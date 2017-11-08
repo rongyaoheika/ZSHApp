@@ -44,6 +44,8 @@
     self.detailLabel = [ZSHBaseUIControl createLabelWithParamDic:detailLabelDic];
     self.detailLabel.numberOfLines = 0;
     [self.detailLabel setLineBreakMode:NSLineBreakByWordWrapping];
+    
+    
     [self.contentView addSubview:self.detailLabel];
     
     self.detailImageView = [[UIImageView alloc]init];
@@ -97,7 +99,7 @@
         make.height.mas_equalTo(kRealValue(43));
     }];
     
-    if ([self.paramDic[@"fromClassType"]integerValue] == ZSHGoodsCommentSubVCToWeiBoCell) {
+    if (kFromVCType == ZSHGoodsCommentSubVCToWeiBoCell) {
         self.bottomView.hidden = YES;
         self.bottomView.frame = CGRectZero;
     }
@@ -109,7 +111,7 @@
     [self.nameLabel setText:model.name];
     [self.detailLabel setText:model.detailText];
     
-    CGSize detailLabelSize = [model.detailText boundingRectWithSize:CGSizeMake(kScreenWidth-kRealValue(30), MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading |NSStringDrawingTruncatesLastVisibleLine attributes:@{NSFontAttributeName:self.detailLabel.font,NSForegroundColorAttributeName:KZSHColor929292} context:nil].size;
+    CGSize detailLabelSize = [model.detailText boundingRectWithSize:CGSizeMake(kScreenWidth-kRealValue(30), MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:self.detailLabel.font,NSForegroundColorAttributeName:KZSHColor929292} context:nil].size;
     
     if (!model.detailText.length) {
         [self.detailLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
@@ -119,6 +121,13 @@
             make.right.mas_equalTo(self).offset(-kRealValue(15));
         }];
     } else {
+        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+        [paragraphStyle setLineSpacing:5];
+        NSString *detailStr = model.detailText;
+        NSMutableAttributedString *setString = [[NSMutableAttributedString alloc] initWithString: model.detailText];
+        [setString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, [detailStr length])];
+        [self.detailLabel setAttributedText:setString];
+
         [self.detailLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.top.mas_equalTo(self.avatarImageView.mas_bottom).offset(kRealValue(17.5));
             make.left.mas_equalTo(self.avatarImageView);

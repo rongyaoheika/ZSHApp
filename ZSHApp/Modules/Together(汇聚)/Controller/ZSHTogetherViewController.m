@@ -32,7 +32,7 @@ static NSString *cellIdentifier = @"listCell";
 }
 
 - (void)loadData{
-    self.pushVCsArr = @[@"ZSHEntertainmentDetailViewController",@"ZSHEntertainmentViewController",@"",@"ZSHEntertainmentViewController"];
+    self.pushVCsArr = @[@"ZSHEntertainmentViewController",@"ZSHEntertainmentViewController",@"",@"ZSHEntertainmentViewController"];
     self.paramArr = @[@{},@{}];
     [self initViewModel];
 }
@@ -80,8 +80,9 @@ static NSString *cellIdentifier = @"listCell";
         };
         
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
-            ZSHEntertainmentDetailViewController *entertaimmentVC= [[ZSHEntertainmentDetailViewController alloc]init];
-            [weakself.navigationController pushViewController:entertaimmentVC animated:YES];
+            Class className = NSClassFromString(weakself.pushVCsArr[indexPath.row]);
+            RootViewController *vc = [[className alloc]initWithParamDic:weakself.paramArr[indexPath.row]];
+            [weakself.navigationController pushViewController:vc animated:YES];
         };
     }
     

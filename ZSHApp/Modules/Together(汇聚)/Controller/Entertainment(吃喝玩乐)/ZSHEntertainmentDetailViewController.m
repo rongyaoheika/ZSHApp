@@ -8,10 +8,9 @@
 
 #import "ZSHEntertainmentDetailViewController.h"
 #import "ZSHEntertainmentHeadView.h"
-#import "ZSHEntertainmentViewController.h"
 #import "ZSHEntertainmentDetailCell.h"
 #import "ZSHPickView.h"
-
+#import "ZSHEntertainmentDisViewController.h"
 @interface ZSHEntertainmentDetailViewController ()
 
 @property (nonatomic, strong) ZSHPickView                       *pickView;
@@ -76,8 +75,6 @@ static NSString *ZSHEntertainmentDetailCellID = @"ZSHEntertainmentDetailCell";
     };
     
     cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
-        ZSHEntertainmentViewController *entertaimmentVC= [[ZSHEntertainmentViewController alloc]init];
-        [weakself.navigationController pushViewController:entertaimmentVC animated:YES];
     };
     
     //中间cell
@@ -123,7 +120,8 @@ static NSString *ZSHEntertainmentDetailCellID = @"ZSHEntertainmentDetailCell";
 }
 
 - (void)distributeAction{
-    
+    ZSHEntertainmentDisViewController *disVC = [[ZSHEntertainmentDisViewController alloc]init];
+    [self.navigationController pushViewController:disVC animated:YES];
 }
 
 #pragma getter

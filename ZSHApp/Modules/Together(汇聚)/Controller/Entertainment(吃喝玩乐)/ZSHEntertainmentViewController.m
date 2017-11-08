@@ -9,6 +9,7 @@
 #import "ZSHEntertainmentViewController.h"
 #import "ZSHEnterTainmentCell.h"
 #import "ZSHEntertainmentModel.h"
+#import "ZSHEntertainmentDetailViewController.h"
 
 @interface ZSHEntertainmentViewController ()
 
@@ -56,6 +57,7 @@ static NSString *ZSHEnterTainmentCellID = @"ZSHEnterTainmentCell";
 
 //head
 - (ZSHBaseTableViewSectionModel*)storeListSection {
+    kWeakSelf(self);
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     for (int i = 0; i<self.dataArr.count; i++) {
         ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
@@ -69,6 +71,8 @@ static NSString *ZSHEnterTainmentCellID = @"ZSHEnterTainmentCell";
         };
         
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
+            ZSHEntertainmentDetailViewController *enterTainMentDetailVC = [[ZSHEntertainmentDetailViewController alloc]init];
+            [weakself.navigationController pushViewController:enterTainMentDetailVC animated:YES];
         };
     }
     return sectionModel;
@@ -76,6 +80,8 @@ static NSString *ZSHEnterTainmentCellID = @"ZSHEnterTainmentCell";
 
 #pragma action
 - (void)distributeAction{
+   
+    
     
 }
 

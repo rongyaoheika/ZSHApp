@@ -25,6 +25,14 @@
     NSDictionary *detailLabelDic = @{@"text":@"天气那么冷，不如找家咖啡馆来一杯咖啡，一起玩玩狼人杀，交一些新朋友，多个朋友多条路嘛！生活不止低头看手机，还有面对面邂逅的缘分",@"font":kPingFangRegular(12)};
     UILabel *detailLabel = [ZSHBaseUIControl createLabelWithParamDic:detailLabelDic];
     detailLabel.numberOfLines = 0;
+    
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    [paragraphStyle  setLineSpacing:5];
+    NSString *detailStr = @"天气那么冷，不如找家咖啡馆来一杯咖啡，一起玩玩狼人杀，交一些新朋友，多个朋友多条路嘛！生活不止低头看手机，还有面对面邂逅的缘分";
+    NSMutableAttributedString *setString = [[NSMutableAttributedString alloc] initWithString:detailStr];
+    [setString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, [detailStr length])];
+    [detailLabel setAttributedText:setString];
+
     [self.contentView addSubview:detailLabel];
     [detailLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self).offset(KLeftMargin);
