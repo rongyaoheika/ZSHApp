@@ -1,0 +1,24 @@
+//
+//  ZSHBaseView.h
+//  ZSHApp
+//
+//  Created by zhaoweiwei on 2017/9/27.
+//  Copyright © 2017年 apple. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+#import "ZSHBaseModel.h"
+
+typedef void(^DismissViewBlock) (id);
+typedef void(^ConfirmBtnBlock) (id);
+@interface ZSHBaseView : UIView
+
+@property (nonatomic,strong)NSDictionary *paramDic;
+@property (nonatomic,strong)ZSHBaseModel *model;
+@property (nonatomic,copy) DismissViewBlock dissmissViewBlock;
+@property (nonatomic,copy) ConfirmBtnBlock goldConfrimBlock;
+
+- (instancetype)initWithFrame:(CGRect)frame paramDic:(NSDictionary *)paramDic;
+- (void)setup;
+
+@end

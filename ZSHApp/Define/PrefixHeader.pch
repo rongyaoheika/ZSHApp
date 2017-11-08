@@ -1,0 +1,46 @@
+//
+//  PrefixHeader.pch
+//  MiAiApp
+//
+//  Created by Apple on 2017/8/18.
+//  Copyright © 2017年 Apple. All rights reserved.
+
+#ifndef PrefixHeader_pch
+#define PrefixHeader_pch
+
+//全局宏
+#import "UtilsMacros.h"
+#import "URLMacros.h"
+#import "FontAndColorMacros.h"
+#import "ThirdMacros.h"
+#import "CommonMacros.h"
+
+//基础类
+#import "AppDelegate.h"
+#import "AppDelegate+AppService.h"
+#import "RootViewController.h"
+#import "RootNavigationController.h"
+#import "MBProgressHUD+XY.h"
+#import "PPNetworkHelper.h"
+#import "AppManager.h"
+#import "ShareManager.h"
+#import "UserManager.h"
+#import "IMManager.h"
+#import "UIButton+XYButton.h"
+#import "UIImage+BlurGlass.h"
+#import "UIImageView+WebCache.h"
+#import "UIViewController+RXLSideMenu.h"
+#import "ZSHBaseUIControl.h"
+#import "UIView+ZSHExtension.h"
+#import "ZSHSpeedy.h"
+#import "ZSHBaseCell.h"
+
+//第三方
+#import <YYKit.h>
+#import <MBProgressHUD.h>
+#import <Masonry.h>
+#import <NSObject+YYModel.h>
+#import <MJExtension.h>
+#import <ReactiveObjC/ReactiveObjC.h>
+
+#endif /* PrefixHeader_pch */

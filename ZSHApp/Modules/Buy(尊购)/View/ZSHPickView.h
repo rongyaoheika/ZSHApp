@@ -1,0 +1,28 @@
+//
+//  ZSHPickView.h
+//  RLJKApp
+//
+//  Created by zhaoweiwei on 2017/9/25.
+//  Copyright © 2017年 apple. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+#import "ZSHManageAddressViewController.h"
+
+typedef void(^SaveChangeBlock)(NSString *);
+
+@interface ZSHPickView : UIWindow
+
+@property (nonatomic,weak) RootViewController                   *controller;
+@property (nonatomic,copy) SaveChangeBlock                      saveChangeBlock;
+
+- (id)initWithFrame:(CGRect)frame type:(ShowPickViewWindowType)type;
+
+// 设置当前用户的身高和体重和出生日期
+- (void)setUserBirthDay:(long long)birthday;
+// 显示
+- (void)show:(ShowPickViewWindowType)type;
+// 消失
+- (void)dismiss;
+
+@end
