@@ -94,7 +94,7 @@
 
 - (void)btnAction:(UIButton *)btn{
     if (btn.tag == 1) {
-        NSDictionary *nextParamDic = @{@"fromClassType":@(ZSHFromMineFriendVCToServiceCenterVC)};
+        NSDictionary *nextParamDic = @{@"fromClassType":@(ZSHFromMineFriendVCToServiceCenterVC),@"title":@"好友"};
         ZSHServiceCenterViewController *serviceVC = [[ZSHServiceCenterViewController alloc]initWithParamDic:nextParamDic];
         [[kAppDelegate getCurrentUIVC].navigationController pushViewController:serviceVC animated:YES];
     }

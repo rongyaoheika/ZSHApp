@@ -49,7 +49,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 }
 
 - (void)createUI{
-    self.title = @"客服中心";
+    self.title = self.paramDic[@"title"];
     [self.view addSubview:self.tableView];
     self.tableView.frame = CGRectMake(0, KNavigationBarHeight, kScreenWidth, kScreenHeight - KNavigationBarHeight);
     

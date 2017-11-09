@@ -41,7 +41,7 @@ static NSString *bottomCellIdentifier   = @"listCell";
     self.imageArr = @[@"mine_icon_1",@"mine_icon_2",@"mine_icon_3",@"mine_icon_4",@"mine_icon_5",@"mine_icon_6",@"mine_icon_7",@"mine_icon_8",@"mine_icon_10",@"mine_icon_9"];
     self.pushVCS = @[@"ZSHMemberCenterViewController",@"",@"",@"ZSHTitleContentViewController",@"",@"ZSHServiceCenterViewController",@"ZSHWalletCenterViewController",@"ZSHGameCenterViewController",@"ZSHGoodsMineViewController",@"ZSHSettingViewController"];
     self.paramArr = @[
-                      @{},@{},@{},@{@"fromClassType":@(FromActivityCenterVCToTitleContentVC),@"title":@"活动中心"},@{},@{@"fromClassType":@(ZSHFromMineServiceVCToServiceCenterVC)},@{},@{},@{},@{}];
+                      @{},@{},@{},@{@"fromClassType":@(FromActivityCenterVCToTitleContentVC),@"title":@"活动中心"},@{},@{@"fromClassType":@(ZSHFromMineServiceVCToServiceCenterVC),@"title":@"客服中心"},@{},@{},@{},@{}];
     
     [self initViewModel];
 }

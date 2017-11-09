@@ -226,6 +226,7 @@
 		FEA483AB1F91B96000219CFE /* UIViewController+RXLSideMenu.h in Sources */ = {isa = PBXBuildFile; fileRef = FEA483A71F91B76F00219CFE /* UIViewController+RXLSideMenu.h */; };
 		FEA483AC1F91B96000219CFE /* UIViewController+RXLSideMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = FEA483A81F91B76F00219CFE /* UIViewController+RXLSideMenu.m */; };
 		FEA483B21F91EC6E00219CFE /* ZSHBuyDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEA483B11F91EC6E00219CFE /* ZSHBuyDetailView.m */; };
+		FEAE111E1FB3FD5D008DCB3E /* ZSHQuotaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEAE111D1FB3FD5D008DCB3E /* ZSHQuotaViewController.m */; };
 		FEAEE3EE1FA86CBA00F73EEA /* NSCalendar+ST.m in Sources */ = {isa = PBXBuildFile; fileRef = FEAEE3E91FA86CBA00F73EEA /* NSCalendar+ST.m */; };
 		FEAEE3EF1FA86CBA00F73EEA /* STCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = FEAEE3EB1FA86CBA00F73EEA /* STCalendar.m */; };
 		FEAEE3F01FA86CBA00F73EEA /* STCalendarItem.m in Sources */ = {isa = PBXBuildFile; fileRef = FEAEE3ED1FA86CBA00F73EEA /* STCalendarItem.m */; };
@@ -665,6 +666,8 @@
 		FEA483D21F91F3CA00219CFE /* ZSHBaseTableViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHBaseTableViewModel.m; sourceTree = "<group>"; };
 		FEA483D31F91F3CA00219CFE /* ZSHBaseTableViewSectionModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHBaseTableViewSectionModel.h; sourceTree = "<group>"; };
 		FEA483D41F91F3CA00219CFE /* ZSHBaseTableViewSectionModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHBaseTableViewSectionModel.m; sourceTree = "<group>"; };
+		FEAE111C1FB3FD5D008DCB3E /* ZSHQuotaViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHQuotaViewController.h; sourceTree = "<group>"; };
+		FEAE111D1FB3FD5D008DCB3E /* ZSHQuotaViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHQuotaViewController.m; sourceTree = "<group>"; };
 		FEAEE3E81FA86CBA00F73EEA /* NSCalendar+ST.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSCalendar+ST.h"; sourceTree = "<group>"; };
 		FEAEE3E91FA86CBA00F73EEA /* NSCalendar+ST.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSCalendar+ST.m"; sourceTree = "<group>"; };
 		FEAEE3EA1FA86CBA00F73EEA /* STCalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STCalendar.h; sourceTree = "<group>"; };
@@ -1973,6 +1976,8 @@
 			children = (
 				FE8FD0811FADE64A005F1184 /* ZSHWalletCenterViewController.h */,
 				FE8FD0821FADE64A005F1184 /* ZSHWalletCenterViewController.m */,
+				FEAE111C1FB3FD5D008DCB3E /* ZSHQuotaViewController.h */,
+				FEAE111D1FB3FD5D008DCB3E /* ZSHQuotaViewController.m */,
 			);
 			path = "WalletCenter(钱包中心)";
 			sourceTree = "<group>";
@@ -2549,6 +2554,7 @@
 				FE7F00121F9203430006E9A3 /* ZSHBaseTableViewCellModel.h in Sources */,
 				FE2CD0B61F98F61A00E9E519 /* ZSHIntegralExchangeCell.m in Sources */,
 				FE443FD01FAFF60200B7F7A5 /* ZSHTicketTypeCell.m in Sources */,
+				FEAE111E1FB3FD5D008DCB3E /* ZSHQuotaViewController.m in Sources */,
 				FE8FD0731FADA833005F1184 /* ZSHMemberCenterViewController.m in Sources */,
 				FE7F00131F9203430006E9A3 /* ZSHBaseTableViewCellModel.m in Sources */,
 				FE7F00141F9203430006E9A3 /* ZSHBaseTableViewModel.h in Sources */,

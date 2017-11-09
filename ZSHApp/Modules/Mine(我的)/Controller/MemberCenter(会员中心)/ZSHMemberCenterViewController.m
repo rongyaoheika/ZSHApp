@@ -43,14 +43,12 @@ static NSString *ZSHNoticeViewCellID = @"ZSHNoticeViewCell";
     [self.tableView registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHHeadViewID];
     [self.tableView registerClass:[ZSHNoticeViewCell class] forCellReuseIdentifier:ZSHNoticeViewCellID];
     [self.tableView reloadData];
-    
 }
 
 - (void)initViewModel {
     [self.tableViewModel.sectionModelArray removeAllObjects];
     [self.tableViewModel.sectionModelArray addObject:[self storeHeadSection]];
-    [self.tableViewModel.sectionModelArray addObject:[self storeListFirstSection]];
-    [self.tableViewModel.sectionModelArray addObject:[self storeListTwoSection]];
+    [self.tableViewModel.sectionModelArray addObject:[self storeListSection]];
 }
 
 //head
@@ -71,7 +69,7 @@ static NSString *ZSHNoticeViewCellID = @"ZSHNoticeViewCell";
 }
 
 //list
-- (ZSHBaseTableViewSectionModel*)storeListFirstSection {
+- (ZSHBaseTableViewSectionModel*)storeListSection {
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     sectionModel.headerHeight = kRealValue(55);
     sectionModel.headerView = [self createHeaderiewWithTitle:@"会员尊享"];
@@ -91,29 +89,6 @@ static NSString *ZSHNoticeViewCellID = @"ZSHNoticeViewCell";
     
     return sectionModel;
 }
-
-//list
-- (ZSHBaseTableViewSectionModel*)storeListTwoSection {
-    ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
-    sectionModel.headerHeight = kRealValue(24);
-    sectionModel.headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, kRealValue(24))];
-    ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
-    [sectionModel.cellModelArray addObject:cellModel];
-    cellModel.height = kRealValue(85);
-    cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
-        ZSHNoticeViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHNoticeViewCellID forIndexPath:indexPath];
-        NSDictionary *nextParamDic = @{@"fromClassType":@(FromMemberCenterVCToNoticeView),@"row":@(1)};
-        [cell updateCellWithParamDic:nextParamDic];
-        return cell;
-    };
-    
-    cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
-        
-    };
-    
-    return sectionModel;
-}
-
 
 #pragma getter
 - (ZSHMemberCenterHeadView *)headView{
@@ -142,7 +117,5 @@ static NSString *ZSHNoticeViewCellID = @"ZSHNoticeViewCell";
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-
 
 @end
