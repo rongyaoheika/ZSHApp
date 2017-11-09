@@ -17,6 +17,7 @@ typedef NS_ENUM(NSInteger,ZSHToTitleContentVC){
     FromFoodVCToTitleContentVC,              //酒店（排序，品牌，筛选）
     FromPlaneTicketVCToTitleContentVC,       //飞机票（价格，时间，准确率）
     FromActivityCenterVCToTitleContentVC,    //活动中心（我发布的，我参与的）
+    
     FromNoneToTitleContentVC
 };
 
