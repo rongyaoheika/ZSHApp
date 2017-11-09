@@ -7,6 +7,7 @@
 //
 
 #import "ZSHEntertainmentDisViewController.h"
+#import "ZSHDetailDemandViewController.h"
 
 @interface ZSHEntertainmentDisViewController ()
 
@@ -71,6 +72,10 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
         };
         
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
+            if (indexPath.row == 7) {
+                ZSHDetailDemandViewController *hotelDetailVC = [[ZSHDetailDemandViewController alloc] init];
+                [weakself.navigationController pushViewController:hotelDetailVC animated:YES];
+            }
         };
     }
     return sectionModel;

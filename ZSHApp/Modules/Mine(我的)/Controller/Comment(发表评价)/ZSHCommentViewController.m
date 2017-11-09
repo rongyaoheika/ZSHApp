@@ -8,6 +8,7 @@
 
 #import "ZSHCommentViewController.h"
 #import "TggStarEvaluationView.h"
+#import "XXTextView.h"
 
 @interface ZSHCommentViewController ()
 
@@ -57,13 +58,15 @@
     }];
     
     
-#warning UItextView placeholder未完成
-    UITextView *contentTextView = [[UITextView alloc] init];
+    XXTextView *contentTextView = [[XXTextView alloc] init];
     contentTextView.backgroundColor = KZSHColor181818;
     contentTextView.textColor = [UIColor whiteColor];
     contentTextView.textContainerInset = UIEdgeInsetsMake(10, 10, 10, 10);
     contentTextView.font = [UIFont systemFontOfSize:15];
     contentTextView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
+    contentTextView.xx_placeholder = @"请输入内容";
+    contentTextView.xx_placeholderFont = [UIFont systemFontOfSize:15];
+    contentTextView.xx_placeholderColor = KZSHColor454545;
     [self.view addSubview:contentTextView];
     [contentTextView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.view).offset(kRealValue(177.5));
