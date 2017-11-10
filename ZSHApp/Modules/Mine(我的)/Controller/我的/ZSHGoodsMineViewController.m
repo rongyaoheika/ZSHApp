@@ -55,7 +55,7 @@ static NSString *headerViewIdentifier = @"hederview";
        @{@"image":@"goods_mine_gift",@"desc":@"礼品",@"tag":@(11)}]
        ];
     
-    self.pushVCArr = @[@"",@"",@"",@"ZSHLogisticsDetailViewController",@"",@"",@"ZSHManageAddressViewController",@"",@"ZSHCouponViewController",@"ZSHIntegralViewController",@""];
+    self.pushVCArr = @[@"",@"",@"ZSHCommentViewController",@"ZSHLogisticsDetailViewController",@"",@"",@"ZSHManageAddressViewController",@"",@"ZSHCouponViewController",@"ZSHIntegralViewController",@""];
 }
 
 - (void)createUI{

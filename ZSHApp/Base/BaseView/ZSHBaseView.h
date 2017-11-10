@@ -18,6 +18,7 @@ typedef void(^ConfirmBtnBlock) (id);
 @property (nonatomic,copy) DismissViewBlock dissmissViewBlock;
 @property (nonatomic,copy) ConfirmBtnBlock goldConfrimBlock;
 
+- (instancetype)initWithFrame:(CGRect)frame;
 - (instancetype)initWithFrame:(CGRect)frame paramDic:(NSDictionary *)paramDic;
 - (void)setup;
 

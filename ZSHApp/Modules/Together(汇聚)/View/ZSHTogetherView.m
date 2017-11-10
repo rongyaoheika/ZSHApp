@@ -14,7 +14,7 @@
 @property (nonatomic, strong)UILabel        *chineseNameLabel;
 @property (nonatomic, strong)UILabel        *englishNameLabel;
 @property (nonatomic, strong)UIButton       *moreBtn;
-@property (nonatomic, strong)NSDictionary   *paramDic;
+//@property (nonatomic, strong)NSDictionary   *paramDic; //父类中已经定义CGH
 
 @end
 

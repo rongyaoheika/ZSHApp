@@ -11,7 +11,7 @@
 #import "TabBarItem.h"
 #import "ZSHHomeViewController.h"
 #import "ZSHTitleContentViewController.h"
-#import "ZSHMineViewController.h"
+#import "ZSHLiveMineViewController.h"
 #import "MainTabBarController.h"
 #import "RXLSideSlipViewController.h"
 
@@ -65,7 +65,7 @@
     ZSHTitleContentViewController *liveVC = [[ZSHTitleContentViewController alloc]initWithParamDic:nextParamDic];
     [self setupChildViewController:liveVC title:@"尚播" imageName:@"tab_live_normal" seleceImageName:@"tab_live_press"];
     
-    ZSHMineViewController *mineVC = [[ZSHMineViewController alloc]init];
+    ZSHLiveMineViewController *mineVC = [[ZSHLiveMineViewController alloc]init];
     [self setupChildViewController:mineVC title:@"我的" imageName:@"tab_mine_normal" seleceImageName:@"tab_mine_press"];
     
     self.viewControllers = _VCS;
