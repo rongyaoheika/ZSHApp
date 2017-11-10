@@ -18,6 +18,7 @@ typedef NS_ENUM(NSInteger,ZSHToTitleContentVC){
     FromPlaneTicketVCToTitleContentVC,       //飞机票（价格，时间，准确率）
     FromActivityCenterVCToTitleContentVC,    //活动中心（我发布的，我参与的）
     FromMineLevelVCToTitleContentVC,         //我的等级（用户等级，主播等级）
+    FromContributionListVCToTitleContentVC,  //贡献榜（日榜，周榜，月榜，总榜）
     FromNoneToTitleContentVC
 };
 

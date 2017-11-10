@@ -33,10 +33,10 @@ static NSString *bottomCellIdentifier   = @"LiveListCell";
 - (void)loadData{
     self.titleArr = @[@"贡献榜",@"等级",@"任务中心",@"签到",@"设置"];
     self.imageArr = @[@"live_mine_icon_1",@"live_mine_icon_2",@"live_mine_icon_3",@"live_mine_icon_4",@"live_mine_icon_5"];
-    self.pushVCS = @[@"",@"ZSHTitleContentViewController",@"",@"",@""];
+    self.pushVCS = @[@"ZSHTitleContentViewController",@"ZSHTitleContentViewController",@"ZSHLiveTaskCenterViewController",@"",@""];
   
     self.paramArr = @[
-                      @{},
+                      @{@"fromClassType":@(FromContributionListVCToTitleContentVC), @"title":@"贡献榜"},
                       @{@"fromClassType":@(FromMineLevelVCToTitleContentVC), @"title":@"我的等级"},
                       @{},
                       @{}];

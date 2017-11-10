@@ -30,11 +30,8 @@ static NSString *cellIdentifier = @"listCell";
 }
 
 - (void)loadData{
-    self.titleArr = @[@"英国皇家绅士产品",@"记录时间节点",@"定制你的专属旅程",@"记录你的美好回忆",@"高尔夫订制线路",@"情感定制 轻奢首饰", @"新东方美学"];
-    NSArray *englishTitleArr = @[@"GIEVES&HAWKES",@"CITIZEN",@"TRAVELID",@"ANDREW",@"WOKEE",@"LABORON",@"CICI"];
     
     self.vcArr = @[@"",@"ZSHGoodsViewController",@"ZSHTitleContentViewController",@"JSCartViewController",@"",@"ZSHPersonalTailorViewController"];
-//    self.paramDicArr = @[@{},@{},@{@"fromClassType":@(FromFindVCToTitleContentVC),@"title":@"发现"},@"",@"",@""];
     
     [self initViewModel];
 }

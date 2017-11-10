@@ -53,14 +53,15 @@
             self.indicatorHeight = 1.0;
             [self createLiveNaviUI];
             self.contentVCS = @[@"ZSHLiveContentFirstViewController",@"ZSHLiveContentFirstViewController",@"ZSHLiveContentFirstViewController"];
-            break;
+            
         }
+            break;
         case FromFindVCToTitleContentVC:{
             self.titleArr = @[@"精选",@"数码",@"亲子",@"时尚",@"美食"];
             self.indicatorHeight = 0.0;
             self.contentVCS = @[@"ZSHFindViewController",@"ZSHFindViewController",@"ZSHFindViewController",@"ZSHFindViewController",@"ZSHFindViewController"];
-            break;
         }
+            break;
         case FromAllOrderVCToTitleContentVC:{
             self.titleArr = @[@"全部",@"待付款",@"待收货",@"待评价",@"退款售后"];
             self.indicatorHeight = 0.0;
@@ -87,26 +88,36 @@
             self.indicatorHeight = 0.0;
             [self createHotelNaviUI];
             self.contentVCS = @[@"ZSHFoodViewController",@"ZSHFoodViewController",@"ZSHFoodViewController"];
-            break;
+            
         }
+            break;
         case FromPlaneTicketVCToTitleContentVC:{
             self.titleArr = @[@"价格",@"时间",@"准确率"];
             self.titleImage = @"hotel_btn";
             self.indicatorHeight = 0.0;
             [self createTicketNaviUI];
             self.contentVCS = @[@"ZSHMoreTicketViewController",@"ZSHMoreTicketViewController",@"ZSHMoreTicketViewController"];
-            break;
+            
         }
+            break;
         case FromActivityCenterVCToTitleContentVC:{
             self.titleArr = @[@"我发布的",@"我参与的"];
             self.indicatorHeight = 0.0;
             self.contentVCS = @[@"ZSHActivityViewController",@"ZSHActivityViewController"];
-            break;
+            
         }
+            break;
         case FromMineLevelVCToTitleContentVC: {
             self.titleArr = @[@"用户等级", @"主播等级"];
             self.indicatorHeight = 0.0;
             self.contentVCS = @[@"ZSHLiveUserLevelViewController",@"ZSHLivePlayerLevelViewController"];
+        }
+            break;
+        case FromContributionListVCToTitleContentVC: {
+            self.titleArr = @[@"日榜", @"周榜", @"月榜", @"总榜"];
+            self.indicatorHeight = 0.0;
+            self.contentVCS = @[@"ZSHLiveDayListViewController", @"ZSHLiveDayListViewController", @"ZSHLiveDayListViewController", @"ZSHLiveDayListViewController"];
+//            self.contentVCS = @[@"ZSHLiveDayListViewController", @"ZSHLiveWeekListViewController", @"ZSHLiveMonthListViewController", @"ZSHLiveTotalListViewController"];
         }
             break;
         default:

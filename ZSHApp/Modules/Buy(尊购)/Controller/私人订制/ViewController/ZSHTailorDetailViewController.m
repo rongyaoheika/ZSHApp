@@ -83,10 +83,8 @@ static NSString *cellIdentifier = @"TailorDetailCell";
         cellModel.height = kRealValue(331);
         cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
             //需要注册，无需判空
-            
             ZSHTailorDetailView *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
             NSDictionary *nextParamDic = @{@"bgImageName":imageArr[i],@"TitleText":titleArr[i],@"ContentText":contentArr[i]};
-            //,@"fromClassType":@(ZSHFromPersonalTailorVCToTogetherView)
             [cell updateCellWithParamDic:nextParamDic];
             return cell;
         };
