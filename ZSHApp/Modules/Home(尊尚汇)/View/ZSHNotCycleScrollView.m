@@ -134,9 +134,10 @@
     NSInteger i = 0;
 
     for (UIButton *btn in self.titleButtons) {
-        if (self.fromClassType == FromKTVCalendarVCToNoticeView) { //KTV日历
+        if (self.fromClassType == FromKTVCalendarVCToNoticeView||self.fromClassType == FromEnergyValueVCToNoticeView) { //KTV日历
             
              btn.frame = CGRectMake(_itemWidth*i++, 0, _itemWidth, self.frame.size.height);
+            
         } else if (self.fromClassType == FromKTVRoomTypeVCToNoticeView) {//KTV房间型号
             
             CGSize titleSize = [btn.titleLabel.text sizeWithAttributes:[NSDictionary dictionaryWithObjectsAndKeys:btn.titleLabel.font,NSFontAttributeName,nil]];

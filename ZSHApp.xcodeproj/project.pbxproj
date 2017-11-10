@@ -227,12 +227,18 @@
 		FEA483AC1F91B96000219CFE /* UIViewController+RXLSideMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = FEA483A81F91B76F00219CFE /* UIViewController+RXLSideMenu.m */; };
 		FEA483B21F91EC6E00219CFE /* ZSHBuyDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEA483B11F91EC6E00219CFE /* ZSHBuyDetailView.m */; };
 		FEAE111E1FB3FD5D008DCB3E /* ZSHQuotaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEAE111D1FB3FD5D008DCB3E /* ZSHQuotaViewController.m */; };
+		FEAE11231FB41977008DCB3E /* ZSHEnergyValueViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEAE11221FB41977008DCB3E /* ZSHEnergyValueViewController.m */; };
+		FEAE11261FB41A95008DCB3E /* ZSHWithdrawViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEAE11251FB41A95008DCB3E /* ZSHWithdrawViewController.m */; };
+		FEAE112C1FB444D1008DCB3E /* ZSHPayView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEAE112B1FB444D1008DCB3E /* ZSHPayView.m */; };
+		FEAE11301FB47292008DCB3E /* ZSHEnergyHeadCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FEAE112F1FB47292008DCB3E /* ZSHEnergyHeadCell.m */; };
+		FEAE11331FB49DD4008DCB3E /* ZSHEnergyScoreCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FEAE11321FB49DD4008DCB3E /* ZSHEnergyScoreCell.m */; };
 		FEAEE3EE1FA86CBA00F73EEA /* NSCalendar+ST.m in Sources */ = {isa = PBXBuildFile; fileRef = FEAEE3E91FA86CBA00F73EEA /* NSCalendar+ST.m */; };
 		FEAEE3EF1FA86CBA00F73EEA /* STCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = FEAEE3EB1FA86CBA00F73EEA /* STCalendar.m */; };
 		FEAEE3F01FA86CBA00F73EEA /* STCalendarItem.m in Sources */ = {isa = PBXBuildFile; fileRef = FEAEE3ED1FA86CBA00F73EEA /* STCalendarItem.m */; };
 		FEB305851F95DFC700E4A061 /* ZSHGoodsGridCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FEB305841F95DFC700E4A061 /* ZSHGoodsGridCell.m */; };
 		FEB305881F95F24100E4A061 /* ZSHGoodsMineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEB305871F95F24100E4A061 /* ZSHGoodsMineViewController.m */; };
 		FEB3058B1F95F9EB00E4A061 /* ZSHGoodsMineGridCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FEB3058A1F95F9EB00E4A061 /* ZSHGoodsMineGridCell.m */; };
+		FEBD36E71FB53AB800959BD8 /* ZSHScoreDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FEBD36E61FB53AB800959BD8 /* ZSHScoreDetailCell.m */; };
 		FEBD7C901FA6C47300CE2BA6 /* ZSHHotelListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FEBD7C8F1FA6C47300CE2BA6 /* ZSHHotelListCell.m */; };
 		FEBD7C931FA6CC1900CE2BA6 /* ZSHHotelPayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEBD7C921FA6CC1900CE2BA6 /* ZSHHotelPayViewController.m */; };
 		FEBD7C961FA6CCEC00CE2BA6 /* ZSHHotelPayHeadCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FEBD7C951FA6CCEC00CE2BA6 /* ZSHHotelPayHeadCell.m */; };
@@ -668,6 +674,16 @@
 		FEA483D41F91F3CA00219CFE /* ZSHBaseTableViewSectionModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHBaseTableViewSectionModel.m; sourceTree = "<group>"; };
 		FEAE111C1FB3FD5D008DCB3E /* ZSHQuotaViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHQuotaViewController.h; sourceTree = "<group>"; };
 		FEAE111D1FB3FD5D008DCB3E /* ZSHQuotaViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHQuotaViewController.m; sourceTree = "<group>"; };
+		FEAE11211FB41977008DCB3E /* ZSHEnergyValueViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHEnergyValueViewController.h; sourceTree = "<group>"; };
+		FEAE11221FB41977008DCB3E /* ZSHEnergyValueViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHEnergyValueViewController.m; sourceTree = "<group>"; };
+		FEAE11241FB41A95008DCB3E /* ZSHWithdrawViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHWithdrawViewController.h; sourceTree = "<group>"; };
+		FEAE11251FB41A95008DCB3E /* ZSHWithdrawViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHWithdrawViewController.m; sourceTree = "<group>"; };
+		FEAE112A1FB444D1008DCB3E /* ZSHPayView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHPayView.h; sourceTree = "<group>"; };
+		FEAE112B1FB444D1008DCB3E /* ZSHPayView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHPayView.m; sourceTree = "<group>"; };
+		FEAE112E1FB47292008DCB3E /* ZSHEnergyHeadCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHEnergyHeadCell.h; sourceTree = "<group>"; };
+		FEAE112F1FB47292008DCB3E /* ZSHEnergyHeadCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHEnergyHeadCell.m; sourceTree = "<group>"; };
+		FEAE11311FB49DD4008DCB3E /* ZSHEnergyScoreCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHEnergyScoreCell.h; sourceTree = "<group>"; };
+		FEAE11321FB49DD4008DCB3E /* ZSHEnergyScoreCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHEnergyScoreCell.m; sourceTree = "<group>"; };
 		FEAEE3E81FA86CBA00F73EEA /* NSCalendar+ST.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSCalendar+ST.h"; sourceTree = "<group>"; };
 		FEAEE3E91FA86CBA00F73EEA /* NSCalendar+ST.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSCalendar+ST.m"; sourceTree = "<group>"; };
 		FEAEE3EA1FA86CBA00F73EEA /* STCalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STCalendar.h; sourceTree = "<group>"; };
@@ -680,6 +696,8 @@
 		FEB305871F95F24100E4A061 /* ZSHGoodsMineViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHGoodsMineViewController.m; sourceTree = "<group>"; };
 		FEB305891F95F9EB00E4A061 /* ZSHGoodsMineGridCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHGoodsMineGridCell.h; sourceTree = "<group>"; };
 		FEB3058A1F95F9EB00E4A061 /* ZSHGoodsMineGridCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHGoodsMineGridCell.m; sourceTree = "<group>"; };
+		FEBD36E51FB53AB800959BD8 /* ZSHScoreDetailCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHScoreDetailCell.h; sourceTree = "<group>"; };
+		FEBD36E61FB53AB800959BD8 /* ZSHScoreDetailCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHScoreDetailCell.m; sourceTree = "<group>"; };
 		FEBD7C8E1FA6C47300CE2BA6 /* ZSHHotelListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHHotelListCell.h; sourceTree = "<group>"; };
 		FEBD7C8F1FA6C47300CE2BA6 /* ZSHHotelListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHHotelListCell.m; sourceTree = "<group>"; };
 		FEBD7C911FA6CC1900CE2BA6 /* ZSHHotelPayViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHHotelPayViewController.h; sourceTree = "<group>"; };
@@ -1175,6 +1193,8 @@
 		FE291EB71F8CAEDC00D4BBE7 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				FEAE11201FB41967008DCB3E /* Energy(能量值) */,
+				FE4DB1DE1F9993EE008E12E9 /* 我的 */,
 				FE8FD08F1FAE0984005F1184 /* Service(客服中心) */,
 				FE8FD0841FADF4E0005F1184 /* Setting(设置) */,
 				FE8FD0801FADE632005F1184 /* WalletCenter(钱包中心) */,
@@ -1207,6 +1227,7 @@
 		FE291EBA1F8CAEDC00D4BBE7 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				FEAE112D1FB4726C008DCB3E /* Energy(能量值) */,
 				FE8FD08B1FAE03D6005F1184 /* Setting(设置中心) */,
 				FE8FD0741FADAA7C005F1184 /* MemberCenter(会员中心) */,
 				FE7502C21F9A252C002F2708 /* ZSHMineHeadView.h */,
@@ -1219,6 +1240,8 @@
 				FEA30A581F9F309400AB0FFC /* ZSHGoodsDetailCell.m */,
 				FEA30A5A1F9F3E0900AB0FFC /* ZSHOrderPayCell.h */,
 				FEA30A5B1F9F3E0900AB0FFC /* ZSHOrderPayCell.m */,
+				FEAE112A1FB444D1008DCB3E /* ZSHPayView.h */,
+				FEAE112B1FB444D1008DCB3E /* ZSHPayView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1238,7 +1261,6 @@
 			isa = PBXGroup;
 			children = (
 				FEA1058D1F9B49B3008652D6 /* 发现 */,
-				FE4DB1DE1F9993EE008E12E9 /* 我的 */,
 				FE0F9D8B1F948717004F8D2A /* 购物车 */,
 				FE7FFFFD1F91FE540006E9A3 /* ViewModel */,
 				FEA483A41F91B76F00219CFE /* 侧滑栏 */,
@@ -1978,6 +2000,8 @@
 				FE8FD0821FADE64A005F1184 /* ZSHWalletCenterViewController.m */,
 				FEAE111C1FB3FD5D008DCB3E /* ZSHQuotaViewController.h */,
 				FEAE111D1FB3FD5D008DCB3E /* ZSHQuotaViewController.m */,
+				FEAE11241FB41A95008DCB3E /* ZSHWithdrawViewController.h */,
+				FEAE11251FB41A95008DCB3E /* ZSHWithdrawViewController.m */,
 			);
 			path = "WalletCenter(钱包中心)";
 			sourceTree = "<group>";
@@ -2132,6 +2156,28 @@
 				FEA483D41F91F3CA00219CFE /* ZSHBaseTableViewSectionModel.m */,
 			);
 			path = BaseTableViewModel;
+			sourceTree = "<group>";
+		};
+		FEAE11201FB41967008DCB3E /* Energy(能量值) */ = {
+			isa = PBXGroup;
+			children = (
+				FEAE11211FB41977008DCB3E /* ZSHEnergyValueViewController.h */,
+				FEAE11221FB41977008DCB3E /* ZSHEnergyValueViewController.m */,
+			);
+			path = "Energy(能量值)";
+			sourceTree = "<group>";
+		};
+		FEAE112D1FB4726C008DCB3E /* Energy(能量值) */ = {
+			isa = PBXGroup;
+			children = (
+				FEAE112E1FB47292008DCB3E /* ZSHEnergyHeadCell.h */,
+				FEAE112F1FB47292008DCB3E /* ZSHEnergyHeadCell.m */,
+				FEAE11311FB49DD4008DCB3E /* ZSHEnergyScoreCell.h */,
+				FEAE11321FB49DD4008DCB3E /* ZSHEnergyScoreCell.m */,
+				FEBD36E51FB53AB800959BD8 /* ZSHScoreDetailCell.h */,
+				FEBD36E61FB53AB800959BD8 /* ZSHScoreDetailCell.m */,
+			);
+			path = "Energy(能量值)";
 			sourceTree = "<group>";
 		};
 		FEAEE3E71FA86CBA00F73EEA /* STCalendar */ = {
@@ -2504,6 +2550,7 @@
 				FEA1057B1F9B274E008652D6 /* UIView+ZSHExtension.h in Sources */,
 				FE7502C11F9A11DE002F2708 /* ZSHSearchBarView.m in Sources */,
 				FE7502B11F99CD83002F2708 /* ZSHBaseUIControl.m in Sources */,
+				FEBD36E71FB53AB800959BD8 /* ZSHScoreDetailCell.m in Sources */,
 				FE8FD08A1FADFF17005F1184 /* ZSHUserInfoViewController.m in Sources */,
 				FE9CC3D51FA05D2200285475 /* ZSHOrderDetailViewController.m in Sources */,
 				FE2CD0A61F988A3C00E9E519 /* iCarousel.h in Sources */,
@@ -2604,6 +2651,8 @@
 				FE443FE51FB0A31600B7F7A5 /* ZSHNotificationViewController.m in Sources */,
 				FEF2B62E1FAC1C89000AEA6E /* ZSHTextFieldCellView.m in Sources */,
 				FE5229911F90B02A00DC2899 /* ZSHLeftContentViewController.m in Sources */,
+				FEAE112C1FB444D1008DCB3E /* ZSHPayView.m in Sources */,
+				FEAE11331FB49DD4008DCB3E /* ZSHEnergyScoreCell.m in Sources */,
 				FEF415F71FAAF3E000137F0A /* ZSHTicketPlaceCell.m in Sources */,
 				FE5538171F47049D00803128 /* TabBarItem.m in Sources */,
 				FEBD7CB21FA74BBF00CE2BA6 /* ZSHGoodsDetailModel.m in Sources */,
@@ -2639,6 +2688,7 @@
 				FE5229851F9050DF00DC2899 /* ZSHLiveCellView.m in Sources */,
 				FEAEE3EE1FA86CBA00F73EEA /* NSCalendar+ST.m in Sources */,
 				FE1377781F973402003C8DFB /* ZSHOrderModel.m in Sources */,
+				FEAE11301FB47292008DCB3E /* ZSHEnergyHeadCell.m in Sources */,
 				FE7AF2381FA3814E00E1A648 /* ZSHHotelDetailViewController.m in Sources */,
 				FE443FDF1FB04FF100B7F7A5 /* ZSHMultiInfoViewController.m in Sources */,
 				18A2C64F1F483A66005F394F /* PPInterfacedConst.m in Sources */,
@@ -2702,6 +2752,7 @@
 				FE5538181F47049D00803128 /* NJKWebViewProgress.m in Sources */,
 				FE8FD07B1FADBCFF005F1184 /* ZSHActivityViewController.m in Sources */,
 				FE443FD61FB030C600B7F7A5 /* ZSHAccountViewController.m in Sources */,
+				FEAE11261FB41A95008DCB3E /* ZSHWithdrawViewController.m in Sources */,
 				FE5538131F47049D00803128 /* RootViewController.m in Sources */,
 				FE55385C1F47049D00803128 /* AESCipher.m in Sources */,
 				FE1377721F97225A003C8DFB /* ZSHOrderSubViewController.m in Sources */,
@@ -2713,6 +2764,7 @@
 				FE291EE91F8CCC5900D4BBE7 /* ZSHMineViewController.m in Sources */,
 				FE7502D01F9A4360002F2708 /* ZSHEntertainmentViewController.m in Sources */,
 				FE5538601F47049D00803128 /* UIViewController+AlertViewAndActionSheet.m in Sources */,
+				FEAE11231FB41977008DCB3E /* ZSHEnergyValueViewController.m in Sources */,
 				FE5538101F47049D00803128 /* AppDelegate.m in Sources */,
 				FE2CD0AA1F98AEAC00E9E519 /* ZSHIntegralBillViewController.m in Sources */,
 				FE1F761F1F8F3D4100C45B83 /* ZSHTogetherView.m in Sources */,

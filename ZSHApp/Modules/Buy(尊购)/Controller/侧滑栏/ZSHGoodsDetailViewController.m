@@ -290,24 +290,21 @@ static NSString *ZSHGoodsDetailCountCellID = @"ZSHGoodsDetailCountCell";
     [self.contentView reloadViewWithChildVcs:self.vcs parentVC:self];
 }
 
-- (void)bottomButtonClick:(UIButton *)button
-{
+- (void)bottomButtonClick:(UIButton *)button{
     if (button.tag == 0) {
         NSLog(@"收藏");
         button.selected = !button.selected;
-    }else if(button.tag == 1){
+    } else if (button.tag == 1){
         NSLog(@"购物车");
-    }else  if (button.tag == 2 || button.tag == 3) { //父控制器的加入购物车和立即购买
+    } else  if (button.tag == 2 || button.tag == 3) { //父控制器的加入购物车和立即购买
         ZSHConfirmOrderViewController *confirmOrderVC = [[ZSHConfirmOrderViewController alloc]init];
         confirmOrderVC.goodsModel = _goodModel;
         [self.navigationController pushViewController:confirmOrderVC animated:YES];
         //异步发通知
-        dispatch_sync(dispatch_get_global_queue(0, 0), ^{
-            NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%zd",button.tag],@"buttonTag", nil];
-            [[NSNotificationCenter defaultCenter]postNotificationName:@"ClikAddOrBuy" object:nil userInfo:dict];
-            
-            
-        });
+//        dispatch_sync(dispatch_get_global_queue(0, 0), ^{
+//            NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%zd",button.tag],@"buttonTag", nil];
+//            [[NSNotificationCenter defaultCenter]postNotificationName:@"ClikAddOrBuy" object:nil userInfo:dict];
+//        });
     }
 }
 

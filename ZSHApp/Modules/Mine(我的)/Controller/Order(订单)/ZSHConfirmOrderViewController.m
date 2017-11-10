@@ -12,8 +12,11 @@
 #import "ZSHGoodsDetailCell.h"
 #import "ZSHOrderPayCell.h"
 #import "JSNummberCount.h"
+#import "ZSHPayView.h"
 
 @interface ZSHConfirmOrderViewController ()
+
+@property (nonatomic, strong) ZSHPayView         *payView;
 
 @end
 
@@ -21,6 +24,7 @@ static NSString *ZSHOrderUserInfoCellID = @"ZSHOrderUserInfoCell";
 static NSString *ZSHGoodsDetailCellID = @"ZSHGoodsDetailCell";
 static NSString *ZSHGoodsCouponCellID = @"ZSHGoodsCouponCell";
 static NSString *ZSHOrderPayCellID = @"ZSHOrderPayCell";
+static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 @implementation ZSHConfirmOrderViewController
 
 - (void)viewDidLoad {
@@ -31,8 +35,6 @@ static NSString *ZSHOrderPayCellID = @"ZSHOrderPayCell";
 }
 
 - (void)loadData{
-    
-    
     [self initViewModel];
 }
 
@@ -65,8 +67,15 @@ static NSString *ZSHOrderPayCellID = @"ZSHOrderPayCell";
     [self.tableViewModel.sectionModelArray addObject:[self storeGoodsDetailSection]];
     [self.tableViewModel.sectionModelArray addObject:[self storeCountSection]];
     [self.tableViewModel.sectionModelArray addObject:[self storeCouponSection]];
-     [self.tableViewModel.sectionModelArray addObject:[self storePriceSection]];
-    [self.tableViewModel.sectionModelArray addObject:[self storePaySection]];
+    [self.tableViewModel.sectionModelArray addObject:[self storePriceSection]];
+    
+    kWeakSelf(self);
+    NSDictionary *nextParamDic = @{@"title":@"支付方式"};
+     _payView = [[ZSHPayView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, kRealValue(40)) paramDic:nextParamDic];
+    [self.tableViewModel.sectionModelArray addObject:[_payView storePaySection]];
+    _payView.rightBtnBlcok = ^(UIButton *btn) {
+        [weakself rightBtnAction:btn];
+    };
 }
 
 //第一组：个人信息
@@ -160,7 +169,7 @@ static NSString *ZSHOrderPayCellID = @"ZSHOrderPayCell";
     [sectionModel.cellModelArray addObject:cellModel];
     cellModel.height = kRealValue(40);
     cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
-        ZSHBaseCell *cell = [[ZSHBaseCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:ZSHGoodsCouponCellID];
+        ZSHBaseCell *cell = [[ZSHBaseCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@""];
         cell.textLabel.text = @"总金额";
         cell.detailTextLabel.text =  [NSString stringWithFormat:@"¥ %.1f",[_goodsModel.price floatValue]];
         cell.detailTextLabel.font = kPingFangMedium(17);
@@ -173,41 +182,19 @@ static NSString *ZSHOrderPayCellID = @"ZSHOrderPayCell";
     return sectionModel;
 }
 
-//支付方式
-- (ZSHBaseTableViewSectionModel*)storePaySection {
-    
-    ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
-    ZSHBaseTableViewCellModel *titleCellModel = [[ZSHBaseTableViewCellModel alloc] init];
-    [sectionModel.cellModelArray addObject:titleCellModel];
-    titleCellModel.height = kRealValue(40);
-    titleCellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
-        ZSHBaseCell *cell = [[ZSHBaseCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:ZSHGoodsCouponCellID];
-        cell.textLabel.text = @"支付方式";
-         [cell setSeparatorInset:UIEdgeInsetsMake(0, 0, 0, MAXFLOAT)];
-        return cell;
-    };
-    
-    
-    NSArray *paramArr = @[
-      @{@"payImage":@"pay_wechat",@"title":@"微信支付",@"btnTag":@(1),@"btnNormalImage":@"pay_btn_normal",@"btnPressImage":@"pay_btn_press"},
-     @{@"payImage":@"pay_alipay",@"title":@"支付宝支付",@"btnTag":@(2),@"btnNormalImage":@"pay_btn_normal",@"btnPressImage":@"pay_btn_press"}];
-    for (int i = 0; i<2; i++) {
-        ZSHBaseTableViewCellModel *payCellModel = [[ZSHBaseTableViewCellModel alloc] init];
-        [sectionModel.cellModelArray addObject:payCellModel];
-        payCellModel.height = kRealValue(40);
-        payCellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
-            ZSHOrderPayCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHOrderPayCellID forIndexPath:indexPath];
-            [cell updateCellWithParamDic:paramArr[i]];
-            [cell setSeparatorInset:UIEdgeInsetsMake(0, 0, 0, MAXFLOAT)];
-            return cell;
-        };
-    }
-    
-    return sectionModel;
-}
-
+#pragma  action
 - (void)placeOrderBtnAction{
     
+}
+
+- (void)rightBtnAction:(UIButton *)rightBtn{
+    ZSHBaseCell * cell = (ZSHBaseCell *)[[rightBtn superview] superview];
+    NSIndexPath * path = [self.tableView indexPathForCell:cell];
+    
+    // 记录下当前的IndexPath.row
+    _payView.selectedCellRow = path.row;
+    NSIndexSet *indexSet = [[NSIndexSet alloc] initWithIndex:path.section];
+    [self.tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationNone];
 }
 
 - (void)didReceiveMemoryWarning {

@@ -95,5 +95,4 @@
     self.imageEdgeInsets = imageEdgeInsets;
 }
 
-
 @end

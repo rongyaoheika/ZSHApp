@@ -13,8 +13,9 @@
 
 @property (nonatomic, strong) ZSHBaseModel *model;
 @property (nonatomic, strong) NSDictionary *paramDic;
-@property (nonatomic, copy) NSString       *arrowImageName;
+@property (nonatomic, copy)   NSString     *arrowImageName;
 
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier paramDic:(NSDictionary *)paramDic;
 
 //加载cell  控件
 - (void)setup;

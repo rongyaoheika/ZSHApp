@@ -37,6 +37,7 @@ static NSString *ZSHNoticeViewCellID = @"ZSHNoticeViewCell";
 - (void)createUI{
     self.title = @"会员中心";
     self.tableView.frame = CGRectMake(0, KNavigationBarHeight, KScreenWidth, KScreenHeight-KNavigationBarHeight);
+    self.tableView.scrollEnabled = NO;
     [self.view addSubview:self.tableView];
     self.tableView.delegate = self.tableViewModel;
     self.tableView.dataSource = self.tableViewModel;

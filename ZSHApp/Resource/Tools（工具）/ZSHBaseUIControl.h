@@ -21,6 +21,7 @@ typedef NS_ENUM(NSInteger,ZSHToChangePWDView){
     FromKTVCalendarVCToNoticeView,      //KTV详情 - 预定日历
     FromKTVRoomTypeVCToNoticeView,      //KTV详情 - 包间类型
     FromMemberCenterVCToNoticeView,     //会员中心 - 类型
+    FromEnergyValueVCToNoticeView,      //能量值 - 类型
     FromNoneVCToChangePWDView
 };
 
@@ -88,4 +89,5 @@ typedef NS_ENUM (NSInteger,ZSHToNotificationVC) {
 + (UITableView *)createTableView;
 + (void)drawLineOfDashByCAShapeLayer:(UIView *)lineView lineLength:(int)lineLength lineSpacing:(int)lineSpacing lineColor:(UIColor *)lineColor lineDirection:(BOOL)isHorizonal;
 + (UIButton *)createLabelBtnWithTopDic:(NSDictionary *)topDic bottomDic:(NSDictionary *)bottomDic;
++ (UIView *)createTabHeadLabelViewWithParamDic:(NSDictionary *)paramDic;
 @end

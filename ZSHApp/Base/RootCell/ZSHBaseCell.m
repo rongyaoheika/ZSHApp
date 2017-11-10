@@ -34,12 +34,13 @@
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    
-    [self.detailTextLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.mas_equalTo(self).offset(-kRealValue(35));
-        make.height.mas_equalTo(self);
-        make.top.mas_equalTo(self);
-    }];
+    if (self.arrowImageName) {
+        [self.detailTextLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.right.mas_equalTo(self).offset(-kRealValue(35));
+            make.height.mas_equalTo(self);
+            make.top.mas_equalTo(self);
+        }];
+    }
 }
 
 //加载UI
@@ -50,6 +51,7 @@
 - (void)setAccessoryType:(UITableViewCellAccessoryType)accessoryType{
     if (accessoryType == UITableViewCellAccessoryDisclosureIndicator) {
         [self.contentView addSubview:self.arrowImage];
+       
          UIImage *image = [UIImage imageNamed:self.arrowImageName];
          [self.arrowImage mas_makeConstraints:^(MASConstraintMaker *make) {
             make.right.mas_equalTo(self).offset(-kRealValue(15));

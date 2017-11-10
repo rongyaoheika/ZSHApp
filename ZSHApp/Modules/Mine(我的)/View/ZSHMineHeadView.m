@@ -8,10 +8,14 @@
 
 #import "ZSHMineHeadView.h"
 #import "ZSHServiceCenterViewController.h"
+#import "ZSHEnergyValueViewController.h"
+
 @interface ZSHMineHeadView()
 
-@property (nonatomic,strong)UIImageView     *headImageView;
-@property (nonatomic,strong)UILabel         *nameLabel;
+@property (nonatomic, strong) NSArray           *pushVCsArr;
+@property (nonatomic, strong) NSArray           *paramArr;
+@property (nonatomic, strong) UIImageView       *headImageView;
+@property (nonatomic, strong) UILabel           *nameLabel;
 @property (nonatomic, strong) UIButton          *friendBtn;
 @property (nonatomic, strong) UIButton          *coinBtn;
 @property (nonatomic, strong) UIButton          *energyBtn;
@@ -21,6 +25,9 @@
 @implementation ZSHMineHeadView
 
 - (void)setup{
+    self.pushVCsArr = @[@"ZSHServiceCenterViewController",@"ZSHEnergyValueViewController",@"ZSHEnergyValueViewController"];
+    self.paramArr = @[@{@"fromClassType":@(ZSHFromMineFriendVCToServiceCenterVC),@"title":@"好友"},@{},@{}];
+    
     UIImageView *headImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"weibo_head_image"]];
     headImageView.layer.cornerRadius = kRealValue(50)/2;
     headImageView.clipsToBounds = YES;
@@ -56,7 +63,6 @@
         make.width.mas_equalTo(KScreenWidth/3);
         make.height.mas_equalTo(kRealValue(kRealValue(40)));
     }];
-
     
     //好友
     NSDictionary *friendBtnTopDic = @{@"text":@"好友",@"font":kPingFangRegular(14),@"textAlignment":@(NSTextAlignmentCenter),@"height":@(14)};
@@ -73,7 +79,7 @@
     }];
     
     //能量值
-    NSDictionary *energyBtnTopDic = @{@"text":@"好友",@"font":kPingFangRegular(14),@"textAlignment":@(NSTextAlignmentCenter),@"height":@(14)};
+    NSDictionary *energyBtnTopDic = @{@"text":@"能量值",@"font":kPingFangRegular(14),@"textAlignment":@(NSTextAlignmentCenter),@"height":@(14)};
     NSDictionary *energyBtnBottomDic = @{@"text":@"99",@"font":kPingFangMedium(18),@"textAlignment":@(NSTextAlignmentCenter),@"height":@(14)};
     _energyBtn = [ZSHBaseUIControl createLabelBtnWithTopDic:energyBtnTopDic bottomDic:energyBtnBottomDic];
     _energyBtn.tag = 3;
@@ -93,11 +99,9 @@
 }
 
 - (void)btnAction:(UIButton *)btn{
-    if (btn.tag == 1) {
-        NSDictionary *nextParamDic = @{@"fromClassType":@(ZSHFromMineFriendVCToServiceCenterVC),@"title":@"好友"};
-        ZSHServiceCenterViewController *serviceVC = [[ZSHServiceCenterViewController alloc]initWithParamDic:nextParamDic];
-        [[kAppDelegate getCurrentUIVC].navigationController pushViewController:serviceVC animated:YES];
-    }
+        Class className = NSClassFromString(self.pushVCsArr[btn.tag - 1]);
+        RootViewController *vc = [[className alloc]initWithParamDic:self.paramArr[btn.tag - 1]];
+        [[kAppDelegate getCurrentUIVC].navigationController pushViewController:vc animated:YES];
 }
 
 @end

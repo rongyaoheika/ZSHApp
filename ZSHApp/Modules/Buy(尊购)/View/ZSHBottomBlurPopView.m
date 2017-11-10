@@ -331,16 +331,17 @@ static NSString *ZSHCalendarCellID = @"ZSHCalendarCell";
             ZSHBaseCell *cell = [[ZSHBaseCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ZSHNumCountCellID];
             cell.backgroundColor = KWhiteColor;
             cell.textLabel.text = titleArr[i];
-                UITextField *userinfoTextField = [[UITextField alloc]initWithFrame:CGRectZero];
-                userinfoTextField.font = kPingFangLight(14);
-                userinfoTextField.textColor = KZSHColor929292;
-                userinfoTextField.placeholder = placeHolderArr[i];
-                [cell.contentView addSubview:userinfoTextField];
-                [userinfoTextField mas_makeConstraints:^(MASConstraintMaker *make) {
-                    make.right.mas_equalTo(cell).offset(-KLeftMargin);
-                    make.size.mas_equalTo(CGSizeMake([widtArr[i]integerValue], kRealValue(44)));
-                    make.centerY.mas_equalTo(cell);
-                }];
+            
+            UITextField *userinfoTextField = [[UITextField alloc]initWithFrame:CGRectZero];
+            userinfoTextField.font = kPingFangLight(14);
+            userinfoTextField.textColor = KZSHColor929292;
+            userinfoTextField.placeholder = placeHolderArr[i];
+            [cell.contentView addSubview:userinfoTextField];
+            [userinfoTextField mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.right.mas_equalTo(cell).offset(-KLeftMargin);
+                make.size.mas_equalTo(CGSizeMake([widtArr[i]integerValue], kRealValue(44)));
+                make.centerY.mas_equalTo(cell);
+            }];
             
             return cell;
         };

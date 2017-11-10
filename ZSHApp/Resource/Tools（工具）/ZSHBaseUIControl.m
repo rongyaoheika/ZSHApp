@@ -137,5 +137,17 @@
     return labelBtn;
 }
 
++ (UIView *)createTabHeadLabelViewWithParamDic:(NSDictionary *)paramDic{
+   UIView *headView = [[UIView alloc]initWithFrame:CGRectZero];
+    UILabel *headLabel = [ZSHBaseUIControl createLabelWithParamDic:paramDic];
+    [headView addSubview:headLabel];
+    [headLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.mas_equalTo(headView);
+        make.height.mas_equalTo(headView);
+        make.width.mas_equalTo(headView);
+        make.centerY.mas_equalTo(headView);
+    }];
+    return headView;
+}
 
 @end

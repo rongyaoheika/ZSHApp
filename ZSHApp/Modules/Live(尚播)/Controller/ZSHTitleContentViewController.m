@@ -29,9 +29,9 @@
 @property (nonatomic, assign) CGFloat             titleWidth;
 @property (nonatomic, assign) CGFloat             indicatorHeight;
 @property (nonatomic, strong) NSArray             *contentVCS;
+@property (nonatomic, strong) NSArray             *subContentVCs;
 
 @property (nonatomic, strong) ZSHBottomBlurPopView *bottomBlurPopView;
-
 @property (nonatomic, strong) ZSHTicketPlaceCell   *ticketView;
 
 @end

@@ -7,7 +7,6 @@
 //
 
 #import "ZSHWalletCenterViewController.h"
-#import "ZSHQuotaViewController.h"
 
 @interface ZSHWalletCenterViewController ()
 
@@ -31,7 +30,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 
 - (void)loadData{
     
-    self.pushVCsArr = @[@"ZSHQuotaViewController",@"ZSHQuotaViewController"];
+    self.pushVCsArr = @[@"ZSHWithdrawViewController",@"ZSHQuotaViewController"];
     self.paramArr = @[
                       @{}
                       ];

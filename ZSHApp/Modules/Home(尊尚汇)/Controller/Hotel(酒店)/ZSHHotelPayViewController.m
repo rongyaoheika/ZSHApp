@@ -12,16 +12,20 @@
 #import "ZSHBottomBlurPopView.h"
 #import "ZSHHotelDetailModel.h"
 #import "ZSHHotelDetailModel.h"
-
+#import "ZSHPayView.h"
 @interface ZSHHotelPayViewController ()
 
+@property (nonatomic, strong) ZSHPayView         *payView;
 @property (nonatomic, strong) ZSHBaseModel       *model;
+@property (nonatomic, assign) NSInteger          selectedCellRow;
+@property (nonatomic, strong) NSArray            *cellParamArr;
 
 @end
 
 static NSString *ZSHHotelPayHeadCellID = @"ZSHHotelPayHeadCell";
 static NSString *ZSHBasePriceCellID = @"ZSHBasePriceCell";
 static NSString *ZSHOrderPayCellID = @"ZSHOrderPayCell";
+static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 
 @implementation ZSHHotelPayViewController
 
@@ -34,9 +38,8 @@ static NSString *ZSHOrderPayCellID = @"ZSHOrderPayCell";
 }
 
 - (void)loadData{
-    
-    [self initViewModel];
-    self.model = self.paramDic[@"model"];
+     self.model = self.paramDic[@"model"];
+     [self initViewModel];
 }
 
 - (void)createUI{
@@ -61,7 +64,14 @@ static NSString *ZSHOrderPayCellID = @"ZSHOrderPayCell";
     [self.tableViewModel.sectionModelArray removeAllObjects];
     [self.tableViewModel.sectionModelArray addObject:[self storeHeadSection]];
     [self.tableViewModel.sectionModelArray addObject:[self storePriceSection]];
-    [self.tableViewModel.sectionModelArray addObject:[self storePaySection]];
+    
+    kWeakSelf(self);
+    NSDictionary *nextParamDic = @{@"title":@"支付方式"};
+    _payView = [[ZSHPayView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, kRealValue(40)) paramDic:nextParamDic];
+    [self.tableViewModel.sectionModelArray addObject:[_payView storePaySection]];
+    _payView.rightBtnBlcok = ^(UIButton *btn) {
+        [weakself rightBtnAction:btn];
+    };
 }
 
 //head
@@ -99,40 +109,20 @@ static NSString *ZSHOrderPayCellID = @"ZSHOrderPayCell";
     return sectionModel;
 }
 
-//支付方式
-- (ZSHBaseTableViewSectionModel*)storePaySection {
-    
-    ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
-    ZSHBaseTableViewCellModel *titleCellModel = [[ZSHBaseTableViewCellModel alloc] init];
-    [sectionModel.cellModelArray addObject:titleCellModel];
-    titleCellModel.height = kRealValue(40);
-    titleCellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
-        ZSHBaseCell *cell = [[ZSHBaseCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ZSHBasePriceCellID];
-        cell.textLabel.text = @"支付方式";
-        return cell;
-    };
-    
-    NSArray *paramArr = @[
-                          @{@"payImage":@"pay_wechat",@"title":@"微信支付",@"btnTag":@(1),@"btnNormalImage":@"pay_btn_normal",@"btnPressImage":@"pay_btn_press"},
-                          @{@"payImage":@"pay_alipay",@"title":@"支付宝支付",@"btnTag":@(2),@"btnNormalImage":@"pay_btn_normal",@"btnPressImage":@"pay_btn_press"}
-                          ];
-    for (int i = 0; i<2; i++) {
-        ZSHBaseTableViewCellModel *payCellModel = [[ZSHBaseTableViewCellModel alloc] init];
-        [sectionModel.cellModelArray addObject:payCellModel];
-        payCellModel.height = kRealValue(40);
-        payCellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
-            ZSHOrderPayCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHOrderPayCellID forIndexPath:indexPath];
-            [cell updateCellWithParamDic:paramArr[i]];
-            return cell;
-        };
-    }
-    return sectionModel;
-}
-
 #pragma action
 - (void)payBtnAction{
 }
 
+- (void)rightBtnAction:(UIButton *)rightBtn{
+    ZSHBaseCell * cell = (ZSHBaseCell *)[[rightBtn superview] superview];
+    NSIndexPath * path = [self.tableView indexPathForCell:cell];
+    
+    // 记录下当前的IndexPath.row
+    _payView.selectedCellRow = path.row;
+    NSIndexSet *indexSet = [[NSIndexSet alloc] initWithIndex:path.section];
+    [self.tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationNone];
+}
+    
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

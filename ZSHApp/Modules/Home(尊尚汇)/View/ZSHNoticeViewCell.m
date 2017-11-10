@@ -123,18 +123,8 @@
     } else if ([paramDic[@"fromClassType"]integerValue] == FromMemberCenterVCToNoticeView) {
         _itemScrollView.itemWidth = kRealValue(145);
         _itemScrollView.fromClassType = FromMemberCenterVCToNoticeView;
-        NSArray *titleArr = nil;
-        NSArray *imageArr = nil;
-        
-//        if ([paramDic[@"row"]integerValue] == 1) {
-//            titleArr = @[@"管家服务",@"生日礼包",@"升级礼包",@"黑咖币返利"];
-//            imageArr = @[@"member_image_5",@"member_image_4"];
-//        } else {
-        
-            titleArr = @[@"升级礼包",@"黑咖币返利",@"管家服务",@"生日礼包",];
-            imageArr = @[@"member_image_2",@"member_image_3",@"member_image_4",@"member_image_5"];
-//        }
-        
+        NSArray *titleArr = @[@"升级礼包",@"黑咖币返利",@"管家服务",@"生日礼包",];
+        NSArray *imageArr = @[@"member_image_2",@"member_image_3",@"member_image_4",@"member_image_5"];
         for (int i = 0; i<titleArr.count; i++) {
             NSDictionary *btnDic = @{@"bgImage":imageArr[i],@"title":titleArr[i],@"detail":@"能量值700以上\n有机会获得福利"};
             UIButton *roomTypeBtn = [self createGiftTypeBtnWithParamDic:btnDic];

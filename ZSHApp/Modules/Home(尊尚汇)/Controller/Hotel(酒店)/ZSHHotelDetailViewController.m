@@ -65,6 +65,7 @@ static NSString *ZSHKTVListCellID = @"ZSHKTVListCell";
         self.model = [ZSHKTVModel mj_objectWithKeyValues:KTVModelDic];
     }
     
+   
      [self initViewModel];
 }
 
@@ -78,6 +79,13 @@ static NSString *ZSHKTVListCellID = @"ZSHKTVListCell";
         self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
         [self.tableView setSeparatorColor:KZSHColor1D1D1D];
         [self.tableView setSeparatorInset:UIEdgeInsetsMake(0, 0, 0, 0)];
+    }
+    
+    if (kFromVCType == ZSHFromFoodVCToHotelDetailVC) {
+        self.tableView.frame = CGRectMake(0, 0, KScreenWidth, KScreenHeight-KBottomNavH);
+        [self.view addSubview:self.bottomBtn];
+        [self.bottomBtn setTitle:@"立即预订" forState:UIControlStateNormal];
+        [self.bottomBtn addTarget:self action:@selector(bookAction) forControlEvents:UIControlEventTouchUpInside];
     }
     
     [self.tableView registerClass:[ZSHHotelDetailHeadCell class] forCellReuseIdentifier:ZSHHotelDetailHeadCellID];
@@ -294,6 +302,12 @@ static NSString *ZSHKTVListCellID = @"ZSHKTVListCell";
     if (kFromVCType == ZSHFromHotelVCToHotelDetailVC || hide) {
         cell.separatorInset = UIEdgeInsetsMake(0, 0, 0, MAXFLOAT);
     }
+}
+
+
+#pragma action
+- (void)bookAction{
+    
 }
 
 - (void)didReceiveMemoryWarning {
