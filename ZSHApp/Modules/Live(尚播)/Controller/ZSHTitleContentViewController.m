@@ -106,8 +106,7 @@
         case FromMineLevelVCToTitleContentVC: {
             self.titleArr = @[@"用户等级", @"主播等级"];
             self.indicatorHeight = 0.0;
-            self.contentVCS = @[@"ZSHLiveContentFirstViewController",@"ZSHLiveContentFirstViewController"];
-
+            self.contentVCS = @[@"ZSHLiveUserLevelViewController",@"ZSHLivePlayerLevelViewController"];
         }
             break;
         default:

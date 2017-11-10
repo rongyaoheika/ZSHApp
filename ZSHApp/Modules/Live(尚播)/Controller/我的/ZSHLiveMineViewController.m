@@ -35,6 +35,11 @@ static NSString *bottomCellIdentifier   = @"LiveListCell";
     self.imageArr = @[@"live_mine_icon_1",@"live_mine_icon_2",@"live_mine_icon_3",@"live_mine_icon_4",@"live_mine_icon_5"];
     self.pushVCS = @[@"",@"ZSHTitleContentViewController",@"",@"",@""];
   
+    self.paramArr = @[
+                      @{},
+                      @{@"fromClassType":@(FromMineLevelVCToTitleContentVC), @"title":@"我的等级"},
+                      @{},
+                      @{}];
     
     [self initViewModel];
 }
