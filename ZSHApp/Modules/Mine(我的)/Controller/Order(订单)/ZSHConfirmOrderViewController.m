@@ -10,7 +10,6 @@
 #import "ZSHGoodModel.h"
 #import "ZSHOrderUserInfoCell.h"
 #import "ZSHGoodsDetailCell.h"
-#import "ZSHOrderPayCell.h"
 #import "JSNummberCount.h"
 #import "ZSHPayView.h"
 
@@ -23,7 +22,6 @@
 static NSString *ZSHOrderUserInfoCellID = @"ZSHOrderUserInfoCell";
 static NSString *ZSHGoodsDetailCellID = @"ZSHGoodsDetailCell";
 static NSString *ZSHGoodsCouponCellID = @"ZSHGoodsCouponCell";
-static NSString *ZSHOrderPayCellID = @"ZSHOrderPayCell";
 static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 @implementation ZSHConfirmOrderViewController
 
@@ -52,7 +50,6 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     
     [self.tableView registerClass:[ZSHOrderUserInfoCell class] forCellReuseIdentifier:ZSHOrderUserInfoCellID];
     [self.tableView registerClass:[ZSHGoodsDetailCell class] forCellReuseIdentifier:ZSHGoodsDetailCellID];
-    [self.tableView registerClass:[ZSHOrderPayCell class] forCellReuseIdentifier:ZSHOrderPayCellID];
     
     [self.tableView reloadData];
     
@@ -188,8 +185,8 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 }
 
 - (void)rightBtnAction:(UIButton *)rightBtn{
-    ZSHBaseCell * cell = (ZSHBaseCell *)[[rightBtn superview] superview];
-    NSIndexPath * path = [self.tableView indexPathForCell:cell];
+    ZSHBaseCell *cell = (ZSHBaseCell *)[[rightBtn superview] superview];
+    NSIndexPath *path = [self.tableView indexPathForCell:cell];
     
     // 记录下当前的IndexPath.row
     _payView.selectedCellRow = path.row;

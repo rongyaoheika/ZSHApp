@@ -110,7 +110,7 @@ static NSString *ZSHEnergyRulesCellID = @"ZSHEnergyRulesCell";
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
     [sectionModel.cellModelArray addObject:cellModel];
-    cellModel.height = kRealValue(300);
+    cellModel.height = kRealValue(320);
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHEnergyHeadCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHEnergyHeadCellID forIndexPath:indexPath];
         return cell;
@@ -198,7 +198,6 @@ static NSString *ZSHEnergyRulesCellID = @"ZSHEnergyRulesCell";
             make.top.mas_equalTo(cell);
         }];
         
-        
         CGSize detailSize = [ZSHSpeedy zsh_calculateTextSizeWithText:detailLabel.text WithTextFont:detailLabel.font WithMaxW:KScreenWidth - kRealValue(30)];
         weakcellModel.height = detailSize.height + kRealValue(10);
         return cell;
@@ -234,7 +233,7 @@ static NSString *ZSHEnergyRulesCellID = @"ZSHEnergyRulesCell";
             [paragraphStyle  setLineSpacing:5];
             NSMutableAttributedString  *setString = [[NSMutableAttributedString alloc] initWithString:_scoreRulesTitleArr[i]];
             [setString  addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, [_scoreRulesTitleArr[i] length])];
-            [detailLabel  setAttributedText:setString];
+            [detailLabel setAttributedText:setString];
             
             [cell.contentView addSubview:detailLabel];
             [detailLabel mas_makeConstraints:^(MASConstraintMaker *make) {

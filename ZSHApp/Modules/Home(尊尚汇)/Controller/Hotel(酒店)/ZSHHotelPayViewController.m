@@ -8,7 +8,6 @@
 
 #import "ZSHHotelPayViewController.h"
 #import "ZSHHotelPayHeadCell.h"
-#import "ZSHOrderPayCell.h"
 #import "ZSHBottomBlurPopView.h"
 #import "ZSHHotelDetailModel.h"
 #import "ZSHHotelDetailModel.h"
@@ -24,7 +23,6 @@
 
 static NSString *ZSHHotelPayHeadCellID = @"ZSHHotelPayHeadCell";
 static NSString *ZSHBasePriceCellID = @"ZSHBasePriceCell";
-static NSString *ZSHOrderPayCellID = @"ZSHOrderPayCell";
 static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 
 @implementation ZSHHotelPayViewController
@@ -49,9 +47,6 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     [self.view addSubview:self.tableView];
     self.tableView.delegate = self.tableViewModel;
     self.tableView.dataSource = self.tableViewModel;
-    [self.tableView registerClass:[ZSHHotelPayHeadCell class] forCellReuseIdentifier:ZSHHotelPayHeadCellID];
-    [self.tableView registerClass:[ZSHOrderPayCell class] forCellReuseIdentifier:ZSHOrderPayCellID];
-    
     [self.tableView reloadData];
     
     [self.view addSubview:self.bottomBtn];

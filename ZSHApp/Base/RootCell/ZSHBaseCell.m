@@ -51,7 +51,6 @@
 - (void)setAccessoryType:(UITableViewCellAccessoryType)accessoryType{
     if (accessoryType == UITableViewCellAccessoryDisclosureIndicator) {
         [self.contentView addSubview:self.arrowImage];
-       
          UIImage *image = [UIImage imageNamed:self.arrowImageName];
          [self.arrowImage mas_makeConstraints:^(MASConstraintMaker *make) {
             make.right.mas_equalTo(self).offset(-kRealValue(15));

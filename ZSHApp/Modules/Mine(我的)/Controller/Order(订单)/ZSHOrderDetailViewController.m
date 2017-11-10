@@ -9,6 +9,7 @@
 #import "ZSHOrderDetailViewController.h"
 #import "ZSHOrderUserInfoCell.h"
 #import "ZSHGoodsDetailCell.h"
+#import "ZSHLogisticsDetailViewController.h"
 
 @interface ZSHOrderDetailViewController ()
 
@@ -66,6 +67,7 @@ static NSString *ZSHGoodsGreetCellID = @"ZSHGoodsGreetCell";
 
 //欢迎
 - (ZSHBaseTableViewSectionModel*)storeGreetSection {
+    kWeakSelf(self);
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
     [sectionModel.cellModelArray addObject:cellModel];
@@ -80,7 +82,8 @@ static NSString *ZSHGoodsGreetCellID = @"ZSHGoodsGreetCell";
     };
     
     cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
-        
+        ZSHLogisticsDetailViewController *logisticsDetailVC = [[ZSHLogisticsDetailViewController alloc]init];
+        [weakself.navigationController pushViewController:logisticsDetailVC animated:YES];
     };
     return sectionModel;
 }

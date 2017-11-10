@@ -236,7 +236,6 @@
 		FEA30A531F9F236100AB0FFC /* ZSHConfirmOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEA30A521F9F236100AB0FFC /* ZSHConfirmOrderViewController.m */; };
 		FEA30A561F9F2A8700AB0FFC /* ZSHOrderUserInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FEA30A551F9F2A8700AB0FFC /* ZSHOrderUserInfoCell.m */; };
 		FEA30A591F9F309400AB0FFC /* ZSHGoodsDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FEA30A581F9F309400AB0FFC /* ZSHGoodsDetailCell.m */; };
-		FEA30A5C1F9F3E0900AB0FFC /* ZSHOrderPayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FEA30A5B1F9F3E0900AB0FFC /* ZSHOrderPayCell.m */; };
 		FEA30A5F1F9F494E00AB0FFC /* ZSHNumberCount.m in Sources */ = {isa = PBXBuildFile; fileRef = FEA30A5E1F9F494E00AB0FFC /* ZSHNumberCount.m */; };
 		FEA483A91F91B96000219CFE /* RXLSideSlipViewController.h in Sources */ = {isa = PBXBuildFile; fileRef = FEA483A51F91B76F00219CFE /* RXLSideSlipViewController.h */; };
 		FEA483AA1F91B96000219CFE /* RXLSideSlipViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEA483A61F91B76F00219CFE /* RXLSideSlipViewController.m */; };
@@ -707,8 +706,6 @@
 		FEA30A551F9F2A8700AB0FFC /* ZSHOrderUserInfoCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHOrderUserInfoCell.m; sourceTree = "<group>"; };
 		FEA30A571F9F309400AB0FFC /* ZSHGoodsDetailCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHGoodsDetailCell.h; sourceTree = "<group>"; };
 		FEA30A581F9F309400AB0FFC /* ZSHGoodsDetailCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHGoodsDetailCell.m; sourceTree = "<group>"; };
-		FEA30A5A1F9F3E0900AB0FFC /* ZSHOrderPayCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHOrderPayCell.h; sourceTree = "<group>"; };
-		FEA30A5B1F9F3E0900AB0FFC /* ZSHOrderPayCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHOrderPayCell.m; sourceTree = "<group>"; };
 		FEA30A5D1F9F494E00AB0FFC /* ZSHNumberCount.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHNumberCount.h; sourceTree = "<group>"; };
 		FEA30A5E1F9F494E00AB0FFC /* ZSHNumberCount.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHNumberCount.m; sourceTree = "<group>"; };
 		FEA483A51F91B76F00219CFE /* RXLSideSlipViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RXLSideSlipViewController.h; sourceTree = "<group>"; };
@@ -1415,8 +1412,6 @@
 				FEA30A551F9F2A8700AB0FFC /* ZSHOrderUserInfoCell.m */,
 				FEA30A571F9F309400AB0FFC /* ZSHGoodsDetailCell.h */,
 				FEA30A581F9F309400AB0FFC /* ZSHGoodsDetailCell.m */,
-				FEA30A5A1F9F3E0900AB0FFC /* ZSHOrderPayCell.h */,
-				FEA30A5B1F9F3E0900AB0FFC /* ZSHOrderPayCell.m */,
 				FEAE112A1FB444D1008DCB3E /* ZSHPayView.h */,
 				FEAE112B1FB444D1008DCB3E /* ZSHPayView.m */,
 			);
@@ -2816,7 +2811,6 @@
 				FE8FD0771FADAA9F005F1184 /* ZSHMemberCenterHeadView.m in Sources */,
 				FE1F76361F8F7E1100C45B83 /* LXScollTitleView.m in Sources */,
 				FE0F9DBE1F949EFA004F8D2A /* ZSHWeiboViewController.m in Sources */,
-				FEA30A5C1F9F3E0900AB0FFC /* ZSHOrderPayCell.m in Sources */,
 				FE1F76371F8F7E1100C45B83 /* LXScrollContentView.h in Sources */,
 				FEA30A501F9F08FE00AB0FFC /* ZSHLogisticsDetailModel.m in Sources */,
 				FE1F76381F8F7E1100C45B83 /* LXScrollContentView.m in Sources */,

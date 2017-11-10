@@ -35,6 +35,7 @@ NSUInteger yearSatrt = 1900;
 @property (nonatomic, assign) NSInteger            currentYear;
 @property (nonatomic, assign) NSInteger            currentMonth;
 @property (nonatomic, assign) NSInteger            currentDay;
+@property (nonatomic, assign) NSInteger            selectedRow;
 
 @end
 
@@ -44,6 +45,7 @@ NSUInteger yearSatrt = 1900;
     self = [super initWithFrame:frame];
     if (self) {
         _showType = type;
+        
         [self createData];
         [self createUI];
     }
@@ -51,7 +53,8 @@ NSUInteger yearSatrt = 1900;
 }
 
 - (void)createData{
-    self.titleArr = @[@"生日",@"性别",@"城市区域选择",@"年份",@"优惠券选择",@"时间选择",@"席别选择",@"方式选择"];
+    self.selectedRow = -1;
+    self.titleArr = @[@"生日",@"性别",@"城市区域选择",@"年份",@"优惠券选择",@"时间选择",@"方式选择"];
     self.regionWidthArr = @[@(KScreenWidth * 0.25),@(KScreenWidth * 0.5),@(KScreenWidth * 0.25)];
     self.regionArr = @[@[@"北京",@"天津市",@"河北省",@"山东省"],
                        @[@"北京市",@"天津市",@"石家庄",@"聊城市"],
@@ -95,13 +98,8 @@ NSUInteger yearSatrt = 1900;
     self.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
     [self addSubview:self.mainView];
     [self.mainView addSubview:self.topLineView];
-    
      self.topLineView.btnActionBlock = ^(NSInteger tag) {
-        if (!tag) {
-            [weakself dismiss];
-        } else {
-            [weakself saveChange];
-        }
+         tag == 0 ? [weakself dismiss]:[weakself saveChange];
     };
     
      //底部添加pickview
@@ -123,11 +121,8 @@ NSUInteger yearSatrt = 1900;
             return _regionArr.count;
         case WindowTime:
             return _timeValues.count;
-        case WindowCoupon:
-        case WindowTogether:
-            return 1;
         default:
-            return 0;
+            return 1;
     }
 }
 
@@ -172,55 +167,61 @@ NSUInteger yearSatrt = 1900;
         case WindowTime:{
             return kRealValue(100);
         }
-        case WindowCoupon:
-        case WindowTogether:{
-            return kRealValue(80);
-        }
             default:
-            return 0;
+            return KScreenWidth;
     }
     return 0;
 }
 
 - (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view{
+    CGFloat labelWith = [self pickerView:pickerView widthForComponent:component];
+    CGFloat labelHeight = [self pickerView:pickerView rowHeightForComponent:component];
+    NSDictionary *textLabelDic = @{@"text":@"",@"font":kPingFangRegular(14),@"textAlignment":@(NSTextAlignmentCenter)};
+    UILabel *pickViewLabel = (UILabel *)view;
+    if (!pickViewLabel){
+        pickViewLabel = [ZSHBaseUIControl createLabelWithParamDic:textLabelDic];
+        pickViewLabel.frame = CGRectMake(0, 0, labelWith, labelHeight);
+    }
+    if (row == self.selectedRow) {
+        pickViewLabel.font = kPingFangMedium(14);
+    } else {
+        pickViewLabel.font = kPingFangRegular(14);
+    }
+
     switch (_showType) {
         case WindowBirthDay:{
-            NSDictionary *textLabelDic = @{@"text":_birthdayValues[component][row],@"font":kPingFangRegular(20),@"textColor":KZSHColor333333,@"textAlignment":@(NSTextAlignmentCenter)};
-            UILabel *textLabel = [ZSHBaseUIControl createLabelWithParamDic:textLabelDic];
-            textLabel.frame = CGRectMake(0, 0, [self.birthdayWidthArr[component]floatValue], kRealValue(20));
-            return textLabel;
+            pickViewLabel.text = _birthdayValues[component][row];
+            break;
         }
         case WindowRegion:{
-            NSDictionary *regionLabelDic = @{@"text":_regionArr[component][row],@"font":kPingFangMedium(14),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentCenter)};
-            UILabel *regionLabel = [ZSHBaseUIControl createLabelWithParamDic:regionLabelDic];
-            regionLabel.frame = CGRectMake(0, 0, [self.regionWidthArr[component]floatValue], kRealValue(42));
-            return regionLabel;
+            pickViewLabel.text = _regionArr[component][row];
+             break;
         }
         case WindowTime:{
-            NSDictionary *timeLabelDic = @{@"text":_timeValues[component][row] ,@"font":kPingFangRegular(20),@"textColor":KZSHColor333333,@"textAlignment":@(NSTextAlignmentCenter)};
-            UILabel *timeLabel = [ZSHBaseUIControl createLabelWithParamDic:timeLabelDic];
-            timeLabel.frame = CGRectMake(0, 0, kRealValue(100), kRealValue(20));
-            return timeLabel;
+            pickViewLabel.text = _timeValues[component][row];
+             break;
         }
         case WindowCoupon:{
-            NSDictionary *couponLabelDic = @{@"text":self.couponArr[row],@"font":kPingFangMedium(14),@"textAlignment":@(NSTextAlignmentCenter)};
-//            UILabel *couponLabel = [ZSHBaseUIControl createLabelWithParamDic:couponLabelDic];
-//            couponLabel.frame = CGRectMake(0, 0, kRealValue(100), kRealValue(40));
-            
-            return [self createCustomLabelWithParamDic:couponLabelDic];
+            pickViewLabel.text = _couponArr[row];
+             break;
         }
         case WindowTogether:{
-            NSDictionary *couponLabelDic = @{@"text":self.togetherArr[row],@"font":kPingFangMedium(14),@"textAlignment":@(NSTextAlignmentCenter)};
-            return [self createCustomLabelWithParamDic:couponLabelDic];
+            pickViewLabel.text = _togetherArr[row];
+             break;
         }
-            
         default:
-            return nil;
+            pickViewLabel.text = @"";
+             break;
     }
+    return pickViewLabel;
+
 }
 
 //选择器选择的方法  row：被选中的行
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
+    self.selectedRow = row;
+    [self.pickerView selectRow:self.selectedRow inComponent:component animated:YES];
+    [self.pickerView reloadComponent:component];
     switch (_showType) {
         case WindowBirthDay:{
             if (component == 0 || component == 1) { // 年和月变化的时候都应该去刷新日期
@@ -287,34 +288,30 @@ NSUInteger yearSatrt = 1900;
             }
             break;
         }
-        case WindowGender:{
-            break;
-        }
             
         case WindowRegion:{
-            [_pickerView selectRow:0 inComponent:0 animated:NO];
-             [_pickerView selectRow:0 inComponent:1 animated:NO];
-             [_pickerView selectRow:0 inComponent:2 animated:NO];
+             [_pickerView selectRow:1 inComponent:0 animated:NO];
+             [_pickerView selectRow:1 inComponent:1 animated:NO];
+             [_pickerView selectRow:1 inComponent:2 animated:NO];
             break;
         }
         case WindowTime:{
              [_pickerView selectRow:2017-yearSatrt inComponent:0 animated:NO];
              [_pickerView selectRow:8 inComponent:1 animated:NO];
-            [self refreshMonth];
-            break;
-        }
-        case WindowCoupon:
-        case WindowTogether:{
-           [_pickerView selectRow:1 inComponent:0 animated:NO];
+             [self refreshMonth];
             break;
         }
             
         default:{
-             [_pickerView selectRow:0 inComponent:0 animated:NO];
+             [_pickerView selectRow:1 inComponent:0 animated:NO];
             break;
         }
-
     }
+    
+//    self.selectedRow = [_pickerView selectedRowInComponent:0];
+    
+    
+    
     
     [self makeKeyAndVisible];
     [UIView animateWithDuration:0.5 animations:^{
@@ -497,12 +494,6 @@ NSUInteger yearSatrt = 1900;
         _pickerView.showsSelectionIndicator = NO;
     }
     return _pickerView;
-}
-
-- (UILabel *)createCustomLabelWithParamDic:(NSDictionary *)paramDic{
-   UILabel *customLabel = [ZSHBaseUIControl createLabelWithParamDic:paramDic];
-    customLabel.frame = CGRectMake(0, 0, kRealValue(100), kRealValue(40));
-   return customLabel;
 }
 
 @end

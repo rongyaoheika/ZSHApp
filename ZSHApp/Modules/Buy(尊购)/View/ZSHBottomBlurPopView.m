@@ -42,6 +42,8 @@
 
 //底部年龄弹出框
 @property (nonatomic, strong) UISlider        *ageSlider;
+@property (nonatomic, strong) UIView          *ageView;
+@property (nonatomic, strong) UILabel         *valueLabel;
 
 @end
 
@@ -185,6 +187,11 @@ static NSString *ZSHCalendarCellID = @"ZSHCalendarCell";
         [self.tableViewModel.sectionModelArray removeAllObjects];
         [self.tableViewModel.sectionModelArray addObject:[self storeTicketUserInfoBtnSection]];
         [self.tableViewModel.sectionModelArray addObject:[self storeConfirmBtnSection]];
+    } else if (kFromVCType == ZSHFromAirplaneAgeVCToBottomBlurPopView){//年龄选择
+        
+        [self.tableViewModel.sectionModelArray removeAllObjects];
+        [self.tableViewModel.sectionModelArray addObject:[self storeHeadSection]];
+        [self.tableViewModel.sectionModelArray addObject:[self storeAgeSection]];
     }
 }
 
@@ -450,12 +457,13 @@ static NSString *ZSHCalendarCellID = @"ZSHCalendarCell";
     cellModel.height = kRealValue(115);
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHBaseCell *cell = [[ZSHBaseCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@""];
-        [cell addSubview:self.ageSlider];
-        [self.ageSlider mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.centerY.mas_equalTo(cell);
-            make.left.mas_equalTo(cell).offset(kRealValue(73.5));
-            make.right.mas_equalTo(cell).offset(-kRealValue(73.5));
-            make.height.mas_equalTo(kRealValue(20));
+        [cell addSubview:self.ageView];
+        [self.ageView mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.edges.mas_equalTo(self.subTab);
+            make.top.mas_equalTo(self);
+            make.height.mas_equalTo(kRealValue(165));
+            make.width.mas_equalTo(KScreenWidth);
+            make.left.mas_equalTo(self.subTab);
         }];
         
         return cell;
@@ -463,7 +471,6 @@ static NSString *ZSHCalendarCellID = @"ZSHCalendarCell";
     
     return sectionModel;
 }
-
 
 #pragma getter
 - (ZSHTopLineView *)topLineView{
@@ -506,12 +513,64 @@ static NSString *ZSHCalendarCellID = @"ZSHCalendarCell";
     return _weekView;
 }
 
+- (UIView *)ageView{
+    if (!_ageView) {
+        _ageView = [[UIView alloc]initWithFrame:CGRectZero];
+        [_ageView addSubview:self.ageSlider];
+        [self.ageSlider mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerY.mas_equalTo(_ageView);
+            make.centerX.mas_equalTo(_ageView);
+            make.width.mas_equalTo(kRealValue(220));
+            make.height.mas_equalTo(kRealValue(20));
+        }];
+        
+        // 当前值label
+        self.valueLabel = [[UILabel alloc] initWithFrame:CGRectMake((KScreenWidth - 100) / 2, self.ageSlider.frame.origin.y + 30, 100, 20)];
+        self.valueLabel.textAlignment = NSTextAlignmentCenter;
+        self.valueLabel.text = [NSString stringWithFormat:@"%.1f岁", self.ageSlider.value];
+        [_ageView addSubview:self.valueLabel];
+        [self.valueLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerX.mas_equalTo(self.ageSlider);
+            make.bottom.mas_equalTo(self.ageSlider.mas_top).offset(-kRealValue(5));
+            make.width.mas_equalTo(kRealValue(30));
+            make.height.mas_equalTo(kRealValue(15));
+        }];
+        
+        // 最小值label
+        UILabel *minLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.ageSlider.frame.origin.x - 35, self.ageSlider.frame.origin.y, 30, 20)];
+        minLabel.textAlignment = NSTextAlignmentRight;
+        minLabel.text = [NSString stringWithFormat:@"%.1f岁", self.ageSlider.minimumValue];
+        [_ageView addSubview:minLabel];
+        [minLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.mas_equalTo(self.ageSlider).offset(-kRealValue(5));
+            make.width.mas_equalTo(kRealValue(30));
+            make.height.mas_equalTo(kRealValue(15));
+            make.top.mas_equalTo(self.ageSlider.mas_bottom).offset(kRealValue(3));
+        }];
+        
+        // 最大值label
+        UILabel *maxLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.ageSlider.frame.origin.x + self.ageSlider.frame.size.width + 5, self.ageSlider.frame.origin.y, 30, 20)];
+        maxLabel.textAlignment = NSTextAlignmentLeft;
+        maxLabel.text = [NSString stringWithFormat:@"%.1f岁", self.ageSlider.maximumValue];
+        [_ageView addSubview:maxLabel];
+        [maxLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.right.mas_equalTo(self.ageSlider).offset(kRealValue(5));
+            make.width.mas_equalTo(kRealValue(30));
+            make.height.mas_equalTo(kRealValue(15));
+            make.top.mas_equalTo(self.ageSlider.mas_bottom).offset(kRealValue(3));
+        }];
+    }
+    return _ageView;
+}
+
 - (UISlider *)ageSlider{
     if (!_ageSlider) {
         _ageSlider = [[UISlider alloc]initWithFrame:CGRectZero];
+        _ageSlider.minimumValue = 18;// 设置最小值
+        _ageSlider.maximumValue = 50;// 设置最大值
         _ageSlider.minimumValueImage = [UIImage imageNamed:@"order_point"];
         _ageSlider.maximumValueImage = [UIImage imageNamed:@"age_icon"];
-        [_ageSlider setThumbImage:[UIImage imageNamed:@"age_icon"] forState:UIControlStateNormal];
+        [_ageSlider setThumbImage:[UIImage imageNamed:@"order_point"] forState:UIControlStateNormal];
         _ageSlider.continuous = YES;
         [_ageSlider addTarget:self action:@selector(sliderValueChanged:) forControlEvents:UIControlEventValueChanged];
     }
@@ -598,10 +657,11 @@ static NSString *ZSHCalendarCellID = @"ZSHCalendarCell";
 
 //年龄滑动块
 -(void)sliderValueChanged:(id)sender{
-    UISlider *control = (UISlider *)sender;
-    if(control == _ageSlider){
-        CGFloat floatvalue = control.value;
+    UISlider *ageSlider = (UISlider *)sender;
+    if(ageSlider == _ageSlider){
+        CGFloat floatvalue = ageSlider.value;
         RLog(@"滑动值===%f",floatvalue);
     }
+    self.valueLabel.text = [NSString stringWithFormat:@"%.1f岁", ageSlider.value];
 }
 @end

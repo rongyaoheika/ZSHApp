@@ -8,13 +8,15 @@
 
 #import "ZSHEntertainmentDisViewController.h"
 #import "ZSHDetailDemandViewController.h"
+#import "ZSHBottomBlurPopView.h"
 
 @interface ZSHEntertainmentDisViewController ()
 
-@property (nonatomic, strong) NSArray            *pushVCsArr;
-@property (nonatomic, strong) NSArray            *paramArr;
-@property (nonatomic, strong) NSArray            *titleArr;
-@property (nonatomic, strong) NSArray            *detailTitleArr;
+@property (nonatomic, strong) NSArray                   *pushVCsArr;
+@property (nonatomic, strong) NSArray                   *paramArr;
+@property (nonatomic, strong) NSArray                   *titleArr;
+@property (nonatomic, strong) NSArray                   *detailTitleArr;
+@property (nonatomic, strong) ZSHBottomBlurPopView      *bottomBlurPopView;
 
 @end
 static NSString *ZSHBaseCellID = @"ZSHBaseCell";
@@ -46,6 +48,11 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     [self.tableView setSeparatorInset:UIEdgeInsetsMake(0, 0, 0, 0)];
     
     [self.tableView registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHBaseCellID];
+    
+    [self.view addSubview:self.bottomBtn];
+    [self.bottomBtn setTitle:@"发布" forState:UIControlStateNormal];
+    [self.bottomBtn addTarget:self action:@selector(distributeAction) forControlEvents:UIControlEventTouchUpInside];
+    
     [self.tableView reloadData];
 }
 
@@ -76,9 +83,30 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
                 ZSHDetailDemandViewController *hotelDetailVC = [[ZSHDetailDemandViewController alloc] init];
                 [weakself.navigationController pushViewController:hotelDetailVC animated:YES];
             }
+//            else if (indexPath.row == 6){
+//                weakself.bottomBlurPopView = [weakself createBottomBlurPopViewWith:ZSHFromAirplaneAgeVCToBottomBlurPopView];
+//                [kAppDelegate.window addSubview:self.bottomBlurPopView];
+//            }
         };
     }
     return sectionModel;
+}
+
+#pragma action
+- (void)distributeAction{
+    
+}
+
+#pragma getter
+- (ZSHBottomBlurPopView *)createBottomBlurPopViewWith:(ZSHFromVCToBottomBlurPopView)fromClassType{
+    NSDictionary *nextParamDic = @{@"fromClassType":@(fromClassType)};
+    ZSHBottomBlurPopView *bottomBlurPopView = [[ZSHBottomBlurPopView alloc]initWithFrame:kAppDelegate.window.bounds paramDic:nextParamDic];
+    bottomBlurPopView.blurRadius = 20;
+    bottomBlurPopView.dynamic = NO;
+    bottomBlurPopView.tintColor = KClearColor;
+    bottomBlurPopView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.6];
+    [bottomBlurPopView setBlurEnabled:NO];
+    return bottomBlurPopView;
 }
 
 - (void)didReceiveMemoryWarning {

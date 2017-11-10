@@ -12,17 +12,16 @@
 #import "ZSHTitleContentViewController.h"
 #import "ZSHIntegralViewController.h"
 #import "ZSHCouponViewController.h"
-#import "ZSHLogisticsDetailViewController.h"
 
 static NSString * cellIdentifier = @"cellId";
 static NSString *headerViewIdentifier = @"hederview";
 
 @interface ZSHGoodsMineViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 
-@property (nonatomic,strong)NSArray        *sectionTitleArr;
-@property (nonatomic,strong)NSArray        *dataArr;
-@property (nonatomic,strong)NSArray        *pushVCArr;
-@property (nonatomic,strong)NSArray        *pushVCDicArr;
+@property (nonatomic, strong) NSArray        *sectionTitleArr;
+@property (nonatomic, strong) NSArray        *dataArr;
+@property (nonatomic, strong) NSArray        *pushVCsArr;
+@property (nonatomic, strong) NSArray        *paramArr;
 
 
 @end
@@ -46,16 +45,41 @@ static NSString *headerViewIdentifier = @"hederview";
        @{@"image":@"goods_mine_receipt",@"desc":@"待收货",@"tag":@(2)},
        @{@"image":@"goods_mine_judge",@"desc":@"待评价",@"tag":@(3)},
        @{@"image":@"goods_mine_service",@"desc":@"售后",@"tag":@(4)}],
-     @[@{@"image":@"goods_mine_vip",@"desc":@"会员中心",@"tag":@(5)},
-       @{@"image":@"goods_mine_collect",@"desc":@"炫购收藏",@"tag":@(6)},
-       @{@"image":@"goods_mine_locate",@"desc":@"地址管理",@"tag":@(7)},
-       @{@"image":@"goods_mine_phoneService",@"desc":@"客服中心",@"tag":@(8)}],
-     @[@{@"image":@"goods_mine_discount",@"desc":@"优惠券",@"tag":@(9)},
-       @{@"image":@"goods_mine_integral",@"desc":@"积分",@"tag":@(10)},
-       @{@"image":@"goods_mine_gift",@"desc":@"礼品",@"tag":@(11)}]
+     @[@{@"image":@"goods_mine_vip",@"desc":@"会员中心",@"tag":@(1)},
+       @{@"image":@"goods_mine_collect",@"desc":@"炫购收藏",@"tag":@(2)},
+       @{@"image":@"goods_mine_locate",@"desc":@"地址管理",@"tag":@(3)},
+       @{@"image":@"goods_mine_phoneService",@"desc":@"客服中心",@"tag":@(4)}],
+     @[@{@"image":@"goods_mine_discount",@"desc":@"优惠券",@"tag":@(1)},
+       @{@"image":@"goods_mine_integral",@"desc":@"积分",@"tag":@(2)},
+       @{@"image":@"goods_mine_gift",@"desc":@"礼品",@"tag":@(3)}]
        ];
     
-    self.pushVCArr = @[@"",@"",@"ZSHCommentViewController",@"ZSHLogisticsDetailViewController",@"",@"",@"ZSHManageAddressViewController",@"",@"ZSHCouponViewController",@"ZSHIntegralViewController",@""];
+    
+    self.pushVCsArr = @[
+      @[@"ZSHTitleContentViewController",
+        @"ZSHTitleContentViewController",
+        @"ZSHCommentViewController",
+        @""],
+      
+      @[@"",
+        @"",
+        @"ZSHManageAddressViewController",
+        @""],
+      
+      @[@"ZSHCouponViewController",
+        @"ZSHIntegralViewController",
+        @""]
+                    ];
+    
+    self.paramArr =@[
+  @[@{@"fromClassType":@(FromAllOrderVCToTitleContentVC),@"title":@"我的订单"},
+    @{@"fromClassType":@(FromAllOrderVCToTitleContentVC),@"title":@"我的订单"},
+    @{},
+    @{}],
+  @[@{},@{},@{},@{}],
+  @[@{},@{},@{},@{}],
+  @[@{},@{},@{},@{}]
+                      ];
 }
 
 - (void)createUI{
@@ -102,8 +126,8 @@ static NSString *headerViewIdentifier = @"hederview";
     NSDictionary *dicData = self.dataArr[indexPath.section][indexPath.row];
     cell.modelDic = dicData;
     cell.btnClickBlock = ^(UIButton *btn){
-        Class className = NSClassFromString(weakself.pushVCArr[btn.tag-1]);
-        UIViewController *vc = [[className alloc]init];
+        Class className = NSClassFromString(weakself.pushVCsArr[indexPath.section][btn.tag-1]);
+        RootViewController *vc = [[className alloc]initWithParamDic:weakself.paramArr[indexPath.section][btn.tag - 1]];
         [weakself.navigationController pushViewController:vc animated:YES];
     };
     return cell;

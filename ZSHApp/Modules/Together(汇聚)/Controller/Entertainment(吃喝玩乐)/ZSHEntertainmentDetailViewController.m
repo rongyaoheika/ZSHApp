@@ -11,6 +11,7 @@
 #import "ZSHEntertainmentDetailCell.h"
 #import "ZSHPickView.h"
 #import "ZSHEntertainmentDisViewController.h"
+
 @interface ZSHEntertainmentDetailViewController ()
 
 @property (nonatomic, strong) ZSHPickView                       *pickView;
@@ -19,6 +20,7 @@
 @end
 
 static NSString *ZSHeadCellID = @"ZSHeadCell";
+static NSString *ZSListCellID = @"ZSListCell";
 static NSString *ZSHEntertainmentDetailCellID = @"ZSHEntertainmentDetailCell";
 @implementation ZSHEntertainmentDetailViewController
 
@@ -41,6 +43,7 @@ static NSString *ZSHEntertainmentDetailCellID = @"ZSHEntertainmentDetailCell";
     
     self.tableView.frame = CGRectMake(0, KNavigationBarHeight, KScreenWidth, kScreenHeight - KNavigationBarHeight - KBottomNavH);
     [self.view addSubview:self.tableView];
+    self.tableView.scrollEnabled = NO;
     self.tableView.delegate = self.tableViewModel;
     self.tableView.dataSource = self.tableViewModel;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
@@ -96,8 +99,14 @@ static NSString *ZSHEntertainmentDetailCellID = @"ZSHEntertainmentDetailCell";
         };
         
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
-            weakself.pickView = [weakself createPickViewWithType:WindowTogether];
-            [weakself.pickView show:WindowTogether];
+            if (indexPath.row == 4) {
+                weakself.pickView = [weakself createPickViewWithType:WindowTogether];
+                [weakself.pickView show:WindowTogether];
+            } else if(indexPath.row == 1||indexPath.row == 2){
+                weakself.pickView = [weakself createPickViewWithType:WindowBirthDay];
+                [weakself.pickView show:WindowBirthDay];
+            } 
+           
         };
     }
     
@@ -132,7 +141,6 @@ static NSString *ZSHEntertainmentDetailCellID = @"ZSHEntertainmentDetailCell";
     return _headView;
 }
 
-#pragma pickView
 -(ZSHPickView *)createPickViewWithType:(NSUInteger)type{
     ZSHPickView *pickView = [[ZSHPickView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight) type:type];
     pickView.controller = self;

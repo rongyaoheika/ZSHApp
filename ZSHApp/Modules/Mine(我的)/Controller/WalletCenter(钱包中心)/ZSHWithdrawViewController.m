@@ -7,7 +7,6 @@
 //
 
 #import "ZSHWithdrawViewController.h"
-#import "ZSHOrderPayCell.h"
 #import "ZSHPayView.h"
 @interface ZSHWithdrawViewController ()
 

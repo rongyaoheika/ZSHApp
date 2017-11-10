@@ -37,9 +37,14 @@ static NSString *bottomCellIdentifier   = @"listCell";
 }
 
 - (void)loadData{
-    self.titleArr = @[@"会员中心",@"管家中心",@"圈子中心",@"活动中心",@"购物中心",@"客服中心",@"钱包中心",@"游戏中心",@"订单中心",@"设置"];
+    self.titleArr = @[@"会员中心",@"管家中心",@"圈子中心",
+                      @"活动中心",@"购物中心",@"客服中心",
+                      @"钱包中心",@"游戏中心",@"订单中心",@"设置"];
     self.imageArr = @[@"mine_icon_1",@"mine_icon_2",@"mine_icon_3",@"mine_icon_4",@"mine_icon_5",@"mine_icon_6",@"mine_icon_7",@"mine_icon_8",@"mine_icon_10",@"mine_icon_9"];
-    self.pushVCS = @[@"ZSHMemberCenterViewController",@"",@"",@"ZSHTitleContentViewController",@"",@"ZSHServiceCenterViewController",@"ZSHWalletCenterViewController",@"ZSHGameCenterViewController",@"ZSHGoodsMineViewController",@"ZSHSettingViewController"];
+    self.pushVCS = @[
+  @"ZSHMemberCenterViewController",@"",@"",
+  @"ZSHTitleContentViewController",@"",@"ZSHServiceCenterViewController",
+  @"ZSHWalletCenterViewController",@"ZSHGameCenterViewController", @"ZSHGoodsMineViewController",@"ZSHSettingViewController"];
     self.paramArr = @[
                       @{},@{},@{},@{@"fromClassType":@(FromActivityCenterVCToTitleContentVC),@"title":@"活动中心"},@{},@{@"fromClassType":@(ZSHFromMineServiceVCToServiceCenterVC),@"title":@"客服中心"},@{},@{},@{},@{}];
     
