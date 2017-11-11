@@ -15,6 +15,7 @@
 #import "ZSHTitleContentViewController.h"
 #import "ZSHAirPlaneViewController.h"
 #import "ZSHKTVModel.h"
+#import "ZSHSubscribeViewController.h"
 
 static NSString *Identify_HeadCell = @"headCell";
 static NSString *Identify_NoticeCell = @"noticeCell";
@@ -41,12 +42,26 @@ static NSString *Identify_MagazineCell = @"magazineCell";
 }
 
 - (void)loadData{
-    self.pushVCsArr = @[@"ZSHTitleContentViewController",@"ZSHTitleContentViewController",@"ZSHAirPlaneViewController",@"ZSHAirPlaneViewController"];
+    self.pushVCsArr = @[@"ZSHTitleContentViewController",
+                        @"ZSHTitleContentViewController",
+                        @"ZSHAirPlaneViewController",
+                        @"ZSHAirPlaneViewController",
+                        @"ZSHSubscribeViewController",
+                        @"ZSHSubscribeViewController",
+                        @"ZSHSubscribeViewController",
+                        @"ZSHMoreSubscribeViewController"];
+    
     self.paramArr = @[
-  @{@"fromClassType":@(FromFoodVCToTitleContentVC)},
-  @{@"fromClassType":@(FromHotelVCToTitleContentVC)},
-  @{@"fromClassType":@(ZSHFromHomeTrainVCToAirPlaneVC),@"title":@"火车票预订"},
-  @{@"fromClassType":@(ZSHHomeAirPlaneVCToAirPlaneVC),@"title":@"机票预订"}];
+                      @{@"fromClassType":@(FromFoodVCToTitleContentVC)},
+                      @{@"fromClassType":@(FromHotelVCToTitleContentVC)},
+                      @{@"fromClassType":@(ZSHFromHomeTrainVCToAirPlaneVC),@"title":@"火车票预订"},
+                      @{@"fromClassType":@(ZSHHomeAirPlaneVCToAirPlaneVC),@"title":@"机票预订"},
+                      @{@"fromClassType":@(FromHorseVCToSubscribeVC),@"title":@"马术"},
+                      @{@"fromClassType":@(FromShipVCToSubscribeVC),@"title":@"游艇"},
+                      @{@"fromClassType":@(FromCarVCToSubscribeVC),@"title":@"豪车"},
+                      @{@"fromClassType":@(FromHelicopterVCToSubscribeVC),@"title":@"飞机"},
+                      @{@"fromClassType":@(FromGolfVCToSubscribeVC),@"title":@"高尔夫汇"}
+                      ];
     [self initViewModel];
 }
 
@@ -63,10 +78,10 @@ static NSString *Identify_MagazineCell = @"magazineCell";
     self.tableView.delegate = self.tableViewModel;
     self.tableView.dataSource = self.tableViewModel;
     
-     [self.tableView registerClass:[ZSHHomeHeadView class] forCellReuseIdentifier:Identify_HeadCell];
-    [self.tableView registerClass:[ZSHNoticeViewCell class] forCellReuseIdentifier:Identify_NoticeCell];
+	[self.tableView registerClass:[ZSHHomeHeadView class] forCellReuseIdentifier:Identify_HeadCell];
+	[self.tableView registerClass:[ZSHNoticeViewCell class] forCellReuseIdentifier:Identify_NoticeCell];
     [self.tableView registerClass:[ZSHNoticeViewCell class] forCellReuseIdentifier:Identify_ServiceCell];
-     [self.tableView registerClass:[ZSHNoticeViewCell class] forCellReuseIdentifier:Identify_PlayCell];
+	[self.tableView registerClass:[ZSHNoticeViewCell class] forCellReuseIdentifier:Identify_PlayCell];
     [self.tableView registerClass:[ZSHNoticeViewCell class] forCellReuseIdentifier:Identify_MagazineCell];
     
     [self.tableView reloadData];

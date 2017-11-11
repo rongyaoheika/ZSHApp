@@ -40,9 +40,25 @@ static NSString *Identify_listCell = @"listCell";
 }
 
 - (void)loadData{
-    self.titleArr = @[@"",@"商品分类",@"发现",@"购物车",@"炫购",@"私人订制"];
-    self.vcArr = @[@"",@"ZSHGoodsViewController",@"ZSHTitleContentViewController",@"JSCartViewController",@"",@"ZSHPersonalTailorViewController"];
-    self.paramDicArr = @[@{},@{},@{@"fromClassType":@(FromFindVCToTitleContentVC),@"title":@"发现"},@"",@"",@""];
+    self.titleArr = @[@"",
+                      @"商品分类",
+                      @"发现",
+                      @"购物车",
+                      @"炫购",
+                      @"私人订制"];
+    self.vcArr = @[
+                   @"",
+                   @"ZSHGoodsViewController",
+                   @"ZSHTitleContentViewController",
+                   @"JSCartViewController",
+                   @"ZSHCollectViewController",
+                   @"ZSHPersonalTailorViewController"];
+    self.paramDicArr = @[@{},
+                         @{},
+                         @{@"fromClassType":@(FromFindVCToTitleContentVC),@"title":@"发现"},
+                         @{},
+                         @{},
+                         @{}];
     
     
     self.tableView.frame = CGRectMake(0, KNavigationBarHeight, KScreenWidth, KScreenHeight-KNavigationBarHeight-KBottomNavH);

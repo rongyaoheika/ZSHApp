@@ -19,7 +19,6 @@ static NSString *cellIdentifier = @"TailorDetailCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     
     [self loadData];
     [self createUI];

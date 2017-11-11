@@ -12,6 +12,7 @@
 #import "OpenUDID.h"
 #import "ZSHLeftContentViewController.h"
 #import "RXLSideSlipViewController.h"
+#import "ZSHLiveTabBarController.h"
 
 @implementation AppDelegate (AppService)
 
@@ -276,6 +277,11 @@
     if ([superVC isKindOfClass:[RXLSideSlipViewController class]]) {
         RXLSideSlipViewController *RXL = (RXLSideSlipViewController *)superVC;
         MainTabBarController *tabVC = (MainTabBarController *)RXL.contentViewController;
+        if ([[tabVC selectedViewController] isKindOfClass:[ZSHLiveTabBarController class]]) {
+            ZSHLiveTabBarController *liveTabVC = [tabVC selectedViewController];
+            RootNavigationController *nav = [liveTabVC selectedViewController];
+            return nav.viewControllers.lastObject;
+        }
         RootNavigationController *nav = [tabVC selectedViewController];
         return nav.viewControllers.lastObject;
     }

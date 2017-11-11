@@ -7,20 +7,32 @@
 //
 
 #import "ZSHLiveMineHeadView.h"
+#import "ZSHFollowViewController.h"
 
 @interface ZSHLiveMineHeadView()
 
-@property (nonatomic,strong)UIImageView     *headImageView;
-@property (nonatomic,strong)UILabel         *nameLabel;
-@property (nonatomic, strong) UIButton          *followBtn;
-@property (nonatomic, strong) UIButton          *coinBtn;
-@property (nonatomic, strong) UIButton          *followerBtn;
+@property (nonatomic, strong) UIImageView *headImageView;
+@property (nonatomic, strong) UILabel     *nameLabel;
+@property (nonatomic, strong) UIButton    *followBtn;
+@property (nonatomic, strong) UIButton    *coinBtn;
+@property (nonatomic, strong) UIButton    *followerBtn;
+
+@property (nonatomic, strong) NSArray     *pushVCsArr;
+@property (nonatomic, strong) NSArray     *paramArr;
 
 @end
 
 @implementation ZSHLiveMineHeadView
 
 - (void)setup{
+    self.pushVCsArr = @[@"ZSHFollowViewController",
+                        @"",
+                        @"ZSHFollowViewController"];
+    self.paramArr = @[
+                      @{@"fromClassType":@(FromHorseVCToFollowVC),@"title":@"关注"},
+                      @{},
+                      @{@"fromClassType":@(FromShipVCToFollowVC),@"title":@"粉丝"}];
+    
     UIImageView *headImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"weibo_head_image"]];
     headImageView.layer.cornerRadius = kRealValue(50)/2;
     headImageView.clipsToBounds = YES;
@@ -93,11 +105,9 @@
 }
 
 - (void)btnAction:(UIButton *)btn{
-    if (btn.tag == 1) {
-//        NSDictionary *nextParamDic = @{@"fromClassType":@(ZSHFromMineFriendVCToServiceCenterVC),@"title":@"好友"};
-//        ZSHServiceCenterViewController *serviceVC = [[ZSHServiceCenterViewController alloc]initWithParamDic:nextParamDic];
-//        [[kAppDelegate getCurrentUIVC].navigationController pushViewController:serviceVC animated:YES];
-    }
+    Class className = NSClassFromString(self.pushVCsArr[btn.tag - 1]);
+    RootViewController *vc = [[className alloc]initWithParamDic:self.paramArr[btn.tag - 1]];
+    [[kAppDelegate getCurrentUIVC].navigationController pushViewController:vc animated:YES];
 }
 
 @end
