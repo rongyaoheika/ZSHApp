@@ -7,10 +7,11 @@
 //
 
 #import "ZSHQuotaViewController.h"
+#import "ZSHQuotaHeadView.h"
 
 @interface ZSHQuotaViewController ()
 
-@property (nonatomic, strong) UIView              *headerView;
+@property (nonatomic, strong) ZSHQuotaHeadView              *headerView;
 
 @end
 
@@ -25,7 +26,9 @@
 
 - (void)createUI{
     self.title = @"黑卡额度";
-    [self.view addSubview:[self createHeadView]];
+    NSDictionary *nextParamDic = @{@"headKeyTitle":@"最高额度（元）",@"headValueTitle":@"100,000.00"};
+    self.headerView = [[ZSHQuotaHeadView alloc]initWithFrame:CGRectZero paramDic:nextParamDic];
+    [self.view addSubview:self.headerView];
     [self.headerView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.view).offset(KNavigationBarHeight);
         make.width.mas_equalTo(KScreenWidth);
@@ -50,34 +53,5 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-#pragma getter
-- (UIView *)createHeadView{
-    self.headerView = [[UIView alloc]initWithFrame:CGRectZero];
-    self.headerView.backgroundColor = KClearColor;
-    
-    NSDictionary *topDic = @{@"text":@"最高额度（元）",@"font":kPingFangMedium(15),@"textAlignment":@(NSTextAlignmentCenter)};
-    UILabel *topLabel = [ZSHBaseUIControl createLabelWithParamDic:topDic];
-    [_headerView addSubview:topLabel];
-    [topLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(_headerView).offset(kRealValue(30));
-        make.centerX.mas_equalTo(_headerView);
-        make.height.mas_equalTo(kRealValue(15));
-        make.width.mas_equalTo(_headerView);
-    }];
-    
-    NSDictionary *bottomDic = @{@"text":@"100,000.00",@"font":kPingFangRegular(32),@"textColor":[UIColor colorWithHexString:@"A0A0A0"],@"textAlignment":@(NSTextAlignmentCenter)};
-    UILabel *bottomLabel = [ZSHBaseUIControl createLabelWithParamDic:bottomDic];
-    bottomLabel.adjustsFontSizeToFitWidth = YES;
-    [_headerView addSubview:bottomLabel];
-    [bottomLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(topLabel.mas_bottom).offset(kRealValue(20));
-        make.centerX.mas_equalTo(_headerView);
-        make.height.mas_equalTo(kRealValue(25));
-        make.width.mas_equalTo(_headerView);
-    }];
-    return _headerView;
-}
-
 
 @end

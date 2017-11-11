@@ -37,11 +37,24 @@ NSUInteger yearSatrt = 1900;
 @property (nonatomic, assign) NSInteger            currentDay;
 @property (nonatomic, assign) NSInteger            selectedRow;
 
+@property (nonatomic, strong) NSArray              *dataArr;
+@property (nonatomic, copy)   NSString             *midTitle;
 @end
 
 @implementation ZSHPickView
 
-- (id)initWithFrame:(CGRect)frame type:(ShowPickViewWindowType)type{
+- (instancetype)initWithFrame:(CGRect)frame paramDic:(NSDictionary *)paramDic{
+    self = [super initWithFrame:frame];
+    if (self) {
+        _dataArr = paramDic[@"dataArr"];
+        _midTitle = paramDic[@"title"];
+        [self createData];
+        [self createUI];
+    }
+    return self;
+}
+
+- (instancetype)initWithFrame:(CGRect)frame type:(ShowPickViewWindowType)type {
     self = [super initWithFrame:frame];
     if (self) {
         _showType = type;
@@ -54,7 +67,8 @@ NSUInteger yearSatrt = 1900;
 
 - (void)createData{
     self.selectedRow = -1;
-    self.titleArr = @[@"生日",@"性别",@"城市区域选择",@"年份",@"优惠券选择",@"时间选择",@"方式选择"];
+    self.titleArr = @[@"生日",@"性别",@"城市区域选择",@"年份",@"优惠券选择",@"时间选择",@"方式选择"
+                      @"物流公司选择"];
     self.regionWidthArr = @[@(KScreenWidth * 0.25),@(KScreenWidth * 0.5),@(KScreenWidth * 0.25)];
     self.regionArr = @[@[@"北京",@"天津市",@"河北省",@"山东省"],
                        @[@"北京市",@"天津市",@"石家庄",@"聊城市"],

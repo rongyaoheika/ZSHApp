@@ -11,7 +11,7 @@
 #import "ZSHLiveCellView.h"
 #import "ZSHWeiboViewController.h"
 #import "ZSHLiveListModel.h"
-
+#import "ZSHLiveRoomViewController.h"
 static NSString * const cellIdentifier = @"cellID";
 
 @interface ZSHLiveContentFirstViewController ()< UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,ZSHCustomWaterFlowLayoutDelegate>
@@ -73,8 +73,11 @@ static NSString * const cellIdentifier = @"cellID";
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-    ZSHWeiboViewController *weiboVC = [[ZSHWeiboViewController alloc]init];
-    [self.navigationController pushViewController:weiboVC animated:YES];
+//    ZSHWeiboViewController *weiboVC = [[ZSHWeiboViewController alloc]init];
+//    [self.navigationController pushViewController:weiboVC animated:YES];
+    
+    ZSHLiveRoomViewController *liveRoomVC = [[ZSHLiveRoomViewController alloc]init];
+    [self presentViewController:liveRoomVC animated:YES completion:nil];
 }
 
 #pragma WaterFlowLayoutDelegate

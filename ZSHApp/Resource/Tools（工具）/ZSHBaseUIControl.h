@@ -49,6 +49,7 @@ typedef NS_ENUM(NSInteger, ShowPickViewWindowType) {
     WindowCoupon,                  // 优惠券
     WindowKTVHour,                 // KTV时间选择
     WindowTogether,                // 汇聚
+    WindowLogistics,               // 物流公司
     WindowKTVNone
 };
 
@@ -78,7 +79,8 @@ typedef NS_ENUM(NSInteger,ZSHToMultiInfoVC){
 };
 
 typedef NS_ENUM (NSInteger,ZSHToNotificationVC) {
-    FromSettingNotifacationVCToNotificationVC,         //设置 - 新消息通知
+    FromSettingVCToNotificationVC,         //设置 - 新消息通知
+    FromLiveMineVCToNotificationVC,        //尚播 - 设置
     FromActivityCenterVCToNotificationVC
 };
 

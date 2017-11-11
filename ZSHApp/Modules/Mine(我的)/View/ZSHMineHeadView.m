@@ -25,7 +25,7 @@
 @implementation ZSHMineHeadView
 
 - (void)setup{
-    self.pushVCsArr = @[@"ZSHServiceCenterViewController",@"ZSHEnergyValueViewController",@"ZSHEnergyValueViewController"];
+    self.pushVCsArr = @[@"ZSHServiceCenterViewController",@"ZSHCoinViewController",@"ZSHEnergyValueViewController"];
     self.paramArr = @[@{@"fromClassType":@(ZSHFromMineFriendVCToServiceCenterVC),@"title":@"好友"},@{},@{}];
     
     UIImageView *headImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"weibo_head_image"]];

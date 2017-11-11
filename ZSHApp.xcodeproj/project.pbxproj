@@ -285,6 +285,13 @@
 		FEC273A71F8E1FD700A0F91A /* ZSHNoticeViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC273A61F8E1FD700A0F91A /* ZSHNoticeViewCell.m */; };
 		FEC702B41FB3195000D5BAA1 /* ZSHEntertainmentDisViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC702B31FB3195000D5BAA1 /* ZSHEntertainmentDisViewController.m */; };
 		FED308981FA414D900CD442B /* ZSHHotelDetailDeviceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FED308971FA414D900CD442B /* ZSHHotelDetailDeviceCell.m */; };
+		FEDF28F91FB68C1C00CD5756 /* ZSHAgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEDF28F81FB68C1C00CD5756 /* ZSHAgeView.m */; };
+		FEDF290C1FB69C2800CD5756 /* ZSHGuideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEDF290B1FB69C2800CD5756 /* ZSHGuideViewController.m */; };
+		FEDF291F1FB69CBF00CD5756 /* ZSHGuideCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FEDF291E1FB69CBF00CD5756 /* ZSHGuideCell.m */; };
+		FEDF29241FB6CFD300CD5756 /* ZSHQuotaHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEDF29231FB6CFD300CD5756 /* ZSHQuotaHeadView.m */; };
+		FEDF29271FB6D1C100CD5756 /* ZSHCoinViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEDF29261FB6D1C100CD5756 /* ZSHCoinViewController.m */; };
+		FEDF292A1FB6DA3000CD5756 /* ZSHLiveRoomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEDF29291FB6DA3000CD5756 /* ZSHLiveRoomViewController.m */; };
+		FEDF292D1FB6F24A00CD5756 /* ZSHLiveProfitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEDF292C1FB6F24A00CD5756 /* ZSHLiveProfitViewController.m */; };
 		FEF2B62E1FAC1C89000AEA6E /* ZSHTextFieldCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEF2B62D1FAC1C88000AEA6E /* ZSHTextFieldCellView.m */; };
 		FEF2B6331FAC4DF3000AEA6E /* ZSHEnterTainmentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FEF2B6321FAC4DF3000AEA6E /* ZSHEnterTainmentCell.m */; };
 		FEF2B6361FAC4FE2000AEA6E /* ZSHEntertainmentHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEF2B6351FAC4FE2000AEA6E /* ZSHEntertainmentHeadView.m */; };
@@ -805,6 +812,20 @@
 		FEC702B31FB3195000D5BAA1 /* ZSHEntertainmentDisViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHEntertainmentDisViewController.m; sourceTree = "<group>"; };
 		FED308961FA414D900CD442B /* ZSHHotelDetailDeviceCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHHotelDetailDeviceCell.h; sourceTree = "<group>"; };
 		FED308971FA414D900CD442B /* ZSHHotelDetailDeviceCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHHotelDetailDeviceCell.m; sourceTree = "<group>"; };
+		FEDF28F71FB68C1C00CD5756 /* ZSHAgeView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHAgeView.h; sourceTree = "<group>"; };
+		FEDF28F81FB68C1C00CD5756 /* ZSHAgeView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHAgeView.m; sourceTree = "<group>"; };
+		FEDF290A1FB69C2800CD5756 /* ZSHGuideViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHGuideViewController.h; sourceTree = "<group>"; };
+		FEDF290B1FB69C2800CD5756 /* ZSHGuideViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHGuideViewController.m; sourceTree = "<group>"; };
+		FEDF291D1FB69CBF00CD5756 /* ZSHGuideCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ZSHGuideCell.h; path = "ZSHApp/Modules/Login(登录&注册)/Controller/ZSHGuideCell.h"; sourceTree = SOURCE_ROOT; };
+		FEDF291E1FB69CBF00CD5756 /* ZSHGuideCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ZSHGuideCell.m; path = "ZSHApp/Modules/Login(登录&注册)/Controller/ZSHGuideCell.m"; sourceTree = SOURCE_ROOT; };
+		FEDF29221FB6CFD300CD5756 /* ZSHQuotaHeadView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHQuotaHeadView.h; sourceTree = "<group>"; };
+		FEDF29231FB6CFD300CD5756 /* ZSHQuotaHeadView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHQuotaHeadView.m; sourceTree = "<group>"; };
+		FEDF29251FB6D1C100CD5756 /* ZSHCoinViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHCoinViewController.h; sourceTree = "<group>"; };
+		FEDF29261FB6D1C100CD5756 /* ZSHCoinViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHCoinViewController.m; sourceTree = "<group>"; };
+		FEDF29281FB6DA3000CD5756 /* ZSHLiveRoomViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHLiveRoomViewController.h; sourceTree = "<group>"; };
+		FEDF29291FB6DA3000CD5756 /* ZSHLiveRoomViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHLiveRoomViewController.m; sourceTree = "<group>"; };
+		FEDF292B1FB6F24A00CD5756 /* ZSHLiveProfitViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHLiveProfitViewController.h; sourceTree = "<group>"; };
+		FEDF292C1FB6F24A00CD5756 /* ZSHLiveProfitViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHLiveProfitViewController.m; sourceTree = "<group>"; };
 		FEF2B62C1FAC1C88000AEA6E /* ZSHTextFieldCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHTextFieldCellView.h; sourceTree = "<group>"; };
 		FEF2B62D1FAC1C88000AEA6E /* ZSHTextFieldCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHTextFieldCellView.m; sourceTree = "<group>"; };
 		FEF2B6311FAC4DF3000AEA6E /* ZSHEnterTainmentCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHEnterTainmentCell.h; sourceTree = "<group>"; };
@@ -989,6 +1010,7 @@
 			isa = PBXGroup;
 			children = (
 				18F902461FB6CBE70044967F /* Follow(关注) */,
+				FEDF292E1FB701A600CD5756 /* Coin(黑咖币) */,
 				1822871E1FB4617300CA5B10 /* MineLevel(等级) */,
 				185BB9BF1FB585BC007A96FF /* TaskCenter(任务中心) */,
 				185BB9AF1FB557E8007A96FF /* List(贡献榜) */,
@@ -1373,6 +1395,8 @@
 				182287171FB4555700CA5B10 /* 我的 */,
 				FE1F76201F8F738700C45B83 /* ZSHLiveTabBarController.h */,
 				FE1F76211F8F738700C45B83 /* ZSHLiveTabBarController.m */,
+				FEDF29281FB6DA3000CD5756 /* ZSHLiveRoomViewController.h */,
+				FEDF29291FB6DA3000CD5756 /* ZSHLiveRoomViewController.m */,
 				FE1F76231F8F788100C45B83 /* ZSHTitleContentViewController.h */,
 				FE1F76241F8F788100C45B83 /* ZSHTitleContentViewController.m */,
 				FE1F76261F8F795C00C45B83 /* ZSHCustomWaterFlowLayout.h */,
@@ -1454,6 +1478,8 @@
 				18155C011FB402E90060BD9D /* Comment(发表评价) */,
 				FE291EE71F8CCC5900D4BBE7 /* ZSHMineViewController.h */,
 				FE291EE81F8CCC5900D4BBE7 /* ZSHMineViewController.m */,
+				FEDF29251FB6D1C100CD5756 /* ZSHCoinViewController.h */,
+				FEDF29261FB6D1C100CD5756 /* ZSHCoinViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1477,6 +1503,7 @@
 		FE291EBA1F8CAEDC00D4BBE7 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				FEDF29211FB6CF9200CD5756 /* Wallet */,
 				FEAE112D1FB4726C008DCB3E /* Energy(能量值) */,
 				FE8FD08B1FAE03D6005F1184 /* Setting(设置中心) */,
 				FE8FD0741FADAA7C005F1184 /* MemberCenter(会员中心) */,
@@ -1632,6 +1659,8 @@
 			children = (
 				FE291EF11F8CCD2200D4BBE7 /* ZSHLoginViewController.h */,
 				FE291EF21F8CCD2200D4BBE7 /* ZSHLoginViewController.m */,
+				FEDF290A1FB69C2800CD5756 /* ZSHGuideViewController.h */,
+				FEDF290B1FB69C2800CD5756 /* ZSHGuideViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1653,6 +1682,8 @@
 		FE291EF01F8CCCF300D4BBE7 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				FEDF291D1FB69CBF00CD5756 /* ZSHGuideCell.h */,
+				FEDF291E1FB69CBF00CD5756 /* ZSHGuideCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2488,6 +2519,25 @@
 			path = iCarousel;
 			sourceTree = "<group>";
 		};
+		FEDF29211FB6CF9200CD5756 /* Wallet */ = {
+			isa = PBXGroup;
+			children = (
+				FEDF29221FB6CFD300CD5756 /* ZSHQuotaHeadView.h */,
+				FEDF29231FB6CFD300CD5756 /* ZSHQuotaHeadView.m */,
+			);
+			path = Wallet;
+			sourceTree = "<group>";
+		};
+		FEDF292E1FB701A600CD5756 /* Coin(黑咖币) */ = {
+			isa = PBXGroup;
+			children = (
+				FEDF292B1FB6F24A00CD5756 /* ZSHLiveProfitViewController.h */,
+				FEDF292C1FB6F24A00CD5756 /* ZSHLiveProfitViewController.m */,
+			);
+			name = "Coin(黑咖币)";
+			path = "ZSHApp/Modules/Live(尚播)/Controller/Coin(黑咖币)";
+			sourceTree = SOURCE_ROOT;
+		};
 		FEF2B62F1FAC4C7D000AEA6E /* Entertainment(吃喝玩乐) */ = {
 			isa = PBXGroup;
 			children = (
@@ -2512,6 +2562,8 @@
 				FEF2B6351FAC4FE2000AEA6E /* ZSHEntertainmentHeadView.m */,
 				FEF2B63E1FACBCE5000AEA6E /* ZSHEntertainmentDetailCell.h */,
 				FEF2B63F1FACBCE5000AEA6E /* ZSHEntertainmentDetailCell.m */,
+				FEDF28F71FB68C1C00CD5756 /* ZSHAgeView.h */,
+				FEDF28F81FB68C1C00CD5756 /* ZSHAgeView.m */,
 			);
 			path = "Entertainment（吃喝玩乐）";
 			sourceTree = "<group>";
@@ -2796,6 +2848,7 @@
 				182287161FB44FE600CA5B10 /* XXTextView.m in Sources */,
 				FE7AF22E1FA2D82E00E1A648 /* TggStarEvaluationView.h in Sources */,
 				FEBD7C9D1FA70F6500CE2BA6 /* ZSHGoodsChartCell.m in Sources */,
+				FEDF28F91FB68C1C00CD5756 /* ZSHAgeView.m in Sources */,
 				FE7AF22F1FA2D82E00E1A648 /* TggStarEvaluationView.m in Sources */,
 				FE9CC3D11FA031F600285475 /* FXBlurView.h in Sources */,
 				FE9CC3D21FA031F600285475 /* FXBlurView.m in Sources */,
@@ -2807,6 +2860,7 @@
 				185BB9CA1FB5BDB9007A96FF /* ZSHMoreSubscribeViewController.m in Sources */,
 				FE7502B11F99CD83002F2708 /* ZSHBaseUIControl.m in Sources */,
 				FEBD36E71FB53AB800959BD8 /* ZSHScoreDetailCell.m in Sources */,
+				FEDF29271FB6D1C100CD5756 /* ZSHCoinViewController.m in Sources */,
 				FE8FD08A1FADFF17005F1184 /* ZSHUserInfoViewController.m in Sources */,
 				FE9CC3D51FA05D2200285475 /* ZSHOrderDetailViewController.m in Sources */,
 				FE2CD0A61F988A3C00E9E519 /* iCarousel.h in Sources */,
@@ -2907,6 +2961,7 @@
 				FEA30A4D1F9F064900AB0FFC /* ZSHLogisticsDetailCell.m in Sources */,
 				FE4B8D241FA9FEC500DE48A1 /* ZSHKTVListCell.m in Sources */,
 				FE1377961F977AC3003C8DFB /* ZSHPickView.m in Sources */,
+				FEDF290C1FB69C2800CD5756 /* ZSHGuideViewController.m in Sources */,
 				FEC2739E1F8E1D7900A0F91A /* ZSHCycleScrollView.m in Sources */,
 				FEC2739C1F8E1D3E00A0F91A /* ZSHHomeViewController.h in Sources */,
 				FEC2739B1F8E1D1E00A0F91A /* ZSHHomeViewController.m in Sources */,
@@ -2926,6 +2981,7 @@
 				FE5538651F47049D00803128 /* OpenUDID.m in Sources */,
 				FE1F761C1F8F191300C45B83 /* ZSHGoodsListView.m in Sources */,
 				FEF416001FAB70EB00137F0A /* ZSHAirTicketDetailViewController.m in Sources */,
+				FEDF292A1FB6DA3000CD5756 /* ZSHLiveRoomViewController.m in Sources */,
 				FE4DB1ED1F99998B008E12E9 /* ZSHBaseCollectionViewCell.m in Sources */,
 				FE50245E1F8A2413005F0FF7 /* ZSHBaseLogic.m in Sources */,
 				FE8FD08E1FAE03E7005F1184 /* ZSHSimpleCellView.m in Sources */,
@@ -2944,8 +3000,10 @@
 				FEBD7CBE1FA7608200CE2BA6 /* ZSHFoodModel.m in Sources */,
 				180C95CE1F57E10200CE570C /* UIImage+BlurGlass.m in Sources */,
 				FEA1056A1F9B208A008652D6 /* ZSHClassMainModel.m in Sources */,
+				FEDF292D1FB6F24A00CD5756 /* ZSHLiveProfitViewController.m in Sources */,
 				FE1F76221F8F738700C45B83 /* ZSHLiveTabBarController.m in Sources */,
 				FEBD7CA31FA716AC00CE2BA6 /* ZSHGoodsCommentCell.m in Sources */,
+				FEDF291F1FB69CBF00CD5756 /* ZSHGuideCell.m in Sources */,
 				FE291EF31F8CCD2200D4BBE7 /* ZSHLoginViewController.m in Sources */,
 				FEF2B63A1FAC5D39000AEA6E /* ZSHEntertainmentModel.m in Sources */,
 				FED308981FA414D900CD442B /* ZSHHotelDetailDeviceCell.m in Sources */,
@@ -3014,6 +3072,7 @@
 				FE5CFA411FA1B32500A55644 /* ZSHHotelCell.m in Sources */,
 				FE1F76281F8F795C00C45B83 /* ZSHCustomWaterFlowLayout.m in Sources */,
 				FE7AF23B1FA383FA00E1A648 /* ZSHHotelDetailHeadCell.m in Sources */,
+				FEDF29241FB6CFD300CD5756 /* ZSHQuotaHeadView.m in Sources */,
 				FE5538801F470BAF00803128 /* ShareManager.m in Sources */,
 				FEBD7C931FA6CC1900CE2BA6 /* ZSHHotelPayViewController.m in Sources */,
 				FE7CA9DE1F9D97F100A2B15D /* ZSHBaseCollectionReusableView.m in Sources */,

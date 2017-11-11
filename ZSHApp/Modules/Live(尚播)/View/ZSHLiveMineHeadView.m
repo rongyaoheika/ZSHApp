@@ -26,7 +26,7 @@
 
 - (void)setup{
     self.pushVCsArr = @[@"ZSHFollowViewController",
-                        @"",
+                        @"ZSHCoinViewController",
                         @"ZSHFollowViewController"];
     self.paramArr = @[
                       @{@"fromClassType":@(FromHorseVCToFollowVC),@"title":@"关注"},

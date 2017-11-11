@@ -20,6 +20,8 @@
 #import "STCalendar.h"
 #import "NSCalendar+ST.h"
 
+//年龄
+#import "ZSHAgeView.h"
 
 @interface ZSHBottomBlurPopView ()<STCalendarDelegate>
 
@@ -41,9 +43,7 @@
 @property (nonatomic, strong, nullable) STCalendar *calender;
 
 //底部年龄弹出框
-@property (nonatomic, strong) UISlider        *ageSlider;
-@property (nonatomic, strong) UIView          *ageView;
-@property (nonatomic, strong) UILabel         *valueLabel;
+@property (nonatomic, strong) ZSHAgeView      *ageView;
 
 @end
 
@@ -207,11 +207,7 @@ static NSString *ZSHCalendarCellID = @"ZSHCalendarCell";
         cell.backgroundColor = KWhiteColor;
         [cell.contentView addSubview:self.topLineView];
         self.topLineView.btnActionBlock = ^(NSInteger tag) {
-            if (!tag) {
-                [weakself dismiss];
-            } else{
-                [weakself saveChange];
-            }
+            tag == 0? [weakself dismiss]:[weakself saveChange];
         };
         return cell;
     };
@@ -451,19 +447,17 @@ static NSString *ZSHCalendarCellID = @"ZSHCalendarCell";
 
 //吃喝玩乐年龄选择
 - (ZSHBaseTableViewSectionModel*)storeAgeSection {
+    kWeakSelf(self);
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
     [sectionModel.cellModelArray addObject:cellModel];
     cellModel.height = kRealValue(115);
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHBaseCell *cell = [[ZSHBaseCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@""];
-        [cell addSubview:self.ageView];
-        [self.ageView mas_makeConstraints:^(MASConstraintMaker *make) {
-//            make.edges.mas_equalTo(self.subTab);
-            make.top.mas_equalTo(self);
-            make.height.mas_equalTo(kRealValue(165));
-            make.width.mas_equalTo(KScreenWidth);
-            make.left.mas_equalTo(self.subTab);
+        weakself.ageView = [[ZSHAgeView alloc]initWithFrame:CGRectZero];
+        [cell addSubview:weakself.ageView];
+        [weakself.ageView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.edges.mas_equalTo(cell);
         }];
         
         return cell;
@@ -513,7 +507,7 @@ static NSString *ZSHCalendarCellID = @"ZSHCalendarCell";
     return _weekView;
 }
 
-- (UIView *)ageView{
+/*- (UIView *)ageView{
     if (!_ageView) {
         _ageView = [[UIView alloc]initWithFrame:CGRectZero];
         [_ageView addSubview:self.ageSlider];
@@ -575,7 +569,7 @@ static NSString *ZSHCalendarCellID = @"ZSHCalendarCell";
         [_ageSlider addTarget:self action:@selector(sliderValueChanged:) forControlEvents:UIControlEventValueChanged];
     }
     return _ageSlider;
-}
+}*/
 
 #pragma mark - event response 日历事件相应
 
@@ -655,13 +649,4 @@ static NSString *ZSHCalendarCellID = @"ZSHCalendarCell";
     }];
 }
 
-//年龄滑动块
--(void)sliderValueChanged:(id)sender{
-    UISlider *ageSlider = (UISlider *)sender;
-    if(ageSlider == _ageSlider){
-        CGFloat floatvalue = ageSlider.value;
-        RLog(@"滑动值===%f",floatvalue);
-    }
-    self.valueLabel.text = [NSString stringWithFormat:@"%.1f岁", ageSlider.value];
-}
 @end

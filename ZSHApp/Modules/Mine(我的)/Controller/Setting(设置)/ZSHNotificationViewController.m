@@ -29,10 +29,13 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 }
 
 - (void)loadData{
-  if (kFromVCType == FromSettingNotifacationVCToNotificationVC){
+  if (kFromVCType == FromSettingVCToNotificationVC){
         self.titleArr = @[@"接收新消息通知",@"声音",@"震动"];
         self.detailTitleArr = @[@"UISwitch",@"UISwitch",@"UISwitch"];
-    }
+  }else if (kFromVCType == FromLiveMineVCToNotificationVC){
+      self.titleArr = @[@"礼物特效",@"开播提醒",@"非wifi环境下观看直播提醒"];
+      self.detailTitleArr = @[@"UISwitch",@"UISwitch",@"UISwitch"];
+  }
     
     [self initViewModel];
 }

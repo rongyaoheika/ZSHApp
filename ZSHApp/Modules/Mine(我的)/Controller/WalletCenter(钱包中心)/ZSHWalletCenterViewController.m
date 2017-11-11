@@ -32,6 +32,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     
     self.pushVCsArr = @[@"ZSHWithdrawViewController",@"ZSHQuotaViewController"];
     self.paramArr = @[
+                      @{},
                       @{}
                       ];
     [self initViewModel];

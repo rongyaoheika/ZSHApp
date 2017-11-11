@@ -7,8 +7,13 @@
 //
 
 #import "ZSHLoginViewController.h"
+#import "ZSHTextFieldCellView.h"
 
 @interface ZSHLoginViewController ()
+
+@property (nonatomic, strong) ZSHTextFieldCellView  *userView;
+@property (nonatomic, strong) ZSHTextFieldCellView  *pwdView;
+@property (nonatomic, strong) UIButton              *loginButton;
 
 @end
 

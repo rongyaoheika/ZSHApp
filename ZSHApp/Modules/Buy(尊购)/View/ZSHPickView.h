@@ -16,7 +16,8 @@ typedef void(^SaveChangeBlock)(NSString *);
 @property (nonatomic,weak) RootViewController                   *controller;
 @property (nonatomic,copy) SaveChangeBlock                      saveChangeBlock;
 
-- (id)initWithFrame:(CGRect)frame type:(ShowPickViewWindowType)type;
+- (instancetype)initWithFrame:(CGRect)frame type:(ShowPickViewWindowType)type;
+- (instancetype)initWithFrame:(CGRect)frame paramDic:(NSDictionary *)paramDic;
 
 // 设置当前用户的身高和体重和出生日期
 - (void)setUserBirthDay:(long long)birthday;

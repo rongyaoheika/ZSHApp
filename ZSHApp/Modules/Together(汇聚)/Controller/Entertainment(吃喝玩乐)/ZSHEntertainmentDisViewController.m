@@ -83,10 +83,10 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
                 ZSHDetailDemandViewController *hotelDetailVC = [[ZSHDetailDemandViewController alloc] init];
                 [weakself.navigationController pushViewController:hotelDetailVC animated:YES];
             }
-//            else if (indexPath.row == 6){
-//                weakself.bottomBlurPopView = [weakself createBottomBlurPopViewWith:ZSHFromAirplaneAgeVCToBottomBlurPopView];
-//                [kAppDelegate.window addSubview:self.bottomBlurPopView];
-//            }
+            else if (indexPath.row == 6){
+                weakself.bottomBlurPopView = [weakself createBottomBlurPopViewWith:ZSHFromAirplaneAgeVCToBottomBlurPopView];
+                [kAppDelegate.window addSubview:self.bottomBlurPopView];
+            }
         };
     }
     return sectionModel;

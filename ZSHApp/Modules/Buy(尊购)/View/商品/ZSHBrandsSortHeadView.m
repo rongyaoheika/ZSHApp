@@ -25,7 +25,7 @@
     _headLabel = [ZSHBaseUIControl createLabelWithParamDic:headLabelDic];
     [self addSubview:_headLabel];
     
-    _headLabel.frame = CGRectMake(10, 0, self.zsh_width, self.zsh_height);
+    _headLabel.frame = CGRectMake(10, 0, self.width, self.height);
 }
 
 #pragma mark - Setter Getter Methods

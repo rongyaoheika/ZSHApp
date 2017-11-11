@@ -75,6 +75,8 @@
 #define kDINCondBold(fontSize)          [UIFont fontWithName:@"DINCond-Bold" size:(fontSize)*(KScreenWidth/375.0f)]
 #define kPingFangLight(fontSize)        [UIFont fontWithName:@".PingFangSC-Light" size:(fontSize)*(KScreenWidth/375.0f)]
 #define kPingFangRegular(fontSize)      [UIFont fontWithName:@".PingFangSC-Regular" size:(fontSize)*(KScreenWidth/375.0f)]
+#define kGeorgia(fontSize)              [UIFont fontWithName:@"Georgia" size:(fontSize)*(KScreenWidth/375.0f)]
+
 #define kPingFangMedium(fontSize)       [UIFont fontWithName:@".PingFangSC-Medium" size:(fontSize)*(KScreenWidth/375.0f)]
 #define kPingFangSemibold(fontSize)     [UIFont fontWithName:@".PingFangSC-Semibold" size:(fontSize)*(KScreenWidth/375.0f)]
 #define kNettoOT(fontSize)              [UIFont fontWithName:@"NettoOT" size:(fontSize)*(KScreenWidth/375.0f)]
