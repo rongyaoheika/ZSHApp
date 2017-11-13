@@ -36,34 +36,34 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 
 - (void)loadData{
 
-    if (kFromVCType == FromAccountVCToMultiInfoVC) {
+    if (kFromClassTypeValue == FromAccountVCToMultiInfoVC) {
         //密码-找回登录密码
         self.titleArr = @[@"当前帐号",@"身份证号",@"手机号",@"验证码"];
         self.textFieldTypeArr = @[@(ZSHTextFieldViewPhone),@(ZSHTextFieldViewID),@(ZSHTextFieldViewPhone),@(ZSHTextFieldViewCaptcha)];
         self.placeHolderArr = @[@"",@"",@"",@""];
         self.toViewType = FromMultiInfoAccountVCToTextFieldCellView;
 
-    } else if (kFromVCType == FromChangePwdVCToMultiInfoVC){
+    } else if (kFromClassTypeValue == FromChangePwdVCToMultiInfoVC){
         //设置-个人资料-银行卡2
         self.titleArr = @[@"卡类型",@"手机号",@"验证码"];
         self.textFieldTypeArr = @[@(ZSHTextFieldViewUser),@(ZSHTextFieldViewPhone),@(ZSHTextFieldViewCaptcha)];
         self.placeHolderArr = @[@"中国银行储蓄卡",@"6216615002674782",@"688686"];
 
-    } else if (kFromVCType == FromUserInfoPhoneVCToMultiInfoVC){
+    } else if (kFromClassTypeValue == FromUserInfoPhoneVCToMultiInfoVC){
         
         //手机-修改手机号
         self.titleArr = @[@"当前手机号",@"新手机号",@"验证码"];
         self.textFieldTypeArr = @[@(ZSHTextFieldViewPhone),@(ZSHTextFieldViewPhone),@(ZSHTextFieldViewCaptcha)];
         self.placeHolderArr = @[@"18688888888",@"请输入新手机号",@"15677853333",@"请输入验证码"];
          self.toViewType = FromMultiPhoneVCToTextFieldCellView;
-    } else if (kFromVCType == FromUserInfoNickNameVCToMultiInfoVC){
+    } else if (kFromClassTypeValue == FromUserInfoNickNameVCToMultiInfoVC){
         
         //昵称-修改昵称
         self.titleArr = @[@""];
         self.textFieldTypeArr = @[@(ZSHTextFieldViewUser)];
         self.placeHolderArr = @[@"请输入您的昵称"];
         self.toViewType = FromMultiInfoNickNameVCToTextFieldCellView;
-    } else if (kFromVCType == FromUserInfoQQVCToMultiInfoVC){
+    } else if (kFromClassTypeValue == FromUserInfoQQVCToMultiInfoVC){
         
         //QQ号码-绑定
         self.titleArr = @[@"QQ帐号",@"密码"];
@@ -77,16 +77,16 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 - (void)createUI{
     self.title = self.paramDic[@"title"];
    
-    if (kFromVCType == FromUserInfoNickNameVCToMultiInfoVC) {//修改昵称
-         [self addNavigationItemWithTitles:@[self.paramDic[@"rightNaviTitle"]] isLeft:NO target:self action:@selector(rightNaviBtnAction:) tags:@[@(kFromVCType)]];
+    if (kFromClassTypeValue == FromUserInfoNickNameVCToMultiInfoVC) {//修改昵称
+         [self addNavigationItemWithTitles:@[self.paramDic[@"rightNaviTitle"]] isLeft:NO target:self action:@selector(rightNaviBtnAction:) tags:@[@(kFromClassTypeValue)]];
         
         [self.view addSubview:self.bottomBtn];
         [self.bottomBtn setTitle:self.paramDic[@"bottomBtnTitle"] forState:UIControlStateNormal];
         [self.bottomBtn addTarget:self action:@selector(nextBtnAction) forControlEvents:UIControlEventTouchUpInside];
-    } else if (kFromVCType == FromUserInfoQQVCToMultiInfoVC){//QQ授权
-       [self addNavigationItemWithTitles:@[self.paramDic[@"rightNaviTitle"]] isLeft:NO target:self action:@selector(rightNaviBtnAction:) tags:@[@(kFromVCType)]];
+    } else if (kFromClassTypeValue == FromUserInfoQQVCToMultiInfoVC){//QQ授权
+       [self addNavigationItemWithTitles:@[self.paramDic[@"rightNaviTitle"]] isLeft:NO target:self action:@selector(rightNaviBtnAction:) tags:@[@(kFromClassTypeValue)]];
         
-    } else if (kFromVCType == FromUserInfoPhoneVCToMultiInfoVC){//更改手机号
+    } else if (kFromClassTypeValue == FromUserInfoPhoneVCToMultiInfoVC){//更改手机号
         [self.view addSubview:self.bottomBtn];
         [self.bottomBtn setTitle:self.paramDic[@"bottomBtnTitle"] forState:UIControlStateNormal];
         [self.bottomBtn addTarget:self action:@selector(nextBtnAction) forControlEvents:UIControlEventTouchUpInside];
@@ -121,7 +121,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
         cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
             ZSHBaseCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHBaseCellID forIndexPath:indexPath];
             
-            NSDictionary *paramDic = @{@"leftTitle":self.titleArr[indexPath.row],@"placeholder":self.placeHolderArr[indexPath.row],@"textFieldType":self.textFieldTypeArr[indexPath.row],@"fromClassType":@(self.toViewType)};
+            NSDictionary *paramDic = @{@"leftTitle":self.titleArr[indexPath.row],@"placeholder":self.placeHolderArr[indexPath.row],@"textFieldType":self.textFieldTypeArr[indexPath.row],KFromClassType:@(self.toViewType)};
             ZSHTextFieldCellView *textFieldView = [[ZSHTextFieldCellView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, kRealValue(44)) paramDic:paramDic];
             [cell.contentView addSubview:textFieldView];
             return cell;

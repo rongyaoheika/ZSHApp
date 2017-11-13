@@ -74,7 +74,7 @@ static NSString *cellIdentifier = @"listCell";
         cellModel.height = kRealValue(140);
         cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
             ZSHTogetherView *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
-            NSDictionary *nextParamDic = @{@"bgImageName":imageArr[i],@"chineseText":chineseTitleArr[i],@"englishText":englishTitleArr[i],@"fromClassType":@(ZSHFromTogetherVCToTogetherView)};
+            NSDictionary *nextParamDic = @{@"bgImageName":imageArr[i],@"chineseText":chineseTitleArr[i],@"englishText":englishTitleArr[i],KFromClassType:@(ZSHFromTogetherVCToTogetherView)};
             [cell updateCellWithParamDic:nextParamDic];
             return cell;
         };

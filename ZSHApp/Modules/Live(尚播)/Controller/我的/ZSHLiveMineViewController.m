@@ -36,10 +36,10 @@ static NSString *bottomCellIdentifier   = @"LiveListCell";
     self.pushVCS = @[@"ZSHTitleContentViewController",@"ZSHTitleContentViewController",@"ZSHLiveTaskCenterViewController",@"",@"ZSHNotificationViewController"];
   
     self.paramArr = @[
-                      @{@"fromClassType":@(FromContributionListVCToTitleContentVC), @"title":@"贡献榜"},
-                      @{@"fromClassType":@(FromMineLevelVCToTitleContentVC), @"title":@"我的等级"},
+                      @{KFromClassType:@(FromContributionListVCToTitleContentVC), @"title":@"贡献榜"},
+                      @{KFromClassType:@(FromMineLevelVCToTitleContentVC), @"title":@"我的等级"},
                       @{},
-                      @{@"fromClassType":@(FromLiveMineVCToNotificationVC),@"title":@"设置"}];
+                      @{KFromClassType:@(FromLiveMineVCToNotificationVC),@"title":@"设置"}];
     
     [self initViewModel];
 }

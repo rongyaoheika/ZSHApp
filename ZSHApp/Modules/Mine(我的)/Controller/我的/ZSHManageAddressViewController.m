@@ -99,7 +99,12 @@
 
 #pragma pickView
 -(ZSHPickView *)createPickViewWithType:(NSUInteger)type{
-    _pickView = [[ZSHPickView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight) type:type];
+   NSArray *regionArr = @[@[@"北京",@"天津市",@"河北省",@"山东省"],
+                          @[@"北京市",@"天津市",@"石家庄",@"聊城市"],
+                          @[@"朝阳区",@"天津市",@"北辰区",@"聊城市"]
+                       ];
+    NSDictionary *nextParamDic = @{@"type":@(type),@"midTitle":@"城市区域选择",@"dataArr":regionArr};
+    _pickView = [[ZSHPickView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight) paramDic:nextParamDic];
     _pickView.controller = self;
     return _pickView;
 }

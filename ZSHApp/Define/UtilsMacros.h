@@ -18,7 +18,8 @@
 #define kRootViewController [UIApplication sharedApplication].delegate.window.rootViewController
 #define kUserDefaults       [NSUserDefaults standardUserDefaults]
 #define kNotificationCenter [NSNotificationCenter defaultCenter]
-#define kFromVCType         [self.paramDic[@"fromClassType"]integerValue]
+#define KFromClassType      @"fromClassType"
+#define kFromClassTypeValue         [self.paramDic[KFromClassType] integerValue]
 
 //系统版本
 //判断是在iOS11之前

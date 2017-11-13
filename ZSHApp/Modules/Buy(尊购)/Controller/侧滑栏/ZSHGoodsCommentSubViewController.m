@@ -63,7 +63,7 @@
         [sectionModel.cellModelArray addObject:cellModel];
         cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
             ZSHWeiBoCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([ZSHWeiBoCell class])];
-            NSDictionary *ndextParamDic = @{@"fromClassType":@(ZSHGoodsCommentSubVCToWeiBoCell)};
+            NSDictionary *ndextParamDic = @{KFromClassType:@(ZSHGoodsCommentSubVCToWeiBoCell)};
             [cell updateCellWithParamDic:ndextParamDic];
            
             [cell updateCellWithModel:weakself.commentModel];

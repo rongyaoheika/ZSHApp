@@ -100,10 +100,13 @@ static NSString *ZSHEntertainmentDetailCellID = @"ZSHEntertainmentDetailCell";
         
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
             if (indexPath.row == 4) {
-                weakself.pickView = [weakself createPickViewWithType:WindowTogether];
+                NSArray *togetherArr = @[@"不限",@"给力邀约",@"AA互动趴"];
+                NSDictionary *nextParamDic = @{@"type":@(WindowTogether),@"midTitle":@"方式选择",@"dataArr":togetherArr};
+                weakself.pickView = [weakself createPickViewWithParamDic:nextParamDic];
                 [weakself.pickView show:WindowTogether];
             } else if(indexPath.row == 1||indexPath.row == 2){
-                weakself.pickView = [weakself createPickViewWithType:WindowBirthDay];
+                NSDictionary *nextParamDic = @{@"type":@(WindowBirthDay),@"midTitle":@"生日"};
+                weakself.pickView = [weakself createPickViewWithParamDic:nextParamDic];
                 [weakself.pickView show:WindowBirthDay];
             } 
            
@@ -141,8 +144,8 @@ static NSString *ZSHEntertainmentDetailCellID = @"ZSHEntertainmentDetailCell";
     return _headView;
 }
 
--(ZSHPickView *)createPickViewWithType:(NSUInteger)type{
-    ZSHPickView *pickView = [[ZSHPickView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight) type:type];
+- (ZSHPickView *)createPickViewWithParamDic:(NSDictionary *)paramDic{
+    ZSHPickView *pickView = [[ZSHPickView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight) paramDic:paramDic];
     pickView.controller = self;
     return pickView;
 }

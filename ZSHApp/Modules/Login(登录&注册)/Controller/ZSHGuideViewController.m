@@ -7,129 +7,80 @@
 //
 
 #import "ZSHGuideViewController.h"
-#import "ZSHGuideCell.h"
+#import "ZSHGuideView.h"
+#import "ZSHLoginViewController.h"
 
 @interface ZSHGuideViewController ()
 
-// ** guide 图片* /
-@property (nonatomic,weak) UIImageView *guide;
-
-// ** guideLargeText 图片* /
-@property (nonatomic,weak) UIImageView *guideLargeText;
-
-// ** guideSmallText 图片* /
-@property (nonatomic,weak) UIImageView *guideSmallText;
-
-// ** 上次的偏移量 */
-@property (nonatomic,assign) CGFloat lastOffsetX;
+@property (nonatomic, strong) NSArray              *imageArr;
+@property (nonatomic, strong) ZSHGuideView         *midView;
+@property (nonatomic, strong) UIButton             *applyBtn;
+@property (nonatomic, strong) UIButton             *vipLoginBtn;
 @end
 
-static NSString  *ZSHGuideCellID = @"ZSHGuideCell";
 @implementation ZSHGuideViewController
-
-/**
- *  重新初始化方法· 将设置flowLayout方法封装
- *
- *  @return 已经设置好FlowLayout 的UICollectionViewController
- */
--(instancetype)init
-{
-    UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc]init];
-    layout.itemSize = [UIScreen mainScreen].bounds.size;
-    layout.minimumLineSpacing = 0;
-    layout.minimumInteritemSpacing = 0;
-    layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-    return [super initWithCollectionViewLayout:layout];
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    // Do any additional setup after loading the view.
     
-    [self setupCollectionView];
-    [self addChildView];
+    [self loadData];
+    [self createUI];
 }
 
--(void)addChildView
-{
-    UIImageView *guide = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"guide1_bg"]];
-    [self.collectionView addSubview:guide];
-    guide.zsh_centerX = self.view.zsh_centerX;
-    self.guide = guide;
-    
-//    UIImageView *guideLargeText = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"guideLargeText1"]];
-//    [self.collectionView addSubview:guideLargeText];
-//    guideLargeText.zsh_centerX = self.view.zsh_centerX;
-//    guideLargeText.zsh_centerY = self.view.height * 0.7;
-//    self.guideLargeText = guideLargeText;
-//
-//    UIImageView *guideSmallText = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"guideSmallText1"]];
-//    [self.collectionView addSubview:guideSmallText];
-//    guideSmallText.zsh_centerX = self.view.zsh_centerX;
-//    guideSmallText.zsh_centerY = self.view.height * 0.8;
-//    self.guideSmallText = guideSmallText;
+- (void)loadData{
+    self.imageArr = @[@"guide1",@"guide2",@"guide3",@"guide4"];
 }
 
-
--(void)setupCollectionView
-{
-    self.collectionView.backgroundColor = [UIColor yellowColor];
-    self.collectionView.pagingEnabled = YES;
-    self.collectionView.showsHorizontalScrollIndicator = NO;
-    self.collectionView.bounces = NO;
+- (void)createUI{
+    UIImageView *bgImage = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"guide1_bg"]];
+    bgImage.frame = self.view.bounds;
+    [self.view addSubview:bgImage];
     
-    // Register cell classes
-    [self.collectionView registerClass:[ZSHGuideCell class] forCellWithReuseIdentifier:ZSHGuideCellID];
-    
-}
-#pragma mark <UICollectionViewDataSource>
-
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    
-    return 1;
-}
-
-
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    
-    return 4;
-}
-
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    ZSHGuideCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:ZSHGuideCellID forIndexPath:indexPath];
-    cell.image = [UIImage imageNamed:@"guide1_bg"];
-    cell.page = indexPath.item + 1;
-    
-    return cell;
-}
-
--(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
-{
-    CGFloat currentOffsetX = scrollView.contentOffset.x;
-    CGFloat deltaX = currentOffsetX - self.lastOffsetX;
-    
-    self.guide.zsh_x += 2*deltaX;
-    self.guideSmallText.zsh_x += 2*deltaX;
-    self.guideLargeText.zsh_x += 2*deltaX;
-    
-    //更换图片
-    NSInteger page = currentOffsetX / [UIScreen mainScreen].bounds.size.width + 1;
-    self.guide.image = [UIImage imageNamed:[NSString stringWithFormat:@"guide%zd",page]];
-//    self.guideLargeText.image = [UIImage imageNamed:[NSString stringWithFormat:@"guideLargeText%zd",page]];
-//    self.guideSmallText.image = [UIImage imageNamed:[NSString stringWithFormat:@"guideSmallText%zd",page]];
-    
-    [UIView animateWithDuration:0.25 animations:^{
-        self.guide.zsh_x -= deltaX;
-        self.guideSmallText.zsh_x -= deltaX;
-        self.guideLargeText.zsh_x -= deltaX;
+     NSDictionary *nextParamDic = @{@"dataArr":self.imageArr};
+     _midView = [[ZSHGuideView alloc]initWithFrame:CGRectZero paramDic:nextParamDic];
+    [self.view addSubview:_midView];
+    [_midView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(self.view).offset(kRealValue(71.5));
+        make.centerX.mas_equalTo(self.view);
+        make.width.mas_equalTo(self.view);
+        make.bottom.mas_equalTo(self.view).offset(-kRealValue(105));
     }];
     
-    self.lastOffsetX = currentOffsetX;
+    kWeakSelf(self);
+    NSDictionary *applyBtnDic = @{@"title":@"在线申请",@"titleColor":KWhiteColor,@"font":kPingFangRegular(12)};
+    _applyBtn = [ZSHBaseUIControl createBtnWithParamDic:applyBtnDic];
+    [ZSHSpeedy zsh_chageControlCircularWith:_applyBtn AndSetCornerRadius:0 SetBorderWidth:1.0 SetBorderColor:KWhiteColor canMasksToBounds:YES];
+    [_applyBtn addTapBlock:^(UIButton *btn) {
+        RLog(@"在线申请");
+        ZSHLoginViewController *loginVC = [[ZSHLoginViewController alloc]init];
+        [weakself presentViewController:loginVC animated:YES completion:nil];
+    }];
+    [self.view addSubview:_applyBtn];
+    [_applyBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(_midView.mas_bottom).offset(kRealValue(28));
+        make.left.mas_equalTo(self.view).offset(kRealValue(37.5));
+        make.width.mas_equalTo(kRealValue(120));
+        make.height.mas_equalTo(kRealValue(30));
+    }];
+    
+    NSDictionary *vipLoginbtnDic = @{@"title":@"会籍登录",@"titleColor":KWhiteColor,@"font":kPingFangRegular(12)};
+    _vipLoginBtn = [ZSHBaseUIControl createBtnWithParamDic:vipLoginbtnDic];
+    [ZSHSpeedy zsh_chageControlCircularWith:_vipLoginBtn AndSetCornerRadius:0 SetBorderWidth:1.0 SetBorderColor:KWhiteColor canMasksToBounds:YES];
+    [_vipLoginBtn addTapBlock:^(UIButton *btn) {
+        RLog(@"登录");
+        ZSHLoginViewController *loginVC = [[ZSHLoginViewController alloc]init];
+        [weakself presentViewController:loginVC animated:YES completion:nil];
+    }];
+    [self.view addSubview:_vipLoginBtn];
+    [_vipLoginBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(_applyBtn);
+        make.right.mas_equalTo(self.view).offset(-kRealValue(37.5));
+        make.width.mas_equalTo(_applyBtn);
+        make.height.mas_equalTo(_applyBtn);
+    }];
 }
 
--(BOOL)prefersStatusBarHidden
-{
-    return YES;
-}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

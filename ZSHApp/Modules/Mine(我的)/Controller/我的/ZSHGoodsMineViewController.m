@@ -72,8 +72,8 @@ static NSString *headerViewIdentifier = @"hederview";
                     ];
     
     self.paramArr =@[
-  @[@{@"fromClassType":@(FromAllOrderVCToTitleContentVC),@"title":@"我的订单"},
-    @{@"fromClassType":@(FromAllOrderVCToTitleContentVC),@"title":@"我的订单"},
+  @[@{KFromClassType:@(FromAllOrderVCToTitleContentVC),@"title":@"我的订单"},
+    @{KFromClassType:@(FromAllOrderVCToTitleContentVC),@"title":@"我的订单"},
     @{},
     @{}],
   @[@{},@{},@{},@{}],
@@ -169,7 +169,7 @@ static NSString *headerViewIdentifier = @"hederview";
 
 - (void)headViewAction:(UITapGestureRecognizer *)gesture{
     if (gesture.view.tag == 1) {//我的订单
-        NSDictionary *nextParamDic = @{@"fromClassType":@(FromAllOrderVCToTitleContentVC),@"title":@"我的订单"};
+        NSDictionary *nextParamDic = @{KFromClassType:@(FromAllOrderVCToTitleContentVC),@"title":@"我的订单"};
         ZSHTitleContentViewController *liveVC = [[ZSHTitleContentViewController alloc]initWithParamDic:nextParamDic];
         [self.navigationController pushViewController:liveVC animated:YES];
     }

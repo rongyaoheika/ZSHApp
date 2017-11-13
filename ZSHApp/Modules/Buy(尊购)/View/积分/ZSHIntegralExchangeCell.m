@@ -53,7 +53,7 @@
 }
 
 - (void)updateCellWithParamDic:(NSDictionary *)dic{
-    if ([dic[@"fromClassType"]integerValue]== FromCouponVCToIntegralExchangeCell) {
+    if ([dic[KFromClassType]integerValue]== FromCouponVCToIntegralExchangeCell) {
         self.typeNameLabel.text = @"满999即可使用";
         [self.exchangeBtn setTitle:@"¥99" forState:UIControlStateNormal];
         self.exchangeBtn.titleLabel.font = kPingFangMedium(40);

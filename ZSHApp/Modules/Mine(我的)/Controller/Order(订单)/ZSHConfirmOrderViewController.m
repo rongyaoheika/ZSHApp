@@ -50,6 +50,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     
     [self.tableView registerClass:[ZSHOrderUserInfoCell class] forCellReuseIdentifier:ZSHOrderUserInfoCellID];
     [self.tableView registerClass:[ZSHGoodsDetailCell class] forCellReuseIdentifier:ZSHGoodsDetailCellID];
+     [self.tableView registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHGoodsCouponCellID];
     
     [self.tableView reloadData];
     
@@ -121,7 +122,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     [sectionModel.cellModelArray addObject:cellModel];
     cellModel.height = kRealValue(40);
     cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
-        ZSHBaseCell *cell = [[ZSHBaseCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ZSHGoodsCouponCellID];
+        ZSHBaseCell *cell = [[ZSHBaseCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@""];
         cell.textLabel.text = @"购买数量";
         JSNummberCount *countBtn = [[JSNummberCount alloc]initWithFrame:CGRectZero];
         [cell.contentView addSubview:countBtn];

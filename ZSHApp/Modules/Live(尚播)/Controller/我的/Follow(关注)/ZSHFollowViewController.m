@@ -27,7 +27,7 @@ static NSString *ZSHLiveFollowCellID = @"ZSHLiveFollowCellID";
 }
 
 - (void)loadData{
-    switch ([self.paramDic[@"fromClassType"] integerValue]) {
+    switch ([self.paramDic[KFromClassType] integerValue]) {
         case FromHorseVCToFollowVC:
             self.title = @"我的关注";
             break;

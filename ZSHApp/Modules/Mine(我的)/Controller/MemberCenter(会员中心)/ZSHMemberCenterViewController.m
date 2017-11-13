@@ -79,7 +79,7 @@ static NSString *ZSHNoticeViewCellID = @"ZSHNoticeViewCell";
     cellModel.height = kRealValue(85);
     cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHNoticeViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHNoticeViewCellID forIndexPath:indexPath];
-        NSDictionary *nextParamDic = @{@"fromClassType":@(FromMemberCenterVCToNoticeView)};
+        NSDictionary *nextParamDic = @{KFromClassType:@(FromMemberCenterVCToNoticeView)};
         [cell updateCellWithParamDic:nextParamDic];
         return cell;
     };

@@ -55,7 +55,7 @@ static NSString *Identify_listCell = @"listCell";
                    @"ZSHPersonalTailorViewController"];
     self.paramDicArr = @[@{},
                          @{},
-                         @{@"fromClassType":@(FromFindVCToTitleContentVC),@"title":@"发现"},
+                         @{KFromClassType:@(FromFindVCToTitleContentVC),@"title":@"发现"},
                          @{},
                          @{},
                          @{}];

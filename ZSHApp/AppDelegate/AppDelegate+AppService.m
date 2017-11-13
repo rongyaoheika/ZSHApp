@@ -13,7 +13,7 @@
 #import "ZSHLeftContentViewController.h"
 #import "RXLSideSlipViewController.h"
 #import "ZSHLiveTabBarController.h"
-
+#import "ZSHGuideViewController.h"
 @implementation AppDelegate (AppService)
 
 
@@ -78,7 +78,7 @@
     }else{
         //没有登录过，展示登录页面
         KPostNotification(KNotificationLoginStateChange, @NO)
-        //        [MBProgressHUD showErrorMessage:@"需要登录"];
+//                [MBProgressHUD showErrorMessage:@"需要登录"];
     }
 }
 
@@ -86,23 +86,22 @@
 - (void)loginStateChange:(NSNotification *)notification
 {
     BOOL loginSuccess = [notification.object boolValue];
-    
-    if (!loginSuccess) {//登陆成功加载主窗口控制器
+    if (loginSuccess) {//登陆成功加载主窗口控制器
         
         //为避免自动登录成功刷新tabbar
-        if (!self.mainTabBarVC || ![self.window.rootViewController isKindOfClass:[MainTabBarController class]]) {
+        if (!self.slipVC || ![self.window.rootViewController isKindOfClass:[RXLSideSlipViewController class]]) {
             self.mainTabBarVC = [MainTabBarController new];
             
             //侧滑栏
-            ZSHLeftContentViewController *left = [[ZSHLeftContentViewController alloc] init];
-            RXLSideSlipViewController *RXL = [[RXLSideSlipViewController alloc] initWithContentViewController:self.mainTabBarVC leftMenuViewController:left rightMenuViewController:nil];
+            ZSHLeftContentViewController *leftVC = [[ZSHLeftContentViewController alloc] init];
+            RXLSideSlipViewController *RXL = [[RXLSideSlipViewController alloc] initWithContentViewController:self.mainTabBarVC leftMenuViewController:leftVC rightMenuViewController:nil];
             
             RXL.menuPreferredStatusBarStyle = 1; // UIStatusBarStyleLightContent
             RXL.contentViewShadowColor = [UIColor blackColor];
             RXL.contentViewShadowOffset = CGSizeMake(0, 0);
             RXL.contentViewShadowOpacity = 0.6;
             RXL.contentViewShadowRadius = 12;
-            RXL.contentViewShadowEnabled = NO; // 是否显示阴影
+            RXL.contentViewShadowEnabled = YES; // 是否显示阴影
             RXL.contentPrefersStatusBarHidden = NO;//是否隐藏主视图的状态条
             RXL.scaleMenuView = NO;
             RXL.scaleContentView = NO;
@@ -114,7 +113,6 @@
             anima.duration = 0.3f;
             
             self.window.rootViewController = RXL;// self.mainTabBarVC;
-            
             [kAppWindow.layer addAnimation:anima forKey:@"revealAnimation"];
 //            [self testGetRequest];
             
@@ -123,8 +121,10 @@
     } else {//登陆失败加载登陆页面控制器
         
         self.mainTabBarVC = nil;
-        RootNavigationController *loginNavi = [[RootNavigationController alloc] initWithRootViewController:[ZSHLoginViewController new]];
-        
+        self.slipVC = nil;
+//        RootNavigationController *loginNavi = [[RootNavigationController alloc] initWithRootViewController:[ZSHLoginViewController new]];
+        RootNavigationController *loginNavi = [[RootNavigationController alloc] initWithRootViewController:[ZSHGuideViewController new]];
+
         CATransition *anima = [CATransition animation];
         anima.type = @"fade";//设置动画的类型
         anima.subtype = kCATransitionFromRight; //设置动画的方向
@@ -244,16 +244,12 @@
 
 
 -(UIViewController *)getCurrentVC{
-    
     UIViewController *result = nil;
     UIWindow * window = [[UIApplication sharedApplication] keyWindow];
-    if (window.windowLevel != UIWindowLevelNormal)
-    {
+    if (window.windowLevel != UIWindowLevelNormal){
         NSArray *windows = [[UIApplication sharedApplication] windows];
-        for(UIWindow * tmpWin in windows)
-        {
-            if (tmpWin.windowLevel == UIWindowLevelNormal)
-            {
+        for(UIWindow * tmpWin in windows){
+            if (tmpWin.windowLevel == UIWindowLevelNormal){
                 window = tmpWin;
                 break;
             }
@@ -277,26 +273,24 @@
     if ([superVC isKindOfClass:[RXLSideSlipViewController class]]) {
         RXLSideSlipViewController *RXL = (RXLSideSlipViewController *)superVC;
         MainTabBarController *tabVC = (MainTabBarController *)RXL.contentViewController;
-        if ([[tabVC selectedViewController] isKindOfClass:[ZSHLiveTabBarController class]]) {
-            ZSHLiveTabBarController *liveTabVC = [tabVC selectedViewController];
-            RootNavigationController *nav = [liveTabVC selectedViewController];
-            return nav.viewControllers.lastObject;
-        }
         RootNavigationController *nav = [tabVC selectedViewController];
-        return nav.viewControllers.lastObject;
+        if ([nav.viewControllers.lastObject isKindOfClass:[ZSHLiveTabBarController class]]) {
+            ZSHLiveTabBarController *liveTabVC = (ZSHLiveTabBarController *)nav.viewControllers.lastObject;
+             RootNavigationController *liveTabNav = [liveTabVC selectedViewController];
+             return liveTabNav.viewControllers.lastObject;
+        } else {
+             return nav.viewControllers.lastObject;
+        }
     }
     
     if ([superVC isKindOfClass:[UITabBarController class]]) {
-        
         UIViewController  *tabSelectVC = ((UITabBarController*)superVC).selectedViewController;
-        
         if ([tabSelectVC isKindOfClass:[UINavigationController class]]) {
             
             return ((UINavigationController*)tabSelectVC).viewControllers.lastObject;
         }
         return tabSelectVC;
-    }else
-        if ([superVC isKindOfClass:[UINavigationController class]]) {
+    } else if ([superVC isKindOfClass:[UINavigationController class]]) {
             
             return ((UINavigationController*)superVC).viewControllers.lastObject;
         }

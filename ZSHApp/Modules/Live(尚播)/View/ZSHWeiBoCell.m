@@ -99,7 +99,7 @@
         make.height.mas_equalTo(kRealValue(43));
     }];
     
-    if (kFromVCType == ZSHGoodsCommentSubVCToWeiBoCell) {
+    if (kFromClassTypeValue == ZSHGoodsCommentSubVCToWeiBoCell) {
         self.bottomView.hidden = YES;
         self.bottomView.frame = CGRectZero;
     }

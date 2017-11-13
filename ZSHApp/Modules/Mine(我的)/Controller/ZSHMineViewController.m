@@ -45,8 +45,12 @@ static NSString *bottomCellIdentifier   = @"listCell";
   @"ZSHMemberCenterViewController",@"",@"",
   @"ZSHTitleContentViewController",@"",@"ZSHServiceCenterViewController",
   @"ZSHWalletCenterViewController",@"ZSHGameCenterViewController", @"ZSHGoodsMineViewController",@"ZSHSettingViewController"];
-    self.paramArr = @[
-                      @{},@{},@{},@{@"fromClassType":@(FromActivityCenterVCToTitleContentVC),@"title":@"活动中心"},@{},@{@"fromClassType":@(ZSHFromMineServiceVCToServiceCenterVC),@"title":@"客服中心"},@{},@{},@{},@{}];
+    self.paramArr = @[@{},@{},@{},
+  @{KFromClassType:@(FromActivityCenterVCToTitleContentVC),@"title":@"活动中心"},@{},
+  @{KFromClassType:@(ZSHFromMineServiceVCToServiceCenterVC),@"title":@"客服中心",
+   @"titleArr":@[@"客服1",@"客服2",@"客服3",@"客服4"],
+   @"imageArr":@[@"mine_service",@"mine_service",@"mine_service",@"mine_service"]},
+  @{},@{},@{},@{}];
     
     [self initViewModel];
 }
@@ -111,9 +115,6 @@ static NSString *bottomCellIdentifier   = @"listCell";
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             cell.imageView.image = [UIImage imageNamed:weakself.imageArr[indexPath.row]];
             cell.textLabel.text = weakself.titleArr[indexPath.row];
-            cell.textLabel.font = kPingFangRegular(15);
-            cell.textLabel.textColor = KZSHColor929292;
-        
             return cell;
         };
         

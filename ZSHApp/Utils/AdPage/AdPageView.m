@@ -174,11 +174,7 @@ static int const showtime = 5;
         [self removeFromSuperview];
         
     }];
-    
 }
-
-
-
 
 /**
  *  判断文件是否存在

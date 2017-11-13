@@ -47,7 +47,7 @@
 
 - (void)layoutSubviews{
     [super layoutSubviews];
-    if ([self.paramDic[@"fromClassType"]integerValue] == ZSHFromTogetherVCToTogetherView) {
+    if ([self.paramDic[KFromClassType]integerValue] == ZSHFromTogetherVCToTogetherView) {
         self.moreBtn.hidden = YES;
         [self.activityImage mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.mas_equalTo(self);
@@ -69,7 +69,7 @@
             make.height.mas_equalTo(kRealValue(15));
             make.width.mas_equalTo(self);
         }];
-    } else if ([self.paramDic[@"fromClassType"]integerValue] == ZSHFromPersonalTailorVCToTogetherView){
+    } else if ([self.paramDic[KFromClassType]integerValue] == ZSHFromPersonalTailorVCToTogetherView){
         
         [self.activityImage mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.mas_equalTo(self);

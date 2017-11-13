@@ -287,7 +287,7 @@
 		FED308981FA414D900CD442B /* ZSHHotelDetailDeviceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FED308971FA414D900CD442B /* ZSHHotelDetailDeviceCell.m */; };
 		FEDF28F91FB68C1C00CD5756 /* ZSHAgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEDF28F81FB68C1C00CD5756 /* ZSHAgeView.m */; };
 		FEDF290C1FB69C2800CD5756 /* ZSHGuideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEDF290B1FB69C2800CD5756 /* ZSHGuideViewController.m */; };
-		FEDF291F1FB69CBF00CD5756 /* ZSHGuideCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FEDF291E1FB69CBF00CD5756 /* ZSHGuideCell.m */; };
+		FEDF291F1FB69CBF00CD5756 /* ZSHGuideView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEDF291E1FB69CBF00CD5756 /* ZSHGuideView.m */; };
 		FEDF29241FB6CFD300CD5756 /* ZSHQuotaHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEDF29231FB6CFD300CD5756 /* ZSHQuotaHeadView.m */; };
 		FEDF29271FB6D1C100CD5756 /* ZSHCoinViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEDF29261FB6D1C100CD5756 /* ZSHCoinViewController.m */; };
 		FEDF292A1FB6DA3000CD5756 /* ZSHLiveRoomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEDF29291FB6DA3000CD5756 /* ZSHLiveRoomViewController.m */; };
@@ -816,8 +816,8 @@
 		FEDF28F81FB68C1C00CD5756 /* ZSHAgeView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHAgeView.m; sourceTree = "<group>"; };
 		FEDF290A1FB69C2800CD5756 /* ZSHGuideViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHGuideViewController.h; sourceTree = "<group>"; };
 		FEDF290B1FB69C2800CD5756 /* ZSHGuideViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHGuideViewController.m; sourceTree = "<group>"; };
-		FEDF291D1FB69CBF00CD5756 /* ZSHGuideCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ZSHGuideCell.h; path = "ZSHApp/Modules/Login(登录&注册)/Controller/ZSHGuideCell.h"; sourceTree = SOURCE_ROOT; };
-		FEDF291E1FB69CBF00CD5756 /* ZSHGuideCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ZSHGuideCell.m; path = "ZSHApp/Modules/Login(登录&注册)/Controller/ZSHGuideCell.m"; sourceTree = SOURCE_ROOT; };
+		FEDF291D1FB69CBF00CD5756 /* ZSHGuideView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ZSHGuideView.h; path = "ZSHApp/Modules/Login(登录&注册)/Controller/ZSHGuideView.h"; sourceTree = SOURCE_ROOT; };
+		FEDF291E1FB69CBF00CD5756 /* ZSHGuideView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ZSHGuideView.m; path = "ZSHApp/Modules/Login(登录&注册)/Controller/ZSHGuideView.m"; sourceTree = SOURCE_ROOT; };
 		FEDF29221FB6CFD300CD5756 /* ZSHQuotaHeadView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHQuotaHeadView.h; sourceTree = "<group>"; };
 		FEDF29231FB6CFD300CD5756 /* ZSHQuotaHeadView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHQuotaHeadView.m; sourceTree = "<group>"; };
 		FEDF29251FB6D1C100CD5756 /* ZSHCoinViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHCoinViewController.h; sourceTree = "<group>"; };
@@ -1682,8 +1682,8 @@
 		FE291EF01F8CCCF300D4BBE7 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				FEDF291D1FB69CBF00CD5756 /* ZSHGuideCell.h */,
-				FEDF291E1FB69CBF00CD5756 /* ZSHGuideCell.m */,
+				FEDF291D1FB69CBF00CD5756 /* ZSHGuideView.h */,
+				FEDF291E1FB69CBF00CD5756 /* ZSHGuideView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -3003,7 +3003,7 @@
 				FEDF292D1FB6F24A00CD5756 /* ZSHLiveProfitViewController.m in Sources */,
 				FE1F76221F8F738700C45B83 /* ZSHLiveTabBarController.m in Sources */,
 				FEBD7CA31FA716AC00CE2BA6 /* ZSHGoodsCommentCell.m in Sources */,
-				FEDF291F1FB69CBF00CD5756 /* ZSHGuideCell.m in Sources */,
+				FEDF291F1FB69CBF00CD5756 /* ZSHGuideView.m in Sources */,
 				FE291EF31F8CCD2200D4BBE7 /* ZSHLoginViewController.m in Sources */,
 				FEF2B63A1FAC5D39000AEA6E /* ZSHEntertainmentModel.m in Sources */,
 				FED308981FA414D900CD442B /* ZSHHotelDetailDeviceCell.m in Sources */,

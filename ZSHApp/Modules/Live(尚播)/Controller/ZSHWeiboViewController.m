@@ -58,7 +58,7 @@
             cell.backgroundColor = KClearColor;
             ZSHWeiBoCellModel *model = weakself.dataArr[indexPath.row];
              weakcellModel.height = [ZSHWeiBoCell getCellHeightWithModel:model];
-            NSDictionary *ndextParamDic = @{@"fromClassType":@(ZSHWeiboVCToWeiBoCell)};
+            NSDictionary *ndextParamDic = @{KFromClassType:@(ZSHWeiboVCToWeiBoCell)};
             [cell updateCellWithParamDic:ndextParamDic];
             [cell updateCellWithModel:model];
             return cell;

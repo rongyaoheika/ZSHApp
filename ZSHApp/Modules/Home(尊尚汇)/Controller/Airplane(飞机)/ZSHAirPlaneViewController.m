@@ -10,9 +10,11 @@
 #import "ZSHTicketPlaceCell.h"
 #import "ZSHBottomBlurPopView.h"
 #import "ZSHTitleContentViewController.h"
+#import "ZSHPickView.h"
 @interface ZSHAirPlaneViewController ()
 
 @property (nonatomic, strong) ZSHBottomBlurPopView      *bottomBlurPopView;
+@property (nonatomic, strong) ZSHPickView               *pickView;
 
 @end
 
@@ -109,8 +111,10 @@ static NSString *ZSHBaseTicketDateCellID = @"ZSHBaseTicketDateCell";
                 self.bottomBlurPopView = [weakself createBottomBlurPopViewWith:ZSHFromAirplaneCalendarVCToBottomBlurPopView];
                 [kAppDelegate.window addSubview:self.bottomBlurPopView];
             }  else if (indexPath.row == 2) {//席别
-                self.bottomBlurPopView = [weakself createBottomBlurPopViewWith:ZSHFromAirplaneSeatTypeVCToBottomBlurPopView];
-                [kAppDelegate.window addSubview:self.bottomBlurPopView];
+                NSArray *seatArr = @[@"不限",@"经济仓",@"头等／商务舱"];
+                NSDictionary *nextParamDic = @{@"type":@(WindowTogether),@"midTitle":@"席别选择",@"dataArr":seatArr};
+                weakself.pickView = [weakself createPickViewWithParamDic:nextParamDic];
+                [weakself.pickView show:WindowTogether];
             }
         };
     }
@@ -148,7 +152,7 @@ static NSString *ZSHBaseTicketDateCellID = @"ZSHBaseTicketDateCell";
 //搜索机票
 - (void)searchTicketAction{
     
-    NSDictionary *nextParamDic = @{@"fromClassType":@(FromPlaneTicketVCToTitleContentVC)};
+    NSDictionary *nextParamDic = @{KFromClassType:@(FromPlaneTicketVCToTitleContentVC)};
     ZSHTitleContentViewController *titleContentVC = [[ZSHTitleContentViewController alloc]initWithParamDic:nextParamDic];
     [self.navigationController pushViewController:titleContentVC animated:YES];
     
@@ -156,7 +160,7 @@ static NSString *ZSHBaseTicketDateCellID = @"ZSHBaseTicketDateCell";
 
 #pragma getter
 - (ZSHBottomBlurPopView *)createBottomBlurPopViewWith:(ZSHFromVCToBottomBlurPopView)fromClassType{
-    NSDictionary *nextParamDic = @{@"fromClassType":@(fromClassType)};
+    NSDictionary *nextParamDic = @{KFromClassType:@(fromClassType)};
     ZSHBottomBlurPopView *bottomBlurPopView = [[ZSHBottomBlurPopView alloc]initWithFrame:kAppDelegate.window.bounds paramDic:nextParamDic];
     bottomBlurPopView.blurRadius = 20;
     bottomBlurPopView.dynamic = NO;
@@ -166,6 +170,11 @@ static NSString *ZSHBaseTicketDateCellID = @"ZSHBaseTicketDateCell";
     return bottomBlurPopView;
 }
 
+-(ZSHPickView *)createPickViewWithParamDic:(NSDictionary *)paramDic{
+    ZSHPickView *pickView = [[ZSHPickView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight) paramDic:paramDic];
+    pickView.controller = self;
+    return pickView;
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

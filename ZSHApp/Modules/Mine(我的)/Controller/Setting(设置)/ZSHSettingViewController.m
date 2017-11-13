@@ -30,7 +30,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 - (void)loadData{
     self.titleArr = @[@"个人资料",@"新消息通知",@"账号与安全",@"关于我们",@"退出当前帐号"];
     self.pushVCsArr = @[@"ZSHUserInfoViewController",@"ZSHNotificationViewController",@"ZSHAccountViewController",@"",@""];
-    self.paramArr = @[@{},@{@"fromClassType":@(FromSettingVCToNotificationVC),@"title":@"新消息通知"},@{@"fromClassType":@""},@{},@""];
+    self.paramArr = @[@{},@{KFromClassType:@(FromSettingVCToNotificationVC),@"title":@"新消息通知"},@{KFromClassType:@""},@{},@""];
     [self initViewModel];
 }
 

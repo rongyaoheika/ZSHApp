@@ -55,7 +55,6 @@ static NSString * const cellIdentifier = @"cellID";
     [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.mas_equalTo(self.view);
     }];
-    
 }
 
 #pragma delegate

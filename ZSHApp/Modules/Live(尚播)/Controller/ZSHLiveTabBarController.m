@@ -26,6 +26,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
     //初始化tabbar
     [self setUpTabBar];
     
@@ -35,7 +36,8 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-     self.selectedIndex = 1;
+     self.selectedIndex = 0;
+     self.navigationController.navigationBar.hidden = YES;
 }
 
 -(void)viewDidLayoutSubviews{
@@ -58,10 +60,7 @@
 -(void)setUpAllChildViewController{
     _VCS = @[].mutableCopy;
     
-    ZSHHomeViewController *homeVC = [[ZSHHomeViewController alloc]init];
-    [self setupChildViewController:homeVC title:@"尊尚汇" imageName:@"tab_home_normal" seleceImageName:@"tab_home_press"];
-    
-    NSDictionary *nextParamDic = @{@"fromClassType":@(FromLiveTabBarVCToTitleContentVC),@"title":@"尚播"};
+    NSDictionary *nextParamDic = @{KFromClassType:@(FromLiveTabBarVCToTitleContentVC),@"title":@"尚播"};
     ZSHTitleContentViewController *liveVC = [[ZSHTitleContentViewController alloc]initWithParamDic:nextParamDic];
     [self setupChildViewController:liveVC title:@"尚播" imageName:@"tab_live_normal" seleceImageName:@"tab_live_press"];
     
@@ -127,14 +126,6 @@
 
 - (void)tabBar:(TabBar *)tabBarView didSelectedItemFrom:(NSInteger)from to:(NSInteger)to {
     self.selectedIndex = to;
-    if (self.selectedIndex == 0) {
-        AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-        
-        RXLSideSlipViewController *RXL= (RXLSideSlipViewController *)delegate.window.rootViewController;
-        MainTabBarController *tab = (MainTabBarController *)RXL.contentViewController;
-        tab.tabBar.hidden = NO;
-        tab.selectedIndex = 0;
-    }
 }
 
 - (BOOL)shouldAutorotate {

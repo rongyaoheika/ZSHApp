@@ -23,7 +23,6 @@
 
 static NSString *ZSHHotelPayHeadCellID = @"ZSHHotelPayHeadCell";
 static NSString *ZSHBasePriceCellID = @"ZSHBasePriceCell";
-static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 
 @implementation ZSHHotelPayViewController
 
@@ -47,6 +46,8 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     [self.view addSubview:self.tableView];
     self.tableView.delegate = self.tableViewModel;
     self.tableView.dataSource = self.tableViewModel;
+    [self.tableView registerClass:[ZSHHotelPayHeadCell class] forCellReuseIdentifier:ZSHHotelPayHeadCellID];
+    [self.tableView registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHBasePriceCellID];
     [self.tableView reloadData];
     
     [self.view addSubview:self.bottomBtn];
@@ -77,7 +78,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     cellModel.height = kRealValue(150);
     cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHHotelPayHeadCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHHotelPayHeadCellID forIndexPath:indexPath];
-        cell.fromClassType = [self.paramDic[@"fromClassType"]integerValue];
+        cell.fromClassType = [self.paramDic[KFromClassType]integerValue];
         [cell updateCellWithModel:self.model];
         return cell;
     };

@@ -35,7 +35,7 @@
 }
 
 - (void)loadData{
-    switch ([self.paramDic[@"fromClassType"]integerValue]) {
+    switch ([self.paramDic[KFromClassType]integerValue]) {
         case FromHorseVCToSubscribeVC:{
             self.dataArr = @[@"horse_image_1",
                              @"2017年夏季诺唯真喜悦号正式首航! 为您提供真正的海上头等舱体验",

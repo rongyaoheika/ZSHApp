@@ -69,7 +69,7 @@ static NSString *ZSHPlaneTicketListCellID = @"ZSHPlaneTicketListCell";
     cellModel.height = kRealValue(60);
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHNoticeViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHKTVCalendarCellID forIndexPath:indexPath];
-        NSDictionary *nextParamDic = @{@"fromClassType":@(FromKTVCalendarVCToNoticeView)};
+        NSDictionary *nextParamDic = @{KFromClassType:@(FromKTVCalendarVCToNoticeView)};
         [cell updateCellWithParamDic:nextParamDic];
         return cell;
     };

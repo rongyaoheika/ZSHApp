@@ -76,7 +76,7 @@
 #pragma getter
 - (void)btnAction:(UIButton *)btn{
     if (btn.tag == 0) {
-        NSDictionary *nextParamDic = @{@"fromClassType":@(FromIntegralVCToTitleContentVC),@"title":@"积分账单"};
+        NSDictionary *nextParamDic = @{KFromClassType:@(FromIntegralVCToTitleContentVC),@"title":@"积分账单"};
         ZSHTitleContentViewController *integralBillVC = [[ZSHTitleContentViewController alloc]initWithParamDic:nextParamDic];
         [self.navigationController pushViewController:integralBillVC animated:YES];
     } else if (btn.tag == 1) {

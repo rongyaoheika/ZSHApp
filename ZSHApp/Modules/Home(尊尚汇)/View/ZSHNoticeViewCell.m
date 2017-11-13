@@ -57,7 +57,7 @@
 
 - (void)updateCellWithParamDic:(NSDictionary *)paramDic{
     _btnArr = [[NSMutableArray alloc]init];
-    if ([paramDic[@"fromClassType"]integerValue] == FromHomeNoticeVCToNoticeView) {
+    if ([paramDic[KFromClassType]integerValue] == FromHomeNoticeVCToNoticeView) {
         _itemScrollView.itemWidth = kRealValue(95);
         NSArray *titleArr = @[@"2.4.6.8娱乐吧",@"逸林游艇",@"麦乐迪KTV",@"海帆酒吧"];
         for (int i = 1; i<5; i++) {
@@ -72,13 +72,13 @@
         
         self.itemScrollView.selectedBlock = ^(NSInteger index) {
             if (index == 2) {
-                NSDictionary *nextParamDic = @{@"fromClassType":@(ZSHFromHomeKTVVCToHotelDetailVC)};
+                NSDictionary *nextParamDic = @{KFromClassType:@(ZSHFromHomeKTVVCToHotelDetailVC)};
                 ZSHHotelDetailViewController *hotelDetailVC = [[ZSHHotelDetailViewController alloc]initWithParamDic:nextParamDic];
                 [[kAppDelegate getCurrentUIVC].navigationController pushViewController:hotelDetailVC animated:YES];
             }
         };
         
-    } else if ([paramDic[@"fromClassType"]integerValue]  == FromHomeServiceVCToNoticeView) {
+    } else if ([paramDic[KFromClassType]integerValue]  == FromHomeServiceVCToNoticeView) {
         
         _itemScrollView.itemWidth = kRealValue(130);
         for (int i = 1; i<4; i++) {
@@ -87,7 +87,7 @@
             [btn setBackgroundImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
             [_btnArr addObject:btn];
         }
-    }  else if ([paramDic[@"fromClassType"]integerValue]  == FromHomeMagazineVCToNoticeView) {
+    }  else if ([paramDic[KFromClassType]integerValue]  == FromHomeMagazineVCToNoticeView) {
          _itemScrollView.itemWidth = kRealValue(95);
         
         for (int i = 1; i<5; i++) {
@@ -96,7 +96,7 @@
             [btn setBackgroundImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
             [_btnArr addObject:btn];
         }
-    } else if ([paramDic[@"fromClassType"]integerValue] == FromKTVCalendarVCToNoticeView) {
+    } else if ([paramDic[KFromClassType]integerValue] == FromKTVCalendarVCToNoticeView) {
         _itemScrollView.itemWidth = kRealValue(70);
         _itemScrollView.fromClassType = FromKTVCalendarVCToNoticeView;
         NSArray *topTitleArr = @[@"今天",@"周三",@"周四",@"周五",@"周六",@"周日",@"周一"];
@@ -107,7 +107,7 @@
             UIButton *calendarBtn = [ZSHBaseUIControl createLabelBtnWithTopDic:topDic bottomDic:bottomDic];
             [_btnArr addObject:calendarBtn];
         } 
-    } else if ([paramDic[@"fromClassType"]integerValue]  == FromKTVRoomTypeVCToNoticeView) {
+    } else if ([paramDic[KFromClassType]integerValue]  == FromKTVRoomTypeVCToNoticeView) {
         
         NSArray *titleArr = @[@"小包（2-4人）",@"中包（4-6人）",@"大包（6-8人）",@"VIP小包（8-10人）"];
         _itemScrollView.itemWidth = kRealValue(85);
@@ -120,7 +120,7 @@
             roomTypeBtn.layer.borderColor = KZSHColor929292.CGColor;
             [_btnArr addObject:roomTypeBtn];
         }
-    } else if ([paramDic[@"fromClassType"]integerValue] == FromMemberCenterVCToNoticeView) {
+    } else if ([paramDic[KFromClassType]integerValue] == FromMemberCenterVCToNoticeView) {
         _itemScrollView.itemWidth = kRealValue(145);
         _itemScrollView.fromClassType = FromMemberCenterVCToNoticeView;
         NSArray *titleArr = @[@"升级礼包",@"黑咖币返利",@"管家服务",@"生日礼包",];

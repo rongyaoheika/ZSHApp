@@ -16,7 +16,8 @@
 #import "ZSHAirPlaneViewController.h"
 #import "ZSHKTVModel.h"
 #import "ZSHSubscribeViewController.h"
-
+#import "ZSHBottomBlurPopView.h"
+#import "ZSHServiceCenterViewController.h"
 static NSString *Identify_HeadCell = @"headCell";
 static NSString *Identify_NoticeCell = @"noticeCell";
 static NSString *Identify_ServiceCell = @"serviceCell";
@@ -25,9 +26,13 @@ static NSString *Identify_MagazineCell = @"magazineCell";
 
 @interface ZSHHomeViewController ()<UISearchBarDelegate>
 
-@property (nonatomic, strong) NSArray            *pushVCsArr;
-@property (nonatomic, strong) NSArray            *paramArr;
-@property (nonatomic, strong) ZSHBaseModel       *model;
+@property (nonatomic, strong) NSArray                *pushVCsArr;
+@property (nonatomic, strong) NSArray                *paramArr;
+
+@property (nonatomic, strong) NSArray                *menuPushVCsArr;
+@property (nonatomic, strong) NSArray                *menuParamArr;
+@property (nonatomic, strong) ZSHBaseModel           *model;
+@property (nonatomic, strong) ZSHBottomBlurPopView   *bottomBlurPopView;
 
 @end
 
@@ -52,16 +57,25 @@ static NSString *Identify_MagazineCell = @"magazineCell";
                         @"ZSHMoreSubscribeViewController"];
     
     self.paramArr = @[
-                      @{@"fromClassType":@(FromFoodVCToTitleContentVC)},
-                      @{@"fromClassType":@(FromHotelVCToTitleContentVC)},
-                      @{@"fromClassType":@(ZSHFromHomeTrainVCToAirPlaneVC),@"title":@"火车票预订"},
-                      @{@"fromClassType":@(ZSHHomeAirPlaneVCToAirPlaneVC),@"title":@"机票预订"},
-                      @{@"fromClassType":@(FromHorseVCToSubscribeVC),@"title":@"马术"},
-                      @{@"fromClassType":@(FromShipVCToSubscribeVC),@"title":@"游艇"},
-                      @{@"fromClassType":@(FromCarVCToSubscribeVC),@"title":@"豪车"},
-                      @{@"fromClassType":@(FromHelicopterVCToSubscribeVC),@"title":@"飞机"},
-                      @{@"fromClassType":@(FromGolfVCToSubscribeVC),@"title":@"高尔夫汇"}
+                      @{KFromClassType:@(FromFoodVCToTitleContentVC)},
+                      @{KFromClassType:@(FromHotelVCToTitleContentVC)},
+                      @{KFromClassType:@(ZSHFromHomeTrainVCToAirPlaneVC),@"title":@"火车票预订"},
+                      @{KFromClassType:@(ZSHHomeAirPlaneVCToAirPlaneVC),@"title":@"机票预订"},
+                      @{KFromClassType:@(FromHorseVCToSubscribeVC),@"title":@"马术"},
+                      @{KFromClassType:@(FromShipVCToSubscribeVC),@"title":@"游艇"},
+                      @{KFromClassType:@(FromCarVCToSubscribeVC),@"title":@"豪车"},
+                      @{KFromClassType:@(FromHelicopterVCToSubscribeVC),@"title":@"飞机"},
+                      @{KFromClassType:@(FromGolfVCToSubscribeVC),@"title":@"高尔夫汇"}
                       ];
+    self.menuPushVCsArr = @[@"",
+                            @"ZSHServiceCenterViewController",
+                            @"ZSHServiceCenterViewController",
+                            @""];
+    self.menuParamArr = @[@{},
+                            @{KFromClassType:@(ZSHFromHomeMenuVCToServiceCenterVC),@"title":@"消息中心",@"titleArr":@[@"评论／回复我的",@"赞我的"],@"imageArr":@[@"menu_news",@"menu_love"]},
+                            @{KFromClassType:@(ZSHFromHomeMenuVCToServiceCenterVC),@"title":@"系统通知",@"titleArr":@[@"隐形者官方帐号"],@"imageArr":@[@"menu_noti"]},
+                            @""];
+    
     [self initViewModel];
 }
 
@@ -133,7 +147,7 @@ static NSString *Identify_MagazineCell = @"magazineCell";
     cellModel.height = kRealValue(135);
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHNoticeViewCell *cell = [tableView dequeueReusableCellWithIdentifier:Identify_NoticeCell forIndexPath:indexPath];
-        NSDictionary *nextParamDic = @{@"fromClassType":@(FromHomeNoticeVCToNoticeView)};
+        NSDictionary *nextParamDic = @{KFromClassType:@(FromHomeNoticeVCToNoticeView)};
         [cell updateCellWithParamDic:nextParamDic];
         return cell;
     };
@@ -154,7 +168,7 @@ static NSString *Identify_MagazineCell = @"magazineCell";
     cellModel.height = kRealValue(80);
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHNoticeViewCell *cell = [tableView dequeueReusableCellWithIdentifier:Identify_ServiceCell forIndexPath:indexPath];
-        NSDictionary *nextParamDic = @{@"fromClassType":@(FromHomeServiceVCToNoticeView)};
+        NSDictionary *nextParamDic = @{KFromClassType:@(FromHomeServiceVCToNoticeView)};
         [cell updateCellWithParamDic:nextParamDic];
         return cell;
     };
@@ -203,7 +217,7 @@ static NSString *Identify_MagazineCell = @"magazineCell";
     cellModel.height = kRealValue(115);
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHNoticeViewCell *cell = [tableView dequeueReusableCellWithIdentifier:Identify_MagazineCell forIndexPath:indexPath];
-        NSDictionary *nextParamDic = @{@"fromClassType":@(FromHomeMagazineVCToNoticeView)};
+        NSDictionary *nextParamDic = @{KFromClassType:@(FromHomeMagazineVCToNoticeView)};
         [cell updateCellWithParamDic:nextParamDic];
         return cell;
     };
@@ -254,14 +268,30 @@ static NSString *Identify_MagazineCell = @"magazineCell";
 
 #pragma action
 - (void)menuBtntClick:(UIButton *)menuBtn{
-    
-    
+    kWeakSelf(self);
+    NSDictionary *nextParamDic = @{KFromClassType:@(ZSHFromHomeMenuVCToBottomBlurPopView)};
+    ZSHBottomBlurPopView *bottomBlurPopView = [[ZSHBottomBlurPopView alloc]initWithFrame:CGRectMake(0, KNavigationBarHeight, KScreenWidth, KScreenHeight - KNavigationBarHeight) paramDic:nextParamDic];
+    bottomBlurPopView.blurRadius = 20;
+    bottomBlurPopView.dynamic = NO;
+    bottomBlurPopView.tintColor = KClearColor;
+    [self setAnimationWithHidden:NO view:bottomBlurPopView completedBlock:nil];
+    bottomBlurPopView.dissmissViewBlock = ^(UIView *blurView, NSIndexPath *indexpath) {
+        [self setAnimationWithHidden:YES view:blurView completedBlock:^{
+            if (indexpath) {//跳转到对应控制器
+                Class className = NSClassFromString(weakself.menuPushVCsArr[indexpath.row]);
+                RootViewController *vc = [[className alloc]initWithParamDic:weakself.menuParamArr[indexpath.row]];
+                [weakself.navigationController pushViewController:vc animated:YES];
+            }
+            return;
+        }];
+    };
     
     //    http://18000d15f7.iask.in/appuserin/useraddshipadr?SHIPADR(混淆码)
     
-    [self testPostRequest];
+//    [self testPostRequest];
     
 }
+
 
 
 - (void)locateBtnAction{
@@ -289,6 +319,17 @@ static NSString *Identify_MagazineCell = @"magazineCell";
         RLog(@"get请求错误");
     }];
 }
+
+#pragma getter
+- (ZSHBottomBlurPopView *)createBottomBlurPopViewWith:(ZSHFromVCToBottomBlurPopView)fromClassType{
+    NSDictionary *nextParamDic = @{KFromClassType:@(fromClassType)};
+    ZSHBottomBlurPopView *bottomBlurPopView = [[ZSHBottomBlurPopView alloc]initWithFrame:kAppDelegate.window.bounds paramDic:nextParamDic];
+    bottomBlurPopView.blurRadius = 20;
+    bottomBlurPopView.dynamic = NO;
+    bottomBlurPopView.tintColor = KClearColor;
+    return bottomBlurPopView;
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

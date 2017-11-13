@@ -22,14 +22,8 @@ NSUInteger yearSatrt = 1900;
 
 @property (nonatomic, copy)   NSMutableArray       *birthdayValues;
 @property (nonatomic, copy)   NSMutableArray       *timeValues;
-
 @property (nonatomic, strong) NSArray              *birthdayWidthArr;
 @property (nonatomic, strong) NSArray              *regionWidthArr;
-@property (nonatomic, strong) NSArray              *regionArr;
-@property (nonatomic, strong) NSArray              *couponArr;
-@property (nonatomic, strong) NSArray              *KTVHourArr;
-@property (nonatomic, strong) NSArray              *seatArr;
-@property (nonatomic, strong) NSArray              *togetherArr;
 
 @property (nonatomic, assign) long long            birthday;
 @property (nonatomic, assign) NSInteger            currentYear;
@@ -46,8 +40,9 @@ NSUInteger yearSatrt = 1900;
 - (instancetype)initWithFrame:(CGRect)frame paramDic:(NSDictionary *)paramDic{
     self = [super initWithFrame:frame];
     if (self) {
+        _showType = [paramDic[@"type"]integerValue];
         _dataArr = paramDic[@"dataArr"];
-        _midTitle = paramDic[@"title"];
+        _midTitle = paramDic[@"midTitle"];
         [self createData];
         [self createUI];
     }
@@ -67,16 +62,9 @@ NSUInteger yearSatrt = 1900;
 
 - (void)createData{
     self.selectedRow = -1;
-    self.titleArr = @[@"生日",@"性别",@"城市区域选择",@"年份",@"优惠券选择",@"时间选择",@"方式选择"
-                      @"物流公司选择"];
+//    self.titleArr = @[@"生日",@"性别",@"城市区域选择",@"年份",@"优惠券选择",@"时间选择",@"方式选择"
+//                      @"物流公司选择"];
     self.regionWidthArr = @[@(KScreenWidth * 0.25),@(KScreenWidth * 0.5),@(KScreenWidth * 0.25)];
-    self.regionArr = @[@[@"北京",@"天津市",@"河北省",@"山东省"],
-                       @[@"北京市",@"天津市",@"石家庄",@"聊城市"],
-                       @[@"朝阳区",@"天津市",@"北辰区",@"聊城市"]
-                       ];
-    self.couponArr = @[@"使用优惠券",@"20元代金券",@"50元代金券"];
-    self.seatArr = @[@"不限",@"经济仓",@"头等／商务舱"];
-    self.togetherArr = @[@"不限",@"给力邀约",@"AA互动趴"];
    
     // 年月日
     self.birthdayWidthArr = @[@(75),@(45),@(60)];
@@ -132,7 +120,7 @@ NSUInteger yearSatrt = 1900;
         case WindowBirthDay:
             return _birthdayValues.count;
         case WindowRegion:
-            return _regionArr.count;
+            return _dataArr.count;
         case WindowTime:
             return _timeValues.count;
         default:
@@ -147,16 +135,15 @@ NSUInteger yearSatrt = 1900;
             return [_birthdayValues[component]count];
         }
         case WindowRegion:{
-            return [_regionArr[component]count];
+            return [_dataArr[component]count];
         }
         case WindowTime:{
             return [_timeValues[component]count];
         }
-        case WindowCoupon:{
-            return [_couponArr count];
-        }
-        case WindowTogether:{
-            return [_togetherArr count];
+        case WindowCoupon:
+        case WindowTogether:
+        case WindowLogistics:{
+            return [_dataArr count];
         }
         default:
             return 0;
@@ -208,20 +195,18 @@ NSUInteger yearSatrt = 1900;
             break;
         }
         case WindowRegion:{
-            pickViewLabel.text = _regionArr[component][row];
+            pickViewLabel.text = _dataArr[component][row];
              break;
         }
         case WindowTime:{
             pickViewLabel.text = _timeValues[component][row];
              break;
         }
-        case WindowCoupon:{
-            pickViewLabel.text = _couponArr[row];
-             break;
-        }
-        case WindowTogether:{
-            pickViewLabel.text = _togetherArr[row];
-             break;
+        case WindowCoupon:
+        case WindowTogether:
+        case WindowLogistics:{
+            pickViewLabel.text = _dataArr[row];
+            break;
         }
         default:
             pickViewLabel.text = @"";
@@ -323,10 +308,7 @@ NSUInteger yearSatrt = 1900;
     }
     
 //    self.selectedRow = [_pickerView selectedRowInComponent:0];
-    
-    
-    
-    
+
     [self makeKeyAndVisible];
     [UIView animateWithDuration:0.5 animations:^{
         CGRect mainFrame = _mainView.frame;
@@ -482,7 +464,6 @@ NSUInteger yearSatrt = 1900;
     [_pickerView reloadComponent:2];
 }
 
-
 #pragma getter
 - (UIView *)mainView{
     if (!_mainView) {
@@ -494,7 +475,8 @@ NSUInteger yearSatrt = 1900;
 
 - (ZSHTopLineView *)topLineView{
     if (!_topLineView) {
-        NSDictionary *paramDic = @{@"typeText":_titleArr[_showType]};
+        NSString *typeText = _midTitle?_midTitle:_titleArr[_showType];
+        NSDictionary *paramDic = @{@"typeText":typeText};
         _topLineView = [[ZSHTopLineView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, kRealValue(50)) paramDic:paramDic];
     }
     return _topLineView;

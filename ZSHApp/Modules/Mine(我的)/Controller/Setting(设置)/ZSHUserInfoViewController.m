@@ -43,8 +43,8 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 ];
     
     self.paramArr = @[
-                      @[@{},@{@"fromClassType":@(FromUserInfoNickNameVCToMultiInfoVC),@"title":@"修改昵称",@"rightNaviTitle":@"保存",@"bottomBtnTitle":@"下一步"},@{},@{},@{},@{},@{},@{}],
-  @[@{},@{@"fromClassType":@(FromUserInfoPhoneVCToMultiInfoVC),@"title":@"更改手机号码",@"bottomBtnTitle":@"提交"},@{@"fromClassType":@(FromUserInfoQQVCToMultiInfoVC),@"title":@"绑定QQ帐号",@"rightNaviTitle":@"授权"},@{},@{},@{}]];
+                      @[@{},@{KFromClassType:@(FromUserInfoNickNameVCToMultiInfoVC),@"title":@"修改昵称",@"rightNaviTitle":@"保存",@"bottomBtnTitle":@"下一步"},@{},@{},@{},@{},@{},@{}],
+  @[@{},@{KFromClassType:@(FromUserInfoPhoneVCToMultiInfoVC),@"title":@"更改手机号码",@"bottomBtnTitle":@"提交"},@{KFromClassType:@(FromUserInfoQQVCToMultiInfoVC),@"title":@"绑定QQ帐号",@"rightNaviTitle":@"授权"},@{},@{},@{}]];
     
     [self initViewModel];
 }

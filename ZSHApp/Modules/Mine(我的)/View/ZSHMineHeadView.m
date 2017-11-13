@@ -26,7 +26,13 @@
 
 - (void)setup{
     self.pushVCsArr = @[@"ZSHServiceCenterViewController",@"ZSHCoinViewController",@"ZSHEnergyValueViewController"];
-    self.paramArr = @[@{@"fromClassType":@(ZSHFromMineFriendVCToServiceCenterVC),@"title":@"好友"},@{},@{}];
+    self.paramArr = @[@{KFromClassType:@(ZSHFromMineFriendVCToServiceCenterVC),
+                        @"title":@"好友",
+                        @"titleArr":@[@"爱跳舞的小丑",@"爱跳舞的小丑",@"爱跳舞的小丑",@"爱跳舞的小丑"],
+                    @"imageArr":@[@"weibo_head_image",@"weibo_head_image",@"weibo_head_image",@"weibo_head_image"]},
+                       @{},
+                       @{}];
+
     
     UIImageView *headImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"weibo_head_image"]];
     headImageView.layer.cornerRadius = kRealValue(50)/2;

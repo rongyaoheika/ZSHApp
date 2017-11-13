@@ -27,24 +27,8 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 }
 
 - (void)loadData{
-    switch (kFromVCType) {
-        case ZSHFromMineServiceVCToServiceCenterVC:{
-            self.titleArr = @[@"客服1",@"客服2",@"客服3",@"客服4"];
-            self.imageArr = @[@"mine_service",@"mine_service",@"mine_service",@"mine_service"];
-            break;
-        }
-        case ZSHFromMineFriendVCToServiceCenterVC:{
-            self.titleArr = @[@"爱跳舞的小丑",@"爱跳舞的小丑",@"爱跳舞的小丑",@"爱跳舞的小丑"];
-            self.imageArr = @[@"weibo_head_image",@"weibo_head_image",@"weibo_head_image",@"weibo_head_image"];
-            break;
-        }
-            
-            
-            
-        default:
-            break;
-    }
-    
+    self.titleArr = self.paramDic[@"titleArr"];
+    self.imageArr = self.paramDic[@"imageArr"];
     [self initViewModel];
 }
 
@@ -77,9 +61,14 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
         cellModel.height = kRealValue(60);
         cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
             ZSHBaseCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHBaseCellID forIndexPath:indexPath];
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             cell.imageView.image = [UIImage imageNamed:weakself.imageArr[indexPath.row]];
             cell.textLabel.text = weakself.titleArr[indexPath.row];
+            if (kFromClassTypeValue == ZSHFromHomeMenuVCToServiceCenterVC) {
+                cell.separatorInset = UIEdgeInsetsMake(0, 0, 0, MAXFLOAT);
+            } else {
+                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            }
+            
             return cell;
         };
         

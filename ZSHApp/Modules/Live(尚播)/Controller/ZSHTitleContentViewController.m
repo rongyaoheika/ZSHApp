@@ -47,7 +47,7 @@
 }
 
 - (void)loadData{
-    switch ([self.paramDic[@"fromClassType"]integerValue]) {
+    switch ([self.paramDic[KFromClassType]integerValue]) {
         case FromLiveTabBarVCToTitleContentVC:{
             self.titleArr = @[@"推荐",@"附近",@"分类"];
             self.indicatorHeight = 1.0;
@@ -127,10 +127,7 @@
 }
 
 - (void)createLiveNaviUI{
-    [self.navigationItem setTitleView:self.searchBar];
-    self.searchBar.delegate = self;
-    
-    [self addNavigationItemWithImageName:@"nav_home_more" title:@"三亚" locate:XYButtonEdgeInsetsStyleRight isLeft:YES target:self action:@selector(locateBtnAction) tag:10];
+    [self addNavigationItemWithImageName:@"nav_back" isLeft:YES target:self action:@selector(backAction) tag:1];
 }
 
 - (void)createHotelNaviUI{
@@ -164,7 +161,7 @@
         _titleView.selectedBlock = ^(NSInteger index){
             __weak typeof(self) strongSelf = weakSelf;
             strongSelf.contentView.currentIndex = index;
-            if ([weakSelf.paramDic[@"fromClassType"]integerValue] == FromHotelVCToTitleContentVC && index == 0) {
+            if ([weakSelf.paramDic[KFromClassType]integerValue] == FromHotelVCToTitleContentVC && index == 0) {
                 [kAppDelegate.window addSubview:weakSelf.bottomBlurPopView];
             }
         };
@@ -202,7 +199,7 @@
 
 #pragma  getter
 - (ZSHBottomBlurPopView *)bottomBlurPopView{
-    NSDictionary *nextParamDic = @{@"fromClassType":@(ZSHFromHotelVCToBottomBlurPopView)};
+    NSDictionary *nextParamDic = @{KFromClassType:@(ZSHFromHotelVCToBottomBlurPopView)};
     _bottomBlurPopView = [[ZSHBottomBlurPopView alloc]initWithFrame:kAppDelegate.window.bounds paramDic:nextParamDic];
     _bottomBlurPopView.blurRadius = 20;
     _bottomBlurPopView.dynamic = NO;
@@ -213,6 +210,15 @@
 #pragma action
 - (void)locateBtnAction{
     
+}
+
+- (void)backAction{
+    [[kAppDelegate getCurrentUIVC].navigationController popToRootViewControllerAnimated:NO];
+    AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    RXLSideSlipViewController *RXL= (RXLSideSlipViewController *)delegate.window.rootViewController;
+    MainTabBarController *tab = (MainTabBarController *)RXL.contentViewController;
+    tab.tabBar.hidden = NO;
+    tab.selectedIndex = 0;
 }
 
 - (void)didReceiveMemoryWarning {

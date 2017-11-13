@@ -67,7 +67,7 @@ static NSString *cellIdentifier = @"listCell";
         cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
             //需要注册，无需判空
             ZSHTogetherView *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
-            NSDictionary *nextParamDic = @{@"bgImageName":imageArr[i],@"chineseText":chineseTitleArr[i],@"englishText":englishTitleArr[i],@"fromClassType":@(ZSHFromPersonalTailorVCToTogetherView)};
+            NSDictionary *nextParamDic = @{@"bgImageName":imageArr[i],@"chineseText":chineseTitleArr[i],@"englishText":englishTitleArr[i],KFromClassType:@(ZSHFromPersonalTailorVCToTogetherView)};
             [cell updateCellWithParamDic:nextParamDic];
             return cell;
         };

@@ -15,7 +15,11 @@
 @property (nonatomic, strong) NSDictionary *paramDic;
 @property (nonatomic, copy)   NSString     *arrowImageName;
 
-- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier paramDic:(NSDictionary *)paramDic;
+@property(nonatomic, assign, readonly) UITableViewCellStyle style;
+@property (nonatomic, assign) UIEdgeInsets imageEdgeInsets;
+@property (nonatomic, assign) UIEdgeInsets textLabelEdgeInsets;
+@property (nonatomic, assign) UIEdgeInsets detailTextLabelEdgeInsets;
+@property (nonatomic, assign) UIEdgeInsets accessoryEdgeInsets;
 
 //加载cell  控件
 - (void)setup;

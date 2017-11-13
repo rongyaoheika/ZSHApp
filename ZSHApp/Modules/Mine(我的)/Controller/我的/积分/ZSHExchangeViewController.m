@@ -79,7 +79,7 @@ static NSString *ZSHIntegralExchangeCellID = @"ZSHIntegralExchangeCell";
 
 - (ZSHBottomBlurPopView *)bottomBlurPopView{
     //    if (!_bottomBlurPopView) {//无法彻底释放
-     NSDictionary *nextParamDic = @{@"fromClassType":@(ZSHFromExchangeVCToBottomBlurPopView)};
+     NSDictionary *nextParamDic = @{KFromClassType:@(ZSHFromExchangeVCToBottomBlurPopView)};
     _bottomBlurPopView = [[ZSHBottomBlurPopView alloc]initWithFrame:kAppDelegate.window.bounds paramDic:nextParamDic];
     _bottomBlurPopView.blurRadius = 20;
     _bottomBlurPopView.dynamic = NO;

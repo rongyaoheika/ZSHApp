@@ -34,6 +34,7 @@
 #define KBlueColor                     [UIColor blueColor]
 #define KRedColor                      [UIColor redColor]
 #define KGreenColor                    [UIColor greenColor]
+#define KZSHColorCD933B               [UIColor colorWithHexString:@"CD933B"]
 #define KZSHColorFD5739               [UIColor colorWithHexString:@"FD5739"]
 #define KZSHColor979797               [UIColor colorWithHexString:@"979797"]
 #define KZSHColor8E8E93               [UIColor colorWithHexString:@"8E8E93"]
@@ -89,6 +90,6 @@
 #define SYSTEMFONT(FONTSIZE)            [UIFont systemFontOfSize:FONTSIZE]
 #define FONT(NAME, FONTSIZE)            [UIFont fontWithName:(NAME) size:((FONTSIZE)*(KScreenWidth/375.0f))]
 
-
+             
 
 #endif /* FontAndColorMacros_h */

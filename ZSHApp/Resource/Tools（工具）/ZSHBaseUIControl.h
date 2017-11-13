@@ -50,6 +50,7 @@ typedef NS_ENUM(NSInteger, ShowPickViewWindowType) {
     WindowKTVHour,                 // KTV时间选择
     WindowTogether,                // 汇聚
     WindowLogistics,               // 物流公司
+    WindowSeat,                    // 座位选择
     WindowKTVNone
 };
 
@@ -65,6 +66,7 @@ typedef NS_ENUM (NSInteger,ZSHToTextFieldCellView) {
     FromAirTicketDetailVCToTextFieldCellView,      //机票弹窗-个人信息
     FromMultiInfoQQVCToTextFieldCellView,          //绑定QQ帐号
     FromMultiPhoneVCToTextFieldCellView,           //更改手机号
+    FromLoginVCToTextFieldCellView,                //登录-自定义View
     FromNoneToTextFieldCellView
 };
 

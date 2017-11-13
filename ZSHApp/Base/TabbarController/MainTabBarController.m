@@ -82,15 +82,10 @@
     controller.tabBarItem.image = [UIImage imageNamed:imageName];
     controller.tabBarItem.selectedImage = [UIImage imageNamed:selectImageName];
 
-//    controller.tabBarItem.badgeValue = _VCS.count%2==0 ? @"100": @"1";
-    if ( [controller isKindOfClass:[ZSHLiveTabBarController class]]) {
-        [_VCS addObject:controller];
-    }else {
-        //包装导航控制器
-        RootNavigationController *nav = [[RootNavigationController alloc]initWithRootViewController:controller];
-        controller.title = title;
-        [_VCS addObject:nav];
-    }
+    //包装导航控制器
+    RootNavigationController *nav = [[RootNavigationController alloc]initWithRootViewController:controller];
+    controller.title = title;
+    [_VCS addObject:nav];
 }
 
 #pragma mark ————— 统一设置tabBarItem属性并添加到TabBar —————

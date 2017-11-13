@@ -60,7 +60,7 @@
                 cell = [[ZSHIntegralExchangeCell alloc] initWithStyle:UITableViewCellStyleDefault
                                                       reuseIdentifier:identifier];
             }
-            NSDictionary *nextParamDic= @{@"fromClassType":@(FromCouponVCToIntegralExchangeCell)};
+            NSDictionary *nextParamDic= @{KFromClassType:@(FromCouponVCToIntegralExchangeCell)};
             [cell updateCellWithParamDic:nextParamDic];
             return cell;
         };
