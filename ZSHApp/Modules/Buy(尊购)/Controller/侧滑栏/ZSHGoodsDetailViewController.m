@@ -93,6 +93,8 @@ static NSString *ZSHGoodsDetailCountCellID = @"ZSHGoodsDetailCountCell";
     [self.collectionView registerClass:[ZSHGoodsDetailCountCell class] forCellWithReuseIdentifier:ZSHGoodsDetailCountCellID];
     
     [self setUpBottomButton];
+    
+//    [self.view addSubview:self.bottomBtnView];
 }
 
 //下半部分

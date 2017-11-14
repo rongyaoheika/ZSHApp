@@ -72,9 +72,7 @@
         _ageSlider = [[UISlider alloc]initWithFrame:CGRectZero];
         _ageSlider.minimumValue = 18;
         _ageSlider.maximumValue = 50;
-        _ageSlider.minimumValueImage = [UIImage imageNamed:@"order_point"];
-        _ageSlider.maximumValueImage = [UIImage imageNamed:@"age_icon"];
-        [_ageSlider setThumbImage:[UIImage imageNamed:@"order_point"] forState:UIControlStateNormal];
+        [_ageSlider setThumbImage:[UIImage imageNamed:@"age_icon"] forState:UIControlStateNormal];
         _ageSlider.continuous = YES;
         [_ageSlider addTarget:self action:@selector(sliderValueChanged:) forControlEvents:UIControlEventValueChanged];
     }

@@ -29,6 +29,7 @@
 @property (nonatomic, assign) CGFloat             titleWidth;
 @property (nonatomic, assign) CGFloat             indicatorHeight;
 @property (nonatomic, strong) NSArray             *contentVCS;
+@property (nonatomic, strong) NSArray             *paramArr;
 @property (nonatomic, strong) NSArray             *subContentVCs;
 
 @property (nonatomic, strong) ZSHBottomBlurPopView *bottomBlurPopView;
@@ -52,7 +53,8 @@
             self.titleArr = @[@"推荐",@"附近",@"分类"];
             self.indicatorHeight = 1.0;
             [self createLiveNaviUI];
-            self.contentVCS = @[@"ZSHLiveContentFirstViewController",@"ZSHLiveContentFirstViewController",@"ZSHLiveContentFirstViewController"];
+            self.contentVCS = @[@"ZSHLiveContentFirstViewController",@"ZSHLiveContentFirstViewController",@"ZSHLiveClassifyViewController"];
+            self.paramArr = @[@{KFromClassType:@(FromLiveRecommendVCToLiveContentFirstVC)},@{KFromClassType:@(FromLiveNearVCToLiveContentFirstVC)},@{KFromClassType:@(FromLiveClassifyVCToLiveContentFirstVC)}];
             
         }
             break;
@@ -199,10 +201,15 @@
 - (void)reloadListData{
     [self.titleView reloadViewWithTitles:self.titleArr image:_titleImage];
     self.vcs = [[NSMutableArray alloc]init];
-    
- 
     for (int i = 0; i<self.titleArr.count; i++) {
-        id vc =  [[NSClassFromString(self.contentVCS[i]) alloc]init];
+        Class className = NSClassFromString(self.contentVCS[i]);
+        RootViewController *vc  = nil;
+        if (self.paramArr.count) {
+           vc = [[className alloc]initWithParamDic:self.paramArr[i]];
+        } else {
+           vc = [[className alloc]init];
+        }
+       
         [self.vcs addObject:vc];
     }
     

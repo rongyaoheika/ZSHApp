@@ -299,7 +299,8 @@
 		FEDF292A1FB6DA3000CD5756 /* ZSHLiveRoomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEDF29291FB6DA3000CD5756 /* ZSHLiveRoomViewController.m */; };
 		FEDF292D1FB6F24A00CD5756 /* ZSHLiveProfitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEDF292C1FB6F24A00CD5756 /* ZSHLiveProfitViewController.m */; };
 		FEEF46EF1FBA84100086A3C4 /* ZSHLivePopView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEEF46EE1FBA84100086A3C4 /* ZSHLivePopView.m */; };
-		FEEF46F21FBA8CAB0086A3C4 /* ZSHLiveNearViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEEF46F11FBA8CAB0086A3C4 /* ZSHLiveNearViewController.m */; };
+		FEEF46F21FBA8CAB0086A3C4 /* ZSHLiveClassifyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEEF46F11FBA8CAB0086A3C4 /* ZSHLiveClassifyViewController.m */; };
+		FEEF46F51FBAD2C90086A3C4 /* ZSHNearHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEEF46F41FBAD2C90086A3C4 /* ZSHNearHeadView.m */; };
 		FEF2B62E1FAC1C89000AEA6E /* ZSHTextFieldCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEF2B62D1FAC1C88000AEA6E /* ZSHTextFieldCellView.m */; };
 		FEF2B6331FAC4DF3000AEA6E /* ZSHEnterTainmentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FEF2B6321FAC4DF3000AEA6E /* ZSHEnterTainmentCell.m */; };
 		FEF2B6361FAC4FE2000AEA6E /* ZSHEntertainmentHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEF2B6351FAC4FE2000AEA6E /* ZSHEntertainmentHeadView.m */; };
@@ -848,8 +849,10 @@
 		FEDF292C1FB6F24A00CD5756 /* ZSHLiveProfitViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHLiveProfitViewController.m; sourceTree = "<group>"; };
 		FEEF46ED1FBA84100086A3C4 /* ZSHLivePopView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHLivePopView.h; sourceTree = "<group>"; };
 		FEEF46EE1FBA84100086A3C4 /* ZSHLivePopView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHLivePopView.m; sourceTree = "<group>"; };
-		FEEF46F01FBA8CAB0086A3C4 /* ZSHLiveNearViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHLiveNearViewController.h; sourceTree = "<group>"; };
-		FEEF46F11FBA8CAB0086A3C4 /* ZSHLiveNearViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHLiveNearViewController.m; sourceTree = "<group>"; };
+		FEEF46F01FBA8CAB0086A3C4 /* ZSHLiveClassifyViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHLiveClassifyViewController.h; sourceTree = "<group>"; };
+		FEEF46F11FBA8CAB0086A3C4 /* ZSHLiveClassifyViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHLiveClassifyViewController.m; sourceTree = "<group>"; };
+		FEEF46F31FBAD2C90086A3C4 /* ZSHNearHeadView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHNearHeadView.h; sourceTree = "<group>"; };
+		FEEF46F41FBAD2C90086A3C4 /* ZSHNearHeadView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHNearHeadView.m; sourceTree = "<group>"; };
 		FEF2B62C1FAC1C88000AEA6E /* ZSHTextFieldCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHTextFieldCellView.h; sourceTree = "<group>"; };
 		FEF2B62D1FAC1C88000AEA6E /* ZSHTextFieldCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHTextFieldCellView.m; sourceTree = "<group>"; };
 		FEF2B6311FAC4DF3000AEA6E /* ZSHEnterTainmentCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHEnterTainmentCell.h; sourceTree = "<group>"; };
@@ -1450,8 +1453,8 @@
 				FE1F76271F8F795C00C45B83 /* ZSHCustomWaterFlowLayout.m */,
 				FE1F76311F8F7D0500C45B83 /* ZSHLiveContentFirstViewController.h */,
 				FE1F76321F8F7D0500C45B83 /* ZSHLiveContentFirstViewController.m */,
-				FEEF46F01FBA8CAB0086A3C4 /* ZSHLiveNearViewController.h */,
-				FEEF46F11FBA8CAB0086A3C4 /* ZSHLiveNearViewController.m */,
+				FEEF46F01FBA8CAB0086A3C4 /* ZSHLiveClassifyViewController.h */,
+				FEEF46F11FBA8CAB0086A3C4 /* ZSHLiveClassifyViewController.m */,
 				FE0F9DBC1F949EFA004F8D2A /* ZSHWeiboViewController.h */,
 				FE0F9DBD1F949EFA004F8D2A /* ZSHWeiboViewController.m */,
 				18F9024E1FB6DE460044967F /* ZSHChargeRecViewController.h */,
@@ -1502,6 +1505,8 @@
 				1874B9651FB99E9700059184 /* ZSHLivePersonInfoView.m */,
 				FEEF46ED1FBA84100086A3C4 /* ZSHLivePopView.h */,
 				FEEF46EE1FBA84100086A3C4 /* ZSHLivePopView.m */,
+				FEEF46F31FBAD2C90086A3C4 /* ZSHNearHeadView.h */,
+				FEEF46F41FBAD2C90086A3C4 /* ZSHNearHeadView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2984,6 +2989,7 @@
 				FEAE111E1FB3FD5D008DCB3E /* ZSHQuotaViewController.m in Sources */,
 				FE8FD0731FADA833005F1184 /* ZSHMemberCenterViewController.m in Sources */,
 				FE7F00131F9203430006E9A3 /* ZSHBaseTableViewCellModel.m in Sources */,
+				FEEF46F51FBAD2C90086A3C4 /* ZSHNearHeadView.m in Sources */,
 				FE7F00141F9203430006E9A3 /* ZSHBaseTableViewModel.h in Sources */,
 				FE7F00151F9203430006E9A3 /* ZSHBaseTableViewModel.m in Sources */,
 				FE7AF2351FA30A0400E1A648 /* ZSHBottomBlurPopView.m in Sources */,
@@ -3013,7 +3019,7 @@
 				FE1F76371F8F7E1100C45B83 /* LXScrollContentView.h in Sources */,
 				FEA30A501F9F08FE00AB0FFC /* ZSHLogisticsDetailModel.m in Sources */,
 				FE1F76381F8F7E1100C45B83 /* LXScrollContentView.m in Sources */,
-				FEEF46F21FBA8CAB0086A3C4 /* ZSHLiveNearViewController.m in Sources */,
+				FEEF46F21FBA8CAB0086A3C4 /* ZSHLiveClassifyViewController.m in Sources */,
 				FE1F76341F8F7DB600C45B83 /* ZSHLiveContentFirstViewController.h in Sources */,
 				FEBD7C991FA6F42900CE2BA6 /* ZSHHotelDetailModel.m in Sources */,
 				FE8FD0831FADE64A005F1184 /* ZSHWalletCenterViewController.m in Sources */,

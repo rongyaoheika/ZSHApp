@@ -14,6 +14,7 @@
 #import "ZSHSearchBarView.h"
 
 typedef void(^RemoveCompletedBlock)();
+typedef void(^ZSHBottomBtnViewBtnBlock)(NSInteger);
 /**
  VC 基类
  */
@@ -25,6 +26,8 @@ typedef void(^RemoveCompletedBlock)();
 @property (nonatomic, assign) UIStatusBarStyle          StatusBarStyle;
 @property (nonatomic, strong) UITableView               *tableView;
 @property (nonatomic, strong) UIButton                  *bottomBtn;
+@property (nonatomic, strong) UIView                    *bottomBtnView;
+@property (nonatomic, copy)   ZSHBottomBtnViewBtnBlock  bottomBtnViewBtnBlock;
 @property (nonatomic, strong) ZSHBaseTableViewModel     *tableViewModel;
 @property (nonatomic, strong) UICollectionView          *collectionView;
 @property (nonatomic, strong) ZSHSearchBarView          *searchBar;

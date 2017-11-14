@@ -12,7 +12,7 @@
 #import "ZSHWeiboViewController.h"
 #import "ZSHLiveListModel.h"
 #import "ZSHLiveRoomViewController.h"
-static NSString * const cellIdentifier = @"cellID";
+#import "ZSHNearHeadView.h"
 
 @interface ZSHLiveContentFirstViewController ()< UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,ZSHCustomWaterFlowLayoutDelegate>
 
@@ -21,6 +21,9 @@ static NSString * const cellIdentifier = @"cellID";
 @property (nonatomic, strong)NSMutableArray           *dataArr;
 
 @end
+
+static NSString * const cellIdentifier = @"cellID";
+static NSString * const ZSHNearHeadViewID = @"ZSHNearHeadView";
 
 @implementation ZSHLiveContentFirstViewController
 
@@ -46,11 +49,17 @@ static NSString * const cellIdentifier = @"cellID";
     
     self.waterLayout = [[ZSHCustomWaterFlowLayout alloc]init];
     self.waterLayout.delegate = self;
-    
+    if (kFromClassTypeValue == FromLiveNearVCToLiveContentFirstVC) {
+         self.waterLayout.headerReferenceSize = CGSizeMake(KScreenWidth, kRealValue(40));
+    }
+
     self.collectionView = [[UICollectionView alloc]initWithFrame:self.view.bounds collectionViewLayout:self.waterLayout];
     self.collectionView.dataSource = self;
     self.collectionView.delegate = self;
+    
     [self.collectionView registerClass:[ZSHLiveCellView class] forCellWithReuseIdentifier:cellIdentifier];
+    [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:ZSHNearHeadViewID];
+    
     [self.view addSubview:self.collectionView];
     [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.mas_equalTo(self.view);
@@ -69,6 +78,23 @@ static NSString * const cellIdentifier = @"cellID";
     ZSHLiveListModel *model = self.dataArr[indexPath.item];
     [cell updateCellWithModel:model];
     return cell;
+}
+
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
+       UICollectionReusableView *reusableview = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:ZSHNearHeadViewID forIndexPath:indexPath];
+    if (kFromClassTypeValue == FromLiveNearVCToLiveContentFirstVC) {
+        ZSHNearHeadView *nearView = [[ZSHNearHeadView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, kRealValue(40))];
+        [reusableview addSubview:nearView];
+    }
+    
+    return reusableview;
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
+     if (kFromClassTypeValue == FromLiveNearVCToLiveContentFirstVC) {
+           return CGSizeMake(KScreenWidth, kRealValue(40));
+     }
+    return  CGSizeMake(0, 0);
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
@@ -96,14 +122,11 @@ static NSString * const cellIdentifier = @"cellID";
 
 - (UIEdgeInsets)edgeinsetOfItems:(ZSHCustomWaterFlowLayout *)layout{
     return UIEdgeInsetsMake(10, 10, 10, 10);
-    
 }
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
 
 @end

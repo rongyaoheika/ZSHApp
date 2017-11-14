@@ -151,7 +151,6 @@
     } else {
         self.selectedIndex = to;
     }
-    
 }
 
 - (BOOL)shouldAutorotate {

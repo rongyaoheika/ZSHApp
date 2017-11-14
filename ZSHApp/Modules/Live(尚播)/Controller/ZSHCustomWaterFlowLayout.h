@@ -23,7 +23,8 @@
 @end
 
 @interface ZSHCustomWaterFlowLayout : UICollectionViewFlowLayout
-
-@property (nonatomic,weak)id<ZSHCustomWaterFlowLayoutDelegate>delegate;
+/** 段头的size */
+@property (nonatomic, assign) CGSize   headerReferenceSize;
+@property (nonatomic, weak)id<ZSHCustomWaterFlowLayoutDelegate>delegate;
 
 @end

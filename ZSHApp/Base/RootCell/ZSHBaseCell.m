@@ -10,8 +10,8 @@
 
 @interface ZSHBaseCell()
 
-//@property (nonatomic, strong) UIImageView *arrowImage;
 @property (nonatomic, strong) UIImageView *defaultAccessoryImageView;
+
 @end
 
 @implementation ZSHBaseCell

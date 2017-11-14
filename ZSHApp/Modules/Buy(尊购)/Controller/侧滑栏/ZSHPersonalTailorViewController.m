@@ -56,9 +56,9 @@ static NSString *cellIdentifier = @"listCell";
 - (ZSHBaseTableViewSectionModel*)storeListSection {
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     kWeakSelf(self);
-    NSArray *imageArr = @[@"personal_image_1",@"personal_image_2",@"personal_image_3",@"personal_image_4",@"personal_image_5",@"personal_image_6",@"personal_image_7"];
-    NSArray *chineseTitleArr = @[@"英国皇家绅士品牌",@"记录时间节点的仪式",@"定制你的专属旅程",@"记录你的美好回忆",@"高尔夫定制线路",@"情感定制 轻奢首饰",@"新东方美学",@"风雅生活，璞素之美"];
-    NSArray *englishTitleArr = @[@"GIEVES&HAWKES",@"CITIZEN",@"TRAVELID",@"ANDREW",@"WOKEE",@"LABORON",@"CICI",@"璞素"];
+    NSArray *imageArr = @[@"personal_image_1",@"personal_image_2",@"personal_image_3",@"personal_image_4",@"personal_image_8",@"personal_image_6",@"personal_image_7"];
+    NSArray *chineseTitleArr = @[@"英国皇家绅士品牌",@"记录时间节点的仪式",@"定制你的专属旅程",@"记录你的美好回忆",@"风雅生活，璞素之美",@"情感定制 轻奢首饰",@"新东方美学"];
+    NSArray *englishTitleArr = @[@"GIEVES&HAWKES",@"CITIZEN",@"TRAVELID",@"ANDREW",@"璞素",@"LABORON",@"CICI",];
     for (int i = 0; i<imageArr.count; i++) {
         
         ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];

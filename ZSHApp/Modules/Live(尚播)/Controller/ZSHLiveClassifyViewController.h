@@ -1,5 +1,5 @@
 //
-//  ZSHLiveNearViewController.h
+//  ZSHLiveClassifyViewController.h
 //  ZSHApp
 //
 //  Created by zhaoweiwei on 2017/11/14.
@@ -8,6 +8,6 @@
 
 #import "RootViewController.h"
 
-@interface ZSHLiveNearViewController : RootViewController
+@interface ZSHLiveClassifyViewController : RootViewController
 
 @end
