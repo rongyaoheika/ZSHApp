@@ -32,7 +32,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     
     self.isShowLiftBack = false;
     self.isHidenNaviBar = true;
-    
+
     UIImageView *image = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"live_room_bg"]];
     image.frame = self.view.bounds;
     [self.view addSubview:image];
@@ -83,6 +83,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 //头部UI
 - (UIView *)createAnchorView{
     UIView *anchorView = [[UIView alloc]initWithFrame:CGRectMake(0, 20, KScreenWidth, kRealValue(60))];
+//    anchorView.userInteractionEnabled = YES;
     [self.view addSubview:anchorView];
     
     UIImageView *anchorHeadImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"live_room_head1"]];

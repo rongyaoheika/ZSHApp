@@ -8,6 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+typedef NS_ENUM (NSInteger,ZSHToTabBarType) {
+    FromMainTabVCToTabBar,         //主界面 - tabbar
+    FromLiveTabVCToTabBar,         //尚播 - tabbar
+    FromNoneVCToTabBar
+};
+
+
 @class TabBar, TabBarItem;
 
 //给每个按钮定义协议 与 方法
@@ -20,6 +27,7 @@
 
 @interface TabBar : UIView
 
+@property (nonatomic, assign) ZSHToTabBarType  toTabBarType;
 /**
  *  TabBar item title color
  */

@@ -9,6 +9,10 @@
 #import "TabBar.h"
 #import "TabBarItem.h"
 
+@interface TabBar()
+
+@end
+
 @implementation TabBar
 
 - (NSMutableArray *)tabBarItems {
@@ -32,31 +36,27 @@
     tabBarItem.tabBarItemCount = self.tabBarItemCount;
     tabBarItem.tabBarItem = item;
     [tabBarItem addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchDown];
-    
     [self addSubview:tabBarItem];
-    
     [self.tabBarItems addObject:tabBarItem];
-    
     if (self.tabBarItems.count == 1) {
-        
         [self buttonClick:tabBarItem];
     }
 }
 
 - (void)buttonClick:(TabBarItem *)tabBarItem {
-    
     if ([self.delegate respondsToSelector:@selector(tabBar:didSelectedItemFrom:to:)]) {
-        
         [self.delegate tabBar:self didSelectedItemFrom:self.selectedItem.tabBarItem.tag to:tabBarItem.tag];
     }
     
+    if (tabBarItem.tag == 1 && self.toTabBarType == FromLiveTabVCToTabBar) {//直播中间按钮
+        return;
+    }
     self.selectedItem.selected = NO;
     self.selectedItem = tabBarItem;
     self.selectedItem.selected = YES;
 }
 
 - (void)layoutSubviews {
-    
     [super layoutSubviews];
     
     CGFloat w = self.frame.size.width;
@@ -67,15 +67,36 @@
     CGFloat itemW = w / self.subviews.count;
     CGFloat itemH = h;
     
-    for (int index = 0; index < count; index++) {
-        TabBarItem *tabBarItem = self.tabBarItems[index];
-        tabBarItem.tag = index;
-        CGFloat itemX = index * itemW;
-        tabBarItem.frame = CGRectMake(itemX, itemY, itemW, itemH);
-//        if (index == 3) {
-//            tabBarItem.frame = CGRectMake(itemX, -1, itemW, itemH);
-//        }
+    if (self.toTabBarType == FromMainTabVCToTabBar) {
+        for (int index = 0; index < count; index++) {
+            TabBarItem *tabBarItem = self.tabBarItems[index];
+            tabBarItem.tag = index;
+            CGFloat itemX = index * itemW;
+            tabBarItem.frame = CGRectMake(itemX, itemY, itemW, itemH);
+        }
+    } else if (self.toTabBarType == FromLiveTabVCToTabBar){
+        for (int index = 0; index < count; index++) {
+            TabBarItem *tabBarItem = self.tabBarItems[index];
+            tabBarItem.tag = index;
+            CGFloat itemX = index * itemW;
+            tabBarItem.frame = CGRectMake(itemX, itemY, itemW, itemH);
+            
+            if (index == 0) {//尚播
+                tabBarItem.frame = CGRectMake(0,itemY, kRealValue(150), itemH);
+            } else if (index == 1){//直播
+                [tabBarItem mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.centerX.mas_equalTo(self);
+                    make.size.mas_equalTo(CGSizeMake(kRealValue(35), kRealValue(35)));
+                    make.top.mas_equalTo(self).offset(kRealValue(5));
+                }];
+            } else if (index == 2){//我的
+                tabBarItem.frame = CGRectMake(kScreenWidth - kRealValue(150),itemY, kRealValue(150), itemH);
+            }
+        }
     }
+    
+    
+   
 }
 
 

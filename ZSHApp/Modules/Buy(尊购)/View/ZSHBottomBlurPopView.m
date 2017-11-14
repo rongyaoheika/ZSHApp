@@ -25,6 +25,9 @@
 
 #import "ZSHLivePersonInfoView.h"
 
+//直播弹窗
+#import "ZSHLivePopView.h"
+
 @interface ZSHBottomBlurPopView ()<STCalendarDelegate>
 
 @property (nonatomic, strong) NSDictionary           *paramDic;
@@ -46,7 +49,6 @@
 
 //底部年龄弹出框
 @property (nonatomic, strong) ZSHAgeView            *ageView;
-
 
 @end
 
@@ -106,7 +108,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     self.backgroundColor = KClearColor;
 //    [self addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapBlurViewAction:)]];
     
-    if (kFromClassTypeValue != ZSHFromPersonInfoVCToBottomBlurPopView) {
+    if (kFromClassTypeValue != ZSHFromPersonInfoVCToBottomBlurPopView||kFromClassTypeValue != ZSHFromLiveMidVCToBottomBlurPopView) {
         self.subTab = [ZSHBaseUIControl createTableView];
         self.subTab.scrollEnabled = NO;
         self.subTab.tag = 2;
@@ -146,6 +148,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
         self.subTab.backgroundColor = KWhiteColor;
         [self.subTab registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHHeadCellID];
     }  else if (kFromClassTypeValue == ZSHFromHomeMenuVCToBottomBlurPopView) {//首页-菜单栏
+        
         self.subTab.frame = CGRectMake(KScreenWidth - kRealValue(7.5) - kRealValue(100), 0, kRealValue(100),kRealValue(128));
         UIImageView *tbBgImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"list_bg"]];
         tbBgImageView.frame = self.subTab.bounds;
@@ -155,6 +158,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
         self.subTab.dataSource = self.tableViewModel;
         [self.subTab reloadData];
         return;
+        
     } else if (kFromClassTypeValue == ZSHFromPersonInfoVCToBottomBlurPopView) {
         ZSHLivePersonInfoView *personInfoView = [[ZSHLivePersonInfoView alloc] init];
         personInfoView.userInteractionEnabled = YES;
@@ -163,8 +167,13 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
             make.centerX.and.centerY.mas_equalTo(self);
             make.size.mas_equalTo(CGSizeMake(kRealValue(260), kRealValue(318)));
         }];
+    }  else if (kFromClassTypeValue == ZSHFromLiveMidVCToBottomBlurPopView) {//直播-直播弹窗
+        
+        ZSHLivePopView *livePopView = [[ZSHLivePopView alloc]initWithFrame:CGRectMake(0, KScreenHeight- kRealValue(150), KScreenWidth, kRealValue(150))];
+        [self addSubview:livePopView];
         return;
     }
+    
     
     self.subTab.delegate = self.tableViewModel;
     self.subTab.dataSource = self.tableViewModel;
