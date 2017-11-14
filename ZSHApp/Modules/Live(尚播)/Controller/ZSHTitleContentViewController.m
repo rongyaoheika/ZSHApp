@@ -116,8 +116,19 @@
         case FromContributionListVCToTitleContentVC: {
             self.titleArr = @[@"日榜", @"周榜", @"月榜", @"总榜"];
             self.indicatorHeight = 0.0;
-            self.contentVCS = @[@"ZSHLiveDayListViewController", @"ZSHLiveDayListViewController", @"ZSHLiveDayListViewController", @"ZSHLiveDayListViewController"];
+            self.contentVCS = @[@"ZSHLiveDayListViewController",
+                                @"ZSHLiveDayListViewController",
+                                @"ZSHLiveDayListViewController",
+                                @"ZSHLiveDayListViewController"];
 //            self.contentVCS = @[@"ZSHLiveDayListViewController", @"ZSHLiveWeekListViewController", @"ZSHLiveMonthListViewController", @"ZSHLiveTotalListViewController"];
+        }
+            break;
+        case FromPeronalCenterVCToTitleContentVC:{
+            self.titleArr = @[@"商品",@"详情",@"评价"];
+            self.indicatorHeight = 0.0;
+            self.contentVCS = @[@"ZSHWeiboViewController",
+                                @"ZSHWeiboViewController",
+                                @"ZSHWeiboViewController"];
         }
             break;
         default:

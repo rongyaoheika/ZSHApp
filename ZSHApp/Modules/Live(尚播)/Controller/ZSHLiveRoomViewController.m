@@ -7,6 +7,8 @@
 //
 
 #import "ZSHLiveRoomViewController.h"
+#import "ZSHBottomBlurPopView.h"
+#import "ZSHPersonalCenterViewController.h"
 
 @interface ZSHLiveRoomViewController ()
 
@@ -17,7 +19,6 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     
     [self loadData];
     [self createUI];
@@ -28,6 +29,9 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 }
 
 - (void)createUI{
+    
+    self.isShowLiftBack = false;
+    self.isHidenNaviBar = true;
     
     UIImageView *image = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"live_room_bg"]];
     image.frame = self.view.bounds;
@@ -110,6 +114,19 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
         make.height.mas_equalTo(kRealValue(18));
     }];
     
+    
+    UIButton *personBtn = [[UIButton alloc]init];
+    
+    [personBtn addTarget:self action:@selector(personInfo) forControlEvents:UIControlEventTouchUpInside];
+    [anchorView addSubview:personBtn];
+    [personBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(anchorView).offset(kRealValue(18));
+        make.centerY.mas_equalTo(anchorView);
+        make.width.mas_equalTo(kRealValue(75));
+        make.height.mas_equalTo(kRealValue(35));
+    }];
+    
+    
     UIButton *closeBtn = [[UIButton alloc]init];
     [closeBtn setBackgroundImage:[UIImage imageNamed:@"live_close"] forState:UIControlStateNormal];
     [closeBtn addTarget:self action:@selector(closeLiveRoom) forControlEvents:UIControlEventTouchUpInside];
@@ -166,7 +183,16 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 }
 
 - (void)closeLiveRoom{
-     [self dismissViewControllerAnimated:YES completion:nil];
+    [self backBtnClicked];
+}
+
+- (void)personInfo {
+    NSDictionary *nextParamDic = @{KFromClassType:@(ZSHFromPersonInfoVCToBottomBlurPopView)};
+    ZSHBottomBlurPopView *bottomBlurPopView = [[ZSHBottomBlurPopView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight) paramDic:nextParamDic];
+    bottomBlurPopView.blurRadius = 20;
+    bottomBlurPopView.dynamic = NO;
+    bottomBlurPopView.tintColor = KClearColor;
+    [ZSHBaseUIControl setAnimationWithHidden:NO view:bottomBlurPopView completedBlock:nil];
 }
 
 - (void)didReceiveMemoryWarning {

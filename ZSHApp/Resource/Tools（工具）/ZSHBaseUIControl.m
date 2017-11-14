@@ -150,4 +150,33 @@
     return headView;
 }
 
++ (void) setAnimationWithHidden:(BOOL)hidden view:(UIView *)view completedBlock:(RemoveCompletedBlock)completedBlock {
+    NSString *functionName = kCAMediaTimingFunctionEaseIn;
+    NSString *animationKey = @"ZSHAlertViewShow";
+    if (hidden) {
+        functionName = kCAMediaTimingFunctionEaseOut;
+        animationKey = @"ZSHAlertViewHide";
+    }
+    CATransition *animation = [CATransition animation];
+    [animation setDuration:0.5f];
+    animation.removedOnCompletion = NO;
+    [animation setType:kCATransitionFade];
+    [animation setFillMode:kCAFillModeForwards];
+    [animation setTimingFunction:[CAMediaTimingFunction functionWithName:functionName]];
+    [[UIApplication sharedApplication].keyWindow.layer addAnimation:animation forKey:animationKey];
+    if (hidden) {
+        [view removeFromSuperview];
+        view = nil;
+        if (completedBlock) {
+            completedBlock();
+        }
+        return;
+        
+    } else {
+        [[UIApplication sharedApplication].keyWindow addSubview:view];
+    }
+}
+
+
+
 @end

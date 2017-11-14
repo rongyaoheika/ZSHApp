@@ -23,6 +23,8 @@
 //年龄
 #import "ZSHAgeView.h"
 
+#import "ZSHLivePersonInfoView.h"
+
 @interface ZSHBottomBlurPopView ()<STCalendarDelegate>
 
 @property (nonatomic, strong) NSDictionary           *paramDic;
@@ -43,7 +45,8 @@
 @property (nonatomic, strong, nullable) STCalendar *calender;
 
 //底部年龄弹出框
-@property (nonatomic, strong) ZSHAgeView      *ageView;
+@property (nonatomic, strong) ZSHAgeView            *ageView;
+
 
 @end
 
@@ -103,10 +106,12 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     self.backgroundColor = KClearColor;
 //    [self addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapBlurViewAction:)]];
     
-    self.subTab = [ZSHBaseUIControl createTableView];
-    self.subTab.scrollEnabled = NO;
-    self.subTab.tag = 2;
-    [self addSubview: self.subTab];
+    if (kFromClassTypeValue != ZSHFromPersonInfoVCToBottomBlurPopView) {
+        self.subTab = [ZSHBaseUIControl createTableView];
+        self.subTab.scrollEnabled = NO;
+        self.subTab.tag = 2;
+        [self addSubview: self.subTab];
+    }
     if (kFromClassTypeValue == ZSHFromHotelVCToBottomBlurPopView){//酒店排序
         _subTabHeight = kRealValue(200);
         
@@ -149,6 +154,15 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
         self.subTab.delegate = self.tableViewModel;
         self.subTab.dataSource = self.tableViewModel;
         [self.subTab reloadData];
+        return;
+    } else if (kFromClassTypeValue == ZSHFromPersonInfoVCToBottomBlurPopView) {
+        ZSHLivePersonInfoView *personInfoView = [[ZSHLivePersonInfoView alloc] init];
+        personInfoView.userInteractionEnabled = YES;
+        [self addSubview:personInfoView];
+        [personInfoView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerX.and.centerY.mas_equalTo(self);
+            make.size.mas_equalTo(CGSizeMake(kRealValue(260), kRealValue(318)));
+        }];
         return;
     }
     

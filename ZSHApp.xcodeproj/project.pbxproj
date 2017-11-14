@@ -28,6 +28,7 @@
 		182287161FB44FE600CA5B10 /* XXTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 182287151FB44E1C00CA5B10 /* XXTextView.m */; };
 		1822871A1FB4559300CA5B10 /* ZSHLiveMineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 182287191FB4559300CA5B10 /* ZSHLiveMineViewController.m */; };
 		1822871D1FB45CE800CA5B10 /* ZSHLiveMineHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1822871C1FB45CE800CA5B10 /* ZSHLiveMineHeadView.m */; };
+		1858710F1FBA8903003ECFE3 /* ZSHPersonalCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1858710E1FBA8903003ECFE3 /* ZSHPersonalCenterViewController.m */; };
 		185BB9AB1FB53BC6007A96FF /* ZSHLiveUserLevelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 185BB9AA1FB53BC6007A96FF /* ZSHLiveUserLevelViewController.m */; };
 		185BB9AE1FB53BF6007A96FF /* ZSHLivePlayerLevelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 185BB9AD1FB53BF6007A96FF /* ZSHLivePlayerLevelViewController.m */; };
 		185BB9B21FB5598F007A96FF /* ZSHLiveDayListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 185BB9B11FB5598F007A96FF /* ZSHLiveDayListViewController.m */; };
@@ -38,6 +39,7 @@
 		185BB9C21FB5860E007A96FF /* ZSHLiveTaskCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 185BB9C11FB5860E007A96FF /* ZSHLiveTaskCenterViewController.m */; };
 		185BB9C61FB58DD6007A96FF /* ZSHLiveTaskCenterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 185BB9C51FB58DD6007A96FF /* ZSHLiveTaskCenterCell.m */; };
 		185BB9CA1FB5BDB9007A96FF /* ZSHMoreSubscribeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 185BB9C91FB5BDB9007A96FF /* ZSHMoreSubscribeViewController.m */; };
+		1874B9661FB99E9700059184 /* ZSHLivePersonInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1874B9651FB99E9700059184 /* ZSHLivePersonInfoView.m */; };
 		18A2C64E1F483A66005F394F /* PPHTTPRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 18A2C6461F483A66005F394F /* PPHTTPRequest.m */; };
 		18A2C64F1F483A66005F394F /* PPInterfacedConst.m in Sources */ = {isa = PBXBuildFile; fileRef = 18A2C6481F483A66005F394F /* PPInterfacedConst.m */; };
 		18A2C6501F483A66005F394F /* PPNetworkCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 18A2C64B1F483A66005F394F /* PPNetworkCache.m */; };
@@ -360,6 +362,8 @@
 		1822871B1FB45CE800CA5B10 /* ZSHLiveMineHeadView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHLiveMineHeadView.h; sourceTree = "<group>"; };
 		1822871C1FB45CE800CA5B10 /* ZSHLiveMineHeadView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHLiveMineHeadView.m; sourceTree = "<group>"; };
 		18342C701F4C04C500FF8C98 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		1858710D1FBA8903003ECFE3 /* ZSHPersonalCenterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHPersonalCenterViewController.h; sourceTree = "<group>"; };
+		1858710E1FBA8903003ECFE3 /* ZSHPersonalCenterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHPersonalCenterViewController.m; sourceTree = "<group>"; };
 		185BB9A91FB53BC6007A96FF /* ZSHLiveUserLevelViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHLiveUserLevelViewController.h; sourceTree = "<group>"; };
 		185BB9AA1FB53BC6007A96FF /* ZSHLiveUserLevelViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHLiveUserLevelViewController.m; sourceTree = "<group>"; };
 		185BB9AC1FB53BF6007A96FF /* ZSHLivePlayerLevelViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHLivePlayerLevelViewController.h; sourceTree = "<group>"; };
@@ -380,6 +384,8 @@
 		185BB9C51FB58DD6007A96FF /* ZSHLiveTaskCenterCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHLiveTaskCenterCell.m; sourceTree = "<group>"; };
 		185BB9C81FB5BDB9007A96FF /* ZSHMoreSubscribeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHMoreSubscribeViewController.h; sourceTree = "<group>"; };
 		185BB9C91FB5BDB9007A96FF /* ZSHMoreSubscribeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHMoreSubscribeViewController.m; sourceTree = "<group>"; };
+		1874B9641FB99E9700059184 /* ZSHLivePersonInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHLivePersonInfoView.h; sourceTree = "<group>"; };
+		1874B9651FB99E9700059184 /* ZSHLivePersonInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHLivePersonInfoView.m; sourceTree = "<group>"; };
 		18A2C6451F483A66005F394F /* PPHTTPRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPHTTPRequest.h; sourceTree = "<group>"; };
 		18A2C6461F483A66005F394F /* PPHTTPRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPHTTPRequest.m; sourceTree = "<group>"; };
 		18A2C6471F483A66005F394F /* PPInterfacedConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPInterfacedConst.h; sourceTree = "<group>"; };
@@ -1009,6 +1015,7 @@
 		182287171FB4555700CA5B10 /* 我的 */ = {
 			isa = PBXGroup;
 			children = (
+				1858710C1FBA8889003ECFE3 /* 个人 */,
 				18F902461FB6CBE70044967F /* Follow(关注) */,
 				FEDF292E1FB701A600CD5756 /* Coin(黑咖币) */,
 				1822871E1FB4617300CA5B10 /* MineLevel(等级) */,
@@ -1029,6 +1036,15 @@
 				185BB9AD1FB53BF6007A96FF /* ZSHLivePlayerLevelViewController.m */,
 			);
 			path = "MineLevel(等级)";
+			sourceTree = "<group>";
+		};
+		1858710C1FBA8889003ECFE3 /* 个人 */ = {
+			isa = PBXGroup;
+			children = (
+				1858710D1FBA8903003ECFE3 /* ZSHPersonalCenterViewController.h */,
+				1858710E1FBA8903003ECFE3 /* ZSHPersonalCenterViewController.m */,
+			);
+			name = "个人";
 			sourceTree = "<group>";
 		};
 		185BB9AF1FB557E8007A96FF /* List(贡献榜) */ = {
@@ -1448,6 +1464,8 @@
 				18F9024B1FB6CFDF0044967F /* ZSHFollowCell.m */,
 				18F902511FB6DED20044967F /* ZSHChargeRecCell.h */,
 				18F902521FB6DED20044967F /* ZSHChargeRecCell.m */,
+				1874B9641FB99E9700059184 /* ZSHLivePersonInfoView.h */,
+				1874B9651FB99E9700059184 /* ZSHLivePersonInfoView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2979,6 +2997,7 @@
 				FE5538171F47049D00803128 /* TabBarItem.m in Sources */,
 				FEBD7CB21FA74BBF00CE2BA6 /* ZSHGoodsDetailModel.m in Sources */,
 				FE5538651F47049D00803128 /* OpenUDID.m in Sources */,
+				1874B9661FB99E9700059184 /* ZSHLivePersonInfoView.m in Sources */,
 				FE1F761C1F8F191300C45B83 /* ZSHGoodsListView.m in Sources */,
 				FEF416001FAB70EB00137F0A /* ZSHAirTicketDetailViewController.m in Sources */,
 				FEDF292A1FB6DA3000CD5756 /* ZSHLiveRoomViewController.m in Sources */,
@@ -3014,6 +3033,7 @@
 				FE1377781F973402003C8DFB /* ZSHOrderModel.m in Sources */,
 				FEAE11301FB47292008DCB3E /* ZSHEnergyHeadCell.m in Sources */,
 				FE7AF2381FA3814E00E1A648 /* ZSHHotelDetailViewController.m in Sources */,
+				1858710F1FBA8903003ECFE3 /* ZSHPersonalCenterViewController.m in Sources */,
 				FE443FDF1FB04FF100B7F7A5 /* ZSHMultiInfoViewController.m in Sources */,
 				18A2C64F1F483A66005F394F /* PPInterfacedConst.m in Sources */,
 				FE7AF2321FA307F400E1A648 /* ZSHTopLineView.m in Sources */,

@@ -19,6 +19,7 @@ typedef NS_ENUM(NSUInteger,ZSHFromVCToBottomBlurPopView){
     ZSHFromHomeMenuVCToBottomBlurPopView,                    //首页-菜单栏
     ZSHFromAirplaneUserInfoVCToBottomBlurPopView,            //机票个人信息-底部弹出
     ZSHFromAirplaneAgeVCToBottomBlurPopView,                 //年龄-底部弹出
+    ZSHFromPersonInfoVCToBottomBlurPopView,                  //主播个人信息
     ZSHFromNoneVCToBottomBlurPopView
 };
 

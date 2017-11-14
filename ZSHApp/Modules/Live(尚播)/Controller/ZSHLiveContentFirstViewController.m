@@ -76,7 +76,7 @@ static NSString * const cellIdentifier = @"cellID";
 //    [self.navigationController pushViewController:weiboVC animated:YES];
     
     ZSHLiveRoomViewController *liveRoomVC = [[ZSHLiveRoomViewController alloc]init];
-    [self presentViewController:liveRoomVC animated:YES completion:nil];
+    [self.navigationController pushViewController:liveRoomVC animated:YES];
 }
 
 #pragma WaterFlowLayoutDelegate

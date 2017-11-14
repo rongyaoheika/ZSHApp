@@ -113,9 +113,6 @@ typedef void(^RemoveCompletedBlock)();
 //取消网络请求
 - (void)cancelRequest;
 
-//加载子view时动画
-- (void) setAnimationWithHidden:(BOOL)hidden view:(UIView *)view completedBlock:(RemoveCompletedBlock)completedBlock;
-
 //跳转是传递参数
 - (instancetype)initWithParamDic:(NSDictionary *)paramDic;
 
