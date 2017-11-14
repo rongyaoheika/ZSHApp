@@ -94,4 +94,5 @@ typedef NS_ENUM (NSInteger,ZSHToNotificationVC) {
 + (void)drawLineOfDashByCAShapeLayer:(UIView *)lineView lineLength:(int)lineLength lineSpacing:(int)lineSpacing lineColor:(UIColor *)lineColor lineDirection:(BOOL)isHorizonal;
 + (UIButton *)createLabelBtnWithTopDic:(NSDictionary *)topDic bottomDic:(NSDictionary *)bottomDic;
 + (UIView *)createTabHeadLabelViewWithParamDic:(NSDictionary *)paramDic;
++ (void) setAnimationWithHidden:(BOOL)hidden view:(UIView *)view completedBlock:(RemoveCompletedBlock)completedBlock;
 @end

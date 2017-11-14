@@ -23,6 +23,10 @@
 //年龄
 #import "ZSHAgeView.h"
 
+//直播弹窗
+#import "TLMenuButtonView.h"
+#import "ZSHLivePopView.h"
+
 @interface ZSHBottomBlurPopView ()<STCalendarDelegate>
 
 @property (nonatomic, strong) NSDictionary           *paramDic;
@@ -45,6 +49,9 @@
 //底部年龄弹出框
 @property (nonatomic, strong) ZSHAgeView      *ageView;
 
+//直播弹窗
+@property (nonatomic, assign) BOOL             ISShowMenuButton;
+@property (nonatomic, strong) TLMenuButtonView *tlMenuView ;
 @end
 
 static NSString *ZSHHeadCellID = @"ZSHHeadCell";
@@ -103,10 +110,13 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     self.backgroundColor = KClearColor;
 //    [self addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapBlurViewAction:)]];
     
-    self.subTab = [ZSHBaseUIControl createTableView];
-    self.subTab.scrollEnabled = NO;
-    self.subTab.tag = 2;
-    [self addSubview: self.subTab];
+    if (kFromClassTypeValue != ZSHFromLiveMidVCToBottomBlurPopView) {
+        self.subTab = [ZSHBaseUIControl createTableView];
+        self.subTab.scrollEnabled = NO;
+        self.subTab.tag = 2;
+        [self addSubview: self.subTab];
+    }
+    
     if (kFromClassTypeValue == ZSHFromHotelVCToBottomBlurPopView){//酒店排序
         _subTabHeight = kRealValue(200);
         
@@ -141,6 +151,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
         self.subTab.backgroundColor = KWhiteColor;
         [self.subTab registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHHeadCellID];
     }  else if (kFromClassTypeValue == ZSHFromHomeMenuVCToBottomBlurPopView) {//首页-菜单栏
+        
         self.subTab.frame = CGRectMake(KScreenWidth - kRealValue(7.5) - kRealValue(100), 0, kRealValue(100),kRealValue(128));
         UIImageView *tbBgImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"list_bg"]];
         tbBgImageView.frame = self.subTab.bounds;
@@ -150,7 +161,13 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
         self.subTab.dataSource = self.tableViewModel;
         [self.subTab reloadData];
         return;
+    }  else if (kFromClassTypeValue == ZSHFromLiveMidVCToBottomBlurPopView) {//直播-直播弹窗
+        
+        ZSHLivePopView *livePopView = [[ZSHLivePopView alloc]initWithFrame:CGRectMake(0, KScreenHeight- kRealValue(150), KScreenWidth, kRealValue(150))];
+        [self addSubview:livePopView];
+        return;
     }
+    
     
     self.subTab.delegate = self.tableViewModel;
     self.subTab.dataSource = self.tableViewModel;
@@ -626,6 +643,24 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     if (touch.view.tag != 2) {
         kFromClassTypeValue!= ZSHFromHomeMenuVCToBottomBlurPopView?[self dismiss]:self.dissmissViewBlock?self.dissmissViewBlock(self,nil):nil;
     }
+}
+
+//直播
+- (void)clickAddButton:(UIButton *)sender{
+    if (!_ISShowMenuButton) {
+        [UIView animateWithDuration:0.2 animations:^{
+            CGAffineTransform rotate = CGAffineTransformMakeRotation( M_PI / 4 );
+            [sender setTransform:rotate];
+        }];
+        [_tlMenuView showItems];
+    }else{
+        [UIView animateWithDuration:0.2 animations:^{
+            CGAffineTransform rotate = CGAffineTransformMakeRotation( 0 );
+            [sender setTransform:rotate];
+        }];
+        [_tlMenuView dismiss];
+    }
+    _ISShowMenuButton = !_ISShowMenuButton;
 }
 
 @end

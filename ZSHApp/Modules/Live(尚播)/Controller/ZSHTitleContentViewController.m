@@ -128,6 +128,7 @@
 
 - (void)createLiveNaviUI{
     [self addNavigationItemWithImageName:@"nav_back" isLeft:YES target:self action:@selector(backAction) tag:1];
+    [self addNavigationItemWithImageName:@"live_search" isLeft:NO target:self action:@selector(searchAction) tag:2];
 }
 
 - (void)createHotelNaviUI{
@@ -219,6 +220,10 @@
     MainTabBarController *tab = (MainTabBarController *)RXL.contentViewController;
     tab.tabBar.hidden = NO;
     tab.selectedIndex = 0;
+}
+
+- (void)searchAction{
+    
 }
 
 - (void)didReceiveMemoryWarning {

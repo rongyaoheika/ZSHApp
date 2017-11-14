@@ -14,11 +14,13 @@
 #import "ZSHLiveMineViewController.h"
 #import "MainTabBarController.h"
 #import "RXLSideSlipViewController.h"
+#import "ZSHBottomBlurPopView.h"
 
 @interface ZSHLiveTabBarController ()<TabBarDelegate>
 
-@property (nonatomic,strong) NSMutableArray * VCS;   //tabbar root VC
-
+@property (nonatomic, strong) NSMutableArray             *VCS;   //tabbar root VC
+@property (nonatomic, strong) UIView                     *baseView;
+@property (nonatomic, strong) ZSHBottomBlurPopView       *bottomBlurPopView;
 
 @end
 
@@ -49,6 +51,7 @@
 -(void)setUpTabBar{
     [self.tabBar addSubview:({
         TabBar *tabBar = [[TabBar alloc] init];
+        tabBar.toTabBarType = FromLiveTabVCToTabBar;
         tabBar.backgroundColor = KZSHColor0B0B0B;
         tabBar.frame     = self.tabBar.bounds;
         tabBar.delegate  = self;
@@ -65,9 +68,9 @@
     [self setupChildViewController:liveVC title:@"尚播" imageName:@"tab_live_normal" seleceImageName:@"tab_live_press"];
     
     ZSHLiveMineViewController *mineVC = [[ZSHLiveMineViewController alloc]init];
-    [self setupChildViewController:mineVC title:@"我的" imageName:@"tab_mine_normal" seleceImageName:@"tab_mine_press"];
-    
+    [self setupChildViewController:mineVC title:@"我的" imageName:@"live_mine_normal" seleceImageName:@"live_mine_press"];
     self.viewControllers = _VCS;
+    
 }
 
 -(void)setupChildViewController:(UIViewController*)controller title:(NSString *)title imageName:(NSString *)imageName seleceImageName:(NSString *)selectImageName{
@@ -100,14 +103,20 @@
         VC.tabBarItem.selectedImage = [selectedImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
         [self addChildViewController:VC];
         [self.TabBar addTabBarItem:VC.tabBarItem];
+        if (idx == 0) {//直播item
+            UITabBarItem *item = [[UITabBarItem alloc]init];
+            item.image = [UIImage imageNamed:@"live_mid"];
+            item.selectedImage = [UIImage imageNamed:@"live_mid"];
+            self.TabBar.itemImageRatio = 0.9;
+            [self.TabBar addTabBarItem:item];
+        }
+        self.TabBar.itemImageRatio = self.itemImageRatio == 0 ? 0.7 : self.itemImageRatio;
     }];
 }
 
 #pragma mark ————— 选中某个tab —————
 - (void)setSelectedIndex:(NSUInteger)selectedIndex {
-    
     [super setSelectedIndex:selectedIndex];
-    
     self.TabBar.selectedItem.selected = NO;
     self.TabBar.selectedItem = self.TabBar.tabBarItems[selectedIndex];
     self.TabBar.selectedItem.selected = YES;
@@ -125,6 +134,19 @@
 #pragma mark - TabBarDelegate Method
 
 - (void)tabBar:(TabBar *)tabBarView didSelectedItemFrom:(NSInteger)from to:(NSInteger)to {
+    if (to == 1) {//中间直播button
+        NSDictionary *nextParamDic = @{KFromClassType:@(ZSHFromLiveMidVCToBottomBlurPopView)};
+        ZSHBottomBlurPopView *bottomBlurPopView = [[ZSHBottomBlurPopView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight) paramDic:nextParamDic];
+        bottomBlurPopView.blurRadius = 20;
+        bottomBlurPopView.dynamic = NO;
+        bottomBlurPopView.tintColor = KClearColor;
+        [ZSHBaseUIControl setAnimationWithHidden:NO view:bottomBlurPopView completedBlock:nil];
+        bottomBlurPopView.dissmissViewBlock = ^(UIView *blurView, NSIndexPath *indexpath) {
+            [ZSHBaseUIControl setAnimationWithHidden:YES view:blurView completedBlock:nil];
+        };
+        return;
+    }
+    
     self.selectedIndex = to;
 }
 
@@ -140,6 +162,5 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
 
 @end

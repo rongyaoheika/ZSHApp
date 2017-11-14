@@ -8,6 +8,13 @@
 
 #import "RootViewController.h"
 
+typedef NS_ENUM (NSInteger,ZSHToLiveContentFirstVC) {
+    FromLiveRecommendVCToLiveContentFirstVC,         //尚播 - 推荐
+    FromLiveNearVCToLiveContentFirstVC,              //尚播 - 附近
+    FromLiveClassifyVCToLiveContentFirstVC,          //尚播 - 分类
+    FromActivityCenterVCToLiveContentFirstVC
+};
+
 @interface ZSHLiveContentFirstViewController : RootViewController
 
 @end

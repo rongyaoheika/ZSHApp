@@ -274,9 +274,10 @@ static NSString *Identify_MagazineCell = @"magazineCell";
     bottomBlurPopView.blurRadius = 20;
     bottomBlurPopView.dynamic = NO;
     bottomBlurPopView.tintColor = KClearColor;
-    [self setAnimationWithHidden:NO view:bottomBlurPopView completedBlock:nil];
+//    [self setAnimationWithHidden:NO view:bottomBlurPopView completedBlock:nil];
+     [ZSHBaseUIControl setAnimationWithHidden:NO view:bottomBlurPopView completedBlock:nil];
     bottomBlurPopView.dissmissViewBlock = ^(UIView *blurView, NSIndexPath *indexpath) {
-        [self setAnimationWithHidden:YES view:blurView completedBlock:^{
+        [ZSHBaseUIControl setAnimationWithHidden:YES view:blurView completedBlock:^{
             if (indexpath) {//跳转到对应控制器
                 Class className = NSClassFromString(weakself.menuPushVCsArr[indexpath.row]);
                 RootViewController *vc = [[className alloc]initWithParamDic:weakself.menuParamArr[indexpath.row]];

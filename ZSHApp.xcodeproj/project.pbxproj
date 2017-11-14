@@ -104,6 +104,7 @@
 		FE291EE91F8CCC5900D4BBE7 /* ZSHMineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE291EE81F8CCC5900D4BBE7 /* ZSHMineViewController.m */; };
 		FE291EF31F8CCD2200D4BBE7 /* ZSHLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE291EF21F8CCD2200D4BBE7 /* ZSHLoginViewController.m */; };
 		FE291EF61F8CD87300D4BBE7 /* ZSHBuyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE291EF51F8CD87300D4BBE7 /* ZSHBuyViewController.m */; };
+		FE2B2A811FB9FD26001F8A61 /* TLMenuButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE2B2A7F1FB9FD26001F8A61 /* TLMenuButtonView.m */; };
 		FE2BB0B81F8E03FB000D5800 /* ZSHHomeHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE2BB0B71F8E03FB000D5800 /* ZSHHomeHeadView.m */; };
 		FE2BB0C21F8E16C8000D5800 /* MainTabBarController.h in Sources */ = {isa = PBXBuildFile; fileRef = FE55374A1F47049D00803128 /* MainTabBarController.h */; };
 		FE2CD0931F9833DE00E9E519 /* ZSHAddressListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE2CD0921F9833DE00E9E519 /* ZSHAddressListCell.m */; };
@@ -292,6 +293,8 @@
 		FEDF29271FB6D1C100CD5756 /* ZSHCoinViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEDF29261FB6D1C100CD5756 /* ZSHCoinViewController.m */; };
 		FEDF292A1FB6DA3000CD5756 /* ZSHLiveRoomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEDF29291FB6DA3000CD5756 /* ZSHLiveRoomViewController.m */; };
 		FEDF292D1FB6F24A00CD5756 /* ZSHLiveProfitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEDF292C1FB6F24A00CD5756 /* ZSHLiveProfitViewController.m */; };
+		FEEF46EF1FBA84100086A3C4 /* ZSHLivePopView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEEF46EE1FBA84100086A3C4 /* ZSHLivePopView.m */; };
+		FEEF46F21FBA8CAB0086A3C4 /* ZSHLiveNearViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEEF46F11FBA8CAB0086A3C4 /* ZSHLiveNearViewController.m */; };
 		FEF2B62E1FAC1C89000AEA6E /* ZSHTextFieldCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEF2B62D1FAC1C88000AEA6E /* ZSHTextFieldCellView.m */; };
 		FEF2B6331FAC4DF3000AEA6E /* ZSHEnterTainmentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FEF2B6321FAC4DF3000AEA6E /* ZSHEnterTainmentCell.m */; };
 		FEF2B6361FAC4FE2000AEA6E /* ZSHEntertainmentHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEF2B6351FAC4FE2000AEA6E /* ZSHEntertainmentHeadView.m */; };
@@ -491,6 +494,8 @@
 		FE291EF21F8CCD2200D4BBE7 /* ZSHLoginViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHLoginViewController.m; sourceTree = "<group>"; };
 		FE291EF41F8CD87300D4BBE7 /* ZSHBuyViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHBuyViewController.h; sourceTree = "<group>"; };
 		FE291EF51F8CD87300D4BBE7 /* ZSHBuyViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHBuyViewController.m; sourceTree = "<group>"; };
+		FE2B2A7E1FB9FD26001F8A61 /* TLMenuButtonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLMenuButtonView.h; sourceTree = "<group>"; };
+		FE2B2A7F1FB9FD26001F8A61 /* TLMenuButtonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TLMenuButtonView.m; sourceTree = "<group>"; };
 		FE2BB0B61F8E03FB000D5800 /* ZSHHomeHeadView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHHomeHeadView.h; sourceTree = "<group>"; };
 		FE2BB0B71F8E03FB000D5800 /* ZSHHomeHeadView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHHomeHeadView.m; sourceTree = "<group>"; };
 		FE2BB0C01F8E168B000D5800 /* ZSHHomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHHomeViewController.h; sourceTree = "<group>"; };
@@ -826,6 +831,10 @@
 		FEDF29291FB6DA3000CD5756 /* ZSHLiveRoomViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHLiveRoomViewController.m; sourceTree = "<group>"; };
 		FEDF292B1FB6F24A00CD5756 /* ZSHLiveProfitViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHLiveProfitViewController.h; sourceTree = "<group>"; };
 		FEDF292C1FB6F24A00CD5756 /* ZSHLiveProfitViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHLiveProfitViewController.m; sourceTree = "<group>"; };
+		FEEF46ED1FBA84100086A3C4 /* ZSHLivePopView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHLivePopView.h; sourceTree = "<group>"; };
+		FEEF46EE1FBA84100086A3C4 /* ZSHLivePopView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHLivePopView.m; sourceTree = "<group>"; };
+		FEEF46F01FBA8CAB0086A3C4 /* ZSHLiveNearViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHLiveNearViewController.h; sourceTree = "<group>"; };
+		FEEF46F11FBA8CAB0086A3C4 /* ZSHLiveNearViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHLiveNearViewController.m; sourceTree = "<group>"; };
 		FEF2B62C1FAC1C88000AEA6E /* ZSHTextFieldCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHTextFieldCellView.h; sourceTree = "<group>"; };
 		FEF2B62D1FAC1C88000AEA6E /* ZSHTextFieldCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHTextFieldCellView.m; sourceTree = "<group>"; };
 		FEF2B6311FAC4DF3000AEA6E /* ZSHEnterTainmentCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHEnterTainmentCell.h; sourceTree = "<group>"; };
@@ -1403,6 +1412,8 @@
 				FE1F76271F8F795C00C45B83 /* ZSHCustomWaterFlowLayout.m */,
 				FE1F76311F8F7D0500C45B83 /* ZSHLiveContentFirstViewController.h */,
 				FE1F76321F8F7D0500C45B83 /* ZSHLiveContentFirstViewController.m */,
+				FEEF46F01FBA8CAB0086A3C4 /* ZSHLiveNearViewController.h */,
+				FEEF46F11FBA8CAB0086A3C4 /* ZSHLiveNearViewController.m */,
 				FE0F9DBC1F949EFA004F8D2A /* ZSHWeiboViewController.h */,
 				FE0F9DBD1F949EFA004F8D2A /* ZSHWeiboViewController.m */,
 				18F9024E1FB6DE460044967F /* ZSHChargeRecViewController.h */,
@@ -1434,6 +1445,7 @@
 		FE291EB51F8CAEDC00D4BBE7 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				FE2B2A7B1FB9FD26001F8A61 /* TLMemuButton */,
 				FE5229831F9050DF00DC2899 /* ZSHLiveCellView.h */,
 				FE5229841F9050DF00DC2899 /* ZSHLiveCellView.m */,
 				FE0F9DB91F949C45004F8D2A /* ZSHWeiBoCell.h */,
@@ -1448,6 +1460,8 @@
 				18F9024B1FB6CFDF0044967F /* ZSHFollowCell.m */,
 				18F902511FB6DED20044967F /* ZSHChargeRecCell.h */,
 				18F902521FB6DED20044967F /* ZSHChargeRecCell.m */,
+				FEEF46ED1FBA84100086A3C4 /* ZSHLivePopView.h */,
+				FEEF46EE1FBA84100086A3C4 /* ZSHLivePopView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1686,6 +1700,15 @@
 				FEDF291E1FB69CBF00CD5756 /* ZSHGuideView.m */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		FE2B2A7B1FB9FD26001F8A61 /* TLMemuButton */ = {
+			isa = PBXGroup;
+			children = (
+				FE2B2A7E1FB9FD26001F8A61 /* TLMenuButtonView.h */,
+				FE2B2A7F1FB9FD26001F8A61 /* TLMenuButtonView.m */,
+			);
+			path = TLMemuButton;
 			sourceTree = "<group>";
 		};
 		FE2CD0A01F98838B00E9E519 /* iCarousel */ = {
@@ -2948,6 +2971,7 @@
 				FE1F76371F8F7E1100C45B83 /* LXScrollContentView.h in Sources */,
 				FEA30A501F9F08FE00AB0FFC /* ZSHLogisticsDetailModel.m in Sources */,
 				FE1F76381F8F7E1100C45B83 /* LXScrollContentView.m in Sources */,
+				FEEF46F21FBA8CAB0086A3C4 /* ZSHLiveNearViewController.m in Sources */,
 				FE1F76341F8F7DB600C45B83 /* ZSHLiveContentFirstViewController.h in Sources */,
 				FEBD7C991FA6F42900CE2BA6 /* ZSHHotelDetailModel.m in Sources */,
 				FE8FD0831FADE64A005F1184 /* ZSHWalletCenterViewController.m in Sources */,
@@ -3009,6 +3033,7 @@
 				FED308981FA414D900CD442B /* ZSHHotelDetailDeviceCell.m in Sources */,
 				FEAEE3EF1FA86CBA00F73EEA /* STCalendar.m in Sources */,
 				FE5538811F470BAF00803128 /* GameInfo.m in Sources */,
+				FEEF46EF1FBA84100086A3C4 /* ZSHLivePopView.m in Sources */,
 				FE5229851F9050DF00DC2899 /* ZSHLiveCellView.m in Sources */,
 				FEAEE3EE1FA86CBA00F73EEA /* NSCalendar+ST.m in Sources */,
 				FE1377781F973402003C8DFB /* ZSHOrderModel.m in Sources */,
@@ -3041,6 +3066,7 @@
 				FEF5DAF61F5FC9E2004B0D2A /* ZSHBaseCell.m in Sources */,
 				FE7502BD1F9A0671002F2708 /* ZSHPersonalTailorViewController.m in Sources */,
 				18A2C64E1F483A66005F394F /* PPHTTPRequest.m in Sources */,
+				FE2B2A811FB9FD26001F8A61 /* TLMenuButtonView.m in Sources */,
 				FEA1057A1F9B2738008652D6 /* UIView+ZSHExtension.m in Sources */,
 				18F902451FB68D740044967F /* ZSHSubscribeViewController.m in Sources */,
 				FE2CD0B91F98F9C200E9E519 /* ZSHCouponViewController.m in Sources */,

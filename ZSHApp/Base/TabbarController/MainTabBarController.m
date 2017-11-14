@@ -16,7 +16,7 @@
 #import "ZSHLiveTabBarController.h"
 
 
-@interface MainTabBarController ()<TabBarDelegate>
+@interface MainTabBarController ()<TabBarDelegate,UITabBarControllerDelegate>
 
 @property (nonatomic,strong) NSMutableArray * VCS;   //tabbar root VC
 
@@ -47,6 +47,7 @@
 -(void)setUpTabBar{
     [self.tabBar addSubview:({
         TabBar *tabBar = [[TabBar alloc] init];
+        tabBar.toTabBarType = FromMainTabVCToTabBar;
         tabBar.backgroundColor = KZSHColor0B0B0B;
         tabBar.frame     = self.tabBar.bounds;
         tabBar.delegate  = self;
@@ -65,6 +66,7 @@
     [self setupChildViewController:buyVC title:@"尊购" imageName:@"tab_buy_normal" seleceImageName:@"tab_buy_press"];
     
     ZSHLiveTabBarController *liveVC = [[ZSHLiveTabBarController alloc]init];
+    liveVC.delegate = self;
     [self setupChildViewController:liveVC title:@"尚播" imageName:@"tab_live_normal" seleceImageName:@"tab_live_press"];
     
     ZSHTogetherViewController *togetherVC = [[ZSHTogetherViewController alloc]init];
@@ -148,6 +150,11 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController
+{
+    return ![viewController isEqual:tabBarController.viewControllers[1]];
 }
 
 
