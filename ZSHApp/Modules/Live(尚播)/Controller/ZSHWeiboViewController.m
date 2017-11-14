@@ -32,8 +32,11 @@
 
 - (void)createUI{
     self.title = @"黑微博";
-    self.tableView.frame = CGRectMake(0, KNavigationBarHeight, KScreenWidth, KScreenHeight-KNavigationBarHeight);
+//    self.tableView.frame = CGRectMake(0, KNavigationBarHeight, KScreenWidth, KScreenHeight-KNavigationBarHeight);
     [self.view addSubview:self.tableView];
+    [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.mas_equalTo(self.view);
+    }];
     self.tableView.delegate = self.tableViewModel;
     self.tableView.dataSource = self.tableViewModel;
     [self.tableView registerClass:[ZSHWeiBoCell class] forCellReuseIdentifier:NSStringFromClass([ZSHWeiBoCell class])];

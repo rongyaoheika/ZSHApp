@@ -11,7 +11,4 @@
 
 @interface ZSHLivePersonInfoView : ZSHBaseView
 
-@property (nonatomic, strong) UIButton         *headTapBtn;
-
-
 @end

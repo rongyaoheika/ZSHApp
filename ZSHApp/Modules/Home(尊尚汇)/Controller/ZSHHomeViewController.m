@@ -54,7 +54,8 @@ static NSString *Identify_MagazineCell = @"magazineCell";
                         @"ZSHSubscribeViewController",
                         @"ZSHSubscribeViewController",
                         @"ZSHSubscribeViewController",
-                        @"ZSHMoreSubscribeViewController"];
+                        @"ZSHApplyServiceViewController"];
+//                        @"ZSHMoreSubscribeViewController"];
     
     self.paramArr = @[
                       @{KFromClassType:@(FromFoodVCToTitleContentVC)},

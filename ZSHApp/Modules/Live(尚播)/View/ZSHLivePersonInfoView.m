@@ -29,14 +29,11 @@
     NSDictionary *headTapBtnDic = @{@"backgroundColor":KClearColor};
     UIButton *headTapBtn = [ZSHBaseUIControl createBtnWithParamDic:headTapBtnDic];
     [headTapBtn addTarget:self action:@selector(headTapBtnAction) forControlEvents:UIControlEventTouchUpInside];
-    headTapBtn.tag = 171114;
-//    headTapBtn.enabled = false;
     [self addSubview:headTapBtn];
     [headTapBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.left.right.mas_equalTo(self);
         make.size.mas_equalTo(CGSizeMake(kRealValue(260), kRealValue(183)));
     }];
-    _headTapBtn = headTapBtn;
     
     //
     NSDictionary *followNumLabelDic = @{@"text":@"36",@"font":kPingFangRegular(20),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentCenter)};
@@ -114,7 +111,7 @@
     }];
 }
 
-- (void)headTapBtnAction{
+- (void)headTapBtnAction {
     [ZSHBaseUIControl setAnimationWithHidden:YES view:self.superview completedBlock:^{
         ZSHPersonalCenterViewController *vc = [[ZSHPersonalCenterViewController alloc] init];
         [[kAppDelegate getCurrentUIVC].navigationController pushViewController:vc animated:YES];
