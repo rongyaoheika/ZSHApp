@@ -54,8 +54,7 @@ static NSString *Identify_MagazineCell = @"magazineCell";
                         @"ZSHSubscribeViewController",
                         @"ZSHSubscribeViewController",
                         @"ZSHSubscribeViewController",
-                        @"ZSHApplyServiceViewController"];
-//                        @"ZSHMoreSubscribeViewController"];
+                        @"ZSHMoreSubscribeViewController"];
     
     self.paramArr = @[
                       @{KFromClassType:@(FromFoodVCToTitleContentVC)},
@@ -73,7 +72,7 @@ static NSString *Identify_MagazineCell = @"magazineCell";
                             @"ZSHServiceCenterViewController",
                             @""];
     self.menuParamArr = @[@{},
-                            @{KFromClassType:@(ZSHFromHomeMenuVCToServiceCenterVC),@"title":@"消息中心",@"titleArr":@[@"评论／回复我的",@"赞我的"],@"imageArr":@[@"menu_news",@"menu_love"]},
+                          @{KFromClassType:@(ZSHFromHomeMenuVCToServiceCenterVC),@"title":@"消息中心",@"titleArr":@[@"评论／回复我的",@"赞我的"],@"imageArr":@[@"menu_news",@"menu_love"], @"pushVCsArr":@[@"ZSHDiscussViewController", @"ZSHLikeViewController"]},
                             @{KFromClassType:@(ZSHFromHomeMenuVCToServiceCenterVC),@"title":@"系统通知",@"titleArr":@[@"隐形者官方帐号"],@"imageArr":@[@"menu_noti"]},
                             @""];
     

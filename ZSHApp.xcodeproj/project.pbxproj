@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		180C95CE1F57E10200CE570C /* UIImage+BlurGlass.m in Sources */ = {isa = PBXBuildFile; fileRef = 180C95CD1F57E10200CE570C /* UIImage+BlurGlass.m */; };
+		181105761FBBD69A0046D229 /* UILabel+Spacing.m in Sources */ = {isa = PBXBuildFile; fileRef = 181105751FBBD69A0046D229 /* UILabel+Spacing.m */; };
+		1811057A1FBC125E0046D229 /* ZSHLikeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 181105791FBC125E0046D229 /* ZSHLikeViewController.m */; };
+		1811057D1FBC12900046D229 /* ZSHDiscussViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1811057C1FBC12900046D229 /* ZSHDiscussViewController.m */; };
+		181105801FBC161A0046D229 /* ZSHDiscussCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1811057F1FBC161A0046D229 /* ZSHDiscussCell.m */; };
+		181105831FBC16250046D229 /* ZSHLikeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 181105821FBC16250046D229 /* ZSHLikeCell.m */; };
 		18155C041FB4031D0060BD9D /* ZSHCommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18155C031FB4031D0060BD9D /* ZSHCommentViewController.m */; };
 		1816F4FC1F5666340060C4BE /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1816F4FB1F5666340060C4BE /* CoreTelephony.framework */; };
 		1816F4FE1F5666590060C4BE /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1816F4FD1F5666590060C4BE /* SystemConfiguration.framework */; };
@@ -340,6 +345,16 @@
 		14ED69325E9FD4BDB1CA95F8 /* Pods-ZSHApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZSHApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-ZSHApp/Pods-ZSHApp.release.xcconfig"; sourceTree = "<group>"; };
 		180C95CC1F57E10200CE570C /* UIImage+BlurGlass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+BlurGlass.h"; sourceTree = "<group>"; };
 		180C95CD1F57E10200CE570C /* UIImage+BlurGlass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+BlurGlass.m"; sourceTree = "<group>"; };
+		181105741FBBD69A0046D229 /* UILabel+Spacing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+Spacing.h"; sourceTree = "<group>"; };
+		181105751FBBD69A0046D229 /* UILabel+Spacing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+Spacing.m"; sourceTree = "<group>"; };
+		181105781FBC125E0046D229 /* ZSHLikeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHLikeViewController.h; sourceTree = "<group>"; };
+		181105791FBC125E0046D229 /* ZSHLikeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHLikeViewController.m; sourceTree = "<group>"; };
+		1811057B1FBC12900046D229 /* ZSHDiscussViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHDiscussViewController.h; sourceTree = "<group>"; };
+		1811057C1FBC12900046D229 /* ZSHDiscussViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHDiscussViewController.m; sourceTree = "<group>"; };
+		1811057E1FBC161A0046D229 /* ZSHDiscussCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHDiscussCell.h; sourceTree = "<group>"; };
+		1811057F1FBC161A0046D229 /* ZSHDiscussCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHDiscussCell.m; sourceTree = "<group>"; };
+		181105811FBC16250046D229 /* ZSHLikeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHLikeCell.h; sourceTree = "<group>"; };
+		181105821FBC16250046D229 /* ZSHLikeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHLikeCell.m; sourceTree = "<group>"; };
 		18155C021FB4031D0060BD9D /* ZSHCommentViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHCommentViewController.h; sourceTree = "<group>"; };
 		18155C031FB4031D0060BD9D /* ZSHCommentViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHCommentViewController.m; sourceTree = "<group>"; };
 		1816F4FB1F5666340060C4BE /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
@@ -930,6 +945,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		181105771FBC123F0046D229 /* 消息中心 */ = {
+			isa = PBXGroup;
+			children = (
+				1811057B1FBC12900046D229 /* ZSHDiscussViewController.h */,
+				1811057C1FBC12900046D229 /* ZSHDiscussViewController.m */,
+				181105781FBC125E0046D229 /* ZSHLikeViewController.h */,
+				181105791FBC125E0046D229 /* ZSHLikeViewController.m */,
+			);
+			name = "消息中心";
+			sourceTree = "<group>";
+		};
 		18155C011FB402E90060BD9D /* Comment(发表评价) */ = {
 			isa = PBXGroup;
 			children = (
@@ -1378,6 +1404,7 @@
 		FE291EAD1F8CAEDC00D4BBE7 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				181105771FBC123F0046D229 /* 消息中心 */,
 				18F902421FB68CB20044967F /* 高级预订 */,
 				185BB9C71FB5BD8B007A96FF /* More(更多) */,
 				FE443FCD1FAFF35D00B7F7A5 /* Train（火车票） */,
@@ -1424,6 +1451,10 @@
 				FE2BB0B71F8E03FB000D5800 /* ZSHHomeHeadView.m */,
 				FEC273A51F8E1FD700A0F91A /* ZSHNoticeViewCell.h */,
 				FEC273A61F8E1FD700A0F91A /* ZSHNoticeViewCell.m */,
+				1811057E1FBC161A0046D229 /* ZSHDiscussCell.h */,
+				1811057F1FBC161A0046D229 /* ZSHDiscussCell.m */,
+				181105811FBC16250046D229 /* ZSHLikeCell.h */,
+				181105821FBC16250046D229 /* ZSHLikeCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2129,6 +2160,8 @@
 				FE5537F71F47049D00803128 /* UICollectionView+IndexPath.m */,
 				FE5537F81F47049D00803128 /* UIViewController+AlertViewAndActionSheet.h */,
 				FE5537F91F47049D00803128 /* UIViewController+AlertViewAndActionSheet.m */,
+				181105741FBBD69A0046D229 /* UILabel+Spacing.h */,
+				181105751FBBD69A0046D229 /* UILabel+Spacing.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -2968,6 +3001,7 @@
 				FE9CC3DF1FA09D0400285475 /* ZSHGoodsSubViewController.m in Sources */,
 				FEA30A531F9F236100AB0FFC /* ZSHConfirmOrderViewController.m in Sources */,
 				FE2CD09F1F9882E400E9E519 /* ZSHIntegralLuckViewController.m in Sources */,
+				1811057D1FBC12900046D229 /* ZSHDiscussViewController.m in Sources */,
 				FE0F9DAF1F94878E004F8D2A /* JSCartHeaderView.m in Sources */,
 				FE0F9DB01F94878E004F8D2A /* JSNummberCount.h in Sources */,
 				FE0F9DB11F94878E004F8D2A /* JSNummberCount.m in Sources */,
@@ -2991,6 +3025,7 @@
 				FE7F00131F9203430006E9A3 /* ZSHBaseTableViewCellModel.m in Sources */,
 				FEEF46F51FBAD2C90086A3C4 /* ZSHNearHeadView.m in Sources */,
 				FE7F00141F9203430006E9A3 /* ZSHBaseTableViewModel.h in Sources */,
+				181105831FBC16250046D229 /* ZSHLikeCell.m in Sources */,
 				FE7F00151F9203430006E9A3 /* ZSHBaseTableViewModel.m in Sources */,
 				FE7AF2351FA30A0400E1A648 /* ZSHBottomBlurPopView.m in Sources */,
 				18F902561FB6E5200044967F /* ZSHRewardViewController.m in Sources */,
@@ -3114,6 +3149,7 @@
 				FEA30A561F9F2A8700AB0FFC /* ZSHOrderUserInfoCell.m in Sources */,
 				FEA30A5F1F9F494E00AB0FFC /* ZSHNumberCount.m in Sources */,
 				FE5538821F470BAF00803128 /* UserInfo.m in Sources */,
+				181105801FBC161A0046D229 /* ZSHDiscussCell.m in Sources */,
 				FEF5DAF61F5FC9E2004B0D2A /* ZSHBaseCell.m in Sources */,
 				FE7502BD1F9A0671002F2708 /* ZSHPersonalTailorViewController.m in Sources */,
 				1826CDAD1FBAE1F000A0ECE2 /* ZSHVideoViewController.m in Sources */,
@@ -3138,6 +3174,7 @@
 				185BB9B81FB559B3007A96FF /* ZSHLiveMonthListViewController.m in Sources */,
 				FE55380E1F47049D00803128 /* AppDelegate+AppService.m in Sources */,
 				FEFDB41A1F7A36D90069F867 /* pinyin.m in Sources */,
+				181105761FBBD69A0046D229 /* UILabel+Spacing.m in Sources */,
 				FE7527B11F7AB9E400858561 /* ZSHBaseView.m in Sources */,
 				FE5538831F470BAF00803128 /* UserManager.m in Sources */,
 				FEBD7CA01FA7161D00CE2BA6 /* ZSHGoodsCommentSubViewController.m in Sources */,
@@ -3164,6 +3201,7 @@
 				FEAE11261FB41A95008DCB3E /* ZSHWithdrawViewController.m in Sources */,
 				FE5538131F47049D00803128 /* RootViewController.m in Sources */,
 				FE55385C1F47049D00803128 /* AESCipher.m in Sources */,
+				1811057A1FBC125E0046D229 /* ZSHLikeViewController.m in Sources */,
 				FE1377721F97225A003C8DFB /* ZSHOrderSubViewController.m in Sources */,
 				FE55387F1F470BAF00803128 /* IMManager.m in Sources */,
 				FEF415F31FAAEDBA00137F0A /* ZSHAirPlaneViewController.m in Sources */,

@@ -8,6 +8,11 @@
 
 #import "RootViewController.h"
 
+typedef NS_ENUM(NSUInteger,ZSHFromVCToApplyServiceVC){
+    ZSHromAllOrderVCToApplyServiceVC,          //我的订单-售后
+    ZSHFromGoodsMineVCToApplyServiceVC,        //我的订单-退款售后
+};
+
 @interface ZSHApplyServiceViewController : RootViewController
 
 @end

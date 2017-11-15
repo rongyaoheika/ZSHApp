@@ -12,6 +12,8 @@
 
 @property (nonatomic, strong) NSArray            *titleArr;
 @property (nonatomic, strong) NSArray            *imageArr;
+@property (nonatomic, strong) NSArray            *pushVCsArr;
+@property (nonatomic, strong) NSArray            *paramArr;
 
 @end
 
@@ -29,6 +31,9 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 - (void)loadData{
     self.titleArr = self.paramDic[@"titleArr"];
     self.imageArr = self.paramDic[@"imageArr"];
+    self.pushVCsArr = self.paramDic[@"pushVCsArr"];
+    self.paramArr  = self.paramDic[@"paramArr"];
+    
     [self initViewModel];
 }
 
@@ -74,6 +79,10 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
         
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
            
+            Class className = NSClassFromString(self.pushVCsArr[indexPath.row]);
+            RootViewController *vc = [[className alloc]initWithParamDic:weakself.paramArr[indexPath.row]];
+            [weakself.navigationController pushViewController:vc animated:YES];
+            
         };
     }
     return sectionModel;

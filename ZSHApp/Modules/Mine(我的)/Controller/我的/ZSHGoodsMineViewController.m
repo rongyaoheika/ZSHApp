@@ -12,6 +12,8 @@
 #import "ZSHTitleContentViewController.h"
 #import "ZSHIntegralViewController.h"
 #import "ZSHCouponViewController.h"
+#import "ZSHApplyServiceViewController.h"
+#import "ZSHCommentViewController.h"
 
 static NSString * cellIdentifier = @"cellId";
 static NSString *headerViewIdentifier = @"hederview";
@@ -59,7 +61,7 @@ static NSString *headerViewIdentifier = @"hederview";
       @[@"ZSHTitleContentViewController",
         @"ZSHTitleContentViewController",
         @"ZSHCommentViewController",
-        @""],
+        @"ZSHApplyServiceViewController"],
       
       @[@"",
         @"",
@@ -74,8 +76,8 @@ static NSString *headerViewIdentifier = @"hederview";
     self.paramArr =@[
   @[@{KFromClassType:@(FromAllOrderVCToTitleContentVC),@"title":@"我的订单"},
     @{KFromClassType:@(FromAllOrderVCToTitleContentVC),@"title":@"我的订单"},
-    @{},
-    @{}],
+    @{KFromClassType:@(ZSHFromGoodsMineVCToCommentVC)},
+    @{KFromClassType:@(ZSHFromGoodsMineVCToApplyServiceVC)}],
   @[@{},@{},@{},@{}],
   @[@{},@{},@{},@{}],
   @[@{},@{},@{},@{}]

@@ -8,6 +8,11 @@
 
 #import "RootViewController.h"
 
+typedef NS_ENUM(NSUInteger,ZSHFromVCToCommentVC){
+    ZSHromAllOrderVCToCommentVC,          //我的订单-售后
+    ZSHFromGoodsMineVCToCommentVC,        //我的订单-退款售后
+};
+
 @interface ZSHCommentViewController : RootViewController
 
 @end

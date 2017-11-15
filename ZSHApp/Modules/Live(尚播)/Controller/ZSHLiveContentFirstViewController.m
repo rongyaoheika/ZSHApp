@@ -38,13 +38,12 @@ static NSString * const ZSHNearHeadViewID = @"ZSHNearHeadView";
 - (void)loadData{
     
     NSArray *baseDataArr = @[
-  @{@"liveName":@"夏天在我手中",@"imageName":@"live_image_1", @"loveCount":@"33"},
-  @{@"liveName":@"忘记时间的钟",@"imageName":@"live_image_2", @"loveCount":@"43"},
-  @{@"liveName":@"流沙",@"imageName":@"live_image_3", @"loveCount":@"33"},
-  @{@"liveName":@"夏天",@"imageName":@"live_image_4", @"loveCount":@"44"},
-  @{@"liveName":@"绅士",@"imageName":@"live_image_5", @"loveCount":@"63"},
-  @{@"liveName":@"拉流",@"imageName":@"live_image_6", @"loveCount":@"40"}
-                              ];
+                            @{@"liveName":@"夏天在我手中",@"imageName":@"live_image_1", @"loveCount":@"33"},
+                            @{@"liveName":@"忘记时间的钟",@"imageName":@"live_image_2", @"loveCount":@"43"},
+                            @{@"liveName":@"流沙",@"imageName":@"live_image_3", @"loveCount":@"33"},
+                            @{@"liveName":@"夏天",@"imageName":@"live_image_4", @"loveCount":@"44"},
+                            @{@"liveName":@"绅士",@"imageName":@"live_image_5", @"loveCount":@"63"},
+                            @{@"liveName":@"拉流",@"imageName":@"live_image_6", @"loveCount":@"40"}];
     self.dataArr = [ZSHLiveListModel mj_objectArrayWithKeyValuesArray:baseDataArr];
     
     self.waterLayout = [[ZSHCustomWaterFlowLayout alloc]init];
@@ -62,7 +61,7 @@ static NSString * const ZSHNearHeadViewID = @"ZSHNearHeadView";
     
     [self.view addSubview:self.collectionView];
     [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.mas_equalTo(self.view);
+        make.edges.mas_equalTo(self.view).insets(UIEdgeInsetsMake(0, 0, KBottomNavH , 0));
     }];
 }
 

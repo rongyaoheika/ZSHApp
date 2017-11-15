@@ -35,12 +35,23 @@
     
     [self addNavigationItemWithTitles:@[@"发布"] isLeft:NO target:self action:@selector(distributeAction) tags:@[@(1)]];
     
+    CGFloat topSpacing = 0;
+    switch ([self.paramDic[KFromClassType]integerValue]) {
+        case ZSHFromGoodsMineVCToCommentVC:{
+            topSpacing = 94;
+        }
+            break;
+        default:{
+            topSpacing = 30;
+        }
+            break;
+    }
     
     _starView = [TggStarEvaluationView evaluationViewWithChooseStarBlock:nil];
     [self.view addSubview:_starView];
     [_starView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.mas_equalTo(self.view);
-        make.top.mas_equalTo(self.view).offset(kRealValue(94));
+        make.top.mas_equalTo(self.view).offset(kRealValue(topSpacing));
         make.width.mas_equalTo(kRealValue(134));
         make.height.mas_equalTo(kRealValue(21));
     }];
@@ -69,7 +80,7 @@
     contentTextView.xx_placeholderColor = KZSHColor454545;
     [self.view addSubview:contentTextView];
     [contentTextView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.view).offset(kRealValue(177.5));
+        make.top.mas_equalTo(noticeLabel).offset(kRealValue(48.5));
         make.left.mas_equalTo(self.view).offset(kRealValue(15));
         make.right.mas_equalTo(self.view).offset(kRealValue(-15));
         make.height.mas_equalTo(kRealValue(177));

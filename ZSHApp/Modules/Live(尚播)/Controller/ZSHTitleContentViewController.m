@@ -67,7 +67,7 @@
         case FromAllOrderVCToTitleContentVC:{
             self.titleArr = @[@"全部",@"待付款",@"待收货",@"待评价",@"退款售后"];
             self.indicatorHeight = 0.0;
-            self.contentVCS = @[@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHOrderSubViewController"];
+            self.contentVCS = @[@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHCommentViewController",@"ZSHApplyServiceViewController"];
             break;
         }
         case FromIntegralVCToTitleContentVC:{
@@ -187,7 +187,7 @@
 
 - (LXScrollContentView *)contentView{
     if (!_contentView) {
-        _contentView = [[LXScrollContentView alloc] initWithFrame:CGRectMake(0,kRealValue(35) + KNavigationBarHeight, KScreenWidth,KScreenHeight - kRealValue(35) - KNavigationBarHeight  - KBottomNavH)];
+        _contentView = [[LXScrollContentView alloc] initWithFrame:CGRectMake(0,kRealValue(35) + KNavigationBarHeight, KScreenWidth,KScreenHeight - kRealValue(35) - KNavigationBarHeight)];
         _contentView.backgroundColor = KClearColor;
         kWeakSelf(self);
         _contentView.scrollBlock = ^(NSInteger index){
