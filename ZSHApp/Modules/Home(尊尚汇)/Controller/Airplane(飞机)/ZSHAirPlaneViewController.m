@@ -11,6 +11,8 @@
 #import "ZSHBottomBlurPopView.h"
 #import "ZSHTitleContentViewController.h"
 #import "ZSHPickView.h"
+#import "ZSHTrainSearchResultController.h"
+
 @interface ZSHAirPlaneViewController ()
 
 @property (nonatomic, strong) ZSHBottomBlurPopView      *bottomBlurPopView;
@@ -152,9 +154,23 @@ static NSString *ZSHBaseTicketDateCellID = @"ZSHBaseTicketDateCell";
 //搜索机票
 - (void)searchTicketAction{
     
-    NSDictionary *nextParamDic = @{KFromClassType:@(FromPlaneTicketVCToTitleContentVC)};
-    ZSHTitleContentViewController *titleContentVC = [[ZSHTitleContentViewController alloc]initWithParamDic:nextParamDic];
-    [self.navigationController pushViewController:titleContentVC animated:YES];
+    switch ([self.paramDic[KFromClassType]integerValue]) {
+        case ZSHHomeAirPlaneVCToAirPlaneVC:{
+            NSDictionary *nextParamDic = @{KFromClassType:@(FromPlaneTicketVCToTitleContentVC)};
+            ZSHTitleContentViewController *titleContentVC = [[ZSHTitleContentViewController alloc]initWithParamDic:nextParamDic];
+            [self.navigationController pushViewController:titleContentVC animated:YES];
+        }
+            break;
+        case ZSHFromHomeTrainVCToAirPlaneVC:{
+            ZSHTrainSearchResultController *searchResultVC = [[ZSHTrainSearchResultController alloc]init];
+            [self.navigationController pushViewController:searchResultVC animated:YES];
+        }
+            break;
+        default:
+            break;
+    }
+    
+
     
 }
 

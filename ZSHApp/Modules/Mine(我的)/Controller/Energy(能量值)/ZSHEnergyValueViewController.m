@@ -9,6 +9,7 @@
 #import "ZSHEnergyValueViewController.h"
 #import "ZSHEnergyHeadCell.h"
 #import "ZSHEnergyScoreCell.h"
+#import "ZSHEnergyExchangeViewController.h"
 
 @interface ZSHEnergyValueViewController ()
 
@@ -253,6 +254,8 @@ static NSString *ZSHEnergyRulesCellID = @"ZSHEnergyRulesCell";
 
 #pragma action
 - (void)exchangeAction{
+    ZSHEnergyExchangeViewController *eeVC = [[ZSHEnergyExchangeViewController alloc] init];
+    [self.navigationController pushViewController:eeVC animated:true];
     
 }
 

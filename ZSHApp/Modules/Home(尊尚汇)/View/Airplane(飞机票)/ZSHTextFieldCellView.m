@@ -83,13 +83,14 @@
             make.height.mas_equalTo(kRealValue(15));
         }];
     }
-    
-    [self.textField mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(self.leftLabel.mas_right);
-        make.right.mas_equalTo(self);
-        make.top.mas_equalTo(self);
-        make.bottom.mas_equalTo(self);
-    }];
+    if ([self.paramDic[@"textFieldType"] integerValue] != ZSHTextFieldViewNone) {
+        [self.textField mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.mas_equalTo(self.leftLabel.mas_right);
+            make.right.mas_equalTo(self);
+            make.top.mas_equalTo(self);
+            make.bottom.mas_equalTo(self);
+        }];
+    }
     
     if ([self.paramDic[@"textFieldType"]integerValue] == ZSHTextFieldViewCaptcha) {
         [self.getCaptchaBtn mas_makeConstraints:^(MASConstraintMaker *make) {
