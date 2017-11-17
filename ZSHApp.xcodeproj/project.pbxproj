@@ -59,6 +59,7 @@
 		185BB9CA1FB5BDB9007A96FF /* ZSHMoreSubscribeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 185BB9C91FB5BDB9007A96FF /* ZSHMoreSubscribeViewController.m */; };
 		185DDCC91FBE86C4004D4688 /* ZSHVideoDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 185DDCC81FBE86C4004D4688 /* ZSHVideoDetailViewController.m */; };
 		185DDCCC1FBE8CE9004D4688 /* ZSHVideoDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 185DDCCB1FBE8CE9004D4688 /* ZSHVideoDetailCell.m */; };
+		185DDCD31FBEDD79004D4688 /* ZSHShareView.m in Sources */ = {isa = PBXBuildFile; fileRef = 185DDCD21FBEDD79004D4688 /* ZSHShareView.m */; };
 		1874B9661FB99E9700059184 /* ZSHLivePersonInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1874B9651FB99E9700059184 /* ZSHLivePersonInfoView.m */; };
 		18A2C64E1F483A66005F394F /* PPHTTPRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 18A2C6461F483A66005F394F /* PPHTTPRequest.m */; };
 		18A2C64F1F483A66005F394F /* PPInterfacedConst.m in Sources */ = {isa = PBXBuildFile; fileRef = 18A2C6481F483A66005F394F /* PPInterfacedConst.m */; };
@@ -462,6 +463,8 @@
 		185DDCC81FBE86C4004D4688 /* ZSHVideoDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHVideoDetailViewController.m; sourceTree = "<group>"; };
 		185DDCCA1FBE8CE9004D4688 /* ZSHVideoDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHVideoDetailCell.h; sourceTree = "<group>"; };
 		185DDCCB1FBE8CE9004D4688 /* ZSHVideoDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHVideoDetailCell.m; sourceTree = "<group>"; };
+		185DDCD11FBEDD79004D4688 /* ZSHShareView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHShareView.h; sourceTree = "<group>"; };
+		185DDCD21FBEDD79004D4688 /* ZSHShareView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHShareView.m; sourceTree = "<group>"; };
 		1874B9641FB99E9700059184 /* ZSHLivePersonInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHLivePersonInfoView.h; sourceTree = "<group>"; };
 		1874B9651FB99E9700059184 /* ZSHLivePersonInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHLivePersonInfoView.m; sourceTree = "<group>"; };
 		18A2C6451F483A66005F394F /* PPHTTPRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPHTTPRequest.h; sourceTree = "<group>"; };
@@ -1166,6 +1169,7 @@
 		182287171FB4555700CA5B10 /* 我的 */ = {
 			isa = PBXGroup;
 			children = (
+				185DDCCD1FBEDB47004D4688 /* 分享 */,
 				1858710C1FBA8889003ECFE3 /* 个人 */,
 				18F902461FB6CBE70044967F /* Follow(关注) */,
 				FEDF292E1FB701A600CD5756 /* Coin(黑咖币) */,
@@ -1254,6 +1258,15 @@
 				185BB9C91FB5BDB9007A96FF /* ZSHMoreSubscribeViewController.m */,
 			);
 			path = "More(更多)";
+			sourceTree = "<group>";
+		};
+		185DDCCD1FBEDB47004D4688 /* 分享 */ = {
+			isa = PBXGroup;
+			children = (
+				185DDCD11FBEDD79004D4688 /* ZSHShareView.h */,
+				185DDCD21FBEDD79004D4688 /* ZSHShareView.m */,
+			);
+			name = "分享";
 			sourceTree = "<group>";
 		};
 		18A2C6441F483A66005F394F /* PPHTTPRequestLayer */ = {
@@ -3109,6 +3122,7 @@
 				FEBD7CBA1FA75FBC00CE2BA6 /* ZSHFoodCell.m in Sources */,
 				FEA105811F9B292B008652D6 /* ZSHBrandsSortHeadView.m in Sources */,
 				FE0F9DA51F94878E004F8D2A /* JSCartModel.h in Sources */,
+				185DDCD31FBEDD79004D4688 /* ZSHShareView.m in Sources */,
 				FEC702B41FB3195000D5BAA1 /* ZSHEntertainmentDisViewController.m in Sources */,
 				FE0F9DA61F94878E004F8D2A /* JSCartModel.m in Sources */,
 				1822871A1FB4559300CA5B10 /* ZSHLiveMineViewController.m in Sources */,

@@ -48,7 +48,7 @@ static NSString *bottomCellIdentifier   = @"LiveListCell";
 
 - (void)createUI{
     self.title = @"我的";
-    
+   
     self.tableView.frame = CGRectMake(0, KNavigationBarHeight, KScreenWidth, KScreenHeight-KNavigationBarHeight-KBottomNavH);
     [self.view addSubview:self.tableView];
     self.tableView.delegate = self.tableViewModel;
@@ -60,6 +60,7 @@ static NSString *bottomCellIdentifier   = @"LiveListCell";
     [self.tableView registerClass:[ZSHBaseCell class] forCellReuseIdentifier:bottomCellIdentifier];
     
     [self.tableView reloadData];
+
 }
 
 - (void)initViewModel {

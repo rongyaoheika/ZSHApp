@@ -8,10 +8,14 @@
 
 #import "ZSHVideoDetailViewController.h"
 #import "ZSHVideoDetailCell.h"
+#import "ZSHBottomBlurPopView.h"
 
 static NSString *cellIdentifier = @"VideoDetailCellIdentifier";
 
 @interface ZSHVideoDetailViewController ()
+
+@property (nonatomic, strong) NSArray *dataArr;
+@property (nonatomic, strong) ZSHBottomBlurPopView   *bottomBlurPopView;
 
 @end
 
@@ -39,7 +43,7 @@ static NSString *cellIdentifier = @"VideoDetailCellIdentifier";
     [self.tableView reloadData];
     
     [self.tableView setTableHeaderView:[self createTableviewHeaderView]];
-    
+    [self.view addSubview:[self createFooterView]];    
 }
 
 - (UIView *)createTableviewHeaderView {
@@ -62,13 +66,50 @@ static NSString *cellIdentifier = @"VideoDetailCellIdentifier";
     nameBtn.frame = CGRectMake(15, 280.5, 105, 20);
     [nameBtn setImage:[UIImage imageNamed:@"video_detail_1"] forState:UIControlStateNormal];
     [view addSubview:nameBtn];
-//    
-//    UIButton *nameBtn = [ZSHBaseUIControl createBtnWithParamDic:@{@"title":@"姜小白：......",@"font":kPingFangMedium(14)}];
-//    nameBtn.frame = CGRectMake(15, 280.5, 105, 20);
-//    [nameBtn setImage:[UIImage imageNamed:@"video_detail_1"] forState:UIControlStateNormal];
-//    [view addSubview:nameBtn];
+    
+    UIButton *likeBtn = [ZSHBaseUIControl createBtnWithParamDic:@{@"title":@"400喜欢",@"font":kPingFangRegular(11)}];
+    likeBtn.frame = CGRectMake(15, 300.5, 70, 20);
+    [likeBtn setImage:[UIImage imageNamed:@"video_detail_2"] forState:UIControlStateNormal];
+    [view addSubview:likeBtn];
+    
+    UIButton *discussBtn = [ZSHBaseUIControl createBtnWithParamDic:@{@"title":@"89评论",@"font":kPingFangRegular(11)}];
+    discussBtn.frame = CGRectMake(15, 320.5, 60, 20);
+    [discussBtn setImage:[UIImage imageNamed:@"video_detail_3"] forState:UIControlStateNormal];
+    [view addSubview:discussBtn];
     
     return view;
+}
+
+- (UIView *)createFooterView{
+    UIView *footerView = [[UIView alloc]initWithFrame:CGRectMake(0, KScreenHeight - kRealValue(49) , KScreenWidth, KBottomNavH)];
+    footerView.backgroundColor = [UIColor colorWithHexString:@"0C0C0C"];
+    
+    UIImage *chatImage = [UIImage imageNamed:@"live_room_chat"];
+    UIButton *chatBtn = [[UIButton alloc]initWithFrame:CGRectZero];
+    [footerView addSubview:chatBtn];
+    [chatBtn setBackgroundImage:chatImage forState:UIControlStateNormal];
+    [chatBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(footerView).offset(KLeftMargin);
+        make.centerY.mas_equalTo(footerView);
+        make.size.mas_equalTo(CGSizeMake(kRealValue(32), kRealValue(32)));
+    }];
+    
+    NSArray *imageArr = @[@"live_room_gift",@"live_room_love",@"live_room_share"];
+    for (int i = 0; i<imageArr.count; i++) {
+        UIImage *btnImage = [UIImage imageNamed:imageArr[i]];
+        UIButton *btn = [[UIButton alloc]initWithFrame:CGRectZero];
+        btn.tag = 11179+i;
+        [btn addTarget:self action:@selector(btnAction:) forControlEvents:UIControlEventTouchUpInside];
+        [footerView addSubview:btn];
+        [btn setImage:btnImage forState:UIControlStateNormal];
+        [btn mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.right.mas_equalTo(footerView).offset(-(15 + i*(btnImage.size.width + kRealValue(10))));
+            make.centerY.mas_equalTo(footerView);
+            make.width.mas_equalTo(btnImage.size.width);
+            make.height.mas_equalTo(btnImage.size.height);
+        }];
+    }
+    return footerView;
 }
 
 
@@ -79,20 +120,22 @@ static NSString *cellIdentifier = @"VideoDetailCellIdentifier";
 
 - (ZSHBaseTableViewSectionModel*)storeListSection {
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
-    NSArray *imageArr = @[@"tailor_detail_2",@"tailor_detail_3"];
+    self.dataArr = @[
+                     @{@"imageName":@"list_user_1",@"nickname":@"爱跳舞的小丑",@"content":@"6666",@"date":@"6分钟前"},
+                     @{@"imageName":@"list_user_2",@"nickname":@"假面骑士",@"content":@"回复 爱跳舞的小丑：是么",@"date":@"9分钟前"},
+                     @{@"imageName":@"list_user_3",@"nickname":@"Miss_王",@"content":@"漂亮",@"date":@"10分钟前"},
+                     @{@"imageName":@"list_user_4",@"nickname":@"忘记时间的钟",@"content":@"666",@"date":@"16分钟前"},
+                     ];
     
-    NSArray *titleArr = @[@"您只要腾出时间享受生活", @"拥有专属于您的私人买手+形象顾问"];
-    NSArray *contentArr = @[@"把款式、尺码、价位......交给专业理型师和大数据，您就可以轻松享用最合适您的服饰和世界级的品味。", @"荣耀黑卡理型师是服装设计专业出身的学院派，同时也是身经百战的实践派，具有多年男装设计和造型搭配经验，为众多比赛与节目提供搭配咨询建议。基于多年行业时尚经验和对您的了解，为您量身打造穿衣搭配方案，让您轻松享用好品味。"];
-    
-    for (int i = 0; i<imageArr.count; i++) {
+    for (int i = 0; i < self.dataArr.count; i++) {
         
         ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
         [sectionModel.cellModelArray addObject:cellModel];
-        cellModel.height = kRealValue(331);
+        cellModel.height = kRealValue(59);
         cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
             //需要注册，无需判空
             ZSHVideoDetailCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
-            NSDictionary *nextParamDic = @{@"bgImageName":imageArr[i],@"TitleText":titleArr[i],@"ContentText":contentArr[i]};
+            NSDictionary *nextParamDic = @{@"imageName":self.dataArr[i][@"imageName"],@"nickname":self.dataArr[i][@"nickname"],@"content":self.dataArr[i][@"content"],@"date":self.dataArr[i][@"date"]};
             [cell updateCellWithParamDic:nextParamDic];
             return cell;
         };
@@ -101,6 +144,23 @@ static NSString *cellIdentifier = @"VideoDetailCellIdentifier";
         
     }
     return sectionModel;
+}
+
+- (ZSHBottomBlurPopView *)createBottomBlurPopViewWith:(ZSHFromVCToBottomBlurPopView)fromClassType{
+    NSDictionary *nextParamDic = @{KFromClassType:@(fromClassType)};
+    ZSHBottomBlurPopView *bottomBlurPopView = [[ZSHBottomBlurPopView alloc]initWithFrame:kAppDelegate.window.bounds paramDic:nextParamDic];
+    bottomBlurPopView.blurRadius = 20;
+    bottomBlurPopView.dynamic = NO;
+    bottomBlurPopView.tintColor = KClearColor;
+    bottomBlurPopView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.6];
+    [bottomBlurPopView setBlurEnabled:NO];
+    return bottomBlurPopView;
+}
+
+- (void)btnAction:(UIButton *)btn {
+    if ((btn.tag -11179) == 2) {
+        [self.view addSubview:[self createBottomBlurPopViewWith:ZSHFromShareVCToToBottomBlurPopView]];
+    }
 }
 
 

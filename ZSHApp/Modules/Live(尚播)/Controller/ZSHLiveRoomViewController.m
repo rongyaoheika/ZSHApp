@@ -171,6 +171,8 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     for (int i = 0; i<imageArr.count; i++) {
         UIImage *btnImage = [UIImage imageNamed:imageArr[i]];
         UIButton *btn = [[UIButton alloc]initWithFrame:CGRectZero];
+        btn.tag = 11179+i;
+        [btn addTarget:self action:@selector(btnAction:) forControlEvents:UIControlEventTouchUpInside];
         [footerView addSubview:btn];
         [btn setImage:btnImage forState:UIControlStateNormal];
         [btn mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -182,6 +184,24 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     }
     return footerView;
 }
+
+- (ZSHBottomBlurPopView *)createBottomBlurPopViewWith:(ZSHFromVCToBottomBlurPopView)fromClassType{
+    NSDictionary *nextParamDic = @{KFromClassType:@(fromClassType)};
+    ZSHBottomBlurPopView *bottomBlurPopView = [[ZSHBottomBlurPopView alloc]initWithFrame:kAppDelegate.window.bounds paramDic:nextParamDic];
+    bottomBlurPopView.blurRadius = 20;
+    bottomBlurPopView.dynamic = NO;
+    bottomBlurPopView.tintColor = KClearColor;
+    bottomBlurPopView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.6];
+    [bottomBlurPopView setBlurEnabled:NO];
+    return bottomBlurPopView;
+}
+
+- (void)btnAction:(UIButton *)btn {
+    if ((btn.tag -11179) == 2) {
+        [self.view addSubview:[self createBottomBlurPopViewWith:ZSHFromShareVCToToBottomBlurPopView]];
+    }
+}
+
 
 - (void)closeLiveRoom{
     [self backBtnClicked];

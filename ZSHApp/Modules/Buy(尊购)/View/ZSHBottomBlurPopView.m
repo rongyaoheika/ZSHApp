@@ -28,6 +28,7 @@
 //直播弹窗
 #import "ZSHLivePopView.h"
 #import "ZSHTrainPassengerController.h"
+#import "ZSHShareView.h"
 
 @interface ZSHBottomBlurPopView ()<STCalendarDelegate>
 
@@ -177,6 +178,14 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
         _subTabHeight = kRealValue(264);
         self.subTab.backgroundColor = KWhiteColor;
         [self.subTab registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHHeadCellID];
+    } else if (kFromClassTypeValue == ZSHFromShareVCToToBottomBlurPopView) { // 分享
+        ZSHShareView *shareView = [[ZSHShareView alloc] init];
+        [self addSubview:shareView];
+        [shareView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.bottom.mas_equalTo(self);
+            make.size.mas_equalTo(CGSizeMake(KScreenWidth, kRealValue(185)));
+        }];
+        return;
     }
     
     
