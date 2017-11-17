@@ -38,7 +38,7 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
 
 - (void)loadData{
     self.imageArr = @[@"glory_card_big",@"glory_card_big",@"glory_card_big"];
-    _selectedArr = [NSMutableArray arrayWithObjects:@"0",@"0",@"0",@"0",@"0",@"0", nil];
+    _selectedArr = [NSMutableArray arrayWithObjects:@"0",@"0",@"0",@"0",@"0",@"0",@"0", nil];
     [self initViewModel];
 }
 
@@ -60,7 +60,7 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
     [self.tableViewModel.sectionModelArray addObject:[self storeBtnListSectionWithTag:1]];
     [self.tableViewModel.sectionModelArray addObject:[self storeQuotaSection]];
 
-    // 第2，3，4，5组
+    // 第3，4，5, 6组
     NSArray *sectionParmaDicArr = @[@{KFromClassType:@(FromCustomizedCellToCardSubHeadView),@"title":@"收货地址",@"btnTitle":@"* 未选",@"tag":@(13)},
           @{KFromClassType:@(FromCustomizedCellToCardSubHeadView),@"title":@"选择卡号",@"btnTitle":@"* 随机",@"tag":@(14)},
           @{KFromClassType:@(FromCustomizedCellToCardSubHeadView),@"title":@"功能定制",@"btnTitle":@"* 定制",@"tag":@(15)},
@@ -254,7 +254,7 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
                     cellModel.height = kRealValue(1420);
                     cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
                         ZSHSelectCardNumCell *cell = [[ZSHSelectCardNumCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@""];
-                        [cell selectedByIndex:1];
+//                        [cell selectedByIndex:1];
 //                        weakcellModel.height = [cell rowHeightWithCellModel:nil];
                         return cell;
                     };
@@ -273,7 +273,6 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
                 cellModel.height = kRealValue(423);
                 cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
                     ZSHCardCustomizedCell *cell = [[ZSHCardCustomizedCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@""];
-                    [cell selectedByIndex:1];
                     return cell;
                 };
             } else {

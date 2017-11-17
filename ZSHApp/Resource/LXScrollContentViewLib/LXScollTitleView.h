@@ -29,6 +29,26 @@ typedef void(^BMPageTitleViewSelectedBlock)(NSInteger index);
  */
 @property (nonatomic, strong) UIColor *selectedColor;
 
+/**
+ button 默认状态背景图片
+ */
+@property (nonatomic, strong) UIImage *normalBgImage;
+
+/**
+ button 选中时背景图片
+ */
+@property (nonatomic, strong) UIImage *selectedBgImage;
+
+/**
+ button 默认状态左边图片
+ */
+@property (nonatomic, strong) UIImage *normalImage;
+
+/**
+ button 选中状态左边图片
+ */
+@property (nonatomic, strong) UIImage *selectedImage;
+
 
 /**
  第几个标题处于选中状态，默认为0
@@ -73,7 +93,6 @@ typedef void(^BMPageTitleViewSelectedBlock)(NSInteger index);
 
  @param titles 标题数组
  */
-//- (void)reloadViewWithTitles:(NSArray *)titles;
-- (void)reloadViewWithTitles:(NSArray *)titles image:(NSString *)imageName;
+- (void)reloadViewWithTitles:(NSArray *)titles;
 
 @end

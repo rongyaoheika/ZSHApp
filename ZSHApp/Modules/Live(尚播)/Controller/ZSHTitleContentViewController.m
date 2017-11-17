@@ -23,8 +23,8 @@
 
 @property (nonatomic, strong) LXScrollContentView *contentView;
 @property (nonatomic, strong) LXScollTitleView    *titleView;
+@property (nonatomic, strong) UIImage             *titleBtnImage;
 @property (nonatomic, strong) NSArray             *titleArr;
-@property (nonatomic, copy)   NSString            *titleImage;
 @property (nonatomic, strong) NSMutableArray      *vcs;
 @property (nonatomic, assign) CGFloat             titleWidth;
 @property (nonatomic, assign) CGFloat             indicatorHeight;
@@ -78,7 +78,7 @@
         }
         case FromHotelVCToTitleContentVC:{
             self.titleArr = @[@"排序",@"品牌",@"筛选"];
-            self.titleImage = @"hotel_btn";
+            self.titleBtnImage = [UIImage imageNamed:@"hotel_btn"];
             self.indicatorHeight = 0.0;
             [self createHotelNaviUI];
             self.contentVCS = @[@"ZSHHotelViewController",@"ZSHHotelViewController",@"ZSHHotelViewController"];
@@ -86,7 +86,7 @@
             break;
         case FromFoodVCToTitleContentVC:{
             self.titleArr = @[@"排序",@"品牌",@"筛选"];
-            self.titleImage = @"hotel_btn";
+            self.titleBtnImage = [UIImage imageNamed:@"hotel_btn"];
             self.indicatorHeight = 0.0;
             [self createHotelNaviUI];
             self.contentVCS = @[@"ZSHFoodViewController",@"ZSHFoodViewController",@"ZSHFoodViewController"];
@@ -95,7 +95,7 @@
             break;
         case FromPlaneTicketVCToTitleContentVC:{
             self.titleArr = @[@"价格",@"时间",@"准确率"];
-            self.titleImage = @"hotel_btn";
+            self.titleBtnImage = [UIImage imageNamed:@"hotel_btn"];
             self.indicatorHeight = 0.0;
             [self createTicketNaviUI];
             self.contentVCS = @[@"ZSHMoreTicketViewController",@"ZSHMoreTicketViewController",@"ZSHMoreTicketViewController"];
@@ -166,6 +166,7 @@
 - (LXScollTitleView *)titleView{
     if (!_titleView) {
         _titleView = [[LXScollTitleView alloc] initWithFrame:CGRectMake(0, KNavigationBarHeight, KScreenWidth, kRealValue(35))];
+        _titleView.normalImage = self.titleBtnImage;
         _titleView.normalTitleFont = kPingFangRegular(15);
         _titleView.selectedTitleFont = kPingFangMedium(15);
         _titleView.selectedColor = KZSHColor929292;
@@ -199,7 +200,8 @@
 }
 
 - (void)reloadListData{
-    [self.titleView reloadViewWithTitles:self.titleArr image:_titleImage];
+    
+    [self.titleView reloadViewWithTitles:self.titleArr];
     self.vcs = [[NSMutableArray alloc]init];
     for (int i = 0; i<self.titleArr.count; i++) {
         Class className = NSClassFromString(self.contentVCS[i]);

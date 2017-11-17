@@ -9,30 +9,25 @@
 #import "ZSHSelectCardNumCell.h"
 #import "ZSHSelectCardNumFirstView.h"
 #import "ZSHSelectCardNumSecondView.h"
+#import "LXScollTitleView.h"
+
 @interface ZSHSelectCardNumCell ()<UIScrollViewDelegate>
 
 @property (nonatomic, strong) NSMutableArray                *btnArr;
+@property (nonatomic, strong) LXScollTitleView              *titleView;
 @property (nonatomic, strong) UIScrollView                  *bottomScrollView;
 @property (nonatomic, strong) ZSHSelectCardNumFirstView     *firstView;
 @property (nonatomic, strong) ZSHSelectCardNumSecondView    *secondView;
 @property (nonatomic, assign) NSInteger                     selectIndex;
 
 @end
+
 @implementation ZSHSelectCardNumCell
 
 - (void)setup{
-    _btnArr = [[NSMutableArray alloc]init];
     NSArray *btnTitleArr = @[@"随机",@"选号"];
-    for (int i = 0; i<btnTitleArr.count; i++) {
-        NSDictionary *cardTypeBtnDic = @{@"title":btnTitleArr[i],@"font":kPingFangLight(15), @"selectedTitleColor":KZSHColorF29E19};
-        UIButton *cardTypeBtn = [ZSHBaseUIControl createBtnWithParamDic:cardTypeBtnDic];
-        cardTypeBtn.tag = i + 1;
-        [cardTypeBtn setBackgroundImage:[UIImage imageNamed:@"card_normal"] forState:UIControlStateNormal];
-        [cardTypeBtn setBackgroundImage:[UIImage imageNamed:@"card_press"] forState:UIControlStateSelected];
-        [cardTypeBtn addTarget:self action:@selector(cardNumBtnAction:) forControlEvents:UIControlEventTouchUpInside];
-        [self.contentView addSubview:cardTypeBtn];
-        [_btnArr addObject:cardTypeBtn];
-    }
+    [self.contentView addSubview:self.titleView];
+    [self.titleView reloadViewWithTitles:btnTitleArr];
     
     [self.contentView addSubview:self.bottomScrollView];
     
@@ -48,16 +43,12 @@
 - (void)layoutSubviews{
     [super layoutSubviews];
     
-    int i = 0;
-    CGFloat leftSpace = (kScreenWidth - 2*kRealValue(100))/2;
-    for (UIButton *btn in _btnArr) {
-        [btn mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.mas_equalTo(self).offset(leftSpace+i*kRealValue(100));
-            make.size.mas_equalTo(CGSizeMake(kRealValue(100), kRealValue(30)));
-            make.top.mas_equalTo(self).offset(kRealValue(20));
-        }];
-        i++;
-    }
+    [_titleView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(self).offset(kRealValue(20));
+        make.left.mas_equalTo(self).offset((kScreenWidth-kRealValue(200))/2);
+        make.width.mas_equalTo(kRealValue(200));
+        make.height.mas_equalTo(kRealValue(30));
+    }];
     
     self.bottomScrollView.contentSize = CGSizeMake(2*kScreenWidth, 0);
     [self.bottomScrollView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -105,31 +96,32 @@
     return _bottomScrollView;
 }
 
-#pragma action
-- (void)cardNumBtnAction:(UIButton *)btn{
-    [self selectedByIndex:btn.tag];
-    if (self.btnClickBlock) {
-        self.btnClickBlock(btn);
+- (LXScollTitleView *)titleView{
+    if (!_titleView) {
+        _titleView = [[LXScollTitleView alloc] initWithFrame:CGRectMake(0, (kScreenWidth-kRealValue(200))/2, kRealValue(200), kRealValue(30))];
+        _titleView.selectedBgImage = [UIImage imageNamed:@"card_press"];
+        _titleView.normalTitleFont = kPingFangRegular(11);
+        _titleView.selectedTitleFont = kPingFangRegular(11);
+        _titleView.selectedColor = KZSHColorF29E19;
+        _titleView.normalColor = KZSHColor929292;
+        _titleView.indicatorHeight = 0;
+        __weak typeof(self) weakSelf = self;
+        _titleView.selectedBlock = ^(NSInteger index){
+            __weak typeof(self) strongSelf = weakSelf;
+            [strongSelf.bottomScrollView setContentOffset:CGPointMake(index * KScreenWidth, 0) animated:YES];
+        };
+        _titleView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"seg_two_bg"] ];
+        _titleView.titleWidth = kRealValue(100);
     }
-    [self.bottomScrollView setContentOffset:CGPointMake(kScreenWidth*(btn.tag-1), 0) animated:YES];
+    return _titleView;
 }
 
-- (void)selectedByIndex:(NSUInteger)index {
-    _selectIndex = index;
-    [self layoutSubviews];
-    [_btnArr enumerateObjectsUsingBlock:^(UIButton *btn , NSUInteger idx, BOOL * _Nonnull stop) {
-        if (btn.tag == index) {
-            btn.selected = YES;
-        } else {
-            btn.selected = NO;
-        }
-    }];
-   
-}
+
+#pragma action
 
 -(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
-    NSInteger tag = scrollView.contentOffset.x/kScreenWidth;
-    [self selectedByIndex:tag+1];
+    NSInteger index = scrollView.contentOffset.x/kScreenWidth;
+    self.titleView.selectedIndex = index;
 }
 
 - (CGFloat)rowHeightWithCellModel:(ZSHBaseModel *)model{

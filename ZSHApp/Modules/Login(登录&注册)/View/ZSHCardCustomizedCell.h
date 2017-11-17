@@ -10,6 +10,4 @@
 
 @interface ZSHCardCustomizedCell : ZSHBaseCell
 
-- (void)selectedByIndex:(NSUInteger)index;
-
 @end

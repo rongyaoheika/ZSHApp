@@ -12,6 +12,4 @@
 
 @property (nonatomic, assign) CGFloat  cellHeight;
 
-- (void)selectedByIndex:(NSUInteger)index;
-
 @end

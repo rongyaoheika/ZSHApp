@@ -284,7 +284,7 @@ static NSString *ZSHGoodsDetailCountCellID = @"ZSHGoodsDetailCountCell";
 }
 
 - (void)reloadListData{
-    [self.titleView reloadViewWithTitles:self.titleArr image:nil];
+    [self.titleView reloadViewWithTitles:self.titleArr];
     self.vcs = [[NSMutableArray alloc]init];
     for (int i = 0; i<self.titleArr.count; i++) {
         Class className = NSClassFromString(self.contentVCS[i]);

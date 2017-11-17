@@ -57,7 +57,7 @@
     [self.scrollView addSubview:self.selectionIndicator];
 }
 
-- (void)reloadViewWithTitles:(NSArray *)titles image:(NSString *)imageName{
+- (void)reloadViewWithTitles:(NSArray *)titles{
     for (UIButton *btn in self.titleButtons) {
         [btn removeFromSuperview];
     }
@@ -70,15 +70,15 @@
         [btn setTitle:title forState:UIControlStateNormal];
         [btn setTitleColor:self.normalColor forState:UIControlStateNormal];
         [btn setTitleColor:self.selectedColor forState:UIControlStateSelected];
+        [btn setBackgroundImage:self.normalBgImage forState:UIControlStateNormal];
+        [btn setBackgroundImage:self.selectedBgImage forState:UIControlStateSelected];
+        [btn setImage:self.normalImage forState:UIControlStateNormal];
+        [btn setImage:self.selectedImage forState:UIControlStateSelected];
+        
         btn.selected = (i == self.selectedIndex);
         btn.titleLabel.font = btn.selected?self.selectedTitleFont:self.normalTitleFont;
         btn.tag = 100 + i++;
         [btn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
-        if (imageName) {
-            _imageName = imageName;
-            [btn setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
-        }
-        
         CGSize titleSize = [title sizeWithAttributes:[NSDictionary dictionaryWithObjectsAndKeys:btn.titleLabel.font,NSFontAttributeName,nil]];
         self.indicatorWidth = titleSize.width;
         
@@ -94,16 +94,9 @@
         if (btn == titleBtn) {
             btn.selected = !btn.selected;
             btn.titleLabel.font = self.selectedTitleFont;
-//            if (_imageName) {
-//                 [self changeButtonObject:btn TransformAngle:M_PI];
-//            }
-           
         } else {
             btn.selected = NO;
             btn.titleLabel.font = self.normalTitleFont;
-//            if (_imageName) {
-//                [self changeButtonObject:btn TransformAngle:0];
-//            }
         }
     }];
 
@@ -121,7 +114,7 @@
     NSInteger i = 0;
     for (UIButton *btn in self.titleButtons) {
         btn.frame = CGRectMake(self.titleWidth * i++, 0, self.titleWidth, self.frame.size.height);
-        if (_imageName) {
+        if (self.normalImage) {
             [btn layoutButtonWithEdgeInsetsStyle:XYButtonEdgeInsetsStyleRight imageTitleSpace:kRealValue(6)];
         }
     }
