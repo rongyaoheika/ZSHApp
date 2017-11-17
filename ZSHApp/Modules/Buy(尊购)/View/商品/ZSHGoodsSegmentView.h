@@ -8,11 +8,7 @@
 
 #import "ZSHBaseView.h"
 
-typedef void(^BtnClickBlock)(UIButton *btn);
-
 @interface ZSHGoodsSegmentView : ZSHBaseView
-
-@property (nonatomic, copy)   BtnClickBlock   btnClickBlock;
 
 - (void)selectedByIndex:(NSUInteger)index;
 @end

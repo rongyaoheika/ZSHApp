@@ -22,11 +22,6 @@
     NSArray *imageArr = @[@"home_food",@"home_hotel",@"home_train",@"home_plane",@"home_horse",@"home_ship",@"home_car",@"home_more"];
     
     for (int i = 0; i<titleArr.count; i++) {
-//        UIButton *btn = [self createXYBtnWithImageName:imageArr[i] title:titleArr[i]];
-//        btn.tag = i+10;
-//        [btn addTarget:self action:@selector(headBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-//        [self.contentView addSubview:btn];
-//        [_btnArr addObject:btn];
         
         UIButton *btn = [[UIButton alloc]initWithFrame:CGRectZero];
         [btn setImage:[UIImage imageNamed:imageArr[i]] forState:UIControlStateNormal];
@@ -56,35 +51,6 @@
     }
     
 }
-
-- (UIButton *)createXYBtnWithImageName:(NSString *)imageName title:(NSString *)title{
-    
-    UIButton *btn = [[UIButton alloc]initWithFrame:CGRectZero];
-    
-    UIImage *image = [UIImage imageNamed:imageName];
-    UIImageView *imageView = [[UIImageView alloc]initWithImage:image];
-    [btn addSubview:imageView];
-    [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(btn).offset(kRealValue(30));
-        make.centerX.mas_equalTo(btn);
-        make.width.mas_equalTo(image.size.width);
-        make.height.mas_equalTo(image.size.height);
-    }];
-    
-    
-   NSDictionary *titleLabelDic = @{@"text":title,@"font": kPingFangLight(14),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentCenter)};
-    UILabel *titleLabel = [ZSHBaseUIControl createLabelWithParamDic:titleLabelDic];
-    [btn addSubview:titleLabel];
-    [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.mas_equalTo(btn).offset(-kRealValue(5));
-        make.centerX.mas_equalTo(btn);
-        make.width.mas_equalTo(btn);
-        make.height.mas_equalTo(kRealValue(14));
-    }];
-    
-    return btn;
-}
-
 - (void)headBtnClick:(UIButton *)headBtn{
     if (self.btnClickBlock) {
         self.btnClickBlock(headBtn.tag-10);

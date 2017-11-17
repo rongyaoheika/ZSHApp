@@ -124,13 +124,17 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHBaseCell *cell = [[ZSHBaseCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@""];
         cell.textLabel.text = @"购买数量";
-        JSNummberCount *countBtn = [[JSNummberCount alloc]initWithFrame:CGRectZero];
-        [cell.contentView addSubview:countBtn];
-        [countBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.right.mas_equalTo(cell).offset(-KLeftMargin);
-            make.size.mas_equalTo(CGSizeMake(kRealValue(50), kRealValue(15)));
-            make.centerY.mas_equalTo(cell);
-        }];
+        if (![cell.contentView viewWithTag:2]) {
+            JSNummberCount *countBtn = [[JSNummberCount alloc]initWithFrame:CGRectZero];
+            countBtn.tag = 2;
+            [cell.contentView addSubview:countBtn];
+            [countBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.right.mas_equalTo(cell).offset(-KLeftMargin);
+                make.size.mas_equalTo(CGSizeMake(kRealValue(50), kRealValue(15)));
+                make.centerY.mas_equalTo(cell);
+            }];
+        }
+        
         return cell;
     };
     

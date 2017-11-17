@@ -80,14 +80,16 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
         cellModel.height = (i==0? kRealValue(55):kRealValue(43));
         cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
             ZSHBaseCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHBaseCellID forIndexPath:indexPath];
-            
-            NSDictionary *nextParamDic = @{@"leftTitle":weakself.titleArr[0][indexPath.row],@"rightTitle":weakself.detailTitleArr[0][indexPath.row],@"row":@(indexPath.row)};
-            ZSHSimpleCellView *cellView = [[ZSHSimpleCellView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kRealValue(43)) paramDic:nextParamDic];
-            [cell.contentView addSubview:cellView];
-            [cellView mas_updateConstraints:^(MASConstraintMaker *make) {
-                make.edges.mas_equalTo(cell);
-            }];
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            if (![cell.contentView viewWithTag:2]) {
+                NSDictionary *nextParamDic = @{@"leftTitle":weakself.titleArr[0][indexPath.row],@"rightTitle":weakself.detailTitleArr[0][indexPath.row],@"row":@(indexPath.row)};
+                ZSHSimpleCellView *cellView = [[ZSHSimpleCellView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kRealValue(43)) paramDic:nextParamDic];
+                cellView.tag = 2;
+                [cell.contentView addSubview:cellView];
+                [cellView mas_updateConstraints:^(MASConstraintMaker *make) {
+                    make.edges.mas_equalTo(cell);
+                }];
+            }
             return cell;
         };
         
@@ -119,14 +121,17 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
         cellModel.height = kRealValue(43);
         cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
             ZSHBaseCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHBaseCellID forIndexPath:indexPath];
-            
-            NSDictionary *nextParamDic = @{@"leftTitle":weakself.titleArr[1][indexPath.row],@"rightTitle":weakself.detailTitleArr[1][indexPath.row],@"row":@(indexPath.row)};
-            ZSHSimpleCellView *cellView = [[ZSHSimpleCellView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kRealValue(43)) paramDic:nextParamDic];
-            [cell.contentView addSubview:cellView];
-            [cellView mas_updateConstraints:^(MASConstraintMaker *make) {
-                make.edges.mas_equalTo(cell);
-            }];
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            if (![cell.contentView viewWithTag:2]) {
+                NSDictionary *nextParamDic = @{@"leftTitle":weakself.titleArr[1][indexPath.row],@"rightTitle":weakself.detailTitleArr[1][indexPath.row],@"row":@(indexPath.row)};
+                ZSHSimpleCellView *cellView = [[ZSHSimpleCellView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kRealValue(43)) paramDic:nextParamDic];
+                cellView.tag = 2;
+                [cell.contentView addSubview:cellView];
+                [cellView mas_updateConstraints:^(MASConstraintMaker *make) {
+                    make.edges.mas_equalTo(cell);
+                }];
+            }
+           
             return cell;
         };
         

@@ -11,7 +11,7 @@
 #import "ZSHGoodsCell.h"
 #import "ZSHGoodsDetailViewController.h"
 
-static NSString * cellIdentifier = @"ZSHGoodsCell";
+
 
 @interface ZSHGoodsTypeViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 
@@ -19,7 +19,8 @@ static NSString * cellIdentifier = @"ZSHGoodsCell";
 @property (strong , nonatomic)NSMutableArray <ZSHGoodModel *> *goodModelArr;
 
 @end
-
+static NSString * cellIdentifier = @"ZSHGoodsCell";
+static NSString * ZSHBottomListCellID = @"ZSHBottomListCell";
 @implementation ZSHGoodsTypeViewController
 
 - (void)viewDidLoad {
@@ -34,7 +35,6 @@ static NSString * cellIdentifier = @"ZSHGoodsCell";
    _cellType = [self.paramDic[@"cellType"]integerValue];
    _goodModelArr = [ZSHGoodModel mj_objectArrayWithFilename:@"YouLikeGoods.plist"];
     if (self.cellType == ZSHTableViewCellType) {
-//        self.tableViewModel = [[ZSHBaseTableViewModel alloc] init];
         [self initViewModel];
     }
 }
@@ -85,10 +85,14 @@ static NSString * cellIdentifier = @"ZSHGoodsCell";
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
-    ZSHGoodsCell *cellView = [[ZSHGoodsCell alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kRealValue(270)) paramDic:nil];
-    cellView.goodModel = _goodModelArr[indexPath.row];
-    cellView.cellType = ZSHCollectionViewCellType;
-    [cell.contentView addSubview:cellView];
+    if (![cell.contentView viewWithTag:2]) {
+        ZSHGoodsCell *cellView = [[ZSHGoodsCell alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kRealValue(270)) paramDic:nil];
+        cellView.tag = 2;
+        cellView.goodModel = _goodModelArr[indexPath.row];
+        cellView.cellType = ZSHCollectionViewCellType;
+        [cell.contentView addSubview:cellView];
+    }
+   
     return cell;
 }
 
@@ -102,6 +106,7 @@ static NSString * cellIdentifier = @"ZSHGoodsCell";
 - (void)initViewModel {
     [self.tableViewModel.sectionModelArray removeAllObjects];
     [self.tableViewModel.sectionModelArray addObject:[self storeListSection]];
+    [self.tableView registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHBottomListCellID];
 }
 
 - (ZSHBaseTableViewSectionModel*)storeListSection {
@@ -111,22 +116,15 @@ static NSString * cellIdentifier = @"ZSHGoodsCell";
         [sectionModel.cellModelArray addObject:cellModel];
         cellModel.height = kRealValue(100);
         cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
-            static NSString *identifier = @"cellId";
-            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-            if (!cell) {
-                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                              reuseIdentifier:identifier];
-            } else {
-                while (cell.contentView.subviews.lastObject!=nil) {
-                    [(UIView *)cell.contentView.subviews.lastObject removeFromSuperview];
-                }
+            ZSHBaseCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHBottomListCellID forIndexPath:indexPath];
+            if (![cell.contentView viewWithTag:3]) {
+                ZSHGoodsCell *cellView = [[ZSHGoodsCell alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kRealValue(100)) paramDic:nil];
+                cellView.tag = 3;
+                cellView.goodModel = _goodModelArr[indexPath.row];
+                cellView.cellType = ZSHTableViewCellType;
+                [cell.contentView addSubview:cellView];
             }
-            cell.backgroundColor = KClearColor;
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            ZSHGoodsCell *cellView = [[ZSHGoodsCell alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kRealValue(100)) paramDic:nil];
-            cellView.goodModel = _goodModelArr[indexPath.row];
-            cellView.cellType = ZSHTableViewCellType;
-            [cell.contentView addSubview:cellView];
+            
             return cell;
         };
     }

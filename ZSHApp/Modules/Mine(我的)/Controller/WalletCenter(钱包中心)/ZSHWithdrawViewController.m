@@ -79,18 +79,21 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     cellModel.height = kRealValue(45);
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHBaseCell *cell = [[ZSHBaseCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@""];
+        if (![cell.contentView viewWithTag:2]) {
+            UITextField *amountTextField = [[UITextField alloc]initWithFrame:CGRectZero];
+            amountTextField.tag = 2;
+            amountTextField.font = kPingFangLight(24);
+            amountTextField.textColor = KZSHColor929292;
+            amountTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:  @"¥" attributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"454545"]}];
+            [cell.contentView addSubview:amountTextField];
+            [amountTextField mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.mas_equalTo(cell).offset(KLeftMargin);
+                make.right.mas_equalTo(cell).offset(-KLeftMargin);
+                make.height.mas_equalTo(kRealValue(40));
+                make.centerY.mas_equalTo(cell);
+            }];
+        }
         
-        UITextField *amountTextField = [[UITextField alloc]initWithFrame:CGRectZero];
-        amountTextField.font = kPingFangLight(24);
-        amountTextField.textColor = KZSHColor929292;
-        amountTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:  @"¥" attributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"454545"]}];
-        [cell.contentView addSubview:amountTextField];
-        [amountTextField mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.mas_equalTo(cell).offset(KLeftMargin);
-            make.right.mas_equalTo(cell).offset(-KLeftMargin);
-            make.height.mas_equalTo(kRealValue(40));
-            make.centerY.mas_equalTo(cell);
-        }];
         return cell;
     };
     cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {

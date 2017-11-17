@@ -45,6 +45,8 @@
     
 }
 
-
+- (void)updateViewWithParamDic:(NSDictionary *)paramDic{
+    
+}
 
 @end

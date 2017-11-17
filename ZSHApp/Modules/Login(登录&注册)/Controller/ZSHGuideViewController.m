@@ -9,6 +9,7 @@
 #import "ZSHGuideViewController.h"
 #import "ZSHGuideView.h"
 #import "ZSHLoginViewController.h"
+#import "ZSHCardViewController.h"
 
 @interface ZSHGuideViewController ()
 
@@ -37,7 +38,7 @@
     bgImage.frame = self.view.bounds;
     [self.view addSubview:bgImage];
     
-     NSDictionary *nextParamDic = @{@"dataArr":self.imageArr};
+    NSDictionary *nextParamDic = @{@"dataArr":self.imageArr,@"min_scale":@(0.6),@"withRatio":@(1.8)};
      _midView = [[ZSHGuideView alloc]initWithFrame:CGRectZero paramDic:nextParamDic];
     [self.view addSubview:_midView];
     [_midView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -53,8 +54,9 @@
     [ZSHSpeedy zsh_chageControlCircularWith:_applyBtn AndSetCornerRadius:0 SetBorderWidth:1.0 SetBorderColor:KWhiteColor canMasksToBounds:YES];
     [_applyBtn addTapBlock:^(UIButton *btn) {
         RLog(@"在线申请");
-        ZSHLoginViewController *loginVC = [[ZSHLoginViewController alloc]init];
-        [weakself presentViewController:loginVC animated:YES completion:nil];
+        ZSHCardViewController *cardVC = [[ZSHCardViewController alloc]init];
+        [weakself.navigationController pushViewController:cardVC animated:YES];
+        
     }];
     [self.view addSubview:_applyBtn];
     [_applyBtn mas_makeConstraints:^(MASConstraintMaker *make) {

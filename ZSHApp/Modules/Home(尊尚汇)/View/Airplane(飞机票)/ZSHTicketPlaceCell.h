@@ -8,6 +8,6 @@
 
 #import "ZSHBaseView.h"
 
-@interface ZSHTicketPlaceCell :ZSHBaseView //ZSHBaseCell
+@interface ZSHTicketPlaceCell :ZSHBaseView 
 
 @end

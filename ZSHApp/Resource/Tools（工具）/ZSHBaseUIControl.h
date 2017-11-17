@@ -57,7 +57,7 @@ typedef NS_ENUM(NSInteger, ShowPickViewWindowType) {
 typedef NS_ENUM(NSInteger,ZSHToSimpleCellView){
     FromSetEditInfoVCToSimpleCellView,     //设置-个人资料
     FromSetNoticeInfoVCToSimpleCellView,   //设置-新消息通知
-    FromNoneToCreateTeamVC
+    FromNoneToSimpleCellView
 };
 
 typedef NS_ENUM (NSInteger,ZSHToTextFieldCellView) {
@@ -67,6 +67,7 @@ typedef NS_ENUM (NSInteger,ZSHToTextFieldCellView) {
     FromMultiInfoQQVCToTextFieldCellView,          //绑定QQ帐号
     FromMultiPhoneVCToTextFieldCellView,           //更改手机号
     FromLoginVCToTextFieldCellView,                //登录-自定义View
+    FromCardVCToTextFieldCellView,                 //黑卡定制-自定义View
     FromNoneToTextFieldCellView
 };
 

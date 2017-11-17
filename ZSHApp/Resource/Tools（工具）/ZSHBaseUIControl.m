@@ -22,7 +22,7 @@
     return label;
 }
 
-//NSDictionary *btnDic = @{@"title":titleArr[i],@"titleColor":KZSHColor929292,@"font":kPingFangRegular(14),@"backgroundColor":KClearColor,@"withImage":@(YES),@"normalImage":imageArr[i],@"selectedImage":imageArr[i]};
+//NSDictionary *btnDic = @{@"title":titleArr[i],@"titleColor":KZSHColor929292,@"selectedTitleColor":KZSHColor929292,@"font":kPingFangRegular(14),@"backgroundColor":KClearColor,@"withImage":@(YES),@"normalImage":imageArr[i],@"selectedImage":imageArr[i]};
 
 + (UIButton *)createBtnWithParamDic:(NSDictionary *)paramDic{
     UIButton *btn = [[UIButton alloc]initWithFrame:CGRectZero];
@@ -31,6 +31,9 @@
     
     UIColor *titleColor = paramDic[@"titleColor"]?paramDic[@"titleColor"]:KZSHColor929292;
     [btn setTitleColor:titleColor forState:UIControlStateNormal];
+    
+    UIColor *selectedTitleColor = paramDic[@"selectedTitleColor"]?paramDic[@"selectedTitleColor"]:KZSHColor929292;
+    [btn setTitleColor:selectedTitleColor forState:UIControlStateSelected];
     
     UIColor *bgColor = paramDic[@"backgroundColor"]?paramDic[@"backgroundColor"]:KClearColor;
     [btn setBackgroundColor:bgColor];

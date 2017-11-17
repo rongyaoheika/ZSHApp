@@ -46,20 +46,23 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
             cell.separatorInset = UIEdgeInsetsMake(0, 0, 0, MAXFLOAT);
             cell.textLabel.text = weakself.cellParamArr[i][@"title"];
             cell.imageView.image = [UIImage imageNamed:weakself.cellParamArr[i][@"payImage"]];
+            if (![cell.contentView viewWithTag:2]) {
+                UIButton *rightBtn = [[UIButton alloc]initWithFrame:CGRectZero];
+                rightBtn.tag = 2;
+                rightBtn.imageView.contentMode = UIViewContentModeScaleAspectFit;
+                [rightBtn addTarget:self action:@selector(rightBtnAction:) forControlEvents:UIControlEventTouchUpInside];
+                [rightBtn setImage:[UIImage imageNamed:weakself.cellParamArr[i][@"btnNormalImage"]] forState:UIControlStateNormal];
+                [rightBtn setImage:[UIImage imageNamed:weakself.cellParamArr[i][@"btnPressImage"]] forState:UIControlStateSelected];
+                [cell.contentView addSubview:rightBtn];
+                [rightBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.right.mas_equalTo(cell).offset(-KLeftMargin);
+                    make.centerY.mas_equalTo(cell);
+                    make.size.mas_equalTo(CGSizeMake(kRealValue(35), kRealValue(35)));
+                }];
+                
+                rightBtn.selected = (weakself.selectedCellRow == indexPath.row);
+            }
             
-            UIButton *rightBtn = [[UIButton alloc]initWithFrame:CGRectZero];
-            rightBtn.imageView.contentMode = UIViewContentModeScaleAspectFit;
-            [rightBtn addTarget:self action:@selector(rightBtnAction:) forControlEvents:UIControlEventTouchUpInside];
-            [rightBtn setImage:[UIImage imageNamed:weakself.cellParamArr[i][@"btnNormalImage"]] forState:UIControlStateNormal];
-            [rightBtn setImage:[UIImage imageNamed:weakself.cellParamArr[i][@"btnPressImage"]] forState:UIControlStateSelected];
-            [cell.contentView addSubview:rightBtn];
-            [rightBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.right.mas_equalTo(cell).offset(-KLeftMargin);
-                make.centerY.mas_equalTo(cell);
-                make.size.mas_equalTo(CGSizeMake(kRealValue(35), kRealValue(35)));
-            }];
-            
-            rightBtn.selected = (weakself.selectedCellRow == indexPath.row);
             return cell;
         };
     }

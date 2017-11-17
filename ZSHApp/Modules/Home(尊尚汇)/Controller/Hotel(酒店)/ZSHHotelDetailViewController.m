@@ -171,18 +171,20 @@ static NSString *ZSHKTVListCellID = @"ZSHKTVListCell";
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHBaseCell *cell = [[ZSHBaseCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:ZSHBookCellID];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        
-        NSDictionary *scoreBtnDic = @{@"title":@"4.9",@"titleColor":KWhiteColor,@"font":kPingFangMedium(12),@"backgroundColor":[UIColor colorWithHexString:@"F29E19"]};
-        UIButton *scoreBtn = [ZSHBaseUIControl createBtnWithParamDic:scoreBtnDic];
-        scoreBtn.layer.cornerRadius = kRealValue(2.5);
-        [cell.contentView addSubview:scoreBtn];
-        [scoreBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.size.mas_equalTo(CGSizeMake(kRealValue(30), kRealValue(20)));
-            make.centerY.mas_equalTo(cell);
-            make.left.mas_equalTo(cell).offset(KLeftMargin);
-        }];
         cell.detailTextLabel.text = @"99条评论";
         [self hideSeparatorLineWithCell:cell hide:NO];
+        if (![cell.contentView viewWithTag:2]) {
+            NSDictionary *scoreBtnDic = @{@"title":@"4.9",@"titleColor":KWhiteColor,@"font":kPingFangMedium(12),@"backgroundColor":[UIColor colorWithHexString:@"F29E19"]};
+            UIButton *scoreBtn = [ZSHBaseUIControl createBtnWithParamDic:scoreBtnDic];
+            scoreBtn.tag = 2;
+            scoreBtn.layer.cornerRadius = kRealValue(2.5);
+            [cell.contentView addSubview:scoreBtn];
+            [scoreBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.size.mas_equalTo(CGSizeMake(kRealValue(30), kRealValue(20)));
+                make.centerY.mas_equalTo(cell);
+                make.left.mas_equalTo(cell).offset(KLeftMargin);
+            }];
+        }
         return cell;
     };
         

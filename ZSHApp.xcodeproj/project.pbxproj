@@ -104,6 +104,10 @@
 		FE0F9DBE1F949EFA004F8D2A /* ZSHWeiboViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE0F9DBD1F949EFA004F8D2A /* ZSHWeiboViewController.m */; };
 		FE0F9DC01F94ACD8004F8D2A /* cellData.plist in Resources */ = {isa = PBXBuildFile; fileRef = FE0F9DBF1F94A20E004F8D2A /* cellData.plist */; };
 		FE0F9DC31F94DB85004F8D2A /* ZSHWeiBoBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE0F9DC21F94DB85004F8D2A /* ZSHWeiBoBottomView.m */; };
+		FE1045921FBDA1D90097CAD9 /* ZSHSelectCardNumFirstView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE1045911FBDA1D90097CAD9 /* ZSHSelectCardNumFirstView.m */; };
+		FE1045951FBDA2610097CAD9 /* ZSHSelectCardNumSecondView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE1045941FBDA2600097CAD9 /* ZSHSelectCardNumSecondView.m */; };
+		FE1045981FBDB4960097CAD9 /* ZSHPhoneNumListView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE1045971FBDB4960097CAD9 /* ZSHPhoneNumListView.m */; };
+		FE10459B1FBDE7240097CAD9 /* ZSHBlackCardPhoneNumView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE10459A1FBDE7240097CAD9 /* ZSHBlackCardPhoneNumView.m */; };
 		FE1377721F97225A003C8DFB /* ZSHOrderSubViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE1377711F97225A003C8DFB /* ZSHOrderSubViewController.m */; };
 		FE1377751F972745003C8DFB /* ZSHOrderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE1377741F972745003C8DFB /* ZSHOrderCell.m */; };
 		FE1377781F973402003C8DFB /* ZSHOrderModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FE1377771F973402003C8DFB /* ZSHOrderModel.m */; };
@@ -122,6 +126,9 @@
 		FE1F76371F8F7E1100C45B83 /* LXScrollContentView.h in Sources */ = {isa = PBXBuildFile; fileRef = FE1F762C1F8F7B0500C45B83 /* LXScrollContentView.h */; };
 		FE1F76381F8F7E1100C45B83 /* LXScrollContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE1F762D1F8F7B0500C45B83 /* LXScrollContentView.m */; };
 		FE248E8C1FA828FE00FFE126 /* ZSHKTVModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FE248E8B1FA828FE00FFE126 /* ZSHKTVModel.m */; };
+		FE27DAD41FBD43BE001F2507 /* ZSHCardCustomizedFirst.m in Sources */ = {isa = PBXBuildFile; fileRef = FE27DAD31FBD43BE001F2507 /* ZSHCardCustomizedFirst.m */; };
+		FE27DAD71FBD5ECE001F2507 /* ZSHCardCustomizedSecond.m in Sources */ = {isa = PBXBuildFile; fileRef = FE27DAD61FBD5ECE001F2507 /* ZSHCardCustomizedSecond.m */; };
+		FE27DADA1FBD67CA001F2507 /* ZSHCardCustomizedThird.m in Sources */ = {isa = PBXBuildFile; fileRef = FE27DAD91FBD67CA001F2507 /* ZSHCardCustomizedThird.m */; };
 		FE291EE61F8CCC2700D4BBE7 /* ZSHTogetherViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE291EE51F8CCC2700D4BBE7 /* ZSHTogetherViewController.m */; };
 		FE291EE91F8CCC5900D4BBE7 /* ZSHMineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE291EE81F8CCC5900D4BBE7 /* ZSHMineViewController.m */; };
 		FE291EF31F8CCD2200D4BBE7 /* ZSHLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE291EF21F8CCD2200D4BBE7 /* ZSHLoginViewController.m */; };
@@ -143,6 +150,10 @@
 		FE2CD0B31F98F4B400E9E519 /* ZSHExchangeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE2CD0B21F98F4B400E9E519 /* ZSHExchangeViewController.m */; };
 		FE2CD0B61F98F61A00E9E519 /* ZSHIntegralExchangeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE2CD0B51F98F61A00E9E519 /* ZSHIntegralExchangeCell.m */; };
 		FE2CD0B91F98F9C200E9E519 /* ZSHCouponViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE2CD0B81F98F9C200E9E519 /* ZSHCouponViewController.m */; };
+		FE3683C01FBC02B300220477 /* ZSHCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE3683BF1FBC02B300220477 /* ZSHCardViewController.m */; };
+		FE3683C31FBC196E00220477 /* ZSHCardBtnListView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE3683C21FBC196E00220477 /* ZSHCardBtnListView.m */; };
+		FE3683C61FBC43C000220477 /* ZSHCardQuotaView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE3683C51FBC43C000220477 /* ZSHCardQuotaView.m */; };
+		FE3683C91FBC493E00220477 /* ZSHCardSubHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE3683C81FBC493E00220477 /* ZSHCardSubHeadView.m */; };
 		FE443FD01FAFF60200B7F7A5 /* ZSHTicketTypeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE443FCF1FAFF60200B7F7A5 /* ZSHTicketTypeCell.m */; };
 		FE443FD61FB030C600B7F7A5 /* ZSHAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE443FD51FB030C600B7F7A5 /* ZSHAccountViewController.m */; };
 		FE443FDF1FB04FF100B7F7A5 /* ZSHMultiInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE443FDE1FB04FF100B7F7A5 /* ZSHMultiInfoViewController.m */; };
@@ -227,6 +238,9 @@
 		FE7F00151F9203430006E9A3 /* ZSHBaseTableViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FEA483D21F91F3CA00219CFE /* ZSHBaseTableViewModel.m */; };
 		FE7F00161F9203430006E9A3 /* ZSHBaseTableViewSectionModel.h in Sources */ = {isa = PBXBuildFile; fileRef = FEA483D31F91F3CA00219CFE /* ZSHBaseTableViewSectionModel.h */; };
 		FE7F00171F9203430006E9A3 /* ZSHBaseTableViewSectionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FEA483D41F91F3CA00219CFE /* ZSHBaseTableViewSectionModel.m */; };
+		FE879A0C1FBCAA260061E65C /* ZSHSelectCardNumCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE879A0B1FBCAA260061E65C /* ZSHSelectCardNumCell.m */; };
+		FE879A0F1FBCB4790061E65C /* ZSHCardCustomizedCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE879A0E1FBCB4790061E65C /* ZSHCardCustomizedCell.m */; };
+		FE879A121FBCBBA20061E65C /* ZSHCardPayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE879A111FBCBBA20061E65C /* ZSHCardPayCell.m */; };
 		FE8FD0731FADA833005F1184 /* ZSHMemberCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE8FD0721FADA833005F1184 /* ZSHMemberCenterViewController.m */; };
 		FE8FD0771FADAA9F005F1184 /* ZSHMemberCenterHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE8FD0761FADAA9F005F1184 /* ZSHMemberCenterHeadView.m */; };
 		FE8FD07B1FADBCFF005F1184 /* ZSHActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE8FD07A1FADBCFF005F1184 /* ZSHActivityViewController.m */; };
@@ -523,6 +537,14 @@
 		FE0F9DBF1F94A20E004F8D2A /* cellData.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = cellData.plist; sourceTree = "<group>"; };
 		FE0F9DC11F94DB85004F8D2A /* ZSHWeiBoBottomView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHWeiBoBottomView.h; sourceTree = "<group>"; };
 		FE0F9DC21F94DB85004F8D2A /* ZSHWeiBoBottomView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHWeiBoBottomView.m; sourceTree = "<group>"; };
+		FE1045901FBDA1D90097CAD9 /* ZSHSelectCardNumFirstView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ZSHSelectCardNumFirstView.h; path = "ZSHApp/Modules/Login(登录&注册)/Controller/ZSHSelectCardNumFirstView.h"; sourceTree = SOURCE_ROOT; };
+		FE1045911FBDA1D90097CAD9 /* ZSHSelectCardNumFirstView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ZSHSelectCardNumFirstView.m; path = "ZSHApp/Modules/Login(登录&注册)/Controller/ZSHSelectCardNumFirstView.m"; sourceTree = SOURCE_ROOT; };
+		FE1045931FBDA2600097CAD9 /* ZSHSelectCardNumSecondView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ZSHSelectCardNumSecondView.h; path = "ZSHApp/Modules/Login(登录&注册)/Controller/ZSHSelectCardNumSecondView.h"; sourceTree = SOURCE_ROOT; };
+		FE1045941FBDA2600097CAD9 /* ZSHSelectCardNumSecondView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ZSHSelectCardNumSecondView.m; path = "ZSHApp/Modules/Login(登录&注册)/Controller/ZSHSelectCardNumSecondView.m"; sourceTree = SOURCE_ROOT; };
+		FE1045961FBDB4960097CAD9 /* ZSHPhoneNumListView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ZSHPhoneNumListView.h; path = "ZSHApp/Modules/Login(登录&注册)/Controller/ZSHPhoneNumListView.h"; sourceTree = SOURCE_ROOT; };
+		FE1045971FBDB4960097CAD9 /* ZSHPhoneNumListView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ZSHPhoneNumListView.m; path = "ZSHApp/Modules/Login(登录&注册)/Controller/ZSHPhoneNumListView.m"; sourceTree = SOURCE_ROOT; };
+		FE1045991FBDE7240097CAD9 /* ZSHBlackCardPhoneNumView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ZSHBlackCardPhoneNumView.h; path = "ZSHApp/Modules/Login(登录&注册)/Controller/ZSHBlackCardPhoneNumView.h"; sourceTree = SOURCE_ROOT; };
+		FE10459A1FBDE7240097CAD9 /* ZSHBlackCardPhoneNumView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ZSHBlackCardPhoneNumView.m; path = "ZSHApp/Modules/Login(登录&注册)/Controller/ZSHBlackCardPhoneNumView.m"; sourceTree = SOURCE_ROOT; };
 		FE1377701F97225A003C8DFB /* ZSHOrderSubViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHOrderSubViewController.h; sourceTree = "<group>"; };
 		FE1377711F97225A003C8DFB /* ZSHOrderSubViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHOrderSubViewController.m; sourceTree = "<group>"; };
 		FE1377731F972745003C8DFB /* ZSHOrderCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHOrderCell.h; sourceTree = "<group>"; };
@@ -553,6 +575,12 @@
 		FE1F76321F8F7D0500C45B83 /* ZSHLiveContentFirstViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHLiveContentFirstViewController.m; sourceTree = "<group>"; };
 		FE248E8A1FA828FE00FFE126 /* ZSHKTVModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHKTVModel.h; sourceTree = "<group>"; };
 		FE248E8B1FA828FE00FFE126 /* ZSHKTVModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHKTVModel.m; sourceTree = "<group>"; };
+		FE27DAD21FBD43BE001F2507 /* ZSHCardCustomizedFirst.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ZSHCardCustomizedFirst.h; path = "ZSHApp/Modules/Login(登录&注册)/Controller/ZSHCardCustomizedFirst.h"; sourceTree = SOURCE_ROOT; };
+		FE27DAD31FBD43BE001F2507 /* ZSHCardCustomizedFirst.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ZSHCardCustomizedFirst.m; path = "ZSHApp/Modules/Login(登录&注册)/Controller/ZSHCardCustomizedFirst.m"; sourceTree = SOURCE_ROOT; };
+		FE27DAD51FBD5ECE001F2507 /* ZSHCardCustomizedSecond.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ZSHCardCustomizedSecond.h; path = "ZSHApp/Modules/Login(登录&注册)/Controller/ZSHCardCustomizedSecond.h"; sourceTree = SOURCE_ROOT; };
+		FE27DAD61FBD5ECE001F2507 /* ZSHCardCustomizedSecond.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ZSHCardCustomizedSecond.m; path = "ZSHApp/Modules/Login(登录&注册)/Controller/ZSHCardCustomizedSecond.m"; sourceTree = SOURCE_ROOT; };
+		FE27DAD81FBD67CA001F2507 /* ZSHCardCustomizedThird.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ZSHCardCustomizedThird.h; path = "ZSHApp/Modules/Login(登录&注册)/Controller/ZSHCardCustomizedThird.h"; sourceTree = SOURCE_ROOT; };
+		FE27DAD91FBD67CA001F2507 /* ZSHCardCustomizedThird.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ZSHCardCustomizedThird.m; path = "ZSHApp/Modules/Login(登录&注册)/Controller/ZSHCardCustomizedThird.m"; sourceTree = SOURCE_ROOT; };
 		FE291EE41F8CCC2700D4BBE7 /* ZSHTogetherViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHTogetherViewController.h; sourceTree = "<group>"; };
 		FE291EE51F8CCC2700D4BBE7 /* ZSHTogetherViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHTogetherViewController.m; sourceTree = "<group>"; };
 		FE291EE71F8CCC5900D4BBE7 /* ZSHMineViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHMineViewController.h; sourceTree = "<group>"; };
@@ -593,6 +621,14 @@
 		FE2CD0B51F98F61A00E9E519 /* ZSHIntegralExchangeCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHIntegralExchangeCell.m; sourceTree = "<group>"; };
 		FE2CD0B71F98F9C100E9E519 /* ZSHCouponViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHCouponViewController.h; sourceTree = "<group>"; };
 		FE2CD0B81F98F9C200E9E519 /* ZSHCouponViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHCouponViewController.m; sourceTree = "<group>"; };
+		FE3683BE1FBC02B300220477 /* ZSHCardViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHCardViewController.h; sourceTree = "<group>"; };
+		FE3683BF1FBC02B300220477 /* ZSHCardViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHCardViewController.m; sourceTree = "<group>"; };
+		FE3683C11FBC196E00220477 /* ZSHCardBtnListView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ZSHCardBtnListView.h; path = "ZSHApp/Modules/Login(登录&注册)/Controller/ZSHCardBtnListView.h"; sourceTree = SOURCE_ROOT; };
+		FE3683C21FBC196E00220477 /* ZSHCardBtnListView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ZSHCardBtnListView.m; path = "ZSHApp/Modules/Login(登录&注册)/Controller/ZSHCardBtnListView.m"; sourceTree = SOURCE_ROOT; };
+		FE3683C41FBC43C000220477 /* ZSHCardQuotaView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ZSHCardQuotaView.h; path = "ZSHApp/Modules/Login(登录&注册)/Controller/ZSHCardQuotaView.h"; sourceTree = SOURCE_ROOT; };
+		FE3683C51FBC43C000220477 /* ZSHCardQuotaView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ZSHCardQuotaView.m; path = "ZSHApp/Modules/Login(登录&注册)/Controller/ZSHCardQuotaView.m"; sourceTree = SOURCE_ROOT; };
+		FE3683C71FBC493E00220477 /* ZSHCardSubHeadView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ZSHCardSubHeadView.h; path = "ZSHApp/Modules/Login(登录&注册)/Controller/ZSHCardSubHeadView.h"; sourceTree = SOURCE_ROOT; };
+		FE3683C81FBC493E00220477 /* ZSHCardSubHeadView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ZSHCardSubHeadView.m; path = "ZSHApp/Modules/Login(登录&注册)/Controller/ZSHCardSubHeadView.m"; sourceTree = SOURCE_ROOT; };
 		FE443FCE1FAFF60200B7F7A5 /* ZSHTicketTypeCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHTicketTypeCell.h; sourceTree = "<group>"; };
 		FE443FCF1FAFF60200B7F7A5 /* ZSHTicketTypeCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHTicketTypeCell.m; sourceTree = "<group>"; };
 		FE443FD41FB030C600B7F7A5 /* ZSHAccountViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHAccountViewController.h; sourceTree = "<group>"; };
@@ -740,6 +776,12 @@
 		FE7CA9E61F9DC59300A2B15D /* ZSHGoodsDetailCountCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHGoodsDetailCountCell.m; sourceTree = "<group>"; };
 		FE7CA9E81F9DD15300A2B15D /* ZSHLiveListModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHLiveListModel.h; sourceTree = "<group>"; };
 		FE7CA9E91F9DD15300A2B15D /* ZSHLiveListModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHLiveListModel.m; sourceTree = "<group>"; };
+		FE879A0A1FBCAA260061E65C /* ZSHSelectCardNumCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ZSHSelectCardNumCell.h; path = "ZSHApp/Modules/Login(登录&注册)/Controller/ZSHSelectCardNumCell.h"; sourceTree = SOURCE_ROOT; };
+		FE879A0B1FBCAA260061E65C /* ZSHSelectCardNumCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ZSHSelectCardNumCell.m; path = "ZSHApp/Modules/Login(登录&注册)/Controller/ZSHSelectCardNumCell.m"; sourceTree = SOURCE_ROOT; };
+		FE879A0D1FBCB4790061E65C /* ZSHCardCustomizedCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ZSHCardCustomizedCell.h; path = "ZSHApp/Modules/Login(登录&注册)/Controller/ZSHCardCustomizedCell.h"; sourceTree = SOURCE_ROOT; };
+		FE879A0E1FBCB4790061E65C /* ZSHCardCustomizedCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ZSHCardCustomizedCell.m; path = "ZSHApp/Modules/Login(登录&注册)/Controller/ZSHCardCustomizedCell.m"; sourceTree = SOURCE_ROOT; };
+		FE879A101FBCBBA20061E65C /* ZSHCardPayCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ZSHCardPayCell.h; path = "ZSHApp/Modules/Login(登录&注册)/Controller/ZSHCardPayCell.h"; sourceTree = SOURCE_ROOT; };
+		FE879A111FBCBBA20061E65C /* ZSHCardPayCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ZSHCardPayCell.m; path = "ZSHApp/Modules/Login(登录&注册)/Controller/ZSHCardPayCell.m"; sourceTree = SOURCE_ROOT; };
 		FE8FD0711FADA833005F1184 /* ZSHMemberCenterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHMemberCenterViewController.h; sourceTree = "<group>"; };
 		FE8FD0721FADA833005F1184 /* ZSHMemberCenterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHMemberCenterViewController.m; sourceTree = "<group>"; };
 		FE8FD0751FADAA9F005F1184 /* ZSHMemberCenterHeadView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHMemberCenterHeadView.h; sourceTree = "<group>"; };
@@ -1819,6 +1861,8 @@
 				FE291EF21F8CCD2200D4BBE7 /* ZSHLoginViewController.m */,
 				FEDF290A1FB69C2800CD5756 /* ZSHGuideViewController.h */,
 				FEDF290B1FB69C2800CD5756 /* ZSHGuideViewController.m */,
+				FE3683BE1FBC02B300220477 /* ZSHCardViewController.h */,
+				FE3683BF1FBC02B300220477 /* ZSHCardViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1842,6 +1886,32 @@
 			children = (
 				FEDF291D1FB69CBF00CD5756 /* ZSHGuideView.h */,
 				FEDF291E1FB69CBF00CD5756 /* ZSHGuideView.m */,
+				FE3683C11FBC196E00220477 /* ZSHCardBtnListView.h */,
+				FE3683C21FBC196E00220477 /* ZSHCardBtnListView.m */,
+				FE3683C41FBC43C000220477 /* ZSHCardQuotaView.h */,
+				FE3683C51FBC43C000220477 /* ZSHCardQuotaView.m */,
+				FE3683C71FBC493E00220477 /* ZSHCardSubHeadView.h */,
+				FE3683C81FBC493E00220477 /* ZSHCardSubHeadView.m */,
+				FE879A0A1FBCAA260061E65C /* ZSHSelectCardNumCell.h */,
+				FE879A0B1FBCAA260061E65C /* ZSHSelectCardNumCell.m */,
+				FE1045901FBDA1D90097CAD9 /* ZSHSelectCardNumFirstView.h */,
+				FE1045911FBDA1D90097CAD9 /* ZSHSelectCardNumFirstView.m */,
+				FE1045931FBDA2600097CAD9 /* ZSHSelectCardNumSecondView.h */,
+				FE1045941FBDA2600097CAD9 /* ZSHSelectCardNumSecondView.m */,
+				FE1045991FBDE7240097CAD9 /* ZSHBlackCardPhoneNumView.h */,
+				FE10459A1FBDE7240097CAD9 /* ZSHBlackCardPhoneNumView.m */,
+				FE1045961FBDB4960097CAD9 /* ZSHPhoneNumListView.h */,
+				FE1045971FBDB4960097CAD9 /* ZSHPhoneNumListView.m */,
+				FE879A0D1FBCB4790061E65C /* ZSHCardCustomizedCell.h */,
+				FE879A0E1FBCB4790061E65C /* ZSHCardCustomizedCell.m */,
+				FE27DAD81FBD67CA001F2507 /* ZSHCardCustomizedThird.h */,
+				FE27DAD91FBD67CA001F2507 /* ZSHCardCustomizedThird.m */,
+				FE879A101FBCBBA20061E65C /* ZSHCardPayCell.h */,
+				FE879A111FBCBBA20061E65C /* ZSHCardPayCell.m */,
+				FE27DAD21FBD43BE001F2507 /* ZSHCardCustomizedFirst.h */,
+				FE27DAD31FBD43BE001F2507 /* ZSHCardCustomizedFirst.m */,
+				FE27DAD51FBD5ECE001F2507 /* ZSHCardCustomizedSecond.h */,
+				FE27DAD61FBD5ECE001F2507 /* ZSHCardCustomizedSecond.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -3034,6 +3104,7 @@
 				FEA1057B1F9B274E008652D6 /* UIView+ZSHExtension.h in Sources */,
 				185BB9C61FB58DD6007A96FF /* ZSHLiveTaskCenterCell.m in Sources */,
 				185BB9C21FB5860E007A96FF /* ZSHLiveTaskCenterViewController.m in Sources */,
+				FE1045981FBDB4960097CAD9 /* ZSHPhoneNumListView.m in Sources */,
 				FE7502C11F9A11DE002F2708 /* ZSHSearchBarView.m in Sources */,
 				1826CDB41FBAFD3D00A0ECE2 /* ZSHApplyServiceViewController.m in Sources */,
 				185BB9CA1FB5BDB9007A96FF /* ZSHMoreSubscribeViewController.m in Sources */,
@@ -3048,6 +3119,7 @@
 				FEA105811F9B292B008652D6 /* ZSHBrandsSortHeadView.m in Sources */,
 				FE0F9DA51F94878E004F8D2A /* JSCartModel.h in Sources */,
 				FEC702B41FB3195000D5BAA1 /* ZSHEntertainmentDisViewController.m in Sources */,
+				FE879A121FBCBBA20061E65C /* ZSHCardPayCell.m in Sources */,
 				FE0F9DA61F94878E004F8D2A /* JSCartModel.m in Sources */,
 				1822871A1FB4559300CA5B10 /* ZSHLiveMineViewController.m in Sources */,
 				FE2CD0991F984B5500E9E519 /* ZSHFindViewController.m in Sources */,
@@ -3060,9 +3132,11 @@
 				1811058A1FBC40180046D229 /* ZSHTrainPassengerController.m in Sources */,
 				FE248E8C1FA828FE00FFE126 /* ZSHKTVModel.m in Sources */,
 				FE7502B71F99D76A002F2708 /* ZSHGoodsSegmentView.m in Sources */,
+				FE1045951FBDA2610097CAD9 /* ZSHSelectCardNumSecondView.m in Sources */,
 				FEF416061FAB74DF00137F0A /* ZSHAirTicketDetailHeadView.m in Sources */,
 				FE4DB1E11F99965D008E12E9 /* ZSHGoodsTypeViewController.m in Sources */,
 				FEF415FA1FAB5A5F00137F0A /* ZSHMoreTicketViewController.m in Sources */,
+				FE1045921FBDA1D90097CAD9 /* ZSHSelectCardNumFirstView.m in Sources */,
 				FE0F9DA91F94878E004F8D2A /* JSCartCell.h in Sources */,
 				FEA1059A1F9B5CEF008652D6 /* ZSHSpeedy.m in Sources */,
 				FEA105641F9B2008008652D6 /* ZSHGoodsViewController.m in Sources */,
@@ -3128,8 +3202,10 @@
 				FEA483AC1F91B96000219CFE /* UIViewController+RXLSideMenu.m in Sources */,
 				FE1F76351F8F7E1100C45B83 /* LXScollTitleView.h in Sources */,
 				FE8FD0771FADAA9F005F1184 /* ZSHMemberCenterHeadView.m in Sources */,
+				FE3683C91FBC493E00220477 /* ZSHCardSubHeadView.m in Sources */,
 				FE1F76361F8F7E1100C45B83 /* LXScollTitleView.m in Sources */,
 				FE0F9DBE1F949EFA004F8D2A /* ZSHWeiboViewController.m in Sources */,
+				FE879A0F1FBCB4790061E65C /* ZSHCardCustomizedCell.m in Sources */,
 				FE1F76371F8F7E1100C45B83 /* LXScrollContentView.h in Sources */,
 				1813E26D1FBD3F5000624405 /* ZSHTrainTicketDetailCell.m in Sources */,
 				FEA30A501F9F08FE00AB0FFC /* ZSHLogisticsDetailModel.m in Sources */,
@@ -3165,6 +3241,7 @@
 				FEAE11331FB49DD4008DCB3E /* ZSHEnergyScoreCell.m in Sources */,
 				FEF415F71FAAF3E000137F0A /* ZSHTicketPlaceCell.m in Sources */,
 				FE5538171F47049D00803128 /* TabBarItem.m in Sources */,
+				FE27DAD71FBD5ECE001F2507 /* ZSHCardCustomizedSecond.m in Sources */,
 				FEBD7CB21FA74BBF00CE2BA6 /* ZSHGoodsDetailModel.m in Sources */,
 				FE5538651F47049D00803128 /* OpenUDID.m in Sources */,
 				1874B9661FB99E9700059184 /* ZSHLivePersonInfoView.m in Sources */,
@@ -3172,6 +3249,7 @@
 				FEF416001FAB70EB00137F0A /* ZSHAirTicketDetailViewController.m in Sources */,
 				FEDF292A1FB6DA3000CD5756 /* ZSHLiveRoomViewController.m in Sources */,
 				FE4DB1ED1F99998B008E12E9 /* ZSHBaseCollectionViewCell.m in Sources */,
+				FE3683C01FBC02B300220477 /* ZSHCardViewController.m in Sources */,
 				FE50245E1F8A2413005F0FF7 /* ZSHBaseLogic.m in Sources */,
 				FE8FD08E1FAE03E7005F1184 /* ZSHSimpleCellView.m in Sources */,
 				FE7502C41F9A252C002F2708 /* ZSHMineHeadView.m in Sources */,
@@ -3201,6 +3279,7 @@
 				FE5538811F470BAF00803128 /* GameInfo.m in Sources */,
 				FEEF46EF1FBA84100086A3C4 /* ZSHLivePopView.m in Sources */,
 				FE5229851F9050DF00DC2899 /* ZSHLiveCellView.m in Sources */,
+				FE879A0C1FBCAA260061E65C /* ZSHSelectCardNumCell.m in Sources */,
 				FEAEE3EE1FA86CBA00F73EEA /* NSCalendar+ST.m in Sources */,
 				FE1377781F973402003C8DFB /* ZSHOrderModel.m in Sources */,
 				FEAE11301FB47292008DCB3E /* ZSHEnergyHeadCell.m in Sources */,
@@ -3220,6 +3299,7 @@
 				FE1F76331F8F7D0500C45B83 /* ZSHLiveContentFirstViewController.m in Sources */,
 				FE5538611F47049D00803128 /* MBProgressHUD+XY.m in Sources */,
 				FE2CD0B01F98B6DB00E9E519 /* ZSHIntegalModel.m in Sources */,
+				FE27DAD41FBD43BE001F2507 /* ZSHCardCustomizedFirst.m in Sources */,
 				FE2BB0B81F8E03FB000D5800 /* ZSHHomeHeadView.m in Sources */,
 				FE1377751F972745003C8DFB /* ZSHOrderCell.m in Sources */,
 				FE55385F1F47049D00803128 /* UICollectionView+IndexPath.m in Sources */,
@@ -3259,12 +3339,14 @@
 				FE291EE61F8CCC2700D4BBE7 /* ZSHTogetherViewController.m in Sources */,
 				185BB9B81FB559B3007A96FF /* ZSHLiveMonthListViewController.m in Sources */,
 				FE55380E1F47049D00803128 /* AppDelegate+AppService.m in Sources */,
+				FE10459B1FBDE7240097CAD9 /* ZSHBlackCardPhoneNumView.m in Sources */,
 				FEFDB41A1F7A36D90069F867 /* pinyin.m in Sources */,
 				181105761FBBD69A0046D229 /* UILabel+Spacing.m in Sources */,
 				FE7527B11F7AB9E400858561 /* ZSHBaseView.m in Sources */,
 				FE5538831F470BAF00803128 /* UserManager.m in Sources */,
 				FEBD7CA01FA7161D00CE2BA6 /* ZSHGoodsCommentSubViewController.m in Sources */,
 				FEBD7C901FA6C47300CE2BA6 /* ZSHHotelListCell.m in Sources */,
+				FE27DADA1FBD67CA001F2507 /* ZSHCardCustomizedThird.m in Sources */,
 				FE7CA9E41F9DBE5100A2B15D /* ZSHGoodsDetailColorCell.m in Sources */,
 				18B2DECC1F497B88005A74A7 /* ZSHBaseModel.m in Sources */,
 				FE2CD0B31F98F4B400E9E519 /* ZSHExchangeViewController.m in Sources */,
@@ -3273,6 +3355,7 @@
 				FE5CFA411FA1B32500A55644 /* ZSHHotelCell.m in Sources */,
 				FE1F76281F8F795C00C45B83 /* ZSHCustomWaterFlowLayout.m in Sources */,
 				FE7AF23B1FA383FA00E1A648 /* ZSHHotelDetailHeadCell.m in Sources */,
+				FE3683C31FBC196E00220477 /* ZSHCardBtnListView.m in Sources */,
 				FEDF29241FB6CFD300CD5756 /* ZSHQuotaHeadView.m in Sources */,
 				1813E2671FBD2A0800624405 /* ZSHTrainSearchResultController.m in Sources */,
 				FE5538801F470BAF00803128 /* ShareManager.m in Sources */,
@@ -3298,6 +3381,7 @@
 				FE5538121F47049D00803128 /* RootNavigationController.m in Sources */,
 				FE291EE91F8CCC5900D4BBE7 /* ZSHMineViewController.m in Sources */,
 				FE7502D01F9A4360002F2708 /* ZSHEntertainmentViewController.m in Sources */,
+				FE3683C61FBC43C000220477 /* ZSHCardQuotaView.m in Sources */,
 				FE5538601F47049D00803128 /* UIViewController+AlertViewAndActionSheet.m in Sources */,
 				FEAE11231FB41977008DCB3E /* ZSHEnergyValueViewController.m in Sources */,
 				FE5538101F47049D00803128 /* AppDelegate.m in Sources */,
@@ -3433,6 +3517,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;

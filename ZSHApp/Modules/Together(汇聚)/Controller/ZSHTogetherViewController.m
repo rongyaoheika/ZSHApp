@@ -33,7 +33,7 @@ static NSString *cellIdentifier = @"listCell";
 
 - (void)loadData{
     self.pushVCsArr = @[@"ZSHEntertainmentViewController",@"ZSHEntertainmentViewController",@"ZSHEntertainmentViewController",@"ZSHEntertainmentViewController",@"ZSHEntertainmentViewController",@"ZSHEntertainmentViewController"];
-    self.paramArr = @[@{},@{}];
+    self.paramArr = @[@{},@{},@{},@{},@{},@{}];
     [self initViewModel];
 }
 

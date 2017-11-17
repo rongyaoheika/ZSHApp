@@ -60,7 +60,9 @@ static NSString *ZSHNoticeViewCellID = @"ZSHNoticeViewCell";
     cellModel.height = kRealValue(193);
     cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHBaseCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHHeadViewID];
-        [cell.contentView addSubview:self.headView];
+        if (![cell.contentView viewWithTag:2]) {
+             [cell.contentView addSubview:self.headView];
+        }
         return cell;
     };
     
@@ -95,6 +97,7 @@ static NSString *ZSHNoticeViewCellID = @"ZSHNoticeViewCell";
 - (ZSHMemberCenterHeadView *)headView{
     if (!_headView) {
         _headView = [[ZSHMemberCenterHeadView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, kRealValue(193)) paramDic:nil];
+        _headView.tag = 2;
     }
     return _headView;
 }

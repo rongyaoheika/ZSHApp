@@ -25,7 +25,8 @@
 
 static NSString *ZSHEnergyHeadCellID = @"ZSHEnergyHeadCell";
 static NSString *ZSHEnergyScoreCellID = @"ZSHEnergyScoreCell";
-static NSString *ZSHEnergyDetailCellID = @"ZSHEnergyDetailCell";
+static NSString *ZSHEnergyDetailTopCellID = @"ZSHEnergyDetailTopCell";
+static NSString *ZSHEnergyDetailBottomCellID = @"ZSHEnergyDetailBottomCell";
 static NSString *ZSHEnergyRulesCellID = @"ZSHEnergyRulesCell";
 
 @implementation ZSHEnergyValueViewController
@@ -90,7 +91,8 @@ static NSString *ZSHEnergyRulesCellID = @"ZSHEnergyRulesCell";
     
     [self.tableView registerClass:[ZSHEnergyHeadCell class] forCellReuseIdentifier:ZSHEnergyHeadCellID];
     [self.tableView registerClass:[ZSHEnergyScoreCell class] forCellReuseIdentifier:ZSHEnergyScoreCellID];
-    [self.tableView registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHEnergyDetailCellID];
+    [self.tableView registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHEnergyDetailTopCellID];
+    [self.tableView registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHEnergyDetailBottomCellID];
     [self.tableView registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHEnergyRulesCellID];
     [self.tableView reloadData];
 }
@@ -162,7 +164,7 @@ static NSString *ZSHEnergyRulesCellID = @"ZSHEnergyRulesCell";
     [sectionModel.cellModelArray addObject:cellModel];
     cellModel.height = kRealValue(46);
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
-        ZSHBaseCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHEnergyDetailCellID forIndexPath:indexPath];
+        ZSHBaseCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHEnergyDetailTopCellID forIndexPath:indexPath];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         cell.imageView.image = [UIImage imageNamed:paramDic[@"headImageName"]];
         cell.textLabel.text = paramDic[@"headTitle"];
@@ -175,32 +177,31 @@ static NSString *ZSHEnergyRulesCellID = @"ZSHEnergyRulesCell";
     [sectionModel.cellModelArray addObject:cellModel];
     kWeakSelf(cellModel);
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
-        ZSHBaseCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHEnergyDetailCellID forIndexPath:indexPath];
-        while ([cell.contentView.subviews lastObject] != nil) {
-            [(UIView*)[cell.contentView.subviews lastObject] removeFromSuperview];
+        ZSHBaseCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHEnergyDetailBottomCellID forIndexPath:indexPath];
+        if (![cell.contentView viewWithTag:1]) {
+            NSDictionary *detailLabelDic = @{@"text":paramDic[@"detailTitle"],@"font":kPingFangRegular(12),@"textAlignment":@(NSTextAlignmentCenter)};
+            UILabel  *detailLabel = [ZSHBaseUIControl createLabelWithParamDic:detailLabelDic];
+            detailLabel.tag = 1;
+            detailLabel.numberOfLines = 0;
+            [detailLabel setLineBreakMode:NSLineBreakByWordWrapping];
+            
+            //行间距
+            NSMutableParagraphStyle  *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+            [paragraphStyle  setLineSpacing:5];
+            NSMutableAttributedString  *setString = [[NSMutableAttributedString alloc] initWithString:paramDic[@"detailTitle"]];
+            [setString  addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, [paramDic[@"detailTitle"] length])];
+            
+            [detailLabel  setAttributedText:setString];
+            [cell.contentView addSubview:detailLabel];
+            [detailLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.mas_equalTo(cell).offset(KLeftMargin);
+                make.right.mas_equalTo(cell).offset(-KLeftMargin);
+                make.top.mas_equalTo(cell);
+            }];
+            
+            CGSize detailSize = [ZSHSpeedy zsh_calculateTextSizeWithText:detailLabel.text WithTextFont:detailLabel.font WithMaxW:KScreenWidth - kRealValue(30)];
+            weakcellModel.height = detailSize.height + kRealValue(10);
         }
-        NSDictionary *detailLabelDic = @{@"text":paramDic[@"detailTitle"],@"font":kPingFangRegular(12),@"textAlignment":@(NSTextAlignmentCenter)};
-        UILabel  *detailLabel = [ZSHBaseUIControl createLabelWithParamDic:detailLabelDic];
-        detailLabel.tag = 1;
-        detailLabel.numberOfLines = 0;
-        [detailLabel setLineBreakMode:NSLineBreakByWordWrapping];
-        
-        //行间距
-        NSMutableParagraphStyle  *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-        [paragraphStyle  setLineSpacing:5];
-        NSMutableAttributedString  *setString = [[NSMutableAttributedString alloc] initWithString:paramDic[@"detailTitle"]];
-        [setString  addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, [paramDic[@"detailTitle"] length])];
-        
-        [detailLabel  setAttributedText:setString];
-        [cell.contentView addSubview:detailLabel];
-        [detailLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.mas_equalTo(cell).offset(KLeftMargin);
-            make.right.mas_equalTo(cell).offset(-KLeftMargin);
-            make.top.mas_equalTo(cell);
-        }];
-        
-        CGSize detailSize = [ZSHSpeedy zsh_calculateTextSizeWithText:detailLabel.text WithTextFont:detailLabel.font WithMaxW:KScreenWidth - kRealValue(30)];
-        weakcellModel.height = detailSize.height + kRealValue(10);
         return cell;
     };
     return sectionModel;
@@ -220,31 +221,31 @@ static NSString *ZSHEnergyRulesCellID = @"ZSHEnergyRulesCell";
         kWeakSelf(cellModel);
         cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
             ZSHBaseCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHEnergyRulesCellID forIndexPath:indexPath];
-            while ([cell.contentView.subviews lastObject] != nil) {
-                [(UIView*)[cell.contentView.subviews lastObject] removeFromSuperview];
+            if (![cell.contentView viewWithTag:3]) {
+                NSDictionary *detailLabelDic = @{@"text":_scoreRulesTitleArr[i],@"font":kPingFangRegular(12)};
+                UILabel  *detailLabel = [ZSHBaseUIControl createLabelWithParamDic:detailLabelDic];
+                detailLabel.tag = 3;
+                detailLabel.numberOfLines = 0;
+                [detailLabel setLineBreakMode:NSLineBreakByWordWrapping];
+                
+                //行间距
+                NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+                [paragraphStyle  setLineSpacing:5];
+                NSMutableAttributedString  *setString = [[NSMutableAttributedString alloc] initWithString:_scoreRulesTitleArr[i]];
+                [setString  addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, [_scoreRulesTitleArr[i] length])];
+                [detailLabel setAttributedText:setString];
+                
+                [cell.contentView addSubview:detailLabel];
+                [detailLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.left.mas_equalTo(cell).offset(KLeftMargin);
+                    make.right.mas_equalTo(cell).offset(-KLeftMargin);
+                    make.top.mas_equalTo(cell);
+                }];
+                
+                CGSize detailSize = [ZSHSpeedy zsh_calculateTextSizeWithText:detailLabel.text WithTextFont:detailLabel.font WithMaxW:KScreenWidth - kRealValue(30)];
+                weakcellModel.height = detailSize.height + kRealValue(18);
             }
-            
-            NSDictionary *detailLabelDic = @{@"text":_scoreRulesTitleArr[i],@"font":kPingFangRegular(12)};
-            UILabel  *detailLabel = [ZSHBaseUIControl createLabelWithParamDic:detailLabelDic];
-            detailLabel.numberOfLines = 0;
-            [detailLabel setLineBreakMode:NSLineBreakByWordWrapping];
-            
-            //行间距
-            NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-            [paragraphStyle  setLineSpacing:5];
-            NSMutableAttributedString  *setString = [[NSMutableAttributedString alloc] initWithString:_scoreRulesTitleArr[i]];
-            [setString  addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, [_scoreRulesTitleArr[i] length])];
-            [detailLabel setAttributedText:setString];
-            
-            [cell.contentView addSubview:detailLabel];
-            [detailLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.left.mas_equalTo(cell).offset(KLeftMargin);
-                make.right.mas_equalTo(cell).offset(-KLeftMargin);
-                make.top.mas_equalTo(cell);
-            }];
-            
-            CGSize detailSize = [ZSHSpeedy zsh_calculateTextSizeWithText:detailLabel.text WithTextFont:detailLabel.font WithMaxW:KScreenWidth - kRealValue(30)];
-            weakcellModel.height = detailSize.height + kRealValue(18);
+           
             return cell;
         };
     }

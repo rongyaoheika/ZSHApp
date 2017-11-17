@@ -27,62 +27,20 @@
     [self addSubview:self.verticalLine];
     [self addSubview:self.bottomLine];
     [self layoutIfNeeded];
-    
-   /* if (kFromClassTypeValue == FromMultiInfoNickNameVCToTextFieldCellView) {//修改昵称
-        [self addSubview:self.leftLabel];
-        [self.leftLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.mas_equalTo(self).offset(KLeftMargin);
-            make.centerY.mas_equalTo(self);
-            make.width.mas_equalTo(kRealValue(0));
-            make.height.mas_equalTo(kRealValue(0));
-        }];
-    } else {
-        [self addSubview:self.leftLabel];
-        [self.leftLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.mas_equalTo(self).offset(KLeftMargin);
-            make.centerY.mas_equalTo(self);
-            make.width.mas_equalTo(kRealValue(80));
-            make.height.mas_equalTo(kRealValue(15));
-        }];
-    }
-    
-    [self addSubview:self.textField];
-    [self.textField mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(self.leftLabel.mas_right);
-        make.right.mas_equalTo(self);
-        make.top.mas_equalTo(self);
-        make.bottom.mas_equalTo(self);
-    }];
-    
-    if ([self.paramDic[@"textFieldType"] integerValue] == ZSHTextFieldViewCaptcha) {
-        [self addSubview:self.getCaptchaBtn];
-        [self.getCaptchaBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.centerY.mas_equalTo(self);
-            make.height.mas_equalTo(kRealValue(15));
-            make.width.mas_equalTo(kRealValue(77));
-            make.right.mas_equalTo(self).offset(-10);
-        }];
-        
-        [self addSubview:self.verticalLine];
-        [self.verticalLine mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.mas_equalTo(self).offset(kRealValue(12));
-            make.bottom.mas_equalTo(self).offset(-kRealValue(12));
-            make.width.mas_equalTo(0.5);
-            make.right.mas_equalTo(self.getCaptchaBtn.mas_left).offset(-10);
-        }];
-    }*/
+
 }
 
 - (void)layoutSubviews{
     [super layoutSubviews];
-    if (self.paramDic[@"leftTitle"]) {//修改昵称
-        [self.leftLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+    if (self.paramDic[@"leftTitle"]) {
+        [_leftLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.mas_equalTo(self).offset(KLeftMargin);
             make.centerY.mas_equalTo(self);
             make.width.mas_equalTo(kRealValue(80));
             make.height.mas_equalTo(kRealValue(15));
         }];
     }
+
     if ([self.paramDic[@"textFieldType"] integerValue] != ZSHTextFieldViewNone) {
         [self.textField mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.mas_equalTo(self.leftLabel.mas_right);
@@ -108,14 +66,22 @@
         }];
     }
     
-    if (kFromClassTypeValue == FromLoginVCToTextFieldCellView) {
-        [self.bottomLine mas_makeConstraints:^(MASConstraintMaker *make) {
+    if (kFromClassTypeValue == FromLoginVCToTextFieldCellView||kFromClassTypeValue == FromCardVCToTextFieldCellView) {
+        [_bottomLine mas_makeConstraints:^(MASConstraintMaker *make) {
             make.height.mas_equalTo(0.5);
             make.bottom.mas_equalTo(self);
             make.left.mas_equalTo(self);
             make.right.mas_equalTo(self);
         }];
     }
+    
+    [_textField mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(self.leftLabel.mas_right);
+        make.right.mas_equalTo(self);
+        make.top.mas_equalTo(self);
+        make.bottom.mas_equalTo(self.bottomLine.mas_top);
+    }];
+   
     
 }
 
@@ -182,6 +148,12 @@
 }
 
 #pragma action
+
+- (void)updateViewWithParamDic:(NSDictionary *)paramDic{
+    _leftLabel.text = paramDic[@"leftTitle"];
+    _textField.placeholder = self.paramDic[@"placeholder"];
+    _textField.secureTextEntry = ([self.paramDic[@"textFieldType"]integerValue] == ZSHTextFieldViewPwd);
+}
 
 - (void)textFieldDidChange:(UITextField *)textField{
     if (self.textFieldChanged) {

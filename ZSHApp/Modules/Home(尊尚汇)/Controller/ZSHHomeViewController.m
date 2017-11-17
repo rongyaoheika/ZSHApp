@@ -73,7 +73,10 @@ static NSString *Identify_MagazineCell = @"magazineCell";
                             @""];
     self.menuParamArr = @[@{},
                           @{KFromClassType:@(ZSHFromHomeMenuVCToServiceCenterVC),@"title":@"消息中心",@"titleArr":@[@"评论／回复我的",@"赞我的"],@"imageArr":@[@"menu_news",@"menu_love"], @"pushVCsArr":@[@"ZSHDiscussViewController", @"ZSHLikeViewController"]},
-                            @{KFromClassType:@(ZSHFromHomeMenuVCToServiceCenterVC),@"title":@"系统通知",@"titleArr":@[@"隐形者官方帐号"],@"imageArr":@[@"menu_noti"]},
+                            @{KFromClassType:@(ZSHFromHomeMenuVCToServiceCenterVC),@"title":@"系统通知",@"titleArr":@[@"荣耀黑卡官方帐号"],@"imageArr":@[@"menu_noti"]},
+
+                            @{KFromClassType:@(ZSHFromHomeMenuVCToServiceCenterVC),@"title":@"消息中心",@"titleArr":@[@"评论／回复我的",@"赞我的"],@"imageArr":@[@"menu_news",@"menu_love"]},
+                            @{KFromClassType:@(ZSHFromHomeMenuVCToServiceCenterVC),@"title":@"系统通知",@"titleArr":@[@"荣耀黑卡官方帐号"],@"imageArr":@[@"menu_noti"]},
                             @""];
     
     [self initViewModel];
@@ -193,9 +196,12 @@ static NSString *Identify_MagazineCell = @"magazineCell";
     __block  CGFloat cellHeight = cellModel.height;
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHBaseCell *cell = [tableView dequeueReusableCellWithIdentifier:Identify_PlayCell forIndexPath:indexPath];
-        UIImageView *imageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"home_play"]];
-        imageView.frame = CGRectMake(15, 0, KScreenWidth-30, cellHeight);
-        [cell.contentView addSubview:imageView];
+        if (![cell.contentView viewWithTag:2]) {
+            UIImageView *imageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"home_play"]];
+            imageView.tag = 2;
+            imageView.frame = CGRectMake(15, 0, KScreenWidth-30, cellHeight);
+            [cell.contentView addSubview:imageView];
+        }
         return cell;
     };
     

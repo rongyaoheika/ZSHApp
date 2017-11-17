@@ -40,6 +40,7 @@ static NSString *ZSHBaseTicketDateCellID = @"ZSHBaseTicketDateCell";
 - (void)createUI{
     self.title = self.paramDic[@"title"];
     [self.view addSubview:self.tableView];
+    self.tableView.scrollEnabled = NO;
     self.tableView.frame = CGRectMake(kRealValue(37.5), KNavigationBarHeight+kRealValue(10), kScreenWidth - 2*kRealValue(37.5), kRealValue(240));
     self.tableView.delegate = self.tableViewModel;
     self.tableView.dataSource = self.tableViewModel;
@@ -47,6 +48,7 @@ static NSString *ZSHBaseTicketDateCellID = @"ZSHBaseTicketDateCell";
     [self.tableView setSeparatorColor:KZSHColor1D1D1D];
     [self.tableView setSeparatorInset:UIEdgeInsetsMake(0, 0, 0, 0)];
     [self.tableView registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHTicketPlaceCellID];
+    [self.tableView registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHBaseTicketDateCellID];
     
     [self.view addSubview:self.bottomBtn];
     [self.bottomBtn setTitle:@"开始搜索" forState:UIControlStateNormal];
@@ -69,10 +71,12 @@ static NSString *ZSHBaseTicketDateCellID = @"ZSHBaseTicketDateCell";
         //起始位置
         ZSHBaseCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHTicketPlaceCellID];
         ZSHTicketPlaceCell *ticketView = [[ZSHTicketPlaceCell alloc]initWithFrame:CGRectZero paramDic:nil];
+        ticketView.tag = 2;
         [cell.contentView addSubview:ticketView];
         [ticketView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.mas_equalTo(cell);
         }];
+        
         return cell;
     };
     
@@ -89,22 +93,19 @@ static NSString *ZSHBaseTicketDateCellID = @"ZSHBaseTicketDateCell";
         [sectionModel.cellModelArray addObject:cellModel];
         cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
             ZSHBaseCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHBaseTicketDateCellID];
-            if (!cell) {
-                cell = [[ZSHBaseCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                          reuseIdentifier:ZSHBaseTicketDateCellID];
-                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-                cell.textLabel.text = titleArr[i];
-                
-                NSDictionary *dateLabelDic = @{@"text":valueArr[i]};
-                UILabel *dateLabel = [ZSHBaseUIControl createLabelWithParamDic:dateLabelDic];
-                [cell.contentView addSubview:dateLabel];
-                [dateLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-                    make.left.mas_equalTo(cell).offset(kRealValue(100));
-                    make.height.mas_equalTo(cell);
-                    make.top.mas_equalTo(cell);
-                    make.right.mas_equalTo(cell).offset(-kRealValue(50));
-                }];
-            }
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            cell.textLabel.text = titleArr[i];
+            NSDictionary *dateLabelDic = @{@"text":valueArr[i]};
+            UILabel *dateLabel = [ZSHBaseUIControl createLabelWithParamDic:dateLabelDic];
+            dateLabel.tag = 3;
+            [cell.contentView addSubview:dateLabel];
+            [dateLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.mas_equalTo(cell).offset(kRealValue(100));
+                make.height.mas_equalTo(cell);
+                make.top.mas_equalTo(cell);
+                make.right.mas_equalTo(cell).offset(-kRealValue(50));
+            }];
+           
             return cell;
         };
         
@@ -125,22 +126,19 @@ static NSString *ZSHBaseTicketDateCellID = @"ZSHBaseTicketDateCell";
     cellModel.height = kRealValue(60);
     [sectionModel.cellModelArray addObject:cellModel];
     cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
-        ZSHBaseCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHBaseTicketDateCellID];
-        if (!cell) {
-            cell = [[ZSHBaseCell alloc] initWithStyle:UITableViewCellStyleDefault
+        ZSHBaseCell *cell = [[ZSHBaseCell alloc] initWithStyle:UITableViewCellStyleDefault
                                       reuseIdentifier:ZSHBaseTicketDateCellID];
-            NSDictionary *childBtnDic = @{@"title":@"携带儿童",@"font":kPingFangRegular(12),@"withImage":@(YES),@"normalImage":@"airplane_press"};
-            UIButton *childBtn = [ZSHBaseUIControl createBtnWithParamDic:childBtnDic];
-            [cell.contentView addSubview:childBtn];
-            [childBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.left.mas_equalTo(cell).offset(KLeftMargin);
-                make.height.mas_equalTo(cell).offset(KLeftMargin);
-                make.width.mas_equalTo(kRealValue(65));
-                make.top.mas_equalTo(cell);
-            }];
-            
-            [childBtn layoutButtonWithEdgeInsetsStyle:XYButtonEdgeInsetsStyleRight imageTitleSpace:kRealValue(5)];
-        }
+        NSDictionary *childBtnDic = @{@"title":@"携带儿童",@"font":kPingFangRegular(12),@"withImage":@(YES),@"normalImage":@"airplane_press"};
+        UIButton *childBtn = [ZSHBaseUIControl createBtnWithParamDic:childBtnDic];
+        [cell.contentView addSubview:childBtn];
+        [childBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.mas_equalTo(cell).offset(KLeftMargin);
+            make.height.mas_equalTo(cell).offset(KLeftMargin);
+            make.width.mas_equalTo(kRealValue(65));
+            make.top.mas_equalTo(cell);
+        }];
+        
+        [childBtn layoutButtonWithEdgeInsetsStyle:XYButtonEdgeInsetsStyleRight imageTitleSpace:kRealValue(5)];
         return cell;
     };
     

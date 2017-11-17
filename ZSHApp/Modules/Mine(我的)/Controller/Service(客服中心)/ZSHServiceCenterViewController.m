@@ -78,11 +78,9 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
         };
         
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
-           
             Class className = NSClassFromString(self.pushVCsArr[indexPath.row]);
             RootViewController *vc = [[className alloc]initWithParamDic:weakself.paramArr[indexPath.row]];
             [weakself.navigationController pushViewController:vc animated:YES];
-            
         };
     }
     return sectionModel;

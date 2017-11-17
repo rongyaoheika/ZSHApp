@@ -40,7 +40,6 @@ static NSString *ZSHGoodsListViewID = @"ZSHGoodsListView";
 }
 
 - (void)createUI{
-//    self.navigationItem.titleView.backgroundColor = [UIColor redColor];
     [self.navigationItem setTitleView:self.searchBar];
     self.searchBar.delegate = self;
     
@@ -53,8 +52,9 @@ static NSString *ZSHGoodsListViewID = @"ZSHGoodsListView";
     [self.view addSubview:self.tableView];
     self.tableView.delegate = self.tableViewModel;
     self.tableView.dataSource = self.tableViewModel;
+    
     [self.tableView registerClass:[ZSHGoodsListView class] forCellReuseIdentifier:Identify_listLeftImageCell];
-     [self.tableView registerClass:[ZSHGoodsListView class] forCellReuseIdentifier:Identify_listRightImageCell];
+    [self.tableView registerClass:[ZSHGoodsListView class] forCellReuseIdentifier:Identify_listRightImageCell];
     [self.tableView reloadData];
     
 }
@@ -73,12 +73,7 @@ static NSString *ZSHGoodsListViewID = @"ZSHGoodsListView";
     cellModel.height = kRealValue(175);
     __block  CGFloat cellHeight = cellModel.height;
     cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:Identify_headCell];
-        if (!cell) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                          reuseIdentifier:Identify_headCell];
-        }
-        cell.backgroundColor = KClearColor;
+        ZSHBaseCell *cell = [[ZSHBaseCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:Identify_headCell];
         UIImage *image = [UIImage imageNamed:@"buy_banner1"];
         ZSHCycleScrollView *cellView = [[ZSHCycleScrollView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, cellHeight)];
         cellView.scrollDirection =  ZSHCycleScrollViewHorizontal;

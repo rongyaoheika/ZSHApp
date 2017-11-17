@@ -12,8 +12,12 @@
 @interface ZSHGuideView ()<iCarouselDelegate,iCarouselDataSource>
 
 @property (nonatomic, strong) iCarousel        *carousel;
+@property (nonatomic, assign) CGSize           midImageSize;
 @property (nonatomic, strong) NSArray          *imageArr;
 @property (nonatomic, strong) UIPageControl    *pageControl;
+@property (nonatomic, assign) CGFloat          min_scale;
+@property (nonatomic, assign) CGFloat          withRatio;
+@property (nonatomic, assign) CGFloat          contentLeft;
 
 @end
 
@@ -21,6 +25,11 @@
 
 - (void)setup{
     self.imageArr = self.paramDic[@"dataArr"];
+    _min_scale = [self.paramDic[@"min_scale"]floatValue];
+    _withRatio = [self.paramDic[@"withRatio"]floatValue];
+    
+    UIImage *midImage = [UIImage imageNamed:self.imageArr[0]];
+    _midImageSize = midImage.size;
     [self addSubview:self.carousel];
     [self.carousel scrollToItemAtIndex:1 animated:NO];
     [self addSubview:self.pageControl];
@@ -31,18 +40,18 @@
     [super layoutSubviews];
     
     [self.carousel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(self);
         make.width.mas_equalTo(self);
         make.top.mas_equalTo(self);
-        make.height.mas_equalTo(kRealValue(440));
+        make.height.mas_equalTo(_midImageSize.height);
     }];
     
     [self.pageControl mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.mas_equalTo(self).offset(-kRealValue(8));
+        make.bottom.mas_equalTo(self);
         make.width.mas_equalTo(self);
         make.height.mas_equalTo(kRealValue(8));
         make.centerX.mas_equalTo(self);
     }];
-    
 }
 
 #pragma mark - getter
@@ -66,6 +75,11 @@
         _pageControl.numberOfPages = self.imageArr.count;
         _pageControl.currentPageIndicatorTintColor = KWhiteColor;
         _pageControl.pageIndicatorTintColor = [UIColor colorWithWhite:1 alpha:0.5];
+        if (self.paramDic[@"pageImage"]) {
+            [_pageControl setValue:[UIImage imageNamed:self.paramDic[@"pageImage"]] forKeyPath:@"_pageImage"];
+            [_pageControl setValue:[UIImage imageNamed:self.paramDic[@"currentPageImage"]] forKeyPath:@"_currentPageImage"];
+        }
+        
     }
     return _pageControl;
 }
@@ -79,7 +93,7 @@
 -(CATransform3D)carousel:(iCarousel *)carousel itemTransformForOffset:(CGFloat)offset baseTransform:(CATransform3D)transform{
     
     CGFloat max_sacle = 1.0f;
-    CGFloat min_scale = 0.6f;
+    CGFloat min_scale = _min_scale;
     if (offset <= 1 && offset >= -1) {
         float tempScale = offset < 0 ? 1 + offset : 1 - offset;
         float slope = (max_sacle - min_scale) / 1;
@@ -90,7 +104,7 @@
         transform = CATransform3DScale(transform, min_scale, min_scale, 1);
     }
     
-    return CATransform3DTranslate(transform, offset * self.carousel.itemWidth * 1.8, 0.0, 0.0);
+    return CATransform3DTranslate(transform, offset * self.carousel.itemWidth * _withRatio, 0.0, 0.0);
 }
 
 #pragma mark - datasource
@@ -101,11 +115,9 @@
 - (UIView *)carousel:(iCarousel *)carousel viewForItemAtIndex:(NSInteger)index reusingView:(nullable UIView *)view{
     if (!view) {
         view = [[UIImageView alloc]initWithImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@",self.imageArr[index]]]];
-        view.frame = CGRectMake(kRealValue(37.5), 0, KScreenWidth - 2*kRealValue(37.5), kRealValue(440));
-
+        view.frame = CGRectMake((KScreenWidth -_midImageSize.width)/2 , 0,_midImageSize.width, _midImageSize.height);
     }
     return view;
-    
 }
 
 -(void)carousel:(iCarousel *)carousel didSelectItemAtIndex:(NSInteger)index{

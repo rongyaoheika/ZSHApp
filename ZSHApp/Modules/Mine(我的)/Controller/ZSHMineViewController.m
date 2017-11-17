@@ -87,10 +87,13 @@ static NSString *bottomCellIdentifier   = @"listCell";
     cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHBaseCell *cell = [tableView dequeueReusableCellWithIdentifier:headCellIdentifier forIndexPath:indexPath];
         [cell setSeparatorInset:UIEdgeInsetsMake(0, 0, 0, MAXFLOAT)];
+        if (![cell.contentView viewWithTag:2]) {
+            ZSHMineHeadView *cellView = [[ZSHMineHeadView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, cellHeight) paramDic:nil];
+            cellView.tag = 2;
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            [cell.contentView addSubview:cellView];
+        }
         
-        ZSHMineHeadView *cellView = [[ZSHMineHeadView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, cellHeight) paramDic:nil];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        [cell.contentView addSubview:cellView];
         return cell;
     };
     

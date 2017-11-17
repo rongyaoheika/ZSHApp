@@ -19,8 +19,8 @@ typedef NS_ENUM(NSInteger, MemberType) {
     MemberTypeEmployee,
     MemberTypeManager,
 };
-static NSString *Identify_listCell = @"listCell";
-
+static NSString *ZSHBaseHeadListCellID = @"ZSHBaseHeadListCell";
+static NSString *ZSHBaseBottomListCellID = @"ZSHBaseBottomListCell";
 @interface ZSHLeftContentViewController ()
 
 @property (nonatomic,assign) MemberType type;
@@ -63,6 +63,8 @@ static NSString *Identify_listCell = @"listCell";
     
     self.tableView.frame = CGRectMake(0, KNavigationBarHeight, KScreenWidth, KScreenHeight-KNavigationBarHeight-KBottomNavH);
     [self.view addSubview:self.tableView];
+    [self.tableView registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHBaseHeadListCellID];
+     [self.tableView registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHBaseBottomListCellID];
     self.tableView.delegate = self.tableViewModel;
     self.tableView.dataSource = self.tableViewModel;
     
@@ -79,19 +81,13 @@ static NSString *Identify_listCell = @"listCell";
 - (ZSHBaseTableViewSectionModel*)storeListSection {
     kWeakSelf(self);
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
-    
     for (int i = 0; i<self.titleArr.count; i++) {
         if (i==0) {
             ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
             [sectionModel.cellModelArray addObject:cellModel];
             cellModel.height = kRealValue(150);
             cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
-                UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-                if (!cell) {
-                    cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:Identify_listCell];
-                }
-                cell.backgroundColor = KClearColor;
-                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                ZSHBaseCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHBaseHeadListCellID forIndexPath:indexPath];
                 [cell.contentView addSubview:[weakself createFirstCellView]];
                 return cell;
             };
@@ -100,22 +96,20 @@ static NSString *Identify_listCell = @"listCell";
             [sectionModel.cellModelArray addObject:cellModel];
             cellModel.height = kRealValue(55);
             cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
-                UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-                if (!cell) {
-                    cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:Identify_listCell];
+                ZSHBaseCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHBaseBottomListCellID forIndexPath:indexPath];
+                if (![cell.contentView viewWithTag:2]) {
+                    NSDictionary *textLabelDic = @{@"text":self.titleArr[indexPath.row],@"font": kPingFangRegular(15),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentLeft)};
+                    UILabel *textLabel = [ZSHBaseUIControl createLabelWithParamDic:textLabelDic];
+                    textLabel.tag = 2;
+                    [cell.contentView addSubview:textLabel];
+                    [textLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+                        make.left.mas_equalTo(cell).offset(kRealValue(30));
+                        make.height.mas_equalTo(kRealValue(15));
+                        make.centerY.mas_equalTo(cell);
+                        make.right.mas_equalTo(cell).offset(-kRealValue(15));
+                    }];
                 }
-                cell.backgroundColor = KClearColor;
-                cell.selectionStyle = UITableViewCellSelectionStyleNone;
-                NSDictionary *textLabelDic = @{@"text":self.titleArr[indexPath.row],@"font": kPingFangRegular(15),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentLeft)};
-                UILabel *textLabel = [ZSHBaseUIControl createLabelWithParamDic:textLabelDic];
-                [cell.contentView addSubview:textLabel];
-                [textLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-                    make.left.mas_equalTo(cell.contentView).offset(kRealValue(30));
-                    make.height.mas_equalTo(kRealValue(15));
-                    make.centerY.mas_equalTo(cell.contentView);
-                    make.right.mas_equalTo(cell.contentView).offset(-kRealValue(15));
-                }];
-            
+               
                 return cell;
             };
             

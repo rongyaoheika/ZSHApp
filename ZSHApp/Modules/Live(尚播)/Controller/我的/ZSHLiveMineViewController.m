@@ -39,7 +39,9 @@ static NSString *bottomCellIdentifier   = @"LiveListCell";
                       @{KFromClassType:@(FromContributionListVCToTitleContentVC), @"title":@"贡献榜"},
                       @{KFromClassType:@(FromMineLevelVCToTitleContentVC), @"title":@"我的等级"},
                       @{},
-                      @{KFromClassType:@(FromLiveMineVCToNotificationVC),@"title":@"设置"}];
+                      @{},
+                      @{KFromClassType:@(FromLiveMineVCToNotificationVC),@"title":@"设置"},
+                      ];
     
     [self initViewModel];
 }
@@ -76,10 +78,12 @@ static NSString *bottomCellIdentifier   = @"LiveListCell";
     cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHBaseCell *cell = [tableView dequeueReusableCellWithIdentifier:headCellIdentifier forIndexPath:indexPath];
         [cell setSeparatorInset:UIEdgeInsetsMake(0, 0, 0, MAXFLOAT)];
+        if (![cell.contentView viewWithTag:2]) {
+            ZSHLiveMineHeadView *cellView = [[ZSHLiveMineHeadView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, cellHeight) paramDic:nil];
+            cellView.tag = 2;
+            [cell.contentView addSubview:cellView];
+        }
         
-        ZSHLiveMineHeadView *cellView = [[ZSHLiveMineHeadView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, cellHeight) paramDic:nil];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        [cell.contentView addSubview:cellView];
         return cell;
     };
     
@@ -104,8 +108,6 @@ static NSString *bottomCellIdentifier   = @"LiveListCell";
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             cell.imageView.image = [UIImage imageNamed:weakself.imageArr[indexPath.row]];
             cell.textLabel.text = weakself.titleArr[indexPath.row];
-            cell.textLabel.font = kPingFangRegular(15);
-            cell.textLabel.textColor = KZSHColor929292;
             
             return cell;
         };

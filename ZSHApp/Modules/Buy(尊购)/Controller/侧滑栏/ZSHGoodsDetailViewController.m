@@ -226,10 +226,13 @@ static NSString *ZSHGoodsDetailCountCellID = @"ZSHGoodsDetailCountCell";
         }
     } else if(indexPath.section == 1){
         ZSHGoodsDetailColorCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:ZSHDetailGoodBottomCellID forIndexPath:indexPath];
-        [cell.contentView addSubview:self.contentView];
-        [self.contentView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.mas_equalTo(cell.contentView);
-        }];
+        if (![cell.contentView viewWithTag:2]) {
+            [cell.contentView addSubview:self.contentView];
+            self.contentView.tag = 2;
+            [self.contentView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.edges.mas_equalTo(cell.contentView);
+            }];
+        }
         gridcell = cell;
     }
         

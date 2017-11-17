@@ -472,25 +472,28 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
         cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
             ZSHBaseCell *cell = [[ZSHBaseCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@""];
             cell.backgroundColor = KWhiteColor;
-            NSDictionary *paramDic = @{@"leftTitle":titleArr[indexPath.row],@"placeholder":placeHolderArr[indexPath.row],@"textFieldType":textFieldTypeArr[indexPath.row],KFromClassType:@(FromAirTicketDetailVCToTextFieldCellView)};
+            if (![cell.contentView viewWithTag:2]) {
+                NSDictionary *paramDic = @{@"leftTitle":titleArr[indexPath.row],@"placeholder":placeHolderArr[indexPath.row],@"textFieldType":textFieldTypeArr[indexPath.row],KFromClassType:@(FromAirTicketDetailVCToTextFieldCellView)};
+                ZSHTextFieldCellView *textFieldCellView = [[ZSHTextFieldCellView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, kRealValue(44)) paramDic:paramDic];
+                [cell.contentView addSubview:textFieldCellView];
+                [textFieldCellView mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.edges.mas_equalTo(cell.contentView);
+                }];
+                textFieldCellView.tag = 2;
+                if (i==0) {
+                    UIButton  *addUserBtn = [[UIButton alloc] initWithFrame:CGRectZero];
+                    addUserBtn.frame = CGRectMake(0, 0, kRealValue(17.5), kRealValue(17.5));
+                    [addUserBtn setBackgroundImage:[UIImage imageNamed:@"add_user"] forState:UIControlStateNormal];
+                    [addUserBtn addTarget:self action:@selector(addUserBtnAction) forControlEvents:UIControlEventTouchUpInside];
+                    cell.accessoryView = addUserBtn;
+                }
+                if (i>=3) {
+                    UISwitch *switchview = [[UISwitch alloc] initWithFrame:CGRectZero];
+                    [switchview addTarget:self action:@selector(switchBtnAction:) forControlEvents:UIControlEventValueChanged];
+                    cell.accessoryView = switchview;
+                }
+            }
             
-            ZSHTextFieldCellView *textFieldCellView = [[ZSHTextFieldCellView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, kRealValue(44)) paramDic:paramDic];
-            [cell.contentView addSubview:textFieldCellView];
-            [textFieldCellView mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.edges.mas_equalTo(cell.contentView);
-            }];
-            if (i==0) {
-                UIButton  *addUserBtn = [[UIButton alloc] initWithFrame:CGRectZero];
-                addUserBtn.frame = CGRectMake(0, 0, kRealValue(17.5), kRealValue(17.5));
-                [addUserBtn setBackgroundImage:[UIImage imageNamed:@"add_user"] forState:UIControlStateNormal];
-                [addUserBtn addTarget:self action:@selector(addUserBtnAction) forControlEvents:UIControlEventTouchUpInside];
-                cell.accessoryView = addUserBtn;
-            }
-            if (i>=3) {
-                UISwitch *switchview = [[UISwitch alloc] initWithFrame:CGRectZero];
-                [switchview addTarget:self action:@selector(switchBtnAction:) forControlEvents:UIControlEventValueChanged];
-                cell.accessoryView = switchview;
-            }
             return cell;
         };
     }
