@@ -192,9 +192,5 @@ static NSString *ZSHBaseTicketDateCellID = @"ZSHBaseTicketDateCell";
     return pickView;
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
 @end

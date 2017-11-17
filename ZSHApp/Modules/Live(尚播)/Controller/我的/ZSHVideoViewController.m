@@ -8,6 +8,7 @@
 
 #import "ZSHVideoViewController.h"
 #import "LXScrollContentView.h"
+#import "ZSHVideoDetailViewController.h"
 
 static NSString *cellIdentifier = @"VideoCellIdentifier";
 
@@ -69,7 +70,8 @@ static NSString *cellIdentifier = @"VideoCellIdentifier";
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-
+    ZSHVideoDetailViewController *videoDetailVc = [[ZSHVideoDetailViewController alloc] init];
+    [self.navigationController pushViewController:videoDetailVc animated:false];
 }
 
 

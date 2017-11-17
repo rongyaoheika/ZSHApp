@@ -27,6 +27,7 @@
 
 //直播弹窗
 #import "ZSHLivePopView.h"
+#import "ZSHTrainPassengerController.h"
 
 @interface ZSHBottomBlurPopView ()<STCalendarDelegate>
 
@@ -138,7 +139,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
         [self.subTab registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHHeadCellID];
         [self.subTab registerClass:[ZSHHotelPayHeadCell class] forCellReuseIdentifier:ZSHHotelPayHeadCellID];
     } else if (kFromClassTypeValue == ZSHFromAirplaneUserInfoVCToBottomBlurPopView) {//机票个人信息
-        _subTabHeight = kRealValue(165);
+        _subTabHeight = kRealValue(310.5);
         
         self.subTab.backgroundColor = KWhiteColor;
         [self.subTab registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHHeadCellID];
@@ -172,7 +173,12 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
         ZSHLivePopView *livePopView = [[ZSHLivePopView alloc]initWithFrame:CGRectMake(0, KScreenHeight- kRealValue(150), KScreenWidth, kRealValue(150))];
         [self addSubview:livePopView];
         return;
+    } else if (kFromClassTypeValue == ZSHFromTrainUserInfoVCToBottomBlurPopView) {//机票个人信息
+        _subTabHeight = kRealValue(264);
+        self.subTab.backgroundColor = KWhiteColor;
+        [self.subTab registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHHeadCellID];
     }
+    
     
     
     self.subTab.delegate = self.tableViewModel;
@@ -228,8 +234,15 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
         
         [self.tableViewModel.sectionModelArray removeAllObjects];
         [self.tableViewModel.sectionModelArray addObject:[self storeMenuListSection]];
+    }else if (kFromClassTypeValue == ZSHFromTrainUserInfoVCToBottomBlurPopView){//火车票个人信息
+        
+        [self.tableViewModel.sectionModelArray removeAllObjects];
+        [self.tableViewModel.sectionModelArray addObject:[self stroreTrainUserInfo]];
+        [self.tableViewModel.sectionModelArray addObject:[self storeConfirmBtnSection]];
     }
 }
+
+
 
 //head
 - (ZSHBaseTableViewSectionModel*)storeHeadSection {
@@ -463,6 +476,9 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
             
             ZSHTextFieldCellView *textFieldCellView = [[ZSHTextFieldCellView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, kRealValue(44)) paramDic:paramDic];
             [cell.contentView addSubview:textFieldCellView];
+            [textFieldCellView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.edges.mas_equalTo(cell.contentView);
+            }];
             if (i==0) {
                 UIButton  *addUserBtn = [[UIButton alloc] initWithFrame:CGRectZero];
                 addUserBtn.frame = CGRectMake(0, 0, kRealValue(17.5), kRealValue(17.5));
@@ -479,6 +495,60 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
         };
     }
     return sectionModel;
+}
+
+// 火车票详情
+- (ZSHBaseTableViewSectionModel *)stroreTrainUserInfo {
+    ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
+    NSArray *titleArr =@[@"乘机人",@"身份证",@"手机号码",@"意外险",@""];
+    NSArray *placeHolderArr = @[@"姓名保持与有效证件一致",@"请填写证件号码",@"18888888888",@"¥20X0份",@""];
+    NSArray *textFieldTypeArr = @[@(ZSHTextFieldViewUser),@(ZSHTextFieldViewID),@(ZSHTextFieldViewPhone),@(ZSHTextFieldViewUser),@(ZSHTextFieldViewNone)];
+    for (int i = 0; i<titleArr.count; i++) {
+        ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
+        [sectionModel.cellModelArray addObject:cellModel];
+        cellModel.height = kRealValue(44);
+        cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
+            ZSHBaseCell *cell = [[ZSHBaseCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@""];
+            cell.backgroundColor = KWhiteColor;
+            NSDictionary *paramDic = @{@"leftTitle":titleArr[indexPath.row],@"placeholder":placeHolderArr[indexPath.row],@"textFieldType":textFieldTypeArr[indexPath.row],KFromClassType:@(FromAirTicketDetailVCToTextFieldCellView)};
+            
+            ZSHTextFieldCellView *textFieldCellView = [[ZSHTextFieldCellView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, kRealValue(44)) paramDic:paramDic];
+            [cell.contentView addSubview:textFieldCellView];
+            [textFieldCellView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.edges.mas_equalTo(cell.contentView);
+            }];
+            if (i == 0) {
+                UIButton  *addUserBtn = [[UIButton alloc] initWithFrame:CGRectZero];
+                addUserBtn.frame = CGRectMake(0, 0, kRealValue(17.5), kRealValue(17.5));
+                [addUserBtn setBackgroundImage:[UIImage imageNamed:@"add_user"] forState:UIControlStateNormal];
+                [addUserBtn addTarget:self action:@selector(addUserBtnAction) forControlEvents:UIControlEventTouchUpInside];
+                cell.accessoryView = addUserBtn;
+            } else if (i == 3) {
+                UISwitch *switchview = [[UISwitch alloc] initWithFrame:CGRectZero];
+                [switchview addTarget:self action:@selector(switchBtnAction:) forControlEvents:UIControlEventValueChanged];
+                cell.accessoryView = switchview;
+            } else if (i == 4) {
+                NSArray *titleArr = @[@"最高保险130W万\n￥30", @"最高保80万\n¥20"];
+                for (int i = 0; i < titleArr.count; i++) {
+                    UIButton *insuranceBtn = [ZSHBaseUIControl createBtnWithParamDic:@{@"title":titleArr[i],@"font":kPingFangRegular(10)}];
+                    insuranceBtn.titleLabel.numberOfLines = 0;
+                    insuranceBtn.titleLabel.textAlignment = NSTextAlignmentCenter;
+                    insuranceBtn.layer.borderWidth = 0.5;
+                    insuranceBtn.layer.borderColor = KZSHColor929292.CGColor;
+                    insuranceBtn.layer.cornerRadius = 5.0;
+                    [cell.contentView addSubview:insuranceBtn];
+                    [insuranceBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+                        make.top.mas_equalTo(cell.contentView).offset(kRealValue(5));
+                        make.left.mas_equalTo(cell.contentView).offset(kRealValue(KLeftMargin+i*(15+90)));
+                        make.size.mas_equalTo(CGSizeMake(kRealValue(90), kRealValue(35)));
+                    }];
+                }
+            }
+            return cell;
+        };
+    }
+    return sectionModel;
+
 }
 
 //吃喝玩乐年龄选择
@@ -609,6 +679,19 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 
 - (void)addUserBtnAction{
     
+    [UIView animateWithDuration:0.5 animations:^{
+        CGRect mainFrame = _subTab.frame;
+        mainFrame.origin.y = self.frame.size.height;
+        _subTab.frame = mainFrame;
+    } completion:^(BOOL finished) {
+        [self removeFromSuperview];
+        [self setHidden:YES];
+        
+        ZSHTrainPassengerController *passengerVC = [[ZSHTrainPassengerController alloc]init];
+        [[kAppDelegate getCurrentUIVC].navigationController pushViewController:passengerVC animated:YES];
+    }];
+    
+   
 }
 
 //确认订单
@@ -626,6 +709,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
             ZSHHotelPayViewController *hotelPayVC = [[ZSHHotelPayViewController alloc]initWithParamDic:nextParamDic];
             [[kAppDelegate getCurrentUIVC].navigationController pushViewController:hotelPayVC animated:YES];
         }
+//        ZSHFromTrainUserInfoVCToBottomBlurPopView
     }];
 }
 

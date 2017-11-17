@@ -12,12 +12,14 @@
 #import "ZSHTicketPlaceCell.h"
 #import "ZSHTrainTicketDetailViewController.h"
 
+
 static NSString *ZSHKTVCalendarCellID = @"ZSHKTVCalendarCellID";
 static NSString *ZSHTrainTicketListCellID = @"ZSHTrainTicketListCellID";
 
 @interface ZSHTrainSearchResultController ()
 
-@property (nonatomic, strong) ZSHTicketPlaceCell   *ticketView;
+@property (nonatomic, strong) ZSHTicketPlaceCell     *ticketView;
+
 
 @end
 
@@ -108,5 +110,6 @@ static NSString *ZSHTrainTicketListCellID = @"ZSHTrainTicketListCellID";
     self.ticketView.center = CGPointMake(self.navigationController.navigationBar.center.x, self.navigationController.navigationBar.center.y);
     [self.navigationItem setTitleView:self.ticketView];
 }
+
 
 @end

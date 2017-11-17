@@ -9,12 +9,14 @@
 #import "ZSHTrainTicketDetailViewController.h"
 #import "ZSHTrainTicketDetailHeadView.h"
 #import "ZSHTrainTicketDetailCell.h"
+#import "ZSHBottomBlurPopView.h"
 
 static NSString *ZSHTrainTicketDetailCellID = @"ZSHTrainTicketDetailCellID";
 
 @interface ZSHTrainTicketDetailViewController ()
 
-@property (nonatomic,strong)UILabel  *naviDateLabel;
+@property (nonatomic, strong) UILabel                *naviDateLabel;
+@property (nonatomic, strong) ZSHBottomBlurPopView   *bottomBlurPopView;
 
 @end
 
@@ -58,7 +60,7 @@ static NSString *ZSHTrainTicketDetailCellID = @"ZSHTrainTicketDetailCellID";
     [self.tableViewModel.sectionModelArray addObject:[self storTicketDetailSection]];
 }
 
-//机票详情
+//火车票详情
 - (ZSHBaseTableViewSectionModel*)storTicketDetailSection{
     kWeakSelf(self);
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
@@ -76,23 +78,23 @@ static NSString *ZSHTrainTicketDetailCellID = @"ZSHTrainTicketDetailCellID";
         };
         
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
-//            ZSHBottomBlurPopView *bottomBlurPopView = [weakself createBottomBlurPopViewWith:ZSHFromAirplaneUserInfoVCToBottomBlurPopView];
-//            [kAppDelegate.window addSubview:bottomBlurPopView];
+            ZSHBottomBlurPopView *bottomBlurPopView = [weakself createBottomBlurPopViewWith:ZSHFromTrainUserInfoVCToBottomBlurPopView];
+            [kAppDelegate.window addSubview:bottomBlurPopView];
         };
     }
     return sectionModel;
 }
 
 #pragma getter
-//- (ZSHBottomBlurPopView *)createBottomBlurPopViewWith:(ZSHFromVCToBottomBlurPopView)fromClassType{
-//    NSDictionary *nextParamDic = @{KFromClassType:@(fromClassType)};
-//    ZSHBottomBlurPopView *bottomBlurPopView = [[ZSHBottomBlurPopView alloc]initWithFrame:kAppDelegate.window.bounds paramDic:nextParamDic];
-//    bottomBlurPopView.blurRadius = 20;
-//    bottomBlurPopView.dynamic = NO;
-//    bottomBlurPopView.tintColor = KClearColor;
-//    bottomBlurPopView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.6];
-//    [bottomBlurPopView setBlurEnabled:NO];
-//    return bottomBlurPopView;
-//}
+- (ZSHBottomBlurPopView *)createBottomBlurPopViewWith:(ZSHFromVCToBottomBlurPopView)fromClassType{
+    NSDictionary *nextParamDic = @{KFromClassType:@(fromClassType)};
+    ZSHBottomBlurPopView *bottomBlurPopView = [[ZSHBottomBlurPopView alloc]initWithFrame:kAppDelegate.window.bounds paramDic:nextParamDic];
+    bottomBlurPopView.blurRadius = 20;
+    bottomBlurPopView.dynamic = NO;
+    bottomBlurPopView.tintColor = KClearColor;
+    bottomBlurPopView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.6];
+    [bottomBlurPopView setBlurEnabled:NO];
+    return bottomBlurPopView;
+}
 
 @end

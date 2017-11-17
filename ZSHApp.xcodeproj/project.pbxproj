@@ -57,6 +57,8 @@
 		185BB9C21FB5860E007A96FF /* ZSHLiveTaskCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 185BB9C11FB5860E007A96FF /* ZSHLiveTaskCenterViewController.m */; };
 		185BB9C61FB58DD6007A96FF /* ZSHLiveTaskCenterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 185BB9C51FB58DD6007A96FF /* ZSHLiveTaskCenterCell.m */; };
 		185BB9CA1FB5BDB9007A96FF /* ZSHMoreSubscribeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 185BB9C91FB5BDB9007A96FF /* ZSHMoreSubscribeViewController.m */; };
+		185DDCC91FBE86C4004D4688 /* ZSHVideoDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 185DDCC81FBE86C4004D4688 /* ZSHVideoDetailViewController.m */; };
+		185DDCCC1FBE8CE9004D4688 /* ZSHVideoDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 185DDCCB1FBE8CE9004D4688 /* ZSHVideoDetailCell.m */; };
 		1874B9661FB99E9700059184 /* ZSHLivePersonInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1874B9651FB99E9700059184 /* ZSHLivePersonInfoView.m */; };
 		18A2C64E1F483A66005F394F /* PPHTTPRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 18A2C6461F483A66005F394F /* PPHTTPRequest.m */; };
 		18A2C64F1F483A66005F394F /* PPInterfacedConst.m in Sources */ = {isa = PBXBuildFile; fileRef = 18A2C6481F483A66005F394F /* PPInterfacedConst.m */; };
@@ -442,6 +444,10 @@
 		185BB9C51FB58DD6007A96FF /* ZSHLiveTaskCenterCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHLiveTaskCenterCell.m; sourceTree = "<group>"; };
 		185BB9C81FB5BDB9007A96FF /* ZSHMoreSubscribeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHMoreSubscribeViewController.h; sourceTree = "<group>"; };
 		185BB9C91FB5BDB9007A96FF /* ZSHMoreSubscribeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHMoreSubscribeViewController.m; sourceTree = "<group>"; };
+		185DDCC71FBE86C4004D4688 /* ZSHVideoDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHVideoDetailViewController.h; sourceTree = "<group>"; };
+		185DDCC81FBE86C4004D4688 /* ZSHVideoDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHVideoDetailViewController.m; sourceTree = "<group>"; };
+		185DDCCA1FBE8CE9004D4688 /* ZSHVideoDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHVideoDetailCell.h; sourceTree = "<group>"; };
+		185DDCCB1FBE8CE9004D4688 /* ZSHVideoDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHVideoDetailCell.m; sourceTree = "<group>"; };
 		1874B9641FB99E9700059184 /* ZSHLivePersonInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHLivePersonInfoView.h; sourceTree = "<group>"; };
 		1874B9651FB99E9700059184 /* ZSHLivePersonInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHLivePersonInfoView.m; sourceTree = "<group>"; };
 		18A2C6451F483A66005F394F /* PPHTTPRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPHTTPRequest.h; sourceTree = "<group>"; };
@@ -1157,6 +1163,8 @@
 				1858710E1FBA8903003ECFE3 /* ZSHPersonalCenterViewController.m */,
 				1826CDAB1FBAE1F000A0ECE2 /* ZSHVideoViewController.h */,
 				1826CDAC1FBAE1F000A0ECE2 /* ZSHVideoViewController.m */,
+				185DDCC71FBE86C4004D4688 /* ZSHVideoDetailViewController.h */,
+				185DDCC81FBE86C4004D4688 /* ZSHVideoDetailViewController.m */,
 				1826CDAE1FBAE20C00A0ECE2 /* ZSHPersonalDetailViewController.h */,
 				1826CDAF1FBAE20C00A0ECE2 /* ZSHPersonalDetailViewController.m */,
 			);
@@ -1595,6 +1603,8 @@
 				FEEF46EE1FBA84100086A3C4 /* ZSHLivePopView.m */,
 				FEEF46F31FBAD2C90086A3C4 /* ZSHNearHeadView.h */,
 				FEEF46F41FBAD2C90086A3C4 /* ZSHNearHeadView.m */,
+				185DDCCA1FBE8CE9004D4688 /* ZSHVideoDetailCell.h */,
+				185DDCCB1FBE8CE9004D4688 /* ZSHVideoDetailCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -3138,6 +3148,7 @@
 				FEA30A4D1F9F064900AB0FFC /* ZSHLogisticsDetailCell.m in Sources */,
 				FE4B8D241FA9FEC500DE48A1 /* ZSHKTVListCell.m in Sources */,
 				FE1377961F977AC3003C8DFB /* ZSHPickView.m in Sources */,
+				185DDCCC1FBE8CE9004D4688 /* ZSHVideoDetailCell.m in Sources */,
 				FEDF290C1FB69C2800CD5756 /* ZSHGuideViewController.m in Sources */,
 				FEC2739E1F8E1D7900A0F91A /* ZSHCycleScrollView.m in Sources */,
 				FEC2739C1F8E1D3E00A0F91A /* ZSHHomeViewController.h in Sources */,
@@ -3169,6 +3180,7 @@
 				FE55387E1F470BAF00803128 /* AppManager.m in Sources */,
 				FEA1059F1F9B6062008652D6 /* ZSHDetailGoodReferralCell.m in Sources */,
 				FEA105971F9B5417008652D6 /* ZSHGoodsDetailShufflingHeadView.m in Sources */,
+				185DDCC91FBE86C4004D4688 /* ZSHVideoDetailViewController.m in Sources */,
 				FE291EF61F8CD87300D4BBE7 /* ZSHBuyViewController.m in Sources */,
 				FE9CC3E31FA0A4B600285475 /* ZSHHotelViewController.m in Sources */,
 				FE7527971F7AA48C00858561 /* DSectionIndexView.m in Sources */,
