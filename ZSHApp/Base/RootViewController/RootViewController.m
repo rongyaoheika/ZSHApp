@@ -323,15 +323,15 @@
     btn.tag = tag;
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:btn];
     RLog(@"item 的frame == %@",NSStringFromCGRect(btn.frame));
-    if (@available(ios 11.0,*)) {
-        if (isLeft) {
-            btn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-            [btn setImageEdgeInsets:UIEdgeInsetsMake(0, kRealValue(-5),0,0)];
-        } else {
-            btn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
-            [btn setImageEdgeInsets:UIEdgeInsetsMake(0, kRealValue(5),0,0)];
-        }
-    }
+//    if (@available(ios 11.0,*)) {
+//        if (isLeft) {
+//            btn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+//            [btn setImageEdgeInsets:UIEdgeInsetsMake(0, kRealValue(-5),0,0)];
+//        } else {
+//            btn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
+//            [btn setImageEdgeInsets:UIEdgeInsetsMake(0, kRealValue(5),0,0)];
+//        }
+//    }
     if (isLeft) {
         self.navigationItem.leftBarButtonItems = @[item];
     } else {
@@ -358,15 +358,15 @@
         btn.titleLabel.font = kPingFangLight(12);
         [btn setTitleColor:KZSHColor929292 forState:UIControlStateNormal];
         btn.tag = [tags[i++] integerValue];
-        if (@available(ios 11.0,*)) {
-            if (isLeft) {
-                btn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-                [btn setImageEdgeInsets:UIEdgeInsetsMake(0, kRealValue(-5),0,0)];
-            } else {
-                btn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
-                [btn setImageEdgeInsets:UIEdgeInsetsMake(0, kRealValue(5),0,0)];
-            }
-        }
+//        if (@available(ios 11.0,*)) {
+//            if (isLeft) {
+//                btn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+//                [btn setImageEdgeInsets:UIEdgeInsetsMake(0, kRealValue(-5),0,0)];
+//            } else {
+//                btn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
+//                [btn setImageEdgeInsets:UIEdgeInsetsMake(0, kRealValue(5),0,0)];
+//            }
+//        }
         UIBarButtonItem * item = [[UIBarButtonItem alloc] initWithCustomView:btn];
         [items addObject:item];
     }

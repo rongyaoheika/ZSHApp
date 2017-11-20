@@ -83,9 +83,9 @@
     }
     self.tableView.contentOffset = CGPointMake(0, -self.tableView.contentInset.top);
     
-    if (@available(iOS 11.0, *)) {
-        self.tableView.contentInset = UIEdgeInsetsMake(-30, 0, 0, 0);
-    }
+//    if (@available(iOS 11.0, *)) {
+//        self.tableView.contentInset = UIEdgeInsetsMake(-30, 0, 0, 0);
+//    }
 }
 
 #pragma mark - Table view data source
