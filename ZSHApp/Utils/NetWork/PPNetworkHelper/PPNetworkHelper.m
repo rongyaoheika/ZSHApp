@@ -11,14 +11,6 @@
 #import "AFNetworking.h"
 #import "AFNetworkActivityIndicatorManager.h"
 
-#ifdef DEBUG
-#define PPLog(...) printf("[%s] %s [第%d行]: %s\n", __TIME__ ,__PRETTY_FUNCTION__ ,__LINE__, [[NSString stringWithFormat:__VA_ARGS__] UTF8String])
-#else
-#define PPLog(...)
-#endif
-
-#define NSStringFormat(format,...) [NSString stringWithFormat:format,##__VA_ARGS__]
-
 @implementation PPNetworkHelper
 
 static BOOL _isOpenLog;   // 是否已开启日志打印
@@ -32,19 +24,19 @@ static AFHTTPSessionManager *_sessionManager;
         switch (status) {
             case AFNetworkReachabilityStatusUnknown:
                 networkStatus ? networkStatus(PPNetworkStatusUnknown) : nil;
-                if (_isOpenLog) PPLog(@"未知网络");
+                if (_isOpenLog) RLog(@"未知网络");
                 break;
             case AFNetworkReachabilityStatusNotReachable:
                 networkStatus ? networkStatus(PPNetworkStatusNotReachable) : nil;
-                if (_isOpenLog) PPLog(@"无网络");
+                if (_isOpenLog) RLog(@"无网络");
                 break;
             case AFNetworkReachabilityStatusReachableViaWWAN:
                 networkStatus ? networkStatus(PPNetworkStatusReachableViaWWAN) : nil;
-                if (_isOpenLog) PPLog(@"手机自带网络");
+                if (_isOpenLog) RLog(@"手机自带网络");
                 break;
             case AFNetworkReachabilityStatusReachableViaWiFi:
                 networkStatus ? networkStatus(PPNetworkStatusReachableViaWiFi) : nil;
-                if (_isOpenLog) PPLog(@"WIFI");
+                if (_isOpenLog) RLog(@"WIFI");
                 break;
         }
     }];
@@ -123,7 +115,7 @@ static AFHTTPSessionManager *_sessionManager;
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
-        if (_isOpenLog) {PPLog(@"responseObject = %@",responseObject);}
+        if (_isOpenLog) {RLog(@"responseObject = %@",responseObject);}
         [[self allSessionTask] removeObject:task];
         success ? success(responseObject) : nil;
         //对数据进行异步缓存
@@ -131,7 +123,7 @@ static AFHTTPSessionManager *_sessionManager;
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
-        if (_isOpenLog) {PPLog(@"error = %@",error);}
+        if (_isOpenLog) {RLog(@"error = %@",error);}
         [[self allSessionTask] removeObject:task];
         failure ? failure(error) : nil;
         
@@ -155,7 +147,7 @@ static AFHTTPSessionManager *_sessionManager;
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
-        if (_isOpenLog) {PPLog(@"responseObject = %@",responseObject);}
+        if (_isOpenLog) {RLog(@"responseObject = %@",responseObject);}
         [[self allSessionTask] removeObject:task];
         success ? success(responseObject) : nil;
         //对数据进行异步缓存
@@ -163,7 +155,7 @@ static AFHTTPSessionManager *_sessionManager;
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
-        if (_isOpenLog) {PPLog(@"error = %@",error);}
+        if (_isOpenLog) {RLog(@"error = %@",error);}
         [[self allSessionTask] removeObject:task];
         failure ? failure(error) : nil;
         
@@ -194,13 +186,13 @@ static AFHTTPSessionManager *_sessionManager;
         });
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
-        if (_isOpenLog) {PPLog(@"responseObject = %@",responseObject);}
+        if (_isOpenLog) {RLog(@"responseObject = %@",responseObject);}
         [[self allSessionTask] removeObject:task];
         success ? success(responseObject) : nil;
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
-        if (_isOpenLog) {PPLog(@"error = %@",error);}
+        if (_isOpenLog) {RLog(@"error = %@",error);}
         [[self allSessionTask] removeObject:task];
         failure ? failure(error) : nil;
     }];
@@ -247,13 +239,13 @@ static AFHTTPSessionManager *_sessionManager;
         });
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
-        if (_isOpenLog) {PPLog(@"responseObject = %@",responseObject);}
+        if (_isOpenLog) {RLog(@"responseObject = %@",responseObject);}
         [[self allSessionTask] removeObject:task];
         success ? success(responseObject) : nil;
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
-        if (_isOpenLog) {PPLog(@"error = %@",error);}
+        if (_isOpenLog) {RLog(@"error = %@",error);}
         [[self allSessionTask] removeObject:task];
         failure ? failure(error) : nil;
     }];

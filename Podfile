@@ -13,4 +13,6 @@ pod 'SDWebImage',    '~>3.8'
 pod 'SGQRCode',      '~> 2.1.5'
 pod 'ReactiveObjC'
 pod 'MJExtension'
+pod 'IQKeyboardManager'
+
 end

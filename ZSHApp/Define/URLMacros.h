@@ -6,8 +6,6 @@
 //  Copyright © 2017年 Apple. All rights reserved.
 //
 
-
-
 #ifndef URLMacros_h
 #define URLMacros_h
 
@@ -31,46 +29,38 @@
 #if DevelopSever
 
 /**开发服务器*/
-#define URL_main @"http://192.168.20.31:20000"
-//#define URL_main @"http://192.168.11.122:8090" //展鹏
+#define kUrlRoot                    @"http://192.168.1.108:8080/MVNFHM/"
+//#define kUrlRoot                  @"http://192.168.11.122:8090" //展鹏
 
 #elif TestSever
 
 /**测试服务器*/
-#define URL_main @"http://192.168.20.31:20000"
-#define URL_user_login @"http://18000d15f7.iask.in"
+#define kUrlRoot                   @"http://192.168.20.31:20000"
 
 #elif ProductSever
 
 /**生产服务器*/
-#define URL_main @"http://192.168.20.31:20000"
+#define kUrlRoot                   @"http://192.168.20.31:20000"
+
 #endif
+
+
 
 
 #pragma mark - ——————— 详细接口地址 ————————
 
 //测试接口
-//NSString *const URL_Test = @"api/recharge/price/list";
-#define URL_Test @"/api/cast/home/start"
-
+#define kUrlTest                    @"/api/cast/home/start"
 
 #pragma mark - ——————— 用户相关 ————————
+
+//注册
+#define kUrlUserRegister            @"/appuserin/userregister?REGISTER"
 //自动登录
-#define URL_user_auto_login           @"/api/autoLogin"
-#define kZSHUrlLogin                 @"http://18000d15f7.iask.in/usertest/login"
-#define kZSHUrlRegister              @"http://18000d15f7.iask.in/usertest/register"
-#define kUrlBindDevice                [NSString stringWithFormat:@"/bicycle/bindDevice"]
-#define kUrlUnbindDevice              @"/bicycle/unbindDevice"
-#define kUrlNotifyBikeLogin(bikeId)   [NSString stringWithFormat:@"/bicycle/%@/notifyLogin", bikeId]
+#define kUrlUserAutoLogin           @"/api/autoLogin"
 //登录
-#define URL_user_login @"/user/login"
-//#define URL_user_login @"/api/login"
-//用户详情
-#define URL_user_info_detail @"/api/user/info/detail"
-//修改头像
-#define URL_user_info_change_photo @"/api/user/info/changephoto"
-//注释
-#define URL_user_info_change @"/api/user/info/change"
+#define kUrlUserLogin               @"/appuserin/userloginphone?LOGIN"
+
 
 
 #endif /* URLMacros_h */
