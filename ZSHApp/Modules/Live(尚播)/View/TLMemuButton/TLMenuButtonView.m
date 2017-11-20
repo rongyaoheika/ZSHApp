@@ -99,22 +99,14 @@ static TLMenuButtonView *instanceMenuView;
     [_menu1 removeFromSuperview];
     [_menu2 removeFromSuperview];
     [_menu3 removeFromSuperview];
-
 }
 
 - (void)_addExamApprovel:(UIButton *)sender{
-    //[self dismiss];
+//    [self dismiss];
     NSLog( @"%@", sender );
     if (self.clickLiveSubButton) {
         self.clickLiveSubButton(sender.tag);
     }
 }
 
-+ (instancetype)standardMenuView{
-    static dispatch_once_t predicate;
-    dispatch_once(&predicate, ^{
-        instanceMenuView = [[self alloc] init];
-    });
-    return instanceMenuView;
-}
 @end

@@ -13,7 +13,7 @@
 @interface RootViewController ()
 
 @property (nonatomic,strong) UIImageView        *noDataView;
-
+@property (nonatomic, weak)  UITextField        *searchTextField;
 @end
 
 @implementation RootViewController
@@ -82,11 +82,6 @@
 - (void)createUI{
     
 }
-
-
-
-
-
 
 #pragma mark ————— 跳转登录界面 —————
 - (void)goLogin
@@ -192,31 +187,11 @@
     return _collectionView;
 }
 
-- (ZSHSearchBarView *)searchBar{
-    if (!_searchBar) {
-        _searchBar = [[ZSHSearchBarView alloc]initWithFrame:CGRectMake(kRealValue(64), 25, kRealValue(270), kRealValue(40))];
-        _searchBar.intrinsicContentSize = CGSizeMake(kRealValue(270), kRealValue(40));
-        _searchBar.backgroundColor = KClearColor;
-        _searchBar.placeholder = @"搜索";
-        
-       //光标颜色
-        _searchBar.cursorColor = KZSHColor929292;
-        //TextField
-        _searchBar.searchBarTextField.layer.cornerRadius = 5.0;
-        _searchBar.searchBarTextField.layer.masksToBounds = YES;
-        _searchBar.searchBarTextField.layer.borderColor = KClearColor.CGColor;
-        _searchBar.searchBarTextField.layer.borderWidth = 0.0;
-        [_searchBar.searchBarTextField setBackgroundColor:[UIColor colorWithHexString:@"1A1A1A"]];
-        [_searchBar.searchBarTextField  setValue:KZSHColor8E8E93 forKeyPath:@"_placeholderLabel.textColor"];
-        [_searchBar.searchBarTextField setValue:kPingFangLight(14) forKeyPath:@"_placeholderLabel.font"];
-        //清除按钮图标
-//        _searchBar.clearButtonImage = [UIImage imageNamed:@"demand_delete"];
-        
-        //去掉取消按钮灰色背景
-//        _searchBar.hideSearchBarBackgroundImage = YES;
-
+- (ZSHSearchBarView *)searchView{
+    if (!_searchView) {
+        _searchView = [[ZSHSearchBarView alloc]initWithFrame:CGRectMake(kRealValue(5), kRealValue(7), kRealValue(270), kRealValue(28))];
     }
-    return _searchBar;
+    return _searchView;
 }
 
 - (UIButton *)bottomBtn{

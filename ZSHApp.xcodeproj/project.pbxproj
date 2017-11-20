@@ -155,6 +155,13 @@
 		FE4DB1E51F99970D008E12E9 /* ZSHGoodsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE4DB1E41F99970D008E12E9 /* ZSHGoodsCell.m */; };
 		FE4DB1E91F999747008E12E9 /* ZSHGoodModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FE4DB1E81F999747008E12E9 /* ZSHGoodModel.m */; };
 		FE4DB1ED1F99998B008E12E9 /* ZSHBaseCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE4DB1EC1F99998B008E12E9 /* ZSHBaseCollectionViewCell.m */; };
+		FE4E4B251FBFDC4E00E3B2F4 /* ZSHSearchLiveFirstCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE4E4B241FBFDC4E00E3B2F4 /* ZSHSearchLiveFirstCell.m */; };
+		FE4E4B281FC000E800E3B2F4 /* ZSHSearchLiveSecondCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE4E4B271FC000E800E3B2F4 /* ZSHSearchLiveSecondCell.m */; };
+		FE4E4B2B1FC005EC00E3B2F4 /* ZSHSearchLiveThirdCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE4E4B2A1FC005EC00E3B2F4 /* ZSHSearchLiveThirdCell.m */; };
+		FE4E4B351FC025C500E3B2F4 /* DCSliderView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE4E4B321FC025C500E3B2F4 /* DCSliderView.m */; };
+		FE4E4B361FC025C500E3B2F4 /* YHSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = FE4E4B341FC025C500E3B2F4 /* YHSlider.m */; };
+		FE4E4B3C1FC03C1D00E3B2F4 /* PYSearchSuggestionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE4E4B391FC03C1D00E3B2F4 /* PYSearchSuggestionViewController.m */; };
+		FE4E4B3D1FC03C1D00E3B2F4 /* PYSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE4E4B3B1FC03C1D00E3B2F4 /* PYSearchViewController.m */; };
 		FE50245E1F8A2413005F0FF7 /* ZSHBaseLogic.m in Sources */ = {isa = PBXBuildFile; fileRef = FE50245D1F8A2413005F0FF7 /* ZSHBaseLogic.m */; };
 		FE5229851F9050DF00DC2899 /* ZSHLiveCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE5229841F9050DF00DC2899 /* ZSHLiveCellView.m */; };
 		FE5229911F90B02A00DC2899 /* ZSHLeftContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE5229901F90B02A00DC2899 /* ZSHLeftContentViewController.m */; };
@@ -633,6 +640,20 @@
 		FE4DB1EB1F99998B008E12E9 /* ZSHBaseCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHBaseCollectionViewCell.h; sourceTree = "<group>"; };
 		FE4DB1EC1F99998B008E12E9 /* ZSHBaseCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHBaseCollectionViewCell.m; sourceTree = "<group>"; };
 		FE4DB1F31F99A23F008E12E9 /* YouLikeGoods.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = YouLikeGoods.plist; sourceTree = "<group>"; };
+		FE4E4B231FBFDC4E00E3B2F4 /* ZSHSearchLiveFirstCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHSearchLiveFirstCell.h; sourceTree = "<group>"; };
+		FE4E4B241FBFDC4E00E3B2F4 /* ZSHSearchLiveFirstCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHSearchLiveFirstCell.m; sourceTree = "<group>"; };
+		FE4E4B261FC000E800E3B2F4 /* ZSHSearchLiveSecondCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHSearchLiveSecondCell.h; sourceTree = "<group>"; };
+		FE4E4B271FC000E800E3B2F4 /* ZSHSearchLiveSecondCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHSearchLiveSecondCell.m; sourceTree = "<group>"; };
+		FE4E4B291FC005EC00E3B2F4 /* ZSHSearchLiveThirdCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHSearchLiveThirdCell.h; sourceTree = "<group>"; };
+		FE4E4B2A1FC005EC00E3B2F4 /* ZSHSearchLiveThirdCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHSearchLiveThirdCell.m; sourceTree = "<group>"; };
+		FE4E4B311FC025C500E3B2F4 /* DCSliderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCSliderView.h; sourceTree = "<group>"; };
+		FE4E4B321FC025C500E3B2F4 /* DCSliderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCSliderView.m; sourceTree = "<group>"; };
+		FE4E4B331FC025C500E3B2F4 /* YHSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHSlider.h; sourceTree = "<group>"; };
+		FE4E4B341FC025C500E3B2F4 /* YHSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHSlider.m; sourceTree = "<group>"; };
+		FE4E4B381FC03C1D00E3B2F4 /* PYSearchSuggestionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PYSearchSuggestionViewController.h; sourceTree = "<group>"; };
+		FE4E4B391FC03C1D00E3B2F4 /* PYSearchSuggestionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PYSearchSuggestionViewController.m; sourceTree = "<group>"; };
+		FE4E4B3A1FC03C1D00E3B2F4 /* PYSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PYSearchViewController.h; sourceTree = "<group>"; };
+		FE4E4B3B1FC03C1D00E3B2F4 /* PYSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PYSearchViewController.m; sourceTree = "<group>"; };
 		FE50245C1F8A2413005F0FF7 /* ZSHBaseLogic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHBaseLogic.h; sourceTree = "<group>"; };
 		FE50245D1F8A2413005F0FF7 /* ZSHBaseLogic.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHBaseLogic.m; sourceTree = "<group>"; };
 		FE5229831F9050DF00DC2899 /* ZSHLiveCellView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHLiveCellView.h; sourceTree = "<group>"; };
@@ -1637,6 +1658,7 @@
 		FE291EB51F8CAEDC00D4BBE7 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				FE4E4B221FBFDC0700E3B2F4 /* SearchLiveView */,
 				FE2B2A7B1FB9FD26001F8A61 /* TLMemuButton */,
 				FE5229831F9050DF00DC2899 /* ZSHLiveCellView.h */,
 				FE5229841F9050DF00DC2899 /* ZSHLiveCellView.m */,
@@ -2029,6 +2051,41 @@
 			path = "Plist(本地文件)";
 			sourceTree = "<group>";
 		};
+		FE4E4B221FBFDC0700E3B2F4 /* SearchLiveView */ = {
+			isa = PBXGroup;
+			children = (
+				FE4E4B231FBFDC4E00E3B2F4 /* ZSHSearchLiveFirstCell.h */,
+				FE4E4B241FBFDC4E00E3B2F4 /* ZSHSearchLiveFirstCell.m */,
+				FE4E4B261FC000E800E3B2F4 /* ZSHSearchLiveSecondCell.h */,
+				FE4E4B271FC000E800E3B2F4 /* ZSHSearchLiveSecondCell.m */,
+				FE4E4B291FC005EC00E3B2F4 /* ZSHSearchLiveThirdCell.h */,
+				FE4E4B2A1FC005EC00E3B2F4 /* ZSHSearchLiveThirdCell.m */,
+			);
+			path = SearchLiveView;
+			sourceTree = "<group>";
+		};
+		FE4E4B301FC025C500E3B2F4 /* Slider */ = {
+			isa = PBXGroup;
+			children = (
+				FE4E4B311FC025C500E3B2F4 /* DCSliderView.h */,
+				FE4E4B321FC025C500E3B2F4 /* DCSliderView.m */,
+				FE4E4B331FC025C500E3B2F4 /* YHSlider.h */,
+				FE4E4B341FC025C500E3B2F4 /* YHSlider.m */,
+			);
+			path = Slider;
+			sourceTree = "<group>";
+		};
+		FE4E4B371FC03C1D00E3B2F4 /* SearchVC */ = {
+			isa = PBXGroup;
+			children = (
+				FE4E4B381FC03C1D00E3B2F4 /* PYSearchSuggestionViewController.h */,
+				FE4E4B391FC03C1D00E3B2F4 /* PYSearchSuggestionViewController.m */,
+				FE4E4B3A1FC03C1D00E3B2F4 /* PYSearchViewController.h */,
+				FE4E4B3B1FC03C1D00E3B2F4 /* PYSearchViewController.m */,
+			);
+			path = SearchVC;
+			sourceTree = "<group>";
+		};
 		FE50245B1F8A23F5005F0FF7 /* BaseLogic */ = {
 			isa = PBXGroup;
 			children = (
@@ -2173,6 +2230,8 @@
 		FE5537AA1F47049D00803128 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				FE4E4B371FC03C1D00E3B2F4 /* SearchVC */,
+				FE4E4B301FC025C500E3B2F4 /* Slider */,
 				182287131FB44E1C00CA5B10 /* XXTextView */,
 				FEAEE3E71FA86CBA00F73EEA /* STCalendar */,
 				FE7AF22B1FA2D7F800E1A648 /* TggStarEvaluationView */,
@@ -3167,6 +3226,7 @@
 				FE0F9DB31F94878E004F8D2A /* JSCartUIService.m in Sources */,
 				FE0F9DB41F94878E004F8D2A /* JSCartViewModel.h in Sources */,
 				FE0F9DB51F94878E004F8D2A /* JSCartViewModel.m in Sources */,
+				FE4E4B361FC025C500E3B2F4 /* YHSlider.m in Sources */,
 				1813E2761FBD43D700624405 /* ZSHAddPassengerViewController.m in Sources */,
 				FEA105671F9B2051008652D6 /* ZSHClassGoodsModel.m in Sources */,
 				FEA30A591F9F309400AB0FFC /* ZSHGoodsDetailCell.m in Sources */,
@@ -3177,8 +3237,10 @@
 				FE7F00121F9203430006E9A3 /* ZSHBaseTableViewCellModel.h in Sources */,
 				FE2CD0B61F98F61A00E9E519 /* ZSHIntegralExchangeCell.m in Sources */,
 				FE443FD01FAFF60200B7F7A5 /* ZSHTicketTypeCell.m in Sources */,
+				FE4E4B3D1FC03C1D00E3B2F4 /* PYSearchViewController.m in Sources */,
 				FEAE111E1FB3FD5D008DCB3E /* ZSHQuotaViewController.m in Sources */,
 				FE8FD0731FADA833005F1184 /* ZSHMemberCenterViewController.m in Sources */,
+				FE4E4B3C1FC03C1D00E3B2F4 /* PYSearchSuggestionViewController.m in Sources */,
 				FE7F00131F9203430006E9A3 /* ZSHBaseTableViewCellModel.m in Sources */,
 				FEEF46F51FBAD2C90086A3C4 /* ZSHNearHeadView.m in Sources */,
 				FE7F00141F9203430006E9A3 /* ZSHBaseTableViewModel.h in Sources */,
@@ -3229,6 +3291,7 @@
 				FEC2739D1F8E1D7900A0F91A /* ZSHCycleScrollView.h in Sources */,
 				FEA30A4D1F9F064900AB0FFC /* ZSHLogisticsDetailCell.m in Sources */,
 				FE4B8D241FA9FEC500DE48A1 /* ZSHKTVListCell.m in Sources */,
+				FE4E4B251FBFDC4E00E3B2F4 /* ZSHSearchLiveFirstCell.m in Sources */,
 				FEADBD311FBEBBC00065B94B /* ZSHSelectCardNumFirstView.m in Sources */,
 				FE1377961F977AC3003C8DFB /* ZSHPickView.m in Sources */,
 				185DDCCC1FBE8CE9004D4688 /* ZSHVideoDetailCell.m in Sources */,
@@ -3286,6 +3349,7 @@
 				FEF2B63A1FAC5D39000AEA6E /* ZSHEntertainmentModel.m in Sources */,
 				FED308981FA414D900CD442B /* ZSHHotelDetailDeviceCell.m in Sources */,
 				FEAEE3EF1FA86CBA00F73EEA /* STCalendar.m in Sources */,
+				FE4E4B351FC025C500E3B2F4 /* DCSliderView.m in Sources */,
 				FE5538811F470BAF00803128 /* GameInfo.m in Sources */,
 				FEEF46EF1FBA84100086A3C4 /* ZSHLivePopView.m in Sources */,
 				FE5229851F9050DF00DC2899 /* ZSHLiveCellView.m in Sources */,
@@ -3345,6 +3409,7 @@
 				FE1377C11F97AE29003C8DFB /* ZSHManageAddressListViewController.m in Sources */,
 				18A2C6501F483A66005F394F /* PPNetworkCache.m in Sources */,
 				1822871D1FB45CE800CA5B10 /* ZSHLiveMineHeadView.m in Sources */,
+				FE4E4B2B1FC005EC00E3B2F4 /* ZSHSearchLiveThirdCell.m in Sources */,
 				FE291EE61F8CCC2700D4BBE7 /* ZSHTogetherViewController.m in Sources */,
 				185BB9B81FB559B3007A96FF /* ZSHLiveMonthListViewController.m in Sources */,
 				FE55380E1F47049D00803128 /* AppDelegate+AppService.m in Sources */,
@@ -3395,6 +3460,7 @@
 				18F9024C1FB6CFDF0044967F /* ZSHFollowCell.m in Sources */,
 				FE1F761F1F8F3D4100C45B83 /* ZSHTogetherView.m in Sources */,
 				FE0F9DC31F94DB85004F8D2A /* ZSHWeiBoBottomView.m in Sources */,
+				FE4E4B281FC000E800E3B2F4 /* ZSHSearchLiveSecondCell.m in Sources */,
 				FE5538151F47049D00803128 /* TabBar.m in Sources */,
 				FE0F9DB81F949B4E004F8D2A /* ZSHWeiBoCellModel.m in Sources */,
 				18F902531FB6DED20044967F /* ZSHChargeRecCell.m in Sources */,

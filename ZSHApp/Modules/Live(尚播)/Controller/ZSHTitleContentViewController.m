@@ -18,8 +18,9 @@
 #import "ZSHMoreTicketViewController.h"
 #import "ZSHTicketPlaceCell.h"
 #import "ZSHActivityViewController.h"
+#import "PYSearchViewController.h"
 
-@interface ZSHTitleContentViewController ()<UISearchBarDelegate>
+@interface ZSHTitleContentViewController ()<UISearchBarDelegate,PYSearchViewControllerDelegate>
 
 @property (nonatomic, strong) LXScrollContentView *contentView;
 @property (nonatomic, strong) LXScollTitleView    *titleView;
@@ -145,8 +146,8 @@
 }
 
 - (void)createHotelNaviUI{
-    [self.navigationItem setTitleView:self.searchBar];
-    self.searchBar.delegate = self;
+    [self.navigationItem setTitleView:self.searchView];
+    self.searchView.searchBar.delegate = self;
 }
 
 - (void)createTicketNaviUI{
@@ -243,7 +244,24 @@
 }
 
 - (void)searchAction{
+    // 1. Create an Array of popular search
+    NSArray *hotSeaches = @[@"阿哲", @"散打哥", @"天佑", @"赵小磊", @"赵雷", @"陈山", @"PHP", @"C#", @"Perl", @"Go", @"JavaScript", @"R", @"Ruby", @"MATLAB"];
+    // 2. Create a search view controller
+    PYSearchViewController *searchViewController = [PYSearchViewController searchViewControllerWithHotSearches:hotSeaches searchBarPlaceholder:NSLocalizedString(@"PYExampleSearchPlaceholderText", @"搜索编程语言") didSearchBlock:^(PYSearchViewController *searchViewController, UISearchBar *searchBar, NSString *searchText) {
+        // Called when search begain.
+        // eg：Push to a temp view conroller
+    }];
+    // 3. Set style for popular search and search history
+    searchViewController.hotSearchStyle = PYHotSearchStyleARCBorderTag;
+    searchViewController.searchHistoryStyle = PYSearchHistoryStyleARCBorderTag;
+    searchViewController.searchBarBackgroundColor = KZSHColor1A1A1A;
     
+    // 4. Set delegate
+    searchViewController.delegate = self;
+    // 5. Present a navigation controller
+//    RootNavigationController *nav = [[RootNavigationController alloc] initWithRootViewController:searchViewController];
+//    [self presentViewController:nav animated:YES completion:nil];
+    [self.navigationController pushViewController:searchViewController animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

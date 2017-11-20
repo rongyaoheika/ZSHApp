@@ -30,6 +30,12 @@
 #import "ZSHTrainPassengerController.h"
 #import "ZSHShareView.h"
 
+//直播 - 附近搜索
+#import "ZSHSearchLiveFirstCell.h"
+#import "ZSHSearchLiveSecondCell.h"
+#import "ZSHSearchLiveThirdCell.h"
+#import "ZSHWeiboViewController.h"
+
 @interface ZSHBottomBlurPopView ()<STCalendarDelegate>
 
 @property (nonatomic, strong) NSDictionary           *paramDic;
@@ -51,6 +57,7 @@
 
 //底部年龄弹出框
 @property (nonatomic, strong) ZSHAgeView            *ageView;
+@property (nonatomic, copy) NSString                *ageRangeStr;
 
 @end
 
@@ -70,6 +77,11 @@ static NSString *ZSHCalendarCellID = @"ZSHCalendarCell";
 
 //首页-菜单栏
 static NSString *ZSHBaseCellID = @"ZSHBaseCell";
+
+//直播 - 附近搜索
+static NSString *ZSHSearchLiveFirstCellID = @"ZSHSearchLiveFirstCell";
+static NSString *ZSHSearchLiveSecondCellID = @"ZSHSearchLiveSecondCell";
+static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
 
 
 @implementation ZSHBottomBlurPopView
@@ -98,8 +110,10 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
         self.model = (ZSHKTVModel *)_paramDic[@"model"];
     } else if (kFromClassTypeValue == ZSHFromAirplaneCalendarVCToBottomBlurPopView){//机票日期选择
         self.typeText = @"请选择出发时间";
-    } else if (kFromClassTypeValue == ZSHFromAirplaneAgeVCToBottomBlurPopView){//年龄
-        self.typeText = @"年龄选择";
+    }
+    
+    if (self.paramDic[@"typeText"]) {
+        self.typeText = self.paramDic[@"typeText"];
     }
     
     self.tableViewModel = [[ZSHBaseTableViewModel alloc] init];
@@ -172,13 +186,19 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     }  else if (kFromClassTypeValue == ZSHFromLiveMidVCToBottomBlurPopView) {//直播-直播弹窗
         
         ZSHLivePopView *livePopView = [[ZSHLivePopView alloc]initWithFrame:CGRectMake(0, KScreenHeight- kRealValue(150), KScreenWidth, kRealValue(150))];
+        livePopView.tag = 2;
         [self addSubview:livePopView];
         return;
-    } else if (kFromClassTypeValue == ZSHFromTrainUserInfoVCToBottomBlurPopView) {//机票个人信息
-        _subTabHeight = kRealValue(264);
+    }  else if (kFromClassTypeValue == ZSHFromLiveNearSearchVCToBottomBlurPopView) {//直播-筛选播主
+        
+        _subTabHeight = kRealValue(217);
         self.subTab.backgroundColor = KWhiteColor;
         [self.subTab registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHHeadCellID];
+        [self.subTab registerClass:[ZSHSearchLiveFirstCell class] forCellReuseIdentifier:ZSHSearchLiveFirstCellID];
+        [self.subTab registerClass:[ZSHSearchLiveSecondCell class] forCellReuseIdentifier:ZSHSearchLiveSecondCellID];
+        [self.subTab registerClass:[ZSHSearchLiveThirdCell class] forCellReuseIdentifier:ZSHSearchLiveThirdCellID];
     } else if (kFromClassTypeValue == ZSHFromShareVCToToBottomBlurPopView) { // 分享
+        
         ZSHShareView *shareView = [[ZSHShareView alloc] init];
         [self addSubview:shareView];
         [shareView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -243,7 +263,12 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
         
         [self.tableViewModel.sectionModelArray removeAllObjects];
         [self.tableViewModel.sectionModelArray addObject:[self storeMenuListSection]];
-    }else if (kFromClassTypeValue == ZSHFromTrainUserInfoVCToBottomBlurPopView){//火车票个人信息
+    } else if (kFromClassTypeValue == ZSHFromLiveNearSearchVCToBottomBlurPopView){//直播-筛选播主
+        
+        [self.tableViewModel.sectionModelArray removeAllObjects];
+        [self.tableViewModel.sectionModelArray addObject:[self storeHeadSection]];
+        [self.tableViewModel.sectionModelArray addObject:[self storeLiveSearchSection]];
+    } else if (kFromClassTypeValue == ZSHFromTrainUserInfoVCToBottomBlurPopView){//火车票个人信息
         
         [self.tableViewModel.sectionModelArray removeAllObjects];
         [self.tableViewModel.sectionModelArray addObject:[self stroreTrainUserInfo]];
@@ -609,11 +634,48 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
             if (self.dissmissViewBlock) {
                 self.dissmissViewBlock(self,indexPath);
             }
-            
         };
     }
     return sectionModel;
 }
+
+//直播-附近-筛选播主
+- (ZSHBaseTableViewSectionModel*)storeLiveSearchSection {
+    kWeakSelf(self);
+    ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
+    ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
+    [sectionModel.cellModelArray addObject:cellModel];
+    cellModel.height = kRealValue(45);
+    cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
+        ZSHSearchLiveFirstCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHSearchLiveFirstCellID];
+        cell.btnClickBlock = ^(UIButton *btn) {
+            if (btn.tag == 1) {//黑微博
+                [weakself pushWeiboVCAction];
+            }
+        };
+        return cell;
+    };
+    
+    cellModel = [[ZSHBaseTableViewCellModel alloc] init];
+    [sectionModel.cellModelArray addObject:cellModel];
+    cellModel.height = kRealValue(45);
+    cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
+        ZSHSearchLiveSecondCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHSearchLiveSecondCellID];
+        return cell;
+    };
+    
+    cellModel = [[ZSHBaseTableViewCellModel alloc] init];
+    [sectionModel.cellModelArray addObject:cellModel];
+    cellModel.height = kRealValue(217) - kRealValue(50) - 2*kRealValue(45);
+    cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
+        ZSHSearchLiveThirdCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHSearchLiveThirdCellID];
+        cell.separatorInset = UIEdgeInsetsMake(0, 0, 0, MAXFLOAT);
+        return cell;
+    };
+    
+    return sectionModel;
+}
+
 
 #pragma getter
 - (ZSHTopLineView *)topLineView{
@@ -689,6 +751,20 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     
 }
 
+- (void)pushWeiboVCAction{
+    [UIView animateWithDuration:0.5 animations:^{
+        CGRect mainFrame = _subTab.frame;
+        mainFrame.origin.y = self.frame.size.height;
+        _subTab.frame = mainFrame;
+    } completion:^(BOOL finished) {
+        [self removeFromSuperview];
+        [self setHidden:YES];
+        
+        ZSHWeiboViewController *weiboVC = [[ZSHWeiboViewController alloc]init];
+        [[kAppDelegate getCurrentUIVC].navigationController pushViewController:weiboVC animated:YES];
+    }];
+}
+
 - (void)addUserBtnAction{
     
     [UIView animateWithDuration:0.5 animations:^{
@@ -726,6 +802,20 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 }
 
 - (void)saveChange{
+    [UIView animateWithDuration:0.5 animations:^{
+        CGRect mainFrame = _subTab.frame;
+        mainFrame.origin.y = self.frame.size.height;
+        _subTab.frame = mainFrame;
+    } completion:^(BOOL finished) {
+        [self removeFromSuperview];
+        [self setHidden:YES];
+        
+         //保存年龄
+        NSDictionary *preParamDic = @{@"ageRange":self.ageView.ageRangeStr};
+        if (self.confirmOrderBlock) {
+            self.confirmOrderBlock(preParamDic);
+        }
+    }];
     
 }
 

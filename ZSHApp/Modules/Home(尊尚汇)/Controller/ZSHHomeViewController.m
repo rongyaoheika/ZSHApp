@@ -4,7 +4,6 @@
 //
 //  Created by zhaoweiwei on 2017/10/10.
 //  Copyright © 2017年 apple. All rights reserved.
-//  2017.11.17 测试代码提交
 
 #import "ZSHHomeViewController.h"
 #import "ZSHHomeHeadView.h"
@@ -86,8 +85,8 @@ static NSString *Identify_MagazineCell = @"magazineCell";
     [self addNavigationItemWithImageName:@"nav_home_more" title:@"三亚" locate:XYButtonEdgeInsetsStyleRight isLeft:YES target:self action:@selector(locateBtnAction) tag:10];
     [self addNavigationItemWithImageName:@"nav_home_menu" isLeft:NO target:self action:@selector(menuBtntClick:) tag:11];
 //    self.navigationItem.titleView.backgroundColor = [UIColor redColor];
-    self.navigationItem.titleView = self.searchBar;
-    self.searchBar.delegate = self;
+    self.navigationItem.titleView = self.searchView;
+    self.searchView.searchBar.delegate = self;
 //    RLog(@"navigationItem 的frame ==%@",NSStringFromCGRect(self.navigationController.navigationBar.frame));
     
     self.tableView.frame = CGRectMake(0, KNavigationBarHeight + kRealValue(25), KScreenWidth, KScreenHeight-KNavigationBarHeight- kRealValue(25) - KBottomNavH);

@@ -9,12 +9,10 @@
 #import "ZSHEntertainmentDetailViewController.h"
 #import "ZSHEntertainmentHeadView.h"
 #import "ZSHEntertainmentDetailCell.h"
-#import "ZSHPickView.h"
 #import "ZSHEntertainmentDisViewController.h"
 
 @interface ZSHEntertainmentDetailViewController ()
 
-@property (nonatomic, strong) ZSHPickView                       *pickView;
 @property (nonatomic, strong) ZSHEntertainmentHeadView          *headView;
 
 @end
@@ -99,16 +97,6 @@ static NSString *ZSHEntertainmentDetailCellID = @"ZSHEntertainmentDetailCell";
         };
         
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
-            if (indexPath.row == 4) {
-                NSArray *togetherArr = @[@"不限",@"给力邀约",@"AA互动趴"];
-                NSDictionary *nextParamDic = @{@"type":@(WindowTogether),@"midTitle":@"方式选择",@"dataArr":togetherArr};
-                weakself.pickView = [weakself createPickViewWithParamDic:nextParamDic];
-                [weakself.pickView show:WindowTogether];
-            } else if(indexPath.row == 1||indexPath.row == 2){
-                NSDictionary *nextParamDic = @{@"type":@(WindowBirthDay),@"midTitle":@"生日"};
-                weakself.pickView = [weakself createPickViewWithParamDic:nextParamDic];
-                [weakself.pickView show:WindowBirthDay];
-            } 
            
         };
     }
@@ -142,12 +130,6 @@ static NSString *ZSHEntertainmentDetailCellID = @"ZSHEntertainmentDetailCell";
         _headView = [[ZSHEntertainmentHeadView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, kRealValue(60)) paramDic:nil];
     }
     return _headView;
-}
-
-- (ZSHPickView *)createPickViewWithParamDic:(NSDictionary *)paramDic{
-    ZSHPickView *pickView = [[ZSHPickView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight) paramDic:paramDic];
-    pickView.controller = self;
-    return pickView;
 }
 
 - (void)didReceiveMemoryWarning {

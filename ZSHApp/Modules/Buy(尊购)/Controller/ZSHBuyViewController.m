@@ -40,8 +40,8 @@ static NSString *ZSHGoodsListViewID = @"ZSHGoodsListView";
 }
 
 - (void)createUI{
-    [self.navigationItem setTitleView:self.searchBar];
-    self.searchBar.delegate = self;
+    [self.navigationItem setTitleView:self.searchView];
+    self.searchView.searchBar.delegate = self;
     
     
     [self addNavigationItemWithImageName:@"nav_buy_mine" isLeft:YES target:self action:@selector(mineBtntAction) tag:11];

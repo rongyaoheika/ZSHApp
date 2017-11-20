@@ -39,8 +39,8 @@ static NSString *cellIdentifier = @"listCell";
 
 - (void)createUI{
 
-    [self.navigationItem setTitleView:self.searchBar];
-    self.searchBar.delegate = self;
+    [self.navigationItem setTitleView:self.searchView];
+    self.searchView.searchBar.delegate = self;
     
     [self.view addSubview:self.tableView];
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {

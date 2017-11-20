@@ -30,7 +30,7 @@ typedef void(^ZSHBottomBtnViewBtnBlock)(NSInteger);
 @property (nonatomic, copy)   ZSHBottomBtnViewBtnBlock  bottomBtnViewBtnBlock;
 @property (nonatomic, strong) ZSHBaseTableViewModel     *tableViewModel;
 @property (nonatomic, strong) UICollectionView          *collectionView;
-@property (nonatomic, strong) ZSHSearchBarView          *searchBar;
+@property (nonatomic, strong) ZSHSearchBarView          *searchView;
 @property (nonatomic, strong) NSDictionary              *paramDic;
 
 /**

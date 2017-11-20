@@ -37,7 +37,6 @@
 #define KZSHColorCD933B               [UIColor colorWithHexString:@"CD933B"]
 #define KZSHColorFD5739               [UIColor colorWithHexString:@"FD5739"]
 #define KZSHColor979797               [UIColor colorWithHexString:@"979797"]
-#define KZSHColor8E8E93               [UIColor colorWithHexString:@"8E8E93"]
 #define KZSHColorFF2366               [UIColor colorWithHexString:@"FF2366"]
 #define KZSHColor262626               [UIColor colorWithHexString:@"262626"]
 #define KZSHColor3B3B3B               [UIColor colorWithHexString:@"3B3B3B"]
@@ -57,6 +56,8 @@
 #define KZSHColorF29E19               [UIColor colorWithHexString:@"F29E19"]    // 进度条填充颜色
 #define KZSHColorFF2068               [UIColor colorWithHexString:@"FF2068"]
 #define KZSHColor141414               [UIColor colorWithHexString:@"141414"]
+#define KZSHColorD8D8D8               [UIColor colorWithHexString:@"D8D8D8"]
+#define KZSHColor1A1A1A               [UIColor colorWithHexString:@"1A1A1A"]
 #define kRandomColor                   KRGBColor(arc4random_uniform(256)/255.0,arc4random_uniform(256)/255.0,arc4random_uniform(256)/255.0)        //随机色生成
 #define KShadowColor                   [UIColor colorWithRed:0 green:0 blue:0 alpha:0.85]
 #define KLightWhiteColor               [UIColor colorWithRed:255/255.0 green:255/255.0f blue:255/255.0f alpha:0.7]

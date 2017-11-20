@@ -21,18 +21,19 @@ typedef NS_ENUM(NSUInteger,ZSHFromVCToBottomBlurPopView){
     ZSHFromAirplaneAgeVCToBottomBlurPopView,                 //年龄-底部弹出
     ZSHFromPersonInfoVCToBottomBlurPopView,                  //主播个人信息
     ZSHFromLiveMidVCToBottomBlurPopView,                     //直播-弹框
+    ZSHFromLiveNearSearchVCToBottomBlurPopView,              //直播-筛选播主
     ZSHFromTrainUserInfoVCToBottomBlurPopView,               //火车票个人信息-底部弹出
     ZSHFromShareVCToToBottomBlurPopView,                     //分享
     ZSHFromNoneVCToBottomBlurPopView
 };
 
-typedef void (^ZSHConfirmOrderBlock)();
+typedef void (^ZSHConfirmOrderBlock)(NSDictionary *);
 typedef void (^DismissBlurViewBlock) (UIView *view, NSIndexPath *indexpath);
 
 @interface ZSHBottomBlurPopView :FXBlurView
 
 @property (nonatomic, strong) ZSHBaseTableViewModel     *tableViewModel;
-@property (nonatomic, copy) dispatch_block_t            confirmOrderBlock;
+@property (nonatomic, copy) ZSHConfirmOrderBlock        confirmOrderBlock;
 @property (nonatomic, copy) DismissBlurViewBlock        dissmissViewBlock;
 
 

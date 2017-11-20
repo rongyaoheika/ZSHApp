@@ -12,8 +12,8 @@
 @interface ZSHLivePopView ()
 
 @property (nonatomic, assign) BOOL              ISShowMenuButton;
-@property (nonatomic, strong) TLMenuButtonView  *tlMenuView ;
-@property (nonatomic, strong)UIButton            *centerBtn;
+@property (nonatomic, weak)   TLMenuButtonView  *tlMenuView;
+@property (nonatomic, strong) UIButton          *centerBtn;
 
 @end
 
@@ -29,7 +29,7 @@
     [_centerBtn setImage:[UIImage imageNamed:@"live_add"] forState:UIControlStateNormal];
     [self addSubview:_centerBtn];
     
-    TLMenuButtonView *tlMenuView = [TLMenuButtonView standardMenuView];
+    TLMenuButtonView *tlMenuView = [[TLMenuButtonView alloc]init];
     tlMenuView.centerPoint = _centerBtn.center;
     tlMenuView.clickLiveSubButton = ^(NSInteger tag){
         _ISShowMenuButton = YES;

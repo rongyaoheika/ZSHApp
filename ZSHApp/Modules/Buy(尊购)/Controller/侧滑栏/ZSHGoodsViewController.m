@@ -51,8 +51,8 @@ static NSString *const ZSHBrandSortCellID = @"ZSHBrandSortCell";
 }
 
 - (void)createUI{
-    [self.navigationItem setTitleView:self.searchBar];
-    self.searchBar.delegate = self;
+    [self.navigationItem setTitleView:self.searchView];
+    self.searchView.searchBar.delegate = self;
     
     self.tableView.frame = CGRectMake(0, KNavigationBarHeight,tableViewW, kScreenHeight - KNavigationBarHeight);
     [self.view addSubview:self.tableView];

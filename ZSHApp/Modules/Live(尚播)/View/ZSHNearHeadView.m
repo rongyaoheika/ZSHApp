@@ -33,6 +33,7 @@
     
     UIButton *accessoryBtn = [[UIButton alloc]initWithFrame:CGRectZero];
     [accessoryBtn setImage:[UIImage imageNamed:@"mine_next"] forState:UIControlStateNormal];
+    [accessoryBtn addTarget:self action:@selector(searchLiveAction:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:accessoryBtn];
     [accessoryBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.mas_equalTo(self);
@@ -40,6 +41,12 @@
         make.height.mas_equalTo(self);
         make.centerY.mas_equalTo(self);
     }];
+}
+
+- (void)searchLiveAction:(UIButton *)btn{
+    if (self.btnClickBlock) {
+        self.btnClickBlock(btn);
+    }
 }
 
 @end

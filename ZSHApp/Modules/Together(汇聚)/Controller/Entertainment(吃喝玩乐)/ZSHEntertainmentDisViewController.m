@@ -9,6 +9,7 @@
 #import "ZSHEntertainmentDisViewController.h"
 #import "ZSHDetailDemandViewController.h"
 #import "ZSHBottomBlurPopView.h"
+#import "ZSHPickView.h"
 
 @interface ZSHEntertainmentDisViewController ()
 
@@ -17,6 +18,7 @@
 @property (nonatomic, strong) NSArray                   *titleArr;
 @property (nonatomic, strong) NSArray                   *detailTitleArr;
 @property (nonatomic, strong) ZSHBottomBlurPopView      *bottomBlurPopView;
+@property (nonatomic, strong) ZSHPickView               *pickView;
 
 @end
 static NSString *ZSHBaseCellID = @"ZSHBaseCell";
@@ -79,13 +81,25 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
         };
         
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
-            if (indexPath.row == 7) {
-                ZSHDetailDemandViewController *hotelDetailVC = [[ZSHDetailDemandViewController alloc] init];
-                [weakself.navigationController pushViewController:hotelDetailVC animated:YES];
-            }
-            else if (indexPath.row == 6){
+            if(indexPath.row == 0||indexPath.row == 1){//开始，结束时间
+                NSDictionary *nextParamDic = @{@"type":@(WindowBirthDay),@"midTitle":@"生日"};
+                weakself.pickView = [weakself createPickViewWithParamDic:nextParamDic];
+                [weakself.pickView show:WindowBirthDay];
+            } else if (indexPath.row == 3) {//方式
+                NSArray *togetherArr = @[@"不限",@"给力邀约",@"AA互动趴"];
+                NSDictionary *nextParamDic = @{@"type":@(WindowTogether),@"midTitle":@"方式选择",@"dataArr":togetherArr};
+                weakself.pickView = [weakself createPickViewWithParamDic:nextParamDic];
+                [weakself.pickView show:WindowTogether];
+            } else if (indexPath.row == 6){//年龄要求
+                ZSHBaseCell *cell = [tableView cellForRowAtIndexPath:indexPath];
                 weakself.bottomBlurPopView = [weakself createBottomBlurPopViewWith:ZSHFromAirplaneAgeVCToBottomBlurPopView];
                 [kAppDelegate.window addSubview:self.bottomBlurPopView];
+                weakself.bottomBlurPopView.confirmOrderBlock = ^(NSDictionary *paramDic) {
+                    cell.detailTextLabel.text = paramDic[@"ageRange"];
+                };
+            } else if (indexPath.row == 7) {//详细要求
+                ZSHDetailDemandViewController *hotelDetailVC = [[ZSHDetailDemandViewController alloc] init];
+                [weakself.navigationController pushViewController:hotelDetailVC animated:YES];
             }
         };
     }
@@ -99,7 +113,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 
 #pragma getter
 - (ZSHBottomBlurPopView *)createBottomBlurPopViewWith:(ZSHFromVCToBottomBlurPopView)fromClassType{
-    NSDictionary *nextParamDic = @{KFromClassType:@(fromClassType)};
+    NSDictionary *nextParamDic = @{KFromClassType:@(fromClassType),@"typeText":@"年龄选择"};
     ZSHBottomBlurPopView *bottomBlurPopView = [[ZSHBottomBlurPopView alloc]initWithFrame:kAppDelegate.window.bounds paramDic:nextParamDic];
     bottomBlurPopView.blurRadius = 20;
     bottomBlurPopView.dynamic = NO;
@@ -107,6 +121,12 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     bottomBlurPopView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.6];
     [bottomBlurPopView setBlurEnabled:NO];
     return bottomBlurPopView;
+}
+
+- (ZSHPickView *)createPickViewWithParamDic:(NSDictionary *)paramDic{
+    ZSHPickView *pickView = [[ZSHPickView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight) paramDic:paramDic];
+    pickView.controller = self;
+    return pickView;
 }
 
 - (void)didReceiveMemoryWarning {

@@ -13,6 +13,8 @@
 #import "ZSHLiveListModel.h"
 #import "ZSHLiveRoomViewController.h"
 #import "ZSHNearHeadView.h"
+#import "ZSHBottomBlurPopView.h"
+
 
 @interface ZSHLiveContentFirstViewController ()< UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,ZSHCustomWaterFlowLayoutDelegate>
 
@@ -82,7 +84,12 @@ static NSString * const ZSHNearHeadViewID = @"ZSHNearHeadView";
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
        UICollectionReusableView *reusableview = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:ZSHNearHeadViewID forIndexPath:indexPath];
     if (kFromClassTypeValue == FromLiveNearVCToLiveContentFirstVC) {
+        kWeakSelf(self);
         ZSHNearHeadView *nearView = [[ZSHNearHeadView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, kRealValue(40))];
+        nearView.btnClickBlock = ^(UIButton *searchLiveBtn) {
+            ZSHBottomBlurPopView *bottomBlurPopView = [weakself createBottomBlurPopViewWith:ZSHFromLiveNearSearchVCToBottomBlurPopView];
+            [kAppDelegate.window addSubview:bottomBlurPopView];
+        };
         [reusableview addSubview:nearView];
     }
     
@@ -97,8 +104,6 @@ static NSString * const ZSHNearHeadViewID = @"ZSHNearHeadView";
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-//    ZSHWeiboViewController *weiboVC = [[ZSHWeiboViewController alloc]init];
-//    [self.navigationController pushViewController:weiboVC animated:YES];
     
     ZSHLiveRoomViewController *liveRoomVC = [[ZSHLiveRoomViewController alloc]init];
     [self.navigationController pushViewController:liveRoomVC animated:YES];
@@ -121,6 +126,19 @@ static NSString * const ZSHNearHeadViewID = @"ZSHNearHeadView";
 
 - (UIEdgeInsets)edgeinsetOfItems:(ZSHCustomWaterFlowLayout *)layout{
     return UIEdgeInsetsMake(10, 10, 10, 10);
+}
+
+
+#pragma getter
+- (ZSHBottomBlurPopView *)createBottomBlurPopViewWith:(ZSHFromVCToBottomBlurPopView)fromClassType{
+    NSDictionary *nextParamDic = @{KFromClassType:@(fromClassType),@"typeText":@"筛选"};
+    ZSHBottomBlurPopView *bottomBlurPopView = [[ZSHBottomBlurPopView alloc]initWithFrame:kAppDelegate.window.bounds paramDic:nextParamDic];
+    bottomBlurPopView.blurRadius = 20;
+    bottomBlurPopView.dynamic = NO;
+    bottomBlurPopView.tintColor = KClearColor;
+    bottomBlurPopView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.6];
+    [bottomBlurPopView setBlurEnabled:NO];
+    return bottomBlurPopView;
 }
 
 - (void)didReceiveMemoryWarning {

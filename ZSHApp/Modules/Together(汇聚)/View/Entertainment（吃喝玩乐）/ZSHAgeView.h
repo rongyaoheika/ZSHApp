@@ -8,6 +8,9 @@
 
 #import "ZSHBaseView.h"
 
+
 @interface ZSHAgeView : ZSHBaseView
+
+@property (nonatomic, copy) NSString        *ageRangeStr;
 
 @end

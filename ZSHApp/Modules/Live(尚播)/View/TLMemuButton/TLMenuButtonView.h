@@ -13,12 +13,9 @@
 @property (nonatomic, assign) CGPoint centerPoint;
 
 - (void)showItems;
-
 - (void)dismiss;
-
 - (void)dismissAtNow;
 
 @property (nonatomic, copy) void (^clickLiveSubButton)(NSInteger index);
 
-+ (instancetype)standardMenuView;
 @end
