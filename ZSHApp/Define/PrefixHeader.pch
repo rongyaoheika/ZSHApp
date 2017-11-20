@@ -42,5 +42,6 @@
 #import <NSObject+YYModel.h>
 #import <MJExtension.h>
 #import <ReactiveObjC/ReactiveObjC.h>
+#import "IQKeyboardManager.h"
 
 #endif /* PrefixHeader_pch */

@@ -35,6 +35,9 @@
     
     //广告页
 //    [AppManager appStart];
+   
+    //键盘监听
+    [self initKeyboard];
     
     return YES;
     

@@ -7,8 +7,12 @@
 //
 
 #import "ZSHCardCustomizedFirst.h"
-
+#import "LXScollTitleView.h"
+#import "ZSHTextFieldCellView.h"
 @interface ZSHCardCustomizedFirst ()
+
+@property (nonatomic, strong) UIView                    *labelView;
+@property (nonatomic, strong) UIView                    *textFieldView;
 
 @property (nonatomic, strong) UILabel          *promptLabel;
 @property (nonatomic, strong) UITextField      *signTextField;
@@ -23,22 +27,44 @@
 @implementation ZSHCardCustomizedFirst
 
 - (void)setup{
+    
+    //姓名
+    _labelView = [[UIView alloc]initWithFrame:CGRectZero];
+    [_labelView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"seg_two_bg"]]];
+    [self addSubview:_labelView];
+    
+    NSArray *labelTitleArr = @[@"姓",@"名"];
+    for (int i = 0; i<labelTitleArr.count; i++) {
+        NSDictionary *titleLabelDic = @{@"text":labelTitleArr[i],@"font":kPingFangLight(15),@"textAlignment":@(NSTextAlignmentCenter)};
+        UILabel *label = [ZSHBaseUIControl createLabelWithParamDic:titleLabelDic];
+        [_labelView addSubview:label];
+    }
+    
+    //提示文字
     NSDictionary *promptLabelDic = @{@"text":@"图示：请输入您要定制的姓名的拼音大写，如（成龙）",@"font":kPingFangLight(11)};
     _promptLabel = [ZSHBaseUIControl createLabelWithParamDic:promptLabelDic];
     _promptLabel.numberOfLines = 0;
     [self addSubview:_promptLabel];
     
-    _signTextField = [[UITextField alloc]initWithFrame:CGRectZero];
-    _signTextField.layer.cornerRadius = kRealValue(2.0);
-    _signTextField.layer.borderColor = KZSHColor929292.CGColor;
-    _signTextField.layer.borderWidth = 1.0;
-    NSString *placeholder = @"请您输入自己的个性签名";
-    _signTextField.placeholder = placeholder;
-    [_signTextField setValue:KZSHColor929292 forKeyPath:@"_placeholderLabel.textColor"];
-    [_signTextField setValue:kPingFangLight(15) forKeyPath:@"_placeholderLabel.font"];
-    [self addSubview:_signTextField];
+    //输入姓名textField
+    _textFieldView = [[UIView alloc]initWithFrame:CGRectZero];
+    [_textFieldView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"seg_two_bg"]]];
+    [self addSubview:_textFieldView];
     
+    NSArray *placeHolderArr = @[@"CHENG",@"LONG"];
+    NSArray *textFieldTypeArr = @[@(ZSHTextFieldViewUser), @(ZSHTextFieldViewUser)];
+    for (int i = 0; i<placeHolderArr.count; i++) {
+        NSDictionary *textFieldDic = @{@"placeholder":placeHolderArr[i],@"textFieldType":textFieldTypeArr[i]};
+         ZSHTextFieldCellView *textField = [[ZSHTextFieldCellView alloc]initWithFrame:CGRectZero paramDic:textFieldDic];
+        
+        NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];
+        style.alignment = NSTextAlignmentCenter;
+        NSAttributedString *attri = [[NSAttributedString alloc] initWithString:placeHolderArr[i] attributes:@{NSForegroundColorAttributeName:KZSHColor929292,NSFontAttributeName:kPingFangLight(15), NSParagraphStyleAttributeName:style}];
+        textField.textField.attributedPlaceholder = attri;
+        [_textFieldView addSubview:textField];
+    }
     
+    //图文
     _bottomView = [[UIView alloc]initWithFrame:CGRectZero];
     _bottomView.backgroundColor = KZSHColor0B0B0B;
     [self addSubview:_bottomView];
@@ -56,21 +82,50 @@
 - (void)layoutSubviews{
     [super layoutSubviews];
    
+    [_labelView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(self).offset(kRealValue(20));
+        make.left.mas_equalTo(self).offset((kScreenWidth-kRealValue(200))/2);
+        make.size.mas_equalTo(CGSizeMake(kRealValue(200), kRealValue(30)));
+    }];
+    
+    int i = 0;
+    for (UILabel * label in _labelView.subviews) {
+        [label mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.mas_equalTo(_labelView).offset(kRealValue(100)*i);
+            make.top.mas_equalTo(_labelView);
+            make.size.mas_equalTo(CGSizeMake(kRealValue(100), kRealValue(30)));
+        }];
+        i++;
+    }
+    
+    
     [_promptLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self).offset(kRealValue(43));
         make.right.mas_equalTo(self).offset(-kRealValue(43));
-        make.top.mas_equalTo(self).offset(kRealValue(20));
+        make.top.mas_equalTo(_labelView.mas_bottom).offset(kRealValue(20));
         make.height.mas_equalTo(kRealValue(17));
     }];
     
-    [_signTextField mas_makeConstraints:^(MASConstraintMaker *make) {
+    
+    [_textFieldView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(_promptLabel.mas_bottom).offset(kRealValue(20));
+        make.left.mas_equalTo(_labelView);
         make.size.mas_equalTo(CGSizeMake(kRealValue(200), kRealValue(30)));
-        make.centerX.mas_equalTo(self);
     }];
     
+    int j = 0;
+    for (ZSHTextFieldCellView * textField in _textFieldView.subviews) {
+        [textField mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.mas_equalTo(_textFieldView).offset(kRealValue(100)*j);
+            make.top.mas_equalTo(_textFieldView);
+            make.size.mas_equalTo(CGSizeMake(kRealValue(100), kRealValue(30)));
+        }];
+        j++;
+    }
+    
+    
     [_bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(_signTextField.mas_bottom).offset(kRealValue(20));
+        make.top.mas_equalTo(_textFieldView.mas_bottom).offset(kRealValue(20));
         make.height.mas_equalTo(kRealValue(160));
         make.width.mas_equalTo(kRealValue(330));
         make.centerX.mas_equalTo(self);
@@ -89,6 +144,5 @@
         make.centerX.mas_equalTo(_bottomView);
     }];
 }
-
 
 @end

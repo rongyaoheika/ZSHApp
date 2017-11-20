@@ -14,6 +14,7 @@
 #import "RXLSideSlipViewController.h"
 #import "ZSHLiveTabBarController.h"
 #import "ZSHGuideViewController.h"
+
 @implementation AppDelegate (AppService)
 
 
@@ -54,6 +55,15 @@
     }
 }
 
+- (void)initKeyboard{
+    
+    //启用自动键盘处理事件
+    [IQKeyboardManager sharedManager].enable = YES;
+    //点击背景收起键盘
+    [IQKeyboardManager sharedManager].shouldResignOnTouchOutside = YES;
+    //隐藏键盘上的工具条
+    [IQKeyboardManager sharedManager].enableAutoToolbar = NO;
+}
 
 #pragma mark ————— 初始化用户系统 —————
 -(void)initUserManager{

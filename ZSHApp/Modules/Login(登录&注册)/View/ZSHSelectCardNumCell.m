@@ -13,7 +13,6 @@
 
 @interface ZSHSelectCardNumCell ()<UIScrollViewDelegate>
 
-@property (nonatomic, strong) NSMutableArray                *btnArr;
 @property (nonatomic, strong) LXScollTitleView              *titleView;
 @property (nonatomic, strong) UIScrollView                  *bottomScrollView;
 @property (nonatomic, strong) ZSHSelectCardNumFirstView     *firstView;
@@ -76,10 +75,6 @@
         make.height.mas_equalTo(_bottomScrollView);
         make.top.mas_equalTo(_bottomScrollView);
     }];
-    
-//    _cellHeight = CGRectGetMaxY(_bottomScrollView.frame);
-//    
-//    RLog(@"cellHight == %f\n  bottomScrollView.frame = %@\n  _firstView.frame = %@\n ,_secondView.frame = %@" ,_cellHeight,NSStringFromCGRect(_bottomScrollView.frame),NSStringFromCGRect(_firstView.frame),NSStringFromCGRect(_secondView.frame));
 }
 
 #pragma getter
@@ -100,8 +95,8 @@
     if (!_titleView) {
         _titleView = [[LXScollTitleView alloc] initWithFrame:CGRectMake(0, (kScreenWidth-kRealValue(200))/2, kRealValue(200), kRealValue(30))];
         _titleView.selectedBgImage = [UIImage imageNamed:@"card_press"];
-        _titleView.normalTitleFont = kPingFangRegular(11);
-        _titleView.selectedTitleFont = kPingFangRegular(11);
+        _titleView.normalTitleFont = kPingFangLight(15);
+        _titleView.selectedTitleFont = kPingFangMedium(15);
         _titleView.selectedColor = KZSHColorF29E19;
         _titleView.normalColor = KZSHColor929292;
         _titleView.indicatorHeight = 0;
