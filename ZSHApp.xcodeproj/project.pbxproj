@@ -61,8 +61,6 @@
 		185DDCCC1FBE8CE9004D4688 /* ZSHVideoDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 185DDCCB1FBE8CE9004D4688 /* ZSHVideoDetailCell.m */; };
 		185DDCD31FBEDD79004D4688 /* ZSHShareView.m in Sources */ = {isa = PBXBuildFile; fileRef = 185DDCD21FBEDD79004D4688 /* ZSHShareView.m */; };
 		1874B9661FB99E9700059184 /* ZSHLivePersonInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1874B9651FB99E9700059184 /* ZSHLivePersonInfoView.m */; };
-		18A2C64E1F483A66005F394F /* PPHTTPRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 18A2C6461F483A66005F394F /* PPHTTPRequest.m */; };
-		18A2C64F1F483A66005F394F /* PPInterfacedConst.m in Sources */ = {isa = PBXBuildFile; fileRef = 18A2C6481F483A66005F394F /* PPInterfacedConst.m */; };
 		18A2C6501F483A66005F394F /* PPNetworkCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 18A2C64B1F483A66005F394F /* PPNetworkCache.m */; };
 		18A2C6511F483A66005F394F /* PPNetworkHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 18A2C64D1F483A66005F394F /* PPNetworkHelper.m */; };
 		18B2DECC1F497B88005A74A7 /* ZSHBaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 18B2DECB1F497B88005A74A7 /* ZSHBaseModel.m */; };
@@ -474,10 +472,6 @@
 		185DDCD21FBEDD79004D4688 /* ZSHShareView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHShareView.m; sourceTree = "<group>"; };
 		1874B9641FB99E9700059184 /* ZSHLivePersonInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHLivePersonInfoView.h; sourceTree = "<group>"; };
 		1874B9651FB99E9700059184 /* ZSHLivePersonInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHLivePersonInfoView.m; sourceTree = "<group>"; };
-		18A2C6451F483A66005F394F /* PPHTTPRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPHTTPRequest.h; sourceTree = "<group>"; };
-		18A2C6461F483A66005F394F /* PPHTTPRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPHTTPRequest.m; sourceTree = "<group>"; };
-		18A2C6471F483A66005F394F /* PPInterfacedConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPInterfacedConst.h; sourceTree = "<group>"; };
-		18A2C6481F483A66005F394F /* PPInterfacedConst.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPInterfacedConst.m; sourceTree = "<group>"; };
 		18A2C64A1F483A66005F394F /* PPNetworkCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPNetworkCache.h; sourceTree = "<group>"; };
 		18A2C64B1F483A66005F394F /* PPNetworkCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPNetworkCache.m; sourceTree = "<group>"; };
 		18A2C64C1F483A66005F394F /* PPNetworkHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPNetworkHelper.h; sourceTree = "<group>"; };
@@ -1288,17 +1282,6 @@
 				185DDCD21FBEDD79004D4688 /* ZSHShareView.m */,
 			);
 			name = "分享";
-			sourceTree = "<group>";
-		};
-		18A2C6441F483A66005F394F /* PPHTTPRequestLayer */ = {
-			isa = PBXGroup;
-			children = (
-				18A2C6451F483A66005F394F /* PPHTTPRequest.h */,
-				18A2C6461F483A66005F394F /* PPHTTPRequest.m */,
-				18A2C6471F483A66005F394F /* PPInterfacedConst.h */,
-				18A2C6481F483A66005F394F /* PPInterfacedConst.m */,
-			);
-			path = PPHTTPRequestLayer;
 			sourceTree = "<group>";
 		};
 		18A2C6491F483A66005F394F /* PPNetworkHelper */ = {
@@ -2345,7 +2328,6 @@
 		FE5537FD1F47049D00803128 /* NetWork */ = {
 			isa = PBXGroup;
 			children = (
-				18A2C6441F483A66005F394F /* PPHTTPRequestLayer */,
 				18A2C6491F483A66005F394F /* PPNetworkHelper */,
 			);
 			path = NetWork;
@@ -3103,6 +3085,7 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-ZSHApp/Pods-ZSHApp-resources.sh",
+				"${PODS_ROOT}/IQKeyboardManager/IQKeyboardManager/Resources/IQKeyboardManager.bundle",
 				"${PODS_ROOT}/MJRefresh/MJRefresh/MJRefresh.bundle",
 				"${PODS_ROOT}/NIMSDK/NIMAVChat/Resources/NMCVideoFilter.bundle",
 				"${PODS_ROOT}/SGQRCode/SGQRCode/SGQRCode.bundle",
@@ -3359,7 +3342,6 @@
 				FE7AF2381FA3814E00E1A648 /* ZSHHotelDetailViewController.m in Sources */,
 				1858710F1FBA8903003ECFE3 /* ZSHPersonalCenterViewController.m in Sources */,
 				FE443FDF1FB04FF100B7F7A5 /* ZSHMultiInfoViewController.m in Sources */,
-				18A2C64F1F483A66005F394F /* PPInterfacedConst.m in Sources */,
 				1826CDB01FBAE20C00A0ECE2 /* ZSHPersonalDetailViewController.m in Sources */,
 				FE7AF2321FA307F400E1A648 /* ZSHTopLineView.m in Sources */,
 				FE55381B1F47049D00803128 /* RxWebViewController.m in Sources */,
@@ -3389,7 +3371,6 @@
 				FEF5DAF61F5FC9E2004B0D2A /* ZSHBaseCell.m in Sources */,
 				FE7502BD1F9A0671002F2708 /* ZSHPersonalTailorViewController.m in Sources */,
 				1826CDAD1FBAE1F000A0ECE2 /* ZSHVideoViewController.m in Sources */,
-				18A2C64E1F483A66005F394F /* PPHTTPRequest.m in Sources */,
 				FE2B2A811FB9FD26001F8A61 /* TLMenuButtonView.m in Sources */,
 				FEA1057A1F9B2738008652D6 /* UIView+ZSHExtension.m in Sources */,
 				18F902451FB68D740044967F /* ZSHSubscribeViewController.m in Sources */,

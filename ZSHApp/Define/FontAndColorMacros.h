@@ -13,19 +13,6 @@
 
 #pragma mark -  常用颜色区
 
-//默认页面背景色
-#define CViewBgColor [UIColor colorWithHexString:@"f2f2f2"]
-
-//分割线颜色
-#define CLineColor [UIColor colorWithHexString:@"ededed"]
-
-//次级字色
-#define CFontColor1 [UIColor colorWithHexString:@"1f1f1f"]
-
-//再次级字色
-#define CFontColor2 [UIColor colorWithHexString:@"5c5c5c"]
-
-#define kRealValue(with)((with)*(KScreenWidth/375.0f))
 #define KClearColor                    [UIColor clearColor]
 #define KWhiteColor                    [UIColor whiteColor]
 #define KBlackColor                    [UIColor blackColor]
@@ -58,6 +45,7 @@
 #define KZSHColor141414               [UIColor colorWithHexString:@"141414"]
 #define KZSHColorD8D8D8               [UIColor colorWithHexString:@"D8D8D8"]
 #define KZSHColor1A1A1A               [UIColor colorWithHexString:@"1A1A1A"]
+#define KZSHColor2A2A2A               [UIColor colorWithHexString:@"2A2A2A"]
 #define kRandomColor                   KRGBColor(arc4random_uniform(256)/255.0,arc4random_uniform(256)/255.0,arc4random_uniform(256)/255.0)        //随机色生成
 #define KShadowColor                   [UIColor colorWithRed:0 green:0 blue:0 alpha:0.85]
 #define KLightWhiteColor               [UIColor colorWithRed:255/255.0 green:255/255.0f blue:255/255.0f alpha:0.7]

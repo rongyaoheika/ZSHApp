@@ -114,7 +114,6 @@
             
             self.window.rootViewController = RXL;// self.mainTabBarVC;
             [kAppWindow.layer addAnimation:anima forKey:@"revealAnimation"];
-//            [self testGetRequest];
             
         }
         

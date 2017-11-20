@@ -75,14 +75,6 @@
         }];
     }
     
-    [_textField mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(self.leftLabel.mas_right);
-        make.right.mas_equalTo(self);
-        make.top.mas_equalTo(self);
-        make.bottom.mas_equalTo(self.bottomLine.mas_top);
-    }];
-   
-    
 }
 
 #pragma getter
@@ -140,9 +132,9 @@
 
 - (UIView *)bottomLine{
     if (!_bottomLine) {
-
+        
         _bottomLine = [[UIView alloc]initWithFrame:CGRectZero];
-        _bottomLine.backgroundColor = [UIColor colorWithHexString:@"2A2A2A"];
+        _bottomLine.backgroundColor = KZSHColor2A2A2A;
     }
     return _bottomLine;
 }
