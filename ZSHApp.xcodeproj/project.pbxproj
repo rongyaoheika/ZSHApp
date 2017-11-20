@@ -88,6 +88,9 @@
 		299610111ED84A7100BCED2A /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 299610101ED84A7100BCED2A /* libsqlite3.tbd */; };
 		299610131ED84A8D00BCED2A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 299610121ED84A8D00BCED2A /* CoreGraphics.framework */; };
 		5BC8C50C0BEF57AA0780D5DC /* libPods-ZSHApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E884624664B432D4FE5044F /* libPods-ZSHApp.a */; };
+		FE0ED7DE1FC2CB7D008299C5 /* ZSHCityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE0ED7DC1FC2CB7D008299C5 /* ZSHCityViewController.m */; };
+		FE0ED7E21FC2CC46008299C5 /* ZSHCityView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE0ED7E11FC2CC45008299C5 /* ZSHCityView.m */; };
+		FE0ED7E51FC2D712008299C5 /* ZSHBaseFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = FE0ED7E41FC2D712008299C5 /* ZSHBaseFunction.m */; };
 		FE0F9DA31F948762004F8D2A /* JSCartViewController.h in Sources */ = {isa = PBXBuildFile; fileRef = FE0F9D9C1F948717004F8D2A /* JSCartViewController.h */; };
 		FE0F9DA41F948762004F8D2A /* JSCartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE0F9D9D1F948717004F8D2A /* JSCartViewController.m */; };
 		FE0F9DA51F94878E004F8D2A /* JSCartModel.h in Sources */ = {isa = PBXBuildFile; fileRef = FE0F9D8D1F948717004F8D2A /* JSCartModel.h */; };
@@ -540,6 +543,12 @@
 		BDF03C8635F8B6D048510007 /* libPods-ZSHAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ZSHAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FE0C20AC1F8CDCE0001E4D4C /* ZSHCycleScrollView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHCycleScrollView.h; sourceTree = "<group>"; };
 		FE0C20AD1F8CDCE0001E4D4C /* ZSHCycleScrollView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHCycleScrollView.m; sourceTree = "<group>"; };
+		FE0ED7DC1FC2CB7D008299C5 /* ZSHCityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHCityViewController.m; sourceTree = "<group>"; };
+		FE0ED7DD1FC2CB7D008299C5 /* ZSHCityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHCityViewController.h; sourceTree = "<group>"; };
+		FE0ED7E01FC2CC45008299C5 /* ZSHCityView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHCityView.h; sourceTree = "<group>"; };
+		FE0ED7E11FC2CC45008299C5 /* ZSHCityView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHCityView.m; sourceTree = "<group>"; };
+		FE0ED7E31FC2D712008299C5 /* ZSHBaseFunction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHBaseFunction.h; sourceTree = "<group>"; };
+		FE0ED7E41FC2D712008299C5 /* ZSHBaseFunction.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHBaseFunction.m; sourceTree = "<group>"; };
 		FE0F9D8D1F948717004F8D2A /* JSCartModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JSCartModel.h; sourceTree = "<group>"; };
 		FE0F9D8E1F948717004F8D2A /* JSCartModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JSCartModel.m; sourceTree = "<group>"; };
 		FE0F9D901F948717004F8D2A /* JSCartBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JSCartBar.h; sourceTree = "<group>"; };
@@ -1368,17 +1377,6 @@
 			name = ADPlayer;
 			sourceTree = "<group>";
 		};
-		18A2C6441F483A66005F394F /* PPHTTPRequestLayer */ = {
-			isa = PBXGroup;
-			children = (
-				18A2C6451F483A66005F394F /* PPHTTPRequest.h */,
-				18A2C6461F483A66005F394F /* PPHTTPRequest.m */,
-				18A2C6471F483A66005F394F /* PPInterfacedConst.h */,
-				18A2C6481F483A66005F394F /* PPInterfacedConst.m */,
-			);
-			path = PPHTTPRequestLayer;
-			sourceTree = "<group>";
-		};
 		18A2C6491F483A66005F394F /* PPNetworkHelper */ = {
 			isa = PBXGroup;
 			children = (
@@ -1513,6 +1511,24 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		FE0ED7D81FC2CB34008299C5 /* 城市 */ = {
+			isa = PBXGroup;
+			children = (
+				FE0ED7DD1FC2CB7D008299C5 /* ZSHCityViewController.h */,
+				FE0ED7DC1FC2CB7D008299C5 /* ZSHCityViewController.m */,
+			);
+			path = "城市";
+			sourceTree = "<group>";
+		};
+		FE0ED7DF1FC2CC45008299C5 /* 城市 */ = {
+			isa = PBXGroup;
+			children = (
+				FE0ED7E01FC2CC45008299C5 /* ZSHCityView.h */,
+				FE0ED7E11FC2CC45008299C5 /* ZSHCityView.m */,
+			);
+			path = "城市";
+			sourceTree = "<group>";
+		};
 		FE0F9D8B1F948717004F8D2A /* 购物车 */ = {
 			isa = PBXGroup;
 			children = (
@@ -1606,6 +1622,7 @@
 		FE291EAD1F8CAEDC00D4BBE7 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				FE0ED7D81FC2CB34008299C5 /* 城市 */,
 				183C65731FC037920081DCFF /* 头条 */,
 				181105771FBC123F0046D229 /* 消息中心 */,
 				18F902421FB68CB20044967F /* 高级预订 */,
@@ -1641,6 +1658,7 @@
 		FE291EB01F8CAEDC00D4BBE7 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				FE0ED7DF1FC2CC45008299C5 /* 城市 */,
 				183C65771FC03B230081DCFF /* 头条 */,
 				1811058B1FBC42460046D229 /* 火车票 */,
 				FEF415F41FAAF3C600137F0A /* Airplane(飞机票) */,
@@ -2507,6 +2525,8 @@
 				FEA105991F9B5CEF008652D6 /* ZSHSpeedy.m */,
 				FE7502AF1F99CD83002F2708 /* ZSHBaseUIControl.h */,
 				FE7502B01F99CD83002F2708 /* ZSHBaseUIControl.m */,
+				FE0ED7E31FC2D712008299C5 /* ZSHBaseFunction.h */,
+				FE0ED7E41FC2D712008299C5 /* ZSHBaseFunction.m */,
 			);
 			path = "Tools（工具）";
 			sourceTree = "<group>";
@@ -3282,6 +3302,7 @@
 				FEB3058B1F95F9EB00E4A061 /* ZSHGoodsMineGridCell.m in Sources */,
 				185BB9B51FB559A0007A96FF /* ZSHLiveWeekListViewController.m in Sources */,
 				FE0F9DAC1F94878E004F8D2A /* JSCartFooterView.h in Sources */,
+				FE0ED7DE1FC2CB7D008299C5 /* ZSHCityViewController.m in Sources */,
 				FE0F9DAD1F94878E004F8D2A /* JSCartFooterView.m in Sources */,
 				1811058E1FBC42600046D229 /* ZSHTrainPassengerCell.m in Sources */,
 				18F9025A1FB6FD890044967F /* ZSHCollectViewController.m in Sources */,
@@ -3442,6 +3463,7 @@
 				1826CDB01FBAE20C00A0ECE2 /* ZSHPersonalDetailViewController.m in Sources */,
 				FE7AF2321FA307F400E1A648 /* ZSHTopLineView.m in Sources */,
 				FE55381B1F47049D00803128 /* RxWebViewController.m in Sources */,
+				FE0ED7E21FC2CC46008299C5 /* ZSHCityView.m in Sources */,
 				FE1377931F977628003C8DFB /* ZSHManageAddressViewController.m in Sources */,
 				FE55381A1F47049D00803128 /* RootWebViewController.m in Sources */,
 				FE55380F1F47049D00803128 /* AppDelegate+PushService.m in Sources */,
@@ -3465,6 +3487,7 @@
 				FE5538821F470BAF00803128 /* UserInfo.m in Sources */,
 				1813E2791FBD79FF00624405 /* ZSHAddpassengerCell.m in Sources */,
 				181105801FBC161A0046D229 /* ZSHDiscussCell.m in Sources */,
+				FE0ED7E51FC2D712008299C5 /* ZSHBaseFunction.m in Sources */,
 				FEF5DAF61F5FC9E2004B0D2A /* ZSHBaseCell.m in Sources */,
 				FE7502BD1F9A0671002F2708 /* ZSHPersonalTailorViewController.m in Sources */,
 				1826CDAD1FBAE1F000A0ECE2 /* ZSHVideoViewController.m in Sources */,

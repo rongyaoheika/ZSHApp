@@ -29,18 +29,18 @@
 #if DevelopSever
 
 /**开发服务器*/
-#define kUrlRoot                    @"http://192.168.1.108:8080/MVNFHM/"
+#define kUrlRoot                    @"http://192.168.1.108:8080/ZSHINTER/"
 //#define kUrlRoot                  @"http://192.168.11.122:8090" //展鹏
 
 #elif TestSever
 
 /**测试服务器*/
-#define kUrlRoot                   @"http://192.168.20.31:20000"
+#define kUrlRoot                   @"http://192.168.1.108:8080/ZSHINTER/"
 
 #elif ProductSever
 
 /**生产服务器*/
-#define kUrlRoot                   @"http://192.168.20.31:20000"
+#define kUrlRoot                   @"http://192.168.1.108:8080/ZSHINTER/"
 
 #endif
 
@@ -61,6 +61,7 @@
 //登录
 #define kUrlUserLogin               @"/appuserin/userloginphone?LOGIN"
 
+#define kUrlUserHome(confusionCode) [NSString stringWithFormat:@"/apphomein/getrecommendlist?FKEY=%@", confusionCode]
 
 
 #endif /* URLMacros_h */

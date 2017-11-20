@@ -82,16 +82,18 @@
 - (void)layoutSubviews{
     [super layoutSubviews];
    
+    //姓名
     [_labelView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self).offset(kRealValue(20));
-        make.left.mas_equalTo(self).offset((kScreenWidth-kRealValue(200))/2);
-        make.size.mas_equalTo(CGSizeMake(kRealValue(200), kRealValue(30)));
+        make.centerX.mas_equalTo(self);
+        make.size.mas_equalTo(CGSizeMake(kRealValue(199.5), kRealValue(30)));
     }];
+    
     
     int i = 0;
     for (UILabel * label in _labelView.subviews) {
         [label mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.mas_equalTo(_labelView).offset(kRealValue(100)*i);
+            make.left.mas_equalTo(_labelView).offset(kRealValue(99.5)*i);
             make.top.mas_equalTo(_labelView);
             make.size.mas_equalTo(CGSizeMake(kRealValue(100), kRealValue(30)));
         }];
@@ -109,14 +111,14 @@
     
     [_textFieldView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(_promptLabel.mas_bottom).offset(kRealValue(20));
-        make.left.mas_equalTo(_labelView);
-        make.size.mas_equalTo(CGSizeMake(kRealValue(200), kRealValue(30)));
+        make.centerX.mas_equalTo(self);
+        make.size.mas_equalTo(CGSizeMake(kRealValue(199.5), kRealValue(30)));
     }];
     
     int j = 0;
     for (ZSHTextFieldCellView * textField in _textFieldView.subviews) {
         [textField mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.mas_equalTo(_textFieldView).offset(kRealValue(100)*j);
+            make.left.mas_equalTo(_textFieldView).offset(kRealValue(99.5)*j);
             make.top.mas_equalTo(_textFieldView);
             make.size.mas_equalTo(CGSizeMake(kRealValue(100), kRealValue(30)));
         }];

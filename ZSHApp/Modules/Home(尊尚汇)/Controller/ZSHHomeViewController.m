@@ -18,7 +18,7 @@
 #import "ZSHBottomBlurPopView.h"
 #import "ZSHServiceCenterViewController.h"
 #import "ZSHToplineViewController.h"
-
+#import "ZSHCityViewController.h"
 
 static NSString *Identify_HeadCell = @"headCell";
 static NSString *Identify_NoticeCell = @"noticeCell";
@@ -86,10 +86,9 @@ static NSString *Identify_MagazineCell = @"magazineCell";
 - (void)createUI{
     [self addNavigationItemWithImageName:@"nav_home_more" title:@"三亚" locate:XYButtonEdgeInsetsStyleRight isLeft:YES target:self action:@selector(locateBtnAction) tag:10];
     [self addNavigationItemWithImageName:@"nav_home_menu" isLeft:NO target:self action:@selector(menuBtntClick:) tag:11];
-//    self.navigationItem.titleView.backgroundColor = [UIColor redColor];
     self.navigationItem.titleView = self.searchView;
     self.searchView.searchBar.delegate = self;
-//    RLog(@"navigationItem 的frame ==%@",NSStringFromCGRect(self.navigationController.navigationBar.frame));
+
     
     self.tableView.frame = CGRectMake(0, KNavigationBarHeight + kRealValue(25), KScreenWidth, KScreenHeight-KNavigationBarHeight- kRealValue(25) - KBottomNavH);
     [self.view addSubview:self.tableView];
@@ -298,9 +297,7 @@ static NSString *Identify_MagazineCell = @"magazineCell";
         }];
     };
     
-    //    http://18000d15f7.iask.in/appuserin/useraddshipadr?SHIPADR(混淆码)
-    
-//    [self testPostRequest];
+    [self testPostRequest];
     
 }
 
@@ -308,27 +305,19 @@ static NSString *Identify_MagazineCell = @"magazineCell";
 
 - (void)locateBtnAction{
     
+    ZSHCityViewController *cityVC = [[ZSHCityViewController alloc]init];
+    [self.navigationController pushViewController:cityVC animated:YES];
 }
 
 - (void)testPostRequest{
     [PPNetworkHelper openLog];
-    //http://18000d15f7.iask.in/MVNFHM//appuserin/useraddshipadr?SHIPADR
-    //    NSDictionary *dic = @{@"CONSIGNEE":@"赵维维",@"ADRPHONE":@"13718127415",@"PROVINCE":@"北京市阐扬去大望路",@"ADDRESS":@"珠江帝景D区"};
-    NSDictionary *dic = @{@"FKEY":@"408d5b21299a4e99a9be464d4b47a9cd"};
-    [PPNetworkHelper POST:@"http://18000d15f7.iask.in/MVNFHM//appuserin/usershipadr?SHIPADR" parameters:dic success:^(id responseObject) {
+    
+    NSString *md5URLString = [ZSHBaseFunction md5StringFromString:@"COMMEND20171120,fh,"];
+    RLog(@"加密数据为%@",md5URLString);
+    [PPNetworkHelper POST:kUrlUserHome(md5URLString) parameters:nil success:^(id responseObject) {
         RLog(@"请求成功：返回数据&%@",responseObject);
     } failure:^(NSError *error) {
         RLog(@"请求失败");
-    }];
-}
-
-- (void)testGetRequest{
-    //CONSIGNEE 收货人姓名/ADRPHONE 收货人电话/PROVINCE  收货人所在地区/ADDRESS  收货人详细地址
-    NSDictionary *dic = @{@"CONSIGNEE":@"赵维维",@"ADRPHONE":@"13718127415",@"PROVINCE":@"北京市阐扬去大望路",@"ADDRESS":@"珠江帝景D区"};
-    [PPNetworkHelper GET:@"http://18000d15f7.iask.in/appuserin/useraddshipadr?SHIPADR" parameters:nil success:^(id responseObject) {
-        RLog(@"get请求成功%@",responseObject);
-    } failure:^(NSError *error) {
-        RLog(@"get请求错误");
     }];
 }
 

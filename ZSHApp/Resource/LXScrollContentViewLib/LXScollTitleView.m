@@ -158,6 +158,7 @@
     }
     _selectedIndex = selectedIndex;
     [self setSelectedIndicator:YES];
+    
 }
 
 - (void)setNormalColor:(UIColor *)normalColor{

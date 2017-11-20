@@ -89,8 +89,8 @@
     if (!_titleView) {
         _titleView = [[LXScollTitleView alloc] initWithFrame:CGRectMake(0, (kScreenWidth-kRealValue(300))/2, kRealValue(300), kRealValue(30))];
         _titleView.selectedBgImage = [UIImage imageNamed:@"card_press"];
-        _titleView.normalTitleFont = kPingFangLight(15);
-        _titleView.selectedTitleFont = kPingFangMedium(15);
+        _titleView.normalTitleFont = kPingFangLight(14);
+        _titleView.selectedTitleFont = kPingFangLight(14);
         _titleView.selectedColor = KZSHColorF29E19;
         _titleView.normalColor = KZSHColor929292;
         _titleView.indicatorHeight = 0;

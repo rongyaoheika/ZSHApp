@@ -34,6 +34,7 @@
 #import "UIView+ZSHExtension.h"
 #import "ZSHSpeedy.h"
 #import "ZSHBaseCell.h"
+#import "ZSHBaseFunction.h"
 
 //第三方
 #import <YYKit.h>
@@ -43,5 +44,6 @@
 #import <MJExtension.h>
 #import <ReactiveObjC/ReactiveObjC.h>
 #import "IQKeyboardManager.h"
+
 
 #endif /* PrefixHeader_pch */
