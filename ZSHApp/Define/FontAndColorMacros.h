@@ -58,6 +58,7 @@
 #define KZSHColor141414               [UIColor colorWithHexString:@"141414"]
 #define KZSHColorD8D8D8               [UIColor colorWithHexString:@"D8D8D8"]
 #define KZSHColor1A1A1A               [UIColor colorWithHexString:@"1A1A1A"]
+
 #define kRandomColor                   KRGBColor(arc4random_uniform(256)/255.0,arc4random_uniform(256)/255.0,arc4random_uniform(256)/255.0)        //随机色生成
 #define KShadowColor                   [UIColor colorWithRed:0 green:0 blue:0 alpha:0.85]
 #define KLightWhiteColor               [UIColor colorWithRed:255/255.0 green:255/255.0f blue:255/255.0f alpha:0.7]

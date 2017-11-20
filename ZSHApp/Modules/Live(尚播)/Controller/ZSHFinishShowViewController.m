@@ -1,21 +1,18 @@
 //
-//  ZSHLiveRoomViewController.m
+//  ZSHFinishShowViewController.m
 //  ZSHApp
 //
-//  Created by zhaoweiwei on 2017/11/11.
+//  Created by apple on 2017/11/18.
 //  Copyright © 2017年 apple. All rights reserved.
 //
 
-#import "ZSHLiveRoomViewController.h"
-#import "ZSHBottomBlurPopView.h"
-#import "ZSHPersonalCenterViewController.h"
+#import "ZSHFinishShowViewController.h"
 
-@interface ZSHLiveRoomViewController ()
+@interface ZSHFinishShowViewController ()
 
 @end
 
-static NSString *ZSHBaseCellID = @"ZSHBaseCell";
-@implementation ZSHLiveRoomViewController
+@implementation ZSHFinishShowViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -25,65 +22,65 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 }
 
 - (void)loadData{
-    [self initViewModel];
 }
 
 - (void)createUI{
-    
     self.isShowLiftBack = false;
     self.isHidenNaviBar = true;
+    
+    UIButton *listButton = [ZSHBaseUIControl createBtnWithParamDic:@{@"title":@"贡献榜  5678",@"titleColor":KBlackColor,@"font":kPingFangRegular(10),@"backgroundColor":KZSHColorD8D8D8}];
+    listButton.layer.cornerRadius = 10;
+    [self.view addSubview:listButton];
+    [listButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(self.view).offset(kRealValue(72.5));
+        make.right.mas_equalTo(self.view).offset(kRealValue(-KLeftMargin));
+        make.size.mas_equalTo(CGSizeMake(kRealValue(75), kRealValue(21)));
+    }];
+    
+    
+    UILabel *finishLabel = [ZSHBaseUIControl createLabelWithParamDic:@{@"text":@"直播结束",@"font":kPingFangRegular(26),@"textColor":KWhiteColor,@"textAlignment":@(NSTextAlignmentCenter)}];
+    [self.view addSubview:finishLabel];
+    [finishLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(self.view).offset(kRealValue(180));
+        make.centerX.mas_equalTo(self.view);
+        make.size.mas_equalTo(CGSizeMake(kRealValue(110), kRealValue(38)));
+    }];
+    
+    
+    NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:@"23097人看过"];
+    [str addAttributes:@{NSFontAttributeName:kGeorgia(16),
+                         NSForegroundColorAttributeName:KZSHColorFF2068} range:NSMakeRange(0, 5)];
+    UILabel *timesLabel = [ZSHBaseUIControl createLabelWithParamDic:@{@"text":@"直播结束",@"font":kPingFangRegular(11),@"textColor":KWhiteColor,@"textAlignment":@(NSTextAlignmentCenter)}];
+    [timesLabel setAttributedText:str];
+    [self.view addSubview:timesLabel];
+    [timesLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(self.view).offset(kRealValue(223.5));
+        make.centerX.mas_equalTo(self.view);
+        make.size.mas_equalTo(CGSizeMake(kRealValue(110), kRealValue(19)));
+    }];
+    
+    
+    UIButton *backBtn = [ZSHBaseUIControl createBtnWithParamDic:@{@"title":@"返回大厅",@"titleColor":KZSHColorFF2068,@"font":kPingFangRegular(17)}];
+    backBtn.layer.cornerRadius = 18;
+    backBtn.layer.borderColor = KZSHColorFF2068.CGColor;
+    backBtn.layer.borderWidth = 1.0;
+    [self.view addSubview:backBtn];
+    [backBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(self.view).offset(kRealValue(362));
+        make.centerX.mas_equalTo(self.view);
+        make.size.mas_equalTo(CGSizeMake(kRealValue(166), kRealValue(36)));
+    }];
 
-    UIImageView *image = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"live_room_bg"]];
-    image.frame = self.view.bounds;
-    [self.view addSubview:image];
     
     [self.view addSubview:[self createAnchorView]];
     [self.view addSubview:[self createFooterView]];
-    
-    self.tableView.scrollEnabled = NO;
-    self.tableView.delegate = self.tableViewModel;
-    self.tableView.dataSource = self.tableViewModel;
-    [self.view addSubview:self.tableView];
-    [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.view).offset(KScreenHeight - kRealValue(150));
-        make.bottom.mas_equalTo(self.view).offset(-(kRealValue(49)+ kRealValue(18)));
-        make.left.mas_equalTo(self.view);
-        make.right.mas_equalTo(self.view);
-    }];
-    [self.tableView registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHBaseCellID];
 }
 
-- (void)initViewModel {
-    [self.tableViewModel.sectionModelArray removeAllObjects];
-    [self.tableViewModel.sectionModelArray addObject:[self storeListSection]];
-}
-
-//list
-- (ZSHBaseTableViewSectionModel*)storeListSection {
-    ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
-    for (int i = 0; i < 3; i++) {
-        ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
-        cellModel.height = kRealValue(44);
-        [sectionModel.cellModelArray addObject:cellModel];
-        cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
-            ZSHBaseCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHBaseCellID forIndexPath:indexPath];
-            cell.textLabel.text = @"李志：三月的艳遇飘摇的南方";
-            cell.textLabel.textColor = KWhiteColor;
-            return cell;
-        };
-        
-        cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
-            
-        };
-    }
-    
-    return sectionModel;
-}
 
 //头部UI
 - (UIView *)createAnchorView{
     UIView *anchorView = [[UIView alloc]initWithFrame:CGRectMake(0, 20, KScreenWidth, kRealValue(60))];
-//    anchorView.userInteractionEnabled = YES;
+    //    anchorView.userInteractionEnabled = YES;
     [self.view addSubview:anchorView];
     
     UIImageView *anchorHeadImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"live_room_head1"]];
@@ -184,37 +181,5 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     }
     return footerView;
 }
-
-- (ZSHBottomBlurPopView *)createBottomBlurPopViewWith:(ZSHFromVCToBottomBlurPopView)fromClassType{
-    NSDictionary *nextParamDic = @{KFromClassType:@(fromClassType)};
-    ZSHBottomBlurPopView *bottomBlurPopView = [[ZSHBottomBlurPopView alloc]initWithFrame:kAppDelegate.window.bounds paramDic:nextParamDic];
-    bottomBlurPopView.blurRadius = 20;
-    bottomBlurPopView.dynamic = NO;
-    bottomBlurPopView.tintColor = KClearColor;
-    bottomBlurPopView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.6];
-    [bottomBlurPopView setBlurEnabled:NO];
-    return bottomBlurPopView;
-}
-
-- (void)btnAction:(UIButton *)btn {
-    if ((btn.tag -11179) == 2) {
-        [self.view addSubview:[self createBottomBlurPopViewWith:ZSHFromShareVCToToBottomBlurPopView]];
-    }
-}
-
-
-- (void)closeLiveRoom{
-    [self backBtnClicked];
-}
-
-- (void)personInfo {
-    NSDictionary *nextParamDic = @{KFromClassType:@(ZSHFromPersonInfoVCToBottomBlurPopView)};
-    ZSHBottomBlurPopView *bottomBlurPopView = [[ZSHBottomBlurPopView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight) paramDic:nextParamDic];
-    bottomBlurPopView.blurRadius = 20;
-    bottomBlurPopView.dynamic = NO;
-    bottomBlurPopView.tintColor = KClearColor;
-    [ZSHBaseUIControl setAnimationWithHidden:NO view:bottomBlurPopView completedBlock:nil];
-}
-
 
 @end

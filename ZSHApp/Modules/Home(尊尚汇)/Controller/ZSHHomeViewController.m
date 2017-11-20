@@ -17,6 +17,9 @@
 #import "ZSHSubscribeViewController.h"
 #import "ZSHBottomBlurPopView.h"
 #import "ZSHServiceCenterViewController.h"
+#import "ZSHToplineViewController.h"
+
+
 static NSString *Identify_HeadCell = @"headCell";
 static NSString *Identify_NoticeCell = @"noticeCell";
 static NSString *Identify_ServiceCell = @"serviceCell";
@@ -39,7 +42,6 @@ static NSString *Identify_MagazineCell = @"magazineCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     
     [self loadData];
     [self createUI];
@@ -142,6 +144,11 @@ static NSString *Identify_MagazineCell = @"magazineCell";
     cellView.scrollDirection =  ZSHCycleScrollViewVertical;
     cellView.autoScroll = YES;
     cellView.dataArr = [titleArr  mutableCopy];
+    kWeakSelf(self);
+    cellView.itemClickBlock = ^(NSInteger index) {
+        ZSHToplineViewController *toplineVC = [[ZSHToplineViewController alloc] init];
+        [weakself.navigationController pushViewController:toplineVC animated:YES];
+    };
     sectionModel.headerView = cellView;
     
     ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
