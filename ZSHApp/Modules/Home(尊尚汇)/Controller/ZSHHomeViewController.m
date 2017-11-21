@@ -342,11 +342,10 @@ static NSString *Identify_MagazineCell = @"magazineCell";
     [self.navigationController pushViewController:cityVC animated:YES];
 }
 
-- (void)testPostRequest{
-    kWeakSelf(self);
+- (void)testPostRequest {
     [PPNetworkHelper openLog];
-    NSString *md5URLString = [ZSHBaseFunction md5StringFromString:@"COMMEND20171121,fh,"];
-    RLog(@"加密数据为%@",md5URLString);
+    
+    kWeakSelf(self);
     [PPNetworkHelper POST:kUrlUserHome parameters:nil success:^(id responseObject) {
         RLog(@"请求成功：返回数据&%@",responseObject);
         _dataArr = responseObject[@"pd"];
