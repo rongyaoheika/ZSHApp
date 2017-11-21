@@ -15,6 +15,7 @@
 #import "ZSHSelectCardNumCell.h"
 #import "ZSHCardCustomizedCell.h"
 #import "ZSHCardPayCell.h"
+#import "ZSHCardCommitBottomView.h"
 @interface ZSHCardViewController ()
 
 @property (nonatomic, strong) NSArray            *imageArr;
@@ -46,12 +47,15 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
     self.title = @"尊尚汇黑卡在线办理";
     [self.view addSubview:self.tableView];
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.mas_equalTo(self.view).insets(UIEdgeInsetsMake(KNavigationBarHeight, 0, 0, 0));
+        make.edges.mas_equalTo(self.view).insets(UIEdgeInsetsMake(KNavigationBarHeight, 0, KBottomNavH, 0));
     }];
     self.tableView.delegate = self.tableViewModel;
     self.tableView.dataSource = self.tableViewModel;
     [self.tableView registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHAddressViewID];
     [self.tableView reloadData];
+    
+    ZSHCardCommitBottomView *bottomView = [[ZSHCardCommitBottomView alloc]initWithFrame:CGRectMake(0, KScreenHeight - KBottomNavH, KScreenWidth, KBottomNavH)];
+    [self.view addSubview:bottomView];
 }
 
 - (void)initViewModel {

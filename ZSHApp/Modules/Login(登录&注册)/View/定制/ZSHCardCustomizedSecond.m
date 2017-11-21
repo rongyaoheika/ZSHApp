@@ -62,11 +62,14 @@
     CGFloat leftSpace = (kScreenWidth - 2*kRealValue(50))/2;
     for (UIButton *btn in _btnArr) {
         [btn mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.mas_equalTo(self).offset(leftSpace+i*( kRealValue(50)+kRealValue(20) ));
+            make.left.mas_equalTo(self).offset(leftSpace+i*(kRealValue(50)+kRealValue(20)));
             make.size.mas_equalTo(CGSizeMake(kRealValue(50), kRealValue(25)));
             make.top.mas_equalTo(_promptLabel.mas_bottom).offset(kRealValue(3.5));
         }];
         [btn layoutButtonWithEdgeInsetsStyle:XYButtonEdgeInsetsStyleLeft imageTitleSpace:kRealValue(8)];
+        if (i == 0) {
+            btn.backgroundColor = [UIColor redColor];
+        }
         i++;
     }
 }

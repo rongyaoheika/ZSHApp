@@ -32,6 +32,8 @@
 
 - (void)createUI{
     self.title = @"黑微博";
+
+//    self.tableView.frame = CGRectMake(0, KNavigationBarHeight, KScreenWidth, KScreenHeight-KNavigationBarHeight);
     
     [self.view addSubview:self.tableView];
     if (kFromClassTypeValue == FromPersonalVCToWeiboVC) {

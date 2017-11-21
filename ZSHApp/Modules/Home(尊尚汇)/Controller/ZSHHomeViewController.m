@@ -35,6 +35,7 @@ static NSString *Identify_MagazineCell = @"magazineCell";
 @property (nonatomic, strong) NSArray                *menuParamArr;
 @property (nonatomic, strong) ZSHBaseModel           *model;
 @property (nonatomic, strong) ZSHBottomBlurPopView   *bottomBlurPopView;
+@property (nonatomic, strong) NSArray                *dataArr;                 //字典数组
 
 @property (nonatomic, strong) NSMutableDictionary    *dataDic;
 @end
@@ -44,8 +45,8 @@ static NSString *Identify_MagazineCell = @"magazineCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self loadData];
     [self createUI];
+    [self loadData];
 }
 
 - (void)loadData{
@@ -80,9 +81,9 @@ static NSString *Identify_MagazineCell = @"magazineCell";
                             @{KFromClassType:@(ZSHFromHomeMenuVCToServiceCenterVC),@"title":@"消息中心",@"titleArr":@[@"评论／回复我的",@"赞我的"],@"imageArr":@[@"menu_news",@"menu_love"]},
                             @{KFromClassType:@(ZSHFromHomeMenuVCToServiceCenterVC),@"title":@"系统通知",@"titleArr":@[@"荣耀黑卡官方帐号"],@"imageArr":@[@"menu_noti"]},
                             @""];
+
+    [self requestData];
     [self initViewModel];
-    self.dataDic = [NSMutableDictionary dictionary];
-    [self testPostRequest];
 }
 
 - (void)createUI{
@@ -102,17 +103,20 @@ static NSString *Identify_MagazineCell = @"magazineCell";
     [self.tableView registerClass:[ZSHNoticeViewCell class] forCellReuseIdentifier:Identify_ServiceCell];
 	[self.tableView registerClass:[ZSHNoticeViewCell class] forCellReuseIdentifier:Identify_PlayCell];
     [self.tableView registerClass:[ZSHNoticeViewCell class] forCellReuseIdentifier:Identify_MagazineCell];
-    
-    [self.tableView reloadData];
+}
+
+- (void)requestData{
+    [self testPostRequest];
 }
 
 - (void)initViewModel {
     [self.tableViewModel.sectionModelArray removeAllObjects];
     [self.tableViewModel.sectionModelArray addObject:[self storeHeadSection]];
     [self.tableViewModel.sectionModelArray addObject:[self storeNoticeSection]];
-//    [self.tableViewModel.sectionModelArray addObject:[self storeServiceSection]];
+    [self.tableViewModel.sectionModelArray addObject:[self storeServiceSection]];
     [self.tableViewModel.sectionModelArray addObject:[self storePlaySection]];
     [self.tableViewModel.sectionModelArray addObject:[self storeMagazineSection]];
+    [self.tableView reloadData];
 }
 
 //head
@@ -157,7 +161,12 @@ static NSString *Identify_MagazineCell = @"magazineCell";
     cellModel.height = kRealValue(135);
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHNoticeViewCell *cell = [tableView dequeueReusableCellWithIdentifier:Identify_NoticeCell forIndexPath:indexPath];
-        NSDictionary *nextParamDic = @{KFromClassType:@(FromHomeNoticeVCToNoticeView)};
+        NSDictionary *nextParamDic = nil;
+        if (_dataArr) {
+            nextParamDic = @{KFromClassType:@(FromHomeNoticeVCToNoticeView),@"dataArr":_dataArr};
+        } else {
+            nextParamDic = @{KFromClassType:@(FromHomeNoticeVCToNoticeView)};
+        }
         [cell updateCellWithParamDic:nextParamDic];
         return cell;
     };
@@ -179,7 +188,7 @@ static NSString *Identify_MagazineCell = @"magazineCell";
     kWeakSelf(self);
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHNoticeViewCell *cell = [tableView dequeueReusableCellWithIdentifier:Identify_ServiceCell forIndexPath:indexPath];
-        NSDictionary *nextParamDic = @{KFromClassType:@(FromHomeServiceVCToNoticeView),@"data":weakself.dataDic};
+        NSDictionary *nextParamDic = @{KFromClassType:@(FromHomeServiceVCToNoticeView)};
         [cell updateCellWithParamDic:nextParamDic];
         return cell;
     };
@@ -242,6 +251,30 @@ static NSString *Identify_MagazineCell = @"magazineCell";
     return sectionModel;
 }
 
+//荣耀音乐
+- (ZSHBaseTableViewSectionModel*)storeMusicSection {
+    ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
+    sectionModel.headerHeight = kRealValue(55);
+    sectionModel.headerView = [self createHeaderiewWithTitle:@"荣耀音乐"];
+    ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
+    [sectionModel.cellModelArray addObject:cellModel];
+    cellModel.height = kRealValue(80);
+    cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
+        ZSHNoticeViewCell *cell = [tableView dequeueReusableCellWithIdentifier:Identify_ServiceCell forIndexPath:indexPath];
+        NSDictionary *nextParamDic = @{KFromClassType:@(FromHomeServiceVCToNoticeView),@"":@""};
+        [cell updateCellWithParamDic:nextParamDic];
+        return cell;
+    };
+    
+    cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        
+        
+    };
+    return sectionModel;
+}
+
+
 #pragma getter
 - (UIView *)createHeaderiewWithTitle:(NSString *)title{
     UIView *headView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, kRealValue(55))];
@@ -299,24 +332,25 @@ static NSString *Identify_MagazineCell = @"magazineCell";
             return;
         }];
     };
+    
+//    [self testPostRequest];
 }
 
-
-
-- (void)locateBtnAction {
+- (void)locateBtnAction{
     
     ZSHCityViewController *cityVC = [[ZSHCityViewController alloc]init];
     [self.navigationController pushViewController:cityVC animated:YES];
 }
 
-- (void)testPostRequest {
-    [PPNetworkHelper openLog];
-    
+- (void)testPostRequest{
     kWeakSelf(self);
+    [PPNetworkHelper openLog];
+    NSString *md5URLString = [ZSHBaseFunction md5StringFromString:@"COMMEND20171121,fh,"];
+    RLog(@"加密数据为%@",md5URLString);
     [PPNetworkHelper POST:kUrlUserHome parameters:nil success:^(id responseObject) {
-        weakself.dataDic = responseObject;
-        [weakself.tableViewModel.sectionModelArray addObject:[self storeServiceSection]];
         RLog(@"请求成功：返回数据&%@",responseObject);
+        _dataArr = responseObject[@"pd"];
+        [weakself initViewModel];
     } failure:^(NSError *error) {
         RLog(@"请求失败");
     }];

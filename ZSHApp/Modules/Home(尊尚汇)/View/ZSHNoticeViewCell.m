@@ -59,20 +59,26 @@
     _btnArr = [[NSMutableArray alloc]init];
     if ([paramDic[KFromClassType]integerValue] == FromHomeNoticeVCToNoticeView) {
         _itemScrollView.itemWidth = kRealValue(95);
-//        NSArray *titleArr = @[@"2.4.6.8娱乐吧",@"逸林游艇",@"麦乐迪KTV",@"海帆酒吧"];
-        NSMutableArray *titleArr = [NSMutableArray array];
-        NSArray *pbArr = paramDic[@"pb"];
-        for (NSDictionary *dic in pbArr) {
-            [titleArr addObject:dic[@"IMAGES"]];
-        }
+        NSArray *titleArr = @[@"2.4.6.8娱乐吧",@"逸林游艇",@"麦乐迪KTV",@"海帆酒吧"];
+//        for (int i = 1; i<5; i++) {
+//            NSString *imageName = [NSString stringWithFormat:@"home_notice%d",i];
+//            UIButton *btn = [[UIButton alloc]init];
+//            [btn setTitle:titleArr[i-1] forState:UIControlStateNormal];
+//            [btn setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
+//            [btn setTitleColor:KZSHColor929292 forState:UIControlStateNormal];
+//            btn.titleLabel.font = kPingFangRegular(12);
+//            [_btnArr addObject:btn];
+//        }
         
-        for (int i = 1; i<titleArr.count; i++) {
-            NSString *imageName = [NSString stringWithFormat:@"home_notice%d",i];
+        //数组字典
+        NSArray *dataArr = paramDic[@"dataArr"];
+        for (NSDictionary *dic in dataArr) {
+            NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:dic[@"IMAGES"]]];
+            UIImage *image = [UIImage imageWithData:data]; // 取得图片
             UIButton *btn = [[UIButton alloc]init];
-            [btn setTitle:titleArr[i-1] forState:UIControlStateNormal];
-            [btn setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
+            [btn setTitle:dic[@"SHOPNAME"] forState:UIControlStateNormal];
+            [btn setImage:image forState:UIControlStateNormal];
             [btn setTitleColor:KZSHColor929292 forState:UIControlStateNormal];
-            btn.titleLabel.font = kPingFangRegular(12);
             [_btnArr addObject:btn];
         }
         
@@ -85,7 +91,6 @@
         };
         
     } else if ([paramDic[KFromClassType]integerValue]  == FromHomeServiceVCToNoticeView) {
-        
         _itemScrollView.itemWidth = kRealValue(130);
         for (int i = 1; i<4; i++) {
             NSString *imageName = [NSString stringWithFormat:@"home_service%d",i];
@@ -93,6 +98,7 @@
             [btn setBackgroundImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
             [_btnArr addObject:btn];
         }
+
     }  else if ([paramDic[KFromClassType]integerValue]  == FromHomeMagazineVCToNoticeView) {
          _itemScrollView.itemWidth = kRealValue(95);
         
