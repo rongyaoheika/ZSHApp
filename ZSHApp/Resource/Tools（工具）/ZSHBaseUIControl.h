@@ -97,4 +97,7 @@ typedef NS_ENUM (NSInteger,ZSHToNotificationVC) {
 + (UIButton *)createLabelBtnWithTopDic:(NSDictionary *)topDic bottomDic:(NSDictionary *)bottomDic;
 + (UIView *)createTabHeadLabelViewWithParamDic:(NSDictionary *)paramDic;
 + (void) setAnimationWithHidden:(BOOL)hidden view:(UIView *)view completedBlock:(RemoveCompletedBlock)completedBlock;
++ (UIView *)createBottomButton;
+
+
 @end

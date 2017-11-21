@@ -185,7 +185,6 @@ static NSString *Identify_MagazineCell = @"magazineCell";
     ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
     [sectionModel.cellModelArray addObject:cellModel];
     cellModel.height = kRealValue(80);
-    kWeakSelf(self);
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHNoticeViewCell *cell = [tableView dequeueReusableCellWithIdentifier:Identify_ServiceCell forIndexPath:indexPath];
         NSDictionary *nextParamDic = @{KFromClassType:@(FromHomeServiceVCToNoticeView)};

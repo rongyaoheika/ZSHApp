@@ -92,9 +92,8 @@ static NSString *ZSHGoodsDetailCountCellID = @"ZSHGoodsDetailCountCell";
      [self.collectionView registerClass:[ZSHGoodsDetailColorCell class] forCellWithReuseIdentifier:ZSHGoodsDetailColorCellID];
     [self.collectionView registerClass:[ZSHGoodsDetailCountCell class] forCellWithReuseIdentifier:ZSHGoodsDetailCountCellID];
     
-    [self setUpBottomButton];
+    [self.view addSubview:[ZSHBaseUIControl createBottomButton]];
     
-//    [self.view addSubview:self.bottomBtnView];
 }
 
 //下半部分
@@ -132,63 +131,6 @@ static NSString *ZSHGoodsDetailCountCellID = @"ZSHGoodsDetailCountCell";
     return _contentView;
 }
 
-//底部
-#pragma mark - 底部按钮(客服，收藏； 加入购物车 立即购买)
-- (void)setUpBottomButton
-{
-   self.bottomView = [[UIView alloc]initWithFrame:CGRectZero];
-    self.bottomView.backgroundColor = KZSHColor0B0B0B;
-    [self.view addSubview:self.bottomView];
-    [self.bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.mas_equalTo(self.view);
-        make.height.mas_equalTo(kRealValue(49));
-        make.left.and.right.mas_equalTo(self.view);
-    }];
-    [self setUpLeftTwoButton];//客服，收藏
-    [self setUpRightTwoButton];//加入购物车 立即购买
-}
-
-#pragma mark - 收藏 购物车
-- (void)setUpLeftTwoButton
-{
-    NSArray *imagesNor = @[@"goods_service",@"goods_collect"];
-    NSArray *imagesSel = @[@"goods_service",@"goods_collect"];
-    CGFloat buttonW = kRealValue(30);
-    
-    for (NSInteger i = 0; i < imagesNor.count; i++) {
-        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        button.backgroundColor = KClearColor;
-        [button setImage:[UIImage imageNamed:imagesNor[i]] forState:UIControlStateNormal];
-        [button setImage:[UIImage imageNamed:imagesSel[i]] forState:UIControlStateSelected];
-        button.tag = i;
-        [button addTarget:self action:@selector(bottomButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-        CGFloat buttonX = kRealValue(25) + ((buttonW +kRealValue(28))  * i);
-        [self.bottomView addSubview:button];
-        [button mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.size.mas_equalTo(CGSizeMake(buttonW, buttonW));
-            make.centerY.mas_equalTo(self.bottomView);
-            make.left.mas_equalTo(buttonX);
-        }];
-    }
-}
-#pragma mark - 加入购物车 立即购买
-- (void)setUpRightTwoButton
-{
-    NSArray *titles = @[@"加入购物车",@"立即购买"];
-    for (NSInteger i = 0; i < titles.count; i++) {
-        NSDictionary *btnDic = @{@"title":titles[i],@"titleColor":KZSHColor929292,@"font":kPingFangMedium(17),@"backgroundColor":KClearColor};
-        UIButton *button = [ZSHBaseUIControl createBtnWithParamDic:btnDic];
-        button.tag = i + 2;
-        [button addTarget:self action:@selector(bottomButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-        [self.bottomView addSubview:button];
-        [button mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.height.mas_equalTo(self.bottomView);
-            make.width.mas_equalTo(kRealValue(120));
-            make.left.mas_equalTo(kRealValue(135)+i*kRealValue(120));
-            make.centerY.mas_equalTo(self.bottomView);
-        }];
-    }
-}
 
 //上半部分
 

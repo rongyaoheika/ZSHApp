@@ -180,4 +180,45 @@
     }
 }
 
++ (UIView *)createBottomButton {
+    UIView *_bottomBtnView = [[UIView alloc]initWithFrame:CGRectZero];
+    _bottomBtnView.backgroundColor = KZSHColor0B0B0B;
+    _bottomBtnView.frame = CGRectMake(0, KScreenHeight - KBottomNavH, KScreenWidth, KBottomNavH);
+    NSArray *imagesNor = @[@"goods_service",@"goods_collect"];
+    NSArray *imagesSel = @[@"goods_service",@"goods_collect"];
+    CGFloat buttonW = kRealValue(30);
+    
+    for (NSInteger i = 0; i < imagesNor.count; i++) {
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        button.backgroundColor = KClearColor;
+        [button setImage:[UIImage imageNamed:imagesNor[i]] forState:UIControlStateNormal];
+        [button setImage:[UIImage imageNamed:imagesSel[i]] forState:UIControlStateSelected];
+        button.tag = i;
+//        [button addTarget:self action:@selector(bottomButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+        CGFloat buttonX = kRealValue(25) + ((buttonW +kRealValue(28))  * i);
+        [_bottomBtnView addSubview:button];
+        [button mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.size.mas_equalTo(CGSizeMake(buttonW, buttonW));
+            make.centerY.mas_equalTo(_bottomBtnView);
+            make.left.mas_equalTo(buttonX);
+        }];
+    }
+    NSArray *titles = @[@"加入购物车",@"立即购买"];
+    for (NSInteger i = 0; i < titles.count; i++) {
+        NSDictionary *btnDic = @{@"title":titles[i],@"titleColor":KZSHColor929292,@"font":kPingFangMedium(17),@"backgroundColor":KClearColor};
+        UIButton *button = [ZSHBaseUIControl createBtnWithParamDic:btnDic];
+        button.tag = i + 2;
+//        [button addTarget:self action:@selector(bottomButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+        [_bottomBtnView addSubview:button];
+        [button mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.height.mas_equalTo(_bottomBtnView);
+            make.width.mas_equalTo(kRealValue(120));
+            make.left.mas_equalTo(kRealValue(135)+i*kRealValue(120));
+            make.centerY.mas_equalTo(_bottomBtnView);
+        }];
+    }
+    return _bottomBtnView;
+}
+
+
 @end

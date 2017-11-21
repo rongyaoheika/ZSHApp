@@ -32,7 +32,7 @@ static NSString *cellIdentifier = @"TailorDetailCell";
 - (void)createUI{
     [self.view addSubview:self.tableView];
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.mas_equalTo(self.view).insets(UIEdgeInsetsMake(0, 0, 0, 0));
+        make.edges.mas_equalTo(self.view).insets(UIEdgeInsetsMake(0, 0, -KBottomNavH, 0));
     }];
     self.tableView.delegate = self.tableViewModel;
     self.tableView.dataSource = self.tableViewModel;
@@ -40,6 +40,8 @@ static NSString *cellIdentifier = @"TailorDetailCell";
     [self.tableView reloadData];
     
     [self.tableView setTableHeaderView:[self createTableviewHeaderView]];
+    
+    [self.view addSubview:[ZSHBaseUIControl createBottomButton]];
     
 }
 
