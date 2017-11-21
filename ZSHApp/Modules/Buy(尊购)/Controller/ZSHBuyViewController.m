@@ -11,7 +11,7 @@
 #import "ZSHGoodsListView.h"
 #import "ZSHLeftContentViewController.h"
 #import "RXLSideSlipViewController.h"
-#import "JSCartViewController.h"
+
 #import "ZSHGoodsListView.h"
 #import "ZSHGoodsTitleContentViewController.h"
 static NSString *Identify_headCell = @"headCell";

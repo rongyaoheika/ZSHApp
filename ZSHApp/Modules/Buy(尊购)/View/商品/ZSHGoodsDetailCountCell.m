@@ -7,7 +7,6 @@
 //
 
 #import "ZSHGoodsDetailCountCell.h"
-#import "JSNummberCount.h"
 
 @implementation ZSHGoodsDetailCountCell
 
@@ -24,14 +23,14 @@
         make.width.mas_equalTo(kRealValue(65));
     }];
    
-    JSNummberCount *countBtn = [[JSNummberCount alloc]initWithFrame:CGRectZero];
-    [self.contentView addSubview:countBtn];
-    [countBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(titleLabel.mas_right).offset(kRealValue(55));
-        make.width.mas_equalTo(kRealValue(50));
-        make.height.mas_equalTo(kRealValue(15));
-        make.centerY.mas_equalTo(self);
-    }];
+//    JSNummberCount *countBtn = [[JSNummberCount alloc]initWithFrame:CGRectZero];
+//    [self.contentView addSubview:countBtn];
+//    [countBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.mas_equalTo(titleLabel.mas_right).offset(kRealValue(55));
+//        make.width.mas_equalTo(kRealValue(50));
+//        make.height.mas_equalTo(kRealValue(15));
+//        make.centerY.mas_equalTo(self);
+//    }];
 }
 
 #pragma mark - 布局

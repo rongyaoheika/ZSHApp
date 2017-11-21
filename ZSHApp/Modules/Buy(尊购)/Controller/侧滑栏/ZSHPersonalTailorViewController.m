@@ -31,7 +31,7 @@ static NSString *cellIdentifier = @"listCell";
 
 - (void)loadData{
     
-    self.vcArr = @[@"",@"ZSHGoodsViewController",@"ZSHTitleContentViewController",@"JSCartViewController",@"",@"ZSHPersonalTailorViewController"];
+    self.vcArr = @[@"",@"ZSHGoodsViewController",@"ZSHTitleContentViewController",@"LZCartViewController",@"",@"ZSHPersonalTailorViewController"];
     
     [self initViewModel];
 }

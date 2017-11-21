@@ -9,7 +9,6 @@ pod 'MBProgressHUD', '~> 1.0.0'
 pod 'Masonry'
 pod 'NIMSDK',        '~> 4.1.0'
 pod 'SDWebImage',    '~>3.8'
-pod 'ReactiveObjC'
 pod 'MJExtension'
 pod 'IQKeyboardManager'
 

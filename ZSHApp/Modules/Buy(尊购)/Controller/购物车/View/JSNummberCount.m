@@ -53,14 +53,14 @@ static CGFloat const Wd = 15;
     [_subButton setBackgroundImage:[UIImage imageNamed:@"goods_sub"]
                           forState:UIControlStateDisabled];
     _subButton.tag = 0;
-    [[self.subButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(id x) {
-        kStrongSelf(self);
-        self.currentCountNumber--;
-        if (self.NumberChangeBlock) {
-            self.NumberChangeBlock(self.currentCountNumber);
-        }
-        
-    }];
+//    [[self.subButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(id x) {
+//        kStrongSelf(self);
+//        self.currentCountNumber--;
+//        if (self.NumberChangeBlock) {
+//            self.NumberChangeBlock(self.currentCountNumber);
+//        }
+//        
+//    }];
     [self addSubview:_subButton];
     
     /************************** 内容 ****************************/
@@ -85,67 +85,67 @@ static CGFloat const Wd = 15;
     [_addButton setBackgroundImage:[UIImage imageNamed:@"goods_add"]
                           forState:UIControlStateDisabled];
     _addButton.tag = 1;
-    [[self.addButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(id x) {
-        
-        kStrongSelf(self);
-        self.currentCountNumber++;
-        if (self.NumberChangeBlock) {
-            self.NumberChangeBlock(self.currentCountNumber);
-        }
-    }];
+//    [[self.addButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(id x) {
+//        
+//        kStrongSelf(self);
+//        self.currentCountNumber++;
+//        if (self.NumberChangeBlock) {
+//            self.NumberChangeBlock(self.currentCountNumber);
+//        }
+//    }];
     
     [self addSubview:_addButton];
     
      /************************** 内容改变 ****************************/
-    [[[NSNotificationCenter defaultCenter] rac_addObserverForName:@"UITextFieldTextDidEndEditingNotification" object:self.numberTT] subscribeNext:^(NSNotification *x) {
-        kStrongSelf(self);
-        UITextField *t1 = [x object];
-        NSString *text = t1.text;
-        NSInteger changeNum = 0;
-        if (text.integerValue>self.totalNum&&self.totalNum!=0) {
-            
-            self.currentCountNumber = self.totalNum;
-            self.numberTT.text = [NSString stringWithFormat:@"%@",@(self.totalNum)];
-            changeNum = self.totalNum;
-            
-        } else if (text.integerValue<1){
-            
-            self.numberTT.text = @"1";
-            changeNum = 1;
-            
-        } else {
-            
-            self.currentCountNumber = text.integerValue;
-            changeNum = self.currentCountNumber;
-
-        }
-        if (self.NumberChangeBlock) {
-            self.NumberChangeBlock(changeNum);
-        }
-        
-    }];
+//    [[[NSNotificationCenter defaultCenter] rac_addObserverForName:@"UITextFieldTextDidEndEditingNotification" object:self.numberTT] subscribeNext:^(NSNotification *x) {
+//        kStrongSelf(self);
+//        UITextField *t1 = [x object];
+//        NSString *text = t1.text;
+//        NSInteger changeNum = 0;
+//        if (text.integerValue>self.totalNum&&self.totalNum!=0) {
+//            
+//            self.currentCountNumber = self.totalNum;
+//            self.numberTT.text = [NSString stringWithFormat:@"%@",@(self.totalNum)];
+//            changeNum = self.totalNum;
+//            
+//        } else if (text.integerValue<1){
+//            
+//            self.numberTT.text = @"1";
+//            changeNum = 1;
+//            
+//        } else {
+//            
+//            self.currentCountNumber = text.integerValue;
+//            changeNum = self.currentCountNumber;
+//
+//        }
+//        if (self.NumberChangeBlock) {
+//            self.NumberChangeBlock(changeNum);
+//        }
+//        
+//    }];
     
     
     /* 捆绑加减的enable */
-    RACSignal *subSignal =  [RACObserve(self, currentCountNumber) map:^id(NSNumber *subValue) {
-        return @(subValue.integerValue>1);
-    }];
-    RACSignal *addSignal =  [RACObserve(self, currentCountNumber) map:^id(NSNumber *addValue) {
-        return @(addValue.integerValue<self.totalNum);
-    }];
-    RAC(self.subButton,enabled)  = subSignal;
-    RAC(self.addButton,enabled)  = addSignal;
-    /* 内容颜色显示 */
-    RACSignal *numColorSignal = [RACObserve(self, totalNum) map:^id(NSNumber *totalValue) {
-//        return totalValue.integerValue==0?[UIColor redColor]:KZSHColor929292;
-        return KZSHColor929292;
-    }];
-    RAC(self.numberTT,textColor) = numColorSignal;
-    /*  */
-    RACSignal *textSigal = [RACObserve(self, currentCountNumber) map:^id(NSNumber *Value) {
-        return [NSString stringWithFormat:@"%@",Value];
-    }];
-    RAC(self.numberTT,text) = textSigal;
+//    RACSignal *subSignal =  [RACObserve(self, currentCountNumber) map:^id(NSNumber *subValue) {
+//        return @(subValue.integerValue>1);
+//    }];
+//    RACSignal *addSignal =  [RACObserve(self, currentCountNumber) map:^id(NSNumber *addValue) {
+//        return @(addValue.integerValue<self.totalNum);
+//    }];
+//    RAC(self.subButton,enabled)  = subSignal;
+//    RAC(self.addButton,enabled)  = addSignal;
+//    /* 内容颜色显示 */
+//    RACSignal *numColorSignal = [RACObserve(self, totalNum) map:^id(NSNumber *totalValue) {
+////        return totalValue.integerValue==0?[UIColor redColor]:KZSHColor929292;
+//        return KZSHColor929292;
+//    }];
+//    RAC(self.numberTT,textColor) = numColorSignal;
+//    /*  */
+//    RACSignal *textSigal = [RACObserve(self, currentCountNumber) map:^id(NSNumber *Value) {
+//        return [NSString stringWithFormat:@"%@",Value];
+//    }];
+//    RAC(self.numberTT,text) = textSigal;
 }
 
 

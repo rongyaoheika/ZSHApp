@@ -10,7 +10,7 @@
 #import "ZSHGoodsMineViewController.h"
 #import "RXLSideSlipViewController.h"
 #import "ZSHTitleContentViewController.h"
-#import "JSCartViewController.h"
+#import "LZCartViewController.h"
 #import "ZSHPersonalTailorViewController.h"
 
 #import "ZSHGoodsViewController.h"
@@ -50,7 +50,7 @@ static NSString *ZSHBaseBottomListCellID = @"ZSHBaseBottomListCell";
                    @"",
                    @"ZSHGoodsViewController",
                    @"ZSHTitleContentViewController",
-                   @"JSCartViewController",
+                   @"LZCartViewController",
                    @"ZSHCollectViewController",
                    @"ZSHPersonalTailorViewController"];
     self.paramDicArr = @[@{},
