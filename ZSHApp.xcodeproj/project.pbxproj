@@ -91,6 +91,7 @@
 		FE0ED7DE1FC2CB7D008299C5 /* ZSHCityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE0ED7DC1FC2CB7D008299C5 /* ZSHCityViewController.m */; };
 		FE0ED7E21FC2CC46008299C5 /* ZSHCityView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE0ED7E11FC2CC45008299C5 /* ZSHCityView.m */; };
 		FE0ED7E51FC2D712008299C5 /* ZSHBaseFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = FE0ED7E41FC2D712008299C5 /* ZSHBaseFunction.m */; };
+		FE0ED82C1FC34703008299C5 /* StepSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = FE0ED82A1FC34703008299C5 /* StepSlider.m */; };
 		FE0F9DA31F948762004F8D2A /* JSCartViewController.h in Sources */ = {isa = PBXBuildFile; fileRef = FE0F9D9C1F948717004F8D2A /* JSCartViewController.h */; };
 		FE0F9DA41F948762004F8D2A /* JSCartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE0F9D9D1F948717004F8D2A /* JSCartViewController.m */; };
 		FE0F9DA51F94878E004F8D2A /* JSCartModel.h in Sources */ = {isa = PBXBuildFile; fileRef = FE0F9D8D1F948717004F8D2A /* JSCartModel.h */; };
@@ -168,7 +169,6 @@
 		FE4E4B251FBFDC4E00E3B2F4 /* ZSHSearchLiveFirstCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE4E4B241FBFDC4E00E3B2F4 /* ZSHSearchLiveFirstCell.m */; };
 		FE4E4B281FC000E800E3B2F4 /* ZSHSearchLiveSecondCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE4E4B271FC000E800E3B2F4 /* ZSHSearchLiveSecondCell.m */; };
 		FE4E4B2B1FC005EC00E3B2F4 /* ZSHSearchLiveThirdCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE4E4B2A1FC005EC00E3B2F4 /* ZSHSearchLiveThirdCell.m */; };
-		FE4E4B351FC025C500E3B2F4 /* DCSliderView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE4E4B321FC025C500E3B2F4 /* DCSliderView.m */; };
 		FE4E4B361FC025C500E3B2F4 /* YHSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = FE4E4B341FC025C500E3B2F4 /* YHSlider.m */; };
 		FE4E4B3C1FC03C1D00E3B2F4 /* PYSearchSuggestionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE4E4B391FC03C1D00E3B2F4 /* PYSearchSuggestionViewController.m */; };
 		FE4E4B3D1FC03C1D00E3B2F4 /* PYSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE4E4B3B1FC03C1D00E3B2F4 /* PYSearchViewController.m */; };
@@ -549,6 +549,8 @@
 		FE0ED7E11FC2CC45008299C5 /* ZSHCityView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHCityView.m; sourceTree = "<group>"; };
 		FE0ED7E31FC2D712008299C5 /* ZSHBaseFunction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHBaseFunction.h; sourceTree = "<group>"; };
 		FE0ED7E41FC2D712008299C5 /* ZSHBaseFunction.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHBaseFunction.m; sourceTree = "<group>"; };
+		FE0ED82A1FC34703008299C5 /* StepSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StepSlider.m; sourceTree = "<group>"; };
+		FE0ED82B1FC34703008299C5 /* StepSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StepSlider.h; sourceTree = "<group>"; };
 		FE0F9D8D1F948717004F8D2A /* JSCartModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JSCartModel.h; sourceTree = "<group>"; };
 		FE0F9D8E1F948717004F8D2A /* JSCartModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JSCartModel.m; sourceTree = "<group>"; };
 		FE0F9D901F948717004F8D2A /* JSCartBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JSCartBar.h; sourceTree = "<group>"; };
@@ -676,8 +678,6 @@
 		FE4E4B271FC000E800E3B2F4 /* ZSHSearchLiveSecondCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHSearchLiveSecondCell.m; sourceTree = "<group>"; };
 		FE4E4B291FC005EC00E3B2F4 /* ZSHSearchLiveThirdCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHSearchLiveThirdCell.h; sourceTree = "<group>"; };
 		FE4E4B2A1FC005EC00E3B2F4 /* ZSHSearchLiveThirdCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHSearchLiveThirdCell.m; sourceTree = "<group>"; };
-		FE4E4B311FC025C500E3B2F4 /* DCSliderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCSliderView.h; sourceTree = "<group>"; };
-		FE4E4B321FC025C500E3B2F4 /* DCSliderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCSliderView.m; sourceTree = "<group>"; };
 		FE4E4B331FC025C500E3B2F4 /* YHSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHSlider.h; sourceTree = "<group>"; };
 		FE4E4B341FC025C500E3B2F4 /* YHSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHSlider.m; sourceTree = "<group>"; };
 		FE4E4B381FC03C1D00E3B2F4 /* PYSearchSuggestionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PYSearchSuggestionViewController.h; sourceTree = "<group>"; };
@@ -2151,8 +2151,8 @@
 		FE4E4B301FC025C500E3B2F4 /* Slider */ = {
 			isa = PBXGroup;
 			children = (
-				FE4E4B311FC025C500E3B2F4 /* DCSliderView.h */,
-				FE4E4B321FC025C500E3B2F4 /* DCSliderView.m */,
+				FE0ED82B1FC34703008299C5 /* StepSlider.h */,
+				FE0ED82A1FC34703008299C5 /* StepSlider.m */,
 				FE4E4B331FC025C500E3B2F4 /* YHSlider.h */,
 				FE4E4B341FC025C500E3B2F4 /* YHSlider.m */,
 			);
@@ -3450,7 +3450,6 @@
 				FEF2B63A1FAC5D39000AEA6E /* ZSHEntertainmentModel.m in Sources */,
 				FED308981FA414D900CD442B /* ZSHHotelDetailDeviceCell.m in Sources */,
 				FEAEE3EF1FA86CBA00F73EEA /* STCalendar.m in Sources */,
-				FE4E4B351FC025C500E3B2F4 /* DCSliderView.m in Sources */,
 				FE5538811F470BAF00803128 /* GameInfo.m in Sources */,
 				FEEF46EF1FBA84100086A3C4 /* ZSHLivePopView.m in Sources */,
 				FE5229851F9050DF00DC2899 /* ZSHLiveCellView.m in Sources */,
@@ -3541,6 +3540,7 @@
 				FE5538181F47049D00803128 /* NJKWebViewProgress.m in Sources */,
 				FE8FD07B1FADBCFF005F1184 /* ZSHActivityViewController.m in Sources */,
 				FE443FD61FB030C600B7F7A5 /* ZSHAccountViewController.m in Sources */,
+				FE0ED82C1FC34703008299C5 /* StepSlider.m in Sources */,
 				FEAE11261FB41A95008DCB3E /* ZSHWithdrawViewController.m in Sources */,
 				FE5538131F47049D00803128 /* RootViewController.m in Sources */,
 				FE55385C1F47049D00803128 /* AESCipher.m in Sources */,

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ZSHApp.ipa</key>
+	<array>
+		<dict>
+			<key>architectures</key>
+			<array>
+				<string>armv7</string>
+				<string>arm64</string>
+			</array>
+			<key>certificate</key>
+			<dict>
+				<key>SHA1</key>
+				<string>4523659D82F5900FA94C75316F8F65851074791E</string>
+				<key>dateExpires</key>
+				<string>2018/10/21</string>
+				<key>type</key>
+				<string>iOS Distribution</string>
+			</dict>
+			<key>embeddedBinaries</key>
+			<array>
+				<dict>
+					<key>architectures</key>
+					<array>
+						<string>arm64</string>
+					</array>
+					<key>certificate</key>
+					<dict>
+						<key>SHA1</key>
+						<string>4523659D82F5900FA94C75316F8F65851074791E</string>
+						<key>dateExpires</key>
+						<string>2018/10/21</string>
+						<key>type</key>
+						<string>iOS Distribution</string>
+					</dict>
+					<key>name</key>
+					<string>ZSHSpeedy.o</string>
+					<key>team</key>
+					<dict>
+						<key>id</key>
+						<string>26ZQGX9T79</string>
+						<key>name</key>
+						<string>dawei hu</string>
+					</dict>
+				</dict>
+			</array>
+			<key>entitlements</key>
+			<dict>
+				<key>application-identifier</key>
+				<string>26ZQGX9T79.com.zoe.TC168</string>
+				<key>com.apple.developer.team-identifier</key>
+				<string>26ZQGX9T79</string>
+				<key>get-task-allow</key>
+				<false/>
+				<key>keychain-access-groups</key>
+				<array>
+					<string>26ZQGX9T79.com.zoe.TC168</string>
+				</array>
+			</dict>
+			<key>name</key>
+			<string>荣耀黑卡.app</string>
+			<key>profile</key>
+			<dict>
+				<key>UUID</key>
+				<string>de92a7e8-f4f0-4d3d-8491-9560248f943c</string>
+				<key>name</key>
+				<string>Ad_Hoc_profile(1106)</string>
+			</dict>
+			<key>team</key>
+			<dict>
+				<key>id</key>
+				<string>26ZQGX9T79</string>
+				<key>name</key>
+				<string>dawei hu</string>
+			</dict>
+		</dict>
+	</array>
+</dict>
+</plist>

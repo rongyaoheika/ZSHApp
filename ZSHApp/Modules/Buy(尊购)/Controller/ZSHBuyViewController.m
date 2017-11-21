@@ -13,7 +13,7 @@
 #import "RXLSideSlipViewController.h"
 #import "JSCartViewController.h"
 #import "ZSHGoodsListView.h"
-
+#import "ZSHGoodsTitleContentViewController.h"
 static NSString *Identify_headCell = @"headCell";
 static NSString *Identify_listLeftImageCell = @"listLeftImageCell";
 static NSString *Identify_listRightImageCell = @"listRightImageCell";
@@ -90,6 +90,7 @@ static NSString *ZSHGoodsListViewID = @"ZSHGoodsListView";
 
 //list
 - (ZSHBaseTableViewSectionModel*)storeListSection {
+    kWeakSelf(self);
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     sectionModel.headerHeight = kRealValue(10);
     
@@ -113,7 +114,8 @@ static NSString *ZSHGoodsListViewID = @"ZSHGoodsListView";
         };
         
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
-            
+            ZSHGoodsTitleContentViewController *goodContentVC = [[ZSHGoodsTitleContentViewController alloc]init];
+            [weakself.navigationController pushViewController:goodContentVC animated:YES];
         };
     }
     
