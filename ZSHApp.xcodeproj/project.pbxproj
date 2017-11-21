@@ -260,6 +260,7 @@
 		FE9CC3D51FA05D2200285475 /* ZSHOrderDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9CC3D41FA05D2200285475 /* ZSHOrderDetailViewController.m */; };
 		FE9CC3DF1FA09D0400285475 /* ZSHGoodsSubViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9CC3DE1FA09D0400285475 /* ZSHGoodsSubViewController.m */; };
 		FE9CC3E31FA0A4B600285475 /* ZSHHotelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9CC3E21FA0A4B600285475 /* ZSHHotelViewController.m */; };
+		FE9E6D5C1FC3BC6A00F7AD95 /* ZSHCardCommitBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9E6D5B1FC3BC6A00F7AD95 /* ZSHCardCommitBottomView.m */; };
 		FEA105641F9B2008008652D6 /* ZSHGoodsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEA105631F9B2008008652D6 /* ZSHGoodsViewController.m */; };
 		FEA105671F9B2051008652D6 /* ZSHClassGoodsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FEA105661F9B2051008652D6 /* ZSHClassGoodsModel.m */; };
 		FEA1056A1F9B208A008652D6 /* ZSHClassMainModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FEA105691F9B208A008652D6 /* ZSHClassMainModel.m */; };
@@ -836,6 +837,8 @@
 		FE9CC3DE1FA09D0400285475 /* ZSHGoodsSubViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHGoodsSubViewController.m; sourceTree = "<group>"; };
 		FE9CC3E11FA0A4B600285475 /* ZSHHotelViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHHotelViewController.h; sourceTree = "<group>"; };
 		FE9CC3E21FA0A4B600285475 /* ZSHHotelViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHHotelViewController.m; sourceTree = "<group>"; };
+		FE9E6D5A1FC3BC6A00F7AD95 /* ZSHCardCommitBottomView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHCardCommitBottomView.h; sourceTree = "<group>"; };
+		FE9E6D5B1FC3BC6A00F7AD95 /* ZSHCardCommitBottomView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHCardCommitBottomView.m; sourceTree = "<group>"; };
 		FEA105621F9B2008008652D6 /* ZSHGoodsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHGoodsViewController.h; sourceTree = "<group>"; };
 		FEA105631F9B2008008652D6 /* ZSHGoodsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHGoodsViewController.m; sourceTree = "<group>"; };
 		FEA105651F9B2051008652D6 /* ZSHClassGoodsModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHClassGoodsModel.h; sourceTree = "<group>"; };
@@ -2722,6 +2725,45 @@
 			path = "Hotel(酒店)";
 			sourceTree = "<group>";
 		};
+		FE9E6D571FC3BB0C00F7AD95 /* 定制 */ = {
+			isa = PBXGroup;
+			children = (
+				FEADBD0D1FBEBBC00065B94B /* ZSHCardCustomizedCell.h */,
+				FEADBD0E1FBEBBC00065B94B /* ZSHCardCustomizedCell.m */,
+				FEADBD0F1FBEBBC00065B94B /* ZSHCardCustomizedFirst.h */,
+				FEADBD101FBEBBC00065B94B /* ZSHCardCustomizedFirst.m */,
+				FEADBD111FBEBBC00065B94B /* ZSHCardCustomizedSecond.h */,
+				FEADBD121FBEBBC00065B94B /* ZSHCardCustomizedSecond.m */,
+				FEADBD131FBEBBC00065B94B /* ZSHCardCustomizedThird.h */,
+				FEADBD141FBEBBC00065B94B /* ZSHCardCustomizedThird.m */,
+			);
+			path = "定制";
+			sourceTree = "<group>";
+		};
+		FE9E6D581FC3BBAD00F7AD95 /* 选择卡号 */ = {
+			isa = PBXGroup;
+			children = (
+				FEADBD091FBEBBC00065B94B /* ZSHBlackCardPhoneNumView.h */,
+				FEADBD0A1FBEBBC00065B94B /* ZSHBlackCardPhoneNumView.m */,
+				FEADBD1F1FBEBBC00065B94B /* ZSHSelectCardNumCell.h */,
+				FEADBD201FBEBBC00065B94B /* ZSHSelectCardNumCell.m */,
+				FEADBD211FBEBBC00065B94B /* ZSHSelectCardNumFirstView.h */,
+				FEADBD221FBEBBC00065B94B /* ZSHSelectCardNumFirstView.m */,
+				FEADBD231FBEBBC00065B94B /* ZSHSelectCardNumSecondView.h */,
+				FEADBD241FBEBBC00065B94B /* ZSHSelectCardNumSecondView.m */,
+			);
+			path = "选择卡号";
+			sourceTree = "<group>";
+		};
+		FE9E6D591FC3BBDD00F7AD95 /* 支付方式 */ = {
+			isa = PBXGroup;
+			children = (
+				FEADBD151FBEBBC00065B94B /* ZSHCardPayCell.h */,
+				FEADBD161FBEBBC00065B94B /* ZSHCardPayCell.m */,
+			);
+			path = "支付方式";
+			sourceTree = "<group>";
+		};
 		FEA1058D1F9B49B3008652D6 /* 发现 */ = {
 			isa = PBXGroup;
 			children = (
@@ -2800,20 +2842,11 @@
 		FEADBD081FBEBBC00065B94B /* View */ = {
 			isa = PBXGroup;
 			children = (
-				FEADBD091FBEBBC00065B94B /* ZSHBlackCardPhoneNumView.h */,
-				FEADBD0A1FBEBBC00065B94B /* ZSHBlackCardPhoneNumView.m */,
+				FE9E6D591FC3BBDD00F7AD95 /* 支付方式 */,
+				FE9E6D581FC3BBAD00F7AD95 /* 选择卡号 */,
+				FE9E6D571FC3BB0C00F7AD95 /* 定制 */,
 				FEADBD0B1FBEBBC00065B94B /* ZSHCardBtnListView.h */,
 				FEADBD0C1FBEBBC00065B94B /* ZSHCardBtnListView.m */,
-				FEADBD0D1FBEBBC00065B94B /* ZSHCardCustomizedCell.h */,
-				FEADBD0E1FBEBBC00065B94B /* ZSHCardCustomizedCell.m */,
-				FEADBD0F1FBEBBC00065B94B /* ZSHCardCustomizedFirst.h */,
-				FEADBD101FBEBBC00065B94B /* ZSHCardCustomizedFirst.m */,
-				FEADBD111FBEBBC00065B94B /* ZSHCardCustomizedSecond.h */,
-				FEADBD121FBEBBC00065B94B /* ZSHCardCustomizedSecond.m */,
-				FEADBD131FBEBBC00065B94B /* ZSHCardCustomizedThird.h */,
-				FEADBD141FBEBBC00065B94B /* ZSHCardCustomizedThird.m */,
-				FEADBD151FBEBBC00065B94B /* ZSHCardPayCell.h */,
-				FEADBD161FBEBBC00065B94B /* ZSHCardPayCell.m */,
 				FEADBD171FBEBBC00065B94B /* ZSHCardQuotaView.h */,
 				FEADBD181FBEBBC00065B94B /* ZSHCardQuotaView.m */,
 				FEADBD191FBEBBC00065B94B /* ZSHCardSubHeadView.h */,
@@ -2822,12 +2855,8 @@
 				FEADBD1C1FBEBBC00065B94B /* ZSHGuideView.m */,
 				FEADBD1D1FBEBBC00065B94B /* ZSHPhoneNumListView.h */,
 				FEADBD1E1FBEBBC00065B94B /* ZSHPhoneNumListView.m */,
-				FEADBD1F1FBEBBC00065B94B /* ZSHSelectCardNumCell.h */,
-				FEADBD201FBEBBC00065B94B /* ZSHSelectCardNumCell.m */,
-				FEADBD211FBEBBC00065B94B /* ZSHSelectCardNumFirstView.h */,
-				FEADBD221FBEBBC00065B94B /* ZSHSelectCardNumFirstView.m */,
-				FEADBD231FBEBBC00065B94B /* ZSHSelectCardNumSecondView.h */,
-				FEADBD241FBEBBC00065B94B /* ZSHSelectCardNumSecondView.m */,
+				FE9E6D5A1FC3BC6A00F7AD95 /* ZSHCardCommitBottomView.h */,
+				FE9E6D5B1FC3BC6A00F7AD95 /* ZSHCardCommitBottomView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -3339,6 +3368,7 @@
 				FE7F00131F9203430006E9A3 /* ZSHBaseTableViewCellModel.m in Sources */,
 				FEEF46F51FBAD2C90086A3C4 /* ZSHNearHeadView.m in Sources */,
 				FE7F00141F9203430006E9A3 /* ZSHBaseTableViewModel.h in Sources */,
+				FE9E6D5C1FC3BC6A00F7AD95 /* ZSHCardCommitBottomView.m in Sources */,
 				181105831FBC16250046D229 /* ZSHLikeCell.m in Sources */,
 				FE7F00151F9203430006E9A3 /* ZSHBaseTableViewModel.m in Sources */,
 				FEADBD301FBEBBC00065B94B /* ZSHSelectCardNumCell.m in Sources */,

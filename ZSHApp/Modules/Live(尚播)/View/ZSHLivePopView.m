@@ -37,6 +37,12 @@
     };
     _tlMenuView = tlMenuView;
     [self addSubview:tlMenuView];
+    [tlMenuView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.mas_equalTo(_centerBtn);
+        make.width.mas_equalTo(KScreenWidth);
+        make.top.mas_equalTo(self);
+        make.bottom.mas_equalTo(_centerBtn.mas_top);
+    }];
     
     CGAffineTransform rotate = CGAffineTransformMakeRotation( M_PI / 4 );
     [_centerBtn setTransform:rotate];
