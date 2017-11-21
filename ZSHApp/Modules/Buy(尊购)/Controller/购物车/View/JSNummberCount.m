@@ -61,6 +61,13 @@ static CGFloat const Wd = 15;
 //        }
 //        
 //    }];
+    [_subButton addTapBlock:^(UIButton *btn) {
+        weakself.currentCountNumber--;
+        weakself.numberTT.text = [NSString stringWithFormat:@"%@",@(weakself.currentCountNumber)];
+        if (weakself.NumberChangeBlock) {
+            weakself.NumberChangeBlock(weakself.currentCountNumber);
+        }
+    }];
     [self addSubview:_subButton];
     
     /************************** 内容 ****************************/
@@ -93,10 +100,20 @@ static CGFloat const Wd = 15;
 //            self.NumberChangeBlock(self.currentCountNumber);
 //        }
 //    }];
-    
+    [_addButton addTapBlock:^(UIButton *btn) {
+        
+        weakself.currentCountNumber++;
+        weakself.numberTT.text = [NSString stringWithFormat:@"%@",@(weakself.currentCountNumber)];
+        if (weakself.NumberChangeBlock) {
+            weakself.NumberChangeBlock(weakself.currentCountNumber);
+        }
+    }];
     [self addSubview:_addButton];
     
      /************************** 内容改变 ****************************/
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textfieldChange:) name:@"UITextFieldTextDidEndEditingNotification" object:nil];
+    
+    
 //    [[[NSNotificationCenter defaultCenter] rac_addObserverForName:@"UITextFieldTextDidEndEditingNotification" object:self.numberTT] subscribeNext:^(NSNotification *x) {
 //        kStrongSelf(self);
 //        UITextField *t1 = [x object];
@@ -148,5 +165,31 @@ static CGFloat const Wd = 15;
 //    RAC(self.numberTT,text) = textSigal;
 }
 
+- (void)textfieldChange:(NSNotification *)x {
+    UITextField *t1 = [x object];
+    NSString *text = t1.text;
+    NSInteger changeNum = 0;
+    if (text.integerValue>self.totalNum&&self.totalNum!=0) {
+
+        self.currentCountNumber = self.totalNum;
+        self.numberTT.text = [NSString stringWithFormat:@"%@",@(self.totalNum)];
+        changeNum = self.totalNum;
+
+    } else if (text.integerValue<1){
+
+        self.numberTT.text = @"1";
+        changeNum = 1;
+
+    } else {
+
+        self.currentCountNumber = text.integerValue;
+        changeNum = self.currentCountNumber;
+
+    }
+    if (self.NumberChangeBlock) {
+        self.NumberChangeBlock(changeNum);
+    }
+
+}
 
 @end
