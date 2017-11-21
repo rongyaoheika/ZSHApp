@@ -26,4 +26,14 @@
     
     return outputString;
 }
+
++ (NSString *)getFKEYWithCommand:(NSString *)cmd {
+    NSDate *date = [NSDate date];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat = @"yyyyMMdd";
+    NSString *string = [formatter stringFromDate:date];
+    
+    return [ZSHBaseFunction md5StringFromString:[NSString stringWithFormat:@"%@%@,fh,",cmd,string]];
+}
+
 @end

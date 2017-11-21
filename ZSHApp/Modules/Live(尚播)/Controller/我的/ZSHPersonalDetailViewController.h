@@ -8,6 +8,13 @@
 
 #import "RootViewController.h"
 
+
+typedef NS_ENUM(NSInteger,ZSHToPersonalDetailVC){
+    FromPersonalVCToPersonalDetailVC,                        //个人中心
+    FromTabbarToPersonalDetailVC,                            //tabbar
+    FromNoneToPersonalDetailVC
+};
+
 @interface ZSHPersonalDetailViewController : RootViewController
 
 @end

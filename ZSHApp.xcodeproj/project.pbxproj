@@ -104,32 +104,12 @@
 		299610111ED84A7100BCED2A /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 299610101ED84A7100BCED2A /* libsqlite3.tbd */; };
 		299610131ED84A8D00BCED2A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 299610121ED84A8D00BCED2A /* CoreGraphics.framework */; };
 		5BC8C50C0BEF57AA0780D5DC /* libPods-ZSHApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E884624664B432D4FE5044F /* libPods-ZSHApp.a */; };
-<<<<<<< HEAD
 		FE0ED7DE1FC2CB7D008299C5 /* ZSHCityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE0ED7DC1FC2CB7D008299C5 /* ZSHCityViewController.m */; };
 		FE0ED7E21FC2CC46008299C5 /* ZSHCityView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE0ED7E11FC2CC45008299C5 /* ZSHCityView.m */; };
 		FE0ED7E51FC2D712008299C5 /* ZSHBaseFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = FE0ED7E41FC2D712008299C5 /* ZSHBaseFunction.m */; };
 		FE0ED82C1FC34703008299C5 /* StepSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = FE0ED82A1FC34703008299C5 /* StepSlider.m */; };
-		FE0F9DA31F948762004F8D2A /* JSCartViewController.h in Sources */ = {isa = PBXBuildFile; fileRef = FE0F9D9C1F948717004F8D2A /* JSCartViewController.h */; };
-		FE0F9DA41F948762004F8D2A /* JSCartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE0F9D9D1F948717004F8D2A /* JSCartViewController.m */; };
-		FE0F9DA51F94878E004F8D2A /* JSCartModel.h in Sources */ = {isa = PBXBuildFile; fileRef = FE0F9D8D1F948717004F8D2A /* JSCartModel.h */; };
-		FE0F9DA61F94878E004F8D2A /* JSCartModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FE0F9D8E1F948717004F8D2A /* JSCartModel.m */; };
-		FE0F9DA71F94878E004F8D2A /* JSCartBar.h in Sources */ = {isa = PBXBuildFile; fileRef = FE0F9D901F948717004F8D2A /* JSCartBar.h */; };
-		FE0F9DA81F94878E004F8D2A /* JSCartBar.m in Sources */ = {isa = PBXBuildFile; fileRef = FE0F9D911F948717004F8D2A /* JSCartBar.m */; };
-		FE0F9DA91F94878E004F8D2A /* JSCartCell.h in Sources */ = {isa = PBXBuildFile; fileRef = FE0F9D921F948717004F8D2A /* JSCartCell.h */; };
-		FE0F9DAA1F94878E004F8D2A /* JSCartCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE0F9D931F948717004F8D2A /* JSCartCell.m */; };
-		FE0F9DAB1F94878E004F8D2A /* JSCartCell.xib in Sources */ = {isa = PBXBuildFile; fileRef = FE0F9D941F948717004F8D2A /* JSCartCell.xib */; };
-		FE0F9DAC1F94878E004F8D2A /* JSCartFooterView.h in Sources */ = {isa = PBXBuildFile; fileRef = FE0F9D951F948717004F8D2A /* JSCartFooterView.h */; };
-		FE0F9DAD1F94878E004F8D2A /* JSCartFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE0F9D961F948717004F8D2A /* JSCartFooterView.m */; };
-		FE0F9DAE1F94878E004F8D2A /* JSCartHeaderView.h in Sources */ = {isa = PBXBuildFile; fileRef = FE0F9D971F948717004F8D2A /* JSCartHeaderView.h */; };
-		FE0F9DAF1F94878E004F8D2A /* JSCartHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE0F9D981F948717004F8D2A /* JSCartHeaderView.m */; };
 		FE0F9DB01F94878E004F8D2A /* JSNummberCount.h in Sources */ = {isa = PBXBuildFile; fileRef = FE0F9D991F948717004F8D2A /* JSNummberCount.h */; };
 		FE0F9DB11F94878E004F8D2A /* JSNummberCount.m in Sources */ = {isa = PBXBuildFile; fileRef = FE0F9D9A1F948717004F8D2A /* JSNummberCount.m */; };
-		FE0F9DB21F94878E004F8D2A /* JSCartUIService.h in Sources */ = {isa = PBXBuildFile; fileRef = FE0F9D9F1F948717004F8D2A /* JSCartUIService.h */; };
-		FE0F9DB31F94878E004F8D2A /* JSCartUIService.m in Sources */ = {isa = PBXBuildFile; fileRef = FE0F9DA01F948717004F8D2A /* JSCartUIService.m */; };
-		FE0F9DB41F94878E004F8D2A /* JSCartViewModel.h in Sources */ = {isa = PBXBuildFile; fileRef = FE0F9DA11F948717004F8D2A /* JSCartViewModel.h */; };
-		FE0F9DB51F94878E004F8D2A /* JSCartViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FE0F9DA21F948717004F8D2A /* JSCartViewModel.m */; };
-=======
->>>>>>> add LZCartViewController, delete RAC
 		FE0F9DB81F949B4E004F8D2A /* ZSHWeiBoCellModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FE0F9DB71F949B4E004F8D2A /* ZSHWeiBoCellModel.m */; };
 		FE0F9DBB1F949C45004F8D2A /* ZSHWeiBoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE0F9DBA1F949C45004F8D2A /* ZSHWeiBoCell.m */; };
 		FE0F9DBE1F949EFA004F8D2A /* ZSHWeiboViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE0F9DBD1F949EFA004F8D2A /* ZSHWeiboViewController.m */; };
@@ -587,7 +567,6 @@
 		BDF03C8635F8B6D048510007 /* libPods-ZSHAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ZSHAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FE0C20AC1F8CDCE0001E4D4C /* ZSHCycleScrollView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHCycleScrollView.h; sourceTree = "<group>"; };
 		FE0C20AD1F8CDCE0001E4D4C /* ZSHCycleScrollView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHCycleScrollView.m; sourceTree = "<group>"; };
-<<<<<<< HEAD
 		FE0ED7DC1FC2CB7D008299C5 /* ZSHCityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHCityViewController.m; sourceTree = "<group>"; };
 		FE0ED7DD1FC2CB7D008299C5 /* ZSHCityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHCityViewController.h; sourceTree = "<group>"; };
 		FE0ED7E01FC2CC45008299C5 /* ZSHCityView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHCityView.h; sourceTree = "<group>"; };
@@ -596,27 +575,8 @@
 		FE0ED7E41FC2D712008299C5 /* ZSHBaseFunction.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHBaseFunction.m; sourceTree = "<group>"; };
 		FE0ED82A1FC34703008299C5 /* StepSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StepSlider.m; sourceTree = "<group>"; };
 		FE0ED82B1FC34703008299C5 /* StepSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StepSlider.h; sourceTree = "<group>"; };
-		FE0F9D8D1F948717004F8D2A /* JSCartModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JSCartModel.h; sourceTree = "<group>"; };
-		FE0F9D8E1F948717004F8D2A /* JSCartModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JSCartModel.m; sourceTree = "<group>"; };
-		FE0F9D901F948717004F8D2A /* JSCartBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JSCartBar.h; sourceTree = "<group>"; };
-		FE0F9D911F948717004F8D2A /* JSCartBar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JSCartBar.m; sourceTree = "<group>"; };
-		FE0F9D921F948717004F8D2A /* JSCartCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JSCartCell.h; sourceTree = "<group>"; };
-		FE0F9D931F948717004F8D2A /* JSCartCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JSCartCell.m; sourceTree = "<group>"; };
-		FE0F9D941F948717004F8D2A /* JSCartCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = JSCartCell.xib; sourceTree = "<group>"; };
-		FE0F9D951F948717004F8D2A /* JSCartFooterView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JSCartFooterView.h; sourceTree = "<group>"; };
-		FE0F9D961F948717004F8D2A /* JSCartFooterView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JSCartFooterView.m; sourceTree = "<group>"; };
-		FE0F9D971F948717004F8D2A /* JSCartHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JSCartHeaderView.h; sourceTree = "<group>"; };
-		FE0F9D981F948717004F8D2A /* JSCartHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JSCartHeaderView.m; sourceTree = "<group>"; };
-		FE0F9D991F948717004F8D2A /* JSNummberCount.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JSNummberCount.h; sourceTree = "<group>"; };
+        FE0F9D991F948717004F8D2A /* JSNummberCount.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JSNummberCount.h; sourceTree = "<group>"; };
 		FE0F9D9A1F948717004F8D2A /* JSNummberCount.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JSNummberCount.m; sourceTree = "<group>"; };
-		FE0F9D9C1F948717004F8D2A /* JSCartViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JSCartViewController.h; sourceTree = "<group>"; };
-		FE0F9D9D1F948717004F8D2A /* JSCartViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JSCartViewController.m; sourceTree = "<group>"; };
-		FE0F9D9F1F948717004F8D2A /* JSCartUIService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JSCartUIService.h; sourceTree = "<group>"; };
-		FE0F9DA01F948717004F8D2A /* JSCartUIService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JSCartUIService.m; sourceTree = "<group>"; };
-		FE0F9DA11F948717004F8D2A /* JSCartViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JSCartViewModel.h; sourceTree = "<group>"; };
-		FE0F9DA21F948717004F8D2A /* JSCartViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JSCartViewModel.m; sourceTree = "<group>"; };
-=======
->>>>>>> add LZCartViewController, delete RAC
 		FE0F9DB61F949B4E004F8D2A /* ZSHWeiBoCellModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHWeiBoCellModel.h; sourceTree = "<group>"; };
 		FE0F9DB71F949B4E004F8D2A /* ZSHWeiBoCellModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHWeiBoCellModel.m; sourceTree = "<group>"; };
 		FE0F9DB91F949C45004F8D2A /* ZSHWeiBoCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHWeiBoCell.h; sourceTree = "<group>"; };
@@ -3409,12 +3369,7 @@
 				FEADBD2F1FBEBBC00065B94B /* ZSHPhoneNumListView.m in Sources */,
 				FEB3058B1F95F9EB00E4A061 /* ZSHGoodsMineGridCell.m in Sources */,
 				185BB9B51FB559A0007A96FF /* ZSHLiveWeekListViewController.m in Sources */,
-<<<<<<< HEAD
-				FE0F9DAC1F94878E004F8D2A /* JSCartFooterView.h in Sources */,
 				FE0ED7DE1FC2CB7D008299C5 /* ZSHCityViewController.m in Sources */,
-				FE0F9DAD1F94878E004F8D2A /* JSCartFooterView.m in Sources */,
-=======
->>>>>>> add LZCartViewController, delete RAC
 				1811058E1FBC42600046D229 /* ZSHTrainPassengerCell.m in Sources */,
 				18F9025A1FB6FD890044967F /* ZSHCollectViewController.m in Sources */,
 				FE9CC3DF1FA09D0400285475 /* ZSHGoodsSubViewController.m in Sources */,

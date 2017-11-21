@@ -42,11 +42,6 @@
 #import <Masonry.h>
 #import <NSObject+YYModel.h>
 #import <MJExtension.h>
-<<<<<<< HEAD
-#import <ReactiveObjC/ReactiveObjC.h>
 #import "IQKeyboardManager.h"
-
-=======
->>>>>>> add LZCartViewController, delete RAC
 
 #endif /* PrefixHeader_pch */

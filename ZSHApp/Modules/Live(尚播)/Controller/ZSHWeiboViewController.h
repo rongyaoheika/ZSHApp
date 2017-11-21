@@ -8,6 +8,13 @@
 
 #import "RootViewController.h"
 
+typedef NS_ENUM(NSInteger,ZSHToWeiboVC){
+    FromPersonalVCToWeiboVC,                        //个人中心
+    FromTabbarToWeiboVC,                            //tabbar
+    FromNoneToWeiboVC
+};
+
+
 @interface ZSHWeiboViewController : RootViewController
 
 @end

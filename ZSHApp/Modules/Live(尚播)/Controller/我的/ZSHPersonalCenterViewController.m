@@ -9,6 +9,9 @@
 #import "ZSHPersonalCenterViewController.h"
 #import "LXScollTitleView.h"
 #import "LXScrollContentView.h"
+#import "ZSHWeiboViewController.h"
+#import "ZSHVideoViewController.h"
+#import "ZSHPersonalDetailViewController.h"
 
 @interface ZSHPersonalCenterViewController ()
 
@@ -17,7 +20,8 @@
 @property (nonatomic, strong) NSMutableArray                 *vcs;
 @property (nonatomic, strong) NSArray                        *titleArr;
 @property (nonatomic, assign) CGFloat                        titleWidth;
-@property (nonatomic, strong) NSArray                        *contentVCS;
+@property (nonatomic, strong) NSArray<NSString *>            *contentVCS;
+@property (nonatomic, strong) NSArray<NSDictionary *>        *paramArr;
 
 @end
 
@@ -34,7 +38,7 @@
     self.titleArr = @[@"黑微博",@"小视频",@"资料"];
     self.titleWidth = kScreenWidth/[self.titleArr count];
     self.contentVCS = @[@"ZSHWeiboViewController",@"ZSHVideoViewController",@"ZSHPersonalDetailViewController"];
-    
+    self.paramArr = @[@{KFromClassType:@(FromPersonalVCToWeiboVC)},@{KFromClassType:@(FromPersonalVCToVideoVC)},@{KFromClassType:@(FromPersonalVCToPersonalDetailVC)}];
 }
 
 - (void)createUI{
@@ -101,7 +105,7 @@
     self.vcs = [[NSMutableArray alloc]init];
     for (int i = 0; i<self.titleArr.count; i++) {
         Class className = NSClassFromString(self.contentVCS[i]);
-        RootViewController *vc =  [[className alloc]init];
+        RootViewController *vc = [[className alloc] initWithParamDic:self.paramArr[i]];
         [self.vcs addObject:vc];
     }
     

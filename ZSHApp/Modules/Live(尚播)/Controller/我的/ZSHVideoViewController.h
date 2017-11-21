@@ -8,6 +8,13 @@
 
 #import "RootViewController.h"
 
+typedef NS_ENUM(NSInteger,ZSHToVideoVC){
+    FromPersonalVCToVideoVC,                        //个人中心
+    FromTabbarToVideoVC,                            //tabbar
+    FromNoneToVideoVC
+};
+
+
 @interface ZSHVideoViewController : RootViewController
 
 @end

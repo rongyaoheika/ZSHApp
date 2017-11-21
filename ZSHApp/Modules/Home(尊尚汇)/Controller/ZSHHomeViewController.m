@@ -36,6 +36,7 @@ static NSString *Identify_MagazineCell = @"magazineCell";
 @property (nonatomic, strong) ZSHBaseModel           *model;
 @property (nonatomic, strong) ZSHBottomBlurPopView   *bottomBlurPopView;
 
+@property (nonatomic, strong) NSMutableDictionary    *dataDic;
 @end
 
 @implementation ZSHHomeViewController
@@ -79,8 +80,9 @@ static NSString *Identify_MagazineCell = @"magazineCell";
                             @{KFromClassType:@(ZSHFromHomeMenuVCToServiceCenterVC),@"title":@"消息中心",@"titleArr":@[@"评论／回复我的",@"赞我的"],@"imageArr":@[@"menu_news",@"menu_love"]},
                             @{KFromClassType:@(ZSHFromHomeMenuVCToServiceCenterVC),@"title":@"系统通知",@"titleArr":@[@"荣耀黑卡官方帐号"],@"imageArr":@[@"menu_noti"]},
                             @""];
-    
     [self initViewModel];
+    self.dataDic = [NSMutableDictionary dictionary];
+    [self testPostRequest];
 }
 
 - (void)createUI{
@@ -108,7 +110,7 @@ static NSString *Identify_MagazineCell = @"magazineCell";
     [self.tableViewModel.sectionModelArray removeAllObjects];
     [self.tableViewModel.sectionModelArray addObject:[self storeHeadSection]];
     [self.tableViewModel.sectionModelArray addObject:[self storeNoticeSection]];
-    [self.tableViewModel.sectionModelArray addObject:[self storeServiceSection]];
+//    [self.tableViewModel.sectionModelArray addObject:[self storeServiceSection]];
     [self.tableViewModel.sectionModelArray addObject:[self storePlaySection]];
     [self.tableViewModel.sectionModelArray addObject:[self storeMagazineSection]];
 }
@@ -174,9 +176,10 @@ static NSString *Identify_MagazineCell = @"magazineCell";
     ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
     [sectionModel.cellModelArray addObject:cellModel];
     cellModel.height = kRealValue(80);
+    kWeakSelf(self);
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHNoticeViewCell *cell = [tableView dequeueReusableCellWithIdentifier:Identify_ServiceCell forIndexPath:indexPath];
-        NSDictionary *nextParamDic = @{KFromClassType:@(FromHomeServiceVCToNoticeView)};
+        NSDictionary *nextParamDic = @{KFromClassType:@(FromHomeServiceVCToNoticeView),@"data":weakself.dataDic};
         [cell updateCellWithParamDic:nextParamDic];
         return cell;
     };
@@ -296,25 +299,23 @@ static NSString *Identify_MagazineCell = @"magazineCell";
             return;
         }];
     };
-    
-    [self testPostRequest];
-    
 }
 
 
 
-- (void)locateBtnAction{
+- (void)locateBtnAction {
     
     ZSHCityViewController *cityVC = [[ZSHCityViewController alloc]init];
     [self.navigationController pushViewController:cityVC animated:YES];
 }
 
-- (void)testPostRequest{
+- (void)testPostRequest {
     [PPNetworkHelper openLog];
     
-    NSString *md5URLString = [ZSHBaseFunction md5StringFromString:@"COMMEND20171120,fh,"];
-    RLog(@"加密数据为%@",md5URLString);
-    [PPNetworkHelper POST:kUrlUserHome(md5URLString) parameters:nil success:^(id responseObject) {
+    kWeakSelf(self);
+    [PPNetworkHelper POST:kUrlUserHome parameters:nil success:^(id responseObject) {
+        weakself.dataDic = responseObject;
+        [weakself.tableViewModel.sectionModelArray addObject:[self storeServiceSection]];
         RLog(@"请求成功：返回数据&%@",responseObject);
     } failure:^(NSError *error) {
         RLog(@"请求失败");

@@ -36,9 +36,20 @@ static NSString *PersonalDetailIdentifier = @"PersonalDetailIdentifier";
     self.title = @"资料";
     
     [self.view addSubview:self.tableView];
-    [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.mas_equalTo(self.view);
-    }];
+    if (kFromClassTypeValue == FromPersonalVCToPersonalDetailVC) {
+        [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.edges.mas_equalTo(self.view);
+        }];
+    } else if (kFromClassTypeValue == FromTabbarToPersonalDetailVC) {
+        [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.edges.mas_equalTo(self.view).insets(UIEdgeInsetsMake(KNavigationBarHeight, 0, 0, 0));
+        }];
+    } else {
+        [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.edges.mas_equalTo(self.view);
+        }];
+    }
+
     self.tableView.delegate = self.tableViewModel;
     self.tableView.dataSource = self.tableViewModel;
     [self.tableView registerClass:[ZSHBaseCell class] forCellReuseIdentifier:PersonalDetailIdentifier];

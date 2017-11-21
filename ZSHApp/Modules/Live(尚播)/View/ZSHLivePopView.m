@@ -8,6 +8,9 @@
 
 #import "ZSHLivePopView.h"
 #import "TLMenuButtonView.h"
+#import "ZSHWeiboViewController.h"
+#import "ZSHVideoViewController.h"
+#import "ZSHPersonalDetailViewController.h"
 
 @interface ZSHLivePopView ()
 
@@ -33,7 +36,7 @@
     tlMenuView.centerPoint = _centerBtn.center;
     tlMenuView.clickLiveSubButton = ^(NSInteger tag){
         _ISShowMenuButton = YES;
-        [weakself clickAddButton:_centerBtn];
+        [weakself clickButton:tag];
     };
     _tlMenuView = tlMenuView;
     [self addSubview:tlMenuView];
@@ -50,6 +53,19 @@
 }
 
 #pragma getter
+- (void)clickButton:(NSInteger)index {
+    NSArray *VCS = @[@"ZSHWeiboViewController",@"ZSHVideoViewController",@"ZSHPersonalDetailViewController"];
+    NSArray *fromclassTypes = @[@(FromTabbarToWeiboVC),@(FromTabbarToVideoVC), @(FromTabbarToPersonalDetailVC)];
+    Class className = NSClassFromString(VCS[index-1]);
+    RootViewController *vc =  [[className alloc] initWithParamDic:@{KFromClassType:fromclassTypes[index-1]}];
+
+    [ZSHBaseUIControl setAnimationWithHidden:YES view:self.superview completedBlock:^{
+        [[kAppDelegate getCurrentUIVC].navigationController pushViewController:vc animated:YES];
+    }];
+
+}
+
+
 - (void)clickAddButton:(UIButton *)sender{
     if (!_ISShowMenuButton) {
         [UIView animateWithDuration:0.2 animations:^{

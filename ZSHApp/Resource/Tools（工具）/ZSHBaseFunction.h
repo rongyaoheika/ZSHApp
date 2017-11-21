@@ -14,5 +14,7 @@
  * MD5 字符串
  */
 + (NSString *)md5StringFromString:(NSString *)string;
++ (NSString *)getFKEYWithCommand:(NSString *)cmd;
+
 
 @end

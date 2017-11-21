@@ -47,12 +47,14 @@
 #pragma mark - 适配
 - (void)setUpFixiOS11
 {
-//    if (@available(ios 11.0,*)) {
-//        UIScrollView.appearance.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
-//        UITableView.appearance.estimatedRowHeight = 0;
-//        UITableView.appearance.estimatedSectionFooterHeight = 0;
-//        UITableView.appearance.estimatedSectionHeaderHeight = 0;
-//    }
+#ifdef __IPHONE_11_0
+    if (@available(ios 11.0,*)) {
+        UIScrollView.appearance.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+        UITableView.appearance.estimatedRowHeight = 0;
+        UITableView.appearance.estimatedSectionFooterHeight = 0;
+        UITableView.appearance.estimatedSectionHeaderHeight = 0;
+    }
+#endif
 }
 
 - (void)initKeyboard{

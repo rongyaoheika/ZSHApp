@@ -59,8 +59,14 @@
     _btnArr = [[NSMutableArray alloc]init];
     if ([paramDic[KFromClassType]integerValue] == FromHomeNoticeVCToNoticeView) {
         _itemScrollView.itemWidth = kRealValue(95);
-        NSArray *titleArr = @[@"2.4.6.8娱乐吧",@"逸林游艇",@"麦乐迪KTV",@"海帆酒吧"];
-        for (int i = 1; i<5; i++) {
+//        NSArray *titleArr = @[@"2.4.6.8娱乐吧",@"逸林游艇",@"麦乐迪KTV",@"海帆酒吧"];
+        NSMutableArray *titleArr = [NSMutableArray array];
+        NSArray *pbArr = paramDic[@"pb"];
+        for (NSDictionary *dic in pbArr) {
+            [titleArr addObject:dic[@"IMAGES"]];
+        }
+        
+        for (int i = 1; i<titleArr.count; i++) {
             NSString *imageName = [NSString stringWithFormat:@"home_notice%d",i];
             UIButton *btn = [[UIButton alloc]init];
             [btn setTitle:titleArr[i-1] forState:UIControlStateNormal];
