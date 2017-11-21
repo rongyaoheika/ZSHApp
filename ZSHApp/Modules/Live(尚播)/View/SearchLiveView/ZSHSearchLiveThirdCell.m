@@ -7,11 +7,11 @@
 //
 
 #import "ZSHSearchLiveThirdCell.h"
-#import "DCSliderView.h"
+#import "StepSlider.h"
 
 @interface ZSHSearchLiveThirdCell()
 
-@property (nonatomic, strong) DCSliderView        *timeSlider;
+@property (nonatomic, strong) StepSlider        *timeSlider;
 
 @end
 
@@ -28,14 +28,33 @@
         make.width.mas_equalTo(kRealValue(60));
     }];
     
-    _timeSlider = [[DCSliderView alloc]initWithFrame:CGRectZero WithLayerColor:KZSHColor929292];
+    NSArray *labelTitleArr = @[@"0", @"15分钟内", @"2小时内", @"1天内", @"7天内"];
+    _timeSlider = [[StepSlider alloc] initWithFrame:CGRectZero];
+    [_timeSlider addTarget:self action:@selector(changeValue:) forControlEvents:UIControlEventValueChanged];
+    _timeSlider.dotsInteractionEnabled = YES;
+    _timeSlider.labelOffset = kRealValue(-5);
+    _timeSlider.sliderCircleColor = KZSHColor929292;
+    _timeSlider.labelFont = kPingFangLight(11);
+    _timeSlider.labelColor = KZSHColor929292;
+    _timeSlider.sliderCircleColor = KZSHColor929292;
+    _timeSlider.sliderCircleImage = [UIImage imageNamed:@"age_icon"];
+    _timeSlider.trackHeight = kRealValue(2);
+    _timeSlider.trackColor = KZSHColor929292;
+    _timeSlider.trackCircleRadius = kRealValue(5);
+    _timeSlider.labels = labelTitleArr;
+    [_timeSlider setMaxCount:labelTitleArr.count];
     [self addSubview:_timeSlider];
     [self.timeSlider mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.mas_equalTo(self);
-        make.left.mas_equalTo(titleLabel.mas_right).offset(kRealValue(46));
+        make.left.mas_equalTo(titleLabel.mas_right).offset(kRealValue(42));
         make.width.mas_equalTo(kRealValue(220));
-        make.height.mas_equalTo(kRealValue(30));
+        make.height.mas_equalTo(kRealValue(40));
     }];
+}
+
+- (void)changeValue:(StepSlider *)sender
+{
+    RLog(@"值变化");
 }
 
 @end

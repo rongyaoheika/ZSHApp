@@ -23,5 +23,7 @@ typedef void (^TextFieldChanged)(NSString *);
 
 @interface ZSHTextFieldCellView : ZSHBaseView
 
-@property (nonatomic,copy)TextFieldChanged textFieldChanged;
+@property (nonatomic, strong) UITextField       *textField;
+@property (nonatomic, copy)   TextFieldChanged  textFieldChanged;
+
 @end

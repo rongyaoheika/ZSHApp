@@ -74,10 +74,12 @@ static AFHTTPSessionManager *_sessionManager;
 }
 
 + (void)cancelRequestWithURL:(NSString *)URL {
-    if (!URL) { return; }
+    NSString *requestUrl = [NSString stringWithFormat:@"%@%@", kUrlRoot, URL];
+    if (!requestUrl) { return; }
     @synchronized (self) {
+        
         [[self allSessionTask] enumerateObjectsUsingBlock:^(NSURLSessionTask  *_Nonnull task, NSUInteger idx, BOOL * _Nonnull stop) {
-            if ([task.currentRequest.URL.absoluteString hasPrefix:URL]) {
+            if ([task.currentRequest.URL.absoluteString hasPrefix:requestUrl]) {
                 [task cancel];
                 [[self allSessionTask] removeObject:task];
                 *stop = YES;
@@ -91,7 +93,10 @@ static AFHTTPSessionManager *_sessionManager;
                parameters:(id)parameters
                   success:(PPHttpRequestSuccess)success
                   failure:(PPHttpRequestFailed)failure {
-    return [self GET:URL parameters:parameters responseCache:nil success:success failure:failure];
+    //完整请求接口
+    NSString *requestUrl = [NSString stringWithFormat:@"%@%@", kUrlRoot, URL];
+    
+    return [self GET:requestUrl parameters:parameters responseCache:nil success:success failure:failure];
 }
 
 #pragma mark - POST请求无缓存
@@ -99,7 +104,11 @@ static AFHTTPSessionManager *_sessionManager;
                 parameters:(id)parameters
                    success:(PPHttpRequestSuccess)success
                    failure:(PPHttpRequestFailed)failure {
-    return [self POST:URL parameters:parameters responseCache:nil success:success failure:failure];
+    NSString *requestUrl = [NSString stringWithFormat:@"%@%@", kUrlRoot, URL];
+    
+    RLog(@"----请求的完整接口为%@",requestUrl);
+    
+    return [self POST:requestUrl parameters:parameters responseCache:nil success:success failure:failure];
 }
 
 #pragma mark - GET请求自动缓存
@@ -108,10 +117,11 @@ static AFHTTPSessionManager *_sessionManager;
             responseCache:(PPHttpRequestCache)responseCache
                   success:(PPHttpRequestSuccess)success
                   failure:(PPHttpRequestFailed)failure {
+     NSString *requestUrl = [NSString stringWithFormat:@"%@%@", kUrlRoot, URL];
     //读取缓存
-    responseCache!=nil ? responseCache([PPNetworkCache httpCacheForURL:URL parameters:parameters]) : nil;
+    responseCache!=nil ? responseCache([PPNetworkCache httpCacheForURL:requestUrl parameters:parameters]) : nil;
     
-    NSURLSessionTask *sessionTask = [_sessionManager GET:URL parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
+    NSURLSessionTask *sessionTask = [_sessionManager GET:requestUrl parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
@@ -119,7 +129,7 @@ static AFHTTPSessionManager *_sessionManager;
         [[self allSessionTask] removeObject:task];
         success ? success(responseObject) : nil;
         //对数据进行异步缓存
-        responseCache!=nil ? [PPNetworkCache setHttpCache:responseObject URL:URL parameters:parameters] : nil;
+        responseCache!=nil ? [PPNetworkCache setHttpCache:responseObject URL:requestUrl parameters:parameters] : nil;
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
@@ -174,8 +184,9 @@ static AFHTTPSessionManager *_sessionManager;
                                progress:(PPHttpProgress)progress
                                 success:(PPHttpRequestSuccess)success
                                 failure:(PPHttpRequestFailed)failure {
+    NSString *requestUrl = [NSString stringWithFormat:@"%@%@", kUrlRoot, URL];
     
-    NSURLSessionTask *sessionTask = [_sessionManager POST:URL parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+    NSURLSessionTask *sessionTask = [_sessionManager POST:requestUrl parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         NSError *error = nil;
         [formData appendPartWithFileURL:[NSURL URLWithString:filePath] name:name error:&error];
         (failure && error) ? failure(error) : nil;
@@ -214,7 +225,9 @@ static AFHTTPSessionManager *_sessionManager;
                                  progress:(PPHttpProgress)progress
                                   success:(PPHttpRequestSuccess)success
                                   failure:(PPHttpRequestFailed)failure {
-    NSURLSessionTask *sessionTask = [_sessionManager POST:URL parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+    NSString *requestUrl = [NSString stringWithFormat:@"%@%@", kUrlRoot, URL];
+    
+    NSURLSessionTask *sessionTask = [_sessionManager POST:requestUrl parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         
         for (NSUInteger i = 0; i < images.count; i++) {
             // 图片经过等比压缩后得到的二进制文件
@@ -262,7 +275,9 @@ static AFHTTPSessionManager *_sessionManager;
                              progress:(PPHttpProgress)progress
                               success:(void(^)(NSString *))success
                               failure:(PPHttpRequestFailed)failure {
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:URL]];
+    NSString *requestUrl = [NSString stringWithFormat:@"%@%@", kUrlRoot, URL];
+    
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:requestUrl]];
     __block NSURLSessionDownloadTask *downloadTask = [_sessionManager downloadTaskWithRequest:request progress:^(NSProgress * _Nonnull downloadProgress) {
         //下载进度
         dispatch_sync(dispatch_get_main_queue(), ^{

@@ -13,7 +13,7 @@
 @property (nonatomic, strong) NSArray             *titles;
 @property (nonatomic, copy)   NSString            *imageName;
 @property (nonatomic, strong) UIScrollView        *scrollView;
-@property (nonatomic, strong) NSMutableArray      *titleButtons;
+//@property (nonatomic, strong) NSMutableArray      *titleButtons;
 @property (nonatomic, strong) UIView              *selectionIndicator;
 
 
@@ -158,6 +158,7 @@
     }
     _selectedIndex = selectedIndex;
     [self setSelectedIndicator:YES];
+    
 }
 
 - (void)setNormalColor:(UIColor *)normalColor{

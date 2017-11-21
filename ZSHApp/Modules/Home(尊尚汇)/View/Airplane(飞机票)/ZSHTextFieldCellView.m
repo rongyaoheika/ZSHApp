@@ -11,7 +11,6 @@
 @interface ZSHTextFieldCellView()<UITextFieldDelegate>
 
 @property (nonatomic,strong) UILabel      *leftLabel;
-@property (nonatomic,strong) UITextField  *textField;
 @property (nonatomic,strong) YYLabel      *getCaptchaBtn;
 @property (nonatomic,strong) UIView       *verticalLine;
 @property (nonatomic,strong) UIView       *bottomLine;

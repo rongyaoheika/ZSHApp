@@ -30,6 +30,8 @@
 //监听网络状态
 - (void)monitorNetworkStatus;
 
+//键盘监听
+- (void)initKeyboard;
 
 //单例
 + (AppDelegate *)shareAppDelegate;

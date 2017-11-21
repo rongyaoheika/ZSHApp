@@ -18,7 +18,7 @@ typedef void(^BMPageTitleViewSelectedBlock)(NSInteger index);
 
 @interface LXScollTitleView : UIView
 
-
+@property (nonatomic, strong) NSMutableArray      *titleButtons;
 /**
  文字未选中颜色，默认black
  */
