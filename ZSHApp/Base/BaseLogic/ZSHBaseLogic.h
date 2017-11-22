@@ -8,6 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
+typedef void (^RequestDataCompleted) (id);
+
 @interface ZSHBaseLogic : NSObject
+
+@property (nonatomic, strong) NSMutableArray           *mDataArr;
+@property (nonatomic, copy)   RequestDataCompleted     requestDataCompleted;
+- (void)loadData;
 
 @end

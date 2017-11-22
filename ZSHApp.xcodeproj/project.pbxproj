@@ -348,6 +348,7 @@
 		FEDF29271FB6D1C100CD5756 /* ZSHCoinViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEDF29261FB6D1C100CD5756 /* ZSHCoinViewController.m */; };
 		FEDF292A1FB6DA3000CD5756 /* ZSHLiveRoomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEDF29291FB6DA3000CD5756 /* ZSHLiveRoomViewController.m */; };
 		FEDF292D1FB6F24A00CD5756 /* ZSHLiveProfitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEDF292C1FB6F24A00CD5756 /* ZSHLiveProfitViewController.m */; };
+		FEE697C01FC566B5002120F0 /* ZSHHomeLogic.m in Sources */ = {isa = PBXBuildFile; fileRef = FEE697BF1FC566B4002120F0 /* ZSHHomeLogic.m */; };
 		FEEF46EF1FBA84100086A3C4 /* ZSHLivePopView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEEF46EE1FBA84100086A3C4 /* ZSHLivePopView.m */; };
 		FEEF46F21FBA8CAB0086A3C4 /* ZSHLiveClassifyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEEF46F11FBA8CAB0086A3C4 /* ZSHLiveClassifyViewController.m */; };
 		FEEF46F51FBAD2C90086A3C4 /* ZSHNearHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEEF46F41FBAD2C90086A3C4 /* ZSHNearHeadView.m */; };
@@ -1008,6 +1009,8 @@
 		FEDF29291FB6DA3000CD5756 /* ZSHLiveRoomViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHLiveRoomViewController.m; sourceTree = "<group>"; };
 		FEDF292B1FB6F24A00CD5756 /* ZSHLiveProfitViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHLiveProfitViewController.h; sourceTree = "<group>"; };
 		FEDF292C1FB6F24A00CD5756 /* ZSHLiveProfitViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHLiveProfitViewController.m; sourceTree = "<group>"; };
+		FEE697BE1FC566B4002120F0 /* ZSHHomeLogic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHHomeLogic.h; sourceTree = "<group>"; };
+		FEE697BF1FC566B4002120F0 /* ZSHHomeLogic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHHomeLogic.m; sourceTree = "<group>"; };
 		FEEF46ED1FBA84100086A3C4 /* ZSHLivePopView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHLivePopView.h; sourceTree = "<group>"; };
 		FEEF46EE1FBA84100086A3C4 /* ZSHLivePopView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHLivePopView.m; sourceTree = "<group>"; };
 		FEEF46F01FBA8CAB0086A3C4 /* ZSHLiveClassifyViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHLiveClassifyViewController.h; sourceTree = "<group>"; };
@@ -1654,8 +1657,8 @@
 		FE291EAC1F8CAEDC00D4BBE7 /* Home(尊尚汇) */ = {
 			isa = PBXGroup;
 			children = (
+				FEE697BD1FC566B4002120F0 /* Logic */,
 				FE291EAD1F8CAEDC00D4BBE7 /* Controller */,
-				FE291EAE1F8CAEDC00D4BBE7 /* Logic */,
 				FE291EAF1F8CAEDC00D4BBE7 /* Model */,
 				FE291EB01F8CAEDC00D4BBE7 /* View */,
 			);
@@ -1679,13 +1682,6 @@
 				FE2BB0C11F8E168B000D5800 /* ZSHHomeViewController.m */,
 			);
 			path = Controller;
-			sourceTree = "<group>";
-		};
-		FE291EAE1F8CAEDC00D4BBE7 /* Logic */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Logic;
 			sourceTree = "<group>";
 		};
 		FE291EAF1F8CAEDC00D4BBE7 /* Model */ = {
@@ -3031,6 +3027,15 @@
 			path = "ZSHApp/Modules/Live(尚播)/Controller/Coin(黑咖币)";
 			sourceTree = SOURCE_ROOT;
 		};
+		FEE697BD1FC566B4002120F0 /* Logic */ = {
+			isa = PBXGroup;
+			children = (
+				FEE697BE1FC566B4002120F0 /* ZSHHomeLogic.h */,
+				FEE697BF1FC566B4002120F0 /* ZSHHomeLogic.m */,
+			);
+			path = Logic;
+			sourceTree = "<group>";
+		};
 		FEF2B62F1FAC4C7D000AEA6E /* Entertainment(吃喝玩乐) */ = {
 			isa = PBXGroup;
 			children = (
@@ -3448,6 +3453,7 @@
 				FE7CA9EA1F9DD15300A2B15D /* ZSHLiveListModel.m in Sources */,
 				185C6D811FC2D950004EA461 /* LZCartViewController.m in Sources */,
 				FEA483AA1F91B96000219CFE /* RXLSideSlipViewController.m in Sources */,
+				FEE697C01FC566B5002120F0 /* ZSHHomeLogic.m in Sources */,
 				FEA483AB1F91B96000219CFE /* UIViewController+RXLSideMenu.h in Sources */,
 				FEA483AC1F91B96000219CFE /* UIViewController+RXLSideMenu.m in Sources */,
 				FEADBD291FBEBBC00065B94B /* ZSHCardCustomizedSecond.m in Sources */,

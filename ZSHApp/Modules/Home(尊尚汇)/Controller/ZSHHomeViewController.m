@@ -22,6 +22,7 @@
 #import "ZSHBaseTitleButtonCell.h"
 #import "ZSHHomeMainModel.h"
 #import "ZSHHotelDetailViewController.h"
+#import "ZSHHomeLogic.h"
 
 static NSString *Identify_HeadCell = @"headCell";
 static NSString *Identify_NoticeCell = @"noticeCell";
@@ -31,6 +32,7 @@ static NSString *Identify_MagazineCell = @"magazineCell";
 
 @interface ZSHHomeViewController ()<UISearchBarDelegate>
 
+
 @property (nonatomic, strong) NSArray                *pushVCsArr;
 @property (nonatomic, strong) NSArray                *paramArr;
 
@@ -38,8 +40,8 @@ static NSString *Identify_MagazineCell = @"magazineCell";
 @property (nonatomic, strong) NSArray                *menuParamArr;
 @property (nonatomic, strong) ZSHBaseModel           *model;
 @property (nonatomic, strong) ZSHBottomBlurPopView   *bottomBlurPopView;
-@property (nonatomic, strong) NSArray                *dataArr;                 //字典数组
 
+@property (nonatomic, strong) ZSHHomeLogic           *homeLogic;
 @property (nonatomic, strong) NSMutableDictionary    *dataDic;
 @end
 
@@ -53,6 +55,9 @@ static NSString *Identify_MagazineCell = @"magazineCell";
 }
 
 - (void)loadData{
+    //加载网络数据
+    [self requestData];
+    
     self.pushVCsArr = @[@"ZSHTitleContentViewController",
                         @"ZSHTitleContentViewController",
                         @"ZSHAirPlaneViewController",
@@ -85,8 +90,7 @@ static NSString *Identify_MagazineCell = @"magazineCell";
                             @{KFromClassType:@(ZSHFromHomeMenuVCToServiceCenterVC),@"title":@"系统通知",@"titleArr":@[@"荣耀黑卡官方帐号"],@"imageArr":@[@"menu_noti"]},
                             @""];
 
-    [self requestData];
-    [self initViewModel];
+    
 }
 
 - (void)createUI{
@@ -106,10 +110,18 @@ static NSString *Identify_MagazineCell = @"magazineCell";
     [self.tableView registerClass:[ZSHNoticeViewCell class] forCellReuseIdentifier:Identify_ServiceCell];
 	[self.tableView registerClass:[ZSHNoticeViewCell class] forCellReuseIdentifier:Identify_PlayCell];
     [self.tableView registerClass:[ZSHNoticeViewCell class] forCellReuseIdentifier:Identify_MagazineCell];
+    
+    [self initViewModel];
 }
 
 - (void)requestData{
-    [self testPostRequest];
+    kWeakSelf(self);
+    _homeLogic = [[ZSHHomeLogic alloc]init];
+    [_homeLogic loadData];
+    _homeLogic.requestDataCompleted = ^(id data){
+         [weakself initViewModel];
+    };
+   
 }
 
 - (void)initViewModel {
@@ -170,8 +182,8 @@ static NSString *Identify_MagazineCell = @"magazineCell";
             [weakself.navigationController pushViewController:hotelDetailVC animated:YES];
         };
         
-        if(_dataArr){
-         [cell updateCellWithDataArr:_dataArr];
+        if(_homeLogic.dataArr){
+         [cell updateCellWithDataArr:_homeLogic.dataArr];
         }
 
         return cell;
@@ -346,19 +358,19 @@ static NSString *Identify_MagazineCell = @"magazineCell";
     [self.navigationController pushViewController:cityVC animated:YES];
 }
 
-- (void)testPostRequest {
-    [PPNetworkHelper openLog];
-    
-    kWeakSelf(self);
-    [PPNetworkHelper POST:kUrlUserHome parameters:nil success:^(id responseObject) {
-        RLog(@"请求成功：返回数据&%@",responseObject);
-//        _dataArr = responseObject[@"pd"];
-         weakself.dataArr = [ZSHHomeMainModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"]];
-        [weakself initViewModel];
-    } failure:^(NSError *error) {
-        RLog(@"请求失败");
-    }];
-}
+//- (void)testPostRequest {
+//    [PPNetworkHelper openLog];
+//
+//    kWeakSelf(self);
+//    [PPNetworkHelper POST:kUrlUserHome parameters:nil success:^(id responseObject) {
+//        RLog(@"请求成功：返回数据&%@",responseObject);
+////        _dataArr = responseObject[@"pd"];
+//         weakself.dataArr = [ZSHHomeMainModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"]];
+//        [weakself initViewModel];
+//    } failure:^(NSError *error) {
+//        RLog(@"请求失败");
+//    }];
+//}
 
 #pragma getter
 - (ZSHBottomBlurPopView *)createBottomBlurPopViewWith:(ZSHFromVCToBottomBlurPopView)fromClassType{
