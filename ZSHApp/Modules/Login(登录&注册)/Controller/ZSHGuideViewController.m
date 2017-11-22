@@ -72,7 +72,8 @@
     [_vipLoginBtn addTapBlock:^(UIButton *btn) {
         RLog(@"登录");
         ZSHLoginViewController *loginVC = [[ZSHLoginViewController alloc]init];
-        [weakself presentViewController:loginVC animated:YES completion:nil];
+        RootNavigationController *loginNavi = [[RootNavigationController alloc]initWithRootViewController:loginVC];
+        [weakself presentViewController:loginNavi animated:YES completion:nil];
     }];
     [self.view addSubview:_vipLoginBtn];
     [_vipLoginBtn mas_makeConstraints:^(MASConstraintMaker *make) {

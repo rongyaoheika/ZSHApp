@@ -133,7 +133,6 @@
         
         self.mainTabBarVC = nil;
         self.slipVC = nil;
-//        RootNavigationController *loginNavi = [[RootNavigationController alloc] initWithRootViewController:[ZSHLoginViewController new]];
         RootNavigationController *loginNavi = [[RootNavigationController alloc] initWithRootViewController:[ZSHGuideViewController new]];
 
         CATransition *anima = [CATransition animation];

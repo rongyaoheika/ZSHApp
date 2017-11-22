@@ -10,7 +10,7 @@
 
 @implementation ZSHHomeLogic
 
-- (void)loadData{
+- (void)loadNoticeCellData{
     kWeakSelf(self);
     [PPNetworkHelper openLog];
     [PPNetworkHelper POST:kUrlUserHome parameters:nil success:^(id responseObject) {

@@ -117,7 +117,7 @@ static NSString *Identify_MagazineCell = @"magazineCell";
 - (void)requestData{
     kWeakSelf(self);
     _homeLogic = [[ZSHHomeLogic alloc]init];
-    [_homeLogic loadData];
+    [_homeLogic loadNoticeCellData];
     _homeLogic.requestDataCompleted = ^(id data){
          [weakself initViewModel];
     };
