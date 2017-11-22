@@ -87,7 +87,9 @@
     _signBtn = [ZSHBaseUIControl createBtnWithParamDic:signBtnDic];
     [_signBtn addTapBlock:^(UIButton *btn) {
         RLog(@"点击在线申请");
-        [weakself dismissViewControllerAnimated:YES completion:nil];
+        ZSHCardViewController *cardVC = [[ZSHCardViewController alloc]init];
+        RootNavigationController *cardNavi = [[RootNavigationController alloc]initWithRootViewController:cardVC];
+        [weakself presentViewController:cardNavi animated:YES completion:nil];
     }];
     [self.view addSubview:_signBtn];
     [_signBtn mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -122,6 +124,8 @@
         loginLogic.loginSuccess = ^(id response) {
             [weakself skipAction];
         };
+    } else {
+         [self skipAction];
     }
 }
 
