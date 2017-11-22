@@ -110,7 +110,7 @@
 //13.获得用户名下所有订单列表
 //参数：HONOURUSER_ID 用户id
 //请求地址：/apporderin/orderalllist?ALLORDER(混淆码)
-#define kUrlShipPrefecture [NSString stringWithFormat:@"/appshipin/shipprefecture?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"ALLORDER"]]
+#define kUrlOrderAllList [NSString stringWithFormat:@"/appshipin/shipprefecture?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"ALLORDER"]]
 //14.获取用户名带条件查询的订单列表（待付款，待收货，待评价，已完成）
 //参数：HONOURUSER_ID 用户id/CONORDER 查询状态
 //（0040001）为待付款状态
@@ -198,59 +198,74 @@
 //33.首页中对应特权详情（仅马术，游艇，飞机，高尔夫，豪车）
 //参数：PRIVILEGE_ID 特权id
 //请求地址：/apphomein/privilegedet?PRIVIDET(混淆码)
-#define kUrlPrivilege [NSString stringWithFormat:@"/apphomein/privilegedet?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"PRIVIDET"]]
+#define kUrlPrivilegeDet [NSString stringWithFormat:@"/apphomein/privilegedet?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"PRIVIDET"]]
 //34.首页中新闻标题列表
 //参数：暂无
 //请求地址：/apphomein/getnewslist?NEWSLIST(混淆码)
+#define kUrlGetNewsList [NSString stringWithFormat:@"/apphomein/getnewslist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"NEWSLIST"]]
 //35.获取新闻详情
 //参数：NEWS_ID 新闻id
 //请求地址：/apphomein/getnewsdet?NEWSDET(混淆码)
+#define kUrlGetNewsDet [NSString stringWithFormat:@"/apphomein/getnewsdet?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"NEWSDET"]]
 //36.获取新闻所有评论
 //参数：NEWS_ID 新闻id
 //请求地址：/apphomein/getnewseva?NEWSEVA(混淆码)
+#define kUrlGetNewsEva [NSString stringWithFormat:@"/apphomein/getnewseva?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"NEWSEVA"]]
 //37.添加新闻评论
 //参数：NEWS_ID 评价新闻id/HONOURUSER_ID 评价用户id /NEWSEVACONTENT 评论内容
 //请求地址：/apphomein/getnewsevaadd?NEWSEVAADD(混淆码)
+#define kUrlGetNewsEvaAdd [NSString stringWithFormat:@"/apphomein/getnewsevaadd?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"NEWSEVAADD"]]
 //38.获取汇聚列表接口
 //参数：无参数
 //请求地址：/appconvergein/convergelist?CONVERGELIST(混淆码)
+#define kUrlConvergeList [NSString stringWithFormat:@"/appconvergein/convergelist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"CONVERGELIST"]]
 //39.获得指定汇聚下所有聚会列表
 //参数：CONVERGE_ID 汇聚列表下汇聚id
 //请求地址：/appconvergein/getpartylist?PARTYLIST(混淆码)
+#define kUrlGetPartyList [NSString stringWithFormat:@"/appconvergein/convergelist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"PARTYLIST"]]
 //40.查看指定聚会详情
 //参数：CONVERGEDETAIL_ID 指定聚会id
 //请求地址：/appconvergein/getdetailbyid?DETAILID(混淆码)
+#define kUrlGetDetaiByID [NSString stringWithFormat:@"/appconvergein/getdetailbyid?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"DETAILID"]]
 //41.发布聚会
 //参数：STARTTIME 聚会开始时间/ENDTIME 聚会结束时间/PRICEMIN 期望价格最低值/PRICEMAX 期望价格最高值/
 //CONVERGEPER 人数要求/CONVERGESEX 性别要求（0为女1为男2为不限）/AGEMIN 年龄要求下限/
 //AGEMAX 年龄要求上限/CONVERGETYPE 聚会方式/CONVERGEDET 聚会详细要求/
 //CONVERGETITLE 聚会标题/HONOURUSER_ID 发起人id
 //请求地址：/appconvergein/adddetailparty?DETAILADD(混淆码)
+#define kUrlAddDetailParty [NSString stringWithFormat:@"/appconvergein/adddetailparty?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"DETAILADD"]]
 //42. 获得某家酒店的综合评价
 //参数：SORTHOTEL_ID 酒店id
 //请求地址：/appshotelin/shotelmeaneva?SHOTELMEANEVA（混淆码）
+#define kUrlSHotelMeanEva [NSString stringWithFormat:@"/appshotelin/shotelmeaneva?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SHOTELMEANEVA"]]
 //43. 获得某家店铺的评价数量
 //参数：SORTHOTEL_ID酒店id
 //请求地址：/appshotelin/shotelcounteva?SHOTELCOUNTEVA(混淆码)
+#define kUrlSHotelCountEva [NSString stringWithFormat:@"/appshotelin/shotelcounteva?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SHOTELCOUNTEVA"]]
 //44. 获得某家酒店的具体服务接口
 //参数：SHOP_ID 对应店铺id
 //请求地址：/appshotelin/shotelserv?SHOTELSERV(混淆码)
+#define kUrlSHotelServ [NSString stringWithFormat:@"/appshotelin/shotelserv?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SHOTELSERV"]]
 //45. 酒店店铺添加用户评价接口
 //参数：SORTHOTEL_ID 所属店铺id/HONOURUSER_ID 评价用户id/EVALUATECONTENT 评价内容/EVALUATECOINT 评价分数
 //请求地址：/appshotelin/shoteladdeva?SHOTELADDEVA(混淆码)
+#define kUrlSHotelAddEva [NSString stringWithFormat:@"/appshotelin/shoteladdeva?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SHOTELADDEVA"]]
 //46. 生成酒店订单接口（未产生交易）
 //参数：ORDERUNAME 入住人姓名/ORDERPHONE 入住人手机号码/ORDERREMARK 订单备注/ORDERMONEY 订单价格/ORDERROOMNUM 预定酒店房间数量/ORDERCHECKDATE 入住日期/ORDERLEAVEDATE 离开日期
 ///ORDERDAYS 入住天数 /HOTELDETAIL_ID 预定房间类型id/HONOURUSER_ID 提交订单用户id
 //请求地址：/appshotelin/shiphotelorder?SHIPHOTELORDER(混淆码)
+#define kUrlShipHotlOrder [NSString stringWithFormat:@"/appshotelin/shiphotelorder?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SHIPHOTELORDER"]]
 //47. 修改酒店订单状态(改为支付成功,用户已支付)
 //参数：ORDERSTATUS 订单状态编码/HONOURUSER_ID 提交订单的用户id /ORDERNUMBER 订单编号
 //请求地址：/appshotelin/shiporderstaupd?SHIPHORELORDERUPD(混淆码)
+#define kUrlShipOrderStauPd [NSString stringWithFormat:@"/appshotelin/shiporderstaupd?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SHIPHORELORDERUPD"]]
 //48. 获得用户名下所有酒店订单列表
 //参数：HONOURUSER_ID 需要查询的用户id
 //请求地址：/apphotelorderin/hotelorderalllist?ALLHOTELORDER(混淆码)
+#define kUrlHotelOrderAllList [NSString stringWithFormat:@"/apphotelorderin/hotelorderalllist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"ALLHOTELORDER"]]
 //49. 获取某酒店详情列表
 //参数：SORTHOTEL_ID 某酒店id
 //请求地址：/appshotelin/hoteldetaillist?HOTELDETAIL(混淆码)
-
+#define kUrlHotelDetailList [NSString stringWithFormat:@"/appshotelin/hoteldetaillist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"HOTELDETAIL"]]
 
 #endif /* URLMacros_h */

@@ -203,58 +203,6 @@
     return _bottomBtn;
 }
 
-/*- (UIView *)bottomBtnView{
-    if (!_bottomBtnView) {
-        _bottomBtnView = [[UIView alloc]initWithFrame:CGRectZero];
-        _bottomBtnView.backgroundColor = KZSHColor0B0B0B;
-        _bottomBtnView.frame = CGRectMake(0, KScreenHeight - KBottomNavH, KScreenWidth, KBottomNavH);
-        [self setUpLeftTwoButton];//客服，收藏
-        [self setUpRightTwoButton];//加入购物车 立即购买
-    }
-    return _bottomBtnView;
-}
-
-- (void)setUpLeftTwoButton
-{
-    NSArray *imagesNor = @[@"goods_service",@"goods_collect"];
-    NSArray *imagesSel = @[@"goods_service",@"goods_collect"];
-    CGFloat buttonW = kRealValue(30);
-    
-    for (NSInteger i = 0; i < imagesNor.count; i++) {
-        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        button.backgroundColor = KClearColor;
-        [button setImage:[UIImage imageNamed:imagesNor[i]] forState:UIControlStateNormal];
-        [button setImage:[UIImage imageNamed:imagesSel[i]] forState:UIControlStateSelected];
-        button.tag = i;
-        [button addTarget:self action:@selector(bottomButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-        CGFloat buttonX = kRealValue(25) + ((buttonW +kRealValue(28))  * i);
-        [_bottomBtnView addSubview:button];
-        [button mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.size.mas_equalTo(CGSizeMake(buttonW, buttonW));
-            make.centerY.mas_equalTo(_bottomBtnView);
-            make.left.mas_equalTo(buttonX);
-        }];
-    }
-}
-#pragma mark - 加入购物车 立即购买
-- (void)setUpRightTwoButton
-{
-    NSArray *titles = @[@"加入购物车",@"立即购买"];
-    for (NSInteger i = 0; i < titles.count; i++) {
-        NSDictionary *btnDic = @{@"title":titles[i],@"titleColor":KZSHColor929292,@"font":kPingFangMedium(17),@"backgroundColor":KClearColor};
-        UIButton *button = [ZSHBaseUIControl createBtnWithParamDic:btnDic];
-        button.tag = i + 2;
-        [button addTarget:self action:@selector(bottomButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-        [_bottomBtnView addSubview:button];
-        [button mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.height.mas_equalTo(_bottomBtnView);
-            make.width.mas_equalTo(kRealValue(120));
-            make.left.mas_equalTo(kRealValue(135)+i*kRealValue(120));
-            make.centerY.mas_equalTo(_bottomBtnView);
-        }];
-    }
-}*/
-
 -(void)headerRereshing{
     
 }
@@ -274,7 +222,7 @@
     if (isShowLiftBack && ( VCCount > 1 || self.navigationController.presentingViewController != nil)) {
         //        [self addNavigationItemWithTitles:@[@"返回"] isLeft:YES target:self action:@selector(backBtnClicked) tags:nil];
         
-        [self addNavigationItemWithImageName:@"nav_back" isLeft:YES target:self  action:@selector(backBtnClicked) tag:nil];
+        [self addNavigationItemWithImageName:@"nav_back" isLeft:YES target:self  action:@selector(backBtnClicked) tag:0];
         
     } else {
         self.navigationItem.hidesBackButton = YES;
