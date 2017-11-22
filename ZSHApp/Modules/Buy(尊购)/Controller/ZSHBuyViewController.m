@@ -96,6 +96,14 @@ static NSString *ZSHGoodsListViewID = @"ZSHGoodsListView";
     
     NSArray *imageArr = @[@"buy_watch",@"buy_bag",@"buy_bracelet",@"buy_car",@"buy_goft",@"buy_plane",@"buy_camera"];
     NSArray *titleArr = @[@"手表专区",@"包袋专区",@"首饰专区",@"豪车世界",@"高尔夫汇",@"飞机游艇",@"家电数码"];
+    NSArray *brandIDArr = @[@"1b4ed4c57ef04933b97e8def48fc423a",
+                            @"a34d1f14a4b7481e8284ad4ba97a496b",
+                            @"2df2c7e628b14341be1e2932cb377c82",
+                            @"c387f598e5c64a1ea275a7ca3e77518c",
+                            @"",
+                            @"668b21fc68a44080899cfd840107af22",
+                            @"a1d59672053f45e1a5499fb1d5850144"
+                            ];
     for (int i = 0; i < imageArr.count; i++) {
         ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
         [sectionModel.cellModelArray addObject:cellModel];
@@ -114,6 +122,7 @@ static NSString *ZSHGoodsListViewID = @"ZSHGoodsListView";
         };
         
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
+            [weakself getShipPrefectureWithBrandID:brandIDArr[indexPath.row]];
             ZSHGoodsTitleContentViewController *goodContentVC = [[ZSHGoodsTitleContentViewController alloc]init];
             [weakself.navigationController pushViewController:goodContentVC animated:YES];
         };
@@ -124,6 +133,18 @@ static NSString *ZSHGoodsListViewID = @"ZSHGoodsListView";
 
 
 #pragma action
+- (void)getShipPrefectureWithBrandID:(NSString *)brandID {
+    RLog(@"brandID:%@",brandID);
+    kWeakSelf(self);
+    [PPNetworkHelper POST:kUrlShipPrefecture parameters:@{@"BRAND_ID":brandID} success:^(id responseObject) {
+        RLog(@"请求成功：返回数据&%@",responseObject);
+        [weakself initViewModel];
+    } failure:^(NSError *error) {
+        RLog(@"请求失败");
+    }];
+}
+
+
 - (void)mineBtntAction{
     [self.sideSlipVC presentLeftMenuViewController];
     

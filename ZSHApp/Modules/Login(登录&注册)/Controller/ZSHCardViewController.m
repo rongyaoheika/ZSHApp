@@ -16,6 +16,7 @@
 #import "ZSHCardCustomizedCell.h"
 #import "ZSHCardPayCell.h"
 #import "ZSHCardCommitBottomView.h"
+
 @interface ZSHCardViewController ()
 
 @property (nonatomic, strong) NSArray            *imageArr;
@@ -23,6 +24,9 @@
 @property (nonatomic, strong) NSArray            *paramArr;
 @property (nonatomic, assign) CGFloat            *headHeight;
 @property (nonatomic, strong) NSMutableArray     *selectedArr;
+
+
+
 
 @end
 
@@ -88,7 +92,7 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
     cellModel.height = kRealValue(240);
     cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHBaseCell *cell = [[ZSHBaseCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@""];
-        NSDictionary *nextParamDic = @{@"dataArr":self.imageArr,@"min_scale":@(0.8),@"withRatio":@(1.18),@"pageImage":@"page_press",@"currentPageImage":@"page_normal"};
+        NSDictionary *nextParamDic = @{@"dataArr":self.imageArr,@"min_scale":@(0.8),@"withRatio":@(1.18),@"pageImage":@"page_press",@"currentPageImage":@"page_normal",@"infinite":@(true)};
         ZSHGuideView *midView = [[ZSHGuideView alloc]initWithFrame:CGRectZero paramDic:nextParamDic];
         [cell.contentView addSubview:midView];
         [midView mas_makeConstraints:^(MASConstraintMaker *make) {

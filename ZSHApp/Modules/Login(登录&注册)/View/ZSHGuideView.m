@@ -7,17 +7,20 @@
 //
 
 #import "ZSHGuideView.h"
-#import "iCarousel.h"
+#import "TYCyclePagerView.h"
+#import "TYCyclePagerViewCell.h"
 
-@interface ZSHGuideView ()<iCarouselDelegate,iCarouselDataSource>
+@interface ZSHGuideView ()<TYCyclePagerViewDataSource, TYCyclePagerViewDelegate>
 
-@property (nonatomic, strong) iCarousel        *carousel;
 @property (nonatomic, assign) CGSize           midImageSize;
 @property (nonatomic, strong) NSArray          *imageArr;
 @property (nonatomic, strong) UIPageControl    *pageControl;
 @property (nonatomic, assign) CGFloat          min_scale;
 @property (nonatomic, assign) CGFloat          withRatio;
 @property (nonatomic, assign) CGFloat          contentLeft;
+
+@property (nonatomic, strong) TYCyclePagerView *pagerView;
+
 
 @end
 
@@ -30,8 +33,8 @@
     
     UIImage *midImage = [UIImage imageNamed:self.imageArr[0]];
     _midImageSize = midImage.size;
-    [self addSubview:self.carousel];
-    [self.carousel scrollToItemAtIndex:1 animated:NO];
+//    [self addSubview:self.carousel];
+    [self addSubview:self.pagerView];
     [self addSubview:self.pageControl];
     [self layoutIfNeeded];
 }
@@ -39,12 +42,19 @@
 - (void)layoutSubviews{
     [super layoutSubviews];
     
-    [self.carousel mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.pagerView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self);
         make.width.mas_equalTo(self);
         make.top.mas_equalTo(self);
         make.height.mas_equalTo(_midImageSize.height);
     }];
+    
+//    [self.carousel mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.mas_equalTo(self);
+//        make.width.mas_equalTo(self);
+//        make.top.mas_equalTo(self);
+//        make.height.mas_equalTo(_midImageSize.height);
+//    }];
     
     [self.pageControl mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.mas_equalTo(self);
@@ -55,19 +65,19 @@
 }
 
 #pragma mark - getter
-- (iCarousel *)carousel {
-    if (!_carousel) {
-        _carousel = [[iCarousel alloc]init];
-        _carousel.dataSource = self;
-        _carousel.delegate = self;
-        _carousel.backgroundColor = [UIColor clearColor];
-        _carousel.type = iCarouselTypeCustom;
-        _carousel.pagingEnabled = YES;
-        _carousel.bounces = NO;
-        _carousel.perspective = -10.0/500.0;
+- (TYCyclePagerView *)pagerView {
+    if (!_pagerView) {
+        _pagerView = [[TYCyclePagerView alloc]init];
+        _pagerView.layer.borderWidth = 1;
+        _pagerView.isInfiniteLoop = [self.paramDic[@"infinite"] boolValue];
+//        _pagerView.autoScrollInterval = 3.0;
+        _pagerView.dataSource = self;
+        _pagerView.delegate = self;
+        [_pagerView registerClass:[TYCyclePagerViewCell class] forCellWithReuseIdentifier:@"cellId"];
     }
-    return _carousel;
+    return _pagerView;
 }
+
 
 - (UIPageControl *)pageControl{
     if (!_pageControl) {
@@ -83,45 +93,34 @@
     }
     return _pageControl;
 }
+#pragma mark - TYCyclePagerViewDataSource
 
-
-#pragma mark - delegate
-- (void)carouselDidEndScrollingAnimation:(iCarousel *)carousel{
-    self.pageControl.currentPage = carousel.currentItemIndex;
-}
-
--(CATransform3D)carousel:(iCarousel *)carousel itemTransformForOffset:(CGFloat)offset baseTransform:(CATransform3D)transform{
-    
-    CGFloat max_sacle = 1.0f;
-    CGFloat min_scale = _min_scale;
-    if (offset <= 1 && offset >= -1) {
-        float tempScale = offset < 0 ? 1 + offset : 1 - offset;
-        float slope = (max_sacle - min_scale) / 1;
-        
-        CGFloat scale = min_scale + slope * tempScale;
-        transform = CATransform3DScale(transform, scale, scale, 1);
-    }else{
-        transform = CATransform3DScale(transform, min_scale, min_scale, 1);
-    }
-    
-    return CATransform3DTranslate(transform, offset * self.carousel.itemWidth * _withRatio, 0.0, 0.0);
-}
-
-#pragma mark - datasource
-- (NSInteger)numberOfItemsInCarousel:(iCarousel *)carousel{
+- (NSInteger)numberOfItemsInPagerView:(TYCyclePagerView *)pageView {
     return self.imageArr.count;
 }
 
-- (UIView *)carousel:(iCarousel *)carousel viewForItemAtIndex:(NSInteger)index reusingView:(nullable UIView *)view{
-    if (!view) {
-        view = [[UIImageView alloc]initWithImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@",self.imageArr[index]]]];
-        view.frame = CGRectMake((KScreenWidth -_midImageSize.width)/2 , 0,_midImageSize.width, _midImageSize.height);
-    }
-    return view;
+- (UICollectionViewCell *)pagerView:(TYCyclePagerView *)pagerView cellForItemAtIndex:(NSInteger)index {
+    TYCyclePagerViewCell *cell = [pagerView dequeueReusableCellWithReuseIdentifier:@"cellId" forIndex:index];
+//    cell.backgroundColor = self.imageArr[index];
+//    cell.label.text = [NSString stringWithFormat:@"index->%ld",index];
+    cell.imageView.image = [UIImage imageNamed:self.imageArr[index]];
+    return cell;
 }
 
--(void)carousel:(iCarousel *)carousel didSelectItemAtIndex:(NSInteger)index{
-    RLog(@"被点击的 是 第%ld 卡片中的 第 %ld",(long)_carousel+1,(long)index+1);
+- (TYCyclePagerViewLayout *)layoutForPagerView:(TYCyclePagerView *)pageView {
+    TYCyclePagerViewLayout *layout = [[TYCyclePagerViewLayout alloc]init];
+    layout.itemSize = CGSizeMake(CGRectGetWidth(pageView.frame)*0.8, CGRectGetHeight(pageView.frame));
+    layout.itemSpacing = 15;
+    //layout.minimumAlpha = 0.3;
+    layout.itemHorizontalCenter = YES;
+    layout.layoutType = TYCyclePagerTransformLayoutLinear;
+    return layout;
+}
+
+- (void)pagerView:(TYCyclePagerView *)pageView didScrollFromIndex:(NSInteger)fromIndex toIndex:(NSInteger)toIndex {
+    _pageControl.currentPage = toIndex;
+    //[_pageControl setCurrentPage:newIndex animate:YES];
+//    NSLog(@"%zd ->  %zd",fromIndex,toIndex);
 }
 
 - (void)updateCellWithParamDic:(NSDictionary *)dic{

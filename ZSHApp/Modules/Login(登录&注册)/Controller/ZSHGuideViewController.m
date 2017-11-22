@@ -11,19 +11,21 @@
 #import "ZSHLoginViewController.h"
 #import "ZSHCardViewController.h"
 
+
 @interface ZSHGuideViewController ()
 
 @property (nonatomic, strong) NSArray              *imageArr;
 @property (nonatomic, strong) ZSHGuideView         *midView;
 @property (nonatomic, strong) UIButton             *applyBtn;
 @property (nonatomic, strong) UIButton             *vipLoginBtn;
+
+
 @end
 
 @implementation ZSHGuideViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     
     [self loadData];
     [self createUI];
@@ -38,7 +40,7 @@
     bgImage.frame = self.view.bounds;
     [self.view addSubview:bgImage];
     
-    NSDictionary *nextParamDic = @{@"dataArr":self.imageArr,@"min_scale":@(0.6),@"withRatio":@(1.8)};
+    NSDictionary *nextParamDic = @{@"dataArr":self.imageArr,@"min_scale":@(0.6),@"withRatio":@(1.8),@"infinite":@(false)};
      _midView = [[ZSHGuideView alloc]initWithFrame:CGRectZero paramDic:nextParamDic];
     [self.view addSubview:_midView];
     [_midView mas_makeConstraints:^(MASConstraintMaker *make) {

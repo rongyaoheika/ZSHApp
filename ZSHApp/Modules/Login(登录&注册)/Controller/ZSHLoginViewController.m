@@ -9,6 +9,8 @@
 #import "ZSHLoginViewController.h"
 #import "ZSHTextFieldCellView.h"
 #import "ZSHTextFieldCellView.h"
+#import "ZSHLoginLogic.h"
+#import "ZSHCardViewController.h"
 
 @interface ZSHLoginViewController ()
 
@@ -70,7 +72,7 @@
     _loginButton.layer.cornerRadius = kRealValue(3.0);
     [_loginButton addTapBlock:^(UIButton *btn) {
         RLog(@"登录");
-         [weakself skipAction];
+         [weakself login];
     }];
     [self.view addSubview:_loginButton];
     [_loginButton mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -85,6 +87,7 @@
     _signBtn = [ZSHBaseUIControl createBtnWithParamDic:signBtnDic];
     [_signBtn addTapBlock:^(UIButton *btn) {
         RLog(@"点击在线申请");
+        [weakself dismissViewControllerAnimated:YES completion:nil];
     }];
     [self.view addSubview:_signBtn];
     [_signBtn mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -110,6 +113,19 @@
 }
 
 #pragma action
+- (void)login {
+    if (_userView.textField.text.length && _pwdView.textField.text.length) {
+        ZSHLoginLogic *loginLogic = [[ZSHLoginLogic alloc] init];
+        RLog(@"username;%@:password%@", _userView.textField.text,_pwdView.textField.text);
+        [loginLogic loginWithCardNo:_userView.textField.text password:_pwdView.textField.text];
+        kWeakSelf(self);
+        loginLogic.loginSuccess = ^(id response) {
+            [weakself skipAction];
+        };
+    }
+}
+
+
 -(void)skipAction{
     KPostNotification(KNotificationLoginStateChange, @YES);
 }

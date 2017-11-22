@@ -192,7 +192,7 @@
         make.top.mas_equalTo(_noticeLabel).offset(kRealValue(26));
         make.centerX.mas_equalTo(_scrollView);
         make.size.mas_equalTo(CGSizeMake(kRealValue(345), kRealValue(100)));
-        make.bottom.mas_equalTo(_noticeDetailLabel.superview.mas_bottom).offset(-132);
+        make.bottom.mas_equalTo(_scrollView).offset(-132);
     }];
     
     NSDictionary *stewardBtnDic = @{@"title":@"召唤管家",@"titleColor":KZSHColor929292,@"font":kPingFangMedium(17),@"backgroundColor":KBlackColor};

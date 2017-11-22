@@ -20,7 +20,7 @@
 @interface ZSHGoodsViewController ()<UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,UISearchBarDelegate>
 
 /* 左边数据 */
-@property (nonatomic, strong)NSMutableArray<ZSHClassGoodsModel *> *titleArr;
+@property (nonatomic, strong)NSMutableArray *titleArr;
 /* 右边数据 */
 @property (nonatomic, strong)NSMutableArray<ZSHClassMainModel *>  *mainArr;
 
@@ -43,10 +43,10 @@ static NSString *const ZSHBrandSortCellID = @"ZSHBrandSortCell";
 
 - (void)loadData{
     
-    _titleArr = [ZSHClassGoodsModel mj_objectArrayWithFilename:@"ClassifyTitles.plist"];
-    _mainArr = [ZSHClassMainModel mj_objectArrayWithFilename:@"ClassiftyGoods01.plist"];
+//    _titleArr = [ZSHClassGoodsModel mj_objectArrayWithFilename:@"ClassifyTitles.plist"];
+//    _mainArr = [ZSHClassMainModel mj_objectArrayWithFilename:@"ClassiftyGoods01.plist"];
     
-    
+    [self requestData];
     [self initViewModel];
 }
 
@@ -60,8 +60,7 @@ static NSString *const ZSHBrandSortCellID = @"ZSHBrandSortCell";
     self.tableView.dataSource = self.tableViewModel;
     [self.tableView registerClass:[ZSHClassCategoryCell class] forCellReuseIdentifier:ZSHClassCategoryCellID];
     [self.tableView reloadData];
-    //默认选择第一行（注意一定要在加载完数据之后）
-    [self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] animated:NO scrollPosition:UITableViewScrollPositionTop];
+
     
     
     UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout *)self.collectionView.collectionViewLayout;
@@ -87,6 +86,7 @@ static NSString *const ZSHBrandSortCellID = @"ZSHBrandSortCell";
 - (void)initViewModel {
     [self.tableViewModel.sectionModelArray removeAllObjects];
     [self.tableViewModel.sectionModelArray addObject:[self storeListSection]];
+    [self.tableView reloadData];
 }
 
 #pragma mark - <UITableViewDelegate>
@@ -100,13 +100,13 @@ static NSString *const ZSHBrandSortCellID = @"ZSHBrandSortCell";
         cellModel.height = kRealValue(45);
         cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
             ZSHClassCategoryCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHClassCategoryCellID forIndexPath:indexPath];
-            cell.titleItem = _titleArr[indexPath.row];
+            cell.titleLabel.text = _titleArr[indexPath.row][@"BRANDBANE"];
             return cell;
         };
         
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
             kStrongSelf(self);
-            _mainArr = [ZSHClassMainModel mj_objectArrayWithFilename:_titleArr[indexPath.row].fileName];
+//            [weakself requestBrandIconListWithBrandID:_titleArr[indexPath.row][@"BRAND_ID"]];
             [self.collectionView reloadData];
         };
     }
@@ -186,10 +186,29 @@ static NSString *const ZSHBrandSortCellID = @"ZSHBrandSortCell";
     [self.navigationController pushViewController:goodContentVC animated:YES];
 }
 
+- (void)requestData {
+    kWeakSelf(self);
+    [PPNetworkHelper POST:kUrlShipBrandList parameters:nil success:^(id responseObject) {
+        RLog(@"请求成功：返回数据&%@",responseObject);
+        _titleArr = responseObject[@"pd"];
+        [weakself initViewModel];
+        //默认选择第一行（注意一定要在加载完数据之后）
+        [weakself.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] animated:NO scrollPosition:UITableViewScrollPositionTop];
+//        [weakself requestBrandIconListWithBrandID:_titleArr[0][@"BRAND_ID"]];
+    } failure:^(NSError *error) {
+        RLog(@"请求失败");
+    }];
+}
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)requestBrandIconListWithBrandID:(NSString *)BrandID {
+    kWeakSelf(self);
+    [PPNetworkHelper POST:kUrlShipBrandIconList parameters:@{@"BRAND_ID":BrandID} success:^(id responseObject) {
+        RLog(@"请求成功：返回数据&%@",responseObject);
+        _mainArr = responseObject[@"pd"];
+        [weakself.collectionView reloadData];
+    } failure:^(NSError *error) {
+        RLog(@"请求失败");
+    }];
 }
 
 @end
