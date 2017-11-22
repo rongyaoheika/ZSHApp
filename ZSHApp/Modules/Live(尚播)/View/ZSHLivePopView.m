@@ -25,7 +25,6 @@
 - (void)setup{
     kWeakSelf(self);
      _ISShowMenuButton = YES;
-    self.backgroundColor = KWhiteColor;
     _centerBtn = [[UIButton alloc] initWithFrame:CGRectMake((KScreenWidth-kRealValue(50))/2, kRealValue(150)-kRealValue(50), kRealValue(50), kRealValue(50))];
     _centerBtn.layer.cornerRadius = kRealValue(25);
     [_centerBtn addTarget:self action:@selector(clickAddButton:) forControlEvents:UIControlEventTouchUpInside];

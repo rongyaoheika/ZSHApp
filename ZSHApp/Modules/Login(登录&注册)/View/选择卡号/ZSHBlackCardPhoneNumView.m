@@ -96,8 +96,6 @@
     return listView;
 }
 
-#pragma action
-
 #pragma getter
 - (LXScollTitleView *)titleView{
     if (!_titleView) {

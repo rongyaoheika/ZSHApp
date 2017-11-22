@@ -12,8 +12,7 @@
 
 @property (nonatomic, strong) NSArray             *titles;
 @property (nonatomic, copy)   NSString            *imageName;
-@property (nonatomic, strong) UIScrollView        *scrollView;
-//@property (nonatomic, strong) NSMutableArray      *titleButtons;
+
 @property (nonatomic, strong) UIView              *selectionIndicator;
 
 
@@ -31,6 +30,10 @@
     if (self = [super initWithFrame:frame]) {
         [self initData];
         [self setupUI];
+        
+        [self.scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.edges.mas_equalTo(self);
+        }];
     }
     return self;
 }
@@ -57,7 +60,7 @@
     [self.scrollView addSubview:self.selectionIndicator];
 }
 
-- (void)reloadViewWithTitles:(NSArray *)titles{
+- (void)reloadViewWithTitles:(NSArray *)titles {
     for (UIButton *btn in self.titleButtons) {
         [btn removeFromSuperview];
     }
@@ -70,10 +73,23 @@
         [btn setTitle:title forState:UIControlStateNormal];
         [btn setTitleColor:self.normalColor forState:UIControlStateNormal];
         [btn setTitleColor:self.selectedColor forState:UIControlStateSelected];
-        [btn setBackgroundImage:self.normalBgImage forState:UIControlStateNormal];
-        [btn setBackgroundImage:self.selectedBgImage forState:UIControlStateSelected];
-        [btn setImage:self.normalImage forState:UIControlStateNormal];
-        [btn setImage:self.selectedImage forState:UIControlStateSelected];
+        
+        [btn setBackgroundImage:self.normalBgImage?self.normalBgImage:self.normalBgImageArr[i] forState:UIControlStateNormal];
+        [btn setBackgroundImage:self.selectedBgImage?self.selectedBgImage:self.selectedBgImageArr[i] forState:UIControlStateSelected];
+        
+        
+        UIImage *image = self.normalImage?self.normalImage:self.normalImageArr[i];
+        CGFloat scale = [UIScreen mainScreen].scale;
+        CGSize aimSize = CGSizeMake(image.size.width, image.size.height);
+        
+        UIGraphicsBeginImageContextWithOptions(aimSize, 0, scale);
+        [image drawInRect:CGRectMake(0, 0, 95, 135)];
+        UIImage *imageOut = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        
+        [btn setImage:imageOut forState:UIControlStateNormal];
+        [btn setImage:imageOut forState:UIControlStateSelected];
+        
         
         btn.selected = (i == self.selectedIndex);
         btn.titleLabel.font = btn.selected?self.selectedTitleFont:self.normalTitleFont;
@@ -87,7 +103,6 @@
     }
     [self layoutSubviews];
 }
-
 
 - (void)btnClick:(UIButton *)titleBtn{
     [self.titleButtons enumerateObjectsUsingBlock:^(UIButton *btn , NSUInteger idx, BOOL * _Nonnull stop) {
@@ -107,16 +122,22 @@
     }
 }
 
+-(void)updateConstraints{
+    
+    
+    
+    [super updateConstraints];
+}
+
 - (void)layoutSubviews{
     [super layoutSubviews];
-    self.scrollView.frame = self.bounds;
-    self.scrollView.contentSize = CGSizeMake(self.titleButtons.count * self.titleWidth, self.frame.size.height);
+    
+//    self.scrollView.frame = self.bounds;
+//    self.scrollView.contentSize = CGSizeMake(self.titleButtons.count * self.titleWidth, self.frame.size.height);
     NSInteger i = 0;
     for (UIButton *btn in self.titleButtons) {
         btn.frame = CGRectMake(self.titleWidth * i++, 0, self.titleWidth, self.frame.size.height);
-        if (self.normalImage) {
-            [btn layoutButtonWithEdgeInsetsStyle:XYButtonEdgeInsetsStyleRight imageTitleSpace:kRealValue(6)];
-        }
+        [btn layoutButtonWithEdgeInsetsStyle:self.imageStyle imageTitleSpace:self.imageTitleSpace];
     }
     [self setSelectedIndicator:NO];
     [self.scrollView bringSubviewToFront:self.selectionIndicator];
@@ -138,16 +159,6 @@
                                      self.scrollView.frame.size.width,
                                      self.scrollView.frame.size.height);
     [self.scrollView scrollRectToVisible:centeredRect animated:animated];
-}
-
-//按钮左侧图片旋转
--(void)changeButtonObject:(UIButton *)button TransformAngle:(CGFloat)angle
-{
-    [UIView animateWithDuration:0.5 animations:^{
-        button.imageView.transform =CGAffineTransformMakeRotation(angle);
-    } completion:^(BOOL finished) {
-    }];
-    
 }
 
 #pragma mark - setter

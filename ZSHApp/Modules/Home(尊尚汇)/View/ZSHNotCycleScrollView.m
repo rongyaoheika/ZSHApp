@@ -7,20 +7,18 @@
 //
 
 #import "ZSHNotCycleScrollView.h"
-#define  leftSpacing 15
-#define  midSpacing 7.5
 #import "ZSHHotelDetailViewController.h"
 @interface ZSHNotCycleScrollView()
 
 @property (nonatomic, strong) UIScrollView   *scrollView;
-@property (nonatomic, strong) NSMutableArray *titleButtons;
 @property (nonatomic, strong) UIView         *selectionIndicator;
-
 //宽度不一致时，记录前个button的maxX
 @property (nonatomic, strong) UIButton        *temBtn;
 
 @end
 
+#define  leftSpacing 15
+#define  midSpacing 7.5
 @implementation ZSHNotCycleScrollView
 
 - (void)awakeFromNib{
@@ -72,7 +70,6 @@
         [btn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
         if (i == self.selectedIndex) {
             btn.selected = YES;
-            
             if (self.fromClassType == FromKTVCalendarVCToNoticeView) {
                 for (UILabel *subLabel in btn.subviews) {
                         subLabel.textColor = KZSHColorF29E19;

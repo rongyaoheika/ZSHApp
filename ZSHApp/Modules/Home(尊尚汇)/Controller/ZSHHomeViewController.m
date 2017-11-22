@@ -19,6 +19,9 @@
 #import "ZSHServiceCenterViewController.h"
 #import "ZSHToplineViewController.h"
 #import "ZSHCityViewController.h"
+#import "ZSHBaseTitleButtonCell.h"
+#import "ZSHHomeMainModel.h"
+#import "ZSHHotelDetailViewController.h"
 
 static NSString *Identify_HeadCell = @"headCell";
 static NSString *Identify_NoticeCell = @"noticeCell";
@@ -99,7 +102,7 @@ static NSString *Identify_MagazineCell = @"magazineCell";
     self.tableView.dataSource = self.tableViewModel;
     
 	[self.tableView registerClass:[ZSHHomeHeadView class] forCellReuseIdentifier:Identify_HeadCell];
-	[self.tableView registerClass:[ZSHNoticeViewCell class] forCellReuseIdentifier:Identify_NoticeCell];
+	[self.tableView registerClass:[ZSHBaseTitleButtonCell class] forCellReuseIdentifier:Identify_NoticeCell];
     [self.tableView registerClass:[ZSHNoticeViewCell class] forCellReuseIdentifier:Identify_ServiceCell];
 	[self.tableView registerClass:[ZSHNoticeViewCell class] forCellReuseIdentifier:Identify_PlayCell];
     [self.tableView registerClass:[ZSHNoticeViewCell class] forCellReuseIdentifier:Identify_MagazineCell];
@@ -160,19 +163,21 @@ static NSString *Identify_MagazineCell = @"magazineCell";
     [sectionModel.cellModelArray addObject:cellModel];
     cellModel.height = kRealValue(135);
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
-        ZSHNoticeViewCell *cell = [tableView dequeueReusableCellWithIdentifier:Identify_NoticeCell forIndexPath:indexPath];
-        NSDictionary *nextParamDic = nil;
-        if (_dataArr) {
-            nextParamDic = @{KFromClassType:@(FromHomeNoticeVCToNoticeView),@"dataArr":_dataArr};
-        } else {
-            nextParamDic = @{KFromClassType:@(FromHomeNoticeVCToNoticeView)};
+        ZSHBaseTitleButtonCell *cell = [tableView dequeueReusableCellWithIdentifier:Identify_NoticeCell forIndexPath:indexPath];
+        cell.itemClickBlock = ^(NSInteger tag) {
+            NSDictionary *nextParamDic = @{KFromClassType:@(ZSHFromHomeKTVVCToHotelDetailVC)};
+            ZSHHotelDetailViewController *hotelDetailVC = [[ZSHHotelDetailViewController alloc]initWithParamDic:nextParamDic];
+            [weakself.navigationController pushViewController:hotelDetailVC animated:YES];
+        };
+        
+        if(_dataArr){
+         [cell updateCellWithDataArr:_dataArr];
         }
-        [cell updateCellWithParamDic:nextParamDic];
+
         return cell;
     };
     
     cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
-        [tableView deselectRowAtIndexPath:indexPath animated:YES];
     };
     return sectionModel;
 }
@@ -349,7 +354,8 @@ static NSString *Identify_MagazineCell = @"magazineCell";
     RLog(@"加密数据为%@",md5URLString);
     [PPNetworkHelper POST:kUrlUserHome parameters:nil success:^(id responseObject) {
         RLog(@"请求成功：返回数据&%@",responseObject);
-        _dataArr = responseObject[@"pd"];
+//        _dataArr = responseObject[@"pd"];
+         weakself.dataArr = [ZSHHomeMainModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"]];
         [weakself initViewModel];
     } failure:^(NSError *error) {
         RLog(@"请求失败");
@@ -365,7 +371,6 @@ static NSString *Identify_MagazineCell = @"magazineCell";
     bottomBlurPopView.tintColor = KClearColor;
     return bottomBlurPopView;
 }
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

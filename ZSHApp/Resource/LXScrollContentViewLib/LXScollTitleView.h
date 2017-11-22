@@ -18,6 +18,9 @@ typedef void(^BMPageTitleViewSelectedBlock)(NSInteger index);
 
 @interface LXScollTitleView : UIView
 
+
+@property (nonatomic, strong) UIScrollView        *scrollView;
+
 @property (nonatomic, strong) NSMutableArray      *titleButtons;
 /**
  文字未选中颜色，默认black
@@ -28,6 +31,9 @@ typedef void(^BMPageTitleViewSelectedBlock)(NSInteger index);
  文字选中和下方滚动条颜色，默认red
  */
 @property (nonatomic, strong) UIColor *selectedColor;
+
+
+//背景图片
 
 /**
  button 默认状态背景图片
@@ -40,15 +46,41 @@ typedef void(^BMPageTitleViewSelectedBlock)(NSInteger index);
 @property (nonatomic, strong) UIImage *selectedBgImage;
 
 /**
- button 默认状态左边图片
+ button 默认状态背景图片数组
+ */
+@property (nonatomic, strong) NSArray *normalBgImageArr;
+
+/**
+ button 选中时背景图片数组
+ */
+@property (nonatomic, strong) NSArray *selectedBgImageArr;
+
+
+// button.imageview图片
+
+/**
+ button.imageview 默认状态图片
  */
 @property (nonatomic, strong) UIImage *normalImage;
 
 /**
- button 选中状态左边图片
+ button.imageview 选中状态图片
  */
 @property (nonatomic, strong) UIImage *selectedImage;
 
+/**
+ button.imageview 默认状态图片数组
+ */
+@property (nonatomic, strong) NSArray *normalImageArr;
+
+/**
+ button.imageview 选中状态图片数组
+ */
+@property (nonatomic, strong) NSArray *selectedImageArr;
+
+
+@property (nonatomic, assign) XYButtonEdgeInsetsStyle  imageStyle;
+@property (nonatomic, assign) CGFloat                  imageTitleSpace;
 
 /**
  第几个标题处于选中状态，默认为0

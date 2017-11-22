@@ -10,6 +10,7 @@
 #import "ZSHNotCycleScrollView.h"
 #import "ZSHBaseModel.h"
 #import "ZSHHotelDetailViewController.h"
+#import "LXScollTitleView.h"
 
 @interface ZSHNoticeViewCell()
 
@@ -17,6 +18,7 @@
 @property (nonatomic ,strong)  NSMutableArray             *btnArr;
 @property (nonatomic ,strong)  ZSHBaseModel               *model;
 @property (nonatomic ,strong)  UIButton                   *giftTypeBtn;
+@property (nonatomic ,strong)  LXScollTitleView           *titleView;
 @end
 
 @implementation ZSHNoticeViewCell
@@ -24,23 +26,40 @@
 - (void)setup {
     kWeakSelf(self);
     [self addSubview:self.itemScrollView];
+    [self addSubview:self.titleView];
     self.itemScrollView.selectedBlock = ^(NSInteger index){
         if (weakself.itemClickBlock) {
             weakself.itemClickBlock(index);
         }
     };
-    
-//    [self reloadListData];
 }
 
 - (void)layoutSubviews{
     [super layoutSubviews];
+    
     [self.itemScrollView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self);
         make.top.mas_equalTo(self);
         make.bottom.mas_equalTo(self);
         make.width.mas_equalTo(KScreenWidth);
     }];
+}
+
+#pragma getter
+- (LXScollTitleView *)titleView{
+    if (!_titleView) {
+        _titleView = [[LXScollTitleView alloc] initWithFrame:CGRectZero];
+        _titleView.normalTitleFont = kPingFangRegular(11);
+        _titleView.selectedTitleFont = kPingFangRegular(11);
+        _titleView.selectedColor = KZSHColorF29E19;
+        _titleView.normalColor = KZSHColor929292;
+        _titleView.indicatorHeight = 0;
+        _titleView.selectedBlock = ^(NSInteger index){
+            
+        };
+        _titleView.titleWidth = kScreenWidth;
+    }
+    return _titleView;
 }
 
 - (ZSHNotCycleScrollView *)itemScrollView{
@@ -56,41 +75,9 @@
 }
 
 - (void)updateCellWithParamDic:(NSDictionary *)paramDic{
+    self.paramDic = paramDic;
     _btnArr = [[NSMutableArray alloc]init];
-    if ([paramDic[KFromClassType]integerValue] == FromHomeNoticeVCToNoticeView) {
-        _itemScrollView.itemWidth = kRealValue(95);
-        NSArray *titleArr = @[@"2.4.6.8娱乐吧",@"逸林游艇",@"麦乐迪KTV",@"海帆酒吧"];
-//        for (int i = 1; i<5; i++) {
-//            NSString *imageName = [NSString stringWithFormat:@"home_notice%d",i];
-//            UIButton *btn = [[UIButton alloc]init];
-//            [btn setTitle:titleArr[i-1] forState:UIControlStateNormal];
-//            [btn setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
-//            [btn setTitleColor:KZSHColor929292 forState:UIControlStateNormal];
-//            btn.titleLabel.font = kPingFangRegular(12);
-//            [_btnArr addObject:btn];
-//        }
-        
-        //数组字典
-        NSArray *dataArr = paramDic[@"dataArr"];
-        for (NSDictionary *dic in dataArr) {
-            NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:dic[@"IMAGES"]]];
-            UIImage *image = [UIImage imageWithData:data]; // 取得图片
-            UIButton *btn = [[UIButton alloc]init];
-            [btn setTitle:dic[@"SHOPNAME"] forState:UIControlStateNormal];
-            [btn setImage:image forState:UIControlStateNormal];
-            [btn setTitleColor:KZSHColor929292 forState:UIControlStateNormal];
-            [_btnArr addObject:btn];
-        }
-        
-        self.itemScrollView.selectedBlock = ^(NSInteger index) {
-            if (index == 2) {
-                NSDictionary *nextParamDic = @{KFromClassType:@(ZSHFromHomeKTVVCToHotelDetailVC)};
-                ZSHHotelDetailViewController *hotelDetailVC = [[ZSHHotelDetailViewController alloc]initWithParamDic:nextParamDic];
-                [[kAppDelegate getCurrentUIVC].navigationController pushViewController:hotelDetailVC animated:YES];
-            }
-        };
-        
-    } else if ([paramDic[KFromClassType]integerValue]  == FromHomeServiceVCToNoticeView) {
+    if ([paramDic[KFromClassType]integerValue]  == FromHomeServiceVCToNoticeView) {
         _itemScrollView.itemWidth = kRealValue(130);
         for (int i = 1; i<4; i++) {
             NSString *imageName = [NSString stringWithFormat:@"home_service%d",i];
@@ -98,9 +85,9 @@
             [btn setBackgroundImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
             [_btnArr addObject:btn];
         }
-
+        
     }  else if ([paramDic[KFromClassType]integerValue]  == FromHomeMagazineVCToNoticeView) {
-         _itemScrollView.itemWidth = kRealValue(95);
+        _itemScrollView.itemWidth = kRealValue(95);
         
         for (int i = 1; i<5; i++) {
             NSString *imageName = [NSString stringWithFormat:@"home_magazine%d",i];
@@ -118,7 +105,7 @@
             NSDictionary *bottomDic = @{@"text":bottomTitleArr[i],@"font":kPingFangMedium(12),@"textAlignment":@(NSTextAlignmentCenter),@"height":@(30)};
             UIButton *calendarBtn = [ZSHBaseUIControl createLabelBtnWithTopDic:topDic bottomDic:bottomDic];
             [_btnArr addObject:calendarBtn];
-        } 
+        }
     } else if ([paramDic[KFromClassType]integerValue]  == FromKTVRoomTypeVCToNoticeView) {
         
         NSArray *titleArr = @[@"小包（2-4人）",@"中包（4-6人）",@"大包（6-8人）",@"VIP小包（8-10人）"];
@@ -144,7 +131,8 @@
         }
     }
     
-     [self.itemScrollView reloadViewWithDataArr:_btnArr];
+    [self.itemScrollView reloadViewWithDataArr:_btnArr];
+   
 }
 
 //会员中心卡片
@@ -153,7 +141,7 @@
     UIButton *btn  = [[UIButton alloc]init];
     [btn setBackgroundImage:[UIImage imageNamed:paramDic[@"bgImage"]] forState:UIControlStateNormal];
     
-     NSDictionary *topTitleLabelDic = @{@"text":paramDic[@"title"],@"font":kPingFangRegular(12),@"textAlignment":@(NSTextAlignmentCenter)};
+    NSDictionary *topTitleLabelDic = @{@"text":paramDic[@"title"],@"font":kPingFangRegular(12),@"textAlignment":@(NSTextAlignmentCenter)};
     UILabel *topTitleLabel = [ZSHBaseUIControl createLabelWithParamDic:topTitleLabelDic];
     [btn addSubview:topTitleLabel];
     [topTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {

@@ -27,8 +27,13 @@
 @property (nonatomic, strong) UIImage             *titleBtnImage;
 @property (nonatomic, strong) NSArray             *titleArr;
 @property (nonatomic, strong) NSMutableArray      *vcs;
-@property (nonatomic, assign) CGFloat             titleWidth;
-@property (nonatomic, assign) CGFloat             indicatorHeight;
+
+@property (nonatomic, assign) CGFloat                  titleWidth;
+@property (nonatomic, assign) CGFloat                  indicatorHeight;
+@property (nonatomic, assign) XYButtonEdgeInsetsStyle  imageStyle;
+@property (nonatomic, assign) CGFloat                  imageTitleSpace;
+
+
 @property (nonatomic, strong) NSArray             *contentVCS;
 @property (nonatomic, strong) NSArray             *paramArr;
 @property (nonatomic, strong) NSArray             *subContentVCs;
@@ -80,6 +85,8 @@
         case FromHotelVCToTitleContentVC:{
             self.titleArr = @[@"排序",@"品牌",@"筛选"];
             self.titleBtnImage = [UIImage imageNamed:@"hotel_btn"];
+            self.imageStyle = XYButtonEdgeInsetsStyleRight;
+            self.imageTitleSpace = kRealValue(6.0);
             self.indicatorHeight = 0.0;
             [self createHotelNaviUI];
             self.contentVCS = @[@"ZSHHotelViewController",@"ZSHHotelViewController",@"ZSHHotelViewController"];
@@ -88,6 +95,8 @@
         case FromFoodVCToTitleContentVC:{
             self.titleArr = @[@"排序",@"品牌",@"筛选"];
             self.titleBtnImage = [UIImage imageNamed:@"hotel_btn"];
+            self.imageStyle = XYButtonEdgeInsetsStyleRight;
+            self.imageTitleSpace = kRealValue(6.0);
             self.indicatorHeight = 0.0;
             [self createHotelNaviUI];
             self.contentVCS = @[@"ZSHFoodViewController",@"ZSHFoodViewController",@"ZSHFoodViewController"];
@@ -97,6 +106,8 @@
         case FromPlaneTicketVCToTitleContentVC:{
             self.titleArr = @[@"价格",@"时间",@"准确率"];
             self.titleBtnImage = [UIImage imageNamed:@"hotel_btn"];
+            self.imageStyle = XYButtonEdgeInsetsStyleRight;
+            self.imageTitleSpace = kRealValue(6.0);
             self.indicatorHeight = 0.0;
             [self createTicketNaviUI];
             self.contentVCS = @[@"ZSHMoreTicketViewController",@"ZSHMoreTicketViewController",@"ZSHMoreTicketViewController"];
@@ -168,6 +179,8 @@
     if (!_titleView) {
         _titleView = [[LXScollTitleView alloc] initWithFrame:CGRectMake(0, KNavigationBarHeight, KScreenWidth, kRealValue(35))];
         _titleView.normalImage = self.titleBtnImage;
+        _titleView.imageStyle = self.imageStyle;
+        _titleView.imageTitleSpace = self.imageTitleSpace;
         _titleView.normalTitleFont = kPingFangRegular(15);
         _titleView.selectedTitleFont = kPingFangMedium(15);
         _titleView.selectedColor = KZSHColor929292;
