@@ -9,7 +9,6 @@
 //  QQ交流: 302934443
 
 #import "LZCartViewController.h"
-#import "LZConfigFile.h"
 #import "LZCartTableViewCell.h"
 #import "LZShopModel.h"
 #import "LZGoodsModel.h"
@@ -30,6 +29,15 @@
 @property (strong,nonatomic)UILabel        *totlePriceLabel;
 @property (strong,nonatomic)UIButton       *balanceBtn;
 @end
+
+#define  TAG_CartEmptyView 100
+
+static NSString *lz_BackButtonString = @"back_button";
+static NSString *lz_Bottom_UnSelectButtonString = @"goods_choose_normal";
+static NSString *lz_Bottom_SelectButtonString = @"goods_choose_press";
+static NSString *lz_CartEmptyString = @"cart_default_bg";
+static NSInteger lz_CartRowHeight = 120;
+
 
 @implementation LZCartViewController
 
@@ -169,11 +177,11 @@
 #pragma mark - 布局页面视图
 #pragma mark -- 自定义导航
 - (void)setupCustomNavigationBar {
-    UIView *backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, LZSCREEN_WIDTH, LZNaigationBarHeight)];
-    backgroundView.backgroundColor = LZColorFromRGB(236, 236, 236);
+    UIView *backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, KNavigationBarHeight)];
+    backgroundView.backgroundColor = KZSHColor929292;
     [self.view addSubview:backgroundView];
     
-    UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(0, LZNaigationBarHeight - 0.5, LZSCREEN_WIDTH, 0.5)];
+    UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(0, KNavigationBarHeight - 0.5, KScreenWidth, 0.5)];
     lineView.backgroundColor = [UIColor lightGrayColor];
     [self.view addSubview:lineView];
     
@@ -181,7 +189,7 @@
     titleLabel.text = @"购物车";
     titleLabel.font = [UIFont systemFontOfSize:20];
     
-    titleLabel.center = CGPointMake(self.view.center.x, (LZNaigationBarHeight - 20)/2.0 + 20);
+    titleLabel.center = CGPointMake(self.view.center.x, (KNavigationBarHeight - 20)/2.0 + 20);
     CGSize size = [titleLabel sizeThatFits:CGSizeMake(300, 44)];
     titleLabel.bounds = CGRectMake(0, 0, size.width + 20, size.height);
     
@@ -204,20 +212,20 @@
     
     //当有tabBarController时,在tabBar的上面
     if (_isHasTabBarController == YES) {
-        backgroundView.frame = CGRectMake(0, LZSCREEN_HEIGHT - LZNaigationBarHeight - LZTabBarHeight, LZSCREEN_WIDTH, LZTabBarHeight);
+        backgroundView.frame = CGRectMake(0, KScreenHeight - KNavigationBarHeight - KBottomNavH - KBottomHeight, KScreenWidth, KBottomNavH);
     } else {
-        backgroundView.frame = CGRectMake(0, LZSCREEN_HEIGHT -  LZTabBarHeight, LZSCREEN_WIDTH, LZTabBarHeight);
+        backgroundView.frame = CGRectMake(0, KScreenHeight -  KBottomNavH - KBottomHeight, KScreenWidth, KBottomNavH);
     }
     
 //    UIView *lineView = [[UIView alloc]init];
-//    lineView.frame = CGRectMake(0, 0, LZSCREEN_WIDTH, 1);
+//    lineView.frame = CGRectMake(0, 0, KScreenWidth, 1);
 //    lineView.backgroundColor = [UIColor lightGrayColor];
 //    [backgroundView addSubview:lineView];
     
     //全选按钮
     UIButton *selectAll = [UIButton buttonWithType:UIButtonTypeCustom];
     selectAll.titleLabel.font = [UIFont systemFontOfSize:12];
-    selectAll.frame = CGRectMake(10, 5, 80, LZTabBarHeight - 10);
+    selectAll.frame = CGRectMake(10, 5, 80, KBottomNavH - 10);
     [selectAll setTitle:@" 全选" forState:UIControlStateNormal];
     [selectAll setImage:[UIImage imageNamed:lz_Bottom_UnSelectButtonString] forState:UIControlStateNormal];
     [selectAll setImage:[UIImage imageNamed:lz_Bottom_SelectButtonString] forState:UIControlStateSelected];
@@ -229,7 +237,7 @@
     //结算按钮
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.backgroundColor = KZSHColor141414;
-    btn.frame = CGRectMake(LZSCREEN_WIDTH - kRealValue(120), 0, kRealValue(120), LZTabBarHeight);
+    btn.frame = CGRectMake(KScreenWidth - kRealValue(120), 0, kRealValue(120), KBottomNavH);
     [btn setTitle:@"去结算" forState:UIControlStateNormal];
     [btn addTarget:self action:@selector(goToPayButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     [backgroundView addSubview:btn];
@@ -242,9 +250,9 @@
     [backgroundView addSubview:label];
     
     label.attributedText = [self LZSetString:@"¥0.00"];
-    CGFloat maxWidth = LZSCREEN_WIDTH - selectAll.bounds.size.width - btn.bounds.size.width - 30;
-//    CGSize size = [label sizeThatFits:CGSizeMake(maxWidth, LZTabBarHeight)];
-    label.frame = CGRectMake(selectAll.bounds.size.width + 20, 0, maxWidth - 10, LZTabBarHeight);
+    CGFloat maxWidth = KScreenWidth - selectAll.bounds.size.width - btn.bounds.size.width - 30;
+//    CGSize size = [label sizeThatFits:CGSizeMake(maxWidth, KBottomNavH)];
+    label.frame = CGRectMake(selectAll.bounds.size.width + 20, 0, maxWidth - 10, KBottomNavH);
     self.totlePriceLabel = label;
 }
 
@@ -278,23 +286,22 @@
 
 - (void)setupCartEmptyView {
     //默认视图背景
-    UIView *backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, LZNaigationBarHeight, LZSCREEN_WIDTH, LZSCREEN_HEIGHT - LZNaigationBarHeight)];
+    UIView *backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, KNavigationBarHeight, KScreenWidth, KScreenHeight - KNavigationBarHeight)];
     backgroundView.tag = TAG_CartEmptyView;
     [self.view addSubview:backgroundView];
     
     //默认图片
     UIImageView *img = [[UIImageView alloc]initWithImage:[UIImage imageNamed:lz_CartEmptyString]];
-    img.center = CGPointMake(LZSCREEN_WIDTH/2.0, LZSCREEN_HEIGHT/2.0 - 120);
+    img.center = CGPointMake(KScreenWidth/2.0, KScreenHeight/2.0 - 120);
     img.bounds = CGRectMake(0, 0, 247.0/187 * 100, 100);
     [backgroundView addSubview:img];
     
     UILabel *warnLabel = [[UILabel alloc]init];
-    warnLabel.center = CGPointMake(LZSCREEN_WIDTH/2.0, LZSCREEN_HEIGHT/2.0 - 10);
-    warnLabel.bounds = CGRectMake(0, 0, LZSCREEN_WIDTH, 30);
+    warnLabel.center = CGPointMake(KScreenWidth/2.0, KScreenHeight/2.0 - 10);
+    warnLabel.bounds = CGRectMake(0, 0, KScreenWidth, 30);
     warnLabel.textAlignment = NSTextAlignmentCenter;
     warnLabel.text = @"购物车为空!";
     warnLabel.font = [UIFont systemFontOfSize:15];
-    warnLabel.textColor = LZColorFromHex(0x706F6F);
     [backgroundView addSubview:warnLabel];
 }
 #pragma mark -- 购物车有商品时的视图
@@ -314,9 +321,9 @@
     self.myTableView = table;
     
     if (_isHasTabBarController) {
-        table.frame = CGRectMake(0, 0, LZSCREEN_WIDTH, LZSCREEN_HEIGHT - LZNaigationBarHeight - LZTabBarHeight);
+        table.frame = CGRectMake(0, 0, KScreenWidth, KScreenHeight - KNavigationBarHeight - KBottomNavH - KBottomHeight);
     } else {
-        table.frame = CGRectMake(0, 0, LZSCREEN_WIDTH, LZSCREEN_HEIGHT - LZNaigationBarHeight-LZTabBarHeight);
+        table.frame = CGRectMake(0, 0, KScreenWidth, KScreenHeight - KNavigationBarHeight-KBottomNavH - KBottomHeight);
     }
     
     [table registerClass:[LZTableHeaderView class] forHeaderFooterViewReuseIdentifier:@"LZHeaderView"];

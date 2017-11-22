@@ -33,21 +33,13 @@
 #define KScreenWidth ([[UIScreen mainScreen] bounds].size.width)
 #define KScreenHeight [[UIScreen mainScreen] bounds].size.height
 #define kScreen_Bounds [UIScreen mainScreen].bounds
-#define KBottomNavH 49
-#define KNavigationBarHeight 64
+#define KBottomNavH  49
+#define KBottomHeight (KScreenHeight == 812.0 ?34 : 0)
+#define KNavigationBarHeight (KScreenHeight == 812.0 ? 88 : 64)
 #define KLeftMargin 15
 
 //根据ip6的屏幕来拉伸
 #define kRealValue(with) ((with)*(KScreenWidth/375.0f))
-
-// 缩放比例(以375*667 ip6的屏幕为基本)
-#define kRatio320x568 0.853
-#define kRatio375x667 1
-#define kRatio414x736 1.104
-#define kHeightRatio320x480 0.720
-
-#define kRealValue(with)((with)*(KScreenWidth/375.0f))
-
 
 #define kWRatio (kScreenWidth / 375.0)
 #define kHRatio (kScreenHeight / 667.0)

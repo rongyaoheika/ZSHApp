@@ -9,7 +9,6 @@
 //  QQ交流: 302934443
 
 #import "LZCartTableViewCell.h"
-#import "LZConfigFile.h"
 //#import "LZCartModel.h"
 #import "LZGoodsModel.h"
 
@@ -36,6 +35,10 @@
 @property (nonatomic,retain)UILabel *numberLabel;
 
 @end
+
+static NSInteger lz_CartRowHeight = 120;
+static NSString *lz_Bottom_UnSelectButtonString = @"goods_choose_normal";
+static NSString *lz_Bottom_SelectButtonString = @"goods_choose_press";
 
 @implementation LZCartTableViewCell
 
@@ -127,7 +130,7 @@
 -(void)setupMainView {
     //白色背景
     UIView *bgView = [[UIView alloc]init];
-    bgView.frame = CGRectMake(10, 10, LZSCREEN_WIDTH - 20, lz_CartRowHeight - 10);
+    bgView.frame = CGRectMake(10, 10, KScreenWidth - 20, lz_CartRowHeight - 10);
     bgView.backgroundColor = KBlackColor;
 //    bgView.layer.borderColor = KBlackColor.CGColor;
 //    bgView.layer.borderWidth = 1;
@@ -146,7 +149,6 @@
     //照片背景
     UIView *imageBgView = [[UIView alloc]init];
     imageBgView.frame = CGRectMake(selectBtn.right + 5, 5, bgView.height - 10, bgView.height - 10);
-    imageBgView.backgroundColor = LZColorFromHex(0xF3F3F3);
     [bgView addSubview:imageBgView];
     
     //显示照片
@@ -180,7 +182,7 @@
     //尺寸
     UILabel* sizeLabel = [[UILabel alloc]init];
     sizeLabel.frame = CGRectMake(nameLabel.left, nameLabel.bottom + 5, width, 20);
-    sizeLabel.textColor = LZColorFromRGB(132, 132, 132);
+    sizeLabel.textColor = KZSHColor929292;
     sizeLabel.font = [UIFont systemFontOfSize:12];
     [bgView addSubview:sizeLabel];
     self.sizeLabel = sizeLabel;

@@ -14,4 +14,5 @@
 @property (nonatomic, strong) NSArray                *dataArr;
 
 - (void)loadNoticeCellData;
+- (void)loadServiceCellData;
 @end

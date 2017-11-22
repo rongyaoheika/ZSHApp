@@ -40,8 +40,6 @@
     image.frame = self.view.bounds;
     [self.view insertSubview:image atIndex:0];
     
-//    [self loadData];
-//    [self createUI];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -142,20 +140,15 @@
         _tableView.backgroundColor = KClearColor;
         _tableView.showsVerticalScrollIndicator = NO;
         _tableView.showsHorizontalScrollIndicator = NO;
+        _tableView.scrollsToTop = YES;
         //头部刷新
-        //        MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
-        //        header.automaticallyChangeAlpha = YES;
-        //        header.lastUpdatedTimeLabel.hidden = NO;
-        //        _tableView.mj_header = header;
+        MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+        header.automaticallyChangeAlpha = YES;
+        header.lastUpdatedTimeLabel.hidden = NO;
+        _tableView.mj_header = header;
         
         //底部刷新
-        //        _tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRereshing)];
-        //        _tableView.contentInset = UIEdgeInsetsMake(0, 0, 30, 0);
-        //        _tableView.mj_footer.ignoredScrollViewContentInsetBottom = 30;
-        
-        _tableView.backgroundColor = KClearColor;
-        _tableView.scrollsToTop = YES;
-        _tableView.tableFooterView = [[UIView alloc] init];
+        _tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRereshing)];
     }
     return _tableView;
 }
@@ -171,18 +164,18 @@
         UICollectionViewFlowLayout *flow = [[UICollectionViewFlowLayout alloc] init];
         
         _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth , KScreenHeight) collectionViewLayout:flow];
-        
-        //头部刷新
-//        MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
-//        header.automaticallyChangeAlpha = YES;
-//        header.lastUpdatedTimeLabel.hidden = NO;
-//        _collectionView.mj_header = header;
-        
-        //底部刷新
-        //        _collectionView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRereshing)];
-    
         _collectionView.backgroundColor = KClearColor;
         _collectionView.scrollsToTop = YES;
+        
+        //头部刷新
+        MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+        header.automaticallyChangeAlpha = YES;
+        header.lastUpdatedTimeLabel.hidden = NO;
+        _collectionView.mj_header = header;
+        
+        //底部刷新
+        _collectionView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRereshing)];
+        
     }
     return _collectionView;
 }
@@ -198,7 +191,7 @@
     if (!_bottomBtn) {
         NSDictionary *bottomBtnDic = @{@"title":@"申请售后",@"titleColor":KZSHColor929292,@"font":kPingFangMedium(17),@"backgroundColor":KZSHColor0B0B0B};
        _bottomBtn = [ZSHBaseUIControl createBtnWithParamDic:bottomBtnDic];
-        _bottomBtn.frame = CGRectMake(0, KScreenHeight - KBottomNavH, KScreenWidth, KBottomNavH);
+       _bottomBtn.frame = CGRectMake(0, KScreenHeight - KBottomNavH - KBottomHeight, KScreenWidth, KBottomNavH);
     }
     return _bottomBtn;
 }
@@ -260,6 +253,12 @@
         spaceButtonItem.width = -15;
         self.navigationItem.rightBarButtonItems = @[spaceButtonItem, item];
     }
+    
+    if (@available(iOS 9.0,*)) {
+        [btn.widthAnchor constraintEqualToConstant:btn.size.width].active = true;
+        [btn.heightAnchor constraintEqualToConstant:btn.size.height].active = true;
+    }
+    
 }
 
 - (void)addNavigationItemWithImageName:(NSString *)imageName isLeft:(BOOL)isLeft target:(id)target action:(SEL)action tag:(NSInteger)tag {
@@ -270,7 +269,6 @@
     [btn addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
     btn.tag = tag;
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:btn];
-    RLog(@"item 的frame == %@",NSStringFromCGRect(btn.frame));
 #ifdef __IPHONE_11_0
     if (@available(ios 11.0,*)) {
         if (isLeft) {
@@ -282,11 +280,14 @@
         }
     }
 #endif
+   
     if (isLeft) {
         self.navigationItem.leftBarButtonItems = @[item];
     } else {
         self.navigationItem.rightBarButtonItems = @[item];
     }
+    
+    
 }
 
 - (void)addNavigationItemWithTitles:(NSArray *)titles isLeft:(BOOL)isLeft target:(id)target action:(SEL)action tags:(NSArray *)tags

@@ -183,7 +183,7 @@
 + (UIView *)createBottomButton {
     UIView *_bottomBtnView = [[UIView alloc]initWithFrame:CGRectZero];
     _bottomBtnView.backgroundColor = KZSHColor0B0B0B;
-    _bottomBtnView.frame = CGRectMake(0, KScreenHeight - KBottomNavH, KScreenWidth, KBottomNavH);
+    _bottomBtnView.frame = CGRectMake(0, KScreenHeight - KBottomNavH - KBottomHeight, KScreenWidth, KBottomNavH);
     NSArray *imagesNor = @[@"goods_service",@"goods_collect"];
     NSArray *imagesSel = @[@"goods_service",@"goods_collect"];
     CGFloat buttonW = kRealValue(30);

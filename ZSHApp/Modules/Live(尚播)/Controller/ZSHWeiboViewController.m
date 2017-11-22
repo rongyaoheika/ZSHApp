@@ -38,7 +38,7 @@
     [self.view addSubview:self.tableView];
     if (kFromClassTypeValue == FromPersonalVCToWeiboVC) {
         [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.mas_equalTo(self.view);
+                make.edges.mas_equalTo(self.view);
         }];
     } else if (kFromClassTypeValue == FromTabbarToWeiboVC) {
         [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {

@@ -77,19 +77,9 @@
         [btn setBackgroundImage:self.normalBgImage?self.normalBgImage:self.normalBgImageArr[i] forState:UIControlStateNormal];
         [btn setBackgroundImage:self.selectedBgImage?self.selectedBgImage:self.selectedBgImageArr[i] forState:UIControlStateSelected];
         
-        
-        UIImage *image = self.normalImage?self.normalImage:self.normalImageArr[i];
-        CGFloat scale = [UIScreen mainScreen].scale;
-        CGSize aimSize = CGSizeMake(image.size.width, image.size.height);
-        
-        UIGraphicsBeginImageContextWithOptions(aimSize, 0, scale);
-        [image drawInRect:CGRectMake(0, 0, 95, 135)];
-        UIImage *imageOut = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
-        
-        [btn setImage:imageOut forState:UIControlStateNormal];
-        [btn setImage:imageOut forState:UIControlStateSelected];
-        
+        //小图片可以
+        [btn setImage:self.normalImage?self.normalImage:self.normalImageArr[i] forState:UIControlStateNormal];
+        [btn setImage:self.selectedImage?self.selectedImage:self.selectedImageArr[i] forState:UIControlStateSelected];
         
         btn.selected = (i == self.selectedIndex);
         btn.titleLabel.font = btn.selected?self.selectedTitleFont:self.normalTitleFont;

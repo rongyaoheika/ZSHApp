@@ -9,7 +9,6 @@
 #import "ZSHHomeHeadView.h"
 #import "ZSHCycleScrollView.h"
 #import "ZSHNoticeViewCell.h"
-#import "ZSHBaseCell.h"
 #import "ZSHSearchBarView.h"
 #import "ZSHTitleContentViewController.h"
 #import "ZSHAirPlaneViewController.h"
@@ -29,6 +28,7 @@ static NSString *Identify_NoticeCell = @"noticeCell";
 static NSString *Identify_ServiceCell = @"serviceCell";
 static NSString *Identify_PlayCell = @"playCell";
 static NSString *Identify_MagazineCell = @"magazineCell";
+static NSString *Identify_MusicCell = @"musicCell";
 
 @interface ZSHHomeViewController ()<UISearchBarDelegate>
 
@@ -56,6 +56,7 @@ static NSString *Identify_MagazineCell = @"magazineCell";
 
 - (void)loadData{
     //加载网络数据
+    _homeLogic = [[ZSHHomeLogic alloc]init];
     [self requestData];
     
     self.pushVCsArr = @[@"ZSHTitleContentViewController",
@@ -90,7 +91,16 @@ static NSString *Identify_MagazineCell = @"magazineCell";
                             @{KFromClassType:@(ZSHFromHomeMenuVCToServiceCenterVC),@"title":@"系统通知",@"titleArr":@[@"荣耀黑卡官方帐号"],@"imageArr":@[@"menu_noti"]},
                             @""];
 
-    
+}
+
+- (void)requestData{
+    kWeakSelf(self);
+    [_homeLogic loadNoticeCellData];
+    _homeLogic.requestDataCompleted = ^(id data){
+        [weakself.tableView.mj_header endRefreshing];
+        [weakself.tableView.mj_footer endRefreshing];
+        [weakself initViewModel];
+    };
 }
 
 - (void)createUI{
@@ -99,7 +109,6 @@ static NSString *Identify_MagazineCell = @"magazineCell";
     self.navigationItem.titleView = self.searchView;
     self.searchView.searchBar.delegate = self;
 
-    
     self.tableView.frame = CGRectMake(0, KNavigationBarHeight + kRealValue(25), KScreenWidth, KScreenHeight-KNavigationBarHeight- kRealValue(25) - KBottomNavH);
     [self.view addSubview:self.tableView];
     self.tableView.delegate = self.tableViewModel;
@@ -110,18 +119,9 @@ static NSString *Identify_MagazineCell = @"magazineCell";
     [self.tableView registerClass:[ZSHNoticeViewCell class] forCellReuseIdentifier:Identify_ServiceCell];
 	[self.tableView registerClass:[ZSHNoticeViewCell class] forCellReuseIdentifier:Identify_PlayCell];
     [self.tableView registerClass:[ZSHNoticeViewCell class] forCellReuseIdentifier:Identify_MagazineCell];
+    [self.tableView registerClass:[ZSHBaseTitleButtonCell class] forCellReuseIdentifier:Identify_MusicCell];
     
     [self initViewModel];
-}
-
-- (void)requestData{
-    kWeakSelf(self);
-    _homeLogic = [[ZSHHomeLogic alloc]init];
-    [_homeLogic loadNoticeCellData];
-    _homeLogic.requestDataCompleted = ^(id data){
-         [weakself initViewModel];
-    };
-   
 }
 
 - (void)initViewModel {
@@ -131,6 +131,7 @@ static NSString *Identify_MagazineCell = @"magazineCell";
     [self.tableViewModel.sectionModelArray addObject:[self storeServiceSection]];
     [self.tableViewModel.sectionModelArray addObject:[self storePlaySection]];
     [self.tableViewModel.sectionModelArray addObject:[self storeMagazineSection]];
+    [self.tableViewModel.sectionModelArray addObject:[self storeMusicSection]];
     [self.tableView reloadData];
 }
 
@@ -249,11 +250,9 @@ static NSString *Identify_MagazineCell = @"magazineCell";
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     sectionModel.headerHeight = kRealValue(55);
     sectionModel.headerView = [self createHeaderiewWithTitle:@"荣耀杂志"];
-    sectionModel.footerHeight = kRealValue(37);
-    sectionModel.footerView = nil;
     ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
     [sectionModel.cellModelArray addObject:cellModel];
-    cellModel.height = kRealValue(115);
+    cellModel.height = kRealValue(113.5);
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHNoticeViewCell *cell = [tableView dequeueReusableCellWithIdentifier:Identify_MagazineCell forIndexPath:indexPath];
         NSDictionary *nextParamDic = @{KFromClassType:@(FromHomeMagazineVCToNoticeView)};
@@ -269,18 +268,29 @@ static NSString *Identify_MagazineCell = @"magazineCell";
 
 //荣耀音乐
 - (ZSHBaseTableViewSectionModel*)storeMusicSection {
+    kWeakSelf(self);
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     sectionModel.headerHeight = kRealValue(55);
     sectionModel.headerView = [self createHeaderiewWithTitle:@"荣耀音乐"];
+    sectionModel.footerHeight = kRealValue(37);
+    sectionModel.footerView = nil;
     ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
     [sectionModel.cellModelArray addObject:cellModel];
-    cellModel.height = kRealValue(80);
+    cellModel.height = kRealValue(135);
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
-        ZSHNoticeViewCell *cell = [tableView dequeueReusableCellWithIdentifier:Identify_ServiceCell forIndexPath:indexPath];
-        NSDictionary *nextParamDic = @{KFromClassType:@(FromHomeServiceVCToNoticeView),@"":@""};
-        [cell updateCellWithParamDic:nextParamDic];
+        ZSHBaseTitleButtonCell *cell = [tableView dequeueReusableCellWithIdentifier:Identify_MusicCell forIndexPath:indexPath];
+        cell.itemClickBlock = ^(NSInteger tag) {
+            NSDictionary *nextParamDic = @{KFromClassType:@(ZSHFromHomeKTVVCToHotelDetailVC)};
+            ZSHHotelDetailViewController *hotelDetailVC = [[ZSHHotelDetailViewController alloc]initWithParamDic:nextParamDic];
+            [weakself.navigationController pushViewController:hotelDetailVC animated:YES];
+        };
+        
+        if(_homeLogic.dataArr){
+            [cell updateCellWithDataArr:_homeLogic.dataArr];
+        }
         return cell;
     };
+   
     
     cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -348,8 +358,6 @@ static NSString *Identify_MagazineCell = @"magazineCell";
             return;
         }];
     };
-    
-//    [self testPostRequest];
 }
 
 - (void)locateBtnAction{
@@ -358,19 +366,6 @@ static NSString *Identify_MagazineCell = @"magazineCell";
     [self.navigationController pushViewController:cityVC animated:YES];
 }
 
-//- (void)testPostRequest {
-//    [PPNetworkHelper openLog];
-//
-//    kWeakSelf(self);
-//    [PPNetworkHelper POST:kUrlUserHome parameters:nil success:^(id responseObject) {
-//        RLog(@"请求成功：返回数据&%@",responseObject);
-////        _dataArr = responseObject[@"pd"];
-//         weakself.dataArr = [ZSHHomeMainModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"]];
-//        [weakself initViewModel];
-//    } failure:^(NSError *error) {
-//        RLog(@"请求失败");
-//    }];
-//}
 
 #pragma getter
 - (ZSHBottomBlurPopView *)createBottomBlurPopViewWith:(ZSHFromVCToBottomBlurPopView)fromClassType{
@@ -380,6 +375,16 @@ static NSString *Identify_MagazineCell = @"magazineCell";
     bottomBlurPopView.dynamic = NO;
     bottomBlurPopView.tintColor = KClearColor;
     return bottomBlurPopView;
+}
+
+#pragma mark ————— 下拉刷新 —————
+-(void)headerRereshing{
+    [self requestData];
+}
+
+#pragma mark ————— 上拉刷新 —————
+-(void)footerRereshing{
+    [self requestData];
 }
 
 - (void)didReceiveMemoryWarning {

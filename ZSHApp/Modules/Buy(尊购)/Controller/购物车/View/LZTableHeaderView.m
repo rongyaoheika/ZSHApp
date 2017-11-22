@@ -7,7 +7,6 @@
 //
 
 #import "LZTableHeaderView.h"
-#import "LZConfigFile.h"
 
 @interface LZTableHeaderView ()
 
@@ -38,7 +37,7 @@
     self.button = button;
     
     UILabel *label = [[UILabel alloc]init];
-    label.frame = CGRectMake(70, 15, LZSCREEN_WIDTH - 100, 30);
+    label.frame = CGRectMake(70, 15, KScreenWidth - 100, 30);
     label.font = [UIFont systemFontOfSize:14];
     [self.contentView addSubview:label];
     self.titleLabel = label;

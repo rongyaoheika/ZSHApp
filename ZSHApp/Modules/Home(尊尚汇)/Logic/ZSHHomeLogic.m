@@ -21,9 +21,27 @@
         }
 
     } failure:^(NSError *error) {
-        RLog(@"请求失败");
+        if (weakself.requestDataCompleted) {
+            weakself.requestDataCompleted(@"fail");
+        }
     }];
-    
+}
+
+- (void)loadServiceCellData{
+    kWeakSelf(self);
+    [PPNetworkHelper openLog];
+    [PPNetworkHelper POST:kUrlUserHome parameters:nil success:^(id responseObject) {
+        RLog(@"请求成功：返回数据&%@",responseObject);
+        weakself.dataArr = [ZSHHomeMainModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"]];
+        if (weakself.requestDataCompleted) {
+            weakself.requestDataCompleted(nil);
+        }
+        
+    } failure:^(NSError *error) {
+        if (weakself.requestDataCompleted) {
+            weakself.requestDataCompleted(@"fail");
+        }
+    }];
 }
 
 @end

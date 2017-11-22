@@ -105,9 +105,6 @@ static AFHTTPSessionManager *_sessionManager;
                    success:(PPHttpRequestSuccess)success
                    failure:(PPHttpRequestFailed)failure {
     NSString *requestUrl = [NSString stringWithFormat:@"%@%@", kUrlRoot, URL];
-    
-    RLog(@"----请求的完整接口为%@",requestUrl);
-    
     return [self POST:requestUrl parameters:parameters responseCache:nil success:success failure:failure];
 }
 
