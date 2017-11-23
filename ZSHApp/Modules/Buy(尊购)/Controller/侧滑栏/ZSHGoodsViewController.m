@@ -9,20 +9,22 @@
 #import "ZSHGoodsViewController.h"
 #import "ZSHClassGoodsModel.h"
 #import "ZSHClassMainModel.h"
+#import "ZSHClassSubModel.h"
 #import "ZSHClassCategoryCell.h"
 #import "ZSHGoodsSortCell.h"
 #import "ZSHBrandSortCell.h"
 #import "ZSHBrandsSortHeadView.h"
 #import "ZSHGoodsTitleContentViewController.h"
+#import "ZSHBuyLogic.h"
 
 #define tableViewW  kRealValue(100)
 
 @interface ZSHGoodsViewController ()<UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,UISearchBarDelegate>
 
 /* 左边数据 */
-@property (nonatomic, strong)NSMutableArray *titleArr;
+@property (nonatomic, strong)NSMutableArray<ZSHClassMainModel *> *titleArr;
 /* 右边数据 */
-@property (nonatomic, strong)NSMutableArray<ZSHClassMainModel *>  *mainArr;
+@property (nonatomic, strong)NSMutableArray<ZSHClassMainModel *> *mainArr;
 
 @end
 
@@ -45,6 +47,7 @@ static NSString *const ZSHBrandSortCellID = @"ZSHBrandSortCell";
     
 //    _titleArr = [ZSHClassGoodsModel mj_objectArrayWithFilename:@"ClassifyTitles.plist"];
 //    _mainArr = [ZSHClassMainModel mj_objectArrayWithFilename:@"ClassiftyGoods01.plist"];
+    RLog(@"789798%@",_mainArr);
     
     [self requestData];
     [self initViewModel];
@@ -61,7 +64,6 @@ static NSString *const ZSHBrandSortCellID = @"ZSHBrandSortCell";
     [self.tableView registerClass:[ZSHClassCategoryCell class] forCellReuseIdentifier:ZSHClassCategoryCellID];
     [self.tableView reloadData];
 
-    
     
     UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout *)self.collectionView.collectionViewLayout;
     layout.minimumLineSpacing = 5;          //Y
@@ -100,7 +102,7 @@ static NSString *const ZSHBrandSortCellID = @"ZSHBrandSortCell";
         cellModel.height = kRealValue(45);
         cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
             ZSHClassCategoryCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHClassCategoryCellID forIndexPath:indexPath];
-            cell.titleLabel.text = _titleArr[indexPath.row][@"BRANDBANE"];
+            cell.titleLabel.text = _titleArr[indexPath.row].BRANDBANE;
             return cell;
         };
         
@@ -188,27 +190,31 @@ static NSString *const ZSHBrandSortCellID = @"ZSHBrandSortCell";
 
 - (void)requestData {
     kWeakSelf(self);
-    [PPNetworkHelper POST:kUrlShipBrandList parameters:nil success:^(id responseObject) {
-        RLog(@"请求成功：返回数据&%@",responseObject);
-        _titleArr = responseObject[@"pd"];
+    ZSHBuyLogic *logic = [[ZSHBuyLogic alloc] init];
+    [logic requestShipBrandList:^(id response) {
+    
+        _titleArr = [ZSHClassMainModel mj_objectArrayWithKeyValuesArray:response[@"pd"]];
+        
         [weakself initViewModel];
         //默认选择第一行（注意一定要在加载完数据之后）
         [weakself.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] animated:NO scrollPosition:UITableViewScrollPositionTop];
-//        [weakself requestBrandIconListWithBrandID:_titleArr[0][@"BRAND_ID"]];
-    } failure:^(NSError *error) {
-        RLog(@"请求失败");
+        [logic requestBrandIconListWithBrandID:_titleArr[0].BRAND_ID success:^(id response) {
+            _mainArr[0].goods = [ZSHClassSubModel mj_objectArrayWithKeyValuesArray:response[@"pd"]];
+
+             [weakself.collectionView reloadData];
+            RLog(@"返回结果%@",response);
+        }];
+    }];
+    
+}
+
+- (void)requestBrandIconListWithBrandID:(ZSHClassMainModel *)model {
+    ZSHBuyLogic *logic = [[ZSHBuyLogic alloc] init];
+    [logic requestBrandIconListWithBrandID:model.BRAND_ID success:^(id response) {
+        _mainArr[0].goods = [ZSHClassSubModel mj_objectArrayWithKeyValuesArray:response[@"pd"]];
+        RLog(@"返回结果%@",response);
     }];
 }
 
-- (void)requestBrandIconListWithBrandID:(NSString *)BrandID {
-    kWeakSelf(self);
-    [PPNetworkHelper POST:kUrlShipBrandIconList parameters:@{@"BRAND_ID":BrandID} success:^(id responseObject) {
-        RLog(@"请求成功：返回数据&%@",responseObject);
-        _mainArr = responseObject[@"pd"];
-        [weakself.collectionView reloadData];
-    } failure:^(NSError *error) {
-        RLog(@"请求失败");
-    }];
-}
 
 @end

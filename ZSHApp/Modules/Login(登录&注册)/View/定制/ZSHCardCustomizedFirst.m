@@ -61,6 +61,10 @@
         style.alignment = NSTextAlignmentCenter;
         NSAttributedString *attri = [[NSAttributedString alloc] initWithString:placeHolderArr[i] attributes:@{NSForegroundColorAttributeName:KZSHColor929292,NSFontAttributeName:kPingFangLight(15), NSParagraphStyleAttributeName:style}];
         textField.textField.attributedPlaceholder = attri;
+        textField.tag = 112311+i;
+        textField.textFieldChanged = ^(NSString *text, NSInteger tag) {
+            [[NSUserDefaults standardUserDefaults] setObject:text forKey:NSStringFormat(@"CardCustom%zd",tag)];
+        };
         [_textFieldView addSubview:textField];
     }
     

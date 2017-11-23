@@ -16,5 +16,8 @@ typedef void(^LoginSuccess)(id response);
 
 - (void)loginWithPhone:(NSString *)phone;
 - (void)loginWithCardNo:(NSString *)CardNo password:(NSString *)password;
+- (void)userRegisterWithDic:(NSDictionary *)dic;
+
+
 
 @end

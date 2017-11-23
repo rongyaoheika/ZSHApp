@@ -9,5 +9,8 @@
 #import "ZSHBaseView.h"
 
 @interface ZSHCardCommitBottomView : ZSHBaseView
-
+@property (nonatomic, strong) UIView    *leftView;
+@property (nonatomic, strong) UILabel   *leftTopLabel;
+@property (nonatomic, strong) UILabel   *leftBottomLabel;
+@property (nonatomic, strong) UIButton  *rightBtn;
 @end

@@ -30,6 +30,7 @@ static NSString *ZSHEnterTainmentCellID = @"ZSHEnterTainmentCell";
 
 - (void)loadData{
    
+    RLog(@"%@",self.paramDic);
     NSArray *baseDataArr = @[
                              @{@"avatarPicture":@"weibo_head_image",@"name":@"完成全部任务",@"gender":@(0),@"distance":@(1.7),@"age":@(19),@"constellation":@"摩羯座",@"title":@"麦乐迪KTV嗨起来 ",@"detailImage":@"entertainment_image_1",@"beginTime":@"2017年10月1日",@"endTime":@"2017年10月8日",@"personCount":@"一对一",@"mode":@"AA互动趴"},
                               @{@"avatarPicture":@"weibo_head_image",@"name":@"完成全部任务",@"gender":@(1),@"distance":@(2.7),@"age":@(29),@"constellation":@"金牛座",@"title":@"麦乐迪KTV嗨起来 ",@"detailImage":@"entertainment_image_1",@"beginTime":@"2017年10月1日",@"endTime":@"2017年10月8日",@"personCount":@"一对一",@"mode":@"AA互动趴"}
@@ -85,9 +86,8 @@ static NSString *ZSHEnterTainmentCellID = @"ZSHEnterTainmentCell";
     
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)requestData {
+    
 }
 
 @end

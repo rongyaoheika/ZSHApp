@@ -7,6 +7,7 @@
 //
 
 #import "ZSHTogetherView.h"
+#import "ZSHTogetherModel.h"
 
 @interface ZSHTogetherView()
 
@@ -103,13 +104,12 @@
     
 }
 
-- (void)updateCellWithParamDic:(NSDictionary *)dic{
-     self.activityImage.image = [UIImage imageNamed:dic[@"bgImageName"]];
-     self.chineseNameLabel.text = dic[@"chineseText"];
-     self.englishNameLabel.text = dic[@"englishText"];
-     self.paramDic = dic;
+- (void)updateCellWithModel:(ZSHTogetherModel *)model {
+    [self.activityImage sd_setImageWithURL:[NSURL URLWithString:model.CONVERGEIMG]];
+    self.chineseNameLabel.text = model.IMGCNCHAR;
+    self.englishNameLabel.text = model.IMGENCHAR;
     [self layoutIfNeeded];
-    
 }
+
 
 @end

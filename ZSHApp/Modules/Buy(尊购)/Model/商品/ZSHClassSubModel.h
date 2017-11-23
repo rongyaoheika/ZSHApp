@@ -10,6 +10,8 @@
 
 @interface ZSHClassSubModel : ZSHBaseModel
 
+
+
 /** 商品类题  */
 @property (nonatomic, copy ,readonly) NSString *goods_title;
 

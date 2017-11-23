@@ -36,4 +36,16 @@
     }];
 }
 
+- (void)userRegisterWithDic:(NSDictionary *)dic {
+
+    [PPNetworkHelper POST:kUrlUserRegister parameters:dic success:^(id responseObject) {
+        RLog(@"请求成功：返回数据&%@",responseObject);
+        if (_loginSuccess) {
+            _loginSuccess(responseObject);
+        }
+    } failure:^(NSError *error) {
+        RLog(@"请求失败");
+    }];
+}
+
 @end

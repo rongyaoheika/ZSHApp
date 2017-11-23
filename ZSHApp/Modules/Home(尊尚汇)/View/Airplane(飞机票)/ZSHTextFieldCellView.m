@@ -148,7 +148,7 @@
 
 - (void)textFieldDidChange:(UITextField *)textField{
     if (self.textFieldChanged) {
-        self.textFieldChanged(textField.text);
+        self.textFieldChanged(textField.text,textField.tag);
     }
 }
 

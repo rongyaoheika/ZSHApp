@@ -97,7 +97,23 @@
         __weak typeof(self) weakSelf = self;
         _titleView.selectedBlock = ^(NSInteger index){
             __weak typeof(self) strongSelf = weakSelf;
-             [strongSelf.bottomScrollView setContentOffset:CGPointMake(index * KScreenWidth, 0) animated:YES];
+            NSString *custom = @"";
+            switch (index) {
+                case 0:
+                    custom = @"1";
+                    break;
+                case 1:
+                    custom = @"2";
+                    break;
+                case 2:
+                    custom = @"0";
+                    break;
+                default:
+                    custom = @"0";
+                    break;
+            }
+            [[NSUserDefaults standardUserDefaults] setObject:custom forKey:@"CUSTOM"];
+            [strongSelf.bottomScrollView setContentOffset:CGPointMake(index * KScreenWidth, 0) animated:YES];
         };
         _titleView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"seg_three_bg"] ];
         _titleView.titleWidth = kRealValue(100);

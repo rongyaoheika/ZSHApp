@@ -8,12 +8,10 @@
 
 #import "ZSHCardCommitBottomView.h"
 
+
 @interface ZSHCardCommitBottomView()
 
-@property (nonatomic, strong) UIView    *leftView;
-@property (nonatomic, strong) UILabel   *leftTopLabel;
-@property (nonatomic, strong) UILabel   *leftBottomLabel;
-@property (nonatomic, strong) UIButton  *rightBtn;
+
 
 @end
 
@@ -52,7 +50,7 @@
     NSDictionary *rightBtnDic = @{@"title":@"提交信息",@"font":kPingFangLight(17),@"backgroundColor": [UIColor colorWithRed:61/255.0 green:61/255.0 blue:61/255.0 alpha:0.4/1.0]};
     _rightBtn = [ZSHBaseUIControl createBtnWithParamDic:rightBtnDic];
     [self addSubview:_rightBtn];
-    [_rightBtn addTarget:self action:@selector(commitInfoAction) forControlEvents:UIControlEventTouchUpInside];
+//    [_rightBtn addTarget:self action:@selector(commitInfoAction) forControlEvents:UIControlEventTouchUpInside];
     [_rightBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(_leftView.mas_right);
         make.right.and.top.and.height.mas_equalTo(self);
@@ -61,7 +59,7 @@
 }
 
 - (void)commitInfoAction{//提交注册信息
-    
+
 }
 
 @end

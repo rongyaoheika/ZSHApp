@@ -11,13 +11,15 @@
 #import "ZSHBaseCell.h"
 #import "ZSHEntertainmentViewController.h"
 #import "ZSHEntertainmentDetailViewController.h"
+#import "ZSHTogetherLogic.h"
 
 static NSString *cellIdentifier = @"listCell";
 
 @interface ZSHTogetherViewController ()<UISearchBarDelegate>
 
 @property (nonatomic, strong) NSArray            *pushVCsArr;
-@property (nonatomic, strong) NSArray            *paramArr;
+@property (nonatomic, strong) NSMutableArray     *paramArr;
+@property (nonatomic, strong) ZSHTogetherLogic   *togetherLogic;
 
 @end
 
@@ -25,7 +27,6 @@ static NSString *cellIdentifier = @"listCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     
     [self loadData];
     [self createUI];
@@ -33,8 +34,9 @@ static NSString *cellIdentifier = @"listCell";
 
 - (void)loadData{
     self.pushVCsArr = @[@"ZSHEntertainmentViewController",@"ZSHEntertainmentViewController",@"ZSHEntertainmentViewController",@"ZSHEntertainmentViewController",@"ZSHEntertainmentViewController",@"ZSHEntertainmentViewController"];
-    self.paramArr = @[@{},@{},@{},@{},@{},@{}];
+
     [self initViewModel];
+    [self requestData];
 }
 
 - (void)createUI{
@@ -58,24 +60,20 @@ static NSString *cellIdentifier = @"listCell";
 - (void)initViewModel {
     [self.tableViewModel.sectionModelArray removeAllObjects];
     [self.tableViewModel.sectionModelArray addObject:[self storeListSection]];
+    [self.tableView reloadData];
 }
 
 - (ZSHBaseTableViewSectionModel*)storeListSection {
     kWeakSelf(self);
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
-    
-    NSArray *imageArr = @[@"together_image_1",@"together_image_2",@"together_image_3",@"together_image_4",@"together_image_5",@"together_image_6"];
-    NSArray *chineseTitleArr = @[@"吃喝玩乐区",@"高端品鉴",@"荣耀活动",@"金钻活动",@"贵宾活动",@"核力轰趴"];
-    NSArray *englishTitleArr = @[@"Entertainment",@"High-end Tasting",@"Glory activities",@"Diamond activities",@"VIP activities",@"Home party"];
-    for (int i = 0; i<imageArr.count; i++) {
+    for (int i = 0; i<_togetherLogic.dataArr.count; i++) {
         
         ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
         [sectionModel.cellModelArray addObject:cellModel];
         cellModel.height = kRealValue(140);
         cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
             ZSHTogetherView *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
-            NSDictionary *nextParamDic = @{@"bgImageName":imageArr[i],@"chineseText":chineseTitleArr[i],@"englishText":englishTitleArr[i],KFromClassType:@(ZSHFromTogetherVCToTogetherView)};
-            [cell updateCellWithParamDic:nextParamDic];
+            [cell updateCellWithModel:_togetherLogic.dataArr[i]];
             return cell;
         };
         
@@ -94,9 +92,25 @@ static NSString *cellIdentifier = @"listCell";
     
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)updateParaArr {
+    self.paramArr = [NSMutableArray arrayWithCapacity:_togetherLogic.dataArr.count];
+    for (int i = 0; i < _togetherLogic.dataArr.count; i++) {
+        [self.paramArr addObject:_togetherLogic.dataArr[i].CONVERGE_ID];
+    }
+}
+
+- (void)requestData {
+    kWeakSelf(self);
+    _togetherLogic = [[ZSHTogetherLogic alloc] init];
+    [_togetherLogic requestConvergeList:^(id response) {
+        [weakself initViewModel];
+        [weakself updateParaArr];
+    }];
+}
+
+
+- (void)requestPartyListWithConvergeID:(NSString *)convergeID {
+    
 }
 
 @end

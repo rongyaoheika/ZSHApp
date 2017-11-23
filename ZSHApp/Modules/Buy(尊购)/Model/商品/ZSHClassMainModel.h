@@ -10,11 +10,19 @@
 @class ZSHClassSubModel;
 @interface ZSHClassMainModel : ZSHBaseModel
 
+/** 商品名称 */
+@property (nonatomic, copy ,readonly) NSString *BRANDBANE;
+/** BrandID */
+@property (nonatomic, strong) NSString *BRAND_ID;
+/** BrandOrder */
+@property (nonatomic, strong) NSString *BRANDORDER;
+
 /** 文标题  */
 @property (nonatomic, copy ,readonly) NSString *title;
 
-
 /** goods  */
-@property (nonatomic, copy ,readonly) NSArray<ZSHClassSubModel *> *goods;
+@property (nonatomic, strong) NSArray<ZSHClassSubModel *> *goods;
+
+
 
 @end

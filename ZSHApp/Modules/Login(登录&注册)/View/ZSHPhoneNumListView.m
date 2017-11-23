@@ -66,6 +66,7 @@
     [_btnArr enumerateObjectsUsingBlock:^(UIButton *btn , NSUInteger idx, BOOL * _Nonnull stop) {
         if (btn.tag == index) {
             btn.selected = YES;
+            [[NSUserDefaults standardUserDefaults] setObject:btn.titleLabel.text forKey:@"CARDNO"];
         } else {
             btn.selected = NO;
         }

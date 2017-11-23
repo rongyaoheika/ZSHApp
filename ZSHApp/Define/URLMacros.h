@@ -234,38 +234,93 @@
 //CONVERGETITLE 聚会标题/HONOURUSER_ID 发起人id
 //请求地址：/appconvergein/adddetailparty?DETAILADD(混淆码)
 #define kUrlAddDetailParty [NSString stringWithFormat:@"/appconvergein/adddetailparty?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"DETAILADD"]]
-//42. 获得某家酒店的综合评价
+//42. 获得首页特权酒店分类列表
+//参数：SORTHOTEL_ID 酒店id
+//请求地址：/appshotelin/shotel.do?SORTHOTEL（混淆码）
+#define kUrlSHotelDo [NSString stringWithFormat:@"/appshotelin/shotel.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SORTHOTEL"]]
+//43. 获得某家酒店的综合评价
 //参数：SORTHOTEL_ID 酒店id
 //请求地址：/appshotelin/shotelmeaneva?SHOTELMEANEVA（混淆码）
 #define kUrlSHotelMeanEva [NSString stringWithFormat:@"/appshotelin/shotelmeaneva?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SHOTELMEANEVA"]]
-//43. 获得某家店铺的评价数量
+//44. 获得某家店铺的评价数量
 //参数：SORTHOTEL_ID酒店id
 //请求地址：/appshotelin/shotelcounteva?SHOTELCOUNTEVA(混淆码)
 #define kUrlSHotelCountEva [NSString stringWithFormat:@"/appshotelin/shotelcounteva?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SHOTELCOUNTEVA"]]
-//44. 获得某家酒店的具体服务接口
+//45. 获得某家酒店的具体服务接口
 //参数：SHOP_ID 对应店铺id
 //请求地址：/appshotelin/shotelserv?SHOTELSERV(混淆码)
 #define kUrlSHotelServ [NSString stringWithFormat:@"/appshotelin/shotelserv?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SHOTELSERV"]]
-//45. 酒店店铺添加用户评价接口
+//46. 酒店店铺添加用户评价接口
 //参数：SORTHOTEL_ID 所属店铺id/HONOURUSER_ID 评价用户id/EVALUATECONTENT 评价内容/EVALUATECOINT 评价分数
 //请求地址：/appshotelin/shoteladdeva?SHOTELADDEVA(混淆码)
 #define kUrlSHotelAddEva [NSString stringWithFormat:@"/appshotelin/shoteladdeva?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SHOTELADDEVA"]]
-//46. 生成酒店订单接口（未产生交易）
+//47. 生成酒店订单接口（未产生交易）
 //参数：ORDERUNAME 入住人姓名/ORDERPHONE 入住人手机号码/ORDERREMARK 订单备注/ORDERMONEY 订单价格/ORDERROOMNUM 预定酒店房间数量/ORDERCHECKDATE 入住日期/ORDERLEAVEDATE 离开日期
 ///ORDERDAYS 入住天数 /HOTELDETAIL_ID 预定房间类型id/HONOURUSER_ID 提交订单用户id
 //请求地址：/appshotelin/shiphotelorder?SHIPHOTELORDER(混淆码)
 #define kUrlShipHotlOrder [NSString stringWithFormat:@"/appshotelin/shiphotelorder?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SHIPHOTELORDER"]]
-//47. 修改酒店订单状态(改为支付成功,用户已支付)
+//48. 修改酒店订单状态(改为支付成功,用户已支付)
 //参数：ORDERSTATUS 订单状态编码/HONOURUSER_ID 提交订单的用户id /ORDERNUMBER 订单编号
 //请求地址：/appshotelin/shiporderstaupd?SHIPHORELORDERUPD(混淆码)
 #define kUrlShipOrderStauPd [NSString stringWithFormat:@"/appshotelin/shiporderstaupd?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SHIPHORELORDERUPD"]]
-//48. 获得用户名下所有酒店订单列表
+//49. 获得用户名下所有酒店订单列表
 //参数：HONOURUSER_ID 需要查询的用户id
 //请求地址：/apphotelorderin/hotelorderalllist?ALLHOTELORDER(混淆码)
 #define kUrlHotelOrderAllList [NSString stringWithFormat:@"/apphotelorderin/hotelorderalllist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"ALLHOTELORDER"]]
-//49. 获取某酒店详情列表
+//50. 获取某酒店详情列表
 //参数：SORTHOTEL_ID 某酒店id
 //请求地址：/appshotelin/hoteldetaillist?HOTELDETAIL(混淆码)
 #define kUrlHotelDetailList [NSString stringWithFormat:@"/appshotelin/hoteldetaillist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"HOTELDETAIL"]]
+//51. 获得某家KTV的综合评价
+//参数：SORTKTV_ID   KTV的id
+//请求地址：/appsktvin/sktvmeaneva?SKTVMEANEVA（混淆码）
+#define kUrlSKtvMeanEva [NSString stringWithFormat:@"/appsktvin/sktvmeaneva?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SKTVMEANEVA"]]
+//52. 获得某家KTV的评价数量
+//参数：SORTKTV_ID   KTV的id
+//请求地址：/appsktvin/sktvcounteva?SKTVCOUNTEVA(混淆码)
+#define kUrlSKtvMeanEva [NSString stringWithFormat:@"/appsktvin/sktvmeaneva?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SKTVMEANEVA"]]
+//53. 获得某家KTV的具体服务接口
+//参数：SHOP_ID 对应KTV的id
+//请求地址：/appsktvin/sktvserv?SKTVSERV(混淆码)
+#define kUrlSKtvServ [NSString stringWithFormat:@"/appsktvin/sktvserv?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SKTVSERV"]]
+//54. KTV店铺添加用户评价接口
+//参数：SORTKTV_ID 所属KTV的id/HONOURUSER_ID 评价用户id/EVALUATECONTENT 评价内容/EVALUATECOINT 评价分数
+//请求地址：/appsktvin/sktvaddeva?SKTVADDEVA(混淆码)
+#define kUrlSKtvAddEva [NSString stringWithFormat:@"/appsktvin/sktvaddeva?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SKTVADDEVA"]]
+//55. 生成KTV订单接口（未产生交易）
+//参数：ORDERUNAME 入住人姓名/ORDERPHONE 入住人手机号码/ORDERREMARK 订单备注/ORDERMONEY 订单价格/ORDERROOMNUM 预定KTV房间数量/ORDERROOMBEGIN 包厢开始时间/ORDERROOMEND 包厢结束时间
+///KTVDETAIL_ID 所关联的KTV包厢id/HONOURUSER_ID 提交订单用户id
+//请求地址：/appsktvin/shipktvorder?SHIPKTVORDER(混淆码)
+#define kUrlShipKtvOrder [NSString stringWithFormat:@"/appsktvin/shipktvorder?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SHIPKTVORDER"]]
+//56. 修改KTV订单状态(改为支付成功,用户已支付)
+//参数：ORDERSTATUS 订单状态编码/HONOURUSER_ID 提交订单的用户id /ORDERNUMBER 订单编号
+//请求地址：/appsktvin/shipktvstaupd?SHIPKTVORDERUPD(混淆码)
+#define kUrlShipKtvStauPd [NSString stringWithFormat:@"/appsktvin/shipktvstaupd?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SHIPKTVORDERUPD"]]
+//57 获得用户名下所有KTV订单列表
+//参数：HONOURUSER_ID 需要查询的用户id
+//请求地址：/appsktvin/ktvorderalllist?ALLKTVORDER(混淆码)
+#define kUrlKtvOrderAllList [NSString stringWithFormat:@"/appsktvin/ktvorderalllist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"ALLKTVORDER"]]
+//58. 获取某KTV详情列表
+//参数：SORTKTV_ID 某KTVid
+//请求地址：/appsktvin/ktvdetaillist?KTVDETAIL(混淆码)
+#define kUrlKtvDetailList [NSString stringWithFormat:@"/appsktvin/ktvdetaillist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"KTVDETAIL"]]
+//59. 根据状态获取轮播图
+//参数：无
+//请求地址：/appshipin/scarouselfigure?SCAROUSELFIGURE(混淆码)
+#define kUrlScarouselfigure [NSString stringWithFormat:@"/appshipin/scarouselfigure?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SCAROUSELFIGURE"]]
+//60.根据酒店id获取酒店综合详细
+//参数：SORTHOTEL_ID 某酒店id
+//请求地址：/appshotelin/hotelsyn?HOTELSYN（混淆码）
+#define kUrlHotelSyn [NSString stringWithFormat:@"/appshotelin/hotelsyn?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"HOTELSYN"]]
+//61.根据美食店铺id获取美食店铺综合详细
+//参数：SORTFOOD_ID 某美食店铺id
+//请求地址：/appsfoodin/foodsyn?SFOODSYN（混淆码）
+#define kUrlFoodSyn [NSString stringWithFormat:@"/appsfoodin/foodsyn?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SFOODSYN"]]
+//62.根据KTVid获取KTV店铺综合详细
+//参数：SORTKTV_ID 某KTVid
+//请求地址：/appsktvin/ktvsyn?KTVSYN（混淆码）
+#define kUrlKtvSyn [NSString stringWithFormat:@"/appsktvin/ktvsyn?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"KTVSYN"]]
+
+
 
 #endif /* URLMacros_h */

@@ -8,6 +8,7 @@
 
 #import "ZSHCollectViewController.h"
 #import "ZSHCollectCell.h"
+#import "ZSHBuyLogic.h"
 
 static NSString *CollectCellIdentifier = @"CollectCellIdentifier";
 
@@ -25,7 +26,7 @@ static NSString *CollectCellIdentifier = @"CollectCellIdentifier";
 }
 
 - (void)loadData{
-    
+    [self requstData];
     [self initViewModel];
 }
 
@@ -48,6 +49,7 @@ static NSString *CollectCellIdentifier = @"CollectCellIdentifier";
 - (void)initViewModel {
     [self.tableViewModel.sectionModelArray removeAllObjects];
     [self.tableViewModel.sectionModelArray addObject:[self storeListSection]];
+    [self.tableView reloadData];
 }
 
 - (ZSHBaseTableViewSectionModel*)storeListSection {
@@ -75,4 +77,13 @@ static NSString *CollectCellIdentifier = @"CollectCellIdentifier";
     }
     return sectionModel;
 }
+
+
+- (void)requstData {
+    ZSHBuyLogic *logic = [[ZSHBuyLogic alloc] init];
+    [logic requestShipCollectWithUserID:@"userID" success:^(id response) {
+        
+    }];
+}
+
 @end

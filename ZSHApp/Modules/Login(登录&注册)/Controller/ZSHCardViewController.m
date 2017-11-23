@@ -16,6 +16,7 @@
 #import "ZSHCardCustomizedCell.h"
 #import "ZSHCardPayCell.h"
 #import "ZSHCardCommitBottomView.h"
+#import "ZSHLoginLogic.h"
 
 @interface ZSHCardViewController ()
 
@@ -59,6 +60,10 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
     [self.tableView reloadData];
     
     ZSHCardCommitBottomView *bottomView = [[ZSHCardCommitBottomView alloc]initWithFrame:CGRectMake(0, KScreenHeight - KBottomNavH, KScreenWidth, KBottomNavH)];
+    kWeakSelf(self);
+    [bottomView.rightBtn addTapBlock:^(UIButton *btn) {
+        [weakself userRegister];
+    }];
     [self.view addSubview:bottomView];
 }
 
@@ -221,6 +226,7 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
     switch (tag) {
         case 3:{
             NSArray *addressArr = @[@"姓名",@"手机号码",@"重复手机号码",@"省市区",@"详细地址"];
+            NSArray *parameterArr = @[@"REALNAME", @"PHONE", @"Repeat", @"PROVINCE",@"ADDRESS"];
             NSArray *textTypeArr =  @[@(ZSHTextFieldViewUser),@(ZSHTextFieldViewPhone),@(ZSHTextFieldViewPhone),@(ZSHTextFieldViewUser),@(ZSHTextFieldViewUser)];
             ZSHBaseTableViewSectionModel *sectionModel = self.tableViewModel.sectionModelArray[tag];
             if ([_selectedArr[tag] isEqualToString:@"1"])  {
@@ -233,7 +239,9 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
                         if (![cell.contentView viewWithTag:2]) {
                             NSDictionary *initParamDic = @{@"placeholder":str,@"textFieldType":textTypeArr[indexPath.row],KFromClassType:@(FromCardVCToTextFieldCellView),@"placeholderTextColor":KZSHColor454545};
                             ZSHTextFieldCellView *textFieldView = [[ZSHTextFieldCellView alloc]initWithFrame:CGRectZero paramDic:initParamDic];
-                            textFieldView.tag = 2;
+                            textFieldView.textFieldChanged = ^(NSString *text,NSInteger tag) {
+                                [[NSUserDefaults standardUserDefaults] setObject:text forKey:parameterArr[indexPath.row]];
+                            };
                             [cell.contentView addSubview:textFieldView];
                             [textFieldView mas_makeConstraints:^(MASConstraintMaker *make) {
                                 make.left.mas_equalTo(cell).offset(kRealValue(KLeftMargin));
@@ -313,11 +321,43 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
     }
 }
 
+- (void)textFieldWithText:(UITextField *)textfield {
+    
+}
 
+- (void)userRegister {
+    NSString *cardNo = SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"CARDNO"]);
+    NSString *phone = SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"PHONE"]);
+    NSString *realName = SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"REALNAME"]);
+    NSString *province = SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"PROVINCE"]);
+    NSString *address = SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"ADDRESS"]);
+    NSString *custom = SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"CUSTOM"]);
+    NSString *customContent = NSStringFormat(@"%@%@", SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"CardCustom112311"]),SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"CardCustom112312"]));
+    
+    RLog(@"987%@", @{@"CARDNO":SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"CARDNO"]),
+                @"PHONE":SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"PHONE"]),
+                @"REALNAME":SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"REALNAME"]),
+                @"PROVINCE":SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"PROVINCE"]),
+                @"ADDRESS":SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"ADDRESS"]),
+                @"CUSTOM":SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"CUSTOM"]),
+                @"CUSTOMCONTENT":NSStringFormat(@"%@%@", SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"CardCustom112311"]),SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"CardCustom112312"]))});
+    if (![cardNo isEqual:@""] && ![phone isEqual:@""] && ![realName isEqual:@""] && ![province isEqual:@""] && ![address isEqual:@""] && ![custom isEqual:@""] && ![customContent isEqual:@""]) {
+        ZSHLoginLogic *loginLogic = [[ZSHLoginLogic alloc] init];
+        [loginLogic userRegisterWithDic:@{@"CARDNO":SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"CARDNO"]),
+                                          @"PHONE":SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"PHONE"]),
+                                          @"REALNAME":SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"REALNAME"]),
+                                          @"PROVINCE":SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"PROVINCE"]),
+                                          @"ADDRESS":SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"ADDRESS"]),
+                                          @"CUSTOM":SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"CUSTOM"]),
+                                          @"CUSTOMCONTENT":NSStringFormat(@"%@%@", SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"CardCustom112311"]),SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"CardCustom112312"]))
+                                          }];
+        
+        loginLogic.loginSuccess = ^(id response) {
+            RLog(@"请求成功：返回数据&%@",response);
+        };
+    }
+    
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 @end
