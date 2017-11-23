@@ -88,6 +88,13 @@ typedef NS_ENUM (NSInteger,ZSHToNotificationVC) {
     FromActivityCenterVCToNotificationVC
 };
 
+typedef NS_ENUM (NSInteger,ZSHToGuideView) {
+    FromGuideVCToGuideView,           //引导页 - 轮播view
+    FromCardVCToGuideView,            //黑卡设置页 - 轮播view
+    FromHotelDetailVCToGuideView,     //酒店（美食，ktv详情页） - 轮播view
+    FromNoneVCToGuideView
+};
+
 @interface ZSHBaseUIControl : NSObject
 
 + (UILabel *)createLabelWithParamDic:(NSDictionary *)paramDic;

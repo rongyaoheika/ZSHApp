@@ -158,6 +158,8 @@
 		FE2CD0B31F98F4B400E9E519 /* ZSHExchangeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE2CD0B21F98F4B400E9E519 /* ZSHExchangeViewController.m */; };
 		FE2CD0B61F98F61A00E9E519 /* ZSHIntegralExchangeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE2CD0B51F98F61A00E9E519 /* ZSHIntegralExchangeCell.m */; };
 		FE2CD0B91F98F9C200E9E519 /* ZSHCouponViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE2CD0B81F98F9C200E9E519 /* ZSHCouponViewController.m */; };
+		FE3005F31FC65B0400A801C9 /* ZSHFoodLogic.m in Sources */ = {isa = PBXBuildFile; fileRef = FE3005F21FC65B0400A801C9 /* ZSHFoodLogic.m */; };
+		FE3005F71FC6779100A801C9 /* CWStarRateView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE3005F61FC6779100A801C9 /* CWStarRateView.m */; };
 		FE3683C01FBC02B300220477 /* ZSHCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE3683BF1FBC02B300220477 /* ZSHCardViewController.m */; };
 		FE443FD01FAFF60200B7F7A5 /* ZSHTicketTypeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE443FCF1FAFF60200B7F7A5 /* ZSHTicketTypeCell.m */; };
 		FE443FD61FB030C600B7F7A5 /* ZSHAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE443FD51FB030C600B7F7A5 /* ZSHAccountViewController.m */; };
@@ -675,6 +677,10 @@
 		FE2CD0B51F98F61A00E9E519 /* ZSHIntegralExchangeCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHIntegralExchangeCell.m; sourceTree = "<group>"; };
 		FE2CD0B71F98F9C100E9E519 /* ZSHCouponViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHCouponViewController.h; sourceTree = "<group>"; };
 		FE2CD0B81F98F9C200E9E519 /* ZSHCouponViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHCouponViewController.m; sourceTree = "<group>"; };
+		FE3005F11FC65B0400A801C9 /* ZSHFoodLogic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHFoodLogic.h; sourceTree = "<group>"; };
+		FE3005F21FC65B0400A801C9 /* ZSHFoodLogic.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHFoodLogic.m; sourceTree = "<group>"; };
+		FE3005F51FC6779100A801C9 /* CWStarRateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CWStarRateView.h; sourceTree = "<group>"; };
+		FE3005F61FC6779100A801C9 /* CWStarRateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CWStarRateView.m; sourceTree = "<group>"; };
 		FE3683BE1FBC02B300220477 /* ZSHCardViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHCardViewController.h; sourceTree = "<group>"; };
 		FE3683BF1FBC02B300220477 /* ZSHCardViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHCardViewController.m; sourceTree = "<group>"; };
 		FE443FCE1FAFF60200B7F7A5 /* ZSHTicketTypeCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHTicketTypeCell.h; sourceTree = "<group>"; };
@@ -2084,6 +2090,15 @@
 			path = TLMemuButton;
 			sourceTree = "<group>";
 		};
+		FE3005F41FC6779100A801C9 /* CWStarRateView */ = {
+			isa = PBXGroup;
+			children = (
+				FE3005F51FC6779100A801C9 /* CWStarRateView.h */,
+				FE3005F61FC6779100A801C9 /* CWStarRateView.m */,
+			);
+			path = CWStarRateView;
+			sourceTree = "<group>";
+		};
 		FE443FCD1FAFF35D00B7F7A5 /* Train（火车票） */ = {
 			isa = PBXGroup;
 			children = (
@@ -2395,6 +2410,7 @@
 		FE5537AA1F47049D00803128 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				FE3005F41FC6779100A801C9 /* CWStarRateView */,
 				FE4E4B371FC03C1D00E3B2F4 /* SearchVC */,
 				FE4E4B301FC025C500E3B2F4 /* Slider */,
 				185DE3051FC01E1A00720CAF /* ADPlayer */,
@@ -3061,6 +3077,8 @@
 			children = (
 				FEE697BE1FC566B4002120F0 /* ZSHHomeLogic.h */,
 				FEE697BF1FC566B4002120F0 /* ZSHHomeLogic.m */,
+				FE3005F11FC65B0400A801C9 /* ZSHFoodLogic.h */,
+				FE3005F21FC65B0400A801C9 /* ZSHFoodLogic.m */,
 			);
 			path = Logic;
 			sourceTree = "<group>";
@@ -3381,6 +3399,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FE3005F31FC65B0400A801C9 /* ZSHFoodLogic.m in Sources */,
 				185BB9AB1FB53BC6007A96FF /* ZSHLiveUserLevelViewController.m in Sources */,
 				182287161FB44FE600CA5B10 /* XXTextView.m in Sources */,
 				FE7AF22E1FA2D82E00E1A648 /* TggStarEvaluationView.h in Sources */,
@@ -3590,6 +3609,7 @@
 				FE55381B1F47049D00803128 /* RxWebViewController.m in Sources */,
 				FE0ED7E21FC2CC46008299C5 /* ZSHCityView.m in Sources */,
 				FE1377931F977628003C8DFB /* ZSHManageAddressViewController.m in Sources */,
+				FE3005F71FC6779100A801C9 /* CWStarRateView.m in Sources */,
 				FE55381A1F47049D00803128 /* RootWebViewController.m in Sources */,
 				FE55380F1F47049D00803128 /* AppDelegate+PushService.m in Sources */,
 				FE5538521F47049D00803128 /* main.m in Sources */,

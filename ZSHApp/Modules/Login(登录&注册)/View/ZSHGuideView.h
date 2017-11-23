@@ -7,7 +7,11 @@
 //
 
 #import "ZSHBaseView.h"
+#import "TYCyclePagerView.h"
 
 @interface ZSHGuideView : ZSHBaseView
+
+@property (nonatomic, strong) TYCyclePagerView *pagerView;
+@property (nonatomic, strong) UIPageControl    *pageControl;
 
 @end

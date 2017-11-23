@@ -138,19 +138,4 @@ typedef void(^EvaluateViewDidChooseStarBlock)(NSUInteger count);
     [self touchesEnded:touches withEvent:event];
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @end

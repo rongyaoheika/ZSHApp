@@ -163,6 +163,12 @@
 //参数：无参数
 //请求地址：/appsfoodin/sfood?SORTFOOD(混淆码)
 #define kUrlSFood [NSString stringWithFormat:@"/appsfoodin/sfood?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SORTFOOD"]]
+
+//24.1:根据美食店铺id获取美食店铺综合详细
+//参数：SORTFOOD_ID 某美食店铺id
+#define kUrlSFoodDetail [NSString stringWithFormat:@"/appsfoodin/foodsyn?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SFOODSYN"]]
+
+
 //25.美食店铺添加评价
 //参数：SORTFOOD_ID 店铺id/HONOURUSER_ID 评价用户id/EVALUATECONTENT 评价内容/EVALUATECOINT 评价分数
 //请求地址：/appsfoodin/sfoodaddeva?SFOODADDEVA（混淆码）
@@ -320,6 +326,8 @@
 //参数：SORTKTV_ID 某KTVid
 //请求地址：/appsktvin/ktvsyn?KTVSYN（混淆码）
 #define kUrlKtvSyn [NSString stringWithFormat:@"/appsktvin/ktvsyn?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"KTVSYN"]]
+
+
 
 
 

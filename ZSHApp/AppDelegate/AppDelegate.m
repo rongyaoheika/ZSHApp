@@ -39,6 +39,9 @@
     //键盘监听
     [self initKeyboard];
     
+    //打印网络json
+    [PPNetworkHelper openLog];
+    
     return YES;
     
 }

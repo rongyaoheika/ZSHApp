@@ -10,10 +10,12 @@
 #import "ZSHFoodCell.h"
 #import "ZSHFoodModel.h"
 #import "ZSHHotelDetailViewController.h"
+#import "ZSHFoodLogic.h"
 
 @interface ZSHFoodViewController ()
 
-@property (nonatomic, strong)NSMutableArray           *dataArr;
+@property (nonatomic, strong) NSMutableArray           *dataArr;
+@property (nonatomic, strong) ZSHFoodLogic             *foodLogic;
 
 @end
 
@@ -24,16 +26,13 @@ static NSString *ZSHFoodCellID = @"ZSHFoodCell";
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    [self loadData];
     [self createUI];
+    [self loadData];
 }
 
 - (void)loadData{
-    NSArray *baseDataArr = @[
-                         @{@"imageName":@"food_image_1",@"price":@"399",@"address":@"三亚市天涯区黄山路90号",@"comment":@"120",@"detailImageName":@"food_image_big",@"foodName":@"菲罗牛排主题自助西餐厅1"},
-                         @{@"imageName":@"food_image_1",@"price":@"309",@"address":@"三亚市天涯区黄山路78号",@"comment":@"10",@"detailImageName":@"food_image_big",@"foodName":@"菲罗牛排主题自助西餐厅2" }
-                             ];
-    self.dataArr = [ZSHFoodModel mj_objectArrayWithKeyValuesArray:baseDataArr];
+    _foodLogic = [[ZSHFoodLogic alloc]init];
+    [self requestData];
     [self initViewModel];
 }
 
@@ -46,42 +45,60 @@ static NSString *ZSHFoodCellID = @"ZSHFoodCell";
     
     self.tableView.delegate = self.tableViewModel;
     self.tableView.dataSource = self.tableViewModel;
-    
     [self.tableView registerClass:[ZSHFoodCell class] forCellReuseIdentifier:ZSHFoodCellID];
-    [self.tableView reloadData];
+   
 }
 
 - (void)initViewModel {
     [self.tableViewModel.sectionModelArray removeAllObjects];
     [self.tableViewModel.sectionModelArray addObject:[self storeListSection]];
+    [self.tableView reloadData];
 }
 
 //list
 - (ZSHBaseTableViewSectionModel*)storeListSection {
     kWeakSelf(self);
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
-    for (int i = 0; i < self.dataArr.count; i++) {
+    for (int i = 0; i < _foodLogic.foodListArr.count; i++) {
         ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
         [sectionModel.cellModelArray addObject:cellModel];
         kWeakSelf(cellModel);
         cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
             ZSHFoodCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHFoodCellID forIndexPath:indexPath];
-            ZSHFoodModel *foodModel = weakself.dataArr[indexPath.row];
+            ZSHFoodModel *foodModel = _foodLogic.foodListArr[indexPath.row];
             [cell updateCellWithModel:foodModel];
             weakcellModel.height = foodModel.cellHeight;
             return cell;
         };
         
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
-             ZSHFoodModel *foodModel = weakself.dataArr[indexPath.row];
+            ZSHFoodModel *foodModel = _foodLogic.foodListArr[indexPath.row];
             NSDictionary *nextParamDic = @{KFromClassType:@(ZSHFromFoodVCToHotelDetailVC),@"model":foodModel};
             ZSHHotelDetailViewController *hotelDetailVC = [[ZSHHotelDetailViewController alloc]initWithParamDic:nextParamDic];
             [weakself.navigationController pushViewController:hotelDetailVC animated:YES];
-           
         };
     }
     
     return sectionModel;
+}
+
+- (void)requestData{
+    kWeakSelf(self);
+    [_foodLogic loadFoodListData];
+    _foodLogic.requestDataCompleted = ^(id data){
+        [weakself.tableView.mj_header endRefreshing];
+        [weakself.tableView.mj_footer endRefreshing];
+        [weakself initViewModel];
+    };
+}
+
+-(void)headerRereshing{
+    [self requestData];
+}
+
+#pragma mark ————— 上拉刷新 —————
+-(void)footerRereshing{
+    [self requestData];
 }
 
 - (void)didReceiveMemoryWarning {

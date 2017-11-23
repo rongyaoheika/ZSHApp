@@ -40,18 +40,19 @@
     bgImage.frame = self.view.bounds;
     [self.view addSubview:bgImage];
     
-    NSDictionary *nextParamDic = @{@"dataArr":self.imageArr,@"min_scale":@(0.6),@"withRatio":@(1.8),@"infinite":@(false)};
+    NSDictionary *nextParamDic = @{@"dataArr":self.imageArr, @"pageViewHeight":@(440),@"min_scale":@(0.6),@"withRatio":@(1.8),@"infinite":@(false)};
      _midView = [[ZSHGuideView alloc]initWithFrame:CGRectZero paramDic:nextParamDic];
     [self.view addSubview:_midView];
     [_midView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.view).offset(kRealValue(71.5));
+//        make.top.mas_equalTo(self.view).offset(kRealValue(71.5));
+        make.centerY.mas_equalTo(self.view);
         make.centerX.mas_equalTo(self.view);
         make.width.mas_equalTo(self.view);
         make.bottom.mas_equalTo(self.view).offset(-kRealValue(105));
     }];
     
     kWeakSelf(self);
-    NSDictionary *applyBtnDic = @{@"title":@"在线申请",@"titleColor":KWhiteColor,@"font":kPingFangRegular(12)};
+    NSDictionary *applyBtnDic = @{KFromClassType:@(FromGuideVCToGuideView),@"title":@"在线申请",@"titleColor":KWhiteColor,@"font":kPingFangRegular(12)};
     _applyBtn = [ZSHBaseUIControl createBtnWithParamDic:applyBtnDic];
     [ZSHSpeedy zsh_chageControlCircularWith:_applyBtn AndSetCornerRadius:0 SetBorderWidth:1.0 SetBorderColor:KWhiteColor canMasksToBounds:YES];
     [_applyBtn addTapBlock:^(UIButton *btn) {

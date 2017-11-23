@@ -7,20 +7,15 @@
 //
 
 #import "ZSHGuideView.h"
-#import "TYCyclePagerView.h"
 #import "TYCyclePagerViewCell.h"
 
 @interface ZSHGuideView ()<TYCyclePagerViewDataSource, TYCyclePagerViewDelegate>
 
 @property (nonatomic, assign) CGSize           midImageSize;
 @property (nonatomic, strong) NSArray          *imageArr;
-@property (nonatomic, strong) UIPageControl    *pageControl;
 @property (nonatomic, assign) CGFloat          min_scale;
 @property (nonatomic, assign) CGFloat          withRatio;
 @property (nonatomic, assign) CGFloat          contentLeft;
-
-@property (nonatomic, strong) TYCyclePagerView *pagerView;
-
 
 @end
 
@@ -31,9 +26,6 @@
     _min_scale = [self.paramDic[@"min_scale"]floatValue];
     _withRatio = [self.paramDic[@"withRatio"]floatValue];
     
-    UIImage *midImage = [UIImage imageNamed:self.imageArr[0]];
-    _midImageSize = midImage.size;
-//    [self addSubview:self.carousel];
     [self addSubview:self.pagerView];
     [self addSubview:self.pageControl];
     [self layoutIfNeeded];
@@ -46,21 +38,19 @@
         make.left.mas_equalTo(self);
         make.width.mas_equalTo(self);
         make.top.mas_equalTo(self);
-        make.height.mas_equalTo(_midImageSize.height);
+        make.height.mas_equalTo([self.paramDic[@"pageViewHeight"]floatValue]);
     }];
-    
-//    [self.carousel mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.left.mas_equalTo(self);
-//        make.width.mas_equalTo(self);
-//        make.top.mas_equalTo(self);
-//        make.height.mas_equalTo(_midImageSize.height);
-//    }];
     
     [self.pageControl mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.mas_equalTo(self);
-        make.width.mas_equalTo(self);
         make.height.mas_equalTo(kRealValue(8));
-        make.centerX.mas_equalTo(self);
+        if (kFromClassTypeValue == FromHotelDetailVCToGuideView) {
+             make.width.mas_equalTo(kRealValue(60));
+             make.right.mas_equalTo(self).offset(-kRealValue(7.0));
+        } else {
+            make.width.mas_equalTo(self);
+            make.centerX.mas_equalTo(self);
+        }
     }];
 }
 
@@ -103,14 +93,25 @@
     TYCyclePagerViewCell *cell = [pagerView dequeueReusableCellWithReuseIdentifier:@"cellId" forIndex:index];
 //    cell.backgroundColor = self.imageArr[index];
 //    cell.label.text = [NSString stringWithFormat:@"index->%ld",index];
-    cell.imageView.image = [UIImage imageNamed:self.imageArr[index]];
+    if ([self.imageArr[index] containsString:@"http"]) {
+        [cell.imageView sd_setImageWithURL:[NSURL URLWithString:self.imageArr[index]]];
+    } else {
+        cell.imageView.image = [UIImage imageNamed:self.imageArr[index]];
+    }
+    
     return cell;
 }
 
 - (TYCyclePagerViewLayout *)layoutForPagerView:(TYCyclePagerView *)pageView {
     TYCyclePagerViewLayout *layout = [[TYCyclePagerViewLayout alloc]init];
-    layout.itemSize = CGSizeMake(CGRectGetWidth(pageView.frame)*0.8, CGRectGetHeight(pageView.frame));
-    layout.itemSpacing = 15;
+    if (kFromClassTypeValue == FromHotelDetailVCToGuideView) {
+        layout.itemSize = CGSizeMake(kScreenWidth, CGRectGetHeight(pageView.frame));
+        layout.itemSpacing = 0;
+    } else {
+        layout.itemSize = CGSizeMake(CGRectGetWidth(pageView.frame)*0.8, CGRectGetHeight(pageView.frame));
+        layout.itemSpacing = 15;
+    }
+   
     //layout.minimumAlpha = 0.3;
     layout.itemHorizontalCenter = YES;
     layout.layoutType = TYCyclePagerTransformLayoutLinear;
@@ -123,8 +124,9 @@
 //    NSLog(@"%zd ->  %zd",fromIndex,toIndex);
 }
 
-- (void)updateCellWithParamDic:(NSDictionary *)dic{
+- (void)updateViewWithParamDic:(NSDictionary *)dic{
     self.imageArr = dic[@"dataArr"];
+    [self.pagerView reloadData];
     [self layoutIfNeeded];
 }
 

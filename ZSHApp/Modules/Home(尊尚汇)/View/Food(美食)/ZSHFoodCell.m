@@ -8,15 +8,17 @@
 
 #import "ZSHFoodCell.h"
 #import "TggStarEvaluationView.h"
+#import "CWStarRateView.h"
 #import "ZSHFoodModel.h"
 @interface ZSHFoodCell()
 
 @property (nonatomic, strong) UIImageView               *hotelmageView;
 @property (nonatomic, strong) UILabel                   *hotelDescLabel;
-@property (nonatomic, strong) UILabel                   *hotelAddressLabel;
+@property (nonatomic, strong) UILabel                   *foodNameLabel;
 @property (nonatomic, strong) UILabel                   *distanceLabel;
 @property (nonatomic, strong) UILabel                   *commentLabel;
-@property (nonatomic, strong) TggStarEvaluationView     *starView;
+//@property (nonatomic, strong) TggStarEvaluationView     *starView;
+@property (nonatomic, strong) CWStarRateView            *starView;
 @property (nonatomic, strong) UILabel                   *priceLabel;
 
 @end
@@ -35,18 +37,23 @@
     [self.contentView addSubview:_priceLabel];
     
     //餐厅地址
-    NSDictionary *hotelAddressLabelDic = @{@"text":@"三亚市天涯区黄山路94号",@"font": kPingFangMedium(12)};
-    _hotelAddressLabel = [ZSHBaseUIControl createLabelWithParamDic:hotelAddressLabelDic];
-    [self.contentView addSubview:_hotelAddressLabel];
+    NSDictionary *foodNameLabelDic = @{@"text":@"三亚市天涯区黄山路94号",@"font": kPingFangMedium(12)};
+    _foodNameLabel = [ZSHBaseUIControl createLabelWithParamDic:foodNameLabelDic];
+    [self.contentView addSubview:_foodNameLabel];
     
     //星星评价
-    _starView = [TggStarEvaluationView evaluationViewWithChooseStarBlock:nil];
+    _starView = [[CWStarRateView alloc] initWithFrame:CGRectMake(kRealValue(230), kRealValue(217), kRealValue(80), kRealValue(12)) numberOfStars:5];
+    _starView.scorePercent = 0.45;
+    _starView.allowIncompleteStar = YES;
+    _starView.hasAnimation = YES;
+    _starView.allowUserTap = NO;
     [self.contentView addSubview:_starView];
     
     //餐厅评价
     NSDictionary *commentLabelDic = @{@"text":@"（120条评价）",@"font": kPingFangRegular(11)};
     _commentLabel = [ZSHBaseUIControl createLabelWithParamDic:commentLabelDic];
     [self.contentView addSubview:_commentLabel];
+    _commentLabel.frame = CGRectMake(kRealValue(kRealValue(315)), kRealValue(217), kRealValue(74), kRealValue(12));
     
 }
 
@@ -67,43 +74,29 @@
         make.right.mas_equalTo(_hotelmageView);
     }];
     
-    [_hotelAddressLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_foodNameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(_priceLabel.mas_bottom).offset(kRealValue(10));
         make.left.mas_equalTo(_hotelmageView);
         make.height.mas_equalTo(kRealValue(12));
         make.width.mas_equalTo(KScreenWidth*0.5);
     }];
     
-    [_starView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(_hotelAddressLabel);
-        make.left.mas_equalTo(_hotelAddressLabel.mas_right);
-        make.height.mas_equalTo(kRealValue(12));
-        make.width.mas_equalTo(kRealValue(80));
-    }];
-    _starView.starCount = 4;
-    _starView.spacing = 0.25;
-    
-    [_commentLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.mas_equalTo(_starView);
-        make.left.mas_equalTo(_starView.mas_right);
-        make.right.mas_equalTo(self).offset(-KLeftMargin);
-        make.height.mas_equalTo(_starView);
-    }];
 }
 
 - (void)updateCellWithModel:(ZSHFoodModel *)model{
     
-    _hotelmageView.image = [UIImage imageNamed:model.imageName];
-    _priceLabel.text = [NSString stringWithFormat:@"¥%@／位",model.price];
-    _hotelAddressLabel.text = model.address;
-    _commentLabel.text = [NSString stringWithFormat:@"（%@条评价）",model.comment];
+    [_hotelmageView sd_setImageWithURL:[NSURL URLWithString:model.SHOWIMAGES]];
+    _priceLabel.text = [NSString stringWithFormat:@"¥%@／位",model.SHOPPRICE];
+    _foodNameLabel.text = model.SHOPNAMES;
+    _commentLabel.text = [NSString stringWithFormat:@"（%@条评价）",model.SHOPEVACOUNT];
+    _starView.scorePercent = [model.SHOPEVALUATE floatValue]/5.0;
 
 }
 
 - (CGFloat)rowHeightWithCellModel:(ZSHFoodModel *)model{
     [self updateCellWithModel:model];
     [self layoutIfNeeded];
-    CGFloat detailLabelY = CGRectGetMaxY(self.hotelAddressLabel.frame);
+    CGFloat detailLabelY = CGRectGetMaxY(self.foodNameLabel.frame);
     return detailLabelY + kRealValue(20);
 }
 
