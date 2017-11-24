@@ -45,6 +45,7 @@ typedef NS_ENUM(NSInteger, ShowPickViewWindowType) {
     WindowBirthDay,                // 出生日期
     WindowGender,                  // 性别
     WindowRegion,                  // 区域
+    Window
     WindowTime,                    // 年份
     WindowCoupon,                  // 优惠券
     WindowKTVHour,                 // KTV时间选择

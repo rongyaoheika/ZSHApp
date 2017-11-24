@@ -10,10 +10,12 @@
 #import "ZSHEntertainmentHeadView.h"
 #import "ZSHEntertainmentDetailCell.h"
 #import "ZSHEntertainmentDisViewController.h"
+#import "ZSHTogetherLogic.h"
 
 @interface ZSHEntertainmentDetailViewController ()
 
 @property (nonatomic, strong) ZSHEntertainmentHeadView          *headView;
+@property (nonatomic, strong) ZSHTogetherLogic                  *togetherLogic;
 
 @end
 
@@ -24,13 +26,13 @@ static NSString *ZSHEntertainmentDetailCellID = @"ZSHEntertainmentDetailCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     
     [self loadData];
     [self createUI];
 }
 
 - (void)loadData{
+    [self  requestData];
     [self initViewModel];
 }
 
@@ -58,11 +60,11 @@ static NSString *ZSHEntertainmentDetailCellID = @"ZSHEntertainmentDetailCell";
 - (void)initViewModel {
     [self.tableViewModel.sectionModelArray removeAllObjects];
     [self.tableViewModel.sectionModelArray addObject:[self storeListSection]];
+    [self.tableView reloadData];
 }
 
 //head
 - (ZSHBaseTableViewSectionModel*)storeListSection {
-    kWeakSelf(self);
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     
     //头部cell
@@ -132,9 +134,12 @@ static NSString *ZSHEntertainmentDetailCellID = @"ZSHEntertainmentDetailCell";
     return _headView;
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)requestData {
+    kWeakSelf(self);
+    _togetherLogic = [[ZSHTogetherLogic alloc] init];
+    [_togetherLogic requestPartyListWithConvergeDetailID:self.paramDic[@"CONVERGEDETAIL_ID"] success:^(id response) {
+        [weakself initViewModel];
+    }];
 }
 
 @end

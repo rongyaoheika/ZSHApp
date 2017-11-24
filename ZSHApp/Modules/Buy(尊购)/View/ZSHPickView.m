@@ -9,7 +9,7 @@
 #import "ZSHPickView.h"
 #import "ZSHTopLineView.h"
 
-NSUInteger yearSatrt = 1900;
+NSInteger yearSatrt = 1900;
 
 @interface ZSHPickView() <UIPickerViewDataSource,UIPickerViewDelegate>
 
@@ -229,7 +229,7 @@ NSUInteger yearSatrt = 1900;
             break;
         }
         case WindowRegion:{
-            RLog(@"选择位置%d",row);
+            RLog(@"选择位置%zd",row);
             break;
         }
         case WindowTime:{
@@ -332,6 +332,13 @@ NSUInteger yearSatrt = 1900;
     switch (_showType) {
         case WindowBirthDay:{
             RLog(@"保存生日数据");
+            NSInteger year = [_pickerView selectedRowInComponent:0];
+            NSInteger month = [_pickerView selectedRowInComponent:1];
+            NSInteger day = [_pickerView selectedRowInComponent:2];
+            NSString *dateStr = [NSString stringWithFormat:@"%zd-%zd-%zd ",yearSatrt + year,month+1,day+1];
+            if (self.saveChangeBlock) {
+                self.saveChangeBlock(dateStr,self.tag);
+            }
             break;
         }
         case WindowGender:{
@@ -350,7 +357,7 @@ NSUInteger yearSatrt = 1900;
             NSString *dateStr = [NSString stringWithFormat:@"%02ld/%ld",month,yearSatrt + year];
             RLog(@"保存区域数据%ld%ld",year,month);
             if (self.saveChangeBlock) {
-                self.saveChangeBlock(dateStr);
+                self.saveChangeBlock(dateStr,self.tag);
             }
             break;
         }

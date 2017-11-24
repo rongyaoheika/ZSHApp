@@ -18,7 +18,6 @@ static NSString *cellIdentifier = @"listCell";
 @interface ZSHTogetherViewController ()<UISearchBarDelegate>
 
 @property (nonatomic, strong) NSArray            *pushVCsArr;
-@property (nonatomic, strong) NSMutableArray     *paramArr;
 @property (nonatomic, strong) ZSHTogetherLogic   *togetherLogic;
 
 @end
@@ -78,8 +77,9 @@ static NSString *cellIdentifier = @"listCell";
         };
         
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
+            ZSHTogetherModel *model = _togetherLogic.dataArr[i];
             Class className = NSClassFromString(weakself.pushVCsArr[indexPath.row]);
-            RootViewController *vc = [[className alloc]initWithParamDic:weakself.paramArr[indexPath.row]];
+            RootViewController *vc = [[className alloc]initWithParamDic:@{@"CONVERGE_ID":model.CONVERGE_ID}];
             [weakself.navigationController pushViewController:vc animated:YES];
         };
     }
@@ -92,25 +92,12 @@ static NSString *cellIdentifier = @"listCell";
     
 }
 
-- (void)updateParaArr {
-    self.paramArr = [NSMutableArray arrayWithCapacity:_togetherLogic.dataArr.count];
-    for (int i = 0; i < _togetherLogic.dataArr.count; i++) {
-        [self.paramArr addObject:_togetherLogic.dataArr[i].CONVERGE_ID];
-    }
-}
-
 - (void)requestData {
     kWeakSelf(self);
     _togetherLogic = [[ZSHTogetherLogic alloc] init];
     [_togetherLogic requestConvergeList:^(id response) {
         [weakself initViewModel];
-        [weakself updateParaArr];
     }];
-}
-
-
-- (void)requestPartyListWithConvergeID:(NSString *)convergeID {
-    
 }
 
 @end

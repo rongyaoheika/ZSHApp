@@ -98,7 +98,7 @@
 #define kUrlShipBrandList [NSString stringWithFormat:@"/appshipin/shipbrandlist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SHIPBR"]]
 //12.尊购首页专区点击之后的列表
 //参数：BRAND_ID 类型参数id
-//（手表id:1b4ed4c57ef04933b97e8def48fc423a）
+//(手表id:1b4ed4c57ef04933b97e8def48fc423a)
 //(包袋id:a34d1f14a4b7481e8284ad4ba97a496b)
 //(首饰id:2df2c7e628b14341be1e2932cb377c82)
 //(豪车id:c387f598e5c64a1ea275a7ca3e77518c)
@@ -222,7 +222,7 @@
 //39.获得指定汇聚下所有聚会列表
 //参数：CONVERGE_ID 汇聚列表下汇聚id
 //请求地址：/appconvergein/getpartylist?PARTYLIST(混淆码)
-#define kUrlGetPartyList [NSString stringWithFormat:@"/appconvergein/convergelist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"PARTYLIST"]]
+#define kUrlGetPartyList [NSString stringWithFormat:@"/appconvergein/getpartylist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"PARTYLIST"]]
 //40.查看指定聚会详情
 //参数：CONVERGEDETAIL_ID 指定聚会id
 //请求地址：/appconvergein/getdetailbyid?DETAILID(混淆码)
