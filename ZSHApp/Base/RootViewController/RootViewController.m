@@ -254,11 +254,6 @@
         self.navigationItem.rightBarButtonItems = @[spaceButtonItem, item];
     }
     
-    if (@available(iOS 9.0,*)) {
-        [btn.widthAnchor constraintEqualToConstant:btn.size.width].active = true;
-        [btn.heightAnchor constraintEqualToConstant:btn.size.height].active = true;
-    }
-    
 }
 
 - (void)addNavigationItemWithImageName:(NSString *)imageName isLeft:(BOOL)isLeft target:(id)target action:(SEL)action tag:(NSInteger)tag {

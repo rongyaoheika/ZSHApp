@@ -100,7 +100,6 @@ typedef NS_ENUM (NSInteger,ZSHToGuideView) {
 + (UILabel *)createLabelWithParamDic:(NSDictionary *)paramDic;
 + (UIButton *)createBtnWithParamDic:(NSDictionary *)paramDic;
 + (UITableView *)createTableView;
-+ (void)drawLineOfDashByCAShapeLayer:(UIView *)lineView lineLength:(int)lineLength lineSpacing:(int)lineSpacing lineColor:(UIColor *)lineColor lineDirection:(BOOL)isHorizonal;
 + (UIButton *)createLabelBtnWithTopDic:(NSDictionary *)topDic bottomDic:(NSDictionary *)bottomDic;
 + (UIView *)createTabHeadLabelViewWithParamDic:(NSDictionary *)paramDic;
 + (void) setAnimationWithHidden:(BOOL)hidden view:(UIView *)view completedBlock:(RemoveCompletedBlock)completedBlock;

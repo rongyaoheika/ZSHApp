@@ -40,12 +40,12 @@
     bgImage.frame = self.view.bounds;
     [self.view addSubview:bgImage];
     
-    NSDictionary *nextParamDic = @{@"dataArr":self.imageArr, @"pageViewHeight":@(440),@"min_scale":@(0.6),@"withRatio":@(1.8),@"infinite":@(false)};
+    NSDictionary *nextParamDic = @{@"dataArr":self.imageArr, @"pageViewHeight":@(kRealValue(440)),@"min_scale":@(0.6),@"withRatio":@(1.8),@"infinite":@(false)};
      _midView = [[ZSHGuideView alloc]initWithFrame:CGRectZero paramDic:nextParamDic];
     [self.view addSubview:_midView];
     [_midView mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.mas_equalTo(self.view).offset(kRealValue(71.5));
-        make.centerY.mas_equalTo(self.view);
+        make.top.mas_equalTo(self.view).offset(kRealValue(71.5));
+//        make.centerY.mas_equalTo(self.view);
         make.centerX.mas_equalTo(self.view);
         make.width.mas_equalTo(self.view);
         make.bottom.mas_equalTo(self.view).offset(-kRealValue(105));

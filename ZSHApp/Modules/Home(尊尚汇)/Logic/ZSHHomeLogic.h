@@ -11,8 +11,6 @@
 
 @interface ZSHHomeLogic : ZSHBaseLogic
 
-
-
 - (void)loadNoticeCellData;
 - (void)loadServiceCellData;
 @end

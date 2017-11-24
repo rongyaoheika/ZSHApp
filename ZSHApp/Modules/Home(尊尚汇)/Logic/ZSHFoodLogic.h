@@ -7,12 +7,14 @@
 //
 
 #import "ZSHBaseLogic.h"
-#import "ZSHFoodModel.h"
+
+@class ZSHFoodModel;
+@class ZSHFoodDetailModel;
 @interface ZSHFoodLogic : ZSHBaseLogic
 
-@property (nonatomic, strong) NSArray        *foodListArr;
-@property (nonatomic, strong) NSDictionary   *foodDetailDic;
-@property (nonatomic, strong) ZSHFoodModel   *foodModel;
+@property (nonatomic, strong) NSArray <ZSHFoodModel *>    *foodListArr;
+@property (nonatomic, strong) ZSHFoodDetailModel          *foodDetailModel;
+
 - (void)loadFoodListData;
 - (void)loadFoodDetailDataWithParamDic:(NSDictionary *)paramDic;
 

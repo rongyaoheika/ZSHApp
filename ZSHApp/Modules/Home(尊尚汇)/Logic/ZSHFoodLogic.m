@@ -30,7 +30,7 @@
     kWeakSelf(self);
     [PPNetworkHelper POST:kUrlSFoodDetail parameters:paramDic success:^(id responseObject) {
         RLog(@"美食详情请求成功：返回数据&%@",responseObject);
-        _foodModel = [ZSHFoodModel mj_objectWithKeyValues:responseObject[@"pd"]];
+        _foodDetailModel = [ZSHFoodDetailModel mj_objectWithKeyValues:responseObject[@"pd"]];
         if (weakself.requestDataCompleted) {
             weakself.requestDataCompleted(nil);
         }

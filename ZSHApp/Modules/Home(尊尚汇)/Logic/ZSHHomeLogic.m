@@ -28,7 +28,6 @@
 
 - (void)loadServiceCellData{
     kWeakSelf(self);
-    [PPNetworkHelper openLog];
     [PPNetworkHelper POST:kUrlUserHome parameters:nil success:^(id responseObject) {
         RLog(@"请求成功：返回数据&%@",responseObject);
         weakself.dataArr = [ZSHHomeMainModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"]];

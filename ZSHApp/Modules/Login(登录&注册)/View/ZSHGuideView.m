@@ -11,6 +11,8 @@
 
 @interface ZSHGuideView ()<TYCyclePagerViewDataSource, TYCyclePagerViewDelegate>
 
+@property (nonatomic, strong) TYCyclePagerView *pagerView;
+@property (nonatomic, strong) UIPageControl    *pageControl;
 @property (nonatomic, assign) CGSize           midImageSize;
 @property (nonatomic, strong) NSArray          *imageArr;
 @property (nonatomic, assign) CGFloat          min_scale;
@@ -42,14 +44,15 @@
     }];
     
     [self.pageControl mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.mas_equalTo(self);
         make.height.mas_equalTo(kRealValue(8));
         if (kFromClassTypeValue == FromHotelDetailVCToGuideView) {
-             make.width.mas_equalTo(kRealValue(60));
+             make.width.mas_equalTo(kRealValue(150));
              make.right.mas_equalTo(self).offset(-kRealValue(7.0));
+             make.bottom.mas_equalTo(self).offset(-KLeftMargin);
         } else {
             make.width.mas_equalTo(self);
             make.centerX.mas_equalTo(self);
+            make.bottom.mas_equalTo(self);
         }
     }];
 }
@@ -107,27 +110,29 @@
     if (kFromClassTypeValue == FromHotelDetailVCToGuideView) {
         layout.itemSize = CGSizeMake(kScreenWidth, CGRectGetHeight(pageView.frame));
         layout.itemSpacing = 0;
+        layout.layoutType = TYCyclePagerTransformLayoutNormal;
     } else {
         layout.itemSize = CGSizeMake(CGRectGetWidth(pageView.frame)*0.8, CGRectGetHeight(pageView.frame));
         layout.itemSpacing = 15;
+        layout.layoutType = TYCyclePagerTransformLayoutLinear;
+        
     }
    
     //layout.minimumAlpha = 0.3;
     layout.itemHorizontalCenter = YES;
-    layout.layoutType = TYCyclePagerTransformLayoutLinear;
     return layout;
 }
 
 - (void)pagerView:(TYCyclePagerView *)pageView didScrollFromIndex:(NSInteger)fromIndex toIndex:(NSInteger)toIndex {
     _pageControl.currentPage = toIndex;
     //[_pageControl setCurrentPage:newIndex animate:YES];
-//    NSLog(@"%zd ->  %zd",fromIndex,toIndex);
+    NSLog(@"%zd ->  %zd",fromIndex,toIndex);
 }
 
-- (void)updateViewWithParamDic:(NSDictionary *)dic{
-    self.imageArr = dic[@"dataArr"];
-    [self.pagerView reloadData];
-    [self layoutIfNeeded];
+- (void)updateViewWithParamDic:(NSDictionary *)paramDic{
+    self.imageArr = paramDic[@"dataArr"];
+    self.pageControl.numberOfPages = self.imageArr.count;
+    [self.pagerView updateData];
 }
 
 @end

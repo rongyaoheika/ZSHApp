@@ -20,11 +20,9 @@
 #import "ZSHHotelPayViewController.h"
 #import "ZSHGoodsCommentSubViewController.h"
 #import "ZSHFoodLogic.h"
-#import "ZSHGuideView.h"
 
 @interface ZSHHotelDetailViewController ()
 
-//美食：ZSHFoodModel或者酒店ZSHHotelDetailModel
 @property (nonatomic, strong) ZSHFoodLogic              *foodLogic;
 @property (nonatomic, strong) ZSHFoodModel              *foodModel;
 
@@ -33,7 +31,6 @@
 @property (nonatomic, strong) ZSHBottomBlurPopView      *bottomBlurPopView;
 @property (nonatomic, strong) NSMutableArray            *dataArr;
 @property (nonatomic, assign) BOOL                      showSeparatorLine;
-
 
 @end
 
@@ -83,6 +80,9 @@ static NSString *ZSHKTVListCellID = @"ZSHKTVListCell";
             [weakself.tableView.mj_footer endRefreshing];
             [weakself initViewModel];
         };
+    } else if(kFromClassTypeValue == ZSHFromHotelVCToHotelDetailVC){
+        
+        
     }
     
 }
@@ -140,27 +140,15 @@ static NSString *ZSHKTVListCellID = @"ZSHKTVListCell";
 
 //图片，设备
 - (ZSHBaseTableViewSectionModel*)storeHeadSection {
-    kWeakSelf(self);
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
     [sectionModel.cellModelArray addObject:cellModel];
     cellModel.height = kRealValue(225);
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
-        //        ZSHHotelDetailHeadCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHHotelDetailHeadCellID forIndexPath:indexPath];
-        //        cell.fromClassType = [self.paramDic[KFromClassType]integerValue];
-        //        [cell updateCellWithModel:weakself.model];
-        
-        
-        ZSHBaseCell *cell = [[ZSHBaseCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@""];
-        if (_foodLogic.foodModel.SHOPDETAILSIMGS) {
-            NSDictionary *nextParamDic = @{KFromClassType:@(FromHotelDetailVCToGuideView),@"dataArr":_foodLogic.foodModel.SHOPDETAILSIMGS, @"pageViewHeight":@(225), @"min_scale":@(1.0),@"withRatio":@(1.0),@"pageImage":@"page_press",@"currentPageImage":@"page_normal",@"infinite":@(false)};
-            ZSHGuideView *headView = [[ZSHGuideView alloc]initWithFrame:CGRectZero paramDic:nextParamDic];
-            //             [headView updateViewWithParamDic:@{@"dataArr":_foodLogic.foodModel.SHOPDETAILSIMGS}];
-            [cell.contentView addSubview:headView];
-            [headView mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.edges.mas_equalTo(cell);
-            }];
-            [self hideSeparatorLineWithCell:cell hide:YES];
+        ZSHHotelDetailHeadCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHHotelDetailHeadCellID forIndexPath:indexPath];
+        cell.fromClassType = [self.paramDic[KFromClassType]integerValue];
+        if (_foodLogic.foodDetailModel) {
+             [cell updateCellWithModel:_foodLogic.foodDetailModel];
         }
         return cell;
         
@@ -173,6 +161,7 @@ static NSString *ZSHKTVListCellID = @"ZSHKTVListCell";
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHHotelDetailDeviceCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHHotelDetailDeviceCellID forIndexPath:indexPath];
         cell.fromClassType = [self.paramDic[KFromClassType]integerValue];
+        [cell updateCellWithModel:_foodLogic.foodDetailModel];
         [self hideSeparatorLineWithCell:cell hide:YES];
         return cell;
     };
@@ -185,6 +174,7 @@ static NSString *ZSHKTVListCellID = @"ZSHKTVListCell";
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     NSArray *arrowImageArr = @[@"hotel_map",@"hotel_phone"];
     NSArray *titleArr = @[@"三亚市天涯区黄山路94号",@"0898-86868686"];
+    
     for (int i = 0; i <arrowImageArr.count; i++) {
         ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
         [sectionModel.cellModelArray addObject:cellModel];
@@ -341,12 +331,10 @@ static NSString *ZSHKTVListCellID = @"ZSHKTVListCell";
     }
 }
 
-
 #pragma action
 - (void)bookAction{
     
 }
-
 
 #pragma mark ————— 下拉刷新 —————
 -(void)headerRereshing{
