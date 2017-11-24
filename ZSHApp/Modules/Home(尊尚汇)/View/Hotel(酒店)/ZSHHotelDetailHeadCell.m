@@ -36,8 +36,10 @@
     [super layoutSubviews];
     
     [_headView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.mas_equalTo(self);
-        make.width.mas_equalTo(KScreenWidth);
+        make.top.mas_equalTo(self.contentView);
+        make.centerX.mas_equalTo(self.contentView);
+        make.width.mas_equalTo(self.contentView);
+        make.bottom.mas_equalTo(self.contentView);
     }];
 
     [_detailLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -46,6 +48,7 @@
         make.bottom.mas_equalTo(self).offset(-kRealValue(13.5));
         make.height.mas_equalTo(kRealValue(18));
     }];
+
 }
 
 - (void)setFromClassType:(ZSHFromVCToHotelDetailVC)fromClassType{

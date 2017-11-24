@@ -13,8 +13,8 @@
 
 @property (nonatomic, strong) TYCyclePagerView *pagerView;
 @property (nonatomic, strong) UIPageControl    *pageControl;
-@property (nonatomic, assign) CGSize           midImageSize;
-@property (nonatomic, strong) NSArray          *imageArr;
+//@property (nonatomic, assign) CGSize           midImageSize;
+@property (nonatomic, strong) NSMutableArray   *imageArr;
 @property (nonatomic, assign) CGFloat          min_scale;
 @property (nonatomic, assign) CGFloat          withRatio;
 @property (nonatomic, assign) CGFloat          contentLeft;
@@ -24,13 +24,13 @@
 @implementation ZSHGuideView
 
 - (void)setup{
+    
     self.imageArr = self.paramDic[@"dataArr"];
     _min_scale = [self.paramDic[@"min_scale"]floatValue];
     _withRatio = [self.paramDic[@"withRatio"]floatValue];
     
     [self addSubview:self.pagerView];
     [self addSubview:self.pageControl];
-    [self layoutIfNeeded];
 }
 
 - (void)layoutSubviews{
@@ -94,8 +94,6 @@
 
 - (UICollectionViewCell *)pagerView:(TYCyclePagerView *)pagerView cellForItemAtIndex:(NSInteger)index {
     TYCyclePagerViewCell *cell = [pagerView dequeueReusableCellWithReuseIdentifier:@"cellId" forIndex:index];
-//    cell.backgroundColor = self.imageArr[index];
-//    cell.label.text = [NSString stringWithFormat:@"index->%ld",index];
     if ([self.imageArr[index] containsString:@"http"]) {
         [cell.imageView sd_setImageWithURL:[NSURL URLWithString:self.imageArr[index]]];
     } else {
@@ -108,18 +106,19 @@
 - (TYCyclePagerViewLayout *)layoutForPagerView:(TYCyclePagerView *)pageView {
     TYCyclePagerViewLayout *layout = [[TYCyclePagerViewLayout alloc]init];
     if (kFromClassTypeValue == FromHotelDetailVCToGuideView) {
-        layout.itemSize = CGSizeMake(kScreenWidth, CGRectGetHeight(pageView.frame));
+        layout.itemSize = CGSizeMake(CGRectGetWidth(pageView.frame), CGRectGetHeight(pageView.frame));
         layout.itemSpacing = 0;
         layout.layoutType = TYCyclePagerTransformLayoutNormal;
+        layout.itemHorizontalCenter = NO;
     } else {
         layout.itemSize = CGSizeMake(CGRectGetWidth(pageView.frame)*0.8, CGRectGetHeight(pageView.frame));
         layout.itemSpacing = 15;
         layout.layoutType = TYCyclePagerTransformLayoutLinear;
+        layout.itemHorizontalCenter = YES;
         
     }
-   
     //layout.minimumAlpha = 0.3;
-    layout.itemHorizontalCenter = YES;
+//    layout.itemHorizontalCenter = YES;
     return layout;
 }
 
@@ -130,9 +129,10 @@
 }
 
 - (void)updateViewWithParamDic:(NSDictionary *)paramDic{
-    self.imageArr = paramDic[@"dataArr"];
-    self.pageControl.numberOfPages = self.imageArr.count;
-    [self.pagerView updateData];
+    _imageArr = paramDic[@"dataArr"];
+    _pageControl.numberOfPages = _imageArr.count;
+    [_pagerView setNeedUpdateLayout];
+    [_pagerView reloadData];
 }
 
 @end
