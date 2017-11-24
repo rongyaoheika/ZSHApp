@@ -7,7 +7,10 @@
 //
 
 #import "ZSHBaseView.h"
+#import "TYCyclePagerView.h"
 
 @interface ZSHGuideView : ZSHBaseView
+
+
 
 @end

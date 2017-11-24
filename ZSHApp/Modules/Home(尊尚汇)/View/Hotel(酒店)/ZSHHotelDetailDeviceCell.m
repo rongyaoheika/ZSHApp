@@ -17,6 +17,10 @@
 
 @property (nonatomic, strong) UILabel            *titleLabel;
 @property (nonatomic, strong) UIButton           *commentBtn;
+@property (nonatomic, strong) UIView             *devicView;
+
+@property (nonatomic, strong) NSMutableArray     *realBtnArr;
+
 @property (nonatomic, strong) NSMutableArray     *hotelBtnArr;
 @property (nonatomic, strong) NSArray            *hotelDeviceArr;
 
@@ -32,6 +36,8 @@
 @implementation ZSHHotelDetailDeviceCell
 
 - (void)setup{
+    _realBtnArr = [[NSMutableArray alloc]init];
+    
     _hotelBtnArr = [[NSMutableArray alloc]init];
     _foodBtnArr = [[NSMutableArray alloc]init];
     _KTVBtnArr = [[NSMutableArray alloc]init];
@@ -41,10 +47,13 @@
     _titleLabel = [ZSHBaseUIControl createLabelWithParamDic:titleLabelDic];
     [self.contentView addSubview:_titleLabel];
     
+    
     NSDictionary *topDic = @{@"text":@"4.9",@"font":kPingFangMedium(18),@"textAlignment":@(NSTextAlignmentCenter),@"height":@(15)};
     NSDictionary *bottomDic = @{@"text":@"好评",@"font":kPingFangMedium(11),@"textAlignment":@(NSTextAlignmentCenter),@"height":@(11)};
     _commentBtn = [ZSHBaseUIControl createLabelBtnWithTopDic:topDic bottomDic:bottomDic];
     [self.contentView addSubview:_commentBtn];
+    
+    _devicView = [[UIView alloc]initWithFrame:CGRectZero];
     
     _hotelDeviceArr = @[
                         @{@"imageName":@"hotel_wifi",@"titleName":@"WIFI"},
@@ -59,6 +68,7 @@
     for (NSDictionary *dic in _hotelDeviceArr) {
         NSDictionary *hotelDeviceBtnDic = @{@"title":dic[@"titleName"],@"font":kPingFangRegular(11),@"tag":@(i+1),@"withImage":@(YES),@"normalImage":dic[@"imageName"]};
         UIButton *hotelDeviceBtn = [ZSHBaseUIControl createBtnWithParamDic:hotelDeviceBtnDic];
+        hotelDeviceBtn.tag = i;
         [hotelDeviceBtn addTarget:self action:@selector(hotelDeviceBtnAction:) forControlEvents:UIControlEventTouchUpInside];
         [self.contentView addSubview:hotelDeviceBtn];
         [_hotelBtnArr addObject:hotelDeviceBtn];
@@ -144,7 +154,15 @@
 }
 
 - (void)updateCellWithModel:(ZSHBaseModel *)model{
-    if (self.fromClassType == ZSHFromHotelPayVCToHotelDetailVC) {
+   if (self.fromClassType == ZSHFromFoodVCToHotelDetailVC) {
+        ZSHFoodDetailModel *foodDetailModel = (ZSHFoodDetailModel *)model;
+       //好评分数
+       UILabel *topLabel = [_commentBtn viewWithTag:1];
+       topLabel.text = [NSString stringWithFormat:@"%@",foodDetailModel.SHOPEVALUATE];
+       
+       
+       
+    } else if (self.fromClassType == ZSHFromHotelPayVCToHotelDetailVC) {
         ZSHHotelDetailModel *hotelModel = (ZSHHotelDetailModel *)model;
         _titleLabel.text = hotelModel.hotelName;
     } else if (self.fromClassType == ZSHFromHomeKTVVCToHotelDetailVC) {

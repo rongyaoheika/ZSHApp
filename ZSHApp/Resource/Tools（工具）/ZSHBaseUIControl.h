@@ -45,7 +45,7 @@ typedef NS_ENUM(NSInteger, ShowPickViewWindowType) {
     WindowBirthDay,                // 出生日期
     WindowGender,                  // 性别
     WindowRegion,                  // 区域
-    Window
+    WindowInterval,                // 区间
     WindowTime,                    // 年份
     WindowCoupon,                  // 优惠券
     WindowKTVHour,                 // KTV时间选择
@@ -89,12 +89,18 @@ typedef NS_ENUM (NSInteger,ZSHToNotificationVC) {
     FromActivityCenterVCToNotificationVC
 };
 
+typedef NS_ENUM (NSInteger,ZSHToGuideView) {
+    FromGuideVCToGuideView,           //引导页 - 轮播view
+    FromCardVCToGuideView,            //黑卡设置页 - 轮播view
+    FromHotelDetailVCToGuideView,     //酒店（美食，ktv详情页） - 轮播view
+    FromNoneVCToGuideView
+};
+
 @interface ZSHBaseUIControl : NSObject
 
 + (UILabel *)createLabelWithParamDic:(NSDictionary *)paramDic;
 + (UIButton *)createBtnWithParamDic:(NSDictionary *)paramDic;
 + (UITableView *)createTableView;
-+ (void)drawLineOfDashByCAShapeLayer:(UIView *)lineView lineLength:(int)lineLength lineSpacing:(int)lineSpacing lineColor:(UIColor *)lineColor lineDirection:(BOOL)isHorizonal;
 + (UIButton *)createLabelBtnWithTopDic:(NSDictionary *)topDic bottomDic:(NSDictionary *)bottomDic;
 + (UIView *)createTabHeadLabelViewWithParamDic:(NSDictionary *)paramDic;
 + (void) setAnimationWithHidden:(BOOL)hidden view:(UIView *)view completedBlock:(RemoveCompletedBlock)completedBlock;

@@ -19,10 +19,13 @@
 #import "ZSHKTVListCell.h"
 #import "ZSHHotelPayViewController.h"
 #import "ZSHGoodsCommentSubViewController.h"
+#import "ZSHFoodLogic.h"
 
 @interface ZSHHotelDetailViewController ()
 
-//美食：ZSHFoodModel或者酒店ZSHHotelDetailModel
+@property (nonatomic, strong) ZSHFoodLogic              *foodLogic;
+@property (nonatomic, strong) ZSHFoodModel              *foodModel;
+
 @property (nonatomic, strong) ZSHBaseModel              *model;
 @property (nonatomic, strong) ZSHKTVModel               *KTVModel;
 @property (nonatomic, strong) ZSHBottomBlurPopView      *bottomBlurPopView;
@@ -46,17 +49,14 @@ static NSString *ZSHKTVListCellID = @"ZSHKTVListCell";
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    [self loadData];
     [self createUI];
-}
-
-- (void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
+    [self loadData];
 }
 
 - (void)loadData{
-    self.dataArr = [[NSMutableArray alloc]init];
     self.model = self.paramDic[@"model"];
+    self.dataArr = [[NSMutableArray alloc]init];
+    [self requestData];
     
     if (kFromClassTypeValue == ZSHFromHomeKTVVCToHotelDetailVC) {
         [self.dataArr removeAllObjects];
@@ -65,8 +65,26 @@ static NSString *ZSHKTVListCellID = @"ZSHKTVListCell";
         self.model = [ZSHKTVModel mj_objectWithKeyValues:KTVModelDic];
     }
     
-   
-     [self initViewModel];
+    [self initViewModel];
+}
+
+- (void)requestData{
+    kWeakSelf(self);
+    if (kFromClassTypeValue == ZSHFromFoodVCToHotelDetailVC) {//美食详情
+        _foodLogic = [[ZSHFoodLogic alloc]init];
+        _foodModel = (ZSHFoodModel *)self.model;
+        NSDictionary *paramDic = @{@"SORTFOOD_ID":_foodModel.SORTFOOD_ID};
+        [_foodLogic loadFoodDetailDataWithParamDic:paramDic];
+        _foodLogic.requestDataCompleted = ^(id data){
+            [weakself.tableView.mj_header endRefreshing];
+            [weakself.tableView.mj_footer endRefreshing];
+            [weakself initViewModel];
+        };
+    } else if(kFromClassTypeValue == ZSHFromHotelVCToHotelDetailVC){
+        
+        
+    }
+    
 }
 
 - (void)createUI{
@@ -97,28 +115,31 @@ static NSString *ZSHKTVListCellID = @"ZSHKTVListCell";
     [self.tableView registerClass:[ZSHNoticeViewCell class] forCellReuseIdentifier:ZSHKTVCalendarCellID];
     [self.tableView registerClass:[ZSHNoticeViewCell class] forCellReuseIdentifier:ZSHKTVCalendarCellID];
     [self.tableView registerClass:[ZSHKTVListCell class] forCellReuseIdentifier:ZSHKTVListCellID];
-    [self.tableView reloadData];
+    
 }
 
 - (void)initViewModel {
     [self.tableViewModel.sectionModelArray removeAllObjects];
-    [self.tableViewModel.sectionModelArray addObject:[self storeHeadSection]];
     if(kFromClassTypeValue == ZSHFromHotelVCToHotelDetailVC){//酒店详情
+        [self.tableViewModel.sectionModelArray addObject:[self storeHeadSection]];
         [self.tableViewModel.sectionModelArray addObject:[self storeSubSection]];
         [self.tableViewModel.sectionModelArray addObject:[self storeCalendarSection]];
         [self.tableViewModel.sectionModelArray addObject:[self storHotelListSection]];
     } else  if (kFromClassTypeValue == ZSHFromFoodVCToHotelDetailVC){//美食详情
+        [self.tableViewModel.sectionModelArray addObject:[self storeHeadSection]];
         [self.tableViewModel.sectionModelArray addObject:[self storeSubSection]];
     } else if(kFromClassTypeValue == ZSHFromHomeKTVVCToHotelDetailVC){//KTV详情
+        [self.tableViewModel.sectionModelArray addObject:[self storeHeadSection]];
         [self.tableViewModel.sectionModelArray addObject:[self storeSubSection]];
         [self.tableViewModel.sectionModelArray addObject:[self storKTVCalendarSection]];
         [self.tableViewModel.sectionModelArray addObject:[self storKTVListSection]];
     }
+    
+    [self.tableView reloadData];
 }
 
 //图片，设备
 - (ZSHBaseTableViewSectionModel*)storeHeadSection {
-    kWeakSelf(self);
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
     [sectionModel.cellModelArray addObject:cellModel];
@@ -126,9 +147,11 @@ static NSString *ZSHKTVListCellID = @"ZSHKTVListCell";
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHHotelDetailHeadCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHHotelDetailHeadCellID forIndexPath:indexPath];
         cell.fromClassType = [self.paramDic[KFromClassType]integerValue];
-        [cell updateCellWithModel:weakself.model];
-        [self hideSeparatorLineWithCell:cell hide:YES];
+        if (_foodLogic.foodDetailModel) {
+             [cell updateCellWithModel:_foodLogic.foodDetailModel];
+        }
         return cell;
+        
     };
     
     //设备
@@ -138,6 +161,7 @@ static NSString *ZSHKTVListCellID = @"ZSHKTVListCell";
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHHotelDetailDeviceCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHHotelDetailDeviceCellID forIndexPath:indexPath];
         cell.fromClassType = [self.paramDic[KFromClassType]integerValue];
+        [cell updateCellWithModel:_foodLogic.foodDetailModel];
         [self hideSeparatorLineWithCell:cell hide:YES];
         return cell;
     };
@@ -150,6 +174,7 @@ static NSString *ZSHKTVListCellID = @"ZSHKTVListCell";
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     NSArray *arrowImageArr = @[@"hotel_map",@"hotel_phone"];
     NSArray *titleArr = @[@"三亚市天涯区黄山路94号",@"0898-86868686"];
+    
     for (int i = 0; i <arrowImageArr.count; i++) {
         ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
         [sectionModel.cellModelArray addObject:cellModel];
@@ -187,9 +212,9 @@ static NSString *ZSHKTVListCellID = @"ZSHKTVListCell";
         }
         return cell;
     };
-        
-        cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
-           //用户评价
+    
+    cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
+        //用户评价
     };
     
     return sectionModel;
@@ -208,7 +233,7 @@ static NSString *ZSHKTVListCellID = @"ZSHKTVListCell";
         ZSHHotelCalendarCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHHotelCalendarCellID forIndexPath:indexPath];
         cell.dateViewTapBlock = ^(NSInteger tag) {//tag = 1入住
             self.bottomBlurPopView = [weakself createBottomBlurPopViewWith:ZSHFromHotelDetailCalendarVCToBottomBlurPopView];
-              [kAppDelegate.window addSubview:self.bottomBlurPopView];
+            [kAppDelegate.window addSubview:self.bottomBlurPopView];
         };
         return cell;
     };
@@ -306,10 +331,19 @@ static NSString *ZSHKTVListCellID = @"ZSHKTVListCell";
     }
 }
 
-
 #pragma action
 - (void)bookAction{
     
+}
+
+#pragma mark ————— 下拉刷新 —————
+-(void)headerRereshing{
+    [self requestData];
+}
+
+#pragma mark ————— 上拉刷新 —————
+-(void)footerRereshing{
+    [self requestData];
 }
 
 - (void)didReceiveMemoryWarning {

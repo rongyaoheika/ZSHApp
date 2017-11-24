@@ -254,6 +254,10 @@
         spaceButtonItem.width = -15;
         self.navigationItem.rightBarButtonItems = @[spaceButtonItem, item];
     }
+<<<<<<< HEAD
+=======
+    
+>>>>>>> 681802ea14c10c5c2e9a89bd9335adba9896f055
 }
 
 - (void)addNavigationItemWithImageName:(NSString *)imageName isLeft:(BOOL)isLeft target:(id)target action:(SEL)action tag:(NSInteger)tag {

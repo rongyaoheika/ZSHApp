@@ -12,6 +12,7 @@ typedef void (^RequestDataCompleted) (id);
 
 @interface ZSHBaseLogic : NSObject
 
+@property (nonatomic, strong) NSArray                  *dataArr;
 @property (nonatomic, strong) NSMutableArray           *mDataArr;
 @property (nonatomic, copy)   RequestDataCompleted     requestDataCompleted;
 - (void)loadData;
