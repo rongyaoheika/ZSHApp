@@ -27,6 +27,17 @@
 //确认订单弹框
 @property (nonatomic, copy) NSString *hotelType;            //豪华贵宾房
 
+
+//酒店列表
+@property (nonatomic, copy) NSString    *SORTHOTEL_ID;           //酒店ID
+@property (nonatomic, copy) NSString    *SHOWIMAGES;             //酒店图片
+@property (nonatomic, copy) NSString    *HOTELNAMES;             //酒店名字
+@property (nonatomic, copy) NSString    *HOTELADDRESS;           //酒店地址
+@property (nonatomic, copy) NSString    *HOTELEVACOUNT;          //评论数
+@property (nonatomic, copy) NSString    *HOTELEVALUATE;          //酒店星评
+@property (nonatomic, copy) NSString    *HOTELPRICE;             //酒店价格
+
+
 @property (nonatomic, assign) CGFloat    cellHeight;
 
 @end

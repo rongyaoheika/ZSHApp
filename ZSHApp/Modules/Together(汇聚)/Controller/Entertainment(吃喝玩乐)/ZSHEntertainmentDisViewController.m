@@ -99,10 +99,15 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
                 };
                 [weakself.pickView show:WindowBirthDay];
             } else if (indexPath.row == 2) {//期望价格
-                NSArray *togetherArr = @[@"不限",@"给力邀约",@"AA互动趴"];
-                NSDictionary *nextParamDic = @{@"type":@(WindowTogether),@"midTitle":@"方式选择",@"dataArr":togetherArr};
+                NSMutableArray *priceMArr = [[NSMutableArray alloc]init];
+                for (int i = 0; i<=1000; i+=100) {
+                    NSString *priceSingle = [NSString stringWithFormat:@"%d",i];
+                    [priceMArr addObject:priceSingle];
+                }
+                
+                NSDictionary *nextParamDic = @{@"type":@(WindowPrice),@"midTitle":@"期望价格",@"dataArr":priceMArr};
                 weakself.pickView = [weakself createPickViewWithParamDic:nextParamDic];
-                [weakself.pickView show:WindowTogether];
+                [weakself.pickView show:WindowPrice];
             } else if (indexPath.row == 3) {//方式
                 NSArray *togetherArr = @[@"不限",@"给力邀约",@"AA互动趴"];
                 NSDictionary *nextParamDic = @{@"type":@(WindowTogether),@"midTitle":@"方式选择",@"dataArr":togetherArr};

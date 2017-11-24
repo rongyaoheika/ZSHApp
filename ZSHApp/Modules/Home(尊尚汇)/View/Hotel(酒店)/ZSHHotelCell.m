@@ -7,8 +7,9 @@
 //
 
 #import "ZSHHotelCell.h"
-#import "TggStarEvaluationView.h"
 #import "ZSHHotelDetailModel.h"
+#import "CWStarRateView.h"
+
 @interface ZSHHotelCell()
 
 @property (nonatomic, strong) UIImageView               *hotelmageView;
@@ -16,7 +17,7 @@
 @property (nonatomic, strong) UILabel                   *hotelAddressLabel;
 @property (nonatomic, strong) UILabel                   *distanceLabel;
 @property (nonatomic, strong) UILabel                   *commentLabel;
-@property (nonatomic, strong) TggStarEvaluationView     *starView;
+@property (nonatomic, strong) CWStarRateView            *starView;
 @property (nonatomic, strong) UILabel                   *priceLabel;
 
 @end
@@ -39,6 +40,7 @@
     //酒店地址
     NSDictionary *hotelAddressLabelDic = @{@"text":@"昌平区回龙观镇科星西路47号",@"font": kPingFangRegular(11)};
     _hotelAddressLabel = [ZSHBaseUIControl createLabelWithParamDic:hotelAddressLabelDic];
+    _hotelAddressLabel.numberOfLines = 0;
     [self.contentView addSubview:_hotelAddressLabel];
     
     //酒店距离
@@ -46,8 +48,15 @@
     _distanceLabel = [ZSHBaseUIControl createLabelWithParamDic:distanceLabelDic];
     [self.contentView addSubview:_distanceLabel];
     
-    _starView = [TggStarEvaluationView evaluationViewWithChooseStarBlock:nil];
+    
+    //星星评价
+    _starView = [[CWStarRateView alloc] initWithFrame:CGRectMake(0,0,kRealValue(80), kRealValue(12)) numberOfStars:5];
+    _starView.scorePercent = 0.45;
+    _starView.allowIncompleteStar = YES;
+    _starView.hasAnimation = YES;
+    _starView.allowUserTap = NO;
     [self.contentView addSubview:_starView];
+
     
     //酒店评价
     NSDictionary *commentLabelDic = @{@"text":@"（120条评价）",@"font": kPingFangRegular(11)};
@@ -74,7 +83,6 @@
         make.top.mas_equalTo(_hotelmageView);
         make.left.mas_equalTo(_hotelmageView.mas_right).offset(kRealValue(10));
         make.right.mas_equalTo(self).offset(-KLeftMargin);
-        make.height.mas_equalTo(kRealValue(15));
     }];
     
     [_hotelAddressLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -97,9 +105,7 @@
         make.height.mas_equalTo(kRealValue(12));
         make.width.mas_equalTo(kRealValue(80));
     }];
-    _starView.starCount = 4.5;
-    _starView.spacing = 0.25;
-   
+
     
     [_commentLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(_starView);
@@ -118,12 +124,14 @@
 
 - (void)updateCellWithModel:(ZSHHotelDetailModel *)model{
     
-    _hotelmageView.image = [UIImage imageNamed:model.imageName];
-    _hotelDescLabel.text = model.title;
-    _hotelAddressLabel.text = model.address;
-    _distanceLabel.text = [NSString stringWithFormat:@"%@公里",model.distance];
-    _priceLabel.text = [NSString stringWithFormat:@"¥%@",model.price];
-    _commentLabel.text = [NSString stringWithFormat:@"（%@条评价）",model.comment];
+    
+    [_hotelmageView sd_setImageWithURL:[NSURL URLWithString:model.SHOWIMAGES]];
+    _hotelDescLabel.text = model.HOTELNAMES;
+    _hotelAddressLabel.text = model.HOTELADDRESS;
+//    _distanceLabel.text = [NSString stringWithFormat:@"%@公里",model.distance];
+    _priceLabel.text = [NSString stringWithFormat:@"¥%@",model.HOTELPRICE];
+    _commentLabel.text = [NSString stringWithFormat:@"（%@条评价）",model.HOTELEVACOUNT];
+    
 }
 
 - (CGFloat)rowHeightWithCellModel:(ZSHHotelDetailModel *)model{

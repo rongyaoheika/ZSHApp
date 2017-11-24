@@ -277,8 +277,6 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
     }
 }
 
-
-
 //head
 - (ZSHBaseTableViewSectionModel*)storeHeadSection {
     kWeakSelf(self);

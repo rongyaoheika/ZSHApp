@@ -237,8 +237,6 @@
 		FE7527961F7AA48C00858561 /* DSectionIndexItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE7527931F7AA48C00858561 /* DSectionIndexItemView.m */; };
 		FE7527971F7AA48C00858561 /* DSectionIndexView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE7527951F7AA48C00858561 /* DSectionIndexView.m */; };
 		FE7527B11F7AB9E400858561 /* ZSHBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE7527B01F7AB9E400858561 /* ZSHBaseView.m */; };
-		FE7AF22E1FA2D82E00E1A648 /* TggStarEvaluationView.h in Sources */ = {isa = PBXBuildFile; fileRef = FE7AF22C1FA2D7F800E1A648 /* TggStarEvaluationView.h */; };
-		FE7AF22F1FA2D82E00E1A648 /* TggStarEvaluationView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE7AF22D1FA2D7F800E1A648 /* TggStarEvaluationView.m */; };
 		FE7AF2321FA307F400E1A648 /* ZSHTopLineView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE7AF2311FA307F400E1A648 /* ZSHTopLineView.m */; };
 		FE7AF2351FA30A0400E1A648 /* ZSHBottomBlurPopView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE7AF2341FA30A0400E1A648 /* ZSHBottomBlurPopView.m */; };
 		FE7AF2381FA3814E00E1A648 /* ZSHHotelDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE7AF2371FA3814D00E1A648 /* ZSHHotelDetailViewController.m */; };
@@ -833,8 +831,6 @@
 		FE7527951F7AA48C00858561 /* DSectionIndexView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DSectionIndexView.m; sourceTree = "<group>"; };
 		FE7527AF1F7AB9E400858561 /* ZSHBaseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHBaseView.h; sourceTree = "<group>"; };
 		FE7527B01F7AB9E400858561 /* ZSHBaseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHBaseView.m; sourceTree = "<group>"; };
-		FE7AF22C1FA2D7F800E1A648 /* TggStarEvaluationView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TggStarEvaluationView.h; sourceTree = "<group>"; };
-		FE7AF22D1FA2D7F800E1A648 /* TggStarEvaluationView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TggStarEvaluationView.m; sourceTree = "<group>"; };
 		FE7AF2301FA307F400E1A648 /* ZSHTopLineView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHTopLineView.h; sourceTree = "<group>"; };
 		FE7AF2311FA307F400E1A648 /* ZSHTopLineView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHTopLineView.m; sourceTree = "<group>"; };
 		FE7AF2331FA30A0400E1A648 /* ZSHBottomBlurPopView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHBottomBlurPopView.h; sourceTree = "<group>"; };
@@ -2425,7 +2421,6 @@
 				185DE3051FC01E1A00720CAF /* ADPlayer */,
 				182287131FB44E1C00CA5B10 /* XXTextView */,
 				FEAEE3E71FA86CBA00F73EEA /* STCalendar */,
-				FE7AF22B1FA2D7F800E1A648 /* TggStarEvaluationView */,
 				FE7502AE1F99CD5F002F2708 /* Tools（工具） */,
 				FE9CC3CE1FA0314300285475 /* FXBlurView */,
 				185B75D11FC51B16008CBD2B /* TYCyclePagerView */,
@@ -2665,15 +2660,6 @@
 				FE7527B01F7AB9E400858561 /* ZSHBaseView.m */,
 			);
 			path = BaseView;
-			sourceTree = "<group>";
-		};
-		FE7AF22B1FA2D7F800E1A648 /* TggStarEvaluationView */ = {
-			isa = PBXGroup;
-			children = (
-				FE7AF22C1FA2D7F800E1A648 /* TggStarEvaluationView.h */,
-				FE7AF22D1FA2D7F800E1A648 /* TggStarEvaluationView.m */,
-			);
-			path = TggStarEvaluationView;
 			sourceTree = "<group>";
 		};
 		FE7CA9DB1F9D97C700A2B15D /* BaseCollectionReusableView */ = {
@@ -3417,11 +3403,9 @@
 				FE3005F31FC65B0400A801C9 /* ZSHFoodLogic.m in Sources */,
 				185BB9AB1FB53BC6007A96FF /* ZSHLiveUserLevelViewController.m in Sources */,
 				182287161FB44FE600CA5B10 /* XXTextView.m in Sources */,
-				FE7AF22E1FA2D82E00E1A648 /* TggStarEvaluationView.h in Sources */,
 				FEBD7C9D1FA70F6500CE2BA6 /* ZSHGoodsChartCell.m in Sources */,
 				FEDF28F91FB68C1C00CD5756 /* ZSHAgeView.m in Sources */,
 				185C6D8D1FC2D98A004EA461 /* LZShopModel.m in Sources */,
-				FE7AF22F1FA2D82E00E1A648 /* TggStarEvaluationView.m in Sources */,
 				FE9CC3D11FA031F600285475 /* FXBlurView.h in Sources */,
 				FE9CC3D21FA031F600285475 /* FXBlurView.m in Sources */,
 				FE7CA9D51F9D8DAC00A2B15D /* ZSHGoodsDetailShufflingHeadView.h in Sources */,

@@ -53,6 +53,7 @@ typedef NS_ENUM(NSInteger, ShowPickViewWindowType) {
     WindowLogistics,               // 物流公司
     WindowSeat,                    // 座位选择
     WindowPapers,                  // 证件选择
+    WindowPrice,                   // 价格
     WindowKTVNone
 };
 

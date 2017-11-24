@@ -47,7 +47,7 @@
         make.height.mas_equalTo(kRealValue(8));
         if (kFromClassTypeValue == FromHotelDetailVCToGuideView) {
              make.width.mas_equalTo(kRealValue(150));
-             make.right.mas_equalTo(self).offset(-kRealValue(7.0));
+             make.right.mas_equalTo(self);
              make.bottom.mas_equalTo(self).offset(-KLeftMargin);
         } else {
             make.width.mas_equalTo(self);
@@ -125,7 +125,7 @@
 - (void)pagerView:(TYCyclePagerView *)pageView didScrollFromIndex:(NSInteger)fromIndex toIndex:(NSInteger)toIndex {
     _pageControl.currentPage = toIndex;
     //[_pageControl setCurrentPage:newIndex animate:YES];
-    NSLog(@"%zd ->  %zd",fromIndex,toIndex);
+    //RLog(@"%zd ->  %zd",fromIndex,toIndex);
 }
 
 - (void)updateViewWithParamDic:(NSDictionary *)paramDic{

@@ -7,13 +7,12 @@
 //
 
 #import "ZSHCommentViewController.h"
-#import "TggStarEvaluationView.h"
 #import "XXTextView.h"
+#import "CWStarRateView.h"
 
 @interface ZSHCommentViewController ()
 
-@property (nonatomic, strong) TggStarEvaluationView     *starView;
-
+@property (nonatomic, strong) CWStarRateView            *starView;
 
 @end
 
@@ -47,16 +46,18 @@
             break;
     }
     
-    _starView = [TggStarEvaluationView evaluationViewWithChooseStarBlock:nil];
+    _starView = [[CWStarRateView alloc] initWithFrame:CGRectMake(0,0, kRealValue(134), kRealValue(20)) numberOfStars:5];
+    _starView.scorePercent = 0.40;
+    _starView.allowIncompleteStar = YES;
+    _starView.hasAnimation = YES;
+    _starView.allowUserTap = YES;
     [self.view addSubview:_starView];
     [_starView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.mas_equalTo(self.view);
         make.top.mas_equalTo(self.view).offset(kRealValue(topSpacing));
         make.width.mas_equalTo(kRealValue(134));
-        make.height.mas_equalTo(kRealValue(21));
+        make.height.mas_equalTo(kRealValue(20));
     }];
-    _starView.starCount = 4;
-    _starView.spacing = 0.33/2;
     
     NSDictionary *noticeLabelDic = @{@"text":@"给店家评分",@"font":kPingFangMedium(11),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentCenter)};
     UILabel *noticeLabel = [ZSHBaseUIControl createLabelWithParamDic:noticeLabelDic];

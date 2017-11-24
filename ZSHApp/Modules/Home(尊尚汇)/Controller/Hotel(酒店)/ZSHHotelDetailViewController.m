@@ -20,11 +20,15 @@
 #import "ZSHHotelPayViewController.h"
 #import "ZSHGoodsCommentSubViewController.h"
 #import "ZSHFoodLogic.h"
+#import "ZSHHotelLogic.h"
 
 @interface ZSHHotelDetailViewController ()
 
 @property (nonatomic, strong) ZSHFoodLogic              *foodLogic;
 @property (nonatomic, strong) ZSHFoodModel              *foodModel;
+
+@property (nonatomic, strong) ZSHHotelLogic             *hotelLogic;
+@property (nonatomic, strong) ZSHHotelDetailModel       *hotelModel;
 
 @property (nonatomic, strong) ZSHBaseModel              *model;
 @property (nonatomic, strong) ZSHKTVModel               *KTVModel;
@@ -81,7 +85,15 @@ static NSString *ZSHKTVListCellID = @"ZSHKTVListCell";
             [weakself initViewModel];
         };
     } else if(kFromClassTypeValue == ZSHFromHotelVCToHotelDetailVC){
-        
+        _hotelLogic = [[ZSHHotelLogic alloc]init];
+        _hotelModel = (ZSHHotelDetailModel *)self.model;
+        NSDictionary *paramDic = @{@"SORTFOOD_ID":_foodModel.SORTFOOD_ID};
+        [_foodLogic loadFoodDetailDataWithParamDic:paramDic];
+        _foodLogic.requestDataCompleted = ^(id data){
+            [weakself.tableView.mj_header endRefreshing];
+            [weakself.tableView.mj_footer endRefreshing];
+            [weakself initViewModel];
+        };
         
     }
     

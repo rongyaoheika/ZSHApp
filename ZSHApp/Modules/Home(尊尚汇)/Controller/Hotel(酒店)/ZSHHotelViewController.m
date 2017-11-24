@@ -10,10 +10,13 @@
 #import "ZSHHotelCell.h"
 #import "ZSHHotelDetailViewController.h"
 #import "ZSHHotelDetailModel.h"
+#import "ZSHHotelLogic.h"
 
 @interface ZSHHotelViewController ()<UISearchBarDelegate>
 
-@property (nonatomic, strong)NSMutableArray           *dataArr;
+@property (nonatomic, strong)NSMutableArray             *dataArr;
+@property (nonatomic, strong) ZSHHotelLogic             *hotelLogic;
+@property (nonatomic, strong) ZSHHotelDetailModel       *hotelModel;
 
 @end
 
@@ -25,11 +28,13 @@ static NSString *ZSHHotelCellID = @"ZSHHotelCell";
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    [self loadData];
+   
     [self createUI];
+    [self loadData];
 }
 
 - (void)loadData{
+    [self requestData];
     NSArray *baseDataArr = @[
                              @{@"imageName":@"hotel_image",@"title":@"如家-北京霍营地铁站店",@"address":@"昌平区回龙观镇科星西路47号",@"price":@"499",@"distance":@"23",@"comment":@"120",@"detailImageName":@"hotel_detail_big",@"hotelName":@"三亚大中华希尔顿酒店1"},
                              
@@ -43,8 +48,20 @@ static NSString *ZSHHotelCellID = @"ZSHHotelCell";
      [self initViewModel];
 }
 
+- (void)requestData{
+    kWeakSelf(self);
+   if(kFromClassTypeValue == ZSHFromHotelVCToHotelDetailVC){
+        _hotelLogic = [[ZSHHotelLogic alloc]init];
+        [_hotelLogic loadHotelListData];
+        _hotelLogic.requestDataCompleted = ^(id data){
+            [weakself.tableView.mj_header endRefreshing];
+            [weakself.tableView.mj_footer endRefreshing];
+            [weakself initViewModel];
+        };
+    }
+}
+
 - (void)createUI{
-    
     [self.view addSubview:self.tableView];
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.mas_equalTo(self.view);
@@ -58,31 +75,29 @@ static NSString *ZSHHotelCellID = @"ZSHHotelCell";
     
     [self.tableView registerClass:[ZSHHotelCell class] forCellReuseIdentifier:ZSHHotelCellID];
     
-    [self.tableView reloadData];
 }
 
 - (void)initViewModel {
     [self.tableViewModel.sectionModelArray removeAllObjects];
     [self.tableViewModel.sectionModelArray addObject:[self storeListSection]];
+    [self.tableView reloadData];
 }
 
 //list
 - (ZSHBaseTableViewSectionModel*)storeListSection {
     kWeakSelf(self);
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
-    for (int i = 0; i < self.dataArr.count; i++) {
+    for (int i = 0; i < _hotelLogic.hotelListArr.count; i++) {
         ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
         cellModel.height = kRealValue(110);
-        kWeakSelf(cellModel)
         [sectionModel.cellModelArray addObject:cellModel];
         cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
             ZSHHotelCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHHotelCellID forIndexPath:indexPath];
-            if (i==3) {
+            if (i==_hotelLogic.hotelListArr.count-1) {
                 cell.separatorInset = UIEdgeInsetsMake(0, 0, 0, MAXFLOAT);
             }
-            ZSHHotelDetailModel *hotelModel = self.dataArr[indexPath.row];
+            ZSHHotelDetailModel *hotelModel = _hotelLogic.hotelListArr[indexPath.row];
             [cell updateCellWithModel:hotelModel];
-            weakcellModel.height = hotelModel.cellHeight;
             return cell;
         };
         

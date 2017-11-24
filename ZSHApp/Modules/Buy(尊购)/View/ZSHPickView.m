@@ -140,13 +140,8 @@ NSInteger yearSatrt = 1900;
         case WindowTime:{
             return [_timeValues[component]count];
         }
-        case WindowCoupon:
-        case WindowTogether:
-        case WindowLogistics:{
-            return [_dataArr count];
-        }
         default:
-            return 0;
+            return [_dataArr count];
     }
 }
 
@@ -202,14 +197,9 @@ NSInteger yearSatrt = 1900;
             pickViewLabel.text = _timeValues[component][row];
              break;
         }
-        case WindowCoupon:
-        case WindowTogether:
-        case WindowLogistics:{
-            pickViewLabel.text = _dataArr[row];
-            break;
-        }
+       
         default:
-            pickViewLabel.text = @"";
+            pickViewLabel.text = _dataArr[row];
              break;
     }
     return pickViewLabel;
@@ -228,22 +218,14 @@ NSInteger yearSatrt = 1900;
             }
             break;
         }
-        case WindowRegion:{
-            RLog(@"选择位置%zd",row);
-            break;
-        }
         case WindowTime:{
             RLog(@"选择年份%ld",row);
             [self refreshMonth];
             break;
         }
-        case WindowCoupon:
-        case WindowTogether:{
-            RLog(@"选择券%ld",row);
-            break;
+        default:{
+             RLog(@"选择行数%ld",row);
         }
-            
-        default:
             break;
     }
 }

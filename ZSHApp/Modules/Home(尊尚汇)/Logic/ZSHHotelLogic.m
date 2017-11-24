@@ -7,7 +7,26 @@
 //
 
 #import "ZSHHotelLogic.h"
+#import "ZSHHotelDetailModel.h"
 
 @implementation ZSHHotelLogic
+
+
+- (void)loadHotelListData{
+    kWeakSelf(self);
+    [PPNetworkHelper POST:kUrlSHotelDo parameters:nil success:^(id responseObject) {
+        weakself.hotelListArr = [ZSHHotelDetailModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"]];
+        RLog(@"酒店详情数据==%@",responseObject);
+        if (weakself.requestDataCompleted) {
+            weakself.requestDataCompleted(nil);
+        }
+        
+    } failure:^(NSError *error) {
+        if (weakself.requestDataCompleted) {
+            weakself.requestDataCompleted(@"fail");
+        }
+    }];
+}
+
 
 @end

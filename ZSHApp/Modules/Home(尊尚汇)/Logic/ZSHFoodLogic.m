@@ -28,7 +28,7 @@
 
 - (void)loadFoodDetailDataWithParamDic:(NSDictionary *)paramDic{
     kWeakSelf(self);
-    [PPNetworkHelper POST:kUrlSFoodDetail parameters:paramDic success:^(id responseObject) {
+    [PPNetworkHelper POST:kUrlFoodSyn parameters:paramDic success:^(id responseObject) {
         RLog(@"美食详情请求成功：返回数据&%@",responseObject);
         _foodDetailModel = [ZSHFoodDetailModel mj_objectWithKeyValues:responseObject[@"pd"]];
         if (weakself.requestDataCompleted) {

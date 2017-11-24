@@ -95,11 +95,6 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    
-    [self.foregroundStarView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.mas_equalTo(self);
-    }];
-    
     __weak CWStarRateView *weakSelf = self;
     CGFloat animationTimeInterval = self.hasAnimation ? ANIMATION_TIME_INTERVAL : 0;
     [UIView animateWithDuration:animationTimeInterval animations:^{

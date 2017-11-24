@@ -30,16 +30,14 @@
     _detailLabel = [ZSHBaseUIControl createLabelWithParamDic:detailLabelDic];
     [self.contentView addSubview:_detailLabel];
     
+   
 }
 
 - (void)layoutSubviews{
     [super layoutSubviews];
     
     [_headView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.contentView);
-        make.centerX.mas_equalTo(self.contentView);
-        make.width.mas_equalTo(self.contentView);
-        make.bottom.mas_equalTo(self.contentView);
+        make.edges.mas_equalTo(self);
     }];
 
     [_detailLabel mas_makeConstraints:^(MASConstraintMaker *make) {
