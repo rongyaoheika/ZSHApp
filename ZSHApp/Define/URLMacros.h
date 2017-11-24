@@ -58,7 +58,7 @@
 //登录
 #define kUrlUserLogin               @"/appuserin/userloginphone?LOGIN"
 
-// 1首页推荐
+// 1首页推荐（完成）
 #define kUrlUserHome [NSString stringWithFormat:@"/apphomein/getrecommendlist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"COMMEND"]]
 // 2用户注册
 #define kUrlUserRegister [NSString stringWithFormat:@"/appuserin/userregister?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"REGISTER"]]
@@ -159,7 +159,7 @@
 //参数：COLLECT_ID 炫购收藏id
 //请求地址：/appshipin/shipcollectdel?SHIPCOLDEL(混淆码)
 #define kUrlShipCollectDel [NSString stringWithFormat:@"/appshipin/shipcollectdel?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SHIPCOLDEL"]]
-//24.获得首页中美食分类列表
+//24.获得首页中美食分类列表（完成）
 //参数：无参数
 //请求地址：/appsfoodin/sfood?SORTFOOD(混淆码)
 #define kUrlSFood [NSString stringWithFormat:@"/appsfoodin/sfood?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SORTFOOD"]]
@@ -236,7 +236,7 @@
 //CONVERGETITLE 聚会标题/HONOURUSER_ID 发起人id
 //请求地址：/appconvergein/adddetailparty?DETAILADD(混淆码)
 #define kUrlAddDetailParty [NSString stringWithFormat:@"/appconvergein/adddetailparty?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"DETAILADD"]]
-//42. 获得首页特权酒店分类列表
+//42. 获得首页特权酒店分类列表 (完成)
 //参数：SORTHOTEL_ID 酒店id
 //请求地址：/appshotelin/shotel.do?SORTHOTEL（混淆码）
 #define kUrlSHotelDo [NSString stringWithFormat:@"/appshotelin/shotel.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SORTHOTEL"]]

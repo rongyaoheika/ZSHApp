@@ -9,8 +9,8 @@
 #import "ZSHHotelPayViewController.h"
 #import "ZSHHotelPayHeadCell.h"
 #import "ZSHBottomBlurPopView.h"
-#import "ZSHHotelDetailModel.h"
-#import "ZSHHotelDetailModel.h"
+#import "ZSHHotelModel.h"
+#import "ZSHHotelModel.h"
 #import "ZSHPayView.h"
 @interface ZSHHotelPayViewController ()
 

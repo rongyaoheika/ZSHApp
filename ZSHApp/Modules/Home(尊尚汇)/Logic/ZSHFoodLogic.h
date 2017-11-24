@@ -15,7 +15,7 @@
 @property (nonatomic, strong) NSArray <ZSHFoodModel *>    *foodListArr;
 @property (nonatomic, strong) ZSHFoodDetailModel          *foodDetailModel;
 
-- (void)loadFoodListData;
+- (void)loadFoodListDataWithParamDic:(NSDictionary *)paramDic;
 - (void)loadFoodDetailDataWithParamDic:(NSDictionary *)paramDic;
 
 @end

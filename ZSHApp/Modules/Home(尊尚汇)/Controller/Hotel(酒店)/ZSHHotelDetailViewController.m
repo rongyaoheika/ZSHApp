@@ -11,8 +11,7 @@
 #import "ZSHHotelDetailDeviceCell.h"
 #import "ZSHHotelCalendarCell.h"
 #import "ZSHHotelListCell.h"
-#import "ZSHFoodModel.h"
-#import "ZSHHotelDetailModel.h"
+#import "ZSHHotelModel.h"
 #import "ZSHBottomBlurPopView.h"
 #import "ZSHKTVModel.h"
 #import "ZSHNoticeViewCell.h"
@@ -24,11 +23,11 @@
 
 @interface ZSHHotelDetailViewController ()
 
+@property (nonatomic, copy)   NSString                  *shopId;
+@property (nonatomic, strong) ZSHBaseLogic              *baseLogic;
 @property (nonatomic, strong) ZSHFoodLogic              *foodLogic;
-@property (nonatomic, strong) ZSHFoodModel              *foodModel;
-
 @property (nonatomic, strong) ZSHHotelLogic             *hotelLogic;
-@property (nonatomic, strong) ZSHHotelDetailModel       *hotelModel;
+@property (nonatomic, strong) NSArray                   *modelNameArr;
 
 @property (nonatomic, strong) ZSHBaseModel              *model;
 @property (nonatomic, strong) ZSHKTVModel               *KTVModel;
@@ -58,8 +57,11 @@ static NSString *ZSHKTVListCellID = @"ZSHKTVListCell";
 }
 
 - (void)loadData{
+    
     self.model = self.paramDic[@"model"];
+    self.shopId = self.paramDic[@"shopId"];
     self.dataArr = [[NSMutableArray alloc]init];
+    
     [self requestData];
     
     if (kFromClassTypeValue == ZSHFromHomeKTVVCToHotelDetailVC) {
@@ -74,29 +76,24 @@ static NSString *ZSHKTVListCellID = @"ZSHKTVListCell";
 
 - (void)requestData{
     kWeakSelf(self);
+    _baseLogic = [[ZSHBaseLogic alloc]init];
     if (kFromClassTypeValue == ZSHFromFoodVCToHotelDetailVC) {//美食详情
         _foodLogic = [[ZSHFoodLogic alloc]init];
-        _foodModel = (ZSHFoodModel *)self.model;
-        NSDictionary *paramDic = @{@"SORTFOOD_ID":_foodModel.SORTFOOD_ID};
+        NSDictionary *paramDic = @{@"SORTFOOD_ID":self.shopId};
         [_foodLogic loadFoodDetailDataWithParamDic:paramDic];
-        _foodLogic.requestDataCompleted = ^(id data){
-            [weakself.tableView.mj_header endRefreshing];
-            [weakself.tableView.mj_footer endRefreshing];
-            [weakself initViewModel];
-        };
-    } else if(kFromClassTypeValue == ZSHFromHotelVCToHotelDetailVC){
+        _baseLogic = _foodLogic;
+    } else if(kFromClassTypeValue == ZSHFromHotelVCToHotelDetailVC){//酒店详情
         _hotelLogic = [[ZSHHotelLogic alloc]init];
-        _hotelModel = (ZSHHotelDetailModel *)self.model;
-        NSDictionary *paramDic = @{@"SORTFOOD_ID":_foodModel.SORTFOOD_ID};
-        [_foodLogic loadFoodDetailDataWithParamDic:paramDic];
-        _foodLogic.requestDataCompleted = ^(id data){
-            [weakself.tableView.mj_header endRefreshing];
-            [weakself.tableView.mj_footer endRefreshing];
-            [weakself initViewModel];
-        };
-        
+        _baseLogic = _hotelLogic;
+        NSDictionary *paramDic = @{@"SORTHOTEL_ID":self.shopId};
+        [_hotelLogic loadHotelDetailDataWithParamDic:paramDic];
     }
     
+    _baseLogic.requestDataCompleted = ^(id data){
+        [weakself.tableView.mj_header endRefreshing];
+        [weakself.tableView.mj_footer endRefreshing];
+        [weakself initViewModel];
+    };
 }
 
 - (void)createUI{
@@ -159,9 +156,16 @@ static NSString *ZSHKTVListCellID = @"ZSHKTVListCell";
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHHotelDetailHeadCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHHotelDetailHeadCellID forIndexPath:indexPath];
         cell.fromClassType = [self.paramDic[KFromClassType]integerValue];
-        if (_foodLogic.foodDetailModel) {
-             [cell updateCellWithModel:_foodLogic.foodDetailModel];
+        if (kFromClassTypeValue == ZSHFromFoodVCToHotelDetailVC) {//美食
+            if (_foodLogic.foodDetailModel) {
+                [cell updateCellWithModel:_foodLogic.foodDetailModel];
+            }
+        } else if (kFromClassTypeValue == ZSHFromHotelVCToHotelDetailVC){//酒店
+            if (_hotelLogic.hotelDetailModel) {
+                [cell updateCellWithModel:_hotelLogic.hotelDetailModel];
+            }
         }
+        
         return cell;
         
     };
@@ -304,7 +308,6 @@ static NSString *ZSHKTVListCellID = @"ZSHKTVListCell";
 
 //KTV底部列表
 - (ZSHBaseTableViewSectionModel*)storKTVListSection{
-    kWeakSelf(self);
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     for (int i = 0; i<2; i++){
         ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];

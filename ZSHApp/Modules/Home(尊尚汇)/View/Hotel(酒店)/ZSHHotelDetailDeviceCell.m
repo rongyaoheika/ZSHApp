@@ -10,7 +10,7 @@
 #import "ZSHHotelDetailHeadCell.h"
 #import "ZSHHotelDetailDeviceCell.h"
 #import "ZSHFoodModel.h"
-#import "ZSHHotelDetailModel.h"
+#import "ZSHHotelModel.h"
 #import "ZSHKTVModel.h"
 
 @interface ZSHHotelDetailDeviceCell ()
@@ -163,7 +163,7 @@
        
        
     } else if (self.fromClassType == ZSHFromHotelPayVCToHotelDetailVC) {
-        ZSHHotelDetailModel *hotelModel = (ZSHHotelDetailModel *)model;
+        ZSHHotelModel *hotelModel = (ZSHHotelModel *)model;
         _titleLabel.text = hotelModel.hotelName;
     } else if (self.fromClassType == ZSHFromHomeKTVVCToHotelDetailVC) {
         ZSHKTVModel *KTVModel = (ZSHKTVModel *)model;

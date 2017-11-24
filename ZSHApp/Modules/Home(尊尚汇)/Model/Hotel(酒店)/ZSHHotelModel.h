@@ -1,5 +1,5 @@
 //
-//  ZSHHotelDetailModel.h
+//  ZSHHotelModel.h
 //  ZSHApp
 //
 //  Created by zhaoweiwei on 2017/10/30.
@@ -8,15 +8,7 @@
 
 #import "ZSHBaseModel.h"
 
-@interface ZSHHotelDetailModel : ZSHBaseModel
-
-//酒店列表
-@property (nonatomic, copy) NSString *imageName;           //hotel_image（列表，确认订单）
-@property (nonatomic, copy) NSString *title;               //如家-北京霍营地铁站店
-@property (nonatomic, copy) NSString *address;             //昌平区回龙观镇科星西路47号
-@property (nonatomic, copy) NSString *comment;             //（120条评价）
-@property (nonatomic, copy) NSString *distance;            //23公里
-@property (nonatomic, copy) NSString *price;               //¥499
+@interface ZSHHotelModel : ZSHBaseModel
 
 //详情(订单)
 @property (nonatomic, copy) NSString *detailImageName;      //hotel_detail_big
@@ -36,8 +28,23 @@
 @property (nonatomic, copy) NSString    *HOTELEVACOUNT;          //评论数
 @property (nonatomic, copy) NSString    *HOTELEVALUATE;          //酒店星评
 @property (nonatomic, copy) NSString    *HOTELPRICE;             //酒店价格
-
-
 @property (nonatomic, assign) CGFloat    cellHeight;
+
+@end
+
+
+
+@interface ZSHHotelDetailModel:ZSHBaseModel
+//酒店详情
+@property (nonatomic, copy) NSString    *HOTELPHONE;             //酒店电话
+@property (nonatomic, copy) NSString    *SHOPSERVFOOD;           //餐饮
+@property (nonatomic, copy) NSString    *HOTELNAMES;             //酒店名字
+@property (nonatomic, copy) NSString    *HOTELEVACOUNT;          //评论数
+@property (nonatomic, copy) NSString    *SHOPSERVPARK;           //停车
+@property (nonatomic, copy) NSString    *HOTELADDRESS;           //酒店地址
+@property (nonatomic, copy) NSString    *HOTELEVALUATE;          //评分
+@property (nonatomic, copy) NSString    *SHOPSERVPAY;            //在线支付
+@property (nonatomic, strong) NSArray   *HOTELDETAILSIMGS;       //酒店轮播图
+@property (nonatomic, copy) NSString    *SHOPSERVWIFI;           //WIFI
 
 @end

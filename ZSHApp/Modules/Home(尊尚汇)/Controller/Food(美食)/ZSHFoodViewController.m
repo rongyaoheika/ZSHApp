@@ -74,7 +74,7 @@ static NSString *ZSHFoodCellID = @"ZSHFoodCell";
         
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
             ZSHFoodModel *foodModel = _foodLogic.foodListArr[indexPath.row];
-            NSDictionary *nextParamDic = @{KFromClassType:@(ZSHFromFoodVCToHotelDetailVC),@"model":foodModel};
+            NSDictionary *nextParamDic = @{KFromClassType:@(ZSHFromFoodVCToHotelDetailVC),@"shopId":foodModel.SORTFOOD_ID};
             ZSHHotelDetailViewController *hotelDetailVC = [[ZSHHotelDetailViewController alloc]initWithParamDic:nextParamDic];
             [weakself.navigationController pushViewController:hotelDetailVC animated:YES];
         };
@@ -85,7 +85,7 @@ static NSString *ZSHFoodCellID = @"ZSHFoodCell";
 
 - (void)requestData{
     kWeakSelf(self);
-    [_foodLogic loadFoodListData];
+    [_foodLogic loadFoodListDataWithParamDic:@{@"HONOURUSER_ID":@"d6a3779de8204dfd9359403f54f7d27c"}];
     _foodLogic.requestDataCompleted = ^(id data){
         [weakself.tableView.mj_header endRefreshing];
         [weakself.tableView.mj_footer endRefreshing];

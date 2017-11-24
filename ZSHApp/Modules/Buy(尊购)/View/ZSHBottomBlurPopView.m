@@ -11,7 +11,7 @@
 #import "ZSHHotelDetailHeadCell.h"
 #import "ZSHHotelDetailDeviceCell.h"
 #import "ZSHHotelPayHeadCell.h"
-#import "ZSHHotelDetailModel.h"
+#import "ZSHHotelModel.h"
 #import "ZSHKTVModel.h"
 #import "ZSHHotelPayViewController.h"
 #import "ZSHTextFieldCellView.h"
@@ -40,7 +40,7 @@
 
 @property (nonatomic, strong) NSDictionary           *paramDic;
 @property (nonatomic, strong) ZSHBaseModel           *model;
-@property (nonatomic, strong) ZSHHotelDetailModel    *hotelModel;
+@property (nonatomic, strong) ZSHHotelModel    *hotelModel;
 @property (nonatomic, strong) ZSHKTVModel            *KTVModel;
 @property (nonatomic, strong) ZSHTopLineView         *topLineView;
 @property (nonatomic, copy)   NSString               *typeText;
@@ -105,7 +105,7 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
     } else if (kFromClassTypeValue == ZSHFromHotelDetailCalendarVCToBottomBlurPopView){
         self.typeText = @"请选择入住离店时间";
     } else if (kFromClassTypeValue == ZSHFromHotelDetailConfirmOrderVCToBottomBlurPopView){
-        self.model = (ZSHHotelDetailModel *)_paramDic[@"model"];
+        self.model = (ZSHHotelModel *)_paramDic[@"model"];
     } else if (kFromClassTypeValue == ZSHFromKTVConfirmOrderVCToBottomBlurPopView){
         self.model = (ZSHKTVModel *)_paramDic[@"model"];
     } else if (kFromClassTypeValue == ZSHFromAirplaneCalendarVCToBottomBlurPopView){//机票日期选择

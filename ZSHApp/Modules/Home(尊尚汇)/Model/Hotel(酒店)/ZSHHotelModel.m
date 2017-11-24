@@ -1,15 +1,15 @@
 //
-//  ZSHHotelDetailModel.m
+//  ZSHHotelModel.m
 //  ZSHApp
 //
 //  Created by zhaoweiwei on 2017/10/30.
 //  Copyright © 2017年 apple. All rights reserved.
 //
 
-#import "ZSHHotelDetailModel.h"
+#import "ZSHHotelModel.h"
 #import "ZSHHotelCell.h"
 
-@implementation ZSHHotelDetailModel
+@implementation ZSHHotelModel
 
 -(CGFloat)cellHeight
 {
@@ -21,5 +21,9 @@
     }
     return _cellHeight;
 }
-
 @end
+
+@implementation ZSHHotelDetailModel
+@end
+
+

@@ -75,7 +75,7 @@
         make.top.mas_equalTo(_priceLabel.mas_bottom).offset(kRealValue(10));
         make.left.mas_equalTo(_foodImageView);
         make.height.mas_equalTo(kRealValue(12));
-        make.width.mas_equalTo(KScreenWidth*0.55);
+        make.width.mas_equalTo(KScreenWidth*0.53);
     }];
     
     [_starView mas_makeConstraints:^(MASConstraintMaker *make) {

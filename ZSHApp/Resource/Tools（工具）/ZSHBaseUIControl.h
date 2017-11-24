@@ -26,11 +26,17 @@ typedef NS_ENUM(NSInteger,ZSHToChangePWDView){
 };
 
 typedef NS_ENUM(NSUInteger,ZSHFromVCToHotelDetailVC){//** -> 详情页面
-    ZSHFromHotelVCToHotelDetailVC,     //酒店-酒店详情
-    ZSHFromHotelPayVCToHotelDetailVC,  //酒店确认订单-底部弹窗
     ZSHFromFoodVCToHotelDetailVC,      //美食-美食详情
+    ZSHFromHotelVCToHotelDetailVC,     //酒店-酒店详情
     ZSHFromHomeKTVVCToHotelDetailVC,   //KTV-KTV详情
+    ZSHFromHotelPayVCToHotelDetailVC,  //酒店确认订单-底部弹窗
     ZSHFromNoneVCToHotelDetailVC
+};
+
+typedef NS_ENUM(NSUInteger,ZSHFromVCToHotelVC){//** -> 酒店列表页面
+    ZSHFromHomeHotelVCToHotelVC,     //首页酒店-酒店
+    ZSHFromHomeKTVVCToHotelVC,       //首页KTV-KTV（酒店）
+    ZSHFromNoneVCToHotelVC
 };
 
 typedef NS_ENUM(NSUInteger,ZSHFromVCToHotelPayVC){//** -> 订单支付页面

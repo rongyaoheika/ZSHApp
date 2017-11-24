@@ -9,14 +9,13 @@
 #import "ZSHHotelViewController.h"
 #import "ZSHHotelCell.h"
 #import "ZSHHotelDetailViewController.h"
-#import "ZSHHotelDetailModel.h"
+#import "ZSHHotelModel.h"
 #import "ZSHHotelLogic.h"
 
 @interface ZSHHotelViewController ()<UISearchBarDelegate>
 
-@property (nonatomic, strong)NSMutableArray             *dataArr;
 @property (nonatomic, strong) ZSHHotelLogic             *hotelLogic;
-@property (nonatomic, strong) ZSHHotelDetailModel       *hotelModel;
+@property (nonatomic, strong) ZSHHotelModel       *hotelModel;
 
 @end
 
@@ -34,31 +33,20 @@ static NSString *ZSHHotelCellID = @"ZSHHotelCell";
 }
 
 - (void)loadData{
-    [self requestData];
-    NSArray *baseDataArr = @[
-                             @{@"imageName":@"hotel_image",@"title":@"如家-北京霍营地铁站店",@"address":@"昌平区回龙观镇科星西路47号",@"price":@"499",@"distance":@"23",@"comment":@"120",@"detailImageName":@"hotel_detail_big",@"hotelName":@"三亚大中华希尔顿酒店1"},
-                             
-                             @{@"imageName":@"hotel_image",@"title":@"如家-北京霍营地铁站店",@"address":@"昌平区回龙观镇科星西路48号",@"price":@"599",@"distance":@"55",@"comment":@"20",@"detailImageName":@"hotel_detail_big",@"hotelName":@"三亚大中华希尔顿酒店1"},
-                             
-                             @{@"imageName":@"hotel_image",@"title":@"如家-北京霍营地铁站店",@"address":@"昌平区回龙观镇科星西路49号",@"price":@"699",@"distance":@"63",@"comment":@"14",@"detailImageName":@"hotel_detail_big",@"hotelName":@"三亚大中华希尔顿酒店1"},
-                             
-                             @{@"imageName":@"hotel_image",@"title":@"如家-北京霍营地铁站店",@"address":@"昌平区回龙观镇科星西路50号",@"price":@"799",@"distance":@"90",@"comment":@"42",@"detailImageName":@"hotel_detail_big",@"hotelName":@"三亚大中华希尔顿酒店1"},
-                             ];
-    self.dataArr = [ZSHHotelDetailModel mj_objectArrayWithKeyValuesArray:baseDataArr];
+   
+    [self requestHotelListData];
      [self initViewModel];
 }
 
-- (void)requestData{
-    kWeakSelf(self);
-   if(kFromClassTypeValue == ZSHFromHotelVCToHotelDetailVC){
-        _hotelLogic = [[ZSHHotelLogic alloc]init];
-        [_hotelLogic loadHotelListData];
-        _hotelLogic.requestDataCompleted = ^(id data){
-            [weakself.tableView.mj_header endRefreshing];
-            [weakself.tableView.mj_footer endRefreshing];
-            [weakself initViewModel];
-        };
-    }
+- (void)requestHotelListData{
+     kWeakSelf(self);
+    _hotelLogic = [[ZSHHotelLogic alloc]init];
+    [_hotelLogic loadHotelListDataWithParamDic:@{@"HONOURUSER_ID":@"d6a3779de8204dfd9359403f54f7d27c"}];
+    _hotelLogic.requestDataCompleted = ^(id data){
+        [weakself.tableView.mj_header endRefreshing];
+        [weakself.tableView.mj_footer endRefreshing];
+        [weakself initViewModel];
+    };
 }
 
 - (void)createUI{
@@ -96,14 +84,14 @@ static NSString *ZSHHotelCellID = @"ZSHHotelCell";
             if (i==_hotelLogic.hotelListArr.count-1) {
                 cell.separatorInset = UIEdgeInsetsMake(0, 0, 0, MAXFLOAT);
             }
-            ZSHHotelDetailModel *hotelModel = _hotelLogic.hotelListArr[indexPath.row];
+            ZSHHotelModel *hotelModel = _hotelLogic.hotelListArr[indexPath.row];
             [cell updateCellWithModel:hotelModel];
             return cell;
         };
         
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
-             ZSHHotelDetailModel *hotelModel = self.dataArr[indexPath.row];
-            NSDictionary *nextParamDic = @{KFromClassType:@(ZSHFromHotelVCToHotelDetailVC),@"model":hotelModel};
+            ZSHHotelModel *hotelModel = _hotelLogic.hotelListArr[indexPath.row];
+            NSDictionary *nextParamDic = @{KFromClassType:@(ZSHFromHotelVCToHotelDetailVC),@"shopId":hotelModel.SORTHOTEL_ID};
             ZSHHotelDetailViewController *hotelDetailVC = [[ZSHHotelDetailViewController alloc]initWithParamDic:nextParamDic];
             [weakself.navigationController pushViewController:hotelDetailVC animated:YES];
         };

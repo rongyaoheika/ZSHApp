@@ -7,16 +7,31 @@
 //
 
 #import "ZSHHotelLogic.h"
-#import "ZSHHotelDetailModel.h"
+#import "ZSHHotelModel.h"
 
 @implementation ZSHHotelLogic
 
 
-- (void)loadHotelListData{
+- (void)loadHotelListDataWithParamDic:(NSDictionary *)paramDic{
     kWeakSelf(self);
-    [PPNetworkHelper POST:kUrlSHotelDo parameters:nil success:^(id responseObject) {
-        weakself.hotelListArr = [ZSHHotelDetailModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"]];
-        RLog(@"酒店详情数据==%@",responseObject);
+    [PPNetworkHelper POST:kUrlSHotelDo parameters:paramDic success:^(id responseObject) {
+        weakself.hotelListArr = [ZSHHotelModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"]];
+        if (weakself.requestDataCompleted) {
+            weakself.requestDataCompleted(nil);
+        }
+        
+    } failure:^(NSError *error) {
+        if (weakself.requestDataCompleted) {
+            weakself.requestDataCompleted(@"fail");
+        }
+    }];
+}
+
+- (void)loadHotelDetailDataWithParamDic:(NSDictionary *)paramDic{
+    kWeakSelf(self);
+    [PPNetworkHelper POST:kUrlHotelSyn parameters:paramDic success:^(id responseObject) {
+        RLog(@"酒店详情数据==%@",responseObject)
+        weakself.hotelDetailModel = [ZSHHotelDetailModel mj_objectWithKeyValues:responseObject[@"pd"]];
         if (weakself.requestDataCompleted) {
             weakself.requestDataCompleted(nil);
         }

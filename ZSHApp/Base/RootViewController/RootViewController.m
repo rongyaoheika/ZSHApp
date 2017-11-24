@@ -151,7 +151,7 @@
         //底部刷新
         _tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRereshing)];
         _tableView.tableFooterView = [[UIView alloc] init];
-        
+
         
     }
     return _tableView;

@@ -7,9 +7,14 @@
 //
 
 #import "ZSHBaseLogic.h"
+@class ZSHHotelModel;
 @class ZSHHotelDetailModel;
+
 @interface ZSHHotelLogic : ZSHBaseLogic
 
-@property (nonatomic, strong) NSArray <ZSHHotelDetailModel *>   *hotelListArr;
-- (void)loadHotelListData;
+@property (nonatomic, strong) NSArray <ZSHHotelModel *>   *hotelListArr;
+@property (nonatomic, strong) ZSHHotelDetailModel         *hotelDetailModel;
+
+- (void)loadHotelListDataWithParamDic:(NSDictionary *)paramDic;
+- (void)loadHotelDetailDataWithParamDic:(NSDictionary *)paramDic;
 @end

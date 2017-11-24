@@ -11,9 +11,9 @@
 
 @implementation ZSHFoodLogic
 
-- (void)loadFoodListData{
+- (void)loadFoodListDataWithParamDic:(NSDictionary *)paramDic{
     kWeakSelf(self);
-    [PPNetworkHelper POST:kUrlSFood parameters:nil success:^(id responseObject) {
+    [PPNetworkHelper POST:kUrlSFood parameters:paramDic success:^(id responseObject) {
         weakself.foodListArr = [ZSHFoodModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"]];
         if (weakself.requestDataCompleted) {
             weakself.requestDataCompleted(nil);

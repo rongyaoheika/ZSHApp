@@ -8,7 +8,7 @@
 
 #import "ZSHHotelDetailHeadCell.h"
 #import "ZSHFoodModel.h"
-#import "ZSHHotelDetailModel.h"
+#import "ZSHHotelModel.h"
 #import "ZSHKTVModel.h"
 #import "ZSHGuideView.h"
 
@@ -49,22 +49,16 @@
 
 }
 
-- (void)setFromClassType:(ZSHFromVCToHotelDetailVC)fromClassType{
-    _fromClassType = fromClassType;
-}
-
 - (void)updateCellWithModel:(ZSHBaseModel *)model{
-    
-    if (self.fromClassType == ZSHFromHotelVCToHotelDetailVC) {
-        ZSHHotelDetailModel *hotelModel = (ZSHHotelDetailModel *)model;
-        _hotelImageView.image = [UIImage imageNamed:hotelModel.detailImageName];
-        _detailLabel.text = hotelModel.hotelName;
-    } else if (self.fromClassType == ZSHFromFoodVCToHotelDetailVC) {
+    if (self.fromClassType == ZSHFromFoodVCToHotelDetailVC) {//美食
         ZSHFoodDetailModel *foodDetailModel = (ZSHFoodDetailModel *)model;
         [_headView updateViewWithParamDic:@{@"dataArr":foodDetailModel.SHOPDETAILSIMGS}];
-        
         _detailLabel.text = foodDetailModel.SHOPNAMES;
-    } else if (self.fromClassType == ZSHFromHomeKTVVCToHotelDetailVC) {
+    } else if (self.fromClassType == ZSHFromHotelVCToHotelDetailVC) {//酒店
+        ZSHHotelDetailModel *hotelDetailModel = (ZSHHotelDetailModel *)model;
+        [_headView updateViewWithParamDic:@{@"dataArr":hotelDetailModel.HOTELDETAILSIMGS}];
+        _detailLabel.text = hotelDetailModel.HOTELNAMES;
+    } else if (self.fromClassType == ZSHFromHomeKTVVCToHotelDetailVC) {//KTV
         ZSHKTVModel *KTVModel = (ZSHKTVModel *)model;
         _hotelImageView.image = [UIImage imageNamed:KTVModel.detailImageName];
         _detailLabel.text = KTVModel.KTVName;
