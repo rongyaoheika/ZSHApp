@@ -22,9 +22,12 @@
 @interface ZSHGoodsViewController ()<UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,UISearchBarDelegate>
 
 /* 左边数据 */
-@property (nonatomic, strong)NSMutableArray<ZSHClassMainModel *> *titleArr;
+@property (nonatomic, strong) NSMutableArray<ZSHClassMainModel *> *titleArr;
 /* 右边数据 */
-@property (nonatomic, strong)NSMutableArray<ZSHClassMainModel *> *mainArr;
+@property (nonatomic, strong) NSMutableArray<ZSHClassSubModel *>  *mainArr;
+
+@property (nonatomic, strong) ZSHBuyLogic                         *buyLogic;
+@property (nonatomic, assign) NSInteger                           currentSelectIndex;
 
 @end
 
@@ -37,17 +40,13 @@ static NSString *const ZSHBrandSortCellID = @"ZSHBrandSortCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     
     [self loadData];
     [self createUI];
 }
 
 - (void)loadData{
-    
-//    _titleArr = [ZSHClassGoodsModel mj_objectArrayWithFilename:@"ClassifyTitles.plist"];
-//    _mainArr = [ZSHClassMainModel mj_objectArrayWithFilename:@"ClassiftyGoods01.plist"];
-    RLog(@"789798%@",_mainArr);
+    _currentSelectIndex = 0;
     
     [self requestData];
     [self initViewModel];
@@ -108,7 +107,8 @@ static NSString *const ZSHBrandSortCellID = @"ZSHBrandSortCell";
         
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
             kStrongSelf(self);
-//            [weakself requestBrandIconListWithBrandID:_titleArr[indexPath.row][@"BRAND_ID"]];
+            _currentSelectIndex = indexPath.row;
+            [weakself requestBrandIconListWithBrandID:_titleArr[indexPath.row]];
             [self.collectionView reloadData];
         };
     }
@@ -116,60 +116,62 @@ static NSString *const ZSHBrandSortCellID = @"ZSHBrandSortCell";
 }
 
 #pragma mark - <UITableViewDataSource>
-- (NSInteger) numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    return _mainArr.count;
-}
+//- (NSInteger) numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+//    return _mainArr.count;
+//}
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return _mainArr[section].goods.count;
+    return _mainArr.count;
 }
 
 #pragma mark - <UICollectionViewDelegate>
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     UICollectionViewCell *gridcell = nil;
-    if ([_mainArr[_mainArr.count - 1].title isEqualToString:@"热门品牌"]) {
-        if (indexPath.section == _mainArr.count - 1) {//品牌
-            ZSHBrandSortCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:ZSHBrandSortCellID forIndexPath:indexPath];
-            cell.subItem = _mainArr[indexPath.section].goods[indexPath.row];
-            gridcell = cell;
-        } else {//商品
-            ZSHGoodsSortCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:ZSHGoodsSortCellID forIndexPath:indexPath];
-            cell.subItem = _mainArr[indexPath.section].goods[indexPath.row];
-            gridcell = cell;
-        }
-    } else {//商品
-        ZSHGoodsSortCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:ZSHGoodsSortCellID forIndexPath:indexPath];
-        cell.subItem = _mainArr[indexPath.section].goods[indexPath.row];
-        gridcell = cell;
-    }
-    
+//    if ([_mainArr[_mainArr.count - 1].title isEqualToString:@"热门品牌"]) {
+//        if (indexPath.section == _mainArr.count - 1) {//品牌
+//            ZSHBrandSortCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:ZSHBrandSortCellID forIndexPath:indexPath];
+//            cell.subItem = _mainArr[indexPath.section].goods[indexPath.row];
+//            gridcell = cell;
+//        } else {//商品
+//            ZSHGoodsSortCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:ZSHGoodsSortCellID forIndexPath:indexPath];
+//            cell.subItem = _mainArr[indexPath.section].goods[indexPath.row];
+//            gridcell = cell;
+//        }
+//    } else {//商品
+//        ZSHGoodsSortCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:ZSHGoodsSortCellID forIndexPath:indexPath];
+//        cell.subItem = _mainArr[indexPath.section].goods[indexPath.row];
+//        gridcell = cell;
+//    }
+    ZSHGoodsSortCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:ZSHGoodsSortCellID forIndexPath:indexPath];
+    cell.subItem = _mainArr[indexPath.row];
+    gridcell = cell;
     return gridcell;
 }
 
-- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
-    
-    UICollectionReusableView *reusableview = nil;
-    if (kind == UICollectionElementKindSectionHeader){
-        
-        ZSHBrandsSortHeadView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:ZSHBrandsSortHeadViewID forIndexPath:indexPath];
-        headerView.headTitle = _mainArr[indexPath.section];
-        reusableview = headerView;
-    }
-    return reusableview;
-}
+//- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
+//    
+//    UICollectionReusableView *reusableview = nil;
+//    if (kind == UICollectionElementKindSectionHeader){
+//        
+//        ZSHBrandsSortHeadView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:ZSHBrandsSortHeadViewID forIndexPath:indexPath];
+//        headerView.headTitle = _mainArr[indexPath.section];
+//        reusableview = headerView;
+//    }
+//    return reusableview;
+//}
 
 #pragma mark - item宽高
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    if ([_mainArr[_mainArr.count - 1].title isEqualToString:@"热门品牌"]) {
-        if (indexPath.section == _mainArr.count - 1) {//品牌
-            return CGSizeMake((kScreenWidth - tableViewW - 6)/3, 60);
-        }else{//商品
-            return CGSizeMake((kScreenWidth - tableViewW - 6)/3, (kScreenWidth - tableViewW - 6)/3 + 20);
-        }
-    }else{
+//    if ([_mainArr[_mainArr.count - 1].title isEqualToString:@"热门品牌"]) {
+//        if (indexPath.section == _mainArr.count - 1) {//品牌
+//            return CGSizeMake((kScreenWidth - tableViewW - 6)/3, 60);
+//        }else{//商品
+//            return CGSizeMake((kScreenWidth - tableViewW - 6)/3, (kScreenWidth - tableViewW - 6)/3 + 20);
+//        }
+//    }else{
         return CGSizeMake((kScreenWidth - tableViewW - 6)/3, (kScreenWidth - tableViewW - 6)/3 + 20);
-    }
-    return CGSizeZero;
+//    }
+//    return CGSizeZero;
 }
 
 #pragma mark - head宽高
@@ -188,31 +190,42 @@ static NSString *const ZSHBrandSortCellID = @"ZSHBrandSortCell";
     [self.navigationController pushViewController:goodContentVC animated:YES];
 }
 
+- (void)headerRereshing {
+    [self requestData];
+}
+- (void)collectionHeaderRereshing {
+    [self requestBrandIconListWithBrandID:_titleArr[_currentSelectIndex]];
+}
+
+- (void)collectionFooterRereshing {
+    kWeakSelf(self);
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [weakself.collectionView.mj_footer endRefreshing];
+    });
+}
+
 - (void)requestData {
     kWeakSelf(self);
-    ZSHBuyLogic *logic = [[ZSHBuyLogic alloc] init];
-    [logic requestShipBrandList:^(id response) {
-    
+    _buyLogic = [[ZSHBuyLogic alloc] init];
+    [_buyLogic requestShipBrandList:^(id response) {
         _titleArr = [ZSHClassMainModel mj_objectArrayWithKeyValuesArray:response[@"pd"]];
-        
         [weakself initViewModel];
-        //默认选择第一行（注意一定要在加载完数据之后）
-        [weakself.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] animated:NO scrollPosition:UITableViewScrollPositionTop];
-        [logic requestBrandIconListWithBrandID:_titleArr[0].BRAND_ID success:^(id response) {
-            _mainArr[0].goods = [ZSHClassSubModel mj_objectArrayWithKeyValuesArray:response[@"pd"]];
-
-             [weakself.collectionView reloadData];
-            RLog(@"返回结果%@",response);
-        }];
+        //第一次加载默认选择第一行（注意一定要在加载完数据之后）
+        [weakself.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:_currentSelectIndex inSection:0] animated:NO scrollPosition:UITableViewScrollPositionNone];
+        [weakself requestBrandIconListWithBrandID:_titleArr[_currentSelectIndex]];
+        [weakself.tableView.mj_header endRefreshing];
     }];
     
 }
 
 - (void)requestBrandIconListWithBrandID:(ZSHClassMainModel *)model {
+    kWeakSelf(self);
     ZSHBuyLogic *logic = [[ZSHBuyLogic alloc] init];
     [logic requestBrandIconListWithBrandID:model.BRAND_ID success:^(id response) {
-        _mainArr[0].goods = [ZSHClassSubModel mj_objectArrayWithKeyValuesArray:response[@"pd"]];
-        RLog(@"返回结果%@",response);
+        _mainArr = [ZSHClassSubModel mj_objectArrayWithKeyValuesArray:response[@"pd"]];
+        [weakself.collectionView reloadData];
+        [weakself.collectionView.mj_header endRefreshing];
+        
     }];
 }
 

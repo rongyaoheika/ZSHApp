@@ -10,6 +10,10 @@
 
 @interface ZSHClassSubModel : ZSHBaseModel
 
+@property (nonatomic, copy) NSString *BRANDICON_ID;
+@property (nonatomic, copy) NSString *BRANDNAME;
+@property (nonatomic, copy) NSString *BRAND_ID;
+@property (nonatomic, copy) NSString *ICONIMGS;
 
 
 /** 商品类题  */

@@ -14,6 +14,8 @@ static NSString *CollectCellIdentifier = @"CollectCellIdentifier";
 
 @interface ZSHCollectViewController ()
 
+@property (nonatomic, strong) ZSHBuyLogic  *buyLogic;
+
 @end
 
 @implementation ZSHCollectViewController
@@ -26,8 +28,9 @@ static NSString *CollectCellIdentifier = @"CollectCellIdentifier";
 }
 
 - (void)loadData{
-    [self requstData];
+    _buyLogic = [[ZSHBuyLogic alloc] init];
     [self initViewModel];
+    [self requstData];
 }
 
 - (void)createUI{
@@ -40,11 +43,7 @@ static NSString *CollectCellIdentifier = @"CollectCellIdentifier";
     self.tableView.delegate = self.tableViewModel;
     self.tableView.dataSource = self.tableViewModel;
     [self.tableView registerClass:[ZSHCollectCell class] forCellReuseIdentifier:CollectCellIdentifier];
-    [self.tableView reloadData];
-    
 }
-
-
 
 - (void)initViewModel {
     [self.tableViewModel.sectionModelArray removeAllObjects];
@@ -54,35 +53,27 @@ static NSString *CollectCellIdentifier = @"CollectCellIdentifier";
 
 - (ZSHBaseTableViewSectionModel*)storeListSection {
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
-    NSArray *imageArr = @[@"buy_watch",@"collect_image_1",@"collect_image_2", @"collect_image_3"];
-    
-    NSArray *titleArr = @[@"卡地亚Cartier伦敦SOLO手表 石英男表W6701005",@"Gucci/古奇新款现货女士牛皮短款钱包零钱包黑色女包474802DRW1T", @"Cartier卡地亚SAPHIRS LÉGERS DE CARTIER系列玫瑰金项链B7218400", @"Channel 香奈儿黄色柔情邂逅女士淡香水50ML"];
-    NSArray *contentArr = @[@"¥49200",@"￥4618",@"￥21200", @"￥640"];
-    
-    for (int i = 0; i<imageArr.count; i++) {
-        
+    for (int i = 0; i<_buyLogic.collectModelArr.count; i++) {
         ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
         [sectionModel.cellModelArray addObject:cellModel];
         cellModel.height = kRealValue(100);
         cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
             //需要注册，无需判空
             ZSHCollectCell *cell = [tableView dequeueReusableCellWithIdentifier:CollectCellIdentifier forIndexPath:indexPath];
-            NSDictionary *nextParamDic = @{@"bgImageName":imageArr[i],@"TitleText":titleArr[i],@"ContentText":contentArr[i]};
-            [cell updateCellWithParamDic:nextParamDic];
+            [cell updateCellWithModel:_buyLogic.collectModelArr[indexPath.row]];
             return cell;
         };
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
         };
-        
     }
     return sectionModel;
 }
 
 
 - (void)requstData {
-    ZSHBuyLogic *logic = [[ZSHBuyLogic alloc] init];
-    [logic requestShipCollectWithUserID:@"userID" success:^(id response) {
-        
+    kWeakSelf(self);
+    [_buyLogic requestShipCollectWithUserID:@"d6a3779de8204dfd9359403f54f7d27c" success:^(id response) {
+        [weakself initViewModel];
     }];
 }
 

@@ -72,6 +72,7 @@ static NSString *cellIdentifier = @"listCell";
         cellModel.height = kRealValue(140);
         cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
             ZSHTogetherView *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
+            [cell setParamDic:@{KFromClassType:@(ZSHFromTogetherVCToTogetherView)}];
             [cell updateCellWithModel:_togetherLogic.dataArr[i]];
             return cell;
         };
@@ -79,7 +80,7 @@ static NSString *cellIdentifier = @"listCell";
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
             ZSHTogetherModel *model = _togetherLogic.dataArr[i];
             Class className = NSClassFromString(weakself.pushVCsArr[indexPath.row]);
-            RootViewController *vc = [[className alloc]initWithParamDic:@{@"CONVERGE_ID":model.CONVERGE_ID}];
+            RootViewController *vc = [[className alloc]initWithParamDic:@{@"CONVERGE_ID":model.CONVERGE_ID,@"Title":model.IMGCNCHAR}];
             [weakself.navigationController pushViewController:vc animated:YES];
         };
     }

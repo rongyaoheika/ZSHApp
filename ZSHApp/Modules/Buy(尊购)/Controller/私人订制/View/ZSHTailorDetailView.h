@@ -7,7 +7,10 @@
 //
 
 #import "ZSHBaseCell.h"
+#import "ZSHPersonalDetailModel.h"
 
 @interface ZSHTailorDetailView : ZSHBaseCell
+
+- (void)updateCellWithModel:(ZSHPersonalDetailModel *)model index:(NSInteger)index;
 
 @end

@@ -7,7 +7,9 @@
 //
 
 #import "ZSHBaseCollectionViewCell.h"
+
 @class ZSHClassSubModel;
+
 @interface ZSHGoodsSortCell : ZSHBaseCollectionViewCell
 
 /* 品牌数据 */

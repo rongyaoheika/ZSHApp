@@ -7,11 +7,12 @@
 //
 
 #import "ZSHCollectCell.h"
+#import "ZSHCollectModel.h"
 
 @interface ZSHCollectCell ()
 
 @property (nonatomic, strong) UILabel     *titleLabel;
-@property (nonatomic, strong) UILabel     *contentLabel;
+@property (nonatomic, strong) UILabel     *priceLabel;
 @property (nonatomic, strong) UIImageView *activityImage;
 @property (nonatomic, strong) UIButton    *similarBtn;
 
@@ -33,11 +34,11 @@
     [self addSubview:titleLabel];
     self.titleLabel = titleLabel;
     
-    NSDictionary *contentLabelDic = @{@"text":@"吃喝玩乐区",@"font":kPingFangRegular(11),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentLeft)};
-    UILabel *contentLabel = [ZSHBaseUIControl createLabelWithParamDic:contentLabelDic];
-    contentLabel.numberOfLines = 0;
-    [self addSubview:contentLabel];
-    self.contentLabel = contentLabel;
+    NSDictionary *priceLabelDic = @{@"text":@"吃喝玩乐区",@"font":kPingFangRegular(11),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentLeft)};
+    UILabel *priceLabel = [ZSHBaseUIControl createLabelWithParamDic:priceLabelDic];
+    priceLabel.numberOfLines = 0;
+    [self addSubview:priceLabel];
+    self.priceLabel = priceLabel;
     
     NSDictionary *similarBtnDic = @{@"title":@"找相似",@"font":kPingFangRegular(10)};
     UIButton *similarBtn = [ZSHBaseUIControl createBtnWithParamDic:similarBtnDic];
@@ -64,7 +65,7 @@
         make.height.mas_equalTo(kRealValue(37));
     }];
     
-    [self.contentLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.priceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self).offset(kRealValue(70.5));
         make.left.mas_equalTo(self).offset(kRealValue(93));
         make.width.mas_equalTo(kRealValue(50));
@@ -79,13 +80,12 @@
     }];
 }
 
-- (void)updateCellWithParamDic:(NSDictionary *)dic{
-    self.activityImage.image = [UIImage imageNamed:dic[@"bgImageName"]];
-    self.titleLabel.text = dic[@"TitleText"];
-    self.contentLabel.text = dic[@"ContentText"];
-    self.paramDic = dic;
+
+- (void)updateCellWithModel:(ZSHCollectModel *)model {
+    [self.activityImage sd_setImageWithURL:[NSURL URLWithString:model.PROSHOWIMG]];
+    self.titleLabel.text = model.PROTITLE;
+    self.priceLabel.text = model.PROPRICE;
     [self layoutIfNeeded];
-    
 }
 
 @end

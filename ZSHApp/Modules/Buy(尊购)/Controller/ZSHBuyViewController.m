@@ -122,8 +122,7 @@ static NSString *ZSHGoodsListViewID = @"ZSHGoodsListView";
         };
         
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
-            [weakself getShipPrefectureWithBrandID:brandIDArr[indexPath.row]];
-            ZSHGoodsTitleContentViewController *goodContentVC = [[ZSHGoodsTitleContentViewController alloc]init];
+            ZSHGoodsTitleContentViewController *goodContentVC = [[ZSHGoodsTitleContentViewController alloc]initWithParamDic:@{@"PreBrandID":brandIDArr[indexPath.row]}];
             [weakself.navigationController pushViewController:goodContentVC animated:YES];
         };
     }
@@ -133,17 +132,6 @@ static NSString *ZSHGoodsListViewID = @"ZSHGoodsListView";
 
 
 #pragma action
-- (void)getShipPrefectureWithBrandID:(NSString *)brandID {
-    RLog(@"brandID:%@",brandID);
-    kWeakSelf(self);
-    [PPNetworkHelper POST:kUrlShipPrefecture parameters:@{@"BRAND_ID":brandID} success:^(id responseObject) {
-        RLog(@"请求成功：返回数据&%@",responseObject);
-        [weakself initViewModel];
-    } failure:^(NSError *error) {
-        RLog(@"请求失败");
-    }];
-}
-
 
 - (void)mineBtntAction{
     [self.sideSlipVC presentLeftMenuViewController];

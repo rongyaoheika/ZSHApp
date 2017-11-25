@@ -36,7 +36,8 @@ static NSString *ZSHEnterTainmentCellID = @"ZSHEnterTainmentCell";
 }
 
 - (void)createUI{
-    self.title = @"吃喝玩乐";
+    self.title = self.paramDic[@"Title"];
+    
     [self addNavigationItemWithTitles:@[@"去发布"] isLeft:NO target:self action:@selector(distributeAction) tags:@[@(1)]];
     
     self.tableView.frame = CGRectMake(0, KNavigationBarHeight, KScreenWidth, KScreenHeight-KNavigationBarHeight);

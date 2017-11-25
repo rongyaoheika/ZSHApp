@@ -172,13 +172,13 @@
         _collectionView.scrollsToTop = YES;
         
         //头部刷新
-        MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+        MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(collectionHeaderRereshing)];
         header.automaticallyChangeAlpha = YES;
         header.lastUpdatedTimeLabel.hidden = NO;
         _collectionView.mj_header = header;
         
         //底部刷新
-        _collectionView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRereshing)];
+        _collectionView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(collectionFooterRereshing)];
         
     }
     return _collectionView;
@@ -200,11 +200,19 @@
     return _bottomBtn;
 }
 
--(void)headerRereshing{
+- (void)headerRereshing{
     
 }
 
--(void)footerRereshing{
+- (void)footerRereshing{
+    
+}
+
+- (void)collectionHeaderRereshing {
+    
+}
+
+- (void)collectionFooterRereshing {
     
 }
 
@@ -384,9 +392,5 @@
     }
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
 @end

@@ -269,7 +269,6 @@ NSInteger yearSatrt = 1900;
             }
             break;
         }
-            
         case WindowRegion:{
              [_pickerView selectRow:1 inComponent:0 animated:NO];
              [_pickerView selectRow:1 inComponent:1 animated:NO];
@@ -323,6 +322,15 @@ NSInteger yearSatrt = 1900;
             }
             break;
         }
+        case WindowPrice:{
+            RLog(@"保存价格数据");
+            NSInteger price = [_pickerView selectedRowInComponent:0];
+            NSString *priceStr = [NSString stringWithFormat:@"%zd", price];
+            if (self.saveChangeBlock) {
+                self.saveChangeBlock(priceStr,self.tag);
+            }
+        }
+            break;
         case WindowGender:{
             RLog(@"保存性别数据");
             break;

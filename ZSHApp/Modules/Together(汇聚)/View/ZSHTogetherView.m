@@ -8,6 +8,7 @@
 
 #import "ZSHTogetherView.h"
 #import "ZSHTogetherModel.h"
+#import "ZSHPersonalModel.h"
 
 @interface ZSHTogetherView()
 
@@ -104,10 +105,20 @@
     
 }
 
-- (void)updateCellWithModel:(ZSHTogetherModel *)model {
-    [self.activityImage sd_setImageWithURL:[NSURL URLWithString:model.CONVERGEIMG]];
-    self.chineseNameLabel.text = model.IMGCNCHAR;
-    self.englishNameLabel.text = model.IMGENCHAR;
+- (void)updateCellWithModel:(ZSHBaseModel *)model {
+    
+    if ([model isKindOfClass:[ZSHTogetherModel class]]) {
+        ZSHTogetherModel *togetherModel = (ZSHTogetherModel *)model;
+        [self.activityImage sd_setImageWithURL:[NSURL URLWithString:togetherModel.CONVERGEIMG]];
+        self.chineseNameLabel.text = togetherModel.IMGCNCHAR;
+        self.englishNameLabel.text = togetherModel.IMGENCHAR;
+    } else if ([model isKindOfClass:[ZSHPersonalModel class]]) {
+        ZSHPersonalModel *personalModel = (ZSHPersonalModel *)model;
+        [self.activityImage sd_setImageWithURL:[NSURL URLWithString:personalModel.PERSONALIMGS]];
+        self.chineseNameLabel.text = personalModel.IMGSCNCHAR;
+        self.englishNameLabel.text = personalModel.IMGENCHAR;
+    }
+    
     [self layoutIfNeeded];
 }
 

@@ -104,10 +104,14 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
                     NSString *priceSingle = [NSString stringWithFormat:@"%d",i];
                     [priceMArr addObject:priceSingle];
                 }
-                
                 NSDictionary *nextParamDic = @{@"type":@(WindowPrice),@"midTitle":@"期望价格",@"dataArr":priceMArr};
                 weakself.pickView = [weakself createPickViewWithParamDic:nextParamDic];
                 [weakself.pickView show:WindowPrice];
+                weakself.pickView.saveChangeBlock= ^(NSString *text,NSInteger tag) {
+//                  _togetherLogic.enterDisModel.PRICEMIN
+//                  _togetherLogic.enterDisModel.PRICEMAX
+                    weakself.detailTitleArr[indexPath.row] = text;
+                };
             } else if (indexPath.row == 3) {//方式
                 NSArray *togetherArr = @[@"不限",@"给力邀约",@"AA互动趴"];
                 NSDictionary *nextParamDic = @{@"type":@(WindowTogether),@"midTitle":@"方式选择",@"dataArr":togetherArr};

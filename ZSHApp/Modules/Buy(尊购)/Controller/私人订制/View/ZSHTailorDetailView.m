@@ -8,6 +8,7 @@
 
 #import "ZSHTailorDetailView.h"
 
+
 @interface ZSHTailorDetailView()
 
 @property (nonatomic, strong) UILabel     *titleLabel;
@@ -62,13 +63,25 @@
     }];
 }
 
-- (void)updateCellWithParamDic:(NSDictionary *)dic{
-    self.activityImage.image = [UIImage imageNamed:dic[@"bgImageName"]];
-    self.titleLabel.text = dic[@"TitleText"];
-    self.contentLabel.text = dic[@"ContentText"];
-    self.paramDic = dic;
+//- (void)updateCellWithParamDic:(NSDictionary *)dic{
+//    self.activityImage.image = [UIImage imageNamed:dic[@"bgImageName"]];
+//    self.titleLabel.text = dic[@"TitleText"];
+//    self.contentLabel.text = dic[@"ContentText"];
+//    self.paramDic = dic;
+//    [self layoutIfNeeded];
+//    
+//}
+
+- (void)updateCellWithModel:(ZSHPersonalDetailModel *)model index:(NSInteger)index {
+    [self.activityImage sd_setImageWithURL:[NSURL URLWithString:model.PERSONALDETIMGS[index]]];
+    if (index == 1) {
+        self.titleLabel.text = model.UPINTROTITLE;
+        self.contentLabel.text = model.UPINTROCONTENT;
+    } else if (index == 2) {
+        self.titleLabel.text = model.DOWNINTROTITLE;
+        self.contentLabel.text = model.DOWNINTROCONTENT;
+    }
     [self layoutIfNeeded];
-    
 }
 
 @end

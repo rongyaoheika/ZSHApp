@@ -10,6 +10,7 @@
 #import "LXScrollContentView.h"
 #import "ZSHGoodsSegmentView.h"
 #import "ZSHGoodsTypeViewController.h"
+#import "ZSHBuyLogic.h"
 
 @interface ZSHGoodsTitleContentViewController ()
 
@@ -18,6 +19,7 @@
 @property (nonatomic, strong) LXScrollContentView  *contentView;
 @property (nonatomic, strong) NSMutableArray       *vcs;
 @property (nonatomic, strong) NSArray              *contentVCS;
+@property (nonatomic, strong) ZSHBuyLogic          *buyLogic;
 
 @end
 
@@ -25,7 +27,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     
     [self loadData];
     [self createUI];
@@ -33,6 +34,8 @@
 
 - (void)loadData{
     self.cellType = ZSHCollectionViewCellType;
+    _buyLogic = [[ZSHBuyLogic alloc] init];
+    [self requestData];
 }
 
 - (void)createUI{
@@ -89,9 +92,19 @@
     [self.contentView reloadViewWithChildVcs:self.vcs parentVC:self];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)requestData {
+    
+//        kWeakSelf(self);
+//        [PPNetworkHelper POST:kUrlShipPrefecture parameters:@{@"BRAND_ID":self.paramDic[@"PreBrandID"]} success:^(id responseObject) {
+//            RLog(@"请求成功：返回数据&%@",responseObject);
+////            [weakself initViewModel];
+//        } failure:^(NSError *error) {
+//            RLog(@"请求失败");
+//        }];
+
+//   [_buyLogic requestShipListAllsuccess:^(id response) {
+//       
+//   }];
 }
 
 @end
