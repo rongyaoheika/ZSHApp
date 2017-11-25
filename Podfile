@@ -11,5 +11,6 @@ pod 'NIMSDK',        '~> 4.1.0'
 pod 'SDWebImage',    '~>3.8'
 pod 'MJExtension'
 pod 'IQKeyboardManager'
+pod 'TZImagePickerController'
 
 end

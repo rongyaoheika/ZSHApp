@@ -57,7 +57,7 @@
 
 //底部年龄弹出框
 @property (nonatomic, strong) ZSHAgeView            *ageView;
-@property (nonatomic, copy) NSString                *ageRangeStr;
+@property (nonatomic, copy)   NSString              *ageRangeStr;
 
 @end
 

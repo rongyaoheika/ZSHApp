@@ -49,7 +49,6 @@
 }
 
 - (void)requestAddDetailParty:(NSDictionary *)dic success:(void(^)(id response))success {
-    kWeakSelf(self);
     [PPNetworkHelper POST:kUrlAddDetailParty parameters:dic success:^(id responseObject) {
         success(responseObject);
     } failure:^(NSError *error) {

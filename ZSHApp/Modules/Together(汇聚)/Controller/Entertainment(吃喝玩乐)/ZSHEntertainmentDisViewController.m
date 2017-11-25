@@ -37,6 +37,22 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     _togetherLogic = [[ZSHTogetherLogic alloc] init];
     self.titleArr = @[@"开始时间",@"结束时间",@"期望价格",@"方式",@"人数要求",@"性别要求",@"年龄要求",@"详细要求"];
     self.detailTitleArr = [NSMutableArray arrayWithArray:@[@"2017-10-1",@"2017-10-7",@"0-1000",@"AA互动趴",@"一对一",@"不限",@"18-30岁",@" "]];
+    
+    NSDictionary *dic = @{@"STARTTIME":@"2017-10-1",
+                          @"ENDTIME":@"2017-10-7",
+                          @"PRICEMIN":@"0",
+                          @"PRICEMAX":@"1000",
+                          @"CONVERGETYPE":@"AA互动趴",
+                          @"CONVERGEPER":@"一对一",
+                          @"CONVERGESEX":@"2",
+                          @"AGEMIN":@"18",
+                          @"AGEMAX":@"30",
+                          @"CONVERGEDET":@"",
+                          @"CONVERGETITLE":@"",
+                          @"HONOURUSER_ID":@"d6a3779de8204dfd9359403f54f7d27c"};
+    
+    _togetherLogic.enterDisModel = [ZSHEnterDisModel mj_objectWithKeyValues:dic];
+    
     [self initViewModel];
 }
 
@@ -104,28 +120,64 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
                     NSString *priceSingle = [NSString stringWithFormat:@"%d",i];
                     [priceMArr addObject:priceSingle];
                 }
-                NSDictionary *nextParamDic = @{@"type":@(WindowPrice),@"midTitle":@"期望价格",@"dataArr":priceMArr};
+                NSMutableArray *priceArr = [NSMutableArray arrayWithObjects:priceMArr,priceMArr, nil];
+                NSDictionary *nextParamDic = @{@"type":@(WindowPrice),@"midTitle":@"期望价格",@"dataArr":priceArr};
                 weakself.pickView = [weakself createPickViewWithParamDic:nextParamDic];
                 [weakself.pickView show:WindowPrice];
                 weakself.pickView.saveChangeBlock= ^(NSString *text,NSInteger tag) {
-//                  _togetherLogic.enterDisModel.PRICEMIN
-//                  _togetherLogic.enterDisModel.PRICEMAX
+                    NSArray *arr = [text componentsSeparatedByString:@"-"];
+                    if ([arr[0] floatValue] < [arr[1] floatValue]) {
+                        _togetherLogic.enterDisModel.PRICEMIN = arr[0];
+                        _togetherLogic.enterDisModel.PRICEMAX = arr[1];
+                    } else {
+                        _togetherLogic.enterDisModel.PRICEMIN = arr[1];
+                        _togetherLogic.enterDisModel.PRICEMAX = arr[0];
+                    }
                     weakself.detailTitleArr[indexPath.row] = text;
+                    [weakself.tableView reloadData];
                 };
             } else if (indexPath.row == 3) {//方式
                 NSArray *togetherArr = @[@"不限",@"给力邀约",@"AA互动趴"];
                 NSDictionary *nextParamDic = @{@"type":@(WindowTogether),@"midTitle":@"方式选择",@"dataArr":togetherArr};
                 weakself.pickView = [weakself createPickViewWithParamDic:nextParamDic];
                 [weakself.pickView show:WindowTogether];
+                weakself.pickView.saveChangeBlock = ^(NSString *text, NSInteger tag) {
+                    _togetherLogic.enterDisModel.CONVERGETYPE = text;
+                    weakself.detailTitleArr[indexPath.row] = text;
+                    [weakself.tableView reloadData];
+                };
+            }else if (indexPath.row == 4) {//人数要求
+                NSArray *togetherArr = @[@"一对一",@"多对多"];
+                NSDictionary *nextParamDic = @{@"type":@(WindowTogether),@"midTitle":@"人数要求",@"dataArr":togetherArr};
+                weakself.pickView = [weakself createPickViewWithParamDic:nextParamDic];
+                [weakself.pickView show:WindowTogether];
+                weakself.pickView.saveChangeBlock = ^(NSString *text, NSInteger tag) {
+                    _togetherLogic.enterDisModel.CONVERGEPER = text;
+                    weakself.detailTitleArr[indexPath.row] = text;
+                    [weakself.tableView reloadData];
+                };
+            }else if (indexPath.row == 5) {//性别要求 0为女1为男2为不限
+                NSArray *togetherArr = @[@"女",@"男",@"不限"];
+                NSDictionary *nextParamDic = @{@"type":@(WindowTogether),@"midTitle":@"性别要求",@"dataArr":togetherArr};
+                weakself.pickView = [weakself createPickViewWithParamDic:nextParamDic];
+                [weakself.pickView show:WindowTogether];
+                weakself.pickView.saveChangeBlock = ^(NSString *text, NSInteger tag) {
+                    _togetherLogic.enterDisModel.CONVERGESEX = text;
+                    weakself.detailTitleArr[indexPath.row] = @(tag);
+                    [weakself.tableView reloadData];
+                };
             } else if (indexPath.row == 6){//年龄要求
                 ZSHBaseCell *cell = [tableView cellForRowAtIndexPath:indexPath];
                 weakself.bottomBlurPopView = [weakself createBottomBlurPopViewWith:ZSHFromAirplaneAgeVCToBottomBlurPopView];
                 [kAppDelegate.window addSubview:self.bottomBlurPopView];
                 weakself.bottomBlurPopView.confirmOrderBlock = ^(NSDictionary *paramDic) {
-                    cell.detailTextLabel.text = paramDic[@"ageRange"];
+                    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@岁", paramDic[@"ageRange"]];
+                    NSArray *arr = [paramDic[@"ageRange"] componentsSeparatedByString:@"-"];
+                    _togetherLogic.enterDisModel.AGEMIN = arr[0];
+                    _togetherLogic.enterDisModel.AGEMAX = arr[1];
                 };
             } else if (indexPath.row == 7) {//详细要求
-                ZSHDetailDemandViewController *hotelDetailVC = [[ZSHDetailDemandViewController alloc] init];
+                ZSHDetailDemandViewController *hotelDetailVC = [[ZSHDetailDemandViewController alloc] initWithParamDic:@{@"EnterDisModel":_togetherLogic.enterDisModel}];
                 [weakself.navigationController pushViewController:hotelDetailVC animated:YES];
             }
         };

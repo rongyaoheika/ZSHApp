@@ -24,6 +24,7 @@ NSInteger yearSatrt = 1900;
 @property (nonatomic, copy)   NSMutableArray       *timeValues;
 @property (nonatomic, strong) NSArray              *birthdayWidthArr;
 @property (nonatomic, strong) NSArray              *regionWidthArr;
+@property (nonatomic, copy)   NSMutableArray       *priceWidthArr;
 
 @property (nonatomic, assign) long long            birthday;
 @property (nonatomic, assign) NSInteger            currentYear;
@@ -43,6 +44,7 @@ NSInteger yearSatrt = 1900;
         _showType = [paramDic[@"type"]integerValue];
         _dataArr = paramDic[@"dataArr"];
         _midTitle = paramDic[@"midTitle"];
+        
         [self createData];
         [self createUI];
     }
@@ -92,6 +94,7 @@ NSInteger yearSatrt = 1900;
     NSMutableArray *arrayDay = [NSMutableArray array];
     _birthdayValues = [NSMutableArray arrayWithArray:@[arrayYear,arrayMonth,arrayDay]];
     _timeValues =  [NSMutableArray arrayWithArray:@[arrayYear,arrayMonth]];
+    
 }
 
 - (void)createUI{
@@ -123,6 +126,8 @@ NSInteger yearSatrt = 1900;
             return _dataArr.count;
         case WindowTime:
             return _timeValues.count;
+        case WindowPrice:
+            return _dataArr.count;
         default:
             return 1;
     }
@@ -140,6 +145,8 @@ NSInteger yearSatrt = 1900;
         case WindowTime:{
             return [_timeValues[component]count];
         }
+        case WindowPrice:
+            return [_dataArr[component] count];
         default:
             return [_dataArr count];
     }
@@ -163,7 +170,9 @@ NSInteger yearSatrt = 1900;
         case WindowTime:{
             return kRealValue(100);
         }
-            default:
+        case WindowPrice:
+            return [@[@(KScreenWidth * 0.25),@(KScreenWidth * 0.25)][component] floatValue];
+        default:
             return KScreenWidth;
     }
     return 0;
@@ -197,7 +206,9 @@ NSInteger yearSatrt = 1900;
             pickViewLabel.text = _timeValues[component][row];
              break;
         }
-       
+        case WindowPrice:
+            pickViewLabel.text = _dataArr[component][row];
+            break;
         default:
             pickViewLabel.text = _dataArr[row];
              break;
@@ -223,6 +234,8 @@ NSInteger yearSatrt = 1900;
             [self refreshMonth];
             break;
         }
+        case WindowPrice:
+            [self refreshPrice];
         default:{
              RLog(@"选择行数%ld",row);
         }
@@ -281,7 +294,11 @@ NSInteger yearSatrt = 1900;
              [self refreshMonth];
             break;
         }
-            
+        case WindowPrice: {
+             [_pickerView selectRow:0 inComponent:0 animated:NO];
+             [_pickerView selectRow:10 inComponent:1 animated:NO];
+            break;
+        }
         default:{
              [_pickerView selectRow:1 inComponent:0 animated:NO];
             break;
@@ -324,8 +341,9 @@ NSInteger yearSatrt = 1900;
         }
         case WindowPrice:{
             RLog(@"保存价格数据");
-            NSInteger price = [_pickerView selectedRowInComponent:0];
-            NSString *priceStr = [NSString stringWithFormat:@"%zd", price];
+            NSInteger priceMin = [_pickerView selectedRowInComponent:0];
+            NSInteger priceMax = [_pickerView selectedRowInComponent:1];
+            NSString *priceStr = [NSString stringWithFormat:@"%zd-%zd", priceMin*100,priceMax*100];
             if (self.saveChangeBlock) {
                 self.saveChangeBlock(priceStr,self.tag);
             }
@@ -337,17 +355,24 @@ NSInteger yearSatrt = 1900;
         }
         case WindowRegion:{
             NSInteger region = [_pickerView selectedRowInComponent:0];
-            RLog(@"保存区域数据%ld",region);
+            RLog(@"保存区域数据%ld",(long)region);
             break;
         }
-            
         case WindowTime:{
             NSInteger year = [_pickerView selectedRowInComponent:0];
             NSInteger month = [_pickerView selectedRowInComponent:1];
-            NSString *dateStr = [NSString stringWithFormat:@"%02ld/%ld",month,yearSatrt + year];
-            RLog(@"保存区域数据%ld%ld",year,month);
+            NSString *dateStr = [NSString stringWithFormat:@"%02ld/%ld",(long)month,(long)(yearSatrt + year)];
+            RLog(@"保存区域数据%ld%ld",(long)year,(long)month);
             if (self.saveChangeBlock) {
                 self.saveChangeBlock(dateStr,self.tag);
+            }
+            break;
+        }
+        case WindowTogether: {
+            NSInteger index = [_pickerView selectedRowInComponent:0];
+            NSString *dateStr = [NSString stringWithFormat:@"%@",_dataArr[index]];
+            if (self.saveChangeBlock) {
+                self.saveChangeBlock(dateStr,index);
             }
             break;
         }
@@ -355,6 +380,10 @@ NSInteger yearSatrt = 1900;
             break;
     }
     [self dismiss];
+}
+
+- (void)refreshPrice {
+    
 }
 
 - (void)refreshMonth{

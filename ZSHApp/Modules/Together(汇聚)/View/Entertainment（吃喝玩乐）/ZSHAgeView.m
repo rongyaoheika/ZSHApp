@@ -58,7 +58,7 @@
     self.ageSlider.valueChanged = ^(CGFloat firstValue, CGFloat secondValue) {
         weakself.firstValueLabel.text = [NSString stringWithFormat:@"%.0f岁", floor(firstValue)];
         weakself.secondValueLabel.text = [NSString stringWithFormat:@"%.0f岁", floor(secondValue)];
-        weakself.ageRangeStr = [NSString stringWithFormat:@"%.0f-%.0f岁",floor(firstValue), floor(secondValue)];
+        weakself.ageRangeStr = [NSString stringWithFormat:@"%.0f-%.0f",floor(firstValue), floor(secondValue)];
     };
 }
 
