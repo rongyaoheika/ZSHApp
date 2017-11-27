@@ -13,4 +13,6 @@
 /** 轮播数组 */
 @property (nonatomic, copy) NSArray *shufflingArray;
 
+
+- (void)updateCellWithModel:(ZSHBaseModel *)model;
 @end

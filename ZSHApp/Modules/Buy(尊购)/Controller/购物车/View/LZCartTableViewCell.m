@@ -22,7 +22,7 @@
 //选中按钮
 @property (nonatomic,retain) UIButton *selectBtn;
 //显示照片
-@property (nonatomic,retain) UIImageView *lzImageView;
+@property (nonatomic,strong) UIImageView *lzImageView;
 //商品名
 @property (nonatomic,retain) UILabel *nameLabel;
 //尺寸
@@ -32,7 +32,7 @@
 //价格
 @property (nonatomic,retain) UILabel *priceLabel;
 //数量
-@property (nonatomic,retain)UILabel *numberLabel;
+@property (nonatomic,retain) UILabel *numberLabel;
 
 @end
 
@@ -65,11 +65,11 @@ static NSString *lz_Bottom_SelectButtonString = @"goods_choose_press";
 #pragma mark - public method
 - (void)reloadDataWithModel:(LZGoodsModel*)model {
     
-    self.lzImageView.image = model.image;
-    self.nameLabel.text = model.goodsName;
+    [self.lzImageView sd_setImageWithURL:[NSURL URLWithString:model.PROSHOWIMG]];
+    self.nameLabel.text = model.PROTITLE;
 //    self.priceLabel.text = model.price;
-    self.dateLabel.text = model.price;
-    self.numberLabel.text = [NSString stringWithFormat:@"%ld",(long)model.count];
+    self.dateLabel.text = model.PROPRICE;
+    self.numberLabel.text = [NSString stringWithFormat:@"%@",model.PRODUCTCOUNT];
 //    self.sizeLabel.text = model.sizeStr;
     self.selectBtn.selected = model.select;
 }

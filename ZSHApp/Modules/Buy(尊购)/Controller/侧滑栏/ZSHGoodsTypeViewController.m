@@ -10,33 +10,38 @@
 #import "ZSHGoodModel.h"
 #import "ZSHGoodsCell.h"
 #import "ZSHGoodsDetailViewController.h"
-
+#import "ZSHBuyLogic.h"
 
 
 @interface ZSHGoodsTypeViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 
 /* 推荐商品属性 */
-@property (strong , nonatomic)NSMutableArray <ZSHGoodModel *> *goodModelArr;
+@property (strong, nonatomic) NSMutableArray <ZSHGoodModel *> *goodModelArr;
+@property (nonatomic, strong) ZSHBuyLogic                     *buyLogic;
 
 @end
+
 static NSString * cellIdentifier = @"ZSHGoodsCell";
 static NSString * ZSHBottomListCellID = @"ZSHBottomListCell";
+
 @implementation ZSHGoodsTypeViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     
     [self loadData];
     [self createUI];
 }
 
 - (void)loadData{
-   _cellType = [self.paramDic[@"cellType"]integerValue];
-   _goodModelArr = [ZSHGoodModel mj_objectArrayWithFilename:@"YouLikeGoods.plist"];
+   _cellType = [self.paramDic[@"cellType"] integerValue];
+//   _goodModelArr = [ZSHGoodModel mj_objectArrayWithFilename:@"YouLikeGoods.plist"];
     if (self.cellType == ZSHTableViewCellType) {
         [self initViewModel];
     }
+    
+    _buyLogic = [[ZSHBuyLogic alloc] init];
+    [self requestData];
 }
 
 - (void)createUI{
@@ -127,8 +132,12 @@ static NSString * ZSHBottomListCellID = @"ZSHBottomListCell";
             
             return cell;
         };
+        cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
+            ZSHGoodsDetailViewController *goodsDetailVC = [[ZSHGoodsDetailViewController alloc]init];
+            goodsDetailVC.goodModel = _goodModelArr[indexPath.row];
+            [self.navigationController pushViewController:goodsDetailVC animated:YES];
+        };
     }
-    
     return sectionModel;
 }
 
@@ -140,9 +149,17 @@ static NSString * ZSHBottomListCellID = @"ZSHBottomListCell";
     [self createUI];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)requestData {
+    kWeakSelf(self);
+    [_buyLogic requestShipPrefectureWithBrandID:self.paramDic[@"PreBrandID"] success:^(id response) {
+        _goodModelArr = [ZSHGoodModel mj_objectArrayWithKeyValuesArray:response[@"pd"]];
+        if (weakself.cellType == ZSHTableViewCellType) {
+            [weakself initViewModel];
+        } else {
+            [weakself.collectionView reloadData];
+        }
+        
+    }];
 }
 
 @end

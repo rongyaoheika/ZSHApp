@@ -69,7 +69,7 @@
         
         [_priceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerX.mas_equalTo(_goodsLabel);
-            make.width.mas_equalTo(kRealValue(50));
+            make.width.mas_equalTo(kRealValue(70));
             make.top.mas_equalTo(_goodsLabel.mas_bottom).offset(kRealValue(10));
             make.height.mas_equalTo(kRealValue(12));
         }];
@@ -96,7 +96,7 @@
         
         [_priceLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.left.mas_equalTo(_goodsLabel);
-            make.width.mas_equalTo(kRealValue(50));
+            make.width.mas_equalTo(kRealValue(70));
             make.top.mas_equalTo(_goodsLabel.mas_bottom).offset(kRealValue(20));
             make.height.mas_equalTo(kRealValue(12));
         }];
@@ -114,10 +114,11 @@
 
 - (void)setGoodModel:(ZSHGoodModel *)goodModel{
     
-    [_goodsImageView sd_setImageWithURL:[NSURL URLWithString:goodModel.image_url]];
-    _priceLabel.text = [NSString stringWithFormat:@"¥ %.1f",[goodModel.price floatValue]];
-    _goodsLabel.text = goodModel.main_title;
+    [_goodsImageView sd_setImageWithURL:[NSURL URLWithString:goodModel.PROSHOWIMG]];
+    _priceLabel.text = [NSString stringWithFormat:@"¥ %.1f",[goodModel.PROPRICE floatValue]];
+    _goodsLabel.text = goodModel.PROTITLE;
 }
+
 
 #pragma mark - 点击事件
 - (void)lookSameGoods{

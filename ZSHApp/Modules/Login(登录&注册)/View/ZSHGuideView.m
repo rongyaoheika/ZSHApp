@@ -94,6 +94,7 @@
 
 - (UICollectionViewCell *)pagerView:(TYCyclePagerView *)pagerView cellForItemAtIndex:(NSInteger)index {
     TYCyclePagerViewCell *cell = [pagerView dequeueReusableCellWithReuseIdentifier:@"cellId" forIndex:index];
+    cell.type = kFromClassTypeValue;
     if ([self.imageArr[index] containsString:@"http"]) {
         [cell.imageView sd_setImageWithURL:[NSURL URLWithString:self.imageArr[index]]];
     } else {
@@ -110,15 +111,19 @@
         layout.itemSpacing = 0;
         layout.layoutType = TYCyclePagerTransformLayoutNormal;
         layout.itemHorizontalCenter = NO;
+    } else if (kFromClassTypeValue == FromGoodsDetailVCTOGuideView) {
+        layout.itemSize = CGSizeMake(CGRectGetWidth(pageView.frame), CGRectGetHeight(pageView.frame));
+        layout.itemSpacing = 0;
+        layout.layoutType = TYCyclePagerTransformLayoutNormal;
+        layout.itemHorizontalCenter = NO;
     } else {
         layout.itemSize = CGSizeMake(CGRectGetWidth(pageView.frame)*0.8, CGRectGetHeight(pageView.frame));
         layout.itemSpacing = 15;
         layout.layoutType = TYCyclePagerTransformLayoutLinear;
         layout.itemHorizontalCenter = YES;
-        
     }
-    //layout.minimumAlpha = 0.3;
-//    layout.itemHorizontalCenter = YES;
+    // layout.minimumAlpha = 0.3;
+    // layout.itemHorizontalCenter = YES;
     return layout;
 }
 
@@ -131,8 +136,8 @@
 - (void)updateViewWithParamDic:(NSDictionary *)paramDic{
     _imageArr = paramDic[@"dataArr"];
     _pageControl.numberOfPages = _imageArr.count;
-    [_pagerView setNeedUpdateLayout];
     [_pagerView reloadData];
+    [_pagerView setNeedUpdateLayout];
 }
 
 @end

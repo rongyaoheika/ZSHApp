@@ -318,11 +318,42 @@
 //参数：SORTFOOD_ID 某美食店铺id
 //请求地址：/appsfoodin/foodsyn?SFOODSYN（混淆码）
 #define kUrlFoodSyn [NSString stringWithFormat:@"/appsfoodin/foodsyn?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SFOODSYN"]]
-
 //62.根据KTVid获取KTV店铺综合详细
 //参数：SORTKTV_ID 某KTVid
 //请求地址：/appsktvin/ktvsyn?KTVSYN（混淆码）
 #define kUrlKtvSyn [NSString stringWithFormat:@"/appsktvin/ktvsyn?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"KTVSYN"]]
+//63. 获得引导页列表
+//参数：无
+//请求地址：/appshipin/bootpagelist?BOOTPAGELIST(混淆码)
+#define kUrlBootPageList [NSString stringWithFormat:@"/appshipin/bootpagelist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"BOOTPAGELIST"]]
+//64. 获得首页荣耀服务列表
+//参数：SERVER_ID 某荣耀服务id
+//请求地址：/appserverin/server.do?SERVER(混淆码)
+#define kUrlServerDo [NSString stringWithFormat:@"/appserverin/server.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SERVER"]]
+//65. 获取荣耀服务详情列表
+//参数：无
+//请求地址：/appserverin/serverdetaillist.do?SERVERDETAIL(混淆码)
+#define kUrlServerDetailList [NSString stringWithFormat:@"/appserverin/serverdetaillist.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SERVERDETAIL"]]
+//66.获得某酒店评论列表
+//参数：SORTHOTEL_ID 某酒店id
+//请求地址：/appshotelin/hotelevalist?HOTELEVA
+//返回参数：EVALUATEDATE 	评价日期/EVALUATECONTENT 评价内容/PORTRAIT 用户头像/NICKNAME 用户昵称
+#define kUrlHotelEvaList [NSString stringWithFormat:@"/appshotelin/hotelevalist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"HOTELEVA"]]
+//67.获得某美食店铺评论列表
+//参数：SORTFOOD_ID 某美食店铺id
+//请求地址：/appsfoodin/foodevalist?FOODEVA
+//返回参数：EVALUATEDATE 	评价日期/EVALUATECONTENT 评价内容/PORTRAIT 用户头像/NICKNAME 用户昵称
+#define kUrlFoodEvaList [NSString stringWithFormat:@"/appsfoodin/foodevalist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"FOODEVA"]]
+//67.获得KTV店铺评论列表
+//参数：SORTKTV_ID 某KTVid
+//请求地址：/appsktvin/ktvevalist?KTVEVA
+//返回参数：EVALUATEDATE 	评价日期/EVALUATECONTENT 评价内容/PORTRAIT 用户头像/NICKNAME 用户昵称
+#define kUrlKtvEvaList [NSString stringWithFormat:@"/appsktvin/ktvevalist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"KTVEVA"]]
+//68.用户上传头像的方法
+//参数：HONOURUSER_ID 上传头像人员id
+//请求地址：/appuserin/up?UPPORT
+#define kUrlUp [NSString stringWithFormat:@"/appuserin/up?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"UPPORT"]]
+
 
 
 

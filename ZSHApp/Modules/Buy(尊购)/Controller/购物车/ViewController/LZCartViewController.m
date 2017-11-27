@@ -13,7 +13,8 @@
 #import "LZShopModel.h"
 #import "LZGoodsModel.h"
 #import "LZTableHeaderView.h"
-
+#import "ZSHBuyLogic.h"
+#import "ZSHConfirmOrderViewController.h"
 
 @interface LZCartViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
@@ -22,12 +23,14 @@
     BOOL _isHasNavitationController;//是否含有导航
 }
 
-@property (strong,nonatomic)NSMutableArray *dataArray;
-@property (strong,nonatomic)NSMutableArray *selectedArray;
-@property (strong,nonatomic)UITableView    *myTableView;
-@property (strong,nonatomic)UIButton       *allSellectedButton;
-@property (strong,nonatomic)UILabel        *totlePriceLabel;
-@property (strong,nonatomic)UIButton       *balanceBtn;
+@property (strong, nonatomic) NSMutableArray *dataArray;
+@property (strong, nonatomic) NSMutableArray *selectedArray;
+@property (strong, nonatomic) UITableView    *myTableView;
+@property (strong, nonatomic) UIButton       *allSellectedButton;
+@property (strong, nonatomic) UILabel        *totlePriceLabel;
+@property (strong, nonatomic) UIButton       *balanceBtn;
+@property (nonatomic, strong) ZSHBuyLogic    *buyLogic;
+
 @end
 
 #define  TAG_CartEmptyView 100
@@ -52,23 +55,26 @@ static NSInteger lz_CartRowHeight = 120;
             _isHiddenNavigationBarWhenDisappear = YES;
         }
     }
-    
-    
-    //当进入购物车的时候判断是否有已选择的商品,有就清空
-    //主要是提交订单后再返回到购物车,如果不清空,还会显示
-    if (self.selectedArray.count > 0) {
-        for (LZGoodsModel *model in self.selectedArray) {
-            model.select = NO;//这个其实有点多余,提交订单后的数据源不会包含这些,保险起见,加上了
-        }
-        [self.selectedArray removeAllObjects];
-    }
-    
     //初始化显示状态
     _allSellectedButton.selected = NO;
     _totlePriceLabel.attributedText = [self LZSetString:@"￥0.00"];
+    
+    //当进入购物车的时候判断是否有已选择的商品,有就清空
+    //主要是提交订单后再返回到购物车,如果不清空,还会显示
+//    if (self.selectedArray.count > 0) {
+//        for (LZGoodsModel *model in self.selectedArray) {
+//            model.select = NO;//这个其实有点多余,提交订单后的数据源不会包含这些,保险起见,加上了
+//        }
+//        [self.selectedArray removeAllObjects];
+//    }
+    [self verityAllSelectState];
+    
+
 }
 
 -(void)creatData {
+    
+    
 //    for (int i = 0; i < 10; i++) {
 //        LZCartModel *model = [[LZCartModel alloc]init];
 //        
@@ -82,23 +88,40 @@ static NSInteger lz_CartRowHeight = 120;
 //        [self.dataArray addObject:model];
 //    }
     
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"ShopCarNew" ofType:@"plist" inDirectory:nil];
-    
-    NSDictionary *dic = [[NSDictionary alloc]initWithContentsOfFile:path];
-    NSLog(@"%@",dic);
-    NSArray *array = [dic objectForKey:@"data"];
-    if (array.count > 0) {
-        for (NSDictionary *dic in array) {
-            LZShopModel *model = [[LZShopModel alloc]init];
-            model.shopID = [dic objectForKey:@"id"];
-            model.shopName = [dic objectForKey:@"shopName"];
-            model.sID = [dic objectForKey:@"sid"];
-            [model configGoodsArrayWithArray:[dic objectForKey:@"items"]];
-            
-            [self.dataArray addObject:model];
+    _buyLogic = [[ZSHBuyLogic alloc] init];
+    kWeakSelf(self);
+    [_buyLogic requestShoppingCartWithHonouruserID:@"d6a3779de8204dfd9359403f54f7d27c" success:^(id response) {
+        LZShopModel *model = [[LZShopModel alloc]init];
+        model.shopID = @"1";
+        model.shopName = @"2";
+        model.sID = @"sID";
+        [model configGoodsArrayWithArray:response[@"pd"]];
+        
+        [weakself.dataArray addObject:model];
+        if (weakself.myTableView != nil) {
+            [weakself.myTableView reloadData];
+        } else {
+            [weakself setupCartView];
         }
-    }
+        [weakself changeView];
+    }];
     
+//    NSString *path = [[NSBundle mainBundle] pathForResource:@"ShopCarNew" ofType:@"plist" inDirectory:nil];
+//    
+//    NSDictionary *dic = [[NSDictionary alloc]initWithContentsOfFile:path];
+//    NSLog(@"%@",dic);
+//    NSArray *array = [dic objectForKey:@"data"];
+//    if (array.count > 0) {
+//        for (NSDictionary *dic in array) {
+//    LZShopModel *model = [[LZShopModel alloc]init];
+//    model.shopID = @"1";
+//    model.shopName = @"2";
+//    model.sID = @"sID";
+//    [model configGoodsArrayWithArray:[dic objectForKey:@"items"]];
+//    
+//            [self.dataArray addObject:model];
+////        }
+////    }
 //    if (self.myTableView != nil) {
 //        [self.myTableView reloadData];
 //    } else {
@@ -148,9 +171,9 @@ static NSInteger lz_CartRowHeight = 120;
     
     for (LZGoodsModel *model in self.selectedArray) {
         
-        double price = [model.price doubleValue];
+        double price = [model.PROPRICE doubleValue];
         
-        totlePrice += price * model.count;
+        totlePrice += price * [model.PRODUCTCOUNT doubleValue];
     }
     NSString *string = [NSString stringWithFormat:@"￥%.2f",totlePrice];
     self.totlePriceLabel.attributedText = [self LZSetString:string];
@@ -267,7 +290,10 @@ static NSInteger lz_CartRowHeight = 120;
 }
 #pragma mark -- 购物车为空时的默认视图
 - (void)changeView {
-    if (self.dataArray.count > 0) {
+    if (!self.dataArray.count) return;
+
+    LZShopModel *model = [self.dataArray objectAtIndex:0];
+    if (model.goodsArray.count > 0) {
         UIView *view = [self.view viewWithTag:TAG_CartEmptyView];
         if (view != nil) {
             [view removeFromSuperview];
@@ -301,6 +327,7 @@ static NSInteger lz_CartRowHeight = 120;
     warnLabel.bounds = CGRectMake(0, 0, KScreenWidth, 30);
     warnLabel.textAlignment = NSTextAlignmentCenter;
     warnLabel.text = @"购物车为空!";
+    warnLabel.textColor = KZSHColor929292;
     warnLabel.font = [UIFont systemFontOfSize:15];
     [backgroundView addSubview:warnLabel];
 }
@@ -353,7 +380,7 @@ static NSInteger lz_CartRowHeight = 120;
     
     [cell numberAddWithBlock:^(NSInteger number) {
         wsCell.lzNumber = number;
-        model.count = number;
+        model.PRODUCTCOUNT = [NSString stringWithFormat:@"%ld",(long)number];
         
         [shopModel.goodsArray replaceObjectAtIndex:indexPath.row withObject:model];
         if ([self.selectedArray containsObject:model]) {
@@ -366,7 +393,7 @@ static NSInteger lz_CartRowHeight = 120;
     [cell numberCutWithBlock:^(NSInteger number) {
         
         wsCell.lzNumber = number;
-        model.count = number;
+        model.PRODUCTCOUNT = [NSString stringWithFormat:@"%ld",(long)number];
         
         [shopModel.goodsArray replaceObjectAtIndex:indexPath.row withObject:model];
         
@@ -453,10 +480,13 @@ static NSInteger lz_CartRowHeight = 120;
         
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"确定要删除该商品?删除后无法恢复!" preferredStyle:1];
         UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            
+
             LZShopModel *shop = [self.dataArray objectAtIndex:indexPath.section];
             LZGoodsModel *model = [shop.goodsArray objectAtIndex:indexPath.row];
-            
+            // 删除
+            [_buyLogic requestShoppingCartDelWithDic:@{@"HONOURUSER_ID":@"d6a3779de8204dfd9359403f54f7d27c",@"PRODUCT_ID":model.PRODUCT_ID} success:^(id response) {
+                
+            }];
             [shop.goodsArray removeObjectAtIndex:indexPath.row];
             //    删除
             [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
@@ -548,6 +578,9 @@ static NSInteger lz_CartRowHeight = 120;
 //        for (LZGoodsModel *model in self.selectedArray) {
 //            NSLog(@"选择的商品>>%@>>>%ld",model,(long)model.count);
 //        }
+        ZSHConfirmOrderViewController *confirmOrderVC = [[ZSHConfirmOrderViewController alloc]init];
+//        confirmOrderVC.goodsModel = _goodModel;
+        [self.navigationController pushViewController:confirmOrderVC animated:YES];
     } else {
         NSLog(@"你还没有选择任何商品");
     }
@@ -586,19 +619,6 @@ static NSInteger lz_CartRowHeight = 120;
         _allSellectedButton.selected = NO;
     }
 }
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

@@ -122,7 +122,7 @@ static NSString *ZSHGoodsListViewID = @"ZSHGoodsListView";
         };
         
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
-            ZSHGoodsTitleContentViewController *goodContentVC = [[ZSHGoodsTitleContentViewController alloc]initWithParamDic:@{@"PreBrandID":brandIDArr[indexPath.row]}];
+            ZSHGoodsTitleContentViewController *goodContentVC = [[ZSHGoodsTitleContentViewController alloc]initWithParamDic:@{@"PreBrandID":brandIDArr[indexPath.row],KFromClassType:@(FromBuyVCToGoogsTitleVC)}];
             [weakself.navigationController pushViewController:goodContentVC animated:YES];
         };
     }

@@ -26,6 +26,9 @@
    
     JSNummberCount *countBtn = [[JSNummberCount alloc]initWithFrame:CGRectZero];
     [self.contentView addSubview:countBtn];
+    countBtn.NumberChangeBlock = ^(NSInteger count) {
+        _NumberChangeBlock(count);
+    };
     [countBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(titleLabel.mas_right).offset(kRealValue(55));
         make.width.mas_equalTo(kRealValue(50));

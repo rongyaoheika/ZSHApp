@@ -8,6 +8,13 @@
 
 #import "RootViewController.h"
 
+typedef NS_ENUM(NSInteger,ZSHToGoogsTitleVC){
+    FromBuyVCToGoogsTitleVC,              //尊购
+    FromGoodsVCToGoogsTitleVC,            //商品分类
+    FromNoneToGoogsTitleVC
+};
+
+
 @interface ZSHGoodsTitleContentViewController : RootViewController
 
 @end

@@ -49,7 +49,11 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
 //    _label.frame = self.bounds;
-    _imageView.frame = self.bounds;
+    if (_type == FromGoodsDetailVCTOGuideView) {
+        _imageView.frame = CGRectMake(kRealValue(108.5), kRealValue(32), kRealValue(158), kRealValue(158));
+    } else {
+        _imageView.frame = self.bounds;
+    }
 }
 
 @end

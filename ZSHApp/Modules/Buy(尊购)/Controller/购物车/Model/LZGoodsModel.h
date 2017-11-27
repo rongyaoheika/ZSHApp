@@ -13,10 +13,11 @@
 
 @property (nonatomic,assign) BOOL select;
 
-@property (assign,nonatomic)NSInteger count;
-@property (copy,nonatomic)NSString *goodsID;
-@property (copy,nonatomic)NSString *goodsName;
-@property (copy,nonatomic)NSString *price;
-@property (strong,nonatomic)UIImage *image;
+
+@property (copy,nonatomic)NSString *PRODUCTCOUNT;
+@property (copy,nonatomic)NSString *PRODUCT_ID;
+@property (copy,nonatomic)NSString *PROPRICE;
+@property (copy,nonatomic)NSString *PROSHOWIMG;
+@property (copy,nonatomic)NSString *PROTITLE;
 
 @end

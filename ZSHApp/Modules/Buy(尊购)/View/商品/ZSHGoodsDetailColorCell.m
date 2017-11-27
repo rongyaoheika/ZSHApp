@@ -7,6 +7,7 @@
 //
 
 #import "ZSHGoodsDetailColorCell.h"
+#import "ZSHGoodDetailModel.h"
 
 @interface ZSHGoodsDetailColorCell()
 
@@ -82,6 +83,13 @@
         }
     }];
     
+}
+
+- (void)updateCellWithModel:(ZSHBaseModel *)model {
+    ZSHGoodDetailModel *goodDetailModel = (ZSHGoodDetailModel *)model;
+    [_btnArr enumerateObjectsUsingBlock:^(UIButton *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+       obj.backgroundColor = [UIColor colorWithHexString:goodDetailModel.PROCOLOR];
+    }];
 }
 
 

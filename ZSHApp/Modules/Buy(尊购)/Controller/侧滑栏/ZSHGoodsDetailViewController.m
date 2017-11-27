@@ -18,6 +18,8 @@
 #import "ZSHGoodsSubViewController.h"
 #import "ZSHGoodsDetailSubViewController.h"
 #import "ZSHGoodsCommentSubViewController.h"
+#import "ZSHBuyLogic.h"
+
 
 
 @interface ZSHGoodsDetailViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
@@ -30,6 +32,9 @@
 @property (nonatomic, strong) NSMutableArray                 *vcs;
 @property (nonatomic, strong) UIView                         *bottomView;
 @property (nonatomic, strong) UIView                         *lineTitleView;
+@property (nonatomic, strong) ZSHBuyLogic                    *buyLogic;
+@property (nonatomic, assign) NSInteger                      count;
+
 @end
 
 //header
@@ -46,7 +51,6 @@ static NSString *ZSHGoodsDetailCountCellID = @"ZSHGoodsDetailCountCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     
     [self loadData];
     [self createUI];
@@ -62,6 +66,8 @@ static NSString *ZSHGoodsDetailCountCellID = @"ZSHGoodsDetailCountCell";
 //    self.goodTitle = @"Gucci/古奇/古驰女士手拿包蓝色大LOGO";
 //    self.goodSubtitle = @"Herschel Supply Co";
 //    self.goodPrice = @"¥3999";
+    _buyLogic = [[ZSHBuyLogic alloc] init];
+    [self requestData];
 }
 
 - (void)createUI{
@@ -92,7 +98,17 @@ static NSString *ZSHGoodsDetailCountCellID = @"ZSHGoodsDetailCountCell";
      [self.collectionView registerClass:[ZSHGoodsDetailColorCell class] forCellWithReuseIdentifier:ZSHGoodsDetailColorCellID];
     [self.collectionView registerClass:[ZSHGoodsDetailCountCell class] forCellWithReuseIdentifier:ZSHGoodsDetailCountCellID];
     
-    [self.view addSubview:[ZSHBaseUIControl createBottomButton]];
+    kWeakSelf(self);
+    [self.view addSubview:[ZSHBaseUIControl createBottomButton:^(NSInteger index) {
+        if (index == 2) {
+            [weakself addCart];
+        } else if (index == 3) {
+            ZSHConfirmOrderViewController *confirmOrderVC = [[ZSHConfirmOrderViewController alloc]init];
+            confirmOrderVC.goodsModel = _goodModel;
+            [self.navigationController pushViewController:confirmOrderVC animated:YES];
+        }
+        
+    }]];
     
 }
 
@@ -161,9 +177,15 @@ static NSString *ZSHGoodsDetailCountCellID = @"ZSHGoodsDetailCountCell";
             gridcell = cell;
         } else if(indexPath.row == 1){
             ZSHGoodsDetailColorCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:ZSHGoodsDetailColorCellID forIndexPath:indexPath];
+            if (_buyLogic.goodDetailModel) {
+                [cell updateCellWithModel:_buyLogic.goodDetailModel];
+            }
             gridcell = cell;
         } else if(indexPath.row == 2){
             ZSHGoodsDetailCountCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:ZSHGoodsDetailCountCellID forIndexPath:indexPath];
+            cell.NumberChangeBlock = ^(NSInteger count) {
+                _count = count;
+            };
             gridcell = cell;
         }
     } else if(indexPath.section == 1){
@@ -186,8 +208,11 @@ static NSString *ZSHGoodsDetailCountCellID = @"ZSHGoodsDetailCountCell";
     UICollectionReusableView *reusableview = nil;
     if (kind == UICollectionElementKindSectionHeader){
         if (indexPath.section == 0) {
+            // 轮播图
             ZSHGoodsDetailShufflingHeadView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:ZSHDetailShufflingHeadViewID forIndexPath:indexPath];
-            headerView.shufflingArray = _shufflingArray;
+            if (_buyLogic.goodDetailModel) {
+                [headerView updateCellWithModel:_buyLogic.goodDetailModel];
+            }
             reusableview = headerView;
         } else if (indexPath.section == 1) {
             reusableview = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:ZSHDetailTitleHeadViewID forIndexPath:indexPath];
@@ -255,7 +280,7 @@ static NSString *ZSHGoodsDetailCountCellID = @"ZSHGoodsDetailCountCell";
     }
 }
 
-- (UIView *)lineTitleView{
+- (UIView *)lineTitleView {
     if (!_lineTitleView) {
         _lineTitleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, KBottomNavH)];
         
@@ -268,14 +293,26 @@ static NSString *ZSHGoodsDetailCountCellID = @"ZSHGoodsDetailCountCell";
         UIView *bottomLineView = [[UIView alloc]initWithFrame:CGRectMake(0, KBottomNavH-0.5, KScreenWidth, 0.5)];
         bottomLineView.backgroundColor = KZSHColor1D1D1D;
         [_lineTitleView addSubview:bottomLineView];
-        
     }
     return _lineTitleView;
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)requestData {
+    kWeakSelf(self);
+    [_buyLogic requestShipDetailWithProductID:_goodModel.PRODUCT_ID success:^(id response) {        
+        [weakself.collectionView reloadData];
+    }];
+}
+
+
+- (void)addCart {
+    if (_count<1) _count = 1;
+    [_buyLogic requestShoppingCartAddWithDic:@{@"PRODUCT_ID":_buyLogic.goodDetailModel.PRODUCT_ID, @"HONOURUSER_ID":@"d6a3779de8204dfd9359403f54f7d27c", @"PRODUCTCOUNT":@(_count)} success:^(id response) {
+        UIAlertController *ac = [UIAlertController alertControllerWithTitle:@"提示" message:@"添加成功" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleCancel handler:nil];
+        [ac addAction:cancelAction];
+        [self presentViewController:ac animated:YES completion:nil];
+    }];
 }
 
 @end

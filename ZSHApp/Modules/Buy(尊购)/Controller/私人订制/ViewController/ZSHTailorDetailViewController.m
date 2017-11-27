@@ -43,7 +43,9 @@ static NSString *cellIdentifier = @"TailorDetailCell";
     [self.tableView registerClass:[ZSHTailorDetailView class] forCellReuseIdentifier:cellIdentifier];
 
     [self.tableView setTableHeaderView:[self createTableviewHeaderView]];
-    [self.view addSubview:[ZSHBaseUIControl createBottomButton]];
+    [self.view addSubview:[ZSHBaseUIControl createBottomButton:^(NSInteger index) {
+        
+    }]];
 }
 
 - (UIView *)createTableviewHeaderView {

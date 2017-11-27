@@ -27,17 +27,14 @@
 @property (copy , nonatomic , readonly)NSArray *images;
 
 
-@property (nonatomic, strong) NSString *BRAND_ID;
-@property (nonatomic, strong) NSString *PROBRAND;
-@property (nonatomic, strong) NSString *PROCOLOR;
-@property (nonatomic, strong) NSArray *PRODETAILSIMG;
-@property (nonatomic, strong) NSString *PRODETAILSINT;
-@property (nonatomic, strong) NSString *PRODUCTIMG;
-@property (nonatomic, strong) NSString *PRODUCT_ID;
-@property (nonatomic, strong) NSString *PROPRICE;
-@property (nonatomic, strong) NSString *PROPROPERTY;
-@property (nonatomic, strong) NSString *PROTITLE;
 
+/** 商品标题 */
+@property (nonatomic, copy) NSString *PROTITLE;
+/** 商品价格 */
+@property (nonatomic, copy) NSString *PROPRICE;
+/** 图片URL */
+@property (nonatomic, copy) NSString *PROSHOWIMG;
+@property (nonatomic, copy) NSString *PRODUCT_ID;
 
 
 

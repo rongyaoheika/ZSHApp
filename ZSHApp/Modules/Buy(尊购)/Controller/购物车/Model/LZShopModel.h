@@ -7,14 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "LZGoodsModel.h"
+
 
 @interface LZShopModel : NSObject
 
-@property (assign,nonatomic)BOOL select;
-@property (copy,nonatomic)NSString *shopID;
-@property (copy,nonatomic)NSString *shopName;
-@property (copy,nonatomic)NSString *sID;
-@property (strong,nonatomic,readonly)NSMutableArray *goodsArray;
+@property (assign,nonatomic) BOOL select;
+@property (copy,nonatomic)   NSString *shopID;
+@property (copy,nonatomic)   NSString *shopName;
+@property (copy,nonatomic)   NSString *sID;
+@property (strong,nonatomic) NSMutableArray<LZGoodsModel *> *goodsArray;
 
 - (void)configGoodsArrayWithArray:(NSArray*)array;
+
 @end

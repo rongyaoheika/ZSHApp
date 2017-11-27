@@ -66,7 +66,7 @@
     
     [_typeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.mas_equalTo(_goodPriceLabel);
-        make.top.mas_equalTo(_goodSubtitleLabel);
+        make.top.mas_equalTo(_goodSubtitleLabel).offset(6);
         make.height.mas_equalTo(_goodPriceLabel);
         make.width.mas_equalTo(kRealValue(25));
     }];

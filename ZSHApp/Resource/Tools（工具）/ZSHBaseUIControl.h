@@ -100,6 +100,7 @@ typedef NS_ENUM (NSInteger,ZSHToGuideView) {
     FromGuideVCToGuideView,           //引导页 - 轮播view
     FromCardVCToGuideView,            //黑卡设置页 - 轮播view
     FromHotelDetailVCToGuideView,     //酒店（美食，ktv详情页） - 轮播view
+    FromGoodsDetailVCTOGuideView,     // 商品详情
     FromNoneVCToGuideView
 };
 
@@ -111,7 +112,7 @@ typedef NS_ENUM (NSInteger,ZSHToGuideView) {
 + (UIButton *)createLabelBtnWithTopDic:(NSDictionary *)topDic bottomDic:(NSDictionary *)bottomDic;
 + (UIView *)createTabHeadLabelViewWithParamDic:(NSDictionary *)paramDic;
 + (void) setAnimationWithHidden:(BOOL)hidden view:(UIView *)view completedBlock:(RemoveCompletedBlock)completedBlock;
-+ (UIView *)createBottomButton;
++ (UIView *)createBottomButton:(void (^)(NSInteger ))tapBlock;
 
 
 @end

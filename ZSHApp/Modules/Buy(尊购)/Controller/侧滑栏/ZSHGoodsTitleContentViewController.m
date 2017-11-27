@@ -10,7 +10,7 @@
 #import "LXScrollContentView.h"
 #import "ZSHGoodsSegmentView.h"
 #import "ZSHGoodsTypeViewController.h"
-#import "ZSHBuyLogic.h"
+
 
 @interface ZSHGoodsTitleContentViewController ()
 
@@ -19,7 +19,6 @@
 @property (nonatomic, strong) LXScrollContentView  *contentView;
 @property (nonatomic, strong) NSMutableArray       *vcs;
 @property (nonatomic, strong) NSArray              *contentVCS;
-@property (nonatomic, strong) ZSHBuyLogic          *buyLogic;
 
 @end
 
@@ -34,8 +33,7 @@
 
 - (void)loadData{
     self.cellType = ZSHCollectionViewCellType;
-    _buyLogic = [[ZSHBuyLogic alloc] init];
-    [self requestData];
+
 }
 
 - (void)createUI{
@@ -85,26 +83,13 @@
 - (void)reloadListData{
     self.vcs = [[NSMutableArray alloc]init];
     for (int i = 0; i<4; i++) {
-        ZSHGoodsTypeViewController *vc =  [[ZSHGoodsTypeViewController alloc]initWithParamDic:@{@"cellType":@(self.cellType)}];
+        ZSHGoodsTypeViewController *vc =  [[ZSHGoodsTypeViewController alloc]initWithParamDic:@{@"cellType":@(self.cellType),@"PreBrandID":self.paramDic[@"PreBrandID"],KFromClassType:self.paramDic[KFromClassType]}];
         [self.vcs addObject:vc];
     }
     
     [self.contentView reloadViewWithChildVcs:self.vcs parentVC:self];
 }
 
-- (void)requestData {
-    
-//        kWeakSelf(self);
-//        [PPNetworkHelper POST:kUrlShipPrefecture parameters:@{@"BRAND_ID":self.paramDic[@"PreBrandID"]} success:^(id responseObject) {
-//            RLog(@"请求成功：返回数据&%@",responseObject);
-////            [weakself initViewModel];
-//        } failure:^(NSError *error) {
-//            RLog(@"请求失败");
-//        }];
 
-//   [_buyLogic requestShipListAllsuccess:^(id response) {
-//       
-//   }];
-}
 
 @end

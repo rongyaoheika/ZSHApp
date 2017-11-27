@@ -128,7 +128,7 @@
     }
 }
 
-+ (UIView *)createBottomButton {
++ (UIView *)createBottomButton:(void (^)(NSInteger ))tapBlock {
     UIView *_bottomBtnView = [[UIView alloc]initWithFrame:CGRectZero];
     _bottomBtnView.backgroundColor = KZSHColor0B0B0B;
     _bottomBtnView.frame = CGRectMake(0, KScreenHeight - KBottomNavH - KBottomHeight, KScreenWidth, KBottomNavH);
@@ -142,6 +142,9 @@
         [button setImage:[UIImage imageNamed:imagesNor[i]] forState:UIControlStateNormal];
         [button setImage:[UIImage imageNamed:imagesSel[i]] forState:UIControlStateSelected];
         button.tag = i;
+        [button addTapBlock:^(UIButton *btn) {
+            tapBlock(btn.tag);
+        }];
 //        [button addTarget:self action:@selector(bottomButtonClick:) forControlEvents:UIControlEventTouchUpInside];
         CGFloat buttonX = kRealValue(25) + ((buttonW +kRealValue(28))  * i);
         [_bottomBtnView addSubview:button];
@@ -156,6 +159,9 @@
         NSDictionary *btnDic = @{@"title":titles[i],@"titleColor":KZSHColor929292,@"font":kPingFangMedium(17),@"backgroundColor":KClearColor};
         UIButton *button = [ZSHBaseUIControl createBtnWithParamDic:btnDic];
         button.tag = i + 2;
+        [button addTapBlock:^(UIButton *btn) {
+            tapBlock(btn.tag);
+        }];
 //        [button addTarget:self action:@selector(bottomButtonClick:) forControlEvents:UIControlEventTouchUpInside];
         [_bottomBtnView addSubview:button];
         [button mas_makeConstraints:^(MASConstraintMaker *make) {

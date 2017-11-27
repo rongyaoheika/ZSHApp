@@ -186,7 +186,7 @@ static NSString *const ZSHBrandSortCellID = @"ZSHBrandSortCell";
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     RLog(@"点击了个第%zd分组第%zd个Item",indexPath.section,indexPath.row);
-    ZSHGoodsTitleContentViewController *goodContentVC = [[ZSHGoodsTitleContentViewController alloc]init];
+    ZSHGoodsTitleContentViewController *goodContentVC = [[ZSHGoodsTitleContentViewController alloc]initWithParamDic:@{@"PreBrandID":_mainArr[indexPath.row].BRAND_ID,KFromClassType:@(FromGoodsVCToGoogsTitleVC)}];
     [self.navigationController pushViewController:goodContentVC animated:YES];
 }
 

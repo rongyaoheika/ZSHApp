@@ -12,5 +12,7 @@
 
 @property (nonatomic, weak, readonly) UILabel *label;
 @property (nonatomic, strong) UIImageView *imageView;
+@property (nonatomic, assign) ZSHToGuideView type;
+
 
 @end
