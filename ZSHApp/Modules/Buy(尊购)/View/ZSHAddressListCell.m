@@ -43,16 +43,16 @@
     [_defaultBtn addTarget:self action:@selector(defaultBtnAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView addSubview:_defaultBtn];
     
-    NSDictionary *deleteBtnDic = @{@"title":@"删除",@"font":kPingFangLight(11),@"backgroundColor":KClearColor,@"withImage":@(YES),@"normalImage":@"address_delete",@"selectedImage":@"address_delete",@"layoutType":@(XYButtonEdgeInsetsStyleLeft),@"space":@(4)};
+    NSDictionary *deleteBtnDic = @{@"title":@"删除",@"font":kPingFangLight(11),};
     _deleteBtn = [ZSHBaseUIControl createBtnWithParamDic:deleteBtnDic];
-    [_defaultBtn setImage:[UIImage imageNamed:@"address_delete"] forState:UIControlStateNormal];
-    [_defaultBtn setImage:[UIImage imageNamed:@"address_delete"] forState:UIControlStateSelected];
+    [_deleteBtn setImage:[UIImage imageNamed:@"address_delete"] forState:UIControlStateNormal];
+    [_deleteBtn setImage:[UIImage imageNamed:@"address_delete"] forState:UIControlStateSelected];
     [self.contentView addSubview:_deleteBtn];
     
     NSDictionary *editBtnDic = @{@"title":@"编辑",@"font":kPingFangLight(11)};
     _editBtn = [ZSHBaseUIControl createBtnWithParamDic:editBtnDic];
-    [_defaultBtn setImage:[UIImage imageNamed:@"address_edit"] forState:UIControlStateNormal];
-    [_defaultBtn setImage:[UIImage imageNamed:@"address_edit"] forState:UIControlStateSelected];
+    [_editBtn setImage:[UIImage imageNamed:@"address_edit"] forState:UIControlStateNormal];
+    [_editBtn setImage:[UIImage imageNamed:@"address_edit"] forState:UIControlStateSelected];
     [self.contentView addSubview:_editBtn];
 }
 
