@@ -7,13 +7,15 @@
 //
 
 #import "ZSHManageAddressListViewController.h"
-#import "ZSHAddressModel.h"
 #import "ZSHAddressListCell.h"
+#import "ZSHMineLogic.h"
+#import "ZSHManageAddressViewController.h"
 
 static NSString *cellIdentifier = @"listCell";
 @interface ZSHManageAddressListViewController ()
 
-@property (nonatomic,strong)NSMutableArray *dataArr;
+@property (nonatomic, strong) NSMutableArray *dataArr;
+@property (nonatomic, strong) ZSHMineLogic   *mineLogic;
 
 @end
 
@@ -21,20 +23,20 @@ static NSString *cellIdentifier = @"listCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     
     [self loadData];
     [self createUI];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self requestData];
+}
+
 - (void)loadData{
-    self.dataArr = [[NSMutableArray alloc]init];
-    for (int i = 0; i<3; i++) {
-        NSDictionary *dataDic = @{@"name":@"王晶",@"telephone":@"13718139876",@"address":@"北京市朝阳区西大望路甲23号soho现代城"};
-        ZSHAddressModel *addressModel = [ZSHAddressModel modelWithDictionary:dataDic];
-        [self.dataArr addObject:addressModel];
-    }
     [self initViewModel];
+    
+    _mineLogic = [[ZSHMineLogic alloc] init];
 }
 
 - (void)createUI{
@@ -48,7 +50,7 @@ static NSString *cellIdentifier = @"listCell";
     
     self.tableView.delegate = self.tableViewModel;
     self.tableView.dataSource = self.tableViewModel;
-    [self.tableView reloadData];
+
     
     [self.view addSubview:self.bottomBtn];
     [self.bottomBtn setTitle:@"添加新地址" forState:UIControlStateNormal];
@@ -58,13 +60,14 @@ static NSString *cellIdentifier = @"listCell";
 - (void)initViewModel {
     [self.tableViewModel.sectionModelArray removeAllObjects];
     [self.tableViewModel.sectionModelArray addObject:[self storeListSection]];
+    [self.tableView reloadData];
 }
 
 //list
 - (ZSHBaseTableViewSectionModel*)storeListSection {
     kWeakSelf(self);
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
-    for (int i = 0; i < self.dataArr.count; i++) {
+    for (int i = 0; i < _mineLogic.addrModelArr.count; i++) {
         ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
         cellModel.height = kRealValue(125);
         [sectionModel.cellModelArray addObject:cellModel];
@@ -74,8 +77,16 @@ static NSString *cellIdentifier = @"listCell";
             if (!cell) {
                 cell = [[ZSHAddressListCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
             }
-            
-            ZSHAddressModel *addressModel = weakself.dataArr[indexPath.row];
+            [cell.defaultBtn addTapBlock:^(UIButton *btn) {
+                btn.selected = !btn.selected;
+            }];
+            [cell.editBtn addTapBlock:^(UIButton *btn) {
+                [weakself editAdressBtnAction:weakself.mineLogic.addrModelArr[indexPath.row]];
+            }];
+            [cell.deleteBtn addTapBlock:^(UIButton *btn) {
+                [weakself delAddressBtnAction:indexPath.row];
+            }];
+            ZSHAddrModel *addressModel = weakself.mineLogic.addrModelArr[indexPath.row];
             [cell updateCellWithModel:addressModel];
             return cell;
         };
@@ -90,13 +101,38 @@ static NSString *cellIdentifier = @"listCell";
 }
 
 #pragma action
-- (void)addAdressBtnAction {
-    RLog(@"点击了添加新地址按钮");
+
+- (void)headrefresh {
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.7 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self.tableView.mj_header endRefreshing];
+    });
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)requestData {
+    kWeakSelf(self);
+    [_mineLogic requestShipAdr:@"d6a3779de8204dfd9359403f54f7d27c" success:^(id response) {
+        [weakself initViewModel];
+    }];
+}
+
+- (void)delAddressBtnAction:(NSInteger)index {
+    kWeakSelf(self);
+    [_mineLogic requestUserDelShipAdrWithModel:_mineLogic.addrModelArr[index] success:^(id response) {
+        if ([response[@"result"] isEqualToString:@"01"]) {
+            [_mineLogic.addrModelArr removeObjectAtIndex:index];
+            [weakself initViewModel];
+        }
+    }];
+}
+
+- (void)editAdressBtnAction:(ZSHAddrModel *)model {
+    ZSHManageAddressViewController *manageAddressVC = [[ZSHManageAddressViewController alloc]initWithParamDic:@{@"AddrModel":model}];
+    [self.navigationController pushViewController:manageAddressVC animated:YES];
+}
+
+- (void)addAdressBtnAction {
+    ZSHManageAddressViewController *manageAddressVC = [[ZSHManageAddressViewController alloc]init];
+    [self.navigationController pushViewController:manageAddressVC animated:YES];
 }
 
 

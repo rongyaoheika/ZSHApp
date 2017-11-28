@@ -354,8 +354,13 @@ NSInteger yearSatrt = 1900;
             break;
         }
         case WindowRegion:{
-            NSInteger region = [_pickerView selectedRowInComponent:0];
-            RLog(@"保存区域数据%ld",(long)region);
+            NSInteger province = [_pickerView selectedRowInComponent:0];
+            NSInteger city = [_pickerView selectedRowInComponent:1];
+            NSInteger district = [_pickerView selectedRowInComponent:2];
+            NSString *addrStr = [NSString stringWithFormat:@"%@%@%@", _dataArr[0][province],_dataArr[1][city],_dataArr[2][district]];
+            if (self.saveChangeBlock) {
+                self.saveChangeBlock(addrStr,self.tag);
+            }
             break;
         }
         case WindowTime:{

@@ -207,9 +207,12 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
             make.size.mas_equalTo(CGSizeMake(KScreenWidth, kRealValue(185)));
         }];
         return;
+    } else if (kFromClassTypeValue == ZSHFromTrainUserInfoVCToBottomBlurPopView) {//火车票个人信息
+        _subTabHeight = kRealValue(266.5);
+        
+        self.subTab.backgroundColor = KWhiteColor;
+        [self.subTab registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHHeadCellID];
     }
-    
-    
     
     self.subTab.delegate = self.tableViewModel;
     self.subTab.dataSource = self.tableViewModel;

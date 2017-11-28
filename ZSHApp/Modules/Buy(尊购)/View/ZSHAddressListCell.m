@@ -10,13 +10,6 @@
 
 @interface ZSHAddressListCell()
 
-@property (nonatomic, strong) UILabel   *nameLabel;
-@property (nonatomic, strong) UILabel   *addressLabel;
-@property (nonatomic, strong) UILabel   *telLabel;
-@property (nonatomic, strong) UIButton  *defaultBtn;
-@property (nonatomic, strong) UIButton  *deleteBtn;
-@property (nonatomic, strong) UIButton  *editBtn;
-
 @end
 
 @implementation ZSHAddressListCell
@@ -40,7 +33,7 @@
     _defaultBtn = [ZSHBaseUIControl createBtnWithParamDic:defaultBtnDic];
     [_defaultBtn setImage:[UIImage imageNamed:@"address_normal"] forState:UIControlStateNormal];
     [_defaultBtn setImage:[UIImage imageNamed:@"address_press"] forState:UIControlStateSelected];
-    [_defaultBtn addTarget:self action:@selector(defaultBtnAction:) forControlEvents:UIControlEventTouchUpInside];
+//    [_defaultBtn addTarget:self action:@selector(defaultBtnAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView addSubview:_defaultBtn];
     
     NSDictionary *deleteBtnDic = @{@"title":@"删除",@"font":kPingFangLight(11),};
@@ -106,15 +99,12 @@
 
 }
 
-- (void)updateCellWithModel:(ZSHAddressModel *)model{
-    self.nameLabel.text = model.name;
-    self.telLabel.text = model.telephone;
-    self.addressLabel.text = model.address;
+- (void)updateCellWithModel:(ZSHAddrModel *)model{
+    self.nameLabel.text = model.CONSIGNEE;
+    self.telLabel.text = model.ADRPHONE;
+    self.addressLabel.text = NSStringFormat(@"%@%@", model.PROVINCE, model.ADDRESS);
 }
 
-#pragma action
-- (void)defaultBtnAction:(UIButton *)defaultBtn{
-    defaultBtn.selected = !defaultBtn.selected;
-}
+
 
 @end

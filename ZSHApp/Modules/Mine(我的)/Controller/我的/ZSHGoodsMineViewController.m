@@ -65,7 +65,7 @@ static NSString *headerViewIdentifier = @"hederview";
       
       @[@"",
         @"",
-        @"ZSHManageAddressViewController",
+        @"ZSHManageAddressListViewController",
         @""],
       
       @[@"ZSHCouponViewController",

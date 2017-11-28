@@ -9,21 +9,23 @@
 #import "ZSHManageAddressViewController.h"
 #import "ZSHBaseCell.h"
 #import "ZSHPickView.h"
-#import "ZSHManageAddressListViewController.h"
 #import "FXBlurView.h"
+#import "ZSHTextFieldCellView.h"
+#import "ZSHMineLogic.h"
 
 @interface ZSHManageAddressViewController ()
 
-@property (nonatomic,strong)NSArray                   *titleArr;
-@property (nonatomic,strong)ZSHPickView               *pickView;
-@property (nonatomic,strong)NSArray                   *vcArr;
+@property (nonatomic, strong) NSArray                   *titleArr;
+@property (nonatomic, strong) ZSHPickView               *pickView;
+@property (nonatomic, strong) NSArray                   *vcArr;
+@property (nonatomic, strong) ZSHMineLogic              *mineLogic;
 @end
 
 @implementation ZSHManageAddressViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
     [self loadData];
     [self createUI];
 }
@@ -32,7 +34,12 @@
     
     self.titleArr = @[@"收货人",@"联系电话",@"所在地区",@"详细地址"];
     self.vcArr = @[@"ZSHManageAddressListViewController",@""];
-    
+    _mineLogic = [[ZSHMineLogic alloc] init];
+    if (self.paramDic[@"AddrModel"]) {
+        _mineLogic.addNewAddr = self.paramDic[@"AddrModel"];
+    } else {
+        _mineLogic.addNewAddr = [[ZSHAddrModel alloc] init];
+    }
     
     self.tableView.frame = CGRectMake(0, KNavigationBarHeight, KScreenWidth, KScreenHeight-KNavigationBarHeight-KBottomNavH);
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
@@ -60,6 +67,9 @@
 - (ZSHBaseTableViewSectionModel*)storeListSection {
     kWeakSelf(self);
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
+    
+    NSArray *textFieldTypeArr = @[@(ZSHTextFieldViewUser),@(ZSHTextFieldViewUser),@(ZSHTextFieldViewNone),@(ZSHTextFieldViewUser)];
+    
     for (int i = 0; i<self.titleArr.count; i++) {
         ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
         [sectionModel.cellModelArray addObject:cellModel];
@@ -67,27 +77,48 @@
         cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
             ZSHBaseCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellId"];
             if (!cell) {
-                cell = [[ZSHBaseCell alloc] initWithStyle:UITableViewCellStyleDefault
+                cell = [[ZSHBaseCell alloc] initWithStyle:UITableViewCellStyleValue2
                                           reuseIdentifier:@"cellId"];
             }
             cell.backgroundColor = KClearColor;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            cell.textLabel.text = weakself.titleArr[indexPath.row];
-            cell.textLabel.font = kPingFangRegular(14);
-            cell.textLabel.textColor = KZSHColor929292;
+            NSDictionary *paramDic = @{@"leftTitle":weakself.titleArr[indexPath.row],@"placeholder":@"",@"textFieldType":textFieldTypeArr[indexPath.row],KFromClassType:@(FromAirTicketDetailVCToTextFieldCellView)};
+            
+            ZSHTextFieldCellView *textFieldCellView = [[ZSHTextFieldCellView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, kRealValue(44)) paramDic:paramDic];
+            textFieldCellView.tag = indexPath.row;
+            textFieldCellView.textFieldChanged = ^(NSString *text, NSInteger index) {
+                if (index == 0) {
+                    _mineLogic.addNewAddr.CONSIGNEE = text;
+                } else if (index == 1) {
+                    _mineLogic.addNewAddr.ADRPHONE = text;
+                } else if (index == 3) {
+                    _mineLogic.addNewAddr.ADDRESS = text;
+                }
+            };
+            [cell.contentView addSubview:textFieldCellView];
+            [textFieldCellView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.edges.mas_equalTo(cell.contentView);
+            }];
+            
             if (indexPath.row == 2) {
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                cell.detailTextLabel.text = _mineLogic.addNewAddr.PROVINCE;
+                cell.detailTextLabel.font = [UIFont systemFontOfSize:13];
             }
+            
             return cell;
         };
         
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
             if (indexPath.row == 2 ) {
                 weakself.pickView = [weakself createPickViewWithType:WindowRegion];
+                weakself.pickView.saveChangeBlock = ^(NSString *text, NSInteger index) {
+                    _mineLogic.addNewAddr.PROVINCE = text;
+                    [tableView reloadData];
+                };
                 [weakself.pickView show:WindowRegion];
             } else if (indexPath.row == 0){
-                ZSHManageAddressListViewController *manageAddressListVC = [[ZSHManageAddressListViewController alloc]init];
-                [self.navigationController pushViewController:manageAddressListVC animated:YES];
+
             }
             
         };
@@ -99,9 +130,9 @@
 
 #pragma pickView
 -(ZSHPickView *)createPickViewWithType:(NSUInteger)type{
-   NSArray *regionArr = @[@[@"北京",@"天津市",@"河北省",@"山东省"],
+   NSArray *regionArr = @[@[@"北京",@"天津",@"河北省",@"山东省"],
                           @[@"北京市",@"天津市",@"石家庄",@"聊城市"],
-                          @[@"朝阳区",@"天津市",@"北辰区",@"聊城市"]
+                          @[@"朝阳区",@"滨海新区",@"北辰区",@"聊城市"]
                        ];
     NSDictionary *nextParamDic = @{@"type":@(type),@"midTitle":@"城市区域选择",@"dataArr":regionArr};
     _pickView = [[ZSHPickView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight) paramDic:nextParamDic];
@@ -111,7 +142,32 @@
 
 #pragma action
 - (void)saveAction{
+    if ([SafeStr(_mineLogic.addNewAddr.PROVINCE) isEqualToString:@""] || [SafeStr(_mineLogic.addNewAddr.ADRPHONE) isEqualToString:@""] || [SafeStr(_mineLogic.addNewAddr.ADDRESS) isEqualToString:@""] || [SafeStr(_mineLogic.addNewAddr.CONSIGNEE)  isEqualToString:@""])
+        return;
     
+    
+    kWeakSelf(self);
+    _mineLogic.addNewAddr.HONOURUSER_ID = @"d6a3779de8204dfd9359403f54f7d27c";
+    
+    if (self.paramDic[@"AddrModel"]) {
+        [_mineLogic requestUserEdiShipAdrWithModel:_mineLogic.addNewAddr success:^(id response) {
+            UIAlertController *ac = [UIAlertController alertControllerWithTitle:@"提示" message:@"添加成功" preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                [weakself.navigationController popViewControllerAnimated:true];
+            }];
+            [ac addAction:cancelAction];
+            [weakself presentViewController:ac animated:YES completion:nil];
+        }];
+    } else {
+        [_mineLogic requestShipAddShipAdr:^(id response) {
+            UIAlertController *ac = [UIAlertController alertControllerWithTitle:@"提示" message:@"添加成功" preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                [weakself.navigationController popViewControllerAnimated:true];
+            }];
+            [ac addAction:cancelAction];
+            [weakself presentViewController:ac animated:YES completion:nil];
+        }];
+    }
 }
 
 - (void)didReceiveMemoryWarning {

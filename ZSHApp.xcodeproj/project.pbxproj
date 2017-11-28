@@ -45,6 +45,8 @@
 		1816F5251F566F320060C4BE /* libUMSocialLog.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1816F51A1F566F320060C4BE /* libUMSocialLog.a */; };
 		1816F5261F566F320060C4BE /* UMSocialSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1816F51C1F566F320060C4BE /* UMSocialSDKResources.bundle */; };
 		1816F5271F566F320060C4BE /* UShareUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1816F51D1F566F320060C4BE /* UShareUI.framework */; };
+		181AD3141FCCF1EE0015D004 /* ZSHMineLogic.m in Sources */ = {isa = PBXBuildFile; fileRef = 181AD3131FCCF1EE0015D004 /* ZSHMineLogic.m */; };
+		181AD3171FCCF3C30015D004 /* ZSHAddrModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 181AD3161FCCF3C30015D004 /* ZSHAddrModel.m */; };
 		182287161FB44FE600CA5B10 /* XXTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 182287151FB44E1C00CA5B10 /* XXTextView.m */; };
 		1822871A1FB4559300CA5B10 /* ZSHLiveMineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 182287191FB4559300CA5B10 /* ZSHLiveMineViewController.m */; };
 		1822871D1FB45CE800CA5B10 /* ZSHLiveMineHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1822871C1FB45CE800CA5B10 /* ZSHLiveMineHeadView.m */; };
@@ -157,7 +159,6 @@
 		FE2BB0B81F8E03FB000D5800 /* ZSHHomeHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE2BB0B71F8E03FB000D5800 /* ZSHHomeHeadView.m */; };
 		FE2BB0C21F8E16C8000D5800 /* MainTabBarController.h in Sources */ = {isa = PBXBuildFile; fileRef = FE55374A1F47049D00803128 /* MainTabBarController.h */; };
 		FE2CD0931F9833DE00E9E519 /* ZSHAddressListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE2CD0921F9833DE00E9E519 /* ZSHAddressListCell.m */; };
-		FE2CD0961F983B7200E9E519 /* ZSHAddressModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FE2CD0951F983B7200E9E519 /* ZSHAddressModel.m */; };
 		FE2CD0991F984B5500E9E519 /* ZSHFindViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE2CD0981F984B5500E9E519 /* ZSHFindViewController.m */; };
 		FE2CD09C1F9857A800E9E519 /* ZSHIntegralViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE2CD09B1F9857A800E9E519 /* ZSHIntegralViewController.m */; };
 		FE2CD09F1F9882E400E9E519 /* ZSHIntegralLuckViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE2CD09E1F9882E400E9E519 /* ZSHIntegralLuckViewController.m */; };
@@ -476,6 +477,10 @@
 		1816F51A1F566F320060C4BE /* libUMSocialLog.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libUMSocialLog.a; sourceTree = "<group>"; };
 		1816F51C1F566F320060C4BE /* UMSocialSDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = UMSocialSDKResources.bundle; sourceTree = "<group>"; };
 		1816F51D1F566F320060C4BE /* UShareUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UShareUI.framework; sourceTree = "<group>"; };
+		181AD3121FCCF1EE0015D004 /* ZSHMineLogic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHMineLogic.h; sourceTree = "<group>"; };
+		181AD3131FCCF1EE0015D004 /* ZSHMineLogic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHMineLogic.m; sourceTree = "<group>"; };
+		181AD3151FCCF3C30015D004 /* ZSHAddrModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHAddrModel.h; sourceTree = "<group>"; };
+		181AD3161FCCF3C30015D004 /* ZSHAddrModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHAddrModel.m; sourceTree = "<group>"; };
 		182287141FB44E1C00CA5B10 /* XXTextView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXTextView.h; sourceTree = "<group>"; };
 		182287151FB44E1C00CA5B10 /* XXTextView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XXTextView.m; sourceTree = "<group>"; };
 		182287181FB4559300CA5B10 /* ZSHLiveMineViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHLiveMineViewController.h; sourceTree = "<group>"; };
@@ -690,8 +695,6 @@
 		FE2BB0C11F8E168B000D5800 /* ZSHHomeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHHomeViewController.m; sourceTree = "<group>"; };
 		FE2CD0911F9833DE00E9E519 /* ZSHAddressListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHAddressListCell.h; sourceTree = "<group>"; };
 		FE2CD0921F9833DE00E9E519 /* ZSHAddressListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHAddressListCell.m; sourceTree = "<group>"; };
-		FE2CD0941F983B7200E9E519 /* ZSHAddressModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHAddressModel.h; sourceTree = "<group>"; };
-		FE2CD0951F983B7200E9E519 /* ZSHAddressModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHAddressModel.m; sourceTree = "<group>"; };
 		FE2CD0971F984B5500E9E519 /* ZSHFindViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHFindViewController.h; sourceTree = "<group>"; };
 		FE2CD0981F984B5500E9E519 /* ZSHFindViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHFindViewController.m; sourceTree = "<group>"; };
 		FE2CD09A1F9857A800E9E519 /* ZSHIntegralViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHIntegralViewController.h; sourceTree = "<group>"; };
@@ -1988,6 +1991,8 @@
 		FE291EB81F8CAEDC00D4BBE7 /* Logic */ = {
 			isa = PBXGroup;
 			children = (
+				181AD3121FCCF1EE0015D004 /* ZSHMineLogic.h */,
+				181AD3131FCCF1EE0015D004 /* ZSHMineLogic.m */,
 			);
 			path = Logic;
 			sourceTree = "<group>";
@@ -1997,6 +2002,8 @@
 			children = (
 				FEA30A4E1F9F08FE00AB0FFC /* ZSHLogisticsDetailModel.h */,
 				FEA30A4F1F9F08FE00AB0FFC /* ZSHLogisticsDetailModel.m */,
+				181AD3151FCCF3C30015D004 /* ZSHAddrModel.h */,
+				181AD3161FCCF3C30015D004 /* ZSHAddrModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2057,8 +2064,6 @@
 				FE4DB1E61F99972F008E12E9 /* 商品 */,
 				FE1377761F973402003C8DFB /* ZSHOrderModel.h */,
 				FE1377771F973402003C8DFB /* ZSHOrderModel.m */,
-				FE2CD0941F983B7200E9E519 /* ZSHAddressModel.h */,
-				FE2CD0951F983B7200E9E519 /* ZSHAddressModel.m */,
 				FE2CD0AE1F98B6DB00E9E519 /* ZSHIntegalModel.h */,
 				FE2CD0AF1F98B6DB00E9E519 /* ZSHIntegalModel.m */,
 			);
@@ -2231,10 +2236,10 @@
 				FE4DB1DD1F9993AD008E12E9 /* 积分 */,
 				FEB305861F95F24100E4A061 /* ZSHGoodsMineViewController.h */,
 				FEB305871F95F24100E4A061 /* ZSHGoodsMineViewController.m */,
-				FE1377911F977628003C8DFB /* ZSHManageAddressViewController.h */,
-				FE1377921F977628003C8DFB /* ZSHManageAddressViewController.m */,
 				FE1377BF1F97AE29003C8DFB /* ZSHManageAddressListViewController.h */,
 				FE1377C01F97AE29003C8DFB /* ZSHManageAddressListViewController.m */,
+				FE1377911F977628003C8DFB /* ZSHManageAddressViewController.h */,
+				FE1377921F977628003C8DFB /* ZSHManageAddressViewController.m */,
 				FE2CD0B71F98F9C100E9E519 /* ZSHCouponViewController.h */,
 				FE2CD0B81F98F9C200E9E519 /* ZSHCouponViewController.m */,
 				FE1377701F97225A003C8DFB /* ZSHOrderSubViewController.h */,
@@ -3622,7 +3627,6 @@
 				FEA483A91F91B96000219CFE /* RXLSideSlipViewController.h in Sources */,
 				18F902491FB6CF270044967F /* ZSHFollowViewController.m in Sources */,
 				183C657A1FC03B400081DCFF /* ZSHToplineCell.m in Sources */,
-				FE2CD0961F983B7200E9E519 /* ZSHAddressModel.m in Sources */,
 				18F902501FB6DE460044967F /* ZSHChargeRecViewController.m in Sources */,
 				FE7CA9EA1F9DD15300A2B15D /* ZSHLiveListModel.m in Sources */,
 				185C6D811FC2D950004EA461 /* LZCartViewController.m in Sources */,
@@ -3724,6 +3728,7 @@
 				FE291EF31F8CCD2200D4BBE7 /* ZSHLoginViewController.m in Sources */,
 				FEF2B63A1FAC5D39000AEA6E /* ZSHEntertainmentModel.m in Sources */,
 				FED308981FA414D900CD442B /* ZSHHotelDetailDeviceCell.m in Sources */,
+				181AD3171FCCF3C30015D004 /* ZSHAddrModel.m in Sources */,
 				FEAEE3EF1FA86CBA00F73EEA /* STCalendar.m in Sources */,
 				FE5538811F470BAF00803128 /* GameInfo.m in Sources */,
 				FEEF46EF1FBA84100086A3C4 /* ZSHLivePopView.m in Sources */,
@@ -3819,6 +3824,7 @@
 				FEBD7C931FA6CC1900CE2BA6 /* ZSHHotelPayViewController.m in Sources */,
 				FE7CA9DE1F9D97F100A2B15D /* ZSHBaseCollectionReusableView.m in Sources */,
 				FEBD7CA91FA72EBB00CE2BA6 /* ZSHGoodsDetailViewController.m in Sources */,
+				181AD3141FCCF1EE0015D004 /* ZSHMineLogic.m in Sources */,
 				1891C1361FC6CCA3000AFEFB /* ZSHTogetherLogic.m in Sources */,
 				FEF2B63D1FACAF42000AEA6E /* ZSHEntertainmentDetailViewController.m in Sources */,
 				FEB305881F95F24100E4A061 /* ZSHGoodsMineViewController.m in Sources */,
