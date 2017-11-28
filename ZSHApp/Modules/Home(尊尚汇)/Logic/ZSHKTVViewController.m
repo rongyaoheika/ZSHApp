@@ -14,7 +14,8 @@
 @interface ZSHKTVViewController ()
 
 @property (nonatomic, strong) ZSHKTVLogic  *KTVLogic;
-@property (nonatomic, strong) NSArray      *KTVListArr;
+@property (nonatomic, strong) NSArray      *KTVArr;
+@property (nonatomic, strong) NSArray      *KTVModelArr;
 
 @end
 
@@ -39,8 +40,9 @@ static NSString *ZSHHotelCellID = @"ZSHHotelCell";
     kWeakSelf(self);
     _KTVLogic = [[ZSHKTVLogic alloc]init];
     [_KTVLogic loadKTVListDataWithParamDic:@{@"HONOURUSER_ID":@"d6a3779de8204dfd9359403f54f7d27c"}];
-    _KTVLogic.requestDataCompleted = ^(NSArray *KTVListArr){
-        weakself.KTVListArr = KTVListArr;
+    _KTVLogic.requestDataCompleted = ^(NSDictionary *paramDic){
+        weakself.KTVModelArr = paramDic[@"KTVModelArr"];
+        weakself.KTVArr = paramDic[@"KTVArr"];
         [weakself.tableView.mj_header endRefreshing];
         [weakself.tableView.mj_footer endRefreshing];
         [weakself initViewModel];
@@ -72,23 +74,23 @@ static NSString *ZSHHotelCellID = @"ZSHHotelCell";
 - (ZSHBaseTableViewSectionModel*)storeListSection {
     kWeakSelf(self);
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
-    for (int i = 0; i < _KTVListArr.count; i++) {
+    for (int i = 0; i < _KTVArr.count; i++) {
         ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
         cellModel.height = kRealValue(110);
         [sectionModel.cellModelArray addObject:cellModel];
         cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
             ZSHHotelCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHHotelCellID forIndexPath:indexPath];
-            if (i==_KTVListArr.count-1) {
+            if (i==_KTVArr.count-1) {
                 cell.separatorInset = UIEdgeInsetsMake(0, 0, 0, MAXFLOAT);
             }
-            ZSHKTVModel *KTVModel = _KTVListArr[indexPath.row];
-            [cell updateCellWithModel:KTVModel];
+            NSDictionary *paramDic = _KTVArr[indexPath.row];
+            [cell updateCellWithParamDic:paramDic];
             return cell;
         };
         
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
-            ZSHKTVModel *KTVModel = _KTVListArr[indexPath.row];
-            NSDictionary *nextParamDic = @{KFromClassType:@(ZSHFromHotelVCToHotelDetailVC),@"shopId":KTVModel.SORTHOTEL_ID};
+            ZSHKTVModel *KTVModel = _KTVModelArr[indexPath.row];
+            NSDictionary *nextParamDic = @{KFromClassType:@(ZSHFromHomeKTVVCToHotelDetailVC),@"shopId":KTVModel.SORTKTV_ID};
             ZSHKTVDetailViewController *KTVDetailVC = [[ZSHKTVDetailViewController alloc]initWithParamDic:nextParamDic];
             [weakself.navigationController pushViewController:KTVDetailVC animated:YES];
         };

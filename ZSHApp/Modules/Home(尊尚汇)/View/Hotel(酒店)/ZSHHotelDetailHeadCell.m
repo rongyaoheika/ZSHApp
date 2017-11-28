@@ -59,9 +59,9 @@
         [_headView updateViewWithParamDic:@{@"dataArr":hotelDetailModel.HOTELDETAILSIMGS}];
         _detailLabel.text = hotelDetailModel.HOTELNAMES;
     } else if (self.fromClassType == ZSHFromHomeKTVVCToHotelDetailVC) {//KTV
-        ZSHKTVModel *KTVModel = (ZSHKTVModel *)model;
-        _hotelImageView.image = [UIImage imageNamed:KTVModel.detailImageName];
-        _detailLabel.text = KTVModel.KTVName;
+        ZSHKTVDetailModel *KTVDetailModel = (ZSHKTVDetailModel *)model;
+        [_headView updateViewWithParamDic:@{@"dataArr":KTVDetailModel.KTVDETAILSIMGS}];
+        _detailLabel.text = KTVDetailModel.KTVNAMES;
     }
     
 }

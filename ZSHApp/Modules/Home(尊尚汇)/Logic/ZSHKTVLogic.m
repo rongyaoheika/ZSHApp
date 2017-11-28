@@ -12,10 +12,13 @@
 
 - (void)loadKTVListDataWithParamDic:(NSDictionary *)paramDic{
     kWeakSelf(self);
-    [PPNetworkHelper POST:kUrlSHotelDo parameters:paramDic success:^(id responseObject) {
-        NSArray *KTVListArr = [ZSHKTVModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"]];
+    [PPNetworkHelper POST:kUrlSktvlist parameters:paramDic success:^(id responseObject) {
+        RLog(@"KTV列表数据==%@",responseObject);
+        NSArray *KTVArr = responseObject[@"pd"];
+        NSArray *KTVModelArr = [ZSHKTVModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"]];
+        NSDictionary *paramDic = @{@"KTVArr":KTVArr,@"KTVModelArr":KTVModelArr};
         if (weakself.requestDataCompleted) {
-            weakself.requestDataCompleted(KTVListArr);
+            weakself.requestDataCompleted(paramDic);
         }
         
     } failure:^(NSError *error) {
@@ -28,10 +31,11 @@
 - (void)loadKTVDetailDataWithParamDic:(NSDictionary *)paramDic{
     kWeakSelf(self);
     [PPNetworkHelper POST:kUrlKtvSyn parameters:paramDic success:^(id responseObject) {
-        RLog(@"KTV详情数据==%@",responseObject)
+        NSDictionary *KTVDetailParamDic = responseObject[@"pd"];
         ZSHKTVDetailModel *KTVDetailModel = [ZSHKTVDetailModel mj_objectWithKeyValues:responseObject[@"pd"]];
         if (weakself.requestDataCompleted) {
-            weakself.requestDataCompleted(KTVDetailModel);
+            NSDictionary *paramDic = @{@"KTVDetailModel":KTVDetailModel,@"KTVDetailParamDic":KTVDetailParamDic};
+            weakself.requestDataCompleted(paramDic);
         }
         
     } failure:^(NSError *error) {
@@ -40,6 +44,5 @@
         }
     }];
 }
-
 
 @end

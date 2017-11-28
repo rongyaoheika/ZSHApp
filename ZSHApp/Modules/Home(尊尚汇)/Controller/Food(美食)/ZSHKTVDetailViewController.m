@@ -23,6 +23,7 @@
 @property (nonatomic, copy)   NSString                  *shopId;
 @property (nonatomic, strong) ZSHKTVLogic               *KTVLogic;
 @property (nonatomic, strong) ZSHKTVDetailModel         *KTVDetailModel;
+@property (nonatomic, strong) NSDictionary              *KTVDetailParamDic;
 @property (nonatomic, strong) ZSHBottomBlurPopView      *bottomBlurPopView;
 @property (nonatomic, strong) NSMutableArray            *dataArr;
 @property (nonatomic, assign) BOOL                      showSeparatorLine;
@@ -50,23 +51,24 @@ static NSString *ZSHKTVListCellID = @"ZSHKTVListCell";
     self.dataArr = [[NSMutableArray alloc]init];
     [self requestData];
     
-    if (kFromClassTypeValue == ZSHFromHomeKTVVCToHotelDetailVC) {
-        [self.dataArr removeAllObjects];
-        NSDictionary *KTVModelDic =
-        @{@"imageName":@"food_image_1",@"price":@"399",@"address":@"三亚市天涯区黄山路90号",@"comment":@"120",@"detailImageName":@"hotel_detail_big",@"KTVName":@"麦乐迪（航天桥店）1",@"roomType":@"小包（2-4人）",@"time":@"10:00-13:00，共3小时"};
-//        self.KTVModel = [ZSHKTVModel mj_objectWithKeyValues:KTVModelDic];
-    }
-    
+//    if (kFromClassTypeValue == ZSHFromHomeKTVVCToHotelDetailVC) {
+//        [self.dataArr removeAllObjects];
+//        NSDictionary *KTVModelDic =
+//        @{@"imageName":@"food_image_1",@"price":@"399",@"address":@"三亚市天涯区黄山路90号",@"comment":@"120",@"detailImageName":@"hotel_detail_big",@"KTVName":@"麦乐迪（航天桥店）1",@"roomType":@"小包（2-4人）",@"time":@"10:00-13:00，共3小时"};
+////        self.KTVModel = [ZSHKTVModel mj_objectWithKeyValues:KTVModelDic];
+//    }
+//
     [self initViewModel];
 }
 
 - (void)requestData{
     kWeakSelf(self);
     _KTVLogic = [[ZSHKTVLogic alloc]init];
-    NSDictionary *paramDic = @{@"SORTFOOD_ID":self.shopId};
+    NSDictionary *paramDic = @{@"SORTKTV_ID":self.shopId};
     [_KTVLogic loadKTVDetailDataWithParamDic:paramDic];
-    _KTVLogic.requestDataCompleted = ^(ZSHKTVDetailModel *KTVDetailModel){
-        weakself.KTVDetailModel = KTVDetailModel;
+    _KTVLogic.requestDataCompleted = ^(NSDictionary *paramDic){
+        weakself.KTVDetailModel = paramDic[@"KTVDetailModel"];
+        weakself.KTVDetailParamDic = paramDic[@"KTVDetailParamDic"];
         [weakself.tableView.mj_header endRefreshing];
         [weakself.tableView.mj_footer endRefreshing];
         [weakself initViewModel];
@@ -108,7 +110,9 @@ static NSString *ZSHKTVListCellID = @"ZSHKTVListCell";
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHHotelDetailHeadCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHHotelDetailHeadCellID forIndexPath:indexPath];
         cell.fromClassType = [self.paramDic[KFromClassType]integerValue];
-        
+        if (_KTVDetailModel) {
+            [cell updateCellWithModel:_KTVDetailModel];
+        }
         return cell;
         
     };
@@ -120,8 +124,8 @@ static NSString *ZSHKTVListCellID = @"ZSHKTVListCell";
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHHotelDetailDeviceCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHHotelDetailDeviceCellID forIndexPath:indexPath];
         cell.fromClassType = [self.paramDic[KFromClassType]integerValue];
-        if (_KTVDetailModel) {
-            [cell updateCellWithModel:_KTVDetailModel];
+        if (_KTVDetailParamDic) {
+            [cell updateCellWithParamDic:_KTVDetailParamDic];
         }
     
         [self hideSeparatorLineWithCell:cell hide:YES];
@@ -136,9 +140,9 @@ static NSString *ZSHKTVListCellID = @"ZSHKTVListCell";
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     NSArray *arrowImageArr = @[@"hotel_map",@"hotel_phone"];
     NSArray *titleArr = @[@"三亚市天涯区黄山路94号",@"0898-86868686"];
-        if (_KTVDetailModel) {
-            titleArr = @[_KTVDetailModel.HOTELADDRESS,_KTVDetailModel.HOTELPHONE];
-        }
+    if (_KTVDetailModel) {
+        titleArr = @[_KTVDetailModel.KTVADDRESS,_KTVDetailModel.KTVPHONE];
+    }
     
     for (int i = 0; i <arrowImageArr.count; i++) {
         ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
@@ -163,8 +167,8 @@ static NSString *ZSHKTVListCellID = @"ZSHKTVListCell";
         NSInteger  commentCount = 99;
         CGFloat    scoreCount = 4.5;
         if (_KTVDetailModel) {
-            commentCount = _KTVDetailModel.HOTELEVACOUNT;
-            scoreCount = _KTVDetailModel.HOTELEVALUATE;
+            commentCount = _KTVDetailModel.KTVEVACOUNT;
+            scoreCount = _KTVDetailModel.KTVEVALUATE;
         }
         ZSHBaseCell *cell = [[ZSHBaseCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:ZSHBookCellID];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;

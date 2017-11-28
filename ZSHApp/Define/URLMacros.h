@@ -376,6 +376,9 @@
 //返回参数：EVALUATEDATE     评价日期/EVALUATECONTENT 评价内容/PORTRAIT 用户头像/NICKNAME 用户昵称
 #define kUrlHotelevalist [NSString stringWithFormat:@"/appshotelin/hotelevalist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"HOTELEVA"]]
 
-
+//92. 获得首页特权KTV分类列表
+//参数：HONOURUSER_ID 用户id
+//请求地址：/appsktvin/sktv.do?SORTKTV(混淆码)
+#define kUrlSktvlist [NSString stringWithFormat:@"/appsktvin/sktv.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SORTKTV"]]
 
 #endif /* URLMacros_h */
