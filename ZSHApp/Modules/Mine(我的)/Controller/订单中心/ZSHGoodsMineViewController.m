@@ -35,7 +35,6 @@ static NSString *headerViewIdentifier = @"hederview";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     
     [self loadData];
     [self createUI];
@@ -190,7 +189,6 @@ static NSString *headerViewIdentifier = @"hederview";
         [self.navigationController pushViewController:liveVC animated:YES];
     }
 }
-
 
 - (UIButton *)titleBtn{
     if (!_titleBtn) {

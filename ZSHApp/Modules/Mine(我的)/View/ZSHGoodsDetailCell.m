@@ -95,9 +95,10 @@
 #pragma mark - Setter Getter Methods
 
 - (void)updateCellWithModel:(ZSHGoodModel *)goodModel{
-    [_goodsImageView sd_setImageWithURL:[NSURL URLWithString:goodModel.image_url]];
-    _priceLabel.text = [NSString stringWithFormat:@"¥ %.1f",[goodModel.price floatValue]];
-    _goodsLabel.text = goodModel.main_title;
+    [_goodsImageView sd_setImageWithURL:[NSURL URLWithString:goodModel.PROSHOWIMG]];
+    _priceLabel.text = [NSString stringWithFormat:@"¥ %.1f",[goodModel.PROPRICE floatValue]];
+    _goodsLabel.text = goodModel.PROTITLE;
+    _countLabel.text = NSStringFormat(@"X%@", goodModel.count);
     if (self.fromClassType == ZSHFromOrderDetailVCToGoodsDetailCell) {
         _countLabel.hidden = YES;
     }

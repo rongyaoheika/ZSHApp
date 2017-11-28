@@ -10,12 +10,14 @@
 #import "ZSHOrderCell.h"
 #import "ZSHOrderModel.h"
 #import "ZSHOrderDetailViewController.h"
+#import "ZSHMineLogic.h"
 
 static NSString *cellIdentifier = @"listCell";
 
 @interface ZSHOrderSubViewController ()
 
-@property (nonatomic,strong)NSMutableArray *dataArr;
+@property (nonatomic, strong) NSMutableArray *dataArr;
+@property (nonatomic, strong) ZSHMineLogic   *mineLogic;
 
 
 @end
@@ -24,7 +26,7 @@ static NSString *cellIdentifier = @"listCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+
     [self loadData];
     [self createUI];
 }
@@ -37,7 +39,8 @@ static NSString *cellIdentifier = @"listCell";
         [self.dataArr addObject:orderModel];
     }
     [self initViewModel];
-   
+    _mineLogic = [[ZSHMineLogic alloc] init];
+    [self requestData];
 }
 
 - (void)createUI{
@@ -48,30 +51,32 @@ static NSString *cellIdentifier = @"listCell";
     
     self.tableView.delegate = self.tableViewModel;
     self.tableView.dataSource = self.tableViewModel;
-    [self.tableView reloadData];
+    
 }
 
 - (void)initViewModel {
     [self.tableViewModel.sectionModelArray removeAllObjects];
     [self.tableViewModel.sectionModelArray addObject:[self storeListSection]];
+    [self.tableView reloadData];
 }
 
 //list
 - (ZSHBaseTableViewSectionModel*)storeListSection {
     kWeakSelf(self);
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
-    for (int i = 0; i < self.dataArr.count; i++) {
+    for (int i = 0; i < _mineLogic.goodOrderModelArr.count; i++) {
         ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
         [sectionModel.cellModelArray addObject:cellModel];
         kWeakSelf(cellModel);
+        cellModel.height = kRealValue(90);
         cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
             //无需注册，需要判空
             ZSHOrderCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
             if (!cell) {
                 cell = [[ZSHOrderCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
             }
-            ZSHOrderModel *orderModel = weakself.dataArr[indexPath.row];
-            weakcellModel.height = [ZSHOrderCell getCellHeightWithModel:orderModel];
+            ZSHGoodOrderModel *orderModel = weakself.mineLogic.goodOrderModelArr[indexPath.row];
+//            weakcellModel.height = [ZSHOrderCell getCellHeightWithModel:orderModel];
             [cell updateCellWithModel:orderModel];
 
             return cell;
@@ -87,9 +92,18 @@ static NSString *cellIdentifier = @"listCell";
 }
 
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)requestData {
+    kWeakSelf(self);
+    if (self.paramDic[@"ORDERSTATUS"]) {
+        [_mineLogic requestOrderConListWithOrderStatus:self.paramDic[@"ORDERSTATUS"] success:^(id response) {
+            [weakself initViewModel];
+        }];
+    } else {
+        [_mineLogic requestOrderAllList:^(id response) {
+            [weakself initViewModel];
+        }];
+    }
+  
 }
 
 @end

@@ -23,13 +23,15 @@ static NSString *ZSHGoodsListViewID = @"ZSHGoodsListView";
 
 @property (nonatomic,strong) UITableView           *leftTableview;
 
+@property (nonatomic,retain) UISearchController *searchController;
+
 @end
 
 @implementation ZSHBuyViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+
     [self loadData];
     [self createUI];
 }
@@ -42,13 +44,12 @@ static NSString *ZSHGoodsListViewID = @"ZSHGoodsListView";
 - (void)createUI{
     [self.navigationItem setTitleView:self.searchView];
     self.searchView.searchBar.delegate = self;
-    
-    
+
     [self addNavigationItemWithImageName:@"nav_buy_mine" isLeft:YES target:self action:@selector(mineBtntAction) tag:11];
-    
     [self addNavigationItemWithImageName:@"nav_buy_scan" isLeft:NO target:self action:@selector(scanBtntAction:) tag:11];
     
     self.tableView.frame = CGRectMake(0, KNavigationBarHeight, KScreenWidth, KScreenHeight-KNavigationBarHeight-KBottomNavH);
+    
     [self.view addSubview:self.tableView];
     self.tableView.delegate = self.tableViewModel;
     self.tableView.dataSource = self.tableViewModel;
@@ -129,7 +130,6 @@ static NSString *ZSHGoodsListViewID = @"ZSHGoodsListView";
     
     return sectionModel;
 }
-
 
 #pragma action
 

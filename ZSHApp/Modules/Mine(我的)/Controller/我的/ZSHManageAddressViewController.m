@@ -95,6 +95,16 @@
                     _mineLogic.addNewAddr.ADDRESS = text;
                 }
             };
+            if (indexPath.row == 0) {
+                textFieldCellView.textField.text = _mineLogic.addNewAddr.CONSIGNEE;
+            } else if (indexPath.row == 1) {
+                textFieldCellView.textField.text = _mineLogic.addNewAddr.ADRPHONE;
+            } else if (indexPath.row ==2) {
+                cell.detailTextLabel.text = _mineLogic.addNewAddr.ADDRESS;
+            } else if (indexPath.row ==3) {
+                textFieldCellView.textField.text = _mineLogic.addNewAddr.ADDRESS;
+            }
+            
             [cell.contentView addSubview:textFieldCellView];
             [textFieldCellView mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.edges.mas_equalTo(cell.contentView);
@@ -132,7 +142,7 @@
 -(ZSHPickView *)createPickViewWithType:(NSUInteger)type{
    NSArray *regionArr = @[@[@"北京",@"天津",@"河北省",@"山东省"],
                           @[@"北京市",@"天津市",@"石家庄",@"聊城市"],
-                          @[@"朝阳区",@"滨海新区",@"北辰区",@"聊城市"]
+                          @[@"朝阳区",@"滨海新区",@"北辰区",@"聊城"]
                        ];
     NSDictionary *nextParamDic = @{@"type":@(type),@"midTitle":@"城市区域选择",@"dataArr":regionArr};
     _pickView = [[ZSHPickView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight) paramDic:nextParamDic];

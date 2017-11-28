@@ -101,7 +101,7 @@
 
 - (void)updateCellWithModel:(ZSHAddrModel *)model{
     self.nameLabel.text = model.CONSIGNEE;
-    self.telLabel.text = model.ADRPHONE;
+    self.telLabel.text = [model.ADRPHONE stringByReplacingCharactersInRange:NSMakeRange(3, 4) withString:@"****"];
     self.addressLabel.text = NSStringFormat(@"%@%@", model.PROVINCE, model.ADDRESS);
 }
 

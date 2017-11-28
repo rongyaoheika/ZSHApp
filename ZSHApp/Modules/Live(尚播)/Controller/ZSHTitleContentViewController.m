@@ -73,7 +73,9 @@
         case FromAllOrderVCToTitleContentVC:{
             self.titleArr = @[@"全部",@"待付款",@"待收货",@"待评价",@"退款售后"];
             self.indicatorHeight = 0.0;
-            self.contentVCS = @[@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHCommentViewController",@"ZSHApplyServiceViewController"];
+            // @"ZSHCommentViewController",@"ZSHApplyServiceViewController"
+            self.contentVCS = @[@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHOrderSubViewController"];
+            self.paramArr = @[@{@"":@""},@{@"ORDERSTATUS":@"0040001"}, @{@"ORDERSTATUS":@"0040002"}, @{@"ORDERSTATUS":@"0040003"}, @{@"ORDERSTATUS":@"0040004"}];
             break;
         }
         case FromIntegralVCToTitleContentVC:{

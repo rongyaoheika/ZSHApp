@@ -185,6 +185,7 @@ static NSString *ZSHGoodsDetailCountCellID = @"ZSHGoodsDetailCountCell";
             ZSHGoodsDetailCountCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:ZSHGoodsDetailCountCellID forIndexPath:indexPath];
             cell.NumberChangeBlock = ^(NSInteger count) {
                 _count = count;
+                _goodModel.count = NSStringFormat(@"%zd", count);
             };
             gridcell = cell;
         }
@@ -301,6 +302,7 @@ static NSString *ZSHGoodsDetailCountCellID = @"ZSHGoodsDetailCountCell";
     kWeakSelf(self);
     [_buyLogic requestShipDetailWithProductID:_goodModel.PRODUCT_ID success:^(id response) {        
         [weakself.collectionView reloadData];
+        weakself.goodModel.count = NSStringFormat(@"%zd", _count);
     }];
 }
 

@@ -12,10 +12,14 @@
 #import "ZSHGoodsDetailCell.h"
 #import "ZSHPayView.h"
 #import "JSNummberCount.h"
+#import "ZSHMineLogic.h"
+#import "ZSHManageAddressListViewController.h"
 
 @interface ZSHConfirmOrderViewController ()
 
 @property (nonatomic, strong) ZSHPayView         *payView;
+@property (nonatomic, strong) ZSHMineLogic       *mineLogic;
+@property (nonatomic, assign) NSInteger          currentAddrIndex;
 
 @end
 
@@ -27,13 +31,17 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
     [self loadData];
     [self createUI];
 }
 
 - (void)loadData{
     [self initViewModel];
+    _mineLogic = [[ZSHMineLogic alloc] init];
+    _mineLogic.buyOrderModel = [[ZSHBuyOrderModel alloc] init];
+    _currentAddrIndex = 0;
+    [self requestAddr];
 }
 
 - (void)createUI{
@@ -74,6 +82,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     _payView.rightBtnBlcok = ^(UIButton *btn) {
         [weakself rightBtnAction:btn];
     };
+    [self.tableView reloadData];
 }
 
 //第一组：个人信息
@@ -82,16 +91,18 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
     [sectionModel.cellModelArray addObject:cellModel];
     cellModel.height = kRealValue(75);
+    kWeakSelf(self);
     cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHOrderUserInfoCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHOrderUserInfoCellID forIndexPath:indexPath];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        NSDictionary *paramDic = @{@"userName":@"蒋小宝",@"phoneNum":@"13719103456",@"userAddress":@"北京市朝阳区西大望路甲23号SOHO现代城A座1720"};
-        [cell updateCellWithParamDic:paramDic];
+        if (_mineLogic.addrModelArr.count) {
+            [cell updateCellWithModel:_mineLogic.addrModelArr[weakself.currentAddrIndex]];
+        }
         return cell;
     };
     
     cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
-        
+        [weakself pushAddAddr];
     };
     return sectionModel;
 }
@@ -121,12 +132,19 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
     [sectionModel.cellModelArray addObject:cellModel];
     cellModel.height = kRealValue(40);
+    kWeakSelf(self);
     cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHBaseCell *cell = [[ZSHBaseCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@""];
         cell.textLabel.text = @"购买数量";
         if (![cell.contentView viewWithTag:2]) {
             JSNummberCount *countBtn = [[JSNummberCount alloc]initWithFrame:CGRectZero];
             countBtn.tag = 2;
+            countBtn.currentCountNumber = [weakself.goodsModel.count integerValue];
+            countBtn.numberTT.text = weakself.goodsModel.count;
+            countBtn.NumberChangeBlock = ^(NSInteger count) {
+                weakself.goodsModel.count = NSStringFormat(@"%zd", count);
+                [weakself initViewModel];
+            };
             [cell.contentView addSubview:countBtn];
             [countBtn mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.right.mas_equalTo(cell).offset(-KLeftMargin);
@@ -173,7 +191,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHBaseCell *cell = [[ZSHBaseCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@""];
         cell.textLabel.text = @"总金额";
-        cell.detailTextLabel.text =  [NSString stringWithFormat:@"¥ %.1f",[_goodsModel.price floatValue]];
+        cell.detailTextLabel.text =  [NSString stringWithFormat:@"¥ %.1f",[_goodsModel.PROPRICE floatValue]*[_goodsModel.count floatValue]];
         cell.detailTextLabel.font = kPingFangMedium(17);
         return cell;
     };
@@ -185,7 +203,52 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 }
 
 #pragma  action
+- (void)requestAddr {
+    kWeakSelf(self);
+    [_mineLogic requestShipAdr:@"d6a3779de8204dfd9359403f54f7d27c" success:^(id response) {
+        if (weakself.mineLogic.addrModelArr.count) {
+            [weakself initViewModel];
+        } else {
+            [weakself pushAddAddr];
+        }
+    }];
+}
+
+- (void)pushAddAddr {
+    kWeakSelf(self);
+    ZSHManageAddressListViewController *addAddr = [[ZSHManageAddressListViewController alloc] init];
+    addAddr.getIndex = ^(NSInteger index) {
+        weakself.currentAddrIndex = index;
+        [weakself requestAddr];
+    };
+    [self.navigationController pushViewController:addAddr animated:true];
+}
+
+
 - (void)placeOrderBtnAction{
+    if ([SafeStr(_mineLogic.buyOrderModel.ORDERADDRESS) isEqualToString:@""] ||
+        [SafeStr(_mineLogic.buyOrderModel.ORDERMONEY) isEqualToString:@""] ||
+        [SafeStr(_mineLogic.buyOrderModel.ORDERDELIVERY) isEqualToString:@""] ||
+        [SafeStr(_mineLogic.buyOrderModel.HONOURUSER_ID)  isEqualToString:@""] ||
+        [SafeStr(_mineLogic.buyOrderModel.PRODUCT_ID)  isEqualToString:@""] ||
+        [SafeStr(_mineLogic.buyOrderModel.PRODUCTCOUNT)  isEqualToString:@""]) {
+//        return;
+    }
+    kWeakSelf(self);
+    _mineLogic.buyOrderModel.ORDERADDRESS = _mineLogic.addrModelArr[_currentAddrIndex].ADDRESS_ID;
+    _mineLogic.buyOrderModel.ORDERMONEY = NSStringFormat(@"%f", [_goodsModel.PROPRICE doubleValue] *[_goodsModel.count floatValue]);
+    _mineLogic.buyOrderModel.ORDERDELIVERY = @"顺丰";
+    _mineLogic.buyOrderModel.HONOURUSER_ID = @"d6a3779de8204dfd9359403f54f7d27c";
+    _mineLogic.buyOrderModel.PRODUCT_ID = _goodsModel.PRODUCT_ID;
+    _mineLogic.buyOrderModel.PRODUCTCOUNT = _goodsModel.count;
+    [_mineLogic requestShipOrderWithModel:_mineLogic.buyOrderModel success:^(id response) {
+        UIAlertController *ac = [UIAlertController alertControllerWithTitle:@"提示" message:@"添加成功" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+            [weakself.navigationController popViewControllerAnimated:true];
+        }];
+        [ac addAction:cancelAction];
+        [weakself presentViewController:ac animated:YES completion:nil];
+    }];
     
 }
 
@@ -199,9 +262,5 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     [self.tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationNone];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
 @end

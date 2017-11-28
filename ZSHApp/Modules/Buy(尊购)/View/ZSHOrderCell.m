@@ -80,9 +80,9 @@
     
     //右侧结果
     NSDictionary *resultLabelDic = @{@"text":@"已发货",@"font": kPingFangRegular(12),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentRight)};
-    UILabel *resultLabel = [ZSHBaseUIControl createLabelWithParamDic:resultLabelDic];
-    [self addSubview:resultLabel];
-    [resultLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+    _resultLabel = [ZSHBaseUIControl createLabelWithParamDic:resultLabelDic];
+    [self addSubview:_resultLabel];
+    [_resultLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(goodsDescLabel);
         make.right.mas_equalTo(self).offset(-kRealValue(20));
         make.height.mas_equalTo(kRealValue(17));
@@ -90,9 +90,9 @@
     }];
 }
 
-- (void)updateCellWithModel:(ZSHOrderModel *)model{
-    UIImage *image = [UIImage imageNamed:model.imageName];
-    self.goodsImageView.image = image;
+- (void)updateCellWithModel:(ZSHGoodOrderModel *)model{
+    [self.goodsImageView sd_setImageWithURL:[NSURL URLWithString:model.PROSHOWIMG]];
+    _goodsImageView.contentMode = UIViewContentModeScaleAspectFill;
     [self.goodsImageView mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self).offset(kRealValue(10));
         make.top.mas_equalTo(self).offset(kRealValue(20));
@@ -100,17 +100,28 @@
         make.height.mas_equalTo(kRealValue(64));
     }];
     
-    self.goodsDescLabel.text = model.descText;
-    self.bottomLabel.text = model.bottomText;
-    self.resultLabel.text = model.result;
+    self.goodsDescLabel.text = model.PROTITLE;
+    self.bottomLabel.text = NSStringFormat(@"共%@件商品 实付款￥%@", model.PRODUCTCOUNT, model.ORDERMONEY);
+    self.resultLabel.text = model.ORDERSTATUS;
     
-    CGSize detailLabelSize = [model.descText boundingRectWithSize:CGSizeMake(kRealValue(157), MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading |NSStringDrawingTruncatesLastVisibleLine attributes:@{NSFontAttributeName:self.goodsDescLabel.font,NSForegroundColorAttributeName:KZSHColor929292} context:nil].size;
+    CGSize detailLabelSize = [model.PROTITLE boundingRectWithSize:CGSizeMake(kRealValue(157), MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading |NSStringDrawingTruncatesLastVisibleLine attributes:@{NSFontAttributeName:self.goodsDescLabel.font,NSForegroundColorAttributeName:KZSHColor929292} context:nil].size;
     [self.goodsDescLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.goodsImageView);
         make.left.mas_equalTo(self.goodsImageView.mas_right).offset(kRealValue(10));
         make.right.mas_equalTo(self).offset(-kRealValue(80));
         make.height.mas_equalTo(detailLabelSize.height);
     }];
+    
+    if ([model.ORDERSTATUS isEqualToString:@"0040001"]) {
+        _resultLabel.text = @"待付款";
+    } else if ([model.ORDERSTATUS isEqualToString:@"0040002"]) {
+        _resultLabel.text = @"待收货";
+    } else if ([model.ORDERSTATUS isEqualToString:@"0040003"]) {
+        _resultLabel.text = @"待评价";
+    } else if ([model.ORDERSTATUS isEqualToString:@"0040004"]) {
+        _resultLabel.text = @"已完成";
+    }
+    
 }
 
 + (CGFloat)getCellHeightWithModel:(ZSHBaseModel *)model{

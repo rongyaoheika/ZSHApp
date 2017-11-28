@@ -7,6 +7,7 @@
 //
 
 #import "ZSHOrderUserInfoCell.h"
+#import "ZSHAddrModel.h"
 
 @interface ZSHOrderUserInfoCell()
 
@@ -71,11 +72,10 @@
     }];
 }
 
-- (void)updateCellWithParamDic:(NSDictionary *)dic{
-    _nameLabel.text = dic[@"userName"];
-    NSString *string = [dic[@"phoneNum"] substringWithRange:NSMakeRange(3,4)];
-   _phoneLabel.text = [dic[@"phoneNum"] stringByReplacingOccurrencesOfString:string withString:@"****"];
-    _addressLabel.text = [NSString stringWithFormat:@"地址：%@",dic[@"userAddress"]];
+- (void)updateCellWithModel:(ZSHAddrModel *)model {
+    _nameLabel.text = model.CONSIGNEE;
+    _phoneLabel.text =  [model.ADRPHONE stringByReplacingCharactersInRange:NSMakeRange(3,4) withString:@"****"];
+    _addressLabel.text = NSStringFormat(@"%@%@",model.PROVINCE,model.ADDRESS);
 }
 
 @end

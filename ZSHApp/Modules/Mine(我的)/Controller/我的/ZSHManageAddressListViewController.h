@@ -8,6 +8,10 @@
 
 #import "RootViewController.h"
 
+typedef void (^GetIndex)(NSInteger);
+
 @interface ZSHManageAddressListViewController : RootViewController
+
+@property (nonatomic, copy) GetIndex  getIndex;
 
 @end

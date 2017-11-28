@@ -92,8 +92,10 @@ static NSString *cellIdentifier = @"listCell";
         };
         
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
-            
-            
+            if (weakself.getIndex) {
+                weakself.getIndex(indexPath.row);
+            }
+            [weakself.navigationController popViewControllerAnimated:true];
         };
     }
     
