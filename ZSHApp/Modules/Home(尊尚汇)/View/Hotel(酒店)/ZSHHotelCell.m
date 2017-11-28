@@ -140,8 +140,8 @@
     [_hotelAddressLabel setAttributedText:setString];
     
 //    _distanceLabel.text = [NSString stringWithFormat:@"%@公里",model.distance];
-    _priceLabel.text = [NSString stringWithFormat:@"¥%@",model.HOTELPRICE];
-    _commentLabel.text = [NSString stringWithFormat:@"（%@条评价）",model.HOTELEVACOUNT];
+    _priceLabel.text = [NSString stringWithFormat:@"¥%.0f",model.HOTELPRICE];
+    _commentLabel.text = [NSString stringWithFormat:@"（%ld条评价）",(long)model.HOTELEVACOUNT];
     
 }
 

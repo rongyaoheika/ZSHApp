@@ -7,7 +7,6 @@
 //
 
 #import "ZSHHotelLogic.h"
-#import "ZSHHotelModel.h"
 
 @implementation ZSHHotelLogic
 
@@ -31,9 +30,9 @@
     kWeakSelf(self);
     [PPNetworkHelper POST:kUrlHotelSyn parameters:paramDic success:^(id responseObject) {
         RLog(@"酒店详情数据==%@",responseObject)
-        weakself.hotelDetailModel = [ZSHHotelDetailModel mj_objectWithKeyValues:responseObject[@"pd"]];
+        ZSHHotelDetailModel *hotelDetailModel = [ZSHHotelDetailModel mj_objectWithKeyValues:responseObject[@"pd"]];
         if (weakself.requestDataCompleted) {
-            weakself.requestDataCompleted(nil);
+            weakself.requestDataCompleted(hotelDetailModel);
         }
         
     } failure:^(NSError *error) {

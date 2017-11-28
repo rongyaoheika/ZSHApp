@@ -7,7 +7,7 @@
 //
 
 #import "ZSHFoodLogic.h"
-#import "ZSHFoodModel.h"
+
 
 @implementation ZSHFoodLogic
 
@@ -30,9 +30,9 @@
     kWeakSelf(self);
     [PPNetworkHelper POST:kUrlFoodSyn parameters:paramDic success:^(id responseObject) {
         RLog(@"美食详情请求成功：返回数据&%@",responseObject);
-        _foodDetailModel = [ZSHFoodDetailModel mj_objectWithKeyValues:responseObject[@"pd"]];
+        weakself.foodDetailModel = [ZSHFoodDetailModel mj_objectWithKeyValues:responseObject[@"pd"]];
         if (weakself.requestDataCompleted) {
-            weakself.requestDataCompleted(nil);
+            weakself.requestDataCompleted(weakself.foodDetailModel);
         }
         
     } failure:^(NSError *error) {

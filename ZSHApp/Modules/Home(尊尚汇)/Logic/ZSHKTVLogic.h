@@ -7,7 +7,14 @@
 //
 
 #import "ZSHBaseLogic.h"
+#import "ZSHKTVModel.h"
 
 @interface ZSHKTVLogic : ZSHBaseLogic
+
+//KTV列表
+- (void)loadKTVListDataWithParamDic:(NSDictionary *)paramDic;
+
+//KTV详情
+- (void)loadKTVDetailDataWithParamDic:(NSDictionary *)paramDic;
 
 @end

@@ -30,7 +30,7 @@ typedef void(^BtnClickBlock)(id);
 //更新cell内容
 - (void)updateCellWithParamDic:(NSDictionary *)dic;
 - (void)updateCellWithDataArr:(NSArray *)dataArr;
-- (void)updateCellWithModel:(ZSHBaseModel *)model;
+- (void)updateCellWithModel:(id)model;
 
 
 //获取cell高度

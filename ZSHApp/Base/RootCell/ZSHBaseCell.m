@@ -145,7 +145,7 @@
     
 }
 
-- (void)updateCellWithModel:(ZSHBaseModel *)model{
+- (void)updateCellWithModel:(id)model{
     
 }
 

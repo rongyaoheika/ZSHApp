@@ -36,7 +36,10 @@
     
     CGFloat topSpacing = 0;
     switch ([self.paramDic[KFromClassType]integerValue]) {
-        case ZSHFromGoodsMineVCToCommentVC:{
+        case ZSHFromGoodsMineVCToCommentVC:
+        case ZSHFromShopCommentVCToCommentVC:{
+            topSpacing = 94;
+        }{
             topSpacing = 94;
         }
             break;

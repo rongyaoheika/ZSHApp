@@ -22,6 +22,9 @@
 #import "ZSHHomeMainModel.h"
 #import "ZSHHotelDetailViewController.h"
 #import "ZSHHomeLogic.h"
+#import "ZSHHotelViewController.h"
+
+
 
 static NSString *Identify_HeadCell = @"headCell";
 static NSString *Identify_NoticeCell = @"noticeCell";
@@ -178,9 +181,13 @@ static NSString *Identify_MusicCell = @"musicCell";
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHBaseTitleButtonCell *cell = [tableView dequeueReusableCellWithIdentifier:Identify_NoticeCell forIndexPath:indexPath];
         cell.itemClickBlock = ^(NSInteger tag) {
-            NSDictionary *nextParamDic = @{KFromClassType:@(ZSHFromHomeKTVVCToHotelDetailVC)};
-            ZSHHotelDetailViewController *hotelDetailVC = [[ZSHHotelDetailViewController alloc]initWithParamDic:nextParamDic];
-            [weakself.navigationController pushViewController:hotelDetailVC animated:YES];
+//            NSDictionary *nextParamDic = @{KFromClassType:@(ZSHFromHomeKTVVCToHotelDetailVC)};
+//            ZSHHotelDetailViewController *hotelDetailVC = [[ZSHHotelDetailViewController alloc]initWithParamDic:nextParamDic];
+//            [weakself.navigationController pushViewController:hotelDetailVC animated:YES];
+            
+            NSDictionary *nextParamDic = @{KFromClassType:@(FromKTVVCToTitleContentVC)};
+            ZSHTitleContentViewController *KTVTitleContentVC = [[ZSHTitleContentViewController alloc]initWithParamDic:nextParamDic];
+            [weakself.navigationController pushViewController:KTVTitleContentVC animated:YES];
         };
         
         if(_homeLogic.dataArr){
@@ -384,7 +391,7 @@ static NSString *Identify_MusicCell = @"musicCell";
 
 #pragma mark ————— 上拉刷新 —————
 -(void)footerRereshing{
-    [self requestData];
+    [self.tableView.mj_footer endRefreshing];
 }
 
 - (void)didReceiveMemoryWarning {

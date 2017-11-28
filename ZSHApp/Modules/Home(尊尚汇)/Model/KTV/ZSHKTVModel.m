@@ -11,3 +11,7 @@
 @implementation ZSHKTVModel
 
 @end
+
+@implementation ZSHKTVDetailModel
+
+@end

@@ -103,6 +103,17 @@
             
         }
             break;
+        case FromKTVVCToTitleContentVC:{
+            self.titleArr = @[@"排序",@"品牌",@"筛选"];
+            self.titleBtnImage = [UIImage imageNamed:@"hotel_btn"];
+            self.imageStyle = XYButtonEdgeInsetsStyleRight;
+            self.imageTitleSpace = kRealValue(6.0);
+            self.indicatorHeight = 0.0;
+            [self createHotelNaviUI];
+            self.contentVCS = @[@"ZSHKTVViewController",@"ZSHKTVViewController",@"ZSHKTVViewController"];
+        }
+            break;
+           
         case FromPlaneTicketVCToTitleContentVC:{
             self.titleArr = @[@"价格",@"时间",@"准确率"];
             self.titleBtnImage = [UIImage imageNamed:@"hotel_btn"];

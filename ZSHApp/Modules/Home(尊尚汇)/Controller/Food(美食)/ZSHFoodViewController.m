@@ -10,6 +10,8 @@
 #import "ZSHFoodCell.h"
 #import "ZSHFoodModel.h"
 #import "ZSHHotelDetailViewController.h"
+
+#import "ZSHFoodDetailViewController.h"
 #import "ZSHFoodLogic.h"
 
 @interface ZSHFoodViewController ()
@@ -75,8 +77,8 @@ static NSString *ZSHFoodCellID = @"ZSHFoodCell";
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
             ZSHFoodModel *foodModel = _foodLogic.foodListArr[indexPath.row];
             NSDictionary *nextParamDic = @{KFromClassType:@(ZSHFromFoodVCToHotelDetailVC),@"shopId":foodModel.SORTFOOD_ID};
-            ZSHHotelDetailViewController *hotelDetailVC = [[ZSHHotelDetailViewController alloc]initWithParamDic:nextParamDic];
-            [weakself.navigationController pushViewController:hotelDetailVC animated:YES];
+            ZSHFoodDetailViewController *foodDetailVC = [[ZSHFoodDetailViewController alloc]initWithParamDic:nextParamDic];
+            [weakself.navigationController pushViewController:foodDetailVC animated:YES];
         };
     }
     
@@ -99,7 +101,7 @@ static NSString *ZSHFoodCellID = @"ZSHFoodCell";
 
 #pragma mark ————— 上拉刷新 —————
 -(void)footerRereshing{
-    [self requestData];
+     [self.tableView.mj_footer endRefreshing];
 }
 
 - (void)didReceiveMemoryWarning {

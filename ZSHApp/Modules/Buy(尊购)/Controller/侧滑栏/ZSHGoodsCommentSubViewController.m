@@ -31,9 +31,7 @@
                                @"name":@"柯南也要为我哭泣",
                                @"detailText":@"#之前就来过这里，环境很不错，作为我来讲对这种牛排其实是一点都不感冒[撇嘴]，朋友的盛情邀请实在是不好意思拒绝，索性就来瞧瞧，不来不知道，吃过之后给我留下不错的印象，这次来也是带几个朋友来，给他们各种吹嘘这里的好东西多好之类的！！还好吃过之后大家都没有失望的表情。。。总之以后回多多光临的，页希望大家来哦"};
     self.commentModel = [ZSHWeiBoCellModel mj_objectWithKeyValues:paramDic];
-    
     [self initViewModel];
-    
 }
 
 - (void)createUI{

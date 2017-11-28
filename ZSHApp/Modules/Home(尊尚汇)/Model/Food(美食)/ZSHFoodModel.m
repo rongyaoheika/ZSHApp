@@ -8,8 +8,8 @@
 
 #import "ZSHFoodModel.h"
 #import "ZSHFoodCell.h"
-@implementation ZSHFoodModel
 
+@implementation ZSHFoodModel
 
 -(CGFloat)cellHeight
 {

@@ -42,9 +42,6 @@
     btn.titleLabel.font = titleFont;
     if ([paramDic[@"withImage"]integerValue]) {
         [btn setImage:[UIImage imageNamed:paramDic[@"normalImage"]] forState:UIControlStateNormal];
-        
-        UIImage *image = paramDic[@"selectedImage"]?paramDic[@"selectedImage"]:paramDic[@"selectedImage"];
-        [btn setImage:image forState:UIControlStateSelected];
     }
     
     return btn;
