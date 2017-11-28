@@ -16,6 +16,7 @@
 @property (nonatomic, copy)   NSString                  *shopId;
 @property (nonatomic, strong) ZSHFoodLogic              *foodLogic;
 @property (nonatomic, strong) ZSHFoodDetailModel        *foodDetailModel;
+@property (nonatomic, strong) NSDictionary              *foodDetailParamDic;
 
 @end
 
@@ -42,12 +43,13 @@ static NSString *ZSHBookCellID = @"ZSHBookCell";
 
 - (void)requestData{
     kWeakSelf(self);
-  
+    
     _foodLogic = [[ZSHFoodLogic alloc]init];
     NSDictionary *paramDic = @{@"SORTFOOD_ID":self.shopId};
     [_foodLogic loadFoodDetailDataWithParamDic:paramDic];
-    _foodLogic.requestDataCompleted = ^(ZSHFoodDetailModel *foodDetailModel){
-        _foodDetailModel = foodDetailModel;
+    _foodLogic.requestDataCompleted = ^(NSDictionary *paramDic){
+        _foodDetailModel = paramDic[@"foodDetailModel"];
+        _foodDetailParamDic = paramDic[@"foodDetailParamDic"];
         [weakself.tableView.mj_header endRefreshing];
         [weakself.tableView.mj_footer endRefreshing];
         [weakself initViewModel];
@@ -100,8 +102,8 @@ static NSString *ZSHBookCellID = @"ZSHBookCell";
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHHotelDetailDeviceCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHHotelDetailDeviceCellID forIndexPath:indexPath];
         cell.fromClassType = [self.paramDic[KFromClassType]integerValue];
-        if (_foodDetailModel) {
-            [cell updateCellWithModel:_foodDetailModel];
+        if (_foodDetailParamDic) {
+            [cell updateCellWithParamDic:_foodDetailParamDic];
         }
         
         return cell;

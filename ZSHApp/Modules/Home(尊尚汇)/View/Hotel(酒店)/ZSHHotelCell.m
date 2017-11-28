@@ -125,25 +125,54 @@
     }];
 }
 
-- (void)updateCellWithModel:(ZSHHotelModel *)model{
+- (void)updateCellWithParamDic:(NSDictionary *)dic{
+    [_hotelmageView sd_setImageWithURL:[NSURL URLWithString:dic[@"SHOWIMAGES"]]];
+    if (self.fromClassType == ZSHFromHotelVCToHotelDetailVC) {//酒店详情
+        _hotelDescLabel.text = dic[@"HOTELNAMES"];
+        _hotelAddressLabel.text = dic[@"HOTELADDRESS"];
+        //        distance = dic[@"HOTELADDRESS"];
+        _priceLabel.text = [NSString stringWithFormat:@"¥%.0f",[dic[@"HOTELPRICE"]floatValue] ];
+        _commentLabel.text = [NSString stringWithFormat:@"（%ld条评价）",(long)[dic[@"HOTELEVACOUNT"]intValue]];
+        _starView.scorePercent = [dic[@"HOTELEVALUATE"]floatValue]/5.0;
+        
+    } else if (self.fromClassType == ZSHFromHotelVCToHotelDetailVC) {//KTV详情
+        _hotelDescLabel.text = dic[@"KTVNAMES"];
+        _hotelAddressLabel.text = dic[@"KTVADDRESS"];
+        //        distance = dic[@"HOTELADDRESS"];
+        _priceLabel.text  = [NSString stringWithFormat:@"¥%.0f",[dic[@"KTVPRICE"]floatValue] ];
+        
+        _commentLabel.text = [NSString stringWithFormat:@"（%ld条评价）",(long)[dic[@"KTVEVACOUNT"]intValue]];
+        _starView.scorePercent = [dic[@"HOTELEVALUATE"]floatValue]/5.0;
+    }
     
-    
-    [_hotelmageView sd_setImageWithURL:[NSURL URLWithString:model.SHOWIMAGES]];
-    _hotelDescLabel.text = model.HOTELNAMES;
-    
-    _hotelAddressLabel.text = model.HOTELADDRESS;
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
     [paragraphStyle setLineSpacing:5];
-    NSString *detailStr = model.HOTELADDRESS;
+    NSString *detailStr = _hotelAddressLabel.text;
     NSMutableAttributedString *setString = [[NSMutableAttributedString alloc] initWithString:detailStr];
     [setString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, [detailStr length])];
     [_hotelAddressLabel setAttributedText:setString];
-    
-//    _distanceLabel.text = [NSString stringWithFormat:@"%@公里",model.distance];
-    _priceLabel.text = [NSString stringWithFormat:@"¥%.0f",model.HOTELPRICE];
-    _commentLabel.text = [NSString stringWithFormat:@"（%ld条评价）",(long)model.HOTELEVACOUNT];
-    
 }
+
+
+//- (void)updateCellWithModel:(ZSHHotelModel *)model{
+//    
+//    
+//    [_hotelmageView sd_setImageWithURL:[NSURL URLWithString:model.SHOWIMAGES]];
+//    _hotelDescLabel.text = model.HOTELNAMES;
+//    
+//    _hotelAddressLabel.text = model.HOTELADDRESS;
+//    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+//    [paragraphStyle setLineSpacing:5];
+//    NSString *detailStr = model.HOTELADDRESS;
+//    NSMutableAttributedString *setString = [[NSMutableAttributedString alloc] initWithString:detailStr];
+//    [setString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, [detailStr length])];
+//    [_hotelAddressLabel setAttributedText:setString];
+//    
+////    _distanceLabel.text = [NSString stringWithFormat:@"%@公里",model.distance];
+//    _priceLabel.text = [NSString stringWithFormat:@"¥%.0f",model.HOTELPRICE];
+//    _commentLabel.text = [NSString stringWithFormat:@"（%ld条评价）",(long)model.HOTELEVACOUNT];
+//    
+//}
 
 - (CGFloat)rowHeightWithCellModel:(ZSHHotelModel *)model{
     [self updateCellWithModel:model];

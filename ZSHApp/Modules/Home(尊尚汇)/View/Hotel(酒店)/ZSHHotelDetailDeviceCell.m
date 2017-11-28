@@ -108,50 +108,6 @@
 
 #pragma action
 
-- (void)updateCellWithModel:(id)model{
-   if (self.fromClassType == ZSHFromFoodVCToHotelDetailVC) {
-        ZSHFoodDetailModel *foodDetailModel = (ZSHFoodDetailModel *)model;
-       //好评分数
-       UILabel *topLabel = [_commentBtn viewWithTag:1];
-       topLabel.text = [NSString stringWithFormat:@"%.1f",foodDetailModel.SHOPEVALUATE];
-       
-       
-   } else if (self.fromClassType == ZSHFromHotelPayVCToHotelDetailVC) {
-       ZSHHotelModel *hotelModel = (ZSHHotelModel *)model;
-       _titleLabel.text = hotelModel.hotelName;
-
-   } else if (self.fromClassType == ZSHFromHotelVCToHotelDetailVC) {// 酒店详情
-       
-       ZSHHotelDetailModel *hotelDetailModel = (ZSHHotelDetailModel *)model;
-       UILabel *topLabel = [_commentBtn viewWithTag:1];
-       topLabel.text = [NSString stringWithFormat:@"%.1f",hotelDetailModel.HOTELEVALUATE];
-       [self createRealBtnArrWith:@{@"model":hotelDetailModel}];
-       
-       
-    } else if (self.fromClassType == ZSHFromHomeKTVVCToHotelDetailVC) {
-        ZSHKTVModel *KTVModel = (ZSHKTVModel *)model;
-        _titleLabel.text = KTVModel.KTVName;
-    }
-    
-    [self layoutIfNeeded];
-}
-
-- (void)updateCellWithParamDic:(NSDictionary *)dic{
-    //好评
-    UILabel *topLabel = [_commentBtn viewWithTag:1];
-    NSString *commentStr = @"4.9";
-    if (self.fromClassType == ZSHFromFoodVCToHotelDetailVC) {//美食详情
-        commentStr = [NSString stringWithFormat:@"%%@f",dic[@"SHOPEVALUATE"]];
-        
-    } else if (self.fromClassType == ZSHFromHotelPayVCToHotelDetailVC) {
-        
-        
-    } else if (self.fromClassType == ZSHFromHotelVCToHotelDetailVC) {// 酒店详情
-        
-    } else if (self.fromClassType == ZSHFromHomeKTVVCToHotelDetailVC) {
-    }
-}
-
 - (void)hotelDeviceBtnAction:(UIButton *)hotelDevieBtn{
     
 }
@@ -160,36 +116,33 @@
     
 }
 
-- (void)createRealBtnArrWith:(id)model{
-    
-    if (self.fromClassType == ZSHFromHotelVCToHotelDetailVC) {
-       ZSHHotelDetailModel *newModel = (ZSHHotelDetailModel *)model;
-        newModel.SHOPSERVWIFI?[_realBtnArr addObject:_allBtnArr[0]]: 0;
-        if (newModel.SHOPSERVWIFI) {//wifi
-            [_realBtnArr addObject:_allBtnArr[0]];
-        }
-        
-        if (newModel.SHOPSERVPAY) {//移动支付
-            [_realBtnArr addObject:_allBtnArr[1]];
-        }
-        
-        if (newModel.SHOPSERVFOOD) {//餐饮
-            [_realBtnArr addObject:_allBtnArr[2]];
-        }
-        
-        if (newModel.SHOPSERVFITNESS) {//健身
-            [_realBtnArr addObject:_allBtnArr[3]];
-        }
-        
-        if (newModel.SHOPSERVSWIM) {//游泳
-            [_realBtnArr addObject:_allBtnArr[4]];
-        }
-        
-        if (newModel.SHOPSERVPARK) {//停车
-            [_realBtnArr addObject:_allBtnArr[5]];
-        }
+#pragma action
+- (void)updateCellWithParamDic:(NSDictionary *)dic{
+    //好评
+    UILabel *topLabel = [_commentBtn viewWithTag:1];
+    NSString *commentStr = @"4.9";
+    if (self.fromClassType == ZSHFromFoodVCToHotelDetailVC) {//美食详情
+        commentStr = [NSString stringWithFormat:@"%.1f",[dic[@"SHOPEVALUATE"]floatValue] ];
+    } else if (self.fromClassType == ZSHFromHotelPayVCToHotelDetailVC) {//酒店订单详情
+        commentStr = [NSString stringWithFormat:@"%.1f",[dic[@"HOTELEVALUATE"]floatValue]];
+    } else if (self.fromClassType == ZSHFromHotelVCToHotelDetailVC) {// 酒店详情
+        commentStr = [NSString stringWithFormat:@"%.1f",[dic[@"HOTELEVALUATE"]floatValue]];
+    } else if (self.fromClassType == ZSHFromHomeKTVVCToHotelDetailVC) {//KTV详情
+        commentStr = [NSString stringWithFormat:@"%.1f",[dic[@"KTVEVALUATE"]floatValue] ];
     }
     
+    topLabel.text = commentStr;
+    [self createRealBtnArrWith:dic];
 }
+
+- (void)createRealBtnArrWith:(NSDictionary *)dic{
+    dic[@"SHOPSERVWIFI"]?[_realBtnArr addObject:_allBtnArr[0]]:0;     //wifi
+    dic[@"SHOPSERVPAY"]?[_realBtnArr addObject:_allBtnArr[1]]:0;      //移动支付
+    dic[@"SHOPSERVFOOD"]?[_realBtnArr addObject:_allBtnArr[2]]:0;     //餐饮
+    dic[@"SHOPSERVFITNESS"]?[_realBtnArr addObject:_allBtnArr[3]]:0;  //健身
+    dic[@"SHOPSERVSWIM"]?[_realBtnArr addObject:_allBtnArr[4]]:0;     //游泳
+    dic[@"SHOPSERVPARK"]?[_realBtnArr addObject:_allBtnArr[5]]:0;     //停车
+}
+
 
 @end
