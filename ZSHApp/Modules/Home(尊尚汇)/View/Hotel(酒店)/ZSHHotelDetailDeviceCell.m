@@ -136,6 +136,22 @@
     [self layoutIfNeeded];
 }
 
+- (void)updateCellWithParamDic:(NSDictionary *)dic{
+    //好评
+    UILabel *topLabel = [_commentBtn viewWithTag:1];
+    NSString *commentStr = @"4.9";
+    if (self.fromClassType == ZSHFromFoodVCToHotelDetailVC) {//美食详情
+        commentStr = [NSString stringWithFormat:@"%%@f",dic[@"SHOPEVALUATE"]];
+        
+    } else if (self.fromClassType == ZSHFromHotelPayVCToHotelDetailVC) {
+        
+        
+    } else if (self.fromClassType == ZSHFromHotelVCToHotelDetailVC) {// 酒店详情
+        
+    } else if (self.fromClassType == ZSHFromHomeKTVVCToHotelDetailVC) {
+    }
+}
+
 - (void)hotelDeviceBtnAction:(UIButton *)hotelDevieBtn{
     
 }
@@ -148,7 +164,7 @@
     
     if (self.fromClassType == ZSHFromHotelVCToHotelDetailVC) {
        ZSHHotelDetailModel *newModel = (ZSHHotelDetailModel *)model;
-        
+        newModel.SHOPSERVWIFI?[_realBtnArr addObject:_allBtnArr[0]]: 0;
         if (newModel.SHOPSERVWIFI) {//wifi
             [_realBtnArr addObject:_allBtnArr[0]];
         }

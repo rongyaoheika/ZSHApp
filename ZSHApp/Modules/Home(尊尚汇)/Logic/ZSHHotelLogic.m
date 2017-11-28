@@ -30,6 +30,7 @@
     kWeakSelf(self);
     [PPNetworkHelper POST:kUrlHotelSyn parameters:paramDic success:^(id responseObject) {
         RLog(@"酒店详情数据==%@",responseObject)
+        weakself.hotelDetailParamDic = responseObject[@"pd"];
         ZSHHotelDetailModel *hotelDetailModel = [ZSHHotelDetailModel mj_objectWithKeyValues:responseObject[@"pd"]];
         if (weakself.requestDataCompleted) {
             weakself.requestDataCompleted(hotelDetailModel);

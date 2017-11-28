@@ -12,6 +12,7 @@
 @interface ZSHHotelLogic : ZSHBaseLogic
 
 @property (nonatomic, strong) NSArray <ZSHHotelModel *>   *hotelListArr;
+@property (nonatomic, strong) NSDictionary                *hotelDetailParamDic;
 
 //酒店列表
 - (void)loadHotelListDataWithParamDic:(NSDictionary *)paramDic;
