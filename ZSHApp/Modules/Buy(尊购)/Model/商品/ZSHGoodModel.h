@@ -26,7 +26,7 @@
 /* 头部轮播 */
 @property (copy , nonatomic , readonly)NSArray *images;
 
-
+@property (nonatomic, copy) NSString *count;
 
 /** 商品标题 */
 @property (nonatomic, copy) NSString *PROTITLE;

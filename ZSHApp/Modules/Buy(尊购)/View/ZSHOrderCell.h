@@ -7,7 +7,7 @@
 //
 
 #import "ZSHBaseCell.h"
-#import "ZSHOrderModel.h"
+#import "ZSHGoodOrderModel.h"
 
 @interface ZSHOrderCell : ZSHBaseCell
 

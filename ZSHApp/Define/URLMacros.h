@@ -110,7 +110,7 @@
 //13.获得用户名下所有订单列表
 //参数：HONOURUSER_ID 用户id
 //请求地址：/apporderin/orderalllist?ALLORDER(混淆码)
-#define kUrlOrderAllList [NSString stringWithFormat:@"/appshipin/shipprefecture?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"ALLORDER"]]
+#define kUrlOrderAllList [NSString stringWithFormat:@"/apporderin/orderalllist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"ALLORDER"]]
 //14.获取用户名带条件查询的订单列表（待付款，待收货，待评价，已完成）
 //参数：HONOURUSER_ID 用户id/CONORDER 查询状态
 //（0040001）为待付款状态

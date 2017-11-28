@@ -32,7 +32,6 @@ static NSString *headerViewIdentifier = @"hederview";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     
     [self loadData];
     [self createUI];
@@ -175,11 +174,6 @@ static NSString *headerViewIdentifier = @"hederview";
         ZSHTitleContentViewController *liveVC = [[ZSHTitleContentViewController alloc]initWithParamDic:nextParamDic];
         [self.navigationController pushViewController:liveVC animated:YES];
     }
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 @end
