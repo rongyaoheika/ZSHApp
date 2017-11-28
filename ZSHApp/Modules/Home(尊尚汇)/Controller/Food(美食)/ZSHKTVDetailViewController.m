@@ -17,7 +17,7 @@
 #import "ZSHHotelCalendarCell.h"
 #import "ZSHHotelListCell.h"
 #import "ZSHHotelPayViewController.h"
-
+#import "ZSHShopCommentViewController.h"
 @interface ZSHKTVDetailViewController ()
 
 @property (nonatomic, copy)   NSString                  *shopId;
@@ -50,14 +50,6 @@ static NSString *ZSHKTVListCellID = @"ZSHKTVListCell";
     self.shopId = self.paramDic[@"shopId"];
     self.dataArr = [[NSMutableArray alloc]init];
     [self requestData];
-    
-//    if (kFromClassTypeValue == ZSHFromHomeKTVVCToHotelDetailVC) {
-//        [self.dataArr removeAllObjects];
-//        NSDictionary *KTVModelDic =
-//        @{@"imageName":@"food_image_1",@"price":@"399",@"address":@"三亚市天涯区黄山路90号",@"comment":@"120",@"detailImageName":@"hotel_detail_big",@"KTVName":@"麦乐迪（航天桥店）1",@"roomType":@"小包（2-4人）",@"time":@"10:00-13:00，共3小时"};
-////        self.KTVModel = [ZSHKTVModel mj_objectWithKeyValues:KTVModelDic];
-//    }
-//
     [self initViewModel];
 }
 
@@ -137,6 +129,7 @@ static NSString *ZSHKTVListCellID = @"ZSHKTVListCell";
 
 //地址，电话，订购
 - (ZSHBaseTableViewSectionModel*)storeSubSection {
+    kWeakSelf(self);
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     NSArray *arrowImageArr = @[@"hotel_map",@"hotel_phone"];
     NSArray *titleArr = @[@"三亚市天涯区黄山路94号",@"0898-86868686"];
@@ -192,6 +185,9 @@ static NSString *ZSHKTVListCellID = @"ZSHKTVListCell";
     
     cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
         //用户评价
+        NSDictionary *nextParamDic = @{@"shopId":self.shopId};
+        ZSHShopCommentViewController *shopCommentVC = [[ZSHShopCommentViewController alloc]initWithParamDic:nextParamDic];
+        [weakself.navigationController pushViewController:shopCommentVC animated:YES];
     };
     
     return sectionModel;

@@ -10,7 +10,7 @@
 #import "ZSHFoodLogic.h"
 #import "ZSHHotelDetailHeadCell.h"
 #import "ZSHHotelDetailDeviceCell.h"
-
+#import "ZSHShopCommentViewController.h"
 @interface ZSHFoodDetailViewController ()
 
 @property (nonatomic, copy)   NSString                  *shopId;
@@ -114,6 +114,7 @@ static NSString *ZSHBookCellID = @"ZSHBookCell";
 
 //地址，电话，评论
 - (ZSHBaseTableViewSectionModel*)storeSubSection {
+    kWeakSelf(self);
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     NSArray *arrowImageArr = @[@"hotel_map",@"hotel_phone"];
     NSArray *titleArr = @[@"三亚市天涯区黄山路94号",@"0898-86868686"];
@@ -165,6 +166,10 @@ static NSString *ZSHBookCellID = @"ZSHBookCell";
     
     cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
         //用户评价
+        
+        NSDictionary *nextParamDic = @{@"shopId":self.shopId};
+        ZSHShopCommentViewController *shopCommentVC = [[ZSHShopCommentViewController alloc]initWithParamDic:nextParamDic];
+        [weakself.navigationController pushViewController:shopCommentVC animated:YES];
     };
     
     return sectionModel;
