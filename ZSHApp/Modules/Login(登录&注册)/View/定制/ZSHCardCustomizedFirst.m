@@ -56,7 +56,7 @@
     for (int i = 0; i<placeHolderArr.count; i++) {
         NSDictionary *textFieldDic = @{@"placeholder":placeHolderArr[i],@"textFieldType":textFieldTypeArr[i]};
          ZSHTextFieldCellView *textField = [[ZSHTextFieldCellView alloc]initWithFrame:CGRectZero paramDic:textFieldDic];
-        
+        textField.textField.delegate = self;
         NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];
         style.alignment = NSTextAlignmentCenter;
         NSAttributedString *attri = [[NSAttributedString alloc] initWithString:placeHolderArr[i] attributes:@{NSForegroundColorAttributeName:KZSHColor929292,NSFontAttributeName:kPingFangLight(15), NSParagraphStyleAttributeName:style}];

@@ -14,7 +14,8 @@
 #import "ZSHCouponViewController.h"
 #import "ZSHApplyServiceViewController.h"
 #import "ZSHCommentViewController.h"
-
+#import "ZSHCardBtnListView.h"
+#import "ZSHBottomBlurPopView.h"
 static NSString * cellIdentifier = @"cellId";
 static NSString *headerViewIdentifier = @"hederview";
 
@@ -24,7 +25,9 @@ static NSString *headerViewIdentifier = @"hederview";
 @property (nonatomic, strong) NSArray        *dataArr;
 @property (nonatomic, strong) NSArray        *pushVCsArr;
 @property (nonatomic, strong) NSArray        *paramArr;
+@property (nonatomic, strong) UIButton       *titleBtn;
 
+@property (nonatomic, strong) ZSHBottomBlurPopView  *topBtnListView;
 
 @end
 
@@ -36,6 +39,14 @@ static NSString *headerViewIdentifier = @"hederview";
     
     [self loadData];
     [self createUI];
+}
+
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    if (self.topBtnListView) {
+        [ZSHBaseUIControl setAnimationWithHidden:YES view:self.topBtnListView completedBlock:nil];
+        self.topBtnListView = nil;
+    }
 }
 
 - (void)loadData{
@@ -85,7 +96,10 @@ static NSString *headerViewIdentifier = @"hederview";
 }
 
 - (void)createUI{
-    self.title = @"我的订单";
+    
+    self.navigationItem.titleView = self.titleBtn;
+    self.titleBtn.frame = self.navigationItem.titleView.bounds;
+    [self.titleBtn layoutButtonWithEdgeInsetsStyle:XYButtonEdgeInsetsStyleRight imageTitleSpace:kRealValue(10)];
 
     UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout *)self.collectionView.collectionViewLayout;
     layout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0);
@@ -174,6 +188,104 @@ static NSString *headerViewIdentifier = @"hederview";
         NSDictionary *nextParamDic = @{KFromClassType:@(FromAllOrderVCToTitleContentVC),@"title":@"我的订单"};
         ZSHTitleContentViewController *liveVC = [[ZSHTitleContentViewController alloc]initWithParamDic:nextParamDic];
         [self.navigationController pushViewController:liveVC animated:YES];
+    }
+}
+
+
+- (UIButton *)titleBtn{
+    if (!_titleBtn) {
+    NSDictionary *titleBtnDic = @{@"title":@"尊购",@"font":kPingFangMedium(17)};
+    _titleBtn = [ZSHBaseUIControl createBtnWithParamDic:titleBtnDic];
+    [_titleBtn addTarget:self action:@selector(titleBtnAction) forControlEvents:UIControlEventTouchUpInside];
+     [_titleBtn setImage:[UIImage imageNamed:@"hotel_btn"] forState:UIControlStateNormal];
+    }
+    return _titleBtn;
+}
+
+- (void)titleBtnAction{
+    _titleBtn.selected = !_titleBtn.selected;
+    if (_titleBtn.selected) {
+        [self changeButtonObject:_titleBtn TransformAngle:M_PI];
+    } else {
+        [self changeButtonObject:_titleBtn TransformAngle:0];
+    }
+   
+}
+
+-(void)changeButtonObject:(UIButton *)button TransformAngle:(CGFloat)angle{
+    kWeakSelf(self);
+    [UIView animateWithDuration:0.5 animations:^{
+        button.imageView.transform =CGAffineTransformMakeRotation(angle);
+        if (angle == M_PI ) {//下拉展开
+            weakself.topBtnListView = [weakself createBottomBlurPopViewWith:ZSHFromGoodsMineVCToToBottomBlurPopView];
+            [ZSHBaseUIControl setAnimationWithHidden:NO view:weakself.topBtnListView completedBlock:nil];
+            
+            //订单列表button点击
+            ZSHCardBtnListView *listView = [weakself.topBtnListView viewWithTag:2];
+            listView.btnClickBlock = ^(UIButton *btn) {
+                [weakself orderTypeBtnAction:btn];
+            };
+            
+            //点击背景消失
+            weakself.topBtnListView .dissmissViewBlock = ^(UIView *blurView, NSIndexPath *indexpath) {
+                [ZSHBaseUIControl setAnimationWithHidden:YES view:blurView completedBlock:nil];
+            };
+            
+        } else if(angle == 0){//收起
+            [ZSHBaseUIControl setAnimationWithHidden:YES view:weakself.topBtnListView completedBlock:nil];
+        }
+       
+    } completion:^(BOOL finished) {
+        
+    }];
+}
+
+#pragma getter
+- (ZSHBottomBlurPopView *)createBottomBlurPopViewWith:(ZSHFromVCToBottomBlurPopView)fromClassType{
+    NSDictionary *nextParamDic = @{KFromClassType:@(fromClassType)};
+    ZSHBottomBlurPopView *bottomBlurPopView = [[ZSHBottomBlurPopView alloc]initWithFrame:CGRectMake(0, KNavigationBarHeight, KScreenWidth, KScreenHeight-KNavigationBarHeight) paramDic:nextParamDic];
+    bottomBlurPopView.blurRadius = 20;
+    bottomBlurPopView.dynamic = NO;
+    bottomBlurPopView.tintColor = KClearColor;
+    [bottomBlurPopView setBlurEnabled:YES];
+    return bottomBlurPopView;
+}
+
+//选中某种订单列表
+- (void)orderTypeBtnAction:(UIButton *)orderBtn{
+    switch (orderBtn.tag) {
+        case 1:{//尊购
+            [self loadData];
+            [self.collectionView reloadData];
+            [self changeButtonObject:_titleBtn TransformAngle:0];
+            _titleBtn.selected = !_titleBtn.selected;
+             break;
+        }
+            
+        default:{
+            self.sectionTitleArr = @[@"我的订单"];
+            self.dataArr = @[@[@{@"image":@"goods_mine_allOrder",@"desc":@"全部订单", @"tag":@(1)},
+                               @{@"image":@"goods_mine_payment",@"desc":@"待付款",@"tag":@(2)},
+                               @{@"image":@"goods_mine_noUse",@"desc":@"待使用",@"tag":@(3)},
+                               @{@"image":@"goods_mine_judge",@"desc":@"待评价",@"tag":@(4)}]
+                             ];
+            self.pushVCsArr = @[
+                                @[@"ZSHTitleContentViewController",
+                                  @"ZSHTitleContentViewController",
+                                  @"ZSHCommentViewController",
+                                  @"ZSHApplyServiceViewController"]
+                                ];
+            self.paramArr = @[
+                             @[@{KFromClassType:@(FromAllOrderVCToTitleContentVC),@"title":@"我的订单"},
+                               @{KFromClassType:@(FromAllOrderVCToTitleContentVC),@"title":@"我的订单"},
+                               @{KFromClassType:@(ZSHFromGoodsMineVCToCommentVC)},
+                               @{KFromClassType:@(ZSHFromGoodsMineVCToApplyServiceVC)}]
+                             ];
+            [self.collectionView reloadData];
+            [self changeButtonObject:_titleBtn TransformAngle:0];
+            _titleBtn.selected = !_titleBtn.selected;
+            break;
+        }
     }
 }
 

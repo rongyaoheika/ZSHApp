@@ -36,11 +36,14 @@
 #import "ZSHSearchLiveThirdCell.h"
 #import "ZSHWeiboViewController.h"
 
+//我的-订单列表
+#import "ZSHCardBtnListView.h"
+
 @interface ZSHBottomBlurPopView ()<STCalendarDelegate>
 
 @property (nonatomic, strong) NSDictionary           *paramDic;
 @property (nonatomic, strong) ZSHBaseModel           *model;
-@property (nonatomic, strong) ZSHHotelModel    *hotelModel;
+@property (nonatomic, strong) ZSHHotelModel          *hotelModel;
 @property (nonatomic, strong) ZSHKTVModel            *KTVModel;
 @property (nonatomic, strong) ZSHTopLineView         *topLineView;
 @property (nonatomic, copy)   NSString               *typeText;
@@ -124,7 +127,7 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
     self.backgroundColor = KClearColor;
 //    [self addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapBlurViewAction:)]];
     
-    if (kFromClassTypeValue != ZSHFromPersonInfoVCToBottomBlurPopView||kFromClassTypeValue != ZSHFromLiveMidVCToBottomBlurPopView) {
+    if (kFromClassTypeValue != ZSHFromPersonInfoVCToBottomBlurPopView && kFromClassTypeValue != ZSHFromLiveMidVCToBottomBlurPopView && kFromClassTypeValue != ZSHFromGoodsMineVCToToBottomBlurPopView) {
         self.subTab = [ZSHBaseUIControl createTableView];
         self.subTab.scrollEnabled = NO;
         self.subTab.tag = 2;
@@ -207,9 +210,15 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
             make.size.mas_equalTo(CGSizeMake(KScreenWidth, kRealValue(185)));
         }];
         return;
+    } else if (kFromClassTypeValue == ZSHFromGoodsMineVCToToBottomBlurPopView) { //我的-订单列表
+        NSArray *titleArr = @[@"尊购",@"火车票",@"机票",@"酒店",@"KTV",@"美食",@"酒吧",@"电影"];
+        NSDictionary *nextParamDic = @{@"titleArr":titleArr,@"normalImage":@"card_normal",@"selectedImage":@"card_press"};
+        ZSHCardBtnListView *listView = [[ZSHCardBtnListView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kRealValue(140)) paramDic:nextParamDic];
+        [listView selectedByIndex:1];
+        listView.tag = 2;
+        [self addSubview:listView];
+        return;
     }
-    
-    
     
     self.subTab.delegate = self.tableViewModel;
     self.subTab.dataSource = self.tableViewModel;

@@ -95,7 +95,7 @@
     };
 }
 
-//超级荣耀黑卡
+//超级黑卡靓号
 - (void)addBlackCardCellModelToSection:(NSInteger)section{
     NSInteger realSection = section - 10;
     ZSHBaseTableViewSectionModel *sectionModel = self.tableViewModel.sectionModelArray[realSection];

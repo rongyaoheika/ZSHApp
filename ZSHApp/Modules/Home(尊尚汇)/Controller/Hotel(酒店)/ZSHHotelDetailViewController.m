@@ -26,6 +26,7 @@
 @property (nonatomic, copy)   NSString                  *shopId;
 @property (nonatomic, strong) ZSHHotelLogic             *hotelLogic;
 @property (nonatomic, strong) ZSHHotelDetailModel       *hotelDetailModel;
+@property (nonatomic, strong) NSDictionary              *hotelDetailParamDic;
 @property (nonatomic, strong) NSArray                   *modelNameArr;
 
 @property (nonatomic, strong) ZSHBaseModel              *model;
@@ -76,6 +77,7 @@ static NSString *ZSHKTVListCellID = @"ZSHKTVListCell";
     _hotelLogic = [[ZSHHotelLogic alloc]init];
     NSDictionary *paramDic = @{@"SORTHOTEL_ID":self.shopId};
     [_hotelLogic loadHotelDetailDataWithParamDic:paramDic];
+    self.hotelDetailParamDic = _hotelLogic.hotelDetailParamDic;
     _hotelLogic.requestDataCompleted = ^(ZSHHotelDetailModel *hotelDetailModel){
         weakself.hotelDetailModel = hotelDetailModel;
         [weakself.tableView.mj_header endRefreshing];
@@ -150,8 +152,8 @@ static NSString *ZSHKTVListCellID = @"ZSHKTVListCell";
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHHotelDetailDeviceCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHHotelDetailDeviceCellID forIndexPath:indexPath];
         cell.fromClassType = [self.paramDic[KFromClassType]integerValue];
-        if (_hotelDetailModel) {
-            [cell updateCellWithModel:_hotelDetailModel];
+        if (_hotelDetailParamDic) {
+            [cell updateCellWithParamDic:_hotelDetailParamDic];
         }
         [self hideSeparatorLineWithCell:cell hide:YES];
         return cell;
