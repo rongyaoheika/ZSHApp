@@ -45,7 +45,7 @@ static NSString *Identify_MusicCell = @"musicCell";
 @property (nonatomic, strong) ZSHBottomBlurPopView   *bottomBlurPopView;
 
 @property (nonatomic, strong) ZSHHomeLogic           *homeLogic;
-@property (nonatomic, strong) NSMutableDictionary    *dataDic;
+
 @end
 
 @implementation ZSHHomeViewController
@@ -59,7 +59,7 @@ static NSString *Identify_MusicCell = @"musicCell";
 
 - (void)loadData{
     //加载网络数据
-    _homeLogic = [[ZSHHomeLogic alloc]init];
+   
     [self requestData];
     
     self.pushVCsArr = @[@"ZSHTitleContentViewController",
@@ -98,7 +98,10 @@ static NSString *Identify_MusicCell = @"musicCell";
 
 - (void)requestData{
     kWeakSelf(self);
+    _homeLogic = [[ZSHHomeLogic alloc]init];
     [_homeLogic loadNoticeCellData];
+    [_homeLogic loadServiceCellData];
+    
     _homeLogic.requestDataCompleted = ^(id data){
         [weakself.tableView.mj_header endRefreshing];
         [weakself.tableView.mj_footer endRefreshing];
@@ -119,7 +122,8 @@ static NSString *Identify_MusicCell = @"musicCell";
     
 	[self.tableView registerClass:[ZSHHomeHeadView class] forCellReuseIdentifier:Identify_HeadCell];
 	[self.tableView registerClass:[ZSHBaseTitleButtonCell class] forCellReuseIdentifier:Identify_NoticeCell];
-    [self.tableView registerClass:[ZSHNoticeViewCell class] forCellReuseIdentifier:Identify_ServiceCell];
+     [self.tableView registerClass:[ZSHBaseTitleButtonCell class] forCellReuseIdentifier:Identify_ServiceCell];
+//    [self.tableView registerClass:[ZSHNoticeViewCell class] forCellReuseIdentifier:Identify_ServiceCell];
 	[self.tableView registerClass:[ZSHNoticeViewCell class] forCellReuseIdentifier:Identify_PlayCell];
     [self.tableView registerClass:[ZSHNoticeViewCell class] forCellReuseIdentifier:Identify_MagazineCell];
     [self.tableView registerClass:[ZSHBaseTitleButtonCell class] forCellReuseIdentifier:Identify_MusicCell];
@@ -190,8 +194,8 @@ static NSString *Identify_MusicCell = @"musicCell";
             [weakself.navigationController pushViewController:KTVTitleContentVC animated:YES];
         };
         
-        if(_homeLogic.dataArr){
-         [cell updateCellWithDataArr:_homeLogic.dataArr];
+        if(_homeLogic.noticeArr){
+            [cell updateCellWithDataArr:_homeLogic.noticeArr paramDic:@{KFromClassType:@(FromHomeNoticeVCToNoticeView)}];
         }
 
         return cell;
@@ -204,16 +208,28 @@ static NSString *Identify_MusicCell = @"musicCell";
 
 //荣耀服务
 - (ZSHBaseTableViewSectionModel*)storeServiceSection {
+    kWeakSelf(self);
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     sectionModel.headerHeight = kRealValue(55);
     sectionModel.headerView = [self createHeaderiewWithTitle:@"荣耀服务"];
     ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
     [sectionModel.cellModelArray addObject:cellModel];
-    cellModel.height = kRealValue(80);
+    cellModel.height = kRealValue(100);
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
-        ZSHNoticeViewCell *cell = [tableView dequeueReusableCellWithIdentifier:Identify_ServiceCell forIndexPath:indexPath];
-        NSDictionary *nextParamDic = @{KFromClassType:@(FromHomeServiceVCToNoticeView)};
-        [cell updateCellWithParamDic:nextParamDic];
+//        ZSHNoticeViewCell *cell = [tableView dequeueReusableCellWithIdentifier:Identify_ServiceCell forIndexPath:indexPath];
+//        NSDictionary *nextParamDic = @{KFromClassType:@(FromHomeServiceVCToNoticeView)};
+//        [cell updateCellWithParamDic:nextParamDic];
+        
+        ZSHBaseTitleButtonCell *cell = [tableView dequeueReusableCellWithIdentifier:Identify_ServiceCell forIndexPath:indexPath];
+        cell.itemClickBlock = ^(NSInteger tag) {//荣耀服务详情
+            NSDictionary *nextParamDic = @{KFromClassType:@(FromKTVVCToTitleContentVC)};
+            ZSHTitleContentViewController *KTVTitleContentVC = [[ZSHTitleContentViewController alloc]initWithParamDic:nextParamDic];
+            [weakself.navigationController pushViewController:KTVTitleContentVC animated:YES];
+        };
+        
+        if(_homeLogic.serviceArr){
+            [cell updateCellWithDataArr:_homeLogic.serviceArr paramDic:@{KFromClassType:@(FromHomeServiceVCToNoticeView)}];
+        }
         return cell;
     };
     
@@ -292,8 +308,8 @@ static NSString *Identify_MusicCell = @"musicCell";
             [weakself.navigationController pushViewController:hotelDetailVC animated:YES];
         };
         
-        if(_homeLogic.dataArr){
-            [cell updateCellWithDataArr:_homeLogic.dataArr];
+        if(_homeLogic.noticeArr){
+            [cell updateCellWithDataArr:_homeLogic.noticeArr paramDic:@{KFromClassType:@(FromHomeNoticeVCToNoticeView)}];
         }
         return cell;
     };

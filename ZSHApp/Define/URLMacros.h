@@ -310,15 +310,15 @@
 //参数：无
 //请求地址：/appshipin/scarouselfigure?SCAROUSELFIGURE(混淆码)
 #define kUrlScarouselfigure [NSString stringWithFormat:@"/appshipin/scarouselfigure?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SCAROUSELFIGURE"]]
-//60.根据酒店id获取酒店综合详细
+//60.根据酒店id获取酒店综合详细（完成）
 //参数：SORTHOTEL_ID 某酒店id
 //请求地址：/appshotelin/hotelsyn?HOTELSYN（混淆码）
 #define kUrlHotelSyn [NSString stringWithFormat:@"/appshotelin/hotelsyn?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"HOTELSYN"]]
-//61.根据美食店铺id获取美食店铺综合详细
+//61.根据美食店铺id获取美食店铺综合详细（完成）
 //参数：SORTFOOD_ID 某美食店铺id
 //请求地址：/appsfoodin/foodsyn?SFOODSYN（混淆码）
 #define kUrlFoodSyn [NSString stringWithFormat:@"/appsfoodin/foodsyn?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SFOODSYN"]]
-//62.根据KTVid获取KTV店铺综合详细
+//62.根据KTVid获取KTV店铺综合详细（完成）
 //参数：SORTKTV_ID 某KTVid
 //请求地址：/appsktvin/ktvsyn?KTVSYN（混淆码）
 #define kUrlKtvSyn [NSString stringWithFormat:@"/appsktvin/ktvsyn?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"KTVSYN"]]
@@ -334,17 +334,17 @@
 //参数：无
 //请求地址：/appserverin/serverdetaillist.do?SERVERDETAIL(混淆码)
 #define kUrlServerDetailList [NSString stringWithFormat:@"/appserverin/serverdetaillist.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SERVERDETAIL"]]
-//66.获得某酒店评论列表
+//66.获得某酒店评论列表 （完成）
 //参数：SORTHOTEL_ID 某酒店id
 //请求地址：/appshotelin/hotelevalist?HOTELEVA
 //返回参数：EVALUATEDATE 	评价日期/EVALUATECONTENT 评价内容/PORTRAIT 用户头像/NICKNAME 用户昵称
 #define kUrlHotelEvaList [NSString stringWithFormat:@"/appshotelin/hotelevalist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"HOTELEVA"]]
-//67.获得某美食店铺评论列表
+//67.获得某美食店铺评论列表(完成)
 //参数：SORTFOOD_ID 某美食店铺id
 //请求地址：/appsfoodin/foodevalist?FOODEVA
 //返回参数：EVALUATEDATE 	评价日期/EVALUATECONTENT 评价内容/PORTRAIT 用户头像/NICKNAME 用户昵称
 #define kUrlFoodEvaList [NSString stringWithFormat:@"/appsfoodin/foodevalist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"FOODEVA"]]
-//67.获得KTV店铺评论列表
+//67.获得KTV店铺评论列表（完成）
 //参数：SORTKTV_ID 某KTVid
 //请求地址：/appsktvin/ktvevalist?KTVEVA
 //返回参数：EVALUATEDATE 	评价日期/EVALUATECONTENT 评价内容/PORTRAIT 用户头像/NICKNAME 用户昵称
@@ -355,18 +355,19 @@
 #define kUrlUp [NSString stringWithFormat:@"/appuserin/up?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"UPPORT"]]
 
 
-//63. 获得引导页列表
+//63. 获得引导页列表（完成）
 //参数：无
 //请求地址：/appbootpagein/bootpagelist?BOOTPAGELIST(混淆码)
 #define kUrlBootpagelist [NSString stringWithFormat:@"/appbootpagein/bootpagelist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"BOOTPAGELIST"]]
 
-//64. 获得首页荣耀服务列表
-//参数：SERVER_ID 某荣耀服务id
+//64. 获得首页荣耀服务列表（完成）
+//参数：无
 //请求地址：/appserverin/server.do?SERVER(混淆码)
 #define kUrlServerDo [NSString stringWithFormat:@"/appserverin/server.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SERVER"]]
 
 //65. 获取荣耀服务详情列表
-//参数：无
+
+//参数：SERVER_ID 某荣耀服务id
 //请求地址：/appserverin/serverdetaillist.do?SERVERDETAIL(混淆码)
 #define kUrlServerdetaillistDo [NSString stringWithFormat:@"/appserverin/serverdetaillist.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SERVERDETAIL"]]
 
@@ -376,6 +377,9 @@
 //返回参数：EVALUATEDATE     评价日期/EVALUATECONTENT 评价内容/PORTRAIT 用户头像/NICKNAME 用户昵称
 #define kUrlHotelevalist [NSString stringWithFormat:@"/appshotelin/hotelevalist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"HOTELEVA"]]
 
-
+//92. 获得首页特权KTV分类列表（完成）
+//参数：HONOURUSER_ID 用户id
+//请求地址：/appsktvin/sktv.do?SORTKTV(混淆码)
+#define kUrlSktvlist [NSString stringWithFormat:@"/appsktvin/sktv.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SORTKTV"]]
 
 #endif /* URLMacros_h */

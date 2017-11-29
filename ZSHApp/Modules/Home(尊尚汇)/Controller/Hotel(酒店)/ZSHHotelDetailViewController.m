@@ -77,9 +77,9 @@ static NSString *ZSHKTVListCellID = @"ZSHKTVListCell";
     _hotelLogic = [[ZSHHotelLogic alloc]init];
     NSDictionary *paramDic = @{@"SORTHOTEL_ID":self.shopId};
     [_hotelLogic loadHotelDetailDataWithParamDic:paramDic];
-    self.hotelDetailParamDic = _hotelLogic.hotelDetailParamDic;
-    _hotelLogic.requestDataCompleted = ^(ZSHHotelDetailModel *hotelDetailModel){
-        weakself.hotelDetailModel = hotelDetailModel;
+    _hotelLogic.requestDataCompleted = ^(NSDictionary *paramDic){
+        weakself.hotelDetailModel = paramDic[@"hotelDetailModel"];
+        weakself.hotelDetailParamDic = paramDic[@"hotelDetailParamDic"];
         [weakself.tableView.mj_header endRefreshing];
         [weakself.tableView.mj_footer endRefreshing];
         [weakself initViewModel];
@@ -131,6 +131,7 @@ static NSString *ZSHKTVListCellID = @"ZSHKTVListCell";
 
 //图片，设备
 - (ZSHBaseTableViewSectionModel*)storeHeadSection {
+    kWeakSelf(self);
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
     [sectionModel.cellModelArray addObject:cellModel];
@@ -138,7 +139,7 @@ static NSString *ZSHKTVListCellID = @"ZSHKTVListCell";
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHHotelDetailHeadCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHHotelDetailHeadCellID forIndexPath:indexPath];
         cell.fromClassType = [self.paramDic[KFromClassType]integerValue];
-        if (_hotelDetailModel) {
+        if (weakself.hotelDetailModel) {
             [cell updateCellWithModel:_hotelDetailModel];
         }
         return cell;
@@ -152,7 +153,7 @@ static NSString *ZSHKTVListCellID = @"ZSHKTVListCell";
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHHotelDetailDeviceCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHHotelDetailDeviceCellID forIndexPath:indexPath];
         cell.fromClassType = [self.paramDic[KFromClassType]integerValue];
-        if (_hotelDetailParamDic) {
+        if (weakself.hotelDetailParamDic) {
             [cell updateCellWithParamDic:_hotelDetailParamDic];
         }
         [self hideSeparatorLineWithCell:cell hide:YES];

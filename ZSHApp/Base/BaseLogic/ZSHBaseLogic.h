@@ -15,6 +15,6 @@ typedef void (^RequestDataCompleted) (id);
 @property (nonatomic, strong) NSArray                  *dataArr;
 @property (nonatomic, strong) NSMutableArray           *mDataArr;
 @property (nonatomic, copy)   RequestDataCompleted     requestDataCompleted;
-- (void)loadData;
+- (void)requestData;
 
 @end

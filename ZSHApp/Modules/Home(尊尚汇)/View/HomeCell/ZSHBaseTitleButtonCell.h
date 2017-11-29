@@ -12,7 +12,8 @@ typedef void (^ItemClickBlock)(NSInteger);
 
 @interface ZSHBaseTitleButtonCell : ZSHBaseCell
 
-@property (nonatomic, copy) ItemClickBlock  itemClickBlock;
 
+@property (nonatomic, copy) ItemClickBlock  itemClickBlock;
+- (void)updateCellWithDataArr:(NSArray *)dataArr paramDic:(NSDictionary *)paramDic;
 @end
 

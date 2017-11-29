@@ -63,7 +63,16 @@ static NSString *ZSHShopCommentCellID = @"ZSHShopCommentCell";
     kWeakSelf(self);
     _commentLogic = [[ZSHShopCommentLogic alloc]init];
     NSDictionary *requestParamDic = @{@"SORTHOTEL_ID":self.shopId};
-    [_commentLogic requestShopCommentListDataWithParamDic:requestParamDic];
+    
+    if (kFromClassTypeValue == ZSHFromFoodVCToHotelDetailVC) {//美食评论
+         [_commentLogic requestHotelShopCommentListDataWithParamDic:requestParamDic];
+    } else if(kFromClassTypeValue == ZSHFromHotelVCToHotelDetailVC){ //酒店评论
+         [_commentLogic requestHotelShopCommentListDataWithParamDic:requestParamDic];
+    } else if(kFromClassTypeValue == ZSHFromHomeKTVVCToHotelDetailVC){ //KTV评论
+        [_commentLogic requestKTVShopCommentListDataWithParamDic:requestParamDic];
+    }
+    
+   
     _commentLogic.requestDataCompleted = ^(NSArray *commentArr){
         weakself.commentArr = commentArr;
         [weakself.tableView.mj_header endRefreshing];

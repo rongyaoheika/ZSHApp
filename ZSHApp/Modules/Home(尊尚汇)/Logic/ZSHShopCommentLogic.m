@@ -10,11 +10,43 @@
 
 @implementation ZSHShopCommentLogic
 
-- (void)requestShopCommentListDataWithParamDic:(NSDictionary *)paramDic{
+- (void)requestHotelShopCommentListDataWithParamDic:(NSDictionary *)paramDic{
     kWeakSelf(self);
     [PPNetworkHelper POST:kUrlHotelevalist parameters:paramDic success:^(id responseObject) {
-        RLog(@"评论详情== %@",responseObject);
+        RLog(@"酒店评论列表== %@",responseObject);
        NSArray *shopCommentArr = [ZSHShopCommentModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"]];
+        if (weakself.requestDataCompleted) {
+            weakself.requestDataCompleted(shopCommentArr);
+        }
+        
+    } failure:^(NSError *error) {
+        if (weakself.requestDataCompleted) {
+            weakself.requestDataCompleted(@"fail");
+        }
+    }];
+}
+
+- (void)requestFoodShopCommentListDataWithParamDic:(NSDictionary *)paramDic{
+    kWeakSelf(self);
+    [PPNetworkHelper POST:kUrlFoodEvaList parameters:paramDic success:^(id responseObject) {
+        RLog(@"美食评论列表== %@",responseObject);
+        NSArray *shopCommentArr = [ZSHShopCommentModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"]];
+        if (weakself.requestDataCompleted) {
+            weakself.requestDataCompleted(shopCommentArr);
+        }
+        
+    } failure:^(NSError *error) {
+        if (weakself.requestDataCompleted) {
+            weakself.requestDataCompleted(@"fail");
+        }
+    }];
+}
+
+- (void)requestKTVShopCommentListDataWithParamDic:(NSDictionary *)paramDic{
+    kWeakSelf(self);
+    [PPNetworkHelper POST:kUrlKtvEvaList parameters:paramDic success:^(id responseObject) {
+        RLog(@"KTV评论列表== %@",responseObject);
+        NSArray *shopCommentArr = [ZSHShopCommentModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"]];
         if (weakself.requestDataCompleted) {
             weakself.requestDataCompleted(shopCommentArr);
         }

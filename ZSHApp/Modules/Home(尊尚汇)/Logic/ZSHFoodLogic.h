@@ -12,7 +12,6 @@
 @interface ZSHFoodLogic : ZSHBaseLogic
 
 @property (nonatomic, strong) NSArray <ZSHFoodModel *>    *foodListArr;
-@property (nonatomic, strong) ZSHFoodDetailModel          *foodDetailModel;
 
 //美食列表
 - (void)loadFoodListDataWithParamDic:(NSDictionary *)paramDic;

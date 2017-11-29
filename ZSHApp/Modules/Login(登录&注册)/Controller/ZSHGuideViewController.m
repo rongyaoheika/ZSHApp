@@ -10,12 +10,12 @@
 #import "ZSHGuideView.h"
 #import "ZSHLoginViewController.h"
 #import "ZSHCardViewController.h"
-
+#import "ZSHGuideLogic.h"
 
 @interface ZSHGuideViewController ()
 
-@property (nonatomic, strong) NSArray              *imageArr;
 @property (nonatomic, strong) ZSHGuideView         *midView;
+@property (nonatomic, strong) ZSHGuideLogic        *guideLogic;
 @property (nonatomic, strong) UIButton             *applyBtn;
 @property (nonatomic, strong) UIButton             *vipLoginBtn;
 
@@ -32,7 +32,20 @@
 }
 
 - (void)loadData{
-    self.imageArr = @[@"guide1",@"guide2",@"guide3",@"guide4"];
+    [self requestGuideImageData];
+}
+
+- (void)requestGuideImageData{
+    kWeakSelf(self);
+    _guideLogic = [[ZSHGuideLogic alloc]init];
+    [_guideLogic requestData];
+    _guideLogic.requestDataCompleted = ^(NSMutableArray *imageArr){
+        [weakself.tableView.mj_header endRefreshing];
+        [weakself.tableView.mj_footer endRefreshing];
+        [weakself.midView updateViewWithParamDic:@{@"dataArr":imageArr}];
+        
+        
+    };
 }
 
 - (void)createUI{
@@ -40,7 +53,7 @@
     bgImage.frame = self.view.bounds;
     [self.view addSubview:bgImage];
     
-    NSDictionary *nextParamDic = @{@"dataArr":self.imageArr, @"pageViewHeight":@(kRealValue(440)),@"min_scale":@(0.6),@"withRatio":@(1.8),@"infinite":@(false)};
+    NSDictionary *nextParamDic = @{@"pageViewHeight":@(kRealValue(440)),@"min_scale":@(0.6),@"withRatio":@(1.8),@"infinite":@(false)};
      _midView = [[ZSHGuideView alloc]initWithFrame:CGRectZero paramDic:nextParamDic];
     [self.view addSubview:_midView];
     [_midView mas_makeConstraints:^(MASConstraintMaker *make) {

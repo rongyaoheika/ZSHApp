@@ -10,6 +10,8 @@
 #import "ZSHShopCommentModel.h"
 @interface ZSHShopCommentLogic : ZSHBaseLogic
 
-- (void)requestShopCommentListDataWithParamDic:(NSDictionary *)paramDic;
+- (void)requestHotelShopCommentListDataWithParamDic:(NSDictionary *)paramDic;
 
+- (void)requestFoodShopCommentListDataWithParamDic:(NSDictionary *)paramDic;
+- (void)requestKTVShopCommentListDataWithParamDic:(NSDictionary *)paramDic;
 @end

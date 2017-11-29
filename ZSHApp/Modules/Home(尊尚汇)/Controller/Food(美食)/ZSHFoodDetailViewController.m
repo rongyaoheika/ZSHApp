@@ -10,12 +10,13 @@
 #import "ZSHFoodLogic.h"
 #import "ZSHHotelDetailHeadCell.h"
 #import "ZSHHotelDetailDeviceCell.h"
-
+#import "ZSHShopCommentViewController.h"
 @interface ZSHFoodDetailViewController ()
 
 @property (nonatomic, copy)   NSString                  *shopId;
 @property (nonatomic, strong) ZSHFoodLogic              *foodLogic;
 @property (nonatomic, strong) ZSHFoodDetailModel        *foodDetailModel;
+@property (nonatomic, strong) NSDictionary              *foodDetailParamDic;
 
 @end
 
@@ -42,12 +43,13 @@ static NSString *ZSHBookCellID = @"ZSHBookCell";
 
 - (void)requestData{
     kWeakSelf(self);
-  
+    
     _foodLogic = [[ZSHFoodLogic alloc]init];
     NSDictionary *paramDic = @{@"SORTFOOD_ID":self.shopId};
     [_foodLogic loadFoodDetailDataWithParamDic:paramDic];
-    _foodLogic.requestDataCompleted = ^(ZSHFoodDetailModel *foodDetailModel){
-        _foodDetailModel = foodDetailModel;
+    _foodLogic.requestDataCompleted = ^(NSDictionary *paramDic){
+        _foodDetailModel = paramDic[@"foodDetailModel"];
+        _foodDetailParamDic = paramDic[@"foodDetailParamDic"];
         [weakself.tableView.mj_header endRefreshing];
         [weakself.tableView.mj_footer endRefreshing];
         [weakself initViewModel];
@@ -100,8 +102,8 @@ static NSString *ZSHBookCellID = @"ZSHBookCell";
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHHotelDetailDeviceCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHHotelDetailDeviceCellID forIndexPath:indexPath];
         cell.fromClassType = [self.paramDic[KFromClassType]integerValue];
-        if (_foodDetailModel) {
-            [cell updateCellWithModel:_foodDetailModel];
+        if (_foodDetailParamDic) {
+            [cell updateCellWithParamDic:_foodDetailParamDic];
         }
         
         return cell;
@@ -112,6 +114,7 @@ static NSString *ZSHBookCellID = @"ZSHBookCell";
 
 //地址，电话，评论
 - (ZSHBaseTableViewSectionModel*)storeSubSection {
+    kWeakSelf(self);
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     NSArray *arrowImageArr = @[@"hotel_map",@"hotel_phone"];
     NSArray *titleArr = @[@"三亚市天涯区黄山路94号",@"0898-86868686"];
@@ -163,6 +166,10 @@ static NSString *ZSHBookCellID = @"ZSHBookCell";
     
     cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
         //用户评价
+        
+        NSDictionary *nextParamDic = @{@"shopId":self.shopId};
+        ZSHShopCommentViewController *shopCommentVC = [[ZSHShopCommentViewController alloc]initWithParamDic:nextParamDic];
+        [weakself.navigationController pushViewController:shopCommentVC animated:YES];
     };
     
     return sectionModel;

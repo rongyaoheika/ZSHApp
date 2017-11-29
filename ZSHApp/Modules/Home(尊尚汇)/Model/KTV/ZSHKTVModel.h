@@ -24,27 +24,29 @@
 
 
 //KTV列表
-@property (nonatomic, copy) NSString    *SORTHOTEL_ID;           //酒店ID
-@property (nonatomic, copy) NSString    *SHOWIMAGES;             //酒店图片
-@property (nonatomic, copy) NSString    *HOTELNAMES;             //酒店名字
-@property (nonatomic, copy) NSString    *HOTELADDRESS;           //酒店地址
-@property (nonatomic, assign) NSInteger HOTELEVACOUNT;           //评论数
-@property (nonatomic, assign) CGFloat   HOTELEVALUATE;           //酒店星评
-@property (nonatomic, assign) CGFloat   HOTELPRICE;              //酒店价格
-@property (nonatomic, assign) CGFloat    cellHeight;
+@property (nonatomic, copy) NSString    *SORTKTV_ID;           //KTVID
+@property (nonatomic, copy) NSString    *SHOWIMAGES;           //KTV图片
+@property (nonatomic, copy) NSString    *KTVNAMES;             //KTV名字
+@property (nonatomic, copy) NSString    *KTVADDRESS;           //KTV地址
+@property (nonatomic, assign) NSInteger KTVEVACOUNT;           //评论数
+@property (nonatomic, assign) CGFloat   KTVEVALUATE;           //KTV星评
+@property (nonatomic, assign) CGFloat   KTVPRICE;              //KTV价格
+@property (nonatomic, assign) CGFloat   cellHeight;
+
 
 @end
 
 
 
 @interface ZSHKTVDetailModel:ZSHBaseModel
+
 //KTV详情
-@property (nonatomic, copy) NSString    *HOTELPHONE;             //酒店电话
-@property (nonatomic, copy) NSString    *HOTELNAMES;             //酒店名字
-@property (nonatomic, copy) NSString    *HOTELADDRESS;           //酒店地址
-@property (nonatomic, assign) NSInteger HOTELEVACOUNT;           //评论数
-@property (nonatomic, assign) CGFloat   HOTELEVALUATE;           //评分
-@property (nonatomic, strong) NSArray   *HOTELDETAILSIMGS;       //酒店轮播图
+@property (nonatomic, copy) NSString    *KTVPHONE;             //KTV电话
+@property (nonatomic, copy) NSString    *KTVNAMES;             //KTV名字
+@property (nonatomic, copy) NSString    *KTVADDRESS;           //KTV地址
+@property (nonatomic, assign) NSInteger KTVEVACOUNT;           //评论数
+@property (nonatomic, assign) CGFloat   KTVEVALUATE;           //评分
+@property (nonatomic, strong) NSArray   *KTVDETAILSIMGS;       //KTV轮播图
 
 @property (nonatomic, assign) BOOL      SHOPSERVWIFI;            //WIFI
 @property (nonatomic, assign) BOOL      SHOPSERVFOOD;            //餐饮
