@@ -101,7 +101,7 @@ static NSString *Identify_MusicCell = @"musicCell";
     _homeLogic = [[ZSHHomeLogic alloc]init];
     [_homeLogic loadNoticeCellData];
     [_homeLogic loadServiceCellData];
-    
+    [_homeLogic loadNewsCellData];
     _homeLogic.requestDataCompleted = ^(id data){
         [weakself.tableView.mj_header endRefreshing];
         [weakself.tableView.mj_footer endRefreshing];
@@ -123,7 +123,7 @@ static NSString *Identify_MusicCell = @"musicCell";
 	[self.tableView registerClass:[ZSHHomeHeadView class] forCellReuseIdentifier:Identify_HeadCell];
 	[self.tableView registerClass:[ZSHBaseTitleButtonCell class] forCellReuseIdentifier:Identify_NoticeCell];
      [self.tableView registerClass:[ZSHBaseTitleButtonCell class] forCellReuseIdentifier:Identify_ServiceCell];
-//    [self.tableView registerClass:[ZSHNoticeViewCell class] forCellReuseIdentifier:Identify_ServiceCell];
+
 	[self.tableView registerClass:[ZSHNoticeViewCell class] forCellReuseIdentifier:Identify_PlayCell];
     [self.tableView registerClass:[ZSHNoticeViewCell class] forCellReuseIdentifier:Identify_MagazineCell];
     [self.tableView registerClass:[ZSHBaseTitleButtonCell class] forCellReuseIdentifier:Identify_MusicCell];
@@ -166,12 +166,15 @@ static NSString *Identify_MusicCell = @"musicCell";
 - (ZSHBaseTableViewSectionModel*)storeNoticeSection {
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     sectionModel.headerHeight = floor(kRealValue(55));
-    NSArray *titleArr = @[@"公告，荣耀黑卡竞技平台全新上线01",@"第二次公告：荣耀黑卡竞技平台全新上线02",@"第三次公告：荣耀黑卡竞技平台全新上线03"];
-    
+//    NSArray *titleArr = @[@"公告，荣耀黑卡竞技平台全新上线01",@"第二次公告：荣耀黑卡竞技平台全新上线02",@"第三次公告：荣耀黑卡竞技平台全新上线03"];
+    NSMutableArray *mTitleArr = [[NSMutableArray alloc]init];
+    for (NSDictionary *paramDic in _homeLogic.newsArr) {
+        [mTitleArr addObject:paramDic[@"NEWSTITLE"]];
+    }
     ZSHCycleScrollView *cellView = [[ZSHCycleScrollView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, sectionModel.headerHeight)];
     cellView.scrollDirection =  ZSHCycleScrollViewVertical;
     cellView.autoScroll = YES;
-    cellView.dataArr = [titleArr  mutableCopy];
+    cellView.dataArr = mTitleArr;
     kWeakSelf(self);
     cellView.itemClickBlock = ^(NSInteger index) {
         ZSHToplineViewController *toplineVC = [[ZSHToplineViewController alloc] init];
@@ -185,9 +188,6 @@ static NSString *Identify_MusicCell = @"musicCell";
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHBaseTitleButtonCell *cell = [tableView dequeueReusableCellWithIdentifier:Identify_NoticeCell forIndexPath:indexPath];
         cell.itemClickBlock = ^(NSInteger tag) {
-//            NSDictionary *nextParamDic = @{KFromClassType:@(ZSHFromHomeKTVVCToHotelDetailVC)};
-//            ZSHHotelDetailViewController *hotelDetailVC = [[ZSHHotelDetailViewController alloc]initWithParamDic:nextParamDic];
-//            [weakself.navigationController pushViewController:hotelDetailVC animated:YES];
             
             NSDictionary *nextParamDic = @{KFromClassType:@(FromKTVVCToTitleContentVC)};
             ZSHTitleContentViewController *KTVTitleContentVC = [[ZSHTitleContentViewController alloc]initWithParamDic:nextParamDic];
@@ -216,10 +216,6 @@ static NSString *Identify_MusicCell = @"musicCell";
     [sectionModel.cellModelArray addObject:cellModel];
     cellModel.height = kRealValue(100);
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
-//        ZSHNoticeViewCell *cell = [tableView dequeueReusableCellWithIdentifier:Identify_ServiceCell forIndexPath:indexPath];
-//        NSDictionary *nextParamDic = @{KFromClassType:@(FromHomeServiceVCToNoticeView)};
-//        [cell updateCellWithParamDic:nextParamDic];
-        
         ZSHBaseTitleButtonCell *cell = [tableView dequeueReusableCellWithIdentifier:Identify_ServiceCell forIndexPath:indexPath];
         cell.itemClickBlock = ^(NSInteger tag) {//荣耀服务详情
             NSDictionary *nextParamDic = @{KFromClassType:@(FromKTVVCToTitleContentVC)};
@@ -299,17 +295,17 @@ static NSString *Identify_MusicCell = @"musicCell";
     sectionModel.footerView = nil;
     ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
     [sectionModel.cellModelArray addObject:cellModel];
-    cellModel.height = kRealValue(135);
+    cellModel.height = kRealValue(100);
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHBaseTitleButtonCell *cell = [tableView dequeueReusableCellWithIdentifier:Identify_MusicCell forIndexPath:indexPath];
         cell.itemClickBlock = ^(NSInteger tag) {
-            NSDictionary *nextParamDic = @{KFromClassType:@(ZSHFromHomeKTVVCToHotelDetailVC)};
+            NSDictionary *nextParamDic = @{KFromClassType:@(FromKTVVCToTitleContentVC)};
             ZSHHotelDetailViewController *hotelDetailVC = [[ZSHHotelDetailViewController alloc]initWithParamDic:nextParamDic];
             [weakself.navigationController pushViewController:hotelDetailVC animated:YES];
         };
         
-        if(_homeLogic.noticeArr){
-            [cell updateCellWithDataArr:_homeLogic.noticeArr paramDic:@{KFromClassType:@(FromHomeNoticeVCToNoticeView)}];
+        if(_homeLogic.serviceArr){
+            [cell updateCellWithDataArr:_homeLogic.serviceArr paramDic:@{KFromClassType:@(FromHomeServiceVCToNoticeView)}];
         }
         return cell;
     };

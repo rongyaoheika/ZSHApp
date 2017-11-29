@@ -27,6 +27,7 @@
     }];
 }
 
+//荣耀服务列表
 - (void)loadServiceCellData{
     kWeakSelf(self);
     [PPNetworkHelper POST:kUrlServerDo parameters:nil success:^(id responseObject) {
@@ -43,7 +44,25 @@
     }];
 }
 
-//kUrlGetNewsList
+//荣耀服务详情
+- (void)loadServiceDetailDataWithParamDic:(NSDictionary *)paramDic{
+    kWeakSelf(self);
+    [PPNetworkHelper POST:kUrlGetNewsList parameters:nil success:^(id responseObject) {
+        RLog(@"新闻头条轮播信息%@",responseObject);
+        weakself.newsArr = responseObject[@"pd"];
+        if (weakself.requestDataCompleted) {
+            weakself.requestDataCompleted(self.serviceArr);
+        }
+        
+    } failure:^(NSError *error) {
+        if (weakself.requestDataCompleted) {
+            weakself.requestDataCompleted(@"fail");
+        }
+    }];
+}
+
+
+//新闻头条轮播信息
 - (void)loadNewsCellData{
     kWeakSelf(self);
     [PPNetworkHelper POST:kUrlGetNewsList parameters:nil success:^(id responseObject) {
@@ -59,5 +78,7 @@
         }
     }];
 }
+
+
 
 @end

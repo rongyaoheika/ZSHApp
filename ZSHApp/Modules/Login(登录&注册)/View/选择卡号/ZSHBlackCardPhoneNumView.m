@@ -14,7 +14,6 @@
 
 @property (nonatomic, strong) NSArray                   *titleArr;
 @property (nonatomic, strong) LXScollTitleView          *titleView;
-//@property (nonatomic, strong) UISegmentedControl        *seg;
 @property (nonatomic, strong) UIScrollView              *blackCardScrollView;
 
 @end
@@ -23,14 +22,15 @@
 
 #pragma getter
 - (void)setup{
-    NSArray  *btnTitleArr = @[@"300元",@"600元",@"1000元",@"5000元",@"10000元"];
+    _titleArr = @[@"300元",@"600元",@"1000元",@"5000元",@"10000元"];
     [self addSubview:self.titleView];
-    [self.titleView reloadViewWithTitles:btnTitleArr];
+    [self.titleView reloadViewWithTitles:_titleArr];
     
     [self addSubview:self.blackCardScrollView];
-    for (int i = 0; i<btnTitleArr.count; i++) {
+    for (int i = 0; i<_titleArr.count; i++) {
         [self.blackCardScrollView addSubview:[self createPhoneNumListView]];
     }
+    [self layoutIfNeeded];
 }
 
 - (void)layoutSubviews{
@@ -39,7 +39,7 @@
     [_titleView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self);
         make.width.mas_equalTo(kRealValue(298));
-        make.centerX.mas_equalTo(self);
+        make.left.mas_equalTo((KScreenWidth- kRealValue(298))/2);
         make.height.mas_equalTo(kRealValue(30));
     }];
     
@@ -99,7 +99,7 @@
 #pragma getter
 - (LXScollTitleView *)titleView{
     if (!_titleView) {
-        _titleView = [[LXScollTitleView alloc] initWithFrame:CGRectMake(0, (kScreenWidth-kRealValue(298))/2, kRealValue(298), kRealValue(30))];
+        _titleView = [[LXScollTitleView alloc] initWithFrame:CGRectMake(0, 0, kRealValue(298), kRealValue(30))];
         _titleView.selectedBgImage = [UIImage imageNamed:@"seg_five_bg_press"];
         _titleView.normalTitleFont = kPingFangRegular(11);
         _titleView.selectedTitleFont = kPingFangRegular(11);

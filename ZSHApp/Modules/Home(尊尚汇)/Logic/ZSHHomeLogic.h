@@ -17,5 +17,7 @@
 
 - (void)loadNoticeCellData;
 - (void)loadServiceCellData;
+- (void)loadServiceDetailDataWithParamDic:(NSDictionary *)paramDic;
+- (void)loadNewsCellData;
 
 @end

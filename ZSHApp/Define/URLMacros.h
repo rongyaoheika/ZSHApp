@@ -326,12 +326,12 @@
 //参数：无
 //请求地址：/appshipin/bootpagelist?BOOTPAGELIST(混淆码)
 #define kUrlBootPageList [NSString stringWithFormat:@"/appshipin/bootpagelist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"BOOTPAGELIST"]]
-//64. 获得首页荣耀服务列表
-//参数：SERVER_ID 某荣耀服务id
+//64. 获得首页荣耀服务列表（完成）
+//参数：无
 //请求地址：/appserverin/server.do?SERVER(混淆码)
 #define kUrlServerDo [NSString stringWithFormat:@"/appserverin/server.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SERVER"]]
 //65. 获取荣耀服务详情列表
-//参数：无
+//参数：SERVER_ID 某荣耀服务id
 //请求地址：/appserverin/serverdetaillist.do?SERVERDETAIL(混淆码)
 #define kUrlServerDetailList [NSString stringWithFormat:@"/appserverin/serverdetaillist.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SERVERDETAIL"]]
 //66.获得某酒店评论列表 （完成）
