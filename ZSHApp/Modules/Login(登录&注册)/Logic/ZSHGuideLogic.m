@@ -13,7 +13,6 @@
 - (void)requestData{
     kWeakSelf(self);
     [PPNetworkHelper POST:kUrlBootpagelist parameters:nil success:^(id responseObject) {
-        RLog(@"引导页图片数据==%@",responseObject);
         NSArray *dataArr = responseObject[@"pd"];
         if (weakself.requestDataCompleted) {
             NSMutableArray *imageArr = [[NSMutableArray alloc]init];

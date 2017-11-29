@@ -14,7 +14,8 @@
     kWeakSelf(self);
     [PPNetworkHelper POST:kUrlUserHome parameters:nil success:^(id responseObject) {
         RLog(@"请求成功：返回数据&%@",responseObject);
-        weakself.dataArr = [ZSHHomeMainModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"]];
+//        weakself.noticeArr = [ZSHHomeMainModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"]];
+        weakself.noticeArr = responseObject[@"pd"];
         if (weakself.requestDataCompleted) {
             weakself.requestDataCompleted(nil);
         }
@@ -28,11 +29,28 @@
 
 - (void)loadServiceCellData{
     kWeakSelf(self);
-    [PPNetworkHelper POST:kUrlUserHome parameters:nil success:^(id responseObject) {
-        RLog(@"请求成功：返回数据&%@",responseObject);
-        weakself.dataArr = [ZSHHomeMainModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"]];
+    [PPNetworkHelper POST:kUrlServerDo parameters:nil success:^(id responseObject) {
+        RLog(@"荣耀服务首页数据==%@",responseObject);
+        weakself.serviceArr = responseObject[@"pd"];
         if (weakself.requestDataCompleted) {
-            weakself.requestDataCompleted(nil);
+            weakself.requestDataCompleted(self.serviceArr);
+        }
+        
+    } failure:^(NSError *error) {
+        if (weakself.requestDataCompleted) {
+            weakself.requestDataCompleted(@"fail");
+        }
+    }];
+}
+
+//kUrlGetNewsList
+- (void)loadNewsCellData{
+    kWeakSelf(self);
+    [PPNetworkHelper POST:kUrlGetNewsList parameters:nil success:^(id responseObject) {
+        RLog(@"新闻头条轮播信息%@",responseObject);
+        weakself.newsArr = responseObject[@"pd"];
+        if (weakself.requestDataCompleted) {
+            weakself.requestDataCompleted(self.serviceArr);
         }
         
     } failure:^(NSError *error) {

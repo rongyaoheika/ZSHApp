@@ -13,4 +13,7 @@
 @property (nonatomic, copy) NSString *SHOPNAME;
 @property (nonatomic, copy) NSString *IMAGES;
 
+
+
+
 @end

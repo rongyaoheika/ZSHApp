@@ -11,6 +11,11 @@
 
 @interface ZSHHomeLogic : ZSHBaseLogic
 
+@property (nonatomic, strong) NSArray *newsArr;
+@property (nonatomic, strong) NSArray *noticeArr;
+@property (nonatomic, strong) NSArray *serviceArr;
+
 - (void)loadNoticeCellData;
 - (void)loadServiceCellData;
+
 @end

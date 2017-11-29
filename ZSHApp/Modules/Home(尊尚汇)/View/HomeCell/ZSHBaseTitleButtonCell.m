@@ -23,20 +23,31 @@
     [self.contentView addSubview:self.scrollView];
 }
 
-- (void)updateCellWithDataArr:(NSArray *)dataArr{
+- (void)updateCellWithDataArr:(NSArray *)dataArr paramDic:(NSDictionary *)paramDic{
     ZSHButtonView *lastBtnView = nil;
     int i = 0;
-    for (ZSHHomeMainModel *homeMainModel in dataArr) {
+    for (NSDictionary *subParamDic in dataArr) {
         ZSHButtonView *btnView = [[ZSHButtonView alloc]init];
         btnView.tag = i++;
         [btnView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(btnViewAction:)]];
-        btnView.label.text = homeMainModel.SHOPNAME;
-        [btnView.imageView sd_setImageWithURL:[NSURL URLWithString:homeMainModel.IMAGES]];
+        if ([paramDic[KFromClassType]integerValue] == FromHomeNoticeVCToNoticeView) {
+            btnView.label.text = subParamDic[@"SHOPNAME"];
+            [btnView.imageView sd_setImageWithURL:[NSURL URLWithString:subParamDic[@"IMAGES"]]];
+            [btnView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.width.mas_equalTo(kRealValue(95));
+            }];
+        } else if ([paramDic[KFromClassType]integerValue] == FromHomeServiceVCToNoticeView) {
+            btnView.label.text = subParamDic[@"SERVICETYPE"];
+            [btnView.imageView sd_setImageWithURL:[NSURL URLWithString:subParamDic[@"SERVICEIMGS"]]];
+            [btnView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.width.mas_equalTo(kRealValue(130));
+            }];
+        }
+        
         [_scrollView addSubview:btnView];
         [btnView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.mas_equalTo(self);
             make.bottom.mas_equalTo(self);
-            make.width.mas_equalTo(kRealValue(95));
             if (lastBtnView) {
                 make.left.mas_equalTo(lastBtnView.mas_right).offset(kRealValue(8));
             } else {
@@ -45,6 +56,8 @@
         }];
 
         lastBtnView = btnView;
+        
+        
     }
     [self.scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.mas_equalTo(self);
