@@ -8,6 +8,7 @@
 
 #import "ZSHGoodsCell.h"
 #import "ZSHGoodModel.h"
+#import "ZSHBuySearchModel.h"
 
 @interface ZSHGoodsCell()
 
@@ -111,6 +112,12 @@
 }
 
 #pragma mark - Setter Getter Methods
+- (void)updateViewWithModel:(ZSHBaseModel *)model {
+    ZSHBuySearchModel *buySearchModel = (ZSHBuySearchModel *)model;
+    [_goodsImageView sd_setImageWithURL:[NSURL URLWithString:buySearchModel.ICONIMGS]];
+    _goodsLabel.text = buySearchModel.BRANDNAME;
+}
+
 
 - (void)setGoodModel:(ZSHGoodModel *)goodModel{
     

@@ -9,7 +9,6 @@
 #import "ZSHGoodsTitleContentViewController.h"
 #import "LXScrollContentView.h"
 #import "ZSHGoodsSegmentView.h"
-#import "ZSHGoodsTypeViewController.h"
 
 
 @interface ZSHGoodsTitleContentViewController ()

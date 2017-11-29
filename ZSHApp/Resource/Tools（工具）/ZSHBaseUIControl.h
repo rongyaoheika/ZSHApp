@@ -10,8 +10,8 @@
 @class ZSHBaseTableViewModel;
 
 typedef NS_ENUM(NSInteger,ZSHCellType){
-    ZSHTableViewCellType,
-    ZSHCollectionViewCellType
+    ZSHCollectionViewCellType,
+    ZSHTableViewCellType
 };
 
 typedef NS_ENUM(NSInteger,ZSHToChangePWDView){

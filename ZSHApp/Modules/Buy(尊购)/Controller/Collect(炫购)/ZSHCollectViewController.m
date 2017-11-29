@@ -52,6 +52,7 @@ static NSString *CollectCellIdentifier = @"CollectCellIdentifier";
 }
 
 - (ZSHBaseTableViewSectionModel*)storeListSection {
+    kWeakSelf(self);
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     for (int i = 0; i<_buyLogic.collectModelArr.count; i++) {
         ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
@@ -60,10 +61,18 @@ static NSString *CollectCellIdentifier = @"CollectCellIdentifier";
         cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
             //需要注册，无需判空
             ZSHCollectCell *cell = [tableView dequeueReusableCellWithIdentifier:CollectCellIdentifier forIndexPath:indexPath];
-            [cell updateCellWithModel:_buyLogic.collectModelArr[indexPath.row]];
+            [cell updateCellWithModel:weakself.buyLogic.collectModelArr[indexPath.row]];
             return cell;
         };
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
+        };
+        cellModel.deleteConfirmationButtonTitle = @"删除";
+        cellModel.canEdit = YES;
+        ;
+        cellModel.commitEditBlock = ^(NSIndexPath *indexPath, UITableView *tableView, UITableViewCellEditingStyle editingStyle) {
+            [weakself.buyLogic requestShipCollectDel:weakself.buyLogic.collectModelArr[indexPath.row].COLLECT_ID success:^(id response) {
+                [weakself requstData];
+            }];
         };
     }
     return sectionModel;
@@ -72,9 +81,13 @@ static NSString *CollectCellIdentifier = @"CollectCellIdentifier";
 
 - (void)requstData {
     kWeakSelf(self);
+    
+    
     [_buyLogic requestShipCollectWithUserID:@"d6a3779de8204dfd9359403f54f7d27c" success:^(id response) {
         [weakself initViewModel];
     }];
 }
+
+
 
 @end

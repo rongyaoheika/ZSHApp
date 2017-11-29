@@ -63,9 +63,6 @@ static NSString *ZSHGoodsDetailCountCellID = @"ZSHGoodsDetailCountCell";
     
     UIImage *image = [UIImage imageNamed:@"buy_bag"];
     self.shufflingArray = @[image,image,image];
-//    self.goodTitle = @"Gucci/古奇/古驰女士手拿包蓝色大LOGO";
-//    self.goodSubtitle = @"Herschel Supply Co";
-//    self.goodPrice = @"¥3999";
     _buyLogic = [[ZSHBuyLogic alloc] init];
     [self requestData];
 }
@@ -100,9 +97,16 @@ static NSString *ZSHGoodsDetailCountCellID = @"ZSHGoodsDetailCountCell";
     
     kWeakSelf(self);
     [self.view addSubview:[ZSHBaseUIControl createBottomButton:^(NSInteger index) {
-        if (index == 2) {
+        if (index == 0) {
+            
+        }
+        else if (index == 1) {
+            [self requestCollectAdd];
+        }
+        else if (index == 2) {
             [weakself addCart];
-        } else if (index == 3) {
+        }
+        else if (index == 3) {
             ZSHConfirmOrderViewController *confirmOrderVC = [[ZSHConfirmOrderViewController alloc]init];
             confirmOrderVC.goodsModel = _goodModel;
             [self.navigationController pushViewController:confirmOrderVC animated:YES];
@@ -314,6 +318,17 @@ static NSString *ZSHGoodsDetailCountCellID = @"ZSHGoodsDetailCountCell";
         UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleCancel handler:nil];
         [ac addAction:cancelAction];
         [self presentViewController:ac animated:YES completion:nil];
+    }];
+}
+
+- (void)requestCollectAdd {
+    kWeakSelf(self);
+    [_buyLogic requestShipCollectAddWithProductID:_buyLogic.goodDetailModel.PRODUCT_ID success:^(id response) {
+        UIAlertController *ac = [UIAlertController alertControllerWithTitle:@"提示" message:@"添加成功" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        }];
+        [ac addAction:cancelAction];
+        [weakself presentViewController:ac animated:YES completion:nil];
     }];
 }
 

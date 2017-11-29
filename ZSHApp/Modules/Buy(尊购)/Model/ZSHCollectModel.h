@@ -11,10 +11,11 @@
 @interface ZSHCollectModel : ZSHBaseModel
 
 
-@property (nonatomic, strong) NSString *PROPRICE;
-@property (nonatomic, strong) NSString *PROTITLE;
-@property (nonatomic, strong) NSString *PROSHOWIMG;
-@property (nonatomic, strong) NSString *PRODUCT_ID;
+@property (nonatomic, copy) NSString *PROPRICE;
+@property (nonatomic, copy) NSString *PROTITLE;
+@property (nonatomic, copy) NSString *PROSHOWIMG;
+@property (nonatomic, copy) NSString *PRODUCT_ID;
+@property (nonatomic, copy) NSString *COLLECT_ID;
 
 
 @end

@@ -22,4 +22,6 @@
 /** 找相似点击回调 */
 @property (nonatomic, copy) dispatch_block_t lookSameBlock;
 
+- (void)updateViewWithModel:(ZSHBaseModel *)model;
+
 @end

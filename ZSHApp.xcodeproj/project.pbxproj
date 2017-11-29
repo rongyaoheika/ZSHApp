@@ -55,6 +55,7 @@
 		1822871A1FB4559300CA5B10 /* ZSHLiveMineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 182287191FB4559300CA5B10 /* ZSHLiveMineViewController.m */; };
 		1822871D1FB45CE800CA5B10 /* ZSHLiveMineHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1822871C1FB45CE800CA5B10 /* ZSHLiveMineHeadView.m */; };
 		1824F1D11FCE800F000D805E /* ZSHBuySearchResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1824F1D01FCE800F000D805E /* ZSHBuySearchResultViewController.m */; };
+		1824F1D41FCE8E01000D805E /* ZSHBuySearchModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1824F1D31FCE8E01000D805E /* ZSHBuySearchModel.m */; };
 		1826CDAD1FBAE1F000A0ECE2 /* ZSHVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1826CDAC1FBAE1F000A0ECE2 /* ZSHVideoViewController.m */; };
 		1826CDB01FBAE20C00A0ECE2 /* ZSHPersonalDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1826CDAF1FBAE20C00A0ECE2 /* ZSHPersonalDetailViewController.m */; };
 		1826CDB41FBAFD3D00A0ECE2 /* ZSHApplyServiceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1826CDB31FBAFD3D00A0ECE2 /* ZSHApplyServiceViewController.m */; };
@@ -502,6 +503,8 @@
 		1822871C1FB45CE800CA5B10 /* ZSHLiveMineHeadView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHLiveMineHeadView.m; sourceTree = "<group>"; };
 		1824F1CF1FCE800F000D805E /* ZSHBuySearchResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHBuySearchResultViewController.h; sourceTree = "<group>"; };
 		1824F1D01FCE800F000D805E /* ZSHBuySearchResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHBuySearchResultViewController.m; sourceTree = "<group>"; };
+		1824F1D21FCE8E01000D805E /* ZSHBuySearchModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHBuySearchModel.h; sourceTree = "<group>"; };
+		1824F1D31FCE8E01000D805E /* ZSHBuySearchModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHBuySearchModel.m; sourceTree = "<group>"; };
 		1826CDAB1FBAE1F000A0ECE2 /* ZSHVideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHVideoViewController.h; sourceTree = "<group>"; };
 		1826CDAC1FBAE1F000A0ECE2 /* ZSHVideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHVideoViewController.m; sourceTree = "<group>"; };
 		1826CDAE1FBAE20C00A0ECE2 /* ZSHPersonalDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHPersonalDetailViewController.h; sourceTree = "<group>"; };
@@ -2118,6 +2121,8 @@
 				FE1377771F973402003C8DFB /* ZSHOrderModel.m */,
 				FE2CD0AE1F98B6DB00E9E519 /* ZSHIntegalModel.h */,
 				FE2CD0AF1F98B6DB00E9E519 /* ZSHIntegalModel.m */,
+				1824F1D21FCE8E01000D805E /* ZSHBuySearchModel.h */,
+				1824F1D31FCE8E01000D805E /* ZSHBuySearchModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -3682,6 +3687,7 @@
 				FEA483A91F91B96000219CFE /* RXLSideSlipViewController.h in Sources */,
 				18F902491FB6CF270044967F /* ZSHFollowViewController.m in Sources */,
 				183C657A1FC03B400081DCFF /* ZSHToplineCell.m in Sources */,
+				1824F1D41FCE8E01000D805E /* ZSHBuySearchModel.m in Sources */,
 				18F902501FB6DE460044967F /* ZSHChargeRecViewController.m in Sources */,
 				FE7CA9EA1F9DD15300A2B15D /* ZSHLiveListModel.m in Sources */,
 				185C6D811FC2D950004EA461 /* LZCartViewController.m in Sources */,

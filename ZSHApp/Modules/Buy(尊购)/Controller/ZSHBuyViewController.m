@@ -40,6 +40,7 @@ static NSString *ZSHGoodsListViewID = @"ZSHGoodsListView";
 - (void)loadData{
     _buyLogic = [[ZSHBuyLogic alloc] init];
     [self initViewModel];
+    [self requestCarouselFigure];
 }
 
 - (void)createUI{
@@ -137,7 +138,9 @@ static NSString *ZSHGoodsListViewID = @"ZSHGoodsListView";
         };
         
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
-            ZSHGoodsTitleContentViewController *goodContentVC = [[ZSHGoodsTitleContentViewController alloc]initWithParamDic:@{@"PreBrandID":brandIDArr[indexPath.row],KFromClassType:@(FromBuyVCToGoodsTitleVC)}];
+            ZSHGoodsTitleContentViewController *goodContentVC = [[ZSHGoodsTitleContentViewController alloc]initWithParamDic:@{@"PreBrandID":brandIDArr[indexPath.row],
+                                  KFromClassType:@(FromBuyVCToGoodsTitleVC)
+                                   }];
             [weakself.navigationController pushViewController:goodContentVC animated:YES];
         };
     }
@@ -186,9 +189,10 @@ static NSString *ZSHGoodsListViewID = @"ZSHGoodsListView";
 }
 
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)requestCarouselFigure {
+   [_buyLogic requestScarouselfigure:^(id response) {
+       
+   }];
 }
 
 @end

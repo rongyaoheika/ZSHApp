@@ -34,13 +34,15 @@ static NSString * ZSHBottomListCellID = @"ZSHBottomListCell";
 }
 
 - (void)loadData{
-   _cellType = [self.paramDic[@"cellType"] integerValue];
-//   _goodModelArr = [ZSHGoodModel mj_objectArrayWithFilename:@"YouLikeGoods.plist"];
+    
+    _cellType = [self.paramDic[@"cellType"] integerValue];
+    _buyLogic = [[ZSHBuyLogic alloc] init];
+    
+    
     if (self.cellType == ZSHTableViewCellType) {
         [self initViewModel];
     }
     
-    _buyLogic = [[ZSHBuyLogic alloc] init];
     [self requestData];
 }
 
@@ -84,7 +86,12 @@ static NSString * ZSHBottomListCellID = @"ZSHBottomListCell";
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    return _goodModelArr.count;
+    if (kFromClassTypeValue == FromSearchResultVCTOGoodsTitleVC) {
+        return _buyLogic.buySearchModelArr.count;
+    } else {
+        return _goodModelArr.count;
+    }
+    
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
@@ -93,8 +100,12 @@ static NSString * ZSHBottomListCellID = @"ZSHBottomListCell";
     if (![cell.contentView viewWithTag:2]) {
         ZSHGoodsCell *cellView = [[ZSHGoodsCell alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kRealValue(270)) paramDic:nil];
         cellView.tag = 2;
-        cellView.goodModel = _goodModelArr[indexPath.row];
         cellView.cellType = ZSHCollectionViewCellType;
+        if (kFromClassTypeValue == FromSearchResultVCTOGoodsTitleVC) {
+            [cellView updateViewWithModel:_buyLogic.buySearchModelArr[indexPath.row]];
+        } else {
+            cellView.goodModel = _goodModelArr[indexPath.row];
+        }
         [cell.contentView addSubview:cellView];
     }
    
@@ -115,8 +126,17 @@ static NSString * ZSHBottomListCellID = @"ZSHBottomListCell";
 }
 
 - (ZSHBaseTableViewSectionModel*)storeListSection {
+    
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
-    for (int i = 0; i < _goodModelArr.count; i++) {
+    
+    NSInteger count = 0;
+    
+    if (kFromClassTypeValue == FromSearchResultVCTOGoodsTitleVC) {
+        count = _buyLogic.buySearchModelArr.count;
+    } else {
+        count = _goodModelArr.count;
+    }
+    for (int i = 0; i < count; i++) {
         ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
         [sectionModel.cellModelArray addObject:cellModel];
         cellModel.height = kRealValue(100);
@@ -125,7 +145,11 @@ static NSString * ZSHBottomListCellID = @"ZSHBottomListCell";
             if (![cell.contentView viewWithTag:3]) {
                 ZSHGoodsCell *cellView = [[ZSHGoodsCell alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kRealValue(100)) paramDic:nil];
                 cellView.tag = 3;
-                cellView.goodModel = _goodModelArr[indexPath.row];
+                if (kFromClassTypeValue == FromSearchResultVCTOGoodsTitleVC) {
+                    [cellView updateViewWithModel:_buyLogic.buySearchModelArr[indexPath.row]];
+                } else {
+                    cellView.goodModel = _goodModelArr[indexPath.row];
+                }
                 cellView.cellType = ZSHTableViewCellType;
                 [cell.contentView addSubview:cellView];
             }
@@ -152,19 +176,23 @@ static NSString * ZSHBottomListCellID = @"ZSHBottomListCell";
 - (void)requestData {
     kWeakSelf(self);
     
-    if (kFromClassTypeValue == 2) {
-        return;
+    if (kFromClassTypeValue == FromSearchResultVCTOGoodsTitleVC) {
+        [_buyLogic requestShipDimQueryWithKeywords:self.paramDic[@"searchText"] success:^(id response) {
+            [weakself initViewModel];
+        }];
+    } else {
+        [_buyLogic requestShipPrefectureWithBrandID:self.paramDic[@"PreBrandID"] success:^(id response) {
+            _goodModelArr = [ZSHGoodModel mj_objectArrayWithKeyValuesArray:response[@"pd"]];
+            if (weakself.cellType == ZSHTableViewCellType) {
+                [weakself initViewModel];
+            } else {
+                [weakself.collectionView reloadData];
+            }
+            
+        }];
     }
     
-    [_buyLogic requestShipPrefectureWithBrandID:self.paramDic[@"PreBrandID"] success:^(id response) {
-        _goodModelArr = [ZSHGoodModel mj_objectArrayWithKeyValuesArray:response[@"pd"]];
-        if (weakself.cellType == ZSHTableViewCellType) {
-            [weakself initViewModel];
-        } else {
-            [weakself.collectionView reloadData];
-        }
-        
-    }];
+
 }
 
 @end
