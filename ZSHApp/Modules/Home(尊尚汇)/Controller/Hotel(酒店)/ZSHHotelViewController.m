@@ -87,6 +87,7 @@ static NSString *ZSHHotelCellID = @"ZSHHotelCell";
             if (i==_hotelArr.count-1) {
                 cell.separatorInset = UIEdgeInsetsMake(0, 0, 0, MAXFLOAT);
             }
+            cell.fromClassType = ZSHFromHotelVCToHotelDetailVC;
             NSDictionary *paramDic = _hotelArr[indexPath.row];
             [cell updateCellWithParamDic:paramDic];
             return cell;

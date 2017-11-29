@@ -17,8 +17,8 @@
         make.edges.mas_equalTo(self).insets(UIEdgeInsetsMake(0, 0, kRealValue(20), 0));
     }];
     
-    NSDictionary *titleLabelDic = @{@"text":@"2.4.6.8娱乐吧",@"font":kPingFangRegular(12),@"textAlignment":@(NSTextAlignmentCenter)};
-    _label = [ZSHBaseUIControl createLabelWithParamDic:titleLabelDic];
+
+    _label = [ZSHBaseUIControl createLabelWithParamDic:self.paramDic];
     [self addSubview:_label];
     [_label mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.mas_equalTo(self);

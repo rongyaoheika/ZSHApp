@@ -8,16 +8,20 @@
 
 #import "ZSHBaseLogic.h"
 #import "ZSHHomeMainModel.h"
+#import "ZSHPrivlegeModel.h"
 
 @interface ZSHHomeLogic : ZSHBaseLogic
 
-@property (nonatomic, strong) NSArray *newsArr;
-@property (nonatomic, strong) NSArray *noticeArr;
-@property (nonatomic, strong) NSArray *serviceArr;
+@property (nonatomic, strong) NSArray       *newsArr;
+@property (nonatomic, strong) NSArray       *noticeArr;
+@property (nonatomic, strong) NSArray       *serviceArr;
+@property (nonatomic, strong) NSDictionary  *partyDic;
 
 - (void)loadNoticeCellData;
 - (void)loadServiceCellData;
 - (void)loadServiceDetailDataWithParamDic:(NSDictionary *)paramDic;
 - (void)loadNewsCellData;
+- (void)loadPartyCellData;
+- (void)loadMorePrivilege;
 
 @end

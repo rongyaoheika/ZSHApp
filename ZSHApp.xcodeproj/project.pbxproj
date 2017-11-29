@@ -377,6 +377,7 @@
 		FEDF292D1FB6F24A00CD5756 /* ZSHLiveProfitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEDF292C1FB6F24A00CD5756 /* ZSHLiveProfitViewController.m */; };
 		FEE697C01FC566B5002120F0 /* ZSHHomeLogic.m in Sources */ = {isa = PBXBuildFile; fileRef = FEE697BF1FC566B4002120F0 /* ZSHHomeLogic.m */; };
 		FEE6AA331FCDC2E8001B5528 /* ZSHGuideLogic.m in Sources */ = {isa = PBXBuildFile; fileRef = FEE6AA321FCDC2E8001B5528 /* ZSHGuideLogic.m */; };
+		FEECC2321FCEA11C000DF4F4 /* ZSHPrivlegeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FEECC2311FCEA11C000DF4F4 /* ZSHPrivlegeModel.m */; };
 		FEEF46EF1FBA84100086A3C4 /* ZSHLivePopView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEEF46EE1FBA84100086A3C4 /* ZSHLivePopView.m */; };
 		FEEF46F21FBA8CAB0086A3C4 /* ZSHLiveClassifyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEEF46F11FBA8CAB0086A3C4 /* ZSHLiveClassifyViewController.m */; };
 		FEEF46F51FBAD2C90086A3C4 /* ZSHNearHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEEF46F41FBAD2C90086A3C4 /* ZSHNearHeadView.m */; };
@@ -1096,6 +1097,8 @@
 		FEE697BF1FC566B4002120F0 /* ZSHHomeLogic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHHomeLogic.m; sourceTree = "<group>"; };
 		FEE6AA311FCDC2E8001B5528 /* ZSHGuideLogic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHGuideLogic.h; sourceTree = "<group>"; };
 		FEE6AA321FCDC2E8001B5528 /* ZSHGuideLogic.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHGuideLogic.m; sourceTree = "<group>"; };
+		FEECC2301FCEA11C000DF4F4 /* ZSHPrivlegeModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHPrivlegeModel.h; sourceTree = "<group>"; };
+		FEECC2311FCEA11C000DF4F4 /* ZSHPrivlegeModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHPrivlegeModel.m; sourceTree = "<group>"; };
 		FEEF46ED1FBA84100086A3C4 /* ZSHLivePopView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHLivePopView.h; sourceTree = "<group>"; };
 		FEEF46EE1FBA84100086A3C4 /* ZSHLivePopView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHLivePopView.m; sourceTree = "<group>"; };
 		FEEF46F01FBA8CAB0086A3C4 /* ZSHLiveClassifyViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHLiveClassifyViewController.h; sourceTree = "<group>"; };
@@ -3011,6 +3014,8 @@
 			children = (
 				FE9E6D721FC4275A00F7AD95 /* ZSHHomeMainModel.h */,
 				FE9E6D731FC4275A00F7AD95 /* ZSHHomeMainModel.m */,
+				FEECC2301FCEA11C000DF4F4 /* ZSHPrivlegeModel.h */,
+				FEECC2311FCEA11C000DF4F4 /* ZSHPrivlegeModel.m */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -3839,6 +3844,7 @@
 				18A2C6511F483A66005F394F /* PPNetworkHelper.m in Sources */,
 				FEBD7CB61FA75F3400CE2BA6 /* ZSHFoodViewController.m in Sources */,
 				1813E2701FBD3F6C00624405 /* ZSHTrainTicketDetailViewController.m in Sources */,
+				FEECC2321FCEA11C000DF4F4 /* ZSHPrivlegeModel.m in Sources */,
 				181105871FBC396B0046D229 /* ZSHEnergyExchangeViewController.m in Sources */,
 				FEA30A4A1F9F053100AB0FFC /* ZSHLogisticsDetailViewController.m in Sources */,
 				185BB9BB1FB559CA007A96FF /* ZSHLiveTotalListViewController.m in Sources */,

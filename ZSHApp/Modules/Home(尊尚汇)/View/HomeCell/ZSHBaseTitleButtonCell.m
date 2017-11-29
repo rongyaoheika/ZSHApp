@@ -25,9 +25,11 @@
 
 - (void)updateCellWithDataArr:(NSArray *)dataArr paramDic:(NSDictionary *)paramDic{
     ZSHButtonView *lastBtnView = nil;
+    
+    NSDictionary *titleLabelDic = @{@"text":@"2.4.6.8娱乐吧",@"font":kPingFangRegular(12),@"textAlignment":@(NSTextAlignmentCenter)};
     int i = 0;
     for (NSDictionary *subParamDic in dataArr) {
-        ZSHButtonView *btnView = [[ZSHButtonView alloc]init];
+        ZSHButtonView *btnView = [[ZSHButtonView alloc]initWithFrame:CGRectZero paramDic:titleLabelDic];
         btnView.tag = i++;
         [btnView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(btnViewAction:)]];
         if ([paramDic[KFromClassType]integerValue] == FromHomeNoticeVCToNoticeView) {

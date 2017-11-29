@@ -102,6 +102,8 @@ static NSString *Identify_MusicCell = @"musicCell";
     [_homeLogic loadNoticeCellData];
     [_homeLogic loadServiceCellData];
     [_homeLogic loadNewsCellData];
+    [_homeLogic loadPartyCellData];
+    
     _homeLogic.requestDataCompleted = ^(id data){
         [weakself.tableView.mj_header endRefreshing];
         [weakself.tableView.mj_footer endRefreshing];
@@ -248,9 +250,11 @@ static NSString *Identify_MusicCell = @"musicCell";
     cellModel.height = kRealValue(95);
     __block  CGFloat cellHeight = cellModel.height;
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
-        ZSHBaseCell *cell = [tableView dequeueReusableCellWithIdentifier:Identify_PlayCell forIndexPath:indexPath];
+        ZSHBaseCell *cell = [[ZSHBaseCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:Identify_PlayCell];
+        [tableView dequeueReusableCellWithIdentifier:Identify_PlayCell forIndexPath:indexPath];
         if (![cell.contentView viewWithTag:2]) {
-            UIImageView *imageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"home_play"]];
+            UIImageView *imageView = [[UIImageView alloc]init];
+            [imageView sd_setImageWithURL:[NSURL URLWithString:_homeLogic.partyDic[@"PARTYIMG"]] placeholderImage:[UIImage imageNamed:@"home_play"]];
             imageView.tag = 2;
             imageView.frame = CGRectMake(15, 0, KScreenWidth-30, cellHeight);
             [cell.contentView addSubview:imageView];
@@ -323,7 +327,7 @@ static NSString *Identify_MusicCell = @"musicCell";
 #pragma getter
 - (UIView *)createHeaderiewWithTitle:(NSString *)title{
     UIView *headView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, kRealValue(55))];
-    NSDictionary *headLabellDic = @{@"text":title, @"font":kPingFangSemibold(15),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentLeft)};
+    NSDictionary *headLabellDic = @{@"text":title, @"font":kPingFangMedium(15),@"textAlignment":@(NSTextAlignmentLeft)};
     UILabel *headLabel = [ZSHBaseUIControl createLabelWithParamDic:headLabellDic];
     [headView addSubview:headLabel];
     [headLabel mas_makeConstraints:^(MASConstraintMaker *make) {

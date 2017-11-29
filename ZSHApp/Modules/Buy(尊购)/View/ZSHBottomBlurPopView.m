@@ -144,7 +144,7 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
         [self.subTab registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHHeadCellID];
         [self.subTab registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHNumCountCellID];
         [self.subTab registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHExchangeSecondCellID];
-    } else if (kFromClassTypeValue == ZSHFromHotelDetailConfirmOrderVCToBottomBlurPopView || kFromClassTypeValue == ZSHFromKTVConfirmOrderVCToBottomBlurPopView) {//酒店(KTV)确认订单
+    } else if (kFromClassTypeValue == ZSHFromHotelDetailConfirmOrderVCToBottomBlurPopView || kFromClassTypeValue == ZSHFromKTVConfirmOrderVCToBottomBlurPopView ||kFromClassTypeValue == ZSHFromFoodDetailVCToBottomBlurPopView) {//酒店(KTV)确认订单
         _subTabHeight = kRealValue(410);
         
         self.subTab.backgroundColor = KWhiteColor;

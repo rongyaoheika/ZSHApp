@@ -11,12 +11,15 @@
 #import "ZSHHotelDetailHeadCell.h"
 #import "ZSHHotelDetailDeviceCell.h"
 #import "ZSHShopCommentViewController.h"
+#import "ZSHHotelListCell.h"
+#import "ZSHBottomBlurPopView.h"
 @interface ZSHFoodDetailViewController ()
 
 @property (nonatomic, copy)   NSString                  *shopId;
 @property (nonatomic, strong) ZSHFoodLogic              *foodLogic;
 @property (nonatomic, strong) ZSHFoodDetailModel        *foodDetailModel;
 @property (nonatomic, strong) NSDictionary              *foodDetailParamDic;
+@property (nonatomic, strong) ZSHBottomBlurPopView      *bottomBlurPopView;
 
 @end
 
@@ -24,6 +27,7 @@ static NSString *ZSHHotelDetailHeadCellID = @"ZSHHotelDetailHeadCell";
 static NSString *ZSHHotelDetailDeviceCellID = @"ZSHHotelDetailDeviceCell";
 static NSString *ZSHBaseSubCellID = @"ZSHBaseSubCell";
 static NSString *ZSHBookCellID = @"ZSHBookCell";
+static NSString *ZSHHotelListCellID = @"ZSHHotelListCell";
 
 @implementation ZSHFoodDetailViewController
 
@@ -63,19 +67,22 @@ static NSString *ZSHBookCellID = @"ZSHBookCell";
     self.tableView.dataSource = self.tableViewModel;
     [self.view addSubview:self.tableView];
     
-    [self.view addSubview:self.bottomBtn];
-    [self.bottomBtn setTitle:@"立即预订" forState:UIControlStateNormal];
-    [self.bottomBtn addTarget:self action:@selector(bookAction) forControlEvents:UIControlEventTouchUpInside];
+//    [self.view addSubview:self.bottomBtn];
+//    [self.bottomBtn setTitle:@"立即预订" forState:UIControlStateNormal];
+//    [self.bottomBtn addTarget:self action:@selector(bookAction) forControlEvents:UIControlEventTouchUpInside];
    
     [self.tableView registerClass:[ZSHHotelDetailHeadCell class] forCellReuseIdentifier:ZSHHotelDetailHeadCellID];
     [self.tableView registerClass:[ZSHHotelDetailDeviceCell class] forCellReuseIdentifier:ZSHHotelDetailDeviceCellID];
     [self.tableView registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHBaseSubCellID];
+    [self.tableView registerClass:[ZSHHotelListCell class] forCellReuseIdentifier:ZSHHotelListCellID];
 }
 
 - (void)initViewModel {
     [self.tableViewModel.sectionModelArray removeAllObjects];
     [self.tableViewModel.sectionModelArray addObject:[self storeHeadSection]];
     [self.tableViewModel.sectionModelArray addObject:[self storeSubSection]];
+    [self.tableViewModel.sectionModelArray addObject:[self storeSetMenuSection]];
+     [self.tableViewModel.sectionModelArray addObject:[self storeMoreShopSection]];
     [self.tableView reloadData];
 }
 
@@ -165,8 +172,6 @@ static NSString *ZSHBookCellID = @"ZSHBookCell";
     };
     
     cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
-        //用户评价
-        
         NSDictionary *nextParamDic = @{@"shopId":self.shopId};
         ZSHShopCommentViewController *shopCommentVC = [[ZSHShopCommentViewController alloc]initWithParamDic:nextParamDic];
         [weakself.navigationController pushViewController:shopCommentVC animated:YES];
@@ -175,11 +180,71 @@ static NSString *ZSHBookCellID = @"ZSHBookCell";
     return sectionModel;
 }
 
+//套餐列表
+- (ZSHBaseTableViewSectionModel*)storeSetMenuSection {
+    kWeakSelf(self);
+    ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
+    sectionModel.headerHeight = kRealValue(40);
+    NSDictionary *headTitleParamDic = @{@"text":@"套餐",@"font":kPingFangMedium(15),@"textAlignment":@(NSTextAlignmentLeft)};
+    sectionModel.headerView = [ZSHBaseUIControl createTabHeadLabelViewWithParamDic:headTitleParamDic];
+    
+    for (int i = 0; i<2; i++) {
+        ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
+        [sectionModel.cellModelArray addObject:cellModel];
+        cellModel.height = kRealValue(75);
+        cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
+            ZSHHotelListCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHHotelListCellID forIndexPath:indexPath];
+            return cell;
+        };
+        
+        cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
+            weakself.bottomBlurPopView = [weakself createBottomBlurPopViewWith:ZSHFromHotelDetailConfirmOrderVCToBottomBlurPopView];
+            [kAppDelegate.window addSubview:weakself.bottomBlurPopView];
+        };
+    }
+    
+    return sectionModel;
+}
+
+//更多商家
+- (ZSHBaseTableViewSectionModel*)storeMoreShopSection {
+    kWeakSelf(self);
+    ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
+    sectionModel.headerHeight = kRealValue(40);
+    NSDictionary *headTitleParamDic = @{@"text":@"更多商家",@"font":kPingFangMedium(15),@"textAlignment":@(NSTextAlignmentLeft)};
+    sectionModel.headerView = [ZSHBaseUIControl createTabHeadLabelViewWithParamDic:headTitleParamDic];
+    
+    for (int i = 0; i<4; i++) {
+        ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
+        [sectionModel.cellModelArray addObject:cellModel];
+        cellModel.height = kRealValue(75);
+        cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
+            ZSHHotelListCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHHotelListCellID forIndexPath:indexPath];
+            return cell;
+        };
+        
+        cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
+            weakself.bottomBlurPopView = [weakself createBottomBlurPopViewWith:ZSHFromFoodDetailVCToBottomBlurPopView];
+            [kAppDelegate.window addSubview:weakself.bottomBlurPopView];
+        };
+    }
+    
+    return sectionModel;
+}
+
+
+#pragma getter
+- (ZSHBottomBlurPopView *)createBottomBlurPopViewWith:(ZSHFromVCToBottomBlurPopView)fromClassType{
+    NSDictionary *nextParamDic = @{KFromClassType:@(fromClassType)};
+    ZSHBottomBlurPopView *bottomBlurPopView = [[ZSHBottomBlurPopView alloc]initWithFrame:kAppDelegate.window.bounds paramDic:nextParamDic];
+    bottomBlurPopView.blurRadius = 20;
+    bottomBlurPopView.dynamic = NO;
+    bottomBlurPopView.tintColor = KClearColor;
+    return bottomBlurPopView;
+}
 
 #pragma action
-- (void)bookAction{
-    
-}
+
 
 #pragma mark ————— 下拉刷新 —————
 -(void)headerRereshing{

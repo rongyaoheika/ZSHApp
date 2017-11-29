@@ -18,6 +18,7 @@
 @implementation ZSHCardCustomizedSecond
 
 - (void)setup{
+    self.userInteractionEnabled = YES;
     _btnArr = [[NSMutableArray alloc]init];
     
     _cardImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"card_customized"]];
@@ -29,8 +30,12 @@
     
     NSArray *titleArr = @[@"男",@"女"];
     for (int i = 0; i<titleArr.count; i++) {
-    NSDictionary *genderBtnDic = @{@"title":titleArr[i],@"font":kPingFangLight(14)};
-        UIButton *genderBtn = [ZSHBaseUIControl createBtnWithParamDic:genderBtnDic];
+//        NSDictionary *genderBtnDic = @{@"title":titleArr[i],@"font":kPingFangLight(14)};
+        UIButton *genderBtn = [[UIButton alloc]init];
+        [genderBtn setTitle:titleArr[i] forState:UIControlStateNormal];
+        genderBtn.titleLabel.font = kPingFangLight(14);
+        
+        //[ZSHBaseUIControl createBtnWithParamDic:genderBtnDic];
         [genderBtn setImage:[UIImage imageNamed:@"gender_normal"] forState:UIControlStateNormal];
         [genderBtn setImage:[UIImage imageNamed:@"gender_press"] forState:UIControlStateSelected];
         genderBtn.tag = i+1;
@@ -67,15 +72,13 @@
             make.top.mas_equalTo(_promptLabel.mas_bottom).offset(kRealValue(3.5));
         }];
         [btn layoutButtonWithEdgeInsetsStyle:XYButtonEdgeInsetsStyleLeft imageTitleSpace:kRealValue(8)];
-        if (i == 0) {
-            btn.backgroundColor = [UIColor redColor];
-        }
         i++;
     }
 }
 
 #pragma action
 - (void)genderBtnAction:(UIButton *)btn{
+    btn.selected = !btn.selected;
     [self selectedByIndex:btn.tag];
     if (self.btnClickBlock) {
         self.btnClickBlock(btn);

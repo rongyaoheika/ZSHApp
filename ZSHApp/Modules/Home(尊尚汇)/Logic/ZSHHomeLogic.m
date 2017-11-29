@@ -47,8 +47,8 @@
 //荣耀服务详情
 - (void)loadServiceDetailDataWithParamDic:(NSDictionary *)paramDic{
     kWeakSelf(self);
-    [PPNetworkHelper POST:kUrlGetNewsList parameters:nil success:^(id responseObject) {
-        RLog(@"新闻头条轮播信息%@",responseObject);
+    [PPNetworkHelper POST:kUrlGetNewsList parameters:paramDic success:^(id responseObject) {
+        RLog(@"荣耀服务详情%@",responseObject);
         weakself.newsArr = responseObject[@"pd"];
         if (weakself.requestDataCompleted) {
             weakself.requestDataCompleted(self.serviceArr);
@@ -79,6 +79,38 @@
     }];
 }
 
+//汇聚玩趴
+- (void)loadPartyCellData{
+    kWeakSelf(self);
+    [PPNetworkHelper POST:kUrlPartyimg parameters:nil success:^(id responseObject) {
+        RLog(@"汇聚玩趴%@",responseObject);
+        weakself.partyDic = responseObject[@"pd"];
+        if (weakself.requestDataCompleted) {
+            weakself.requestDataCompleted(weakself.partyDic);
+        }
+        
+    } failure:^(NSError *error) {
+        if (weakself.requestDataCompleted) {
+            weakself.requestDataCompleted(@"fail");
+        }
+    }];
+}
 
+//更多特权
+- (void)loadMorePrivilege{
+    kWeakSelf(self);
+    [PPNetworkHelper POST:kUrlPrivilegelist parameters:nil success:^(id responseObject) {
+        RLog(@"更多特权%@",responseObject);
+        NSArray *privledgeModelArr = [ZSHPrivlegeModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"]];
+        if (weakself.requestDataCompleted) {
+            weakself.requestDataCompleted(privledgeModelArr);
+        }
+        
+    } failure:^(NSError *error) {
+        if (weakself.requestDataCompleted) {
+            weakself.requestDataCompleted(@"fail");
+        }
+    }];
+}
 
 @end

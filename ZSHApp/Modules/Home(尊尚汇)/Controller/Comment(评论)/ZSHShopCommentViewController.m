@@ -35,7 +35,6 @@ static NSString *ZSHShopCommentCellID = @"ZSHShopCommentCell";
 
 - (void)createUI{
     self.title = @"用户评价";
-    [self addNavigationItemWithTitles:@[@"去发布"] isLeft:NO target:self action:@selector(commentAction) tags:@[@(1)]];
     
     [self.view addSubview:self.headView];
     [self.view addSubview:self.tableView];
@@ -140,12 +139,6 @@ static NSString *ZSHShopCommentCellID = @"ZSHShopCommentCell";
         }];
     }
     return _headView;
-}
-
-- (void)commentAction{
-    NSDictionary *nextParamDic = @{KFromClassType:@(ZSHFromShopCommentVCToCommentVC)};
-    ZSHCommentViewController *goCommentVC = [[ZSHCommentViewController alloc]initWithParamDic:nextParamDic];
-    [self.navigationController pushViewController:goCommentVC animated:YES];
 }
 
 -(void)headerRereshing{

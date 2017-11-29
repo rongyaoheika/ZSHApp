@@ -10,12 +10,16 @@
 #import "ZSHTitleContentViewController.h"
 #import "ZSHAirPlaneViewController.h"
 #import "ZSHSubscribeViewController.h"
-
+#import "ZSHHomeLogic.h"
+#import "UIButton+WebCache.h"
+#import "ZSHButtonView.h"
 @interface ZSHMoreSubscribeViewController ()
 
 @property (nonatomic, strong) NSMutableArray  *btnArr;
 @property (nonatomic, strong) NSArray         *pushVCsArr;
 @property (nonatomic, strong) NSArray         *paramArr;
+@property (nonatomic, strong) ZSHHomeLogic    *homeLogic;
+@property (nonatomic, strong) NSArray         *privlegeModelArr;
 
 @end
 
@@ -30,6 +34,7 @@
 }
 
 - (void)loadData {
+    [self requestData];
     self.pushVCsArr = @[@"ZSHTitleContentViewController",
                         @"ZSHTitleContentViewController",
                         @"ZSHAirPlaneViewController",
@@ -61,36 +66,42 @@
                       @{}];
 }
 
+- (void)requestData{
+    kWeakSelf(self);
+    _homeLogic = [[ZSHHomeLogic alloc]init];
+    [_homeLogic loadMorePrivilege];
+    _homeLogic.requestDataCompleted = ^(NSArray *privlegeModelArr){
+        weakself.privlegeModelArr = privlegeModelArr;
+        [weakself.tableView.mj_header endRefreshing];
+        [weakself.tableView.mj_footer endRefreshing];
+        [weakself createUI];
+    };
+}
+
 - (void)createUI {
-    _btnArr = [[NSMutableArray alloc]init];
     
-    NSArray *titleArr = @[@"美食",@"酒店",@"火车票",@"机票",@"马术",@"游艇",@"豪车",@"飞机",@"高尔夫汇",@"私人定制",@"品牌杂志",@"健康养生",@"高端品鉴", @"定制理财"];
-    NSArray *imageArr = @[@"home_food",@"home_hotel",@"home_train",@"home_plane",@"home_horse",@"home_ship",@"home_car",@"home_helicopter",@"home_golf",@"home_diamond",@"home_magazine",@"home_healthy",@"home_judge",@"home_investment"];
-    
-    for (int i = 0; i<titleArr.count; i++) {        
-        UIButton *btn = [[UIButton alloc]initWithFrame:CGRectZero];
-        [btn setImage:[UIImage imageNamed:imageArr[i]] forState:UIControlStateNormal];
-        [btn setTitle:titleArr[i] forState:UIControlStateNormal];
-        btn.titleLabel.font = kPingFangLight(14);
-        [btn setTitleColor:KZSHColor929292 forState:UIControlStateNormal];
-        btn.tag = i+10;
-        [btn addTarget:self action:@selector(headBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-        [self.view addSubview:btn];
-        [_btnArr addObject:btn];
-        
-        [btn mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.mas_equalTo(self.view).offset((i/4) * kRealValue(72+18) + kRealValue(94));
+    for (int i = 0; i<_privlegeModelArr.count; i++) {
+        ZSHPrivlegeModel *privlegeModel = _privlegeModelArr[i];
+        NSDictionary *labelParamDic = @{@"text":@"美食",@"font":kPingFangRegular(14),@"textAlignment":@(NSTextAlignmentCenter)};
+        ZSHButtonView *btnView = [[ZSHButtonView alloc]initWithFrame:CGRectZero paramDic:labelParamDic];
+        btnView.imageView.contentMode = UIViewContentModeScaleAspectFit;
+        btnView.label.text = privlegeModel.PRIVILEGENAME;
+        [btnView.imageView sd_setImageWithURL:[NSURL URLWithString:privlegeModel.PRIVILEGEIMGS]];
+        [btnView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(headBtnClick:)]];
+        btnView.tag = i+10;
+        [self.view addSubview:btnView];
+        [btnView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.mas_equalTo(self.view).offset((i/4) * kRealValue(72 + 18) + kRealValue(74));
             make.left.mas_equalTo(self.view).offset(((i%4)*(floor(KScreenWidth/4))));
             make.width.mas_equalTo(floor(KScreenWidth/4));
             make.height.mas_equalTo(kRealValue(72));
         }];
-        [btn layoutButtonWithEdgeInsetsStyle:XYButtonEdgeInsetsStyleTop imageTitleSpace:kRealValue(6)];
-
     }
 }
 
-- (void)headBtnClick:(UIButton *)sender {
-    NSInteger tag = sender.tag-10;
+- (void)headBtnClick:(UITapGestureRecognizer *)gesture {
+    NSInteger tag = gesture.view.tag - 10;
+//    NSInteger tag = sender.tag-10;
     Class className = NSClassFromString(self.pushVCsArr[tag]);
     RootViewController *vc = [[className alloc]initWithParamDic:self.paramArr[tag]];
     [self.navigationController pushViewController:vc animated:YES];

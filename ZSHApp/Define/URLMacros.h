@@ -196,7 +196,7 @@
 //32.首页中获取所有特权接口
 //参数：无参数
 //请求地址：/apphomein/privilegelist?PRIVILIST(混淆码)
-#define kUrlTrainSelect [NSString stringWithFormat:@"/apppersonalin/trainselect?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"TRAINSELECT"]]
+#define kUrlPrivilegelist [NSString stringWithFormat:@"/apphomein/privilegelist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"PRIVILIST"]]
 //33.首页中对应特权详情（仅马术，游艇，飞机，高尔夫，豪车）
 //参数：PRIVILEGE_ID 特权id
 //请求地址：/apphomein/privilegedet?PRIVIDET(混淆码)
@@ -376,6 +376,11 @@
 //请求地址：/appshotelin/hotelevalist?HOTELEVA
 //返回参数：EVALUATEDATE     评价日期/EVALUATECONTENT 评价内容/PORTRAIT 用户头像/NICKNAME 用户昵称
 #define kUrlHotelevalist [NSString stringWithFormat:@"/appshotelin/hotelevalist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"HOTELEVA"]]
+
+//80. 获得首页汇聚玩趴图片 （完成）
+//参数：无参数
+//请求地址：/apphomein/partyimg.do?PARTY(混淆码)
+#define kUrlPartyimg [NSString stringWithFormat:@"/apphomein/partyimg.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"PARTY"]]
 
 //92. 获得首页特权KTV分类列表（完成）
 //参数：HONOURUSER_ID 用户id
