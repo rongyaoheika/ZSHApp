@@ -62,14 +62,10 @@ static NSString *ZSHHotelListCellID = @"ZSHHotelListCell";
 
 - (void)createUI{
     
-    self.tableView.frame = CGRectMake(0, 0, KScreenWidth, KScreenHeight-KBottomNavH);
+    self.tableView.frame = CGRectMake(0, 0, KScreenWidth, KScreenHeight);
     self.tableView.delegate = self.tableViewModel;
     self.tableView.dataSource = self.tableViewModel;
     [self.view addSubview:self.tableView];
-    
-//    [self.view addSubview:self.bottomBtn];
-//    [self.bottomBtn setTitle:@"立即预订" forState:UIControlStateNormal];
-//    [self.bottomBtn addTarget:self action:@selector(bookAction) forControlEvents:UIControlEventTouchUpInside];
    
     [self.tableView registerClass:[ZSHHotelDetailHeadCell class] forCellReuseIdentifier:ZSHHotelDetailHeadCellID];
     [self.tableView registerClass:[ZSHHotelDetailDeviceCell class] forCellReuseIdentifier:ZSHHotelDetailDeviceCellID];

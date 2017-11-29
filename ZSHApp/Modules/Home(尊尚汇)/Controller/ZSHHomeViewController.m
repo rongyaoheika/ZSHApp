@@ -23,7 +23,7 @@
 #import "ZSHHotelDetailViewController.h"
 #import "ZSHHomeLogic.h"
 #import "ZSHHotelViewController.h"
-
+#import "ZSHKTVDetailViewController.h"
 
 
 static NSString *Identify_HeadCell = @"headCell";
@@ -191,9 +191,10 @@ static NSString *Identify_MusicCell = @"musicCell";
         ZSHBaseTitleButtonCell *cell = [tableView dequeueReusableCellWithIdentifier:Identify_NoticeCell forIndexPath:indexPath];
         cell.itemClickBlock = ^(NSInteger tag) {
             
-            NSDictionary *nextParamDic = @{KFromClassType:@(FromKTVVCToTitleContentVC)};
-            ZSHTitleContentViewController *KTVTitleContentVC = [[ZSHTitleContentViewController alloc]initWithParamDic:nextParamDic];
-            [weakself.navigationController pushViewController:KTVTitleContentVC animated:YES];
+            NSDictionary *subDic = _homeLogic.noticeArr[tag];
+            NSDictionary *nextParamDic = @{KFromClassType:@(ZSHFromHomeKTVVCToHotelDetailVC),@"shopId":subDic[@"SORT_ID"]};
+            ZSHKTVDetailViewController *KTVDetailVC = [[ZSHKTVDetailViewController alloc]initWithParamDic:nextParamDic];
+            [weakself.navigationController pushViewController:KTVDetailVC animated:YES];
         };
         
         if(_homeLogic.noticeArr){
@@ -220,9 +221,7 @@ static NSString *Identify_MusicCell = @"musicCell";
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHBaseTitleButtonCell *cell = [tableView dequeueReusableCellWithIdentifier:Identify_ServiceCell forIndexPath:indexPath];
         cell.itemClickBlock = ^(NSInteger tag) {//荣耀服务详情
-            NSDictionary *nextParamDic = @{KFromClassType:@(FromKTVVCToTitleContentVC)};
-            ZSHTitleContentViewController *KTVTitleContentVC = [[ZSHTitleContentViewController alloc]initWithParamDic:nextParamDic];
-            [weakself.navigationController pushViewController:KTVTitleContentVC animated:YES];
+           
         };
         
         if(_homeLogic.serviceArr){

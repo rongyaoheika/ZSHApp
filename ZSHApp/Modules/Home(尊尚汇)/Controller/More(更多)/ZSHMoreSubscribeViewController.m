@@ -35,23 +35,27 @@
 
 - (void)loadData {
     [self requestData];
-    self.pushVCsArr = @[@"ZSHTitleContentViewController",
-                        @"ZSHTitleContentViewController",
-                        @"ZSHAirPlaneViewController",
-                        @"ZSHAirPlaneViewController",
-                        @"ZSHSubscribeViewController",
-                        @"ZSHSubscribeViewController",
-                        @"ZSHSubscribeViewController",
-                        @"ZSHSubscribeViewController",
-                        @"ZSHSubscribeViewController",
-                        @"ZSHTailorDetailViewController",
-                        @"",
-                        @"",
-                        @"",
-                        @"ZSHMoreSubscribeViewController"];
+    self.pushVCsArr = @[@"ZSHTitleContentViewController",  //美食
+                        @"ZSHTitleContentViewController",  //酒店
+                        @"ZSHTitleContentViewController",  //酒吧
+                        @"ZSHTitleContentViewController",  //KTV
+                        @"ZSHAirPlaneViewController",      //火车票
+                        @"ZSHAirPlaneViewController",      //飞机票
+                        @"ZSHSubscribeViewController",     //马术
+                        @"ZSHSubscribeViewController",     //游艇
+                        @"ZSHSubscribeViewController",     //豪车
+                        @"ZSHSubscribeViewController",     //飞机
+                        @"ZSHSubscribeViewController",     //高尔夫汇
+                        @"ZSHTailorDetailViewController",  //私人定制
+                        @"",//品牌杂志
+                        @"",//健康养生
+                        @"",//高端品鉴
+                        @"ZSHMoreSubscribeViewController"]; //定制理财
     self.paramArr = @[
                       @{KFromClassType:@(FromFoodVCToTitleContentVC)},
                       @{KFromClassType:@(FromHotelVCToTitleContentVC)},
+                      @{KFromClassType:@(FromHotelVCToTitleContentVC)},
+                      @{KFromClassType:@(FromKTVVCToTitleContentVC)},
                       @{KFromClassType:@(ZSHFromHomeTrainVCToAirPlaneVC),@"title":@"火车票预订"},
                       @{KFromClassType:@(ZSHHomeAirPlaneVCToAirPlaneVC),@"title":@"机票预订"},
                       @{KFromClassType:@(FromHorseVCToSubscribeVC),@"title":@"马术"},
