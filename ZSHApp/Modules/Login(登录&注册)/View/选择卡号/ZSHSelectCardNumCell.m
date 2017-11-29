@@ -49,6 +49,16 @@
         make.height.mas_equalTo(kRealValue(30));
     }];
     
+    int i = 0;
+    for (UIButton *btn in _titleView.titleButtons) {
+        [btn mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.mas_equalTo(_titleView).mas_equalTo(kRealValue(99.5)*i);
+            make.size.mas_equalTo(CGSizeMake(kRealValue(100), kRealValue(30)));
+            make.top.mas_equalTo(_titleView);
+        }];
+        i++;
+    }
+    
     self.bottomScrollView.contentSize = CGSizeMake(2*kScreenWidth, 0);
     [self.bottomScrollView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self).offset(kRealValue(50));

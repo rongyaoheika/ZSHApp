@@ -47,6 +47,17 @@
         make.width.mas_equalTo(kRealValue(300));
         make.height.mas_equalTo(kRealValue(30));
     }];
+    
+    int i = 0;
+    for (UIButton *btn in _titleView.titleButtons) {
+        [btn mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.mas_equalTo(_titleView).mas_equalTo(kRealValue(99.5)*i);
+            make.size.mas_equalTo(CGSizeMake(kRealValue(100), kRealValue(30)));
+            make.top.mas_equalTo(_titleView);
+        }];
+        i++;
+    }
+    
     self.bottomScrollView.contentSize = CGSizeMake(3*kScreenWidth, 0);
     [self.bottomScrollView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self).offset(kRealValue(50));
@@ -88,7 +99,7 @@
 - (LXScollTitleView *)titleView{
     if (!_titleView) {
         _titleView = [[LXScollTitleView alloc] initWithFrame:CGRectMake(0, (kScreenWidth-kRealValue(300))/2, kRealValue(300), kRealValue(30))];
-        _titleView.selectedBgImage = [UIImage imageNamed:@"card_press"];
+        _titleView.selectedBgImage = [UIImage imageNamed:@"seg_press"];
         _titleView.normalTitleFont = kPingFangLight(14);
         _titleView.selectedTitleFont = kPingFangLight(14);
         _titleView.selectedColor = KZSHColorF29E19;

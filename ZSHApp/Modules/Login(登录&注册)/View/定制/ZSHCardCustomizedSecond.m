@@ -18,7 +18,6 @@
 @implementation ZSHCardCustomizedSecond
 
 - (void)setup{
-    self.userInteractionEnabled = YES;
     _btnArr = [[NSMutableArray alloc]init];
     
     _cardImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"card_customized"]];
@@ -78,7 +77,6 @@
 
 #pragma action
 - (void)genderBtnAction:(UIButton *)btn{
-    btn.selected = !btn.selected;
     [self selectedByIndex:btn.tag];
     if (self.btnClickBlock) {
         self.btnClickBlock(btn);
