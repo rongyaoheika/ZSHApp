@@ -8,6 +8,6 @@
 
 #import "RootViewController.h"
 
-@interface ZSHBuySearchViewController : RootViewController
+@interface ZSHBuySearchResultViewController : RootViewController
 
 @end

@@ -22,6 +22,9 @@
 @property (nonatomic, strong) NSArray<ZSHCollectModel *>                  *collectModelArr;
 @property (nonatomic, strong) ZSHGoodDetailModel                          *goodDetailModel;
 
+
+- (void)requestShipDimQueryWithKeywords:(NSString *)keyword success:(void (^)(id response))success;
+
 - (void)requestShipBrandList:(void(^)(id response))success;
 - (void)requestBrandIconListWithBrandID:(NSString *)BrandID success:(void (^)(id response))success;
 - (void)requestShipListAllsuccess:(void (^)(id response))success;

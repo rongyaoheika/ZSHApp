@@ -11,6 +11,16 @@
 @implementation ZSHBuyLogic
 
 
+// 尊购里模糊查询
+- (void)requestShipDimQueryWithKeywords:(NSString *)keyword success:(void (^)(id response))success {
+    [PPNetworkHelper POST:kUrlShipDimQuery parameters:@{@"KEYWORDS":keyword,@"HONOURUSER_ID":@"d6a3779de8204dfd9359403f54f7d27c"} success:^(id responseObject) {
+        RLog(@"请求成功：返回数据&%@",responseObject);
+        success(responseObject);
+    } failure:^(NSError *error) {
+        RLog(@"请求失败");
+    }];
+}
+
 // 商品分类
 - (void)requestShipBrandList:(void (^)(id response))success {
     [PPNetworkHelper POST:kUrlShipBrandList parameters:nil success:^(id responseObject) {

@@ -11,19 +11,20 @@
 #import "ZSHGoodsListView.h"
 #import "ZSHLeftContentViewController.h"
 #import "RXLSideSlipViewController.h"
-
 #import "ZSHGoodsListView.h"
 #import "ZSHGoodsTitleContentViewController.h"
+#import "ZSHBuyLogic.h"
+#import "PYSearchViewController.h"
+
 static NSString *Identify_headCell = @"headCell";
 static NSString *Identify_listLeftImageCell = @"listLeftImageCell";
 static NSString *Identify_listRightImageCell = @"listRightImageCell";
 static NSString *ZSHGoodsListViewID = @"ZSHGoodsListView";
 
-@interface ZSHBuyViewController ()<UISearchBarDelegate>
+@interface ZSHBuyViewController ()<UISearchBarDelegate,PYSearchViewControllerDelegate>
 
-@property (nonatomic,strong) UITableView           *leftTableview;
-
-@property (nonatomic,retain) UISearchController *searchController;
+@property (nonatomic, strong) UITableView           *leftTableview;
+@property (nonatomic, strong) ZSHBuyLogic           *buyLogic;
 
 @end
 
@@ -37,15 +38,28 @@ static NSString *ZSHGoodsListViewID = @"ZSHGoodsListView";
 }
 
 - (void)loadData{
-    
+    _buyLogic = [[ZSHBuyLogic alloc] init];
     [self initViewModel];
 }
 
 - (void)createUI{
-    [self.navigationItem setTitleView:self.searchView];
+//    [self.navigationItem setTitleView:self.searchView];
+    
+    UIButton *searchBtn = [ZSHBaseUIControl createBtnWithParamDic:@{@"title":@"搜索",@"font":kPingFangRegular(14),@"withImage":@(YES),@"normalImage":@"nav_home_search"}];
+    searchBtn.frame = CGRectMake(0, 0, kRealValue(270), 30);
+    searchBtn.backgroundColor = KZSHColor1A1A1A;
+    searchBtn.layer.cornerRadius = 5.0;
+    searchBtn.layer.masksToBounds = YES;
+    kWeakSelf(self);
+    [searchBtn addTapBlock:^(UIButton *btn) {
+        [weakself requestShipDimQuery];
+    }];
+    [self.navigationItem setTitleView:searchBtn];
+    
     self.searchView.searchBar.delegate = self;
 
     [self addNavigationItemWithImageName:@"nav_buy_mine" isLeft:YES target:self action:@selector(mineBtntAction) tag:11];
+    
     [self addNavigationItemWithImageName:@"nav_buy_scan" isLeft:NO target:self action:@selector(scanBtntAction:) tag:11];
     
     self.tableView.frame = CGRectMake(0, KNavigationBarHeight, KScreenWidth, KScreenHeight-KNavigationBarHeight-KBottomNavH);
@@ -123,12 +137,36 @@ static NSString *ZSHGoodsListViewID = @"ZSHGoodsListView";
         };
         
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
-            ZSHGoodsTitleContentViewController *goodContentVC = [[ZSHGoodsTitleContentViewController alloc]initWithParamDic:@{@"PreBrandID":brandIDArr[indexPath.row],KFromClassType:@(FromBuyVCToGoogsTitleVC)}];
+            ZSHGoodsTitleContentViewController *goodContentVC = [[ZSHGoodsTitleContentViewController alloc]initWithParamDic:@{@"PreBrandID":brandIDArr[indexPath.row],KFromClassType:@(FromBuyVCToGoodsTitleVC)}];
             [weakself.navigationController pushViewController:goodContentVC animated:YES];
         };
     }
     
     return sectionModel;
+}
+
+- (void)searchAction{
+    // 1. Create an Array of popular search
+    NSArray *hotSeaches = @[@"阿哲", @"散打哥", @"天佑", @"赵小磊", @"赵雷", @"陈山", @"PHP", @"C#", @"Perl", @"Go", @"JavaScript", @"R", @"Ruby", @"MATLAB"];
+    // 2. Create a search view controller
+    kWeakSelf(self);
+    PYSearchViewController *searchViewController = [PYSearchViewController searchViewControllerWithHotSearches:hotSeaches searchBarPlaceholder:NSLocalizedString(@"PYExampleSearchPlaceholderText", @"搜索编程语言") didSearchBlock:^(PYSearchViewController *searchViewController, UISearchBar *searchBar, NSString *searchText) {
+        // Called when search begain.
+        // eg：Push to a temp view conroller
+        ZSHGoodsTitleContentViewController *goodContentVC = [[ZSHGoodsTitleContentViewController alloc]initWithParamDic:@{@"searchText":searchText,KFromClassType:@(FromSearchResultVCTOGoodsTitleVC)}];
+        [weakself.navigationController pushViewController:goodContentVC animated:YES];
+    }];
+    // 3. Set style for popular search and search history
+    searchViewController.hotSearchStyle = PYHotSearchStyleARCBorderTag;
+    searchViewController.searchHistoryStyle = PYSearchHistoryStyleARCBorderTag;
+    searchViewController.searchBarBackgroundColor = KZSHColor1A1A1A;
+    
+    // 4. Set delegate
+    searchViewController.delegate = self;
+    // 5. Present a navigation controller
+    //    RootNavigationController *nav = [[RootNavigationController alloc] initWithRootViewController:searchViewController];
+    //    [self presentViewController:nav animated:YES completion:nil];
+    [self.navigationController pushViewController:searchViewController animated:YES];
 }
 
 #pragma action
@@ -142,6 +180,10 @@ static NSString *ZSHGoodsListViewID = @"ZSHGoodsListView";
     
 }
 
+- (void)requestShipDimQuery {
+    [self searchAction];
+
+}
 
 
 - (void)didReceiveMemoryWarning {

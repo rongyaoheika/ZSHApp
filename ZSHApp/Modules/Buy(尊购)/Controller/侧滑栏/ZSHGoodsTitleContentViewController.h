@@ -8,9 +8,10 @@
 
 #import "RootViewController.h"
 
-typedef NS_ENUM(NSInteger,ZSHToGoogsTitleVC){
-    FromBuyVCToGoogsTitleVC,              //尊购
-    FromGoodsVCToGoogsTitleVC,            //商品分类
+typedef NS_ENUM(NSInteger,ZSHToGoodsTitleVC){
+    FromBuyVCToGoodsTitleVC,              // 尊购
+    FromGoodsVCToGoodsTitleVC,            // 商品分类
+    FromSearchResultVCTOGoodsTitleVC,     // 尊购顶部搜索
     FromNoneToGoogsTitleVC
 };
 

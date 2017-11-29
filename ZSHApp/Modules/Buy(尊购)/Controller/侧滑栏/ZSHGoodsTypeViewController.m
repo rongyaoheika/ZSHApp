@@ -151,6 +151,11 @@ static NSString * ZSHBottomListCellID = @"ZSHBottomListCell";
 
 - (void)requestData {
     kWeakSelf(self);
+    
+    if (kFromClassTypeValue == 2) {
+        return;
+    }
+    
     [_buyLogic requestShipPrefectureWithBrandID:self.paramDic[@"PreBrandID"] success:^(id response) {
         _goodModelArr = [ZSHGoodModel mj_objectArrayWithKeyValuesArray:response[@"pd"]];
         if (weakself.cellType == ZSHTableViewCellType) {

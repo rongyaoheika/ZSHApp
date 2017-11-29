@@ -83,7 +83,7 @@
 - (void)reloadListData{
     self.vcs = [[NSMutableArray alloc]init];
     for (int i = 0; i<4; i++) {
-        ZSHGoodsTypeViewController *vc =  [[ZSHGoodsTypeViewController alloc]initWithParamDic:@{@"cellType":@(self.cellType),@"PreBrandID":self.paramDic[@"PreBrandID"],KFromClassType:self.paramDic[KFromClassType]}];
+        ZSHGoodsTypeViewController *vc =  [[ZSHGoodsTypeViewController alloc]initWithParamDic:self.paramDic];
         [self.vcs addObject:vc];
     }
     
