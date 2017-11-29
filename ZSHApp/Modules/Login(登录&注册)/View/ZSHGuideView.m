@@ -111,12 +111,18 @@
         layout.itemSpacing = 0;
         layout.layoutType = TYCyclePagerTransformLayoutNormal;
         layout.itemHorizontalCenter = NO;
-    } else if (kFromClassTypeValue == FromGoodsDetailVCTOGuideView) {
+    } else if (kFromClassTypeValue == FromGoodsDetailVCToGuideView) {
         layout.itemSize = CGSizeMake(CGRectGetWidth(pageView.frame), CGRectGetHeight(pageView.frame));
         layout.itemSpacing = 0;
         layout.layoutType = TYCyclePagerTransformLayoutNormal;
         layout.itemHorizontalCenter = NO;
-    } else {
+//
+    } else if (kFromClassTypeValue == FromBuyVCToGuideView){
+        layout.itemSize = CGSizeMake(CGRectGetWidth(pageView.frame), CGRectGetHeight(pageView.frame));
+        layout.itemSpacing = 15;
+        layout.layoutType = TYCyclePagerTransformLayoutNormal;
+        layout.itemHorizontalCenter = YES;
+    }else {
         layout.itemSize = CGSizeMake(CGRectGetWidth(pageView.frame)*0.8, CGRectGetHeight(pageView.frame));
         layout.itemSpacing = 15;
         layout.layoutType = TYCyclePagerTransformLayoutLinear;

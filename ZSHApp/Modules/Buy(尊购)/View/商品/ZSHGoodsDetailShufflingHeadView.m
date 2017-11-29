@@ -32,7 +32,7 @@
 }
 
 - (void)setup {
-    NSDictionary *nextParamDic = @{KFromClassType:@(FromGoodsDetailVCTOGuideView), @"pageViewHeight":@(kRealValue(225)), @"min_scale":@(1.0),@"withRatio":@(1.0),@"pageImage":@"page_press",@"currentPageImage":@"page_normal",@"infinite":@(false)};
+    NSDictionary *nextParamDic = @{KFromClassType:@(FromGoodsDetailVCToGuideView), @"pageViewHeight":@(kRealValue(225)), @"min_scale":@(1.0),@"withRatio":@(1.0),@"pageImage":@"page_press",@"currentPageImage":@"page_normal",@"infinite":@(false)};
     _headView = [[ZSHGuideView alloc]initWithFrame:CGRectZero paramDic:nextParamDic];
     [self addSubview:_headView];
 }

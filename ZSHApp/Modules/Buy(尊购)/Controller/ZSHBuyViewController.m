@@ -15,6 +15,7 @@
 #import "ZSHGoodsTitleContentViewController.h"
 #import "ZSHBuyLogic.h"
 #import "PYSearchViewController.h"
+#import "ZSHGuideView.h"
 
 static NSString *Identify_headCell = @"headCell";
 static NSString *Identify_listLeftImageCell = @"listLeftImageCell";
@@ -25,7 +26,7 @@ static NSString *ZSHGoodsListViewID = @"ZSHGoodsListView";
 
 @property (nonatomic, strong) UITableView           *leftTableview;
 @property (nonatomic, strong) ZSHBuyLogic           *buyLogic;
-
+@property (nonatomic, strong) ZSHGuideView          *guideView;
 @end
 
 @implementation ZSHBuyViewController
@@ -87,15 +88,24 @@ static NSString *ZSHGoodsListViewID = @"ZSHGoodsListView";
     ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
     [sectionModel.cellModelArray addObject:cellModel];
     cellModel.height = kRealValue(175);
-    __block  CGFloat cellHeight = cellModel.height;
+//    __block  CGFloat cellHeight = cellModel.height;
+    kWeakSelf(self);
     cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHBaseCell *cell = [[ZSHBaseCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:Identify_headCell];
-        UIImage *image = [UIImage imageNamed:@"buy_banner1"];
-        ZSHCycleScrollView *cellView = [[ZSHCycleScrollView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, cellHeight)];
-        cellView.scrollDirection =  ZSHCycleScrollViewHorizontal;
-        cellView.autoScroll = YES;
-        cellView.dataArr = [@[image,image,image]mutableCopy];
-        [cell.contentView addSubview:cellView];
+        NSDictionary *nextParamDic = @{KFromClassType:@(FromBuyVCToGuideView),@"pageViewHeight":@(kRealValue(175)),@"min_scale":@(0.6),@"withRatio":@(1.8),@"infinite":@(false)};
+        weakself.guideView = [[ZSHGuideView alloc]initWithFrame:CGRectZero paramDic:nextParamDic];
+        [cell.contentView addSubview:_guideView];
+        [weakself.guideView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerX.mas_equalTo(cell.contentView);
+            make.size.mas_equalTo(CGSizeMake(KScreenWidth, kRealValue(175)));
+        }];
+        
+//        UIImage *image = [UIImage imageNamed:@"buy_banner1"];
+//        ZSHCycleScrollView *cellView = [[ZSHCycleScrollView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, cellHeight)];
+//        cellView.scrollDirection =  ZSHCycleScrollViewHorizontal;
+//        cellView.autoScroll = YES;
+//        cellView.dataArr = [@[image,image,image]mutableCopy];
+//        [cell.contentView addSubview:cellView];
         return cell;
     };
     
@@ -190,8 +200,13 @@ static NSString *ZSHGoodsListViewID = @"ZSHGoodsListView";
 
 
 - (void)requestCarouselFigure {
+    kWeakSelf(self);
    [_buyLogic requestScarouselfigure:^(id response) {
-       
+       NSArray *imageArr = response[@"pd"][@"SHOWIMAGES"];
+       if (imageArr.count) {
+           
+           [weakself.guideView updateViewWithParamDic:@{@"dataArr":imageArr}];
+       }
    }];
 }
 

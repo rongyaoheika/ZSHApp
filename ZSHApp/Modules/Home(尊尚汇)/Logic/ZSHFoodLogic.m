@@ -18,7 +18,7 @@
         if (weakself.requestDataCompleted) {
             weakself.requestDataCompleted(nil);
         }
-        
+
     } failure:^(NSError *error) {
         if (weakself.requestDataCompleted) {
             weakself.requestDataCompleted(@"fail");

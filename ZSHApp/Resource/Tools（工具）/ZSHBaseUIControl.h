@@ -100,7 +100,8 @@ typedef NS_ENUM (NSInteger,ZSHToGuideView) {
     FromGuideVCToGuideView,           //引导页 - 轮播view
     FromCardVCToGuideView,            //黑卡设置页 - 轮播view
     FromHotelDetailVCToGuideView,     //酒店（美食，ktv详情页） - 轮播view
-    FromGoodsDetailVCTOGuideView,     // 商品详情
+    FromGoodsDetailVCToGuideView,     // 商品详情
+    FromBuyVCToGuideView,             // 尊购首页轮播
     FromNoneVCToGuideView
 };
 
