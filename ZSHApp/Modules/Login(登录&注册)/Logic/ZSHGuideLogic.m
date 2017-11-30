@@ -24,9 +24,9 @@
         }
         
     } failure:^(NSError *error) {
-        if (weakself.requestDataCompleted) {
-            weakself.requestDataCompleted(@"fail");
-        }
+//        if (weakself.requestDataCompleted) {
+//            weakself.requestDataCompleted(@"fail");
+//        }
     }];
     
 }

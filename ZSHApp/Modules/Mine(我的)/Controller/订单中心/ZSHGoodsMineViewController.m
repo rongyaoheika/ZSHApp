@@ -16,6 +16,8 @@
 #import "ZSHCommentViewController.h"
 #import "ZSHCardBtnListView.h"
 #import "ZSHBottomBlurPopView.h"
+#import "ZSHGoodMineReusableView.h"
+
 static NSString * cellIdentifier = @"cellId";
 static NSString *headerViewIdentifier = @"hederview";
 
@@ -28,6 +30,7 @@ static NSString *headerViewIdentifier = @"hederview";
 @property (nonatomic, strong) UIButton       *titleBtn;
 
 @property (nonatomic, strong) ZSHBottomBlurPopView  *topBtnListView;
+@property (nonatomic, assign) NSInteger             typeIndex; // 尊购,KTV,火车票等
 
 @end
 
@@ -49,7 +52,7 @@ static NSString *headerViewIdentifier = @"hederview";
 }
 
 - (void)loadData{
-    
+    _typeIndex = 0;
     self.sectionTitleArr = @[@"我的订单",@"必备工具",@"钱包中心"];
     
     self.dataArr = @[
@@ -83,14 +86,13 @@ static NSString *headerViewIdentifier = @"hederview";
         @""]
                     ];
     
-    self.paramArr =@[
-  @[@{KFromClassType:@(FromAllOrderVCToTitleContentVC),@"title":@"我的订单"},
-    @{KFromClassType:@(FromAllOrderVCToTitleContentVC),@"title":@"我的订单"},
-    @{KFromClassType:@(ZSHFromGoodsMineVCToCommentVC)},
-    @{KFromClassType:@(ZSHFromGoodsMineVCToApplyServiceVC)}],
-  @[@{},@{},@{},@{}],
-  @[@{},@{},@{},@{}],
-  @[@{},@{},@{},@{}]
+    self.paramArr = @[@[@{KFromClassType:@(FromAllOrderVCToTitleContentVC),@"title":@"我的订单",@"tag":@(_typeIndex)},
+                        @{KFromClassType:@(FromAllOrderVCToTitleContentVC),@"title":@"我的订单",@"tag":@(_typeIndex)},
+                        @{KFromClassType:@(ZSHFromGoodsMineVCToCommentVC),@"tag":@(_typeIndex)},
+                        @{KFromClassType:@(ZSHFromGoodsMineVCToApplyServiceVC),@"tag":@(_typeIndex)}],
+                      @[@{},@{},@{},@{}],
+                      @[@{},@{},@{},@{}],
+                      @[@{},@{},@{},@{}]
                       ];
 }
 
@@ -115,7 +117,7 @@ static NSString *headerViewIdentifier = @"hederview";
     self.collectionView.dataSource = self;
 
     [self.collectionView registerClass:[ZSHGoodsMineGridCell class] forCellWithReuseIdentifier:cellIdentifier];
-    [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:headerViewIdentifier];
+    [self.collectionView registerClass:[ZSHGoodMineReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:headerViewIdentifier];
     
     CGFloat top =  layout.headerReferenceSize.height + layout.itemSize.height;
     CGFloat sectionHeight = layout.headerReferenceSize.height + layout.itemSize.height;
@@ -142,7 +144,7 @@ static NSString *headerViewIdentifier = @"hederview";
     cell.modelDic = dicData;
     cell.btnClickBlock = ^(UIButton *btn){
         Class className = NSClassFromString(weakself.pushVCsArr[indexPath.section][btn.tag-1]);
-        RootViewController *vc = [[className alloc]initWithParamDic:weakself.paramArr[indexPath.section][btn.tag - 1]];
+        RootViewController *vc = [[className alloc]initWithParamDic:weakself.paramArr[indexPath.section][btn.tag-1]];
         [weakself.navigationController pushViewController:vc animated:YES];
     };
     return cell;
@@ -150,10 +152,11 @@ static NSString *headerViewIdentifier = @"hederview";
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath{
     if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
-        UICollectionReusableView *header = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:headerViewIdentifier forIndexPath:indexPath];
+        ZSHGoodMineReusableView *header = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:headerViewIdentifier forIndexPath:indexPath];
+        [header updateWithTitle:self.sectionTitleArr[indexPath.section]];
         header.userInteractionEnabled = YES;
         header.tag = indexPath.section + 1;
-        [header addSubview:[self createHeaderiewWithTitle:self.sectionTitleArr[indexPath.section]]];
+//        header = [self createHeaderiewWithTitle:self.sectionTitleArr[indexPath.section]];
         [header addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(headViewAction:)]];
         return header;
     }
@@ -184,7 +187,7 @@ static NSString *headerViewIdentifier = @"hederview";
 
 - (void)headViewAction:(UITapGestureRecognizer *)gesture{
     if (gesture.view.tag == 1) {//我的订单
-        NSDictionary *nextParamDic = @{KFromClassType:@(FromAllOrderVCToTitleContentVC),@"title":@"我的订单"};
+        NSDictionary *nextParamDic = @{KFromClassType:@(FromAllOrderVCToTitleContentVC),@"title":@"我的订单",@"tag":@(_typeIndex)};
         ZSHTitleContentViewController *liveVC = [[ZSHTitleContentViewController alloc]initWithParamDic:nextParamDic];
         [self.navigationController pushViewController:liveVC animated:YES];
     }
@@ -250,7 +253,8 @@ static NSString *headerViewIdentifier = @"hederview";
 }
 
 //选中某种订单列表
-- (void)orderTypeBtnAction:(UIButton *)orderBtn{
+- (void)orderTypeBtnAction:(UIButton *)orderBtn {
+    _typeIndex = orderBtn.tag-1;
     switch (orderBtn.tag) {
         case 1:{//尊购
             [self loadData];
@@ -259,8 +263,13 @@ static NSString *headerViewIdentifier = @"hederview";
             _titleBtn.selected = !_titleBtn.selected;
              break;
         }
-            
-        default:{
+        case 2:// 火车票
+        case 3:// 机票
+        case 4:// 酒店
+        case 5:// KTV
+        case 6:// 美食
+        case 7:// 酒吧
+        case 8:{// 电影
             self.sectionTitleArr = @[@"我的订单"];
             self.dataArr = @[@[@{@"image":@"goods_mine_allOrder",@"desc":@"全部订单", @"tag":@(1)},
                                @{@"image":@"goods_mine_payment",@"desc":@"待付款",@"tag":@(2)},
@@ -274,14 +283,21 @@ static NSString *headerViewIdentifier = @"hederview";
                                   @"ZSHApplyServiceViewController"]
                                 ];
             self.paramArr = @[
-                             @[@{KFromClassType:@(FromAllOrderVCToTitleContentVC),@"title":@"我的订单"},
-                               @{KFromClassType:@(FromAllOrderVCToTitleContentVC),@"title":@"我的订单"},
-                               @{KFromClassType:@(ZSHFromGoodsMineVCToCommentVC)},
-                               @{KFromClassType:@(ZSHFromGoodsMineVCToApplyServiceVC)}]
-                             ];
+                              @[@{KFromClassType:@(FromAllOrderVCToTitleContentVC),@"title":@"我的订单",@"tag":@(_typeIndex)},
+                                @{KFromClassType:@(FromAllOrderVCToTitleContentVC),@"title":@"我的订单",@"tag":@(_typeIndex)},
+                                @{KFromClassType:@(ZSHFromGoodsMineVCToCommentVC),@"tag":@(_typeIndex)},
+                                @{KFromClassType:@(ZSHFromGoodsMineVCToApplyServiceVC),@"tag":@(_typeIndex)}]
+                              ];
+            
+
+            
             [self.collectionView reloadData];
             [self changeButtonObject:_titleBtn TransformAngle:0];
             _titleBtn.selected = !_titleBtn.selected;
+            break;
+        }
+        default:{
+            
             break;
         }
     }

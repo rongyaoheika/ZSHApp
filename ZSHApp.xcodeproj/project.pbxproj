@@ -56,6 +56,7 @@
 		1822871D1FB45CE800CA5B10 /* ZSHLiveMineHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1822871C1FB45CE800CA5B10 /* ZSHLiveMineHeadView.m */; };
 		1824F1D11FCE800F000D805E /* ZSHBuySearchResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1824F1D01FCE800F000D805E /* ZSHBuySearchResultViewController.m */; };
 		1824F1D41FCE8E01000D805E /* ZSHBuySearchModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1824F1D31FCE8E01000D805E /* ZSHBuySearchModel.m */; };
+		1824F1D81FCFDADC000D805E /* ZSHGoodMineReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1824F1D71FCFDADC000D805E /* ZSHGoodMineReusableView.m */; };
 		1826CDAD1FBAE1F000A0ECE2 /* ZSHVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1826CDAC1FBAE1F000A0ECE2 /* ZSHVideoViewController.m */; };
 		1826CDB01FBAE20C00A0ECE2 /* ZSHPersonalDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1826CDAF1FBAE20C00A0ECE2 /* ZSHPersonalDetailViewController.m */; };
 		1826CDB41FBAFD3D00A0ECE2 /* ZSHApplyServiceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1826CDB31FBAFD3D00A0ECE2 /* ZSHApplyServiceViewController.m */; };
@@ -505,6 +506,8 @@
 		1824F1D01FCE800F000D805E /* ZSHBuySearchResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHBuySearchResultViewController.m; sourceTree = "<group>"; };
 		1824F1D21FCE8E01000D805E /* ZSHBuySearchModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHBuySearchModel.h; sourceTree = "<group>"; };
 		1824F1D31FCE8E01000D805E /* ZSHBuySearchModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHBuySearchModel.m; sourceTree = "<group>"; };
+		1824F1D61FCFDADC000D805E /* ZSHGoodMineReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHGoodMineReusableView.h; sourceTree = "<group>"; };
+		1824F1D71FCFDADC000D805E /* ZSHGoodMineReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHGoodMineReusableView.m; sourceTree = "<group>"; };
 		1826CDAB1FBAE1F000A0ECE2 /* ZSHVideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHVideoViewController.h; sourceTree = "<group>"; };
 		1826CDAC1FBAE1F000A0ECE2 /* ZSHVideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHVideoViewController.m; sourceTree = "<group>"; };
 		1826CDAE1FBAE20C00A0ECE2 /* ZSHPersonalDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHPersonalDetailViewController.h; sourceTree = "<group>"; };
@@ -1413,6 +1416,15 @@
 			path = "搜索";
 			sourceTree = "<group>";
 		};
+		1824F1D51FCFDA87000D805E /* 订单中心 */ = {
+			isa = PBXGroup;
+			children = (
+				1824F1D61FCFDADC000D805E /* ZSHGoodMineReusableView.h */,
+				1824F1D71FCFDADC000D805E /* ZSHGoodMineReusableView.m */,
+			);
+			path = "订单中心";
+			sourceTree = "<group>";
+		};
 		1826CDB11FBAFD0B00A0ECE2 /* ApplyService(申请售后) */ = {
 			isa = PBXGroup;
 			children = (
@@ -2065,6 +2077,7 @@
 		FE291EBA1F8CAEDC00D4BBE7 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				1824F1D51FCFDA87000D805E /* 订单中心 */,
 				FEDF29211FB6CF9200CD5756 /* Wallet */,
 				FEAE112D1FB4726C008DCB3E /* Energy(能量值) */,
 				FE8FD08B1FAE03D6005F1184 /* Setting(设置中心) */,
@@ -3741,6 +3754,7 @@
 				FEA018C21FCBBCE600989FB2 /* ZSHKTVDetailViewController.m in Sources */,
 				FEC273A11F8E1F4A00A0F91A /* ZSHNotCycleScrollView.m in Sources */,
 				FE443FE51FB0A31600B7F7A5 /* ZSHNotificationViewController.m in Sources */,
+				1824F1D81FCFDADC000D805E /* ZSHGoodMineReusableView.m in Sources */,
 				FEF2B62E1FAC1C89000AEA6E /* ZSHTextFieldCellView.m in Sources */,
 				FE5229911F90B02A00DC2899 /* ZSHLeftContentViewController.m in Sources */,
 				FEAE112C1FB444D1008DCB3E /* ZSHPayView.m in Sources */,

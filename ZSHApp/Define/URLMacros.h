@@ -29,18 +29,19 @@
 #if DevelopSever
 
 /**开发服务器*/
-#define kUrlRoot                    @"http://192.168.1.108:8080/ZSHINTER/"
+#define kUrlRoot                    @"http://192.168.1.134:8081/ZSHINTER/"
+//#define kUrlRoot                    @"http://192.168.1.108:8080/ZSHINTER/"
 //#define kUrlRoot                  @"http://192.168.11.122:8090" //展鹏
 
 #elif TestSever
 
 /**测试服务器*/
-#define kUrlRoot                   @"http://192.168.1.108:8080/ZSHINTER/"
+#define kUrlRoot                    @"http://47.104.16.215:8080/ZSHINTER/"
 
 #elif ProductSever
 
 /**生产服务器*/
-#define kUrlRoot                   @"http://192.168.1.108:8080/ZSHINTER/"
+#define kUrlRoot                    @"http://192.168.1.108:8080/ZSHINTER/"
 
 #endif
 
@@ -267,8 +268,8 @@
 #define kUrlShipOrderStauPd [NSString stringWithFormat:@"/appshotelin/shiporderstaupd?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SHIPHORELORDERUPD"]]
 //49. 获得用户名下所有酒店订单列表
 //参数：HONOURUSER_ID 需要查询的用户id
-//请求地址：/apphotelorderin/hotelorderalllist?ALLHOTELORDER(混淆码)
-#define kUrlHotelOrderAllList [NSString stringWithFormat:@"/apphotelorderin/hotelorderalllist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"ALLHOTELORDER"]]
+//请求地址：/appshotelin/hotelorderalllist.do?ALLHOTELORDER(混淆码)
+#define kUrlHotelOrderAllList [NSString stringWithFormat:@"/appshotelin/hotelorderalllist.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"ALLHOTELORDER"]]
 //50. 获取某酒店详情列表
 //参数：SORTHOTEL_ID 某酒店id
 //请求地址：/appshotelin/hoteldetaillist?HOTELDETAIL(混淆码)

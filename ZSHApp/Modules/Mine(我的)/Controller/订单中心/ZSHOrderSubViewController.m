@@ -1,4 +1,4 @@
-//
+ //
 //  ZSHOrderSubViewController.m
 //  ZSHApp
 //
@@ -94,14 +94,88 @@ static NSString *cellIdentifier = @"listCell";
 
 - (void)requestData {
     kWeakSelf(self);
-    if (self.paramDic[@"ORDERSTATUS"]) {
-        [_mineLogic requestOrderConListWithOrderStatus:self.paramDic[@"ORDERSTATUS"] success:^(id response) {
-            [weakself initViewModel];
-        }];
+
+    if (![self.paramDic[@"ORDERSTATUS"] isEqualToString:@"0040000"]) {
+        if ([self.paramDic[@"tag"] integerValue] == 0) {
+            [_mineLogic requestOrderConListWithOrderStatus:self.paramDic[@"ORDERSTATUS"] success:^(id response) {
+                [weakself initViewModel];
+            }];
+        } else if ([self.paramDic[@"tag"] integerValue] == 1) {
+            [_mineLogic requestOrderConListWithOrderStatus:self.paramDic[@"ORDERSTATUS"] success:^(id response) {
+                [weakself initViewModel];
+            }];
+        } else if ([self.paramDic[@"tag"] integerValue] == 2) {
+            [_mineLogic requestOrderConListWithOrderStatus:self.paramDic[@"ORDERSTATUS"] success:^(id response) {
+                [weakself initViewModel];
+            }];
+        } else if ([self.paramDic[@"tag"] integerValue] == 3) {
+            [_mineLogic requestOrderConListWithOrderStatus:self.paramDic[@"ORDERSTATUS"] success:^(id response) {
+                [weakself initViewModel];
+            }];
+        } else if ([self.paramDic[@"tag"] integerValue] == 4) {
+            [_mineLogic requestOrderConListWithOrderStatus:self.paramDic[@"ORDERSTATUS"] success:^(id response) {
+                [weakself initViewModel];
+            }];
+        } else if ([self.paramDic[@"tag"] integerValue] == 5) {
+            [_mineLogic requestOrderConListWithOrderStatus:self.paramDic[@"ORDERSTATUS"] success:^(id response) {
+                [weakself initViewModel];
+            }];
+        } else if ([self.paramDic[@"tag"] integerValue] == 6) {
+            [_mineLogic requestOrderConListWithOrderStatus:self.paramDic[@"ORDERSTATUS"] success:^(id response) {
+                [weakself initViewModel];
+            }];
+        } else if ([self.paramDic[@"tag"] integerValue] == 7) {
+            [_mineLogic requestOrderConListWithOrderStatus:self.paramDic[@"ORDERSTATUS"] success:^(id response) {
+                [weakself initViewModel];
+            }];
+        } else if ([self.paramDic[@"tag"] integerValue] == 8) {
+            [_mineLogic requestOrderConListWithOrderStatus:self.paramDic[@"ORDERSTATUS"] success:^(id response) {
+                [weakself initViewModel];
+            }];
+        }  else {
+      
+        }
     } else {
-        [_mineLogic requestOrderAllList:^(id response) {
-            [weakself initViewModel];
-        }];
+        if ([self.paramDic[@"tag"] integerValue] == 0) {
+            [_mineLogic requestOrderAllList:^(id response) {
+                [weakself initViewModel];
+            }];
+        } else if ([self.paramDic[@"tag"] integerValue] == 1) {
+            [_mineLogic requestOrderConListWithOrderStatus:self.paramDic[@"ORDERSTATUS"] success:^(id response) {
+                [weakself initViewModel];
+            }];
+        } else if ([self.paramDic[@"tag"] integerValue] == 2) {
+            [_mineLogic requestOrderConListWithOrderStatus:self.paramDic[@"ORDERSTATUS"] success:^(id response) {
+                [weakself initViewModel];
+            }];
+        } else if ([self.paramDic[@"tag"] integerValue] == 3) {
+            [_mineLogic requestAllHotelOrder:^(id response) {
+                [weakself initViewModel];
+            }];
+        } else if ([self.paramDic[@"tag"] integerValue] == 4) {
+            [_mineLogic requestOrderConListWithOrderStatus:self.paramDic[@"ORDERSTATUS"] success:^(id response) {
+                [weakself initViewModel];
+            }];
+        } else if ([self.paramDic[@"tag"] integerValue] == 5) {
+            [_mineLogic requestOrderConListWithOrderStatus:self.paramDic[@"ORDERSTATUS"] success:^(id response) {
+                [weakself initViewModel];
+            }];
+        } else if ([self.paramDic[@"tag"] integerValue] == 6) {
+            [_mineLogic requestOrderConListWithOrderStatus:self.paramDic[@"ORDERSTATUS"] success:^(id response) {
+                [weakself initViewModel];
+            }];
+        } else if ([self.paramDic[@"tag"] integerValue] == 7) {
+            [_mineLogic requestOrderConListWithOrderStatus:self.paramDic[@"ORDERSTATUS"] success:^(id response) {
+                [weakself initViewModel];
+            }];
+        } else if ([self.paramDic[@"tag"] integerValue] == 8) {
+            [_mineLogic requestOrderConListWithOrderStatus:self.paramDic[@"ORDERSTATUS"] success:^(id response) {
+                [weakself initViewModel];
+            }];
+        }  else {
+            
+        }
+
     }
   
 }

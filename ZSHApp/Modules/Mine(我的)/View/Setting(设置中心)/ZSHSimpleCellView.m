@@ -82,6 +82,7 @@
         _rightImageView = [[UIImageView alloc]initWithFrame:CGRectZero];
         _rightImageView.image = [UIImage imageNamed:self.paramDic[@"rightTitle"]];
         _rightImageView.layer.cornerRadius = imageWH/2;
+        _rightImageView.layer.masksToBounds = YES;
     }
     return _rightImageView;
 }
@@ -93,6 +94,10 @@
         [_rightSwitchBtn setOn:YES];
     }
     return _rightSwitchBtn;
+}
+
+- (void)updateHeadImage:(UIImage *)image {
+    _rightImageView.image = image;
 }
 
 @end

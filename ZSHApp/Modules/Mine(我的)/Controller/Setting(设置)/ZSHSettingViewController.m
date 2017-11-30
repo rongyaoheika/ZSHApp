@@ -8,11 +8,16 @@
 
 #import "ZSHSettingViewController.h"
 
-@interface ZSHSettingViewController ()
 
-@property (nonatomic, strong) NSArray            *pushVCsArr;
-@property (nonatomic, strong) NSArray            *paramArr;
-@property (nonatomic, strong) NSArray            *titleArr;
+@interface ZSHSettingViewController ()
+{
+    NSMutableArray *_selectedPhotos;
+    NSMutableArray *_selectedAssets;
+}
+
+@property (nonatomic, strong) NSArray                 *pushVCsArr;
+@property (nonatomic, strong) NSArray                 *paramArr;
+@property (nonatomic, strong) NSArray                 *titleArr;
 
 @end
 
@@ -32,6 +37,8 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     self.pushVCsArr = @[@"ZSHUserInfoViewController",@"ZSHNotificationViewController",@"ZSHAccountViewController",@"",@""];
     self.paramArr = @[@{},@{KFromClassType:@(FromSettingVCToNotificationVC),@"title":@"新消息通知"},@{KFromClassType:@""},@{},@""];
     [self initViewModel];
+    _selectedPhotos = [NSMutableArray array];
+    _selectedAssets = [NSMutableArray array];
 }
 
 - (void)createUI{
@@ -69,6 +76,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
         };
         
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
+
             Class className = NSClassFromString(self.pushVCsArr[indexPath.row]);
             RootViewController *vc = [[className alloc]initWithParamDic:weakself.paramArr[indexPath.row]];
             [weakself.navigationController pushViewController:vc animated:YES];
@@ -76,6 +84,8 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     }
     return sectionModel;
 }
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

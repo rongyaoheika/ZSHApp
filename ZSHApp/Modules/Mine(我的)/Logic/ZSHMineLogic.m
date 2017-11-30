@@ -72,6 +72,17 @@
     }];
 }
 
+//ALLHOTELORDER
+// 获得用户名下所有酒店订单列表
+- (void)requestAllHotelOrder:(void (^)(id response))success {
+    kWeakSelf(self);
+    [PPNetworkHelper POST:kUrlHotelOrderAllList parameters:@{@"HONOURUSER_ID":@"d6a3779de8204dfd9359403f54f7d27c"} success:^(id responseObject) {
+        RLog(@"%@", responseObject);
+        success(nil);
+    } failure:^(NSError *error) {
+        RLog(@"请求失败");
+    }];
+}
 
 // 生成订单接口（未产生交易）状态为待付款（购物车结算）
 - (void)requestShipOrderWithModel:(ZSHBuyOrderModel *)model success:(void (^)(id response))success {
@@ -79,6 +90,18 @@
         success(responseObject);
     } failure:^(NSError *error) {
         RLog(@"请求失败");
+    }];
+}
+
+
+// 上传头像
+- (void)uploadImage:(NSArray *)imageArr name:(NSArray *)nameArr success:(void (^)(id response))success {
+    [PPNetworkHelper uploadImagesWithURL:kUrlUp parameters:@{@"HONOURUSER_ID":@"d6a3779de8204dfd9359403f54f7d27c"} name:@"showfile" images:imageArr fileNames:nameArr imageScale:1.0 imageType:@"image/jpeg" progress:^(NSProgress *progress) {
+        
+    } success:^(id responseObject) {
+        success(responseObject);
+    } failure:^(NSError *error) {
+        
     }];
 }
 

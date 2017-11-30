@@ -75,7 +75,15 @@
             self.indicatorHeight = 0.0;
             // @"ZSHCommentViewController",@"ZSHApplyServiceViewController"
             self.contentVCS = @[@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHOrderSubViewController"];
-            self.paramArr = @[@{@"":@""},@{@"ORDERSTATUS":@"0040001"}, @{@"ORDERSTATUS":@"0040002"}, @{@"ORDERSTATUS":@"0040003"}, @{@"ORDERSTATUS":@"0040004"}];
+            NSMutableArray *arr = [[NSMutableArray alloc] init];
+            NSMutableDictionary *muDic = [NSMutableDictionary dictionaryWithDictionary:self.paramDic];
+            NSArray *values = @[@"0040000", @"0040001", @"0040002", @"0040003", @"0040004"];
+            for (int i = 0; i<5; i++) {
+                [muDic setObject:values[i] forKey:@"ORDERSTATUS"];
+                [arr addObject:[muDic mutableCopy]];
+            }
+            self.paramArr = [arr copy];
+//            self.paramArr = @[@{@"":@""},@{@"ORDERSTATUS":@"0040001"}, @{@"ORDERSTATUS":@"0040002"}, @{@"ORDERSTATUS":@"0040003"}, @{@"ORDERSTATUS":@"0040004"}];
             break;
         }
         case FromIntegralVCToTitleContentVC:{

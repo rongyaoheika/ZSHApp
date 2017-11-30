@@ -11,4 +11,6 @@
 @interface ZSHSimpleCellView : ZSHBaseView
 
 
+- (void)updateHeadImage:(UIImage *)image;
+
 @end
