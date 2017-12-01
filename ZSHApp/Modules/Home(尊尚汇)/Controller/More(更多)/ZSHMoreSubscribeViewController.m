@@ -46,11 +46,15 @@
                         @"ZSHSubscribeViewController",     //豪车
                         @"ZSHSubscribeViewController",     //飞机
                         @"ZSHSubscribeViewController",     //高尔夫汇
-                        @"ZSHTailorDetailViewController",  //私人定制
-                        @"",//品牌杂志
-                        @"",//健康养生
-                        @"",//高端品鉴
-                        @"ZSHMoreSubscribeViewController"]; //定制理财
+                        
+//                        @"ZSHTailorDetailViewController",  //私人定制
+                        @"ZSHSubscribeViewController",//私人定制
+                        @"ZSHSubscribeViewController",//品牌杂志
+                        @"ZSHSubscribeViewController",//健康养生
+                        @"ZSHSubscribeViewController",//高端品鉴
+//                        @"ZSHMoreSubscribeViewController"
+                        @"ZSHSubscribeViewController" //定制理财
+                        ];
     self.paramArr = @[
                       @{KFromClassType:@(FromFoodVCToTitleContentVC)},
                       @{KFromClassType:@(FromHotelVCToTitleContentVC)},
@@ -63,11 +67,12 @@
                       @{KFromClassType:@(FromCarVCToSubscribeVC),@"title":@"豪车"},
                       @{KFromClassType:@(FromHelicopterVCToSubscribeVC),@"title":@"飞机"},
                       @{KFromClassType:@(FromGolfVCToSubscribeVC),@"title":@"高尔夫汇"},
-                      @{},
-                      @{},
-                      @{},
-                      @{},
-                      @{}];
+                      @{KFromClassType:@(FromShipVCToSubscribeVC),@"title":@"私人定制"},
+                      @{KFromClassType:@(FromShipVCToSubscribeVC),@"title":@"品牌杂志"},
+                      @{KFromClassType:@(FromShipVCToSubscribeVC),@"title":@"健康养生"},
+                      @{KFromClassType:@(FromShipVCToSubscribeVC),@"title":@"高端品鉴"},
+                      @{KFromClassType:@(FromShipVCToSubscribeVC),@"title":@"定制理财"},
+                       ];
 }
 
 - (void)requestData{

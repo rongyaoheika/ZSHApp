@@ -36,16 +36,10 @@
 }
 
 - (void)requestGuideImageData{
-    kWeakSelf(self);
     _guideLogic = [[ZSHGuideLogic alloc]init];
-    [_guideLogic requestData];
-    _guideLogic.requestDataCompleted = ^(NSMutableArray *imageArr){
-        [weakself.tableView.mj_header endRefreshing];
-        [weakself.tableView.mj_footer endRefreshing];
-        [weakself.midView updateViewWithParamDic:@{@"dataArr":imageArr}];
-        
-        
-    };
+    [_guideLogic requestGuideDataSuccess:^(NSMutableArray *imageArr) {
+        [_midView updateViewWithParamDic:@{@"dataArr":imageArr}];
+    } fail:nil];
 }
 
 - (void)createUI{

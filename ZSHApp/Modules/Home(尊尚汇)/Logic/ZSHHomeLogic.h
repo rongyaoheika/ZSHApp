@@ -16,12 +16,15 @@
 @property (nonatomic, strong) NSArray       *noticeArr;
 @property (nonatomic, strong) NSArray       *serviceArr;
 @property (nonatomic, strong) NSDictionary  *partyDic;
+@property (nonatomic, strong) NSArray       *musicArr;
 
-- (void)loadNoticeCellData;
-- (void)loadServiceCellData;
+- (void)loadNoticeCellDataSuccess:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail;
+- (void)loadServiceCellDataSuccess:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail;
+- (void)loadNewsCellDataSuccess:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail;
+- (void)loadPartyCellDataSuccess:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail;
 - (void)loadServiceDetailDataWithParamDic:(NSDictionary *)paramDic;
 - (void)loadNewsCellData;
 - (void)loadPartyCellData;
 - (void)loadMorePrivilege;
-
+- (void)loadMusicCellDataSuccess:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail;
 @end

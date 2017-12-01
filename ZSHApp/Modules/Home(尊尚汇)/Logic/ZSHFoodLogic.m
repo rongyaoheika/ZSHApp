@@ -20,9 +20,7 @@
         }
 
     } failure:^(NSError *error) {
-        if (weakself.requestDataCompleted) {
-            weakself.requestDataCompleted(@"fail");
-        }
+        
     }];
 }
 
@@ -38,9 +36,17 @@
         }
         
     } failure:^(NSError *error) {
-        if (weakself.requestDataCompleted) {
-            weakself.requestDataCompleted(@"fail");
-        }
+        
+    }];
+}
+
+- (void)loadFoodDetailListDataWithParamDic:(NSDictionary *)paramDic success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail {
+    [PPNetworkHelper POST:kUrlSfoodlistrand parameters:paramDic success:^(id responseObject) {
+        RLog(@"美食详情列表数据==%@",responseObject)
+        NSArray *foodDetaiDicListArr = responseObject[@"pd"];
+        success(foodDetaiDicListArr);
+    } failure:^(NSError *error) {
+        RLog(@"请求失败");
     }];
 }
 

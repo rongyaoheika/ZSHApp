@@ -9,12 +9,13 @@
 #import <Foundation/Foundation.h>
 
 typedef void (^RequestDataCompleted) (id);
-
+typedef void (^ResponseSuccessBlock) (id responseObject);
+typedef void (^ResponseFailBlock) (NSError *error);
 @interface ZSHBaseLogic : NSObject
 
 @property (nonatomic, strong) NSArray                  *dataArr;
 @property (nonatomic, strong) NSMutableArray           *mDataArr;
 @property (nonatomic, copy)   RequestDataCompleted     requestDataCompleted;
 - (void)requestData;
-
+- (void)requestDataWithURLStr:(NSString *)URLStr paramDic:(NSDictionary *)paramDic success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail;
 @end

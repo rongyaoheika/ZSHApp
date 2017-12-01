@@ -392,5 +392,12 @@
     }
 }
 
+- (void) showProgress {
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+}
+
+- (void) hideProgress {
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
+}
 
 @end

@@ -32,8 +32,6 @@
 
 @end
 
-
-
 @interface ZSHHotelDetailModel:ZSHBaseModel
 //酒店详情
 @property (nonatomic, copy) NSString    *HOTELPHONE;             //酒店电话
@@ -49,5 +47,17 @@
 @property (nonatomic, assign) BOOL      SHOPSERVFITNESS;         //健身
 @property (nonatomic, assign) BOOL      SHOPSERVSWIM;            //游泳
 @property (nonatomic, assign) BOOL      SHOPSERVPARK;            //停车
+
+@end
+
+@interface ZSHHotelDetailListModel:ZSHBaseModel
+
+//酒店列表详情
+@property (nonatomic, copy) NSString    *HOTELDETROOMSIZE;        //酒店电话
+@property (nonatomic, copy) NSString    *HOTELDETNAME;            //豪华单人间
+@property (nonatomic, copy) NSString    *HOTELDETAIL_ID;          //
+@property (nonatomic, copy) NSString    *SORTHOTEL_ID;            //
+@property (nonatomic, copy) NSString    *HOTELDETBEDTYPE;         //单人床1.35*2  2张;
+@property (nonatomic, assign) CGFloat   HOTELDETPRICE;            //酒店价格
 
 @end

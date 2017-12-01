@@ -25,9 +25,8 @@
 @property (nonatomic, strong) ZSHKTVDetailModel         *KTVDetailModel;
 @property (nonatomic, strong) NSDictionary              *KTVDetailParamDic;
 @property (nonatomic, strong) ZSHBottomBlurPopView      *bottomBlurPopView;
-@property (nonatomic, strong) NSMutableArray            *dataArr;
-@property (nonatomic, assign) BOOL                      showSeparatorLine;
 
+@property (nonatomic, strong) NSArray                    *KTVDetailListArr;
 @end
 
 static NSString *ZSHHotelDetailHeadCellID = @"ZSHHotelDetailHeadCell";
@@ -48,7 +47,6 @@ static NSString *ZSHKTVListCellID = @"ZSHKTVListCell";
 
 - (void)loadData{
     self.shopId = self.paramDic[@"shopId"];
-    self.dataArr = [[NSMutableArray alloc]init];
     [self requestData];
     [self initViewModel];
 }
@@ -59,12 +57,24 @@ static NSString *ZSHKTVListCellID = @"ZSHKTVListCell";
     NSDictionary *paramDic = @{@"SORTKTV_ID":self.shopId};
     [_KTVLogic loadKTVDetailDataWithParamDic:paramDic];
     _KTVLogic.requestDataCompleted = ^(NSDictionary *paramDic){
+        
         weakself.KTVDetailModel = paramDic[@"KTVDetailModel"];
         weakself.KTVDetailParamDic = paramDic[@"KTVDetailParamDic"];
         [weakself.tableView.mj_header endRefreshing];
         [weakself.tableView.mj_footer endRefreshing];
         [weakself initViewModel];
     };
+    
+    [_KTVLogic loadKTVDetailListDataWithParamDic:paramDic success:^(NSArray *KTVDetailListArr) {
+        _KTVDetailListArr = KTVDetailListArr;
+        weakself.tableViewModel.sectionModelArray[3] = [weakself storKTVListSection];
+        NSIndexSet *indexSet = [[NSIndexSet alloc]initWithIndex:3];
+        [weakself updateSectionDatWithSet:indexSet];
+    } fail:nil];
+}
+
+- (void)updateSectionDatWithSet:(NSIndexSet *)indexSet{
+    [self.tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
 - (void)createUI{
@@ -223,12 +233,14 @@ static NSString *ZSHKTVListCellID = @"ZSHKTVListCell";
 //KTV底部列表
 - (ZSHBaseTableViewSectionModel*)storKTVListSection{
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
-    for (int i = 0; i<2; i++){
+    for (int i = 0; i<_KTVDetailListArr.count; i++){
         ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
         [sectionModel.cellModelArray addObject:cellModel];
         cellModel.height = kRealValue(75);
         cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
             ZSHKTVListCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHKTVListCellID forIndexPath:indexPath];
+            NSDictionary *nextParamDic = _KTVDetailListArr[indexPath.row];
+            [cell updateCellWithParamDic:nextParamDic];
             return cell;
         };
         

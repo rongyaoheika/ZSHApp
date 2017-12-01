@@ -24,6 +24,10 @@
 @end
 
 @implementation ZSHHotelDetailModel
+
+@end
+
+@implementation ZSHHotelDetailListModel
 @end
 
 

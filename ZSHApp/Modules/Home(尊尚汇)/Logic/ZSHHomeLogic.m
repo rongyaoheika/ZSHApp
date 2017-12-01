@@ -10,37 +10,27 @@
 
 @implementation ZSHHomeLogic
 
-- (void)loadNoticeCellData{
+- (void)loadNoticeCellDataSuccess:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail{
     kWeakSelf(self);
     [PPNetworkHelper POST:kUrlUserHome parameters:nil success:^(id responseObject) {
-        RLog(@"请求成功：返回数据&%@",responseObject);
-//        weakself.noticeArr = [ZSHHomeMainModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"]];
+        RLog(@"新闻推荐数据%@",responseObject);
         weakself.noticeArr = responseObject[@"pd"];
-        if (weakself.requestDataCompleted) {
-            weakself.requestDataCompleted(nil);
-        }
-
+        success(nil);
     } failure:^(NSError *error) {
-        if (weakself.requestDataCompleted) {
-            weakself.requestDataCompleted(@"fail");
-        }
+        RLog(@"新闻推荐数据获取失败");
+        
     }];
 }
 
 //荣耀服务列表
-- (void)loadServiceCellData{
+- (void)loadServiceCellDataSuccess:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail{
     kWeakSelf(self);
     [PPNetworkHelper POST:kUrlServerDo parameters:nil success:^(id responseObject) {
         RLog(@"荣耀服务首页数据==%@",responseObject);
         weakself.serviceArr = responseObject[@"pd"];
-        if (weakself.requestDataCompleted) {
-            weakself.requestDataCompleted(self.serviceArr);
-        }
-        
+        success(nil);
     } failure:^(NSError *error) {
-        if (weakself.requestDataCompleted) {
-            weakself.requestDataCompleted(@"fail");
-        }
+         RLog(@"荣耀服务首页数据获取失败");
     }];
 }
 
@@ -55,31 +45,37 @@
         }
         
     } failure:^(NSError *error) {
-        if (weakself.requestDataCompleted) {
-            weakself.requestDataCompleted(@"fail");
-        }
+        
     }];
 }
 
 
 //新闻头条轮播信息
-- (void)loadNewsCellData{
+- (void)loadNewsCellDataSuccess:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail{
     kWeakSelf(self);
     [PPNetworkHelper POST:kUrlGetNewsList parameters:nil success:^(id responseObject) {
         RLog(@"新闻头条轮播信息%@",responseObject);
         weakself.newsArr = responseObject[@"pd"];
-        if (weakself.requestDataCompleted) {
-            weakself.requestDataCompleted(self.serviceArr);
-        }
+        success(nil);
         
     } failure:^(NSError *error) {
-        if (weakself.requestDataCompleted) {
-            weakself.requestDataCompleted(@"fail");
-        }
+        RLog(@"新闻头条轮播数据获取失败");
     }];
 }
 
 //汇聚玩趴
+- (void)loadPartyCellDataSuccess:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail{
+    kWeakSelf(self);
+    [PPNetworkHelper POST:kUrlPartyimg parameters:nil success:^(id responseObject) {
+        RLog(@"汇聚玩趴%@",responseObject);
+        weakself.partyDic = responseObject[@"pd"];
+        success(nil);
+        
+    } failure:^(NSError *error) {
+        RLog(@"汇聚玩趴数据获取失败");
+    }];
+}
+
 - (void)loadPartyCellData{
     kWeakSelf(self);
     [PPNetworkHelper POST:kUrlPartyimg parameters:nil success:^(id responseObject) {
@@ -90,9 +86,7 @@
         }
         
     } failure:^(NSError *error) {
-        if (weakself.requestDataCompleted) {
-            weakself.requestDataCompleted(@"fail");
-        }
+       
     }];
 }
 
@@ -107,9 +101,19 @@
         }
         
     } failure:^(NSError *error) {
-        if (weakself.requestDataCompleted) {
-            weakself.requestDataCompleted(@"fail");
-        }
+        
+    }];
+}
+
+//音乐
+- (void)loadMusicCellDataSuccess:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail{
+    kWeakSelf(self);
+    [PPNetworkHelper POST:kUrlMusicreclist parameters:nil success:^(id responseObject) {
+        RLog(@"音乐列表%@",responseObject);
+        weakself.musicArr = responseObject[@"pd"];
+        success(nil);
+    } failure:^(NSError *error) {
+        RLog(@"音乐列表请求失败");
     }];
 }
 

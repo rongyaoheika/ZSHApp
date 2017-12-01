@@ -122,4 +122,7 @@ typedef void(^ZSHBottomBtnViewBtnBlock)(NSInteger);
 - (void)createUI;
 - (void)loadData;
 
+- (void) showProgress;
+- (void) hideProgress;
+
 @end

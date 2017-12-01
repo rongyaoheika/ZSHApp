@@ -56,3 +56,16 @@
 @property (nonatomic, assign) BOOL      SHOPSERVPARK;            //停车
 
 @end
+
+@interface ZSHKTVDetailListModel:ZSHBaseModel
+
+@property (nonatomic, assign) NSInteger   KTVDETNUM;
+@property (nonatomic, assign) CGFloat     KTVDETPRICE;        //KTV价格
+@property (nonatomic, copy)   NSString    *KTVDETEND;         //KTV结束时间
+@property (nonatomic, copy)   NSString    *KTVDETAIL_ID;      //KTV id
+@property (nonatomic, copy)   NSString    *SORTKTV_ID;        //分类id
+@property (nonatomic, copy)   NSString    *KTVDETTYPE;        //KTV轮播图
+@property (nonatomic, copy)   NSString    *KTVDETTITLE;       //09:00-18:00内任选3小时
+@property (nonatomic, copy)   NSString    *KTVDETBEGIN;       //KTV开始时间
+
+@end

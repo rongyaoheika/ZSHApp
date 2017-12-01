@@ -11,8 +11,9 @@
 #import "ZSHHotelDetailHeadCell.h"
 #import "ZSHHotelDetailDeviceCell.h"
 #import "ZSHShopCommentViewController.h"
-#import "ZSHHotelListCell.h"
 #import "ZSHBottomBlurPopView.h"
+#import "ZSHHotelCell.h"
+#import "ZSHHotelListCell.h"
 @interface ZSHFoodDetailViewController ()
 
 @property (nonatomic, copy)   NSString                  *shopId;
@@ -20,6 +21,7 @@
 @property (nonatomic, strong) ZSHFoodDetailModel        *foodDetailModel;
 @property (nonatomic, strong) NSDictionary              *foodDetailParamDic;
 @property (nonatomic, strong) ZSHBottomBlurPopView      *bottomBlurPopView;
+@property (nonatomic, strong) NSArray                   *foodDetailListDicArr;
 
 @end
 
@@ -27,6 +29,7 @@ static NSString *ZSHHotelDetailHeadCellID = @"ZSHHotelDetailHeadCell";
 static NSString *ZSHHotelDetailDeviceCellID = @"ZSHHotelDetailDeviceCell";
 static NSString *ZSHBaseSubCellID = @"ZSHBaseSubCell";
 static NSString *ZSHBookCellID = @"ZSHBookCell";
+static NSString *ZSHHotelCellID = @"ZSHHotelCell";
 static NSString *ZSHHotelListCellID = @"ZSHHotelListCell";
 
 @implementation ZSHFoodDetailViewController
@@ -58,6 +61,19 @@ static NSString *ZSHHotelListCellID = @"ZSHHotelListCell";
         [weakself.tableView.mj_footer endRefreshing];
         [weakself initViewModel];
     };
+    
+    NSDictionary *detailListParamDic = @{@"HONOURUSER_ID":HONOURUSER_IDValue};
+    [_foodLogic loadFoodDetailListDataWithParamDic:detailListParamDic success:^(NSArray *foodDetaiDicListArr) {
+        _foodDetailListDicArr = foodDetaiDicListArr;
+        weakself.tableViewModel.sectionModelArray[3] = [weakself storeMoreShopSection];
+        NSIndexSet *indexSet = [[NSIndexSet alloc]initWithIndex:3];
+        [weakself updateSectionDatWithSet:indexSet];
+        
+    } fail:nil];
+}
+
+- (void)updateSectionDatWithSet:(NSIndexSet *)indexSet{
+    [self.tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
 - (void)createUI{
@@ -71,6 +87,7 @@ static NSString *ZSHHotelListCellID = @"ZSHHotelListCell";
     [self.tableView registerClass:[ZSHHotelDetailDeviceCell class] forCellReuseIdentifier:ZSHHotelDetailDeviceCellID];
     [self.tableView registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHBaseSubCellID];
     [self.tableView registerClass:[ZSHHotelListCell class] forCellReuseIdentifier:ZSHHotelListCellID];
+    [self.tableView registerClass:[ZSHHotelCell class] forCellReuseIdentifier:ZSHHotelCellID];
 }
 
 - (void)initViewModel {
@@ -210,12 +227,18 @@ static NSString *ZSHHotelListCellID = @"ZSHHotelListCell";
     NSDictionary *headTitleParamDic = @{@"text":@"更多商家",@"font":kPingFangMedium(15),@"textAlignment":@(NSTextAlignmentLeft)};
     sectionModel.headerView = [ZSHBaseUIControl createTabHeadLabelViewWithParamDic:headTitleParamDic];
     
-    for (int i = 0; i<4; i++) {
+    for (int i = 0; i<_foodDetailListDicArr.count; i++) {
         ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
         [sectionModel.cellModelArray addObject:cellModel];
-        cellModel.height = kRealValue(75);
+        cellModel.height = kRealValue(110);
         cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
-            ZSHHotelListCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHHotelListCellID forIndexPath:indexPath];
+            ZSHHotelCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHHotelCellID forIndexPath:indexPath];
+            cell.shopType = ZSHFoodShopType;
+            if (i==_foodDetailListDicArr.count-1) {
+                cell.separatorInset = UIEdgeInsetsMake(0, 0, 0, MAXFLOAT);
+            }
+            NSDictionary *paramDic = _foodDetailListDicArr[indexPath.row];
+            [cell updateCellWithParamDic:paramDic];
             return cell;
         };
         

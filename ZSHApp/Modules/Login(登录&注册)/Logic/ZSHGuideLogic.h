@@ -10,4 +10,6 @@
 
 @interface ZSHGuideLogic : ZSHBaseLogic
 
+-(void)requestGuideDataSuccess:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail;
+
 @end

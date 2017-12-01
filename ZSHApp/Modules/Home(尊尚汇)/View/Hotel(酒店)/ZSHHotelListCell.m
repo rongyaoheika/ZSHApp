@@ -103,4 +103,19 @@
     }];
 }
 
+- (void)updateCellWithParamDic:(NSDictionary *)dic{
+    if (_shopType == ZSHHotelShopType) {
+        [_hotelmageView sd_setImageWithURL:[NSURL URLWithString:dic[@"HOTELDETIMGS"]]];
+        _hotelNameLabel.text = dic[@"HOTELDETNAME"];
+        _hotelBottomLabel.text = [NSString stringWithFormat:@"%@㎡   %@",dic[@"HOTELDETROOMSIZE"],dic[@"HOTELDETBEDTYPE"] ];
+        _priceLabel.text = [NSString stringWithFormat:@"¥%.0f",[dic[@"HOTELDETPRICE"]floatValue] ];
+    } else if(_shopType == ZSHFoodShopType){
+        [_hotelmageView sd_setImageWithURL:[NSURL URLWithString:dic[@"HOTELDETIMGS"]]];
+        _hotelNameLabel.text = dic[@"HOTELDETNAME"];
+        _hotelBottomLabel.text = [NSString stringWithFormat:@"%@㎡   %@",dic[@"HOTELDETROOMSIZE"],dic[@"HOTELDETBEDTYPE"] ];
+        _priceLabel.text = [NSString stringWithFormat:@"¥%.0f",[dic[@"SHOPPRICE"]floatValue] ];
+    }
+    
+}
+
 @end

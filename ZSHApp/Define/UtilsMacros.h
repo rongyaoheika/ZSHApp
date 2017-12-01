@@ -19,7 +19,7 @@
 #define kUserDefaults       [NSUserDefaults standardUserDefaults]
 #define kNotificationCenter [NSNotificationCenter defaultCenter]
 #define KFromClassType      @"fromClassType"
-#define kFromClassTypeValue         [self.paramDic[KFromClassType] integerValue]
+#define kFromClassTypeValue [self.paramDic[KFromClassType] integerValue]
 #define kRealValue(with)    ((with)*(KScreenWidth/375.0f))
 //系统版本
 //判断是在iOS11之前
@@ -126,5 +126,7 @@ shared##className = [[self alloc] init]; \
 }); \
 return shared##className; \
 }
+
+#define HONOURUSER_IDValue         @"d6a3779de8204dfd9359403f54f7d27c"
 
 #endif /* define_h */

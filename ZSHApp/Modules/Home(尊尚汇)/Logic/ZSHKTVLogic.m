@@ -22,9 +22,7 @@
         }
         
     } failure:^(NSError *error) {
-        if (weakself.requestDataCompleted) {
-            weakself.requestDataCompleted(@"fail");
-        }
+        
     }];
 }
 
@@ -39,10 +37,22 @@
         }
         
     } failure:^(NSError *error) {
-        if (weakself.requestDataCompleted) {
-            weakself.requestDataCompleted(@"fail");
-        }
+        
     }];
 }
+
+
+- (void)loadKTVDetailListDataWithParamDic:(NSDictionary *)paramDic success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail {
+    [PPNetworkHelper POST:kUrlKtvDetailList parameters:paramDic success:^(id responseObject) {
+        
+        RLog(@"KTV详情列表数据==%@",responseObject)
+        NSArray *KTVDetailListArr = responseObject[@"pd"];
+        success(KTVDetailListArr);
+        
+    } failure:^(NSError *error) {
+        RLog(@"请求失败");
+    }];
+}
+
 
 @end

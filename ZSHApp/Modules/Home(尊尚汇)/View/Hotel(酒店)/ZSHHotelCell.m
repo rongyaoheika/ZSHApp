@@ -85,7 +85,7 @@
         make.top.mas_equalTo(_hotelmageView);
         make.left.mas_equalTo(_hotelmageView.mas_right).offset(kRealValue(10));
         make.right.mas_equalTo(self).offset(-KLeftMargin);
-        make.height.mas_equalTo(kRealValue(12));
+        make.height.mas_equalTo(kRealValue(14));
     }];
     
     [_hotelAddressLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -127,10 +127,11 @@
 
 - (void)updateCellWithParamDic:(NSDictionary *)dic{
     [_hotelmageView sd_setImageWithURL:[NSURL URLWithString:dic[@"SHOWIMAGES"]]];
+    _distanceLabel.text = [NSString stringWithFormat:@"%.1f公里",[dic[@"distance"]floatValue] ];
+    
     if (self.fromClassType == ZSHFromHotelVCToHotelDetailVC) {//酒店详情
         _hotelDescLabel.text = dic[@"HOTELNAMES"];
         _hotelAddressLabel.text = dic[@"HOTELADDRESS"];
-        _distanceLabel.text = [NSString stringWithFormat:@"%.1f公里",[dic[@"distance"]floatValue] ];
         _priceLabel.text = [NSString stringWithFormat:@"¥%.0f",[dic[@"HOTELPRICE"]floatValue] ];
         _commentLabel.text = [NSString stringWithFormat:@"（%ld条评价）",(long)[dic[@"HOTELEVACOUNT"]intValue]];
         _starView.scorePercent = [dic[@"HOTELEVALUATE"]floatValue]/5.0;
@@ -138,11 +139,17 @@
     } else if (self.fromClassType == ZSHFromHomeKTVVCToHotelDetailVC) {//KTV详情
         _hotelDescLabel.text = dic[@"KTVNAMES"];
         _hotelAddressLabel.text = dic[@"KTVADDRESS"];
-        _distanceLabel.text = [NSString stringWithFormat:@"%.1f公里",[dic[@"distance"]floatValue] ];
         _priceLabel.text  = [NSString stringWithFormat:@"¥%.0f",[dic[@"KTVPRICE"]floatValue] ];
         _commentLabel.text = [NSString stringWithFormat:@"（%ld条评价）",(long)[dic[@"KTVEVACOUNT"]intValue]];
         _starView.scorePercent = [dic[@"KTVEVALUATE"]floatValue]/5.0;
+    } else if (_shopType == ZSHFoodShopType) {//美食更多商家
+        _hotelDescLabel.text = dic[@"SHOPNAMES"];
+        _hotelAddressLabel.text = dic[@"SHOPADDRESS"];
+        _priceLabel.text  = [NSString stringWithFormat:@"¥%.0f",[dic[@"SHOPPRICE"]floatValue] ];
+        _commentLabel.text = [NSString stringWithFormat:@"（%ld条评价）",(long)[dic[@"SHOPEVACOUNT"]intValue]];
+        _starView.scorePercent = [dic[@"SHOPEVALUATE"]floatValue]/5.0;
     }
+    
     
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
     [paragraphStyle setLineSpacing:5];

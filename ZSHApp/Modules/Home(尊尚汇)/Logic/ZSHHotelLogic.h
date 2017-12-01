@@ -17,4 +17,7 @@
 
 //酒店详情
 - (void)loadHotelDetailDataWithParamDic:(NSDictionary *)paramDic;
+
+//酒店详情列表
+- (void)loadHotelDetailListDataWithParamDic:(NSDictionary *)paramDic success:(ResponseSuccessBlock)successBlock fail:(ResponseFailBlock)failBlock;
 @end

@@ -25,7 +25,6 @@
 #import "ZSHHotelViewController.h"
 #import "ZSHKTVDetailViewController.h"
 
-
 static NSString *Identify_HeadCell = @"headCell";
 static NSString *Identify_NoticeCell = @"noticeCell";
 static NSString *Identify_ServiceCell = @"serviceCell";
@@ -59,7 +58,6 @@ static NSString *Identify_MusicCell = @"musicCell";
 
 - (void)loadData{
     //加载网络数据
-   
     [self requestData];
     
     self.pushVCsArr = @[@"ZSHTitleContentViewController",
@@ -99,16 +97,43 @@ static NSString *Identify_MusicCell = @"musicCell";
 - (void)requestData{
     kWeakSelf(self);
     _homeLogic = [[ZSHHomeLogic alloc]init];
-    [_homeLogic loadNoticeCellData];
-    [_homeLogic loadServiceCellData];
-    [_homeLogic loadNewsCellData];
-    [_homeLogic loadPartyCellData];
     
-    _homeLogic.requestDataCompleted = ^(id data){
-        [weakself.tableView.mj_header endRefreshing];
-        [weakself.tableView.mj_footer endRefreshing];
-        [weakself initViewModel];
-    };
+    [_homeLogic loadNewsCellDataSuccess:^(id responseObject) {
+        NSIndexSet *indexSet = [[NSIndexSet alloc]initWithIndex:1];
+         [weakself updateSectionDatWithSet:indexSet];
+    } fail:nil];
+    
+    [_homeLogic loadNoticeCellDataSuccess:^(id responseObject) {
+      weakself.tableViewModel.sectionModelArray[1] = [weakself storeNoticeSection];
+      NSIndexSet *indexSet = [[NSIndexSet alloc]initWithIndex:1];
+      [weakself updateSectionDatWithSet:indexSet];
+    } fail:nil];
+    
+    [_homeLogic loadServiceCellDataSuccess:^(id responseObject) {
+        weakself.tableViewModel.sectionModelArray[2] = [weakself storeServiceSection];
+        NSIndexSet *indexSet = [[NSIndexSet alloc]initWithIndex:2];
+        [weakself updateSectionDatWithSet:indexSet];
+    } fail:nil];
+    
+    [_homeLogic loadPartyCellDataSuccess:^(id responseObject) {
+        weakself.tableViewModel.sectionModelArray[3] = [weakself storePlaySection];
+        NSIndexSet *indexSet = [[NSIndexSet alloc]initWithIndex:3];
+        [weakself updateSectionDatWithSet:indexSet];
+    } fail:nil];
+    
+    [_homeLogic loadMusicCellDataSuccess:^(id data) {
+      weakself.tableViewModel.sectionModelArray[5] = [weakself storeMusicSection];
+      NSIndexSet *indexSet = [[NSIndexSet alloc]initWithIndex:5];
+      [weakself updateSectionDatWithSet:indexSet];
+    } fail:nil];
+    
+   
+}
+
+- (void)updateSectionDatWithSet:(NSIndexSet *)indexSet{
+    [self.tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self.tableView.mj_header endRefreshing];
+    [self.tableView.mj_footer endRefreshing];
 }
 
 - (void)createUI{
@@ -135,6 +160,7 @@ static NSString *Identify_MusicCell = @"musicCell";
 
 - (void)initViewModel {
     [self.tableViewModel.sectionModelArray removeAllObjects];
+    
     [self.tableViewModel.sectionModelArray addObject:[self storeHeadSection]];
     [self.tableViewModel.sectionModelArray addObject:[self storeNoticeSection]];
     [self.tableViewModel.sectionModelArray addObject:[self storeServiceSection]];
@@ -164,11 +190,10 @@ static NSString *Identify_MusicCell = @"musicCell";
     return sectionModel;
 }
 
-//公告
+//新闻推荐
 - (ZSHBaseTableViewSectionModel*)storeNoticeSection {
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     sectionModel.headerHeight = floor(kRealValue(55));
-//    NSArray *titleArr = @[@"公告，荣耀黑卡竞技平台全新上线01",@"第二次公告：荣耀黑卡竞技平台全新上线02",@"第三次公告：荣耀黑卡竞技平台全新上线03"];
     NSMutableArray *mTitleArr = [[NSMutableArray alloc]init];
     for (NSDictionary *paramDic in _homeLogic.newsArr) {
         [mTitleArr addObject:paramDic[@"NEWSTITLE"]];
@@ -190,11 +215,12 @@ static NSString *Identify_MusicCell = @"musicCell";
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHBaseTitleButtonCell *cell = [tableView dequeueReusableCellWithIdentifier:Identify_NoticeCell forIndexPath:indexPath];
         cell.itemClickBlock = ^(NSInteger tag) {
-            
+            if(tag == 3){
             NSDictionary *subDic = _homeLogic.noticeArr[tag];
             NSDictionary *nextParamDic = @{KFromClassType:@(ZSHFromHomeKTVVCToHotelDetailVC),@"shopId":subDic[@"SORT_ID"]};
             ZSHKTVDetailViewController *KTVDetailVC = [[ZSHKTVDetailViewController alloc]initWithParamDic:nextParamDic];
             [weakself.navigationController pushViewController:KTVDetailVC animated:YES];
+            }
         };
         
         if(_homeLogic.noticeArr){
@@ -211,7 +237,6 @@ static NSString *Identify_MusicCell = @"musicCell";
 
 //荣耀服务
 - (ZSHBaseTableViewSectionModel*)storeServiceSection {
-    kWeakSelf(self);
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     sectionModel.headerHeight = kRealValue(55);
     sectionModel.headerView = [self createHeaderiewWithTitle:@"荣耀服务"];
@@ -307,8 +332,8 @@ static NSString *Identify_MusicCell = @"musicCell";
             [weakself.navigationController pushViewController:hotelDetailVC animated:YES];
         };
         
-        if(_homeLogic.serviceArr){
-            [cell updateCellWithDataArr:_homeLogic.serviceArr paramDic:@{KFromClassType:@(FromHomeServiceVCToNoticeView)}];
+        if(_homeLogic.musicArr){
+            [cell updateCellWithDataArr:_homeLogic.musicArr paramDic:@{KFromClassType:@(FromHomeMusicVCToNoticeView)}];
         }
         return cell;
     };

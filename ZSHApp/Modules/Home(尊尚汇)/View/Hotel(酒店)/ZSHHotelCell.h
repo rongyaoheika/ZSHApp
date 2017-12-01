@@ -11,5 +11,6 @@
 @interface ZSHHotelCell : ZSHBaseCell
 
 @property (nonatomic, assign)ZSHFromVCToHotelDetailVC  fromClassType;
+@property (nonatomic, assign) ZSHShopType  shopType;
 
 @end

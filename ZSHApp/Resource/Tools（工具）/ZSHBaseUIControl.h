@@ -14,10 +14,18 @@ typedef NS_ENUM(NSInteger,ZSHCellType){
     ZSHTableViewCellType
 };
 
+typedef NS_ENUM(NSInteger,ZSHShopType){
+    ZSHFoodShopType,     //美食
+    ZSHKTVShopType,      //KTV
+    ZSHHotelShopType,    //酒店
+    ZSHOtherShopType,   //其它
+};
+
 typedef NS_ENUM(NSInteger,ZSHToChangePWDView){
     FromHomeNoticeVCToNoticeView,     //首页 - 公告
     FromHomeServiceVCToNoticeView,    //首页 - 玩趴
     FromHomeMagazineVCToNoticeView,   //首页 - 荣耀杂志
+    FromHomeMusicVCToNoticeView,      //首页 - 音乐
     FromKTVCalendarVCToNoticeView,      //KTV详情 - 预定日历
     FromKTVRoomTypeVCToNoticeView,      //KTV详情 - 包间类型
     FromMemberCenterVCToNoticeView,     //会员中心 - 类型

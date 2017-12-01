@@ -44,6 +44,12 @@
             [btnView mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.width.mas_equalTo(kRealValue(130));
             }];
+        } else if ([paramDic[KFromClassType]integerValue] == FromHomeMusicVCToNoticeView) {
+            btnView.label.text = subParamDic[@"MUSICTYPE"];
+            [btnView.imageView sd_setImageWithURL:[NSURL URLWithString:subParamDic[@"MUSICIMAGE"]]];
+            [btnView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.width.mas_equalTo(kRealValue(130));
+            }];
         }
         
         [_scrollView addSubview:btnView];

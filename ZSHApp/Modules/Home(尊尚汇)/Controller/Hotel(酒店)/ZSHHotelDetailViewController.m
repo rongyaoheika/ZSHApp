@@ -29,6 +29,9 @@
 @property (nonatomic, strong) NSDictionary              *hotelDetailParamDic;
 @property (nonatomic, strong) NSArray                   *modelNameArr;
 
+@property (nonatomic, strong) NSArray                   *hotelDetailListDicArr;
+@property (nonatomic, strong) NSArray                   *hotelDetailListModelArr;
+
 @property (nonatomic, strong) ZSHBaseModel              *model;
 @property (nonatomic, strong) ZSHKTVModel               *KTVModel;
 @property (nonatomic, strong) ZSHBottomBlurPopView      *bottomBlurPopView;
@@ -84,6 +87,18 @@ static NSString *ZSHKTVListCellID = @"ZSHKTVListCell";
         [weakself.tableView.mj_footer endRefreshing];
         [weakself initViewModel];
     };
+    
+    [_hotelLogic loadHotelDetailListDataWithParamDic:paramDic success:^(NSArray *hotelDetailListDicArr) {
+        _hotelDetailListDicArr = hotelDetailListDicArr;
+        weakself.tableViewModel.sectionModelArray[2] = [weakself storHotelListSection];
+        NSIndexSet *indexSet = [[NSIndexSet alloc]initWithIndex:2];
+        [weakself updateSectionDatWithSet:indexSet];
+        
+    } fail:nil];
+}
+
+- (void)updateSectionDatWithSet:(NSIndexSet *)indexSet{
+    [self.tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
 - (void)createUI{
@@ -98,7 +113,6 @@ static NSString *ZSHKTVListCellID = @"ZSHKTVListCell";
         [self.tableView setSeparatorInset:UIEdgeInsetsMake(0, 0, 0, 0)];
     }
    
-    
     [self.tableView registerClass:[ZSHHotelDetailHeadCell class] forCellReuseIdentifier:ZSHHotelDetailHeadCellID];
     [self.tableView registerClass:[ZSHHotelDetailDeviceCell class] forCellReuseIdentifier:ZSHHotelDetailDeviceCellID];
     [self.tableView registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHBaseSubCellID];
@@ -253,13 +267,14 @@ static NSString *ZSHKTVListCellID = @"ZSHKTVListCell";
 - (ZSHBaseTableViewSectionModel*)storHotelListSection{
     kWeakSelf(self);
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
-    
-    for (int i = 0; i<2; i++) {
+    for (int i = 0; i<_hotelDetailListDicArr.count; i++) {
         ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
         [sectionModel.cellModelArray addObject:cellModel];
         cellModel.height = kRealValue(75);
         cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
             ZSHHotelListCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHHotelListCellID forIndexPath:indexPath];
+            NSDictionary *paramDic = _hotelDetailListDicArr[indexPath.row];
+            [cell updateCellWithParamDic:paramDic];
             return cell;
         };
         

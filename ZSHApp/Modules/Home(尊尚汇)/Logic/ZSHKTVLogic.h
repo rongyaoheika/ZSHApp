@@ -17,4 +17,6 @@
 //KTV详情
 - (void)loadKTVDetailDataWithParamDic:(NSDictionary *)paramDic;
 
+//KTV详情列表
+- (void)loadKTVDetailListDataWithParamDic:(NSDictionary *)paramDic success:(ResponseSuccessBlock)successBlock fail:(ResponseFailBlock)failBlock;
 @end

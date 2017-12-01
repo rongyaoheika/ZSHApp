@@ -11,4 +11,6 @@
 
 @interface ZSHHotelListCell : ZSHBaseCell
 
+@property (nonatomic, assign)ZSHShopType   shopType;
+
 @end

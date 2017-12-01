@@ -12,7 +12,7 @@
 
 - (void)requestHotelShopCommentListDataWithParamDic:(NSDictionary *)paramDic{
     kWeakSelf(self);
-    [PPNetworkHelper POST:kUrlHotelevalist parameters:paramDic success:^(id responseObject) {
+    [PPNetworkHelper POST:kUrlHotelEvaList parameters:paramDic success:^(id responseObject) {
         RLog(@"酒店评论列表== %@",responseObject);
        NSArray *shopCommentArr = [ZSHShopCommentModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"]];
         if (weakself.requestDataCompleted) {
@@ -20,9 +20,7 @@
         }
         
     } failure:^(NSError *error) {
-        if (weakself.requestDataCompleted) {
-            weakself.requestDataCompleted(@"fail");
-        }
+       
     }];
 }
 
@@ -36,9 +34,7 @@
         }
         
     } failure:^(NSError *error) {
-        if (weakself.requestDataCompleted) {
-            weakself.requestDataCompleted(@"fail");
-        }
+        
     }];
 }
 
@@ -52,9 +48,7 @@
         }
         
     } failure:^(NSError *error) {
-        if (weakself.requestDataCompleted) {
-            weakself.requestDataCompleted(@"fail");
-        }
+        
     }];
 }
 
