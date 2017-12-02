@@ -263,6 +263,7 @@
     return _contentView;
 }
 
+
 - (void)reloadListData{
     
     [self.titleView reloadViewWithTitles:self.titleArr];
@@ -282,7 +283,7 @@
     } else{
         for (int i = 0; i<self.titleArr.count; i++) {
             Class className = NSClassFromString(self.contentVCS[i]);
-            if (kFromClassTypeValue == FromLiveTabBarVCToTitleContentVC) {
+            if (self.paramArr.count) {
                 vc = [[className alloc]initWithParamDic:self.paramArr[i]];
             } else {
                vc = [[className alloc]init];

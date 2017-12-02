@@ -51,14 +51,13 @@ static NSString *ZSHHotelCellID = @"ZSHHotelCell";
              [weakself initViewModel];
             
         } fail:nil];
+    } else if (kFromClassTypeValue == ZSHBarShopType){//酒吧
+        [_hotelLogic loadBarListDataWithParamDic:paramDic success:^(NSArray *barListDicArr) {
+            [weakself endrefresh];
+            _hotelListDicArr = barListDicArr;
+            [weakself initViewModel];
+        } fail:nil];
     }
-//    else if (kFromClassTypeValue == ZSHBarShopType){//酒吧
-//        [_hotelLogic loadBarListDataWithParamDic:paramDic success:^(NSArray *barListDicArr) {
-//            [weakself endrefresh];
-//            _hotelListDicArr = barListDicArr;
-//            [weakself initViewModel];
-//        } fail:nil];
-//    }
 }
 
 - (void)endrefresh{
