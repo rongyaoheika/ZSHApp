@@ -47,7 +47,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     
     [self loadData];
     [self createUI];
@@ -159,7 +158,6 @@
             break;
             
     }
-            
         case FromHorseVCToTitleContentVC://马术
         case FromShipVCToTitleContentVC://游艇
         case FromGolfVCToTitleContentVC://游艇
@@ -189,7 +187,6 @@
             [self createSearchNaviUI];
             
         }
-       
             break;
     }
     self.titleWidth = KScreenWidth/(self.titleArr.count);
@@ -223,12 +220,14 @@
     
     [self.view addSubview:self.titleView];
     [self.view addSubview:self.contentView];
+
     [self reloadListData];
 }
 
 - (LXScollTitleView *)titleView{
     if (!_titleView) {
         _titleView = [[LXScollTitleView alloc] initWithFrame:CGRectMake(0, KNavigationBarHeight, KScreenWidth, kRealValue(35))];
+
         _titleView.normalImage = self.titleBtnImage;
         _titleView.imageStyle = self.imageStyle;
         _titleView.imageTitleSpace = self.imageTitleSpace;
@@ -268,19 +267,34 @@
     
     [self.titleView reloadViewWithTitles:self.titleArr];
     self.vcs = [[NSMutableArray alloc]init];
-    for (int i = 0; i<self.titleArr.count; i++) {
-        Class className = NSClassFromString(self.contentVCS[i]);
-        RootViewController *vc  = nil;
-        if (self.paramArr.count) {
-           vc = [[className alloc]initWithParamDic:self.paramArr[i]];
-        } else {
-           vc = [[className alloc]init];
+    
+    
+    RootViewController *vc  = nil;
+
+    if (kFromClassTypeValue == FromNoneToTitleContentVC) {
+        for (int i = 0;i< [self.paramDic[@"titleArr"] count]; i++) {
+            NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:self.paramDic];
+            [dic setValue:self.paramDic[@"ORDERSTATUS"][i] forKey:@"ORDERSTATUS"];
+            Class className = NSClassFromString(self.paramDic[@"contentVCS"][i]);
+            vc = [[className alloc]initWithParamDic:dic];
+            [self.vcs addObject:vc];
         }
-       
-        [self.vcs addObject:vc];
+    } else{
+        for (int i = 0; i<self.titleArr.count; i++) {
+            Class className = NSClassFromString(self.contentVCS[i]);
+            if (kFromClassTypeValue == FromLiveTabBarVCToTitleContentVC) {
+                vc = [[className alloc]initWithParamDic:self.paramArr[i]];
+            } else {
+               vc = [[className alloc]init];
+            }
+           
+            [self.vcs addObject:vc];
+        }
     }
     
     [self.contentView reloadViewWithChildVcs:self.vcs parentVC:self];
+    self.titleView.selectedIndex = [self.paramDic[@"selectedIndex"] integerValue];
+    self.contentView.currentIndex = [self.paramDic[@"selectedIndex"] integerValue];
 }
 
 #pragma  getter

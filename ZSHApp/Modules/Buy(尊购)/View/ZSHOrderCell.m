@@ -8,6 +8,7 @@
 
 #import "ZSHOrderCell.h"
 
+
 @interface ZSHOrderCell()
 
 @property (nonatomic, strong)UIImageView *goodsImageView;
@@ -24,6 +25,7 @@
     //商品图片
     UIImage *image = [UIImage imageNamed:@"buy_watch"];
     UIImageView *goodsImageView = [[UIImageView alloc]initWithImage:image];
+
     [self addSubview:goodsImageView];
     [goodsImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self).offset(kRealValue(10));
@@ -90,27 +92,25 @@
     }];
 }
 
-- (void)updateCellWithModel:(ZSHGoodOrderModel *)model{
-    [self.goodsImageView sd_setImageWithURL:[NSURL URLWithString:model.PROSHOWIMG]];
-    _goodsImageView.contentMode = UIViewContentModeScaleAspectFill;
-    [self.goodsImageView mas_remakeConstraints:^(MASConstraintMaker *make) {
+// 酒吧
+- (void)updateCellWithBarorder:(ZSHBarorderOrderModel *)model {
+    [self.goodsImageView sd_setImageWithURL:[NSURL URLWithString:model.SHOWIMAGES]];
+    [_goodsImageView mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self).offset(kRealValue(10));
         make.top.mas_equalTo(self).offset(kRealValue(20));
-        make.width.mas_equalTo(kRealValue(37));
+        make.width.mas_equalTo(kRealValue(80));
         make.height.mas_equalTo(kRealValue(64));
     }];
-    
-    self.goodsDescLabel.text = model.PROTITLE;
-    self.bottomLabel.text = NSStringFormat(@"共%@件商品 实付款￥%@", model.PRODUCTCOUNT, model.ORDERMONEY);
-    self.resultLabel.text = model.ORDERSTATUS;
-    
-    CGSize detailLabelSize = [model.PROTITLE boundingRectWithSize:CGSizeMake(kRealValue(157), MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading |NSStringDrawingTruncatesLastVisibleLine attributes:@{NSFontAttributeName:self.goodsDescLabel.font,NSForegroundColorAttributeName:KZSHColor929292} context:nil].size;
+    CGSize detailLabelSize = [model.BARDETTITLE boundingRectWithSize:CGSizeMake(kRealValue(157), MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading |NSStringDrawingTruncatesLastVisibleLine attributes:@{NSFontAttributeName:self.goodsDescLabel.font,NSForegroundColorAttributeName:KZSHColor929292} context:nil].size;
     [self.goodsDescLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.goodsImageView);
         make.left.mas_equalTo(self.goodsImageView.mas_right).offset(kRealValue(10));
         make.right.mas_equalTo(self).offset(-kRealValue(80));
         make.height.mas_equalTo(detailLabelSize.height);
     }];
+    
+    self.goodsDescLabel.text = model.BARDETTITLE;
+    self.bottomLabel.text = NSStringFormat(@"实付款￥%@", model.ORDERMONEY);
     
     if ([model.ORDERSTATUS isEqualToString:@"0040001"]) {
         _resultLabel.text = @"待付款";
@@ -122,6 +122,95 @@
         _resultLabel.text = @"已完成";
     }
     
+
+}
+
+// KTV
+- (void)updateCellWithKtv:(ZSHKtvOrderModel *)model {
+    [self.goodsImageView sd_setImageWithURL:[NSURL URLWithString:model.SHOWIMAGES]];
+    [_goodsImageView mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(self).offset(kRealValue(10));
+        make.top.mas_equalTo(self).offset(kRealValue(20));
+        make.width.mas_equalTo(kRealValue(80));
+        make.height.mas_equalTo(kRealValue(64));
+    }];
+    CGSize detailLabelSize = [model.KTVDETTITLE boundingRectWithSize:CGSizeMake(kRealValue(157), MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading |NSStringDrawingTruncatesLastVisibleLine attributes:@{NSFontAttributeName:self.goodsDescLabel.font,NSForegroundColorAttributeName:KZSHColor929292} context:nil].size;
+    [self.goodsDescLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(self.goodsImageView);
+        make.left.mas_equalTo(self.goodsImageView.mas_right).offset(kRealValue(10));
+        make.right.mas_equalTo(self).offset(-kRealValue(80));
+        make.height.mas_equalTo(detailLabelSize.height);
+    }];
+    
+    self.goodsDescLabel.text = model.KTVDETTITLE;
+    self.bottomLabel.text = NSStringFormat(@"实付款￥%@", model.ORDERMONEY);
+    
+    if ([model.ORDERSTATUS isEqualToString:@"0040001"]) {
+        _resultLabel.text = @"待付款";
+    } else if ([model.ORDERSTATUS isEqualToString:@"0040002"]) {
+        _resultLabel.text = @"待收货";
+    } else if ([model.ORDERSTATUS isEqualToString:@"0040003"]) {
+        _resultLabel.text = @"待评价";
+    } else if ([model.ORDERSTATUS isEqualToString:@"0040004"]) {
+        _resultLabel.text = @"已完成";
+    }
+}
+// 酒店
+- (void)updateCellWithHotel:(ZSHHotelOrderModel *)model {
+    [self.goodsImageView sd_setImageWithURL:[NSURL URLWithString:model.SHOWIMAGES]];
+    [_goodsImageView mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(self).offset(kRealValue(10));
+        make.top.mas_equalTo(self).offset(kRealValue(20));
+        make.width.mas_equalTo(kRealValue(80));
+        make.height.mas_equalTo(kRealValue(64));
+    }];
+    CGSize detailLabelSize = [model.HOTELDETNAME boundingRectWithSize:CGSizeMake(kRealValue(157), MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading |NSStringDrawingTruncatesLastVisibleLine attributes:@{NSFontAttributeName:self.goodsDescLabel.font,NSForegroundColorAttributeName:KZSHColor929292} context:nil].size;
+    [self.goodsDescLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(self.goodsImageView);
+        make.left.mas_equalTo(self.goodsImageView.mas_right).offset(kRealValue(10));
+        make.right.mas_equalTo(self).offset(-kRealValue(80));
+        make.height.mas_equalTo(detailLabelSize.height);
+    }];
+    
+    self.goodsDescLabel.text = model.HOTELDETNAME;
+    self.bottomLabel.text = NSStringFormat(@"实付款￥%@", model.ORDERMONEY);
+    
+    if ([model.ORDERSTATUS isEqualToString:@"0040001"]) {
+        _resultLabel.text = @"待付款";
+    } else if ([model.ORDERSTATUS isEqualToString:@"0040002"]) {
+        _resultLabel.text = @"待收货";
+    } else if ([model.ORDERSTATUS isEqualToString:@"0040003"]) {
+        _resultLabel.text = @"待评价";
+    } else if ([model.ORDERSTATUS isEqualToString:@"0040004"]) {
+        _resultLabel.text = @"已完成";
+    }
+
+}
+
+- (void)updateCellWithModel:(ZSHGoodOrderModel *)model{
+    [self.goodsImageView sd_setImageWithURL:[NSURL URLWithString:model.PROSHOWIMG]];
+    _goodsImageView.contentMode = UIViewContentModeScaleAspectFill;
+    CGSize detailLabelSize = [model.PROTITLE boundingRectWithSize:CGSizeMake(kRealValue(157), MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading |NSStringDrawingTruncatesLastVisibleLine attributes:@{NSFontAttributeName:self.goodsDescLabel.font,NSForegroundColorAttributeName:KZSHColor929292} context:nil].size;
+    [self.goodsDescLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(self.goodsImageView);
+        make.left.mas_equalTo(self.goodsImageView.mas_right).offset(kRealValue(10));
+        make.right.mas_equalTo(self).offset(-kRealValue(80));
+        make.height.mas_equalTo(detailLabelSize.height);
+    }];
+    
+    
+    self.goodsDescLabel.text = model.PROTITLE;
+    self.bottomLabel.text = NSStringFormat(@"共%@件商品 实付款￥%@", model.PRODUCTCOUNT, model.ORDERMONEY);
+    
+    if ([model.ORDERSTATUS isEqualToString:@"0040001"]) {
+        _resultLabel.text = @"待付款";
+    } else if ([model.ORDERSTATUS isEqualToString:@"0040002"]) {
+        _resultLabel.text = @"待收货";
+    } else if ([model.ORDERSTATUS isEqualToString:@"0040003"]) {
+        _resultLabel.text = @"待评价";
+    } else if ([model.ORDERSTATUS isEqualToString:@"0040004"]) {
+        _resultLabel.text = @"已完成";
+    }
 }
 
 + (CGFloat)getCellHeightWithModel:(ZSHBaseModel *)model{

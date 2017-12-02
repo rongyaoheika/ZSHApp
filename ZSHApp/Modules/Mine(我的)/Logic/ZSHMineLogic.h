@@ -10,13 +10,17 @@
 #import "ZSHAddrModel.h"
 #import "ZSHGoodOrderModel.h"
 #import "ZSHBuyOrderModel.h"
+#import "ZSHHotelOrderModel.h"
 
 @interface ZSHMineLogic : ZSHLoginLogic
 
 @property (nonatomic, strong) ZSHAddrModel                     *addNewAddr;
+@property (nonatomic, strong) ZSHBuyOrderModel                 *buyOrderModel;
 @property (nonatomic, strong) NSMutableArray<ZSHAddrModel *>   *addrModelArr;
 @property (nonatomic, strong) NSArray<ZSHGoodOrderModel *>     *goodOrderModelArr;
-@property (nonatomic, strong) ZSHBuyOrderModel                 *buyOrderModel;
+@property (nonatomic, strong) NSArray<ZSHHotelOrderModel *>    *hotlOrderModelArr;
+@property (nonatomic, strong) NSArray<ZSHKtvOrderModel *>      *ktvOrderModelArr;
+@property (nonatomic, strong) NSArray<ZSHBarorderOrderModel *> *barorderOrderModelArr;
 
 
 // 获取用户收货地址列表
@@ -27,8 +31,10 @@
 - (void)requestUserDelShipAdrWithModel:(ZSHAddrModel *)model success:(void (^)(id response))success;
 // 修改用户收货地址
 - (void)requestUserEdiShipAdrWithModel:(ZSHAddrModel *)model success:(void (^)(id response))success;
-// 酒店
-- (void)requestAllHotelOrder:(void (^)(id response))success;
+// 获得用户名下所有KTV订单列表
+- (void)requestKtvOrderAllList:(void (^)(id response))success;
+// 获得用户名下订单列表
+- (void)requestOrderWithURL:(NSString *)url orderStatus:(NSString *)orderStatus success:(void (^)(id response))success;
 // 获取订单列表
 - (void)requestOrderAllList:(void (^)(id response))success;
 // 获取用户名带条件查询的订单列表（待付款，待收货，待评价，已完成）
