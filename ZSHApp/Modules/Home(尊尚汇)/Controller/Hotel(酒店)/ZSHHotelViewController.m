@@ -14,7 +14,8 @@
 
 @interface ZSHHotelViewController ()<UISearchBarDelegate>
 
-@property (nonatomic, strong) ZSHHotelLogic             *hotelLogic;
+@property (nonatomic, strong) ZSHHotelLogic              *hotelLogic;
+@property (nonatomic, assign) ZSHShopType                shopType;
 @property (nonatomic, strong) NSArray <ZSHHotelModel *>  *hotelModelArr;
 @property (nonatomic, strong) NSArray <NSDictionary *>   *hotelListDicArr;
 
@@ -43,17 +44,18 @@ static NSString *ZSHHotelCellID = @"ZSHHotelCell";
     kWeakSelf(self);
     _hotelLogic = [[ZSHHotelLogic alloc]init];
     NSDictionary *paramDic = @{@"HONOURUSER_ID":@"d6a3779de8204dfd9359403f54f7d27c"};
-    
-    if (kFromClassTypeValue == ZSHHotelShopType) {//酒店
+    if (kFromClassTypeValue == FromHotelVCToTitleContentVC) {//酒店
         [_hotelLogic loadHotelListDataWithParamDic:paramDic success:^(NSArray *hotelListDicArr) {
             [weakself endrefresh];
+            _shopType = ZSHHotelShopType;
             _hotelListDicArr = hotelListDicArr;
-             [weakself initViewModel];
+            [weakself initViewModel];
             
         } fail:nil];
-    } else if (kFromClassTypeValue == ZSHBarShopType){//酒吧
+    } else if (kFromClassTypeValue == FromBarVCToTitleContentVC){//酒吧
         [_hotelLogic loadBarListDataWithParamDic:paramDic success:^(NSArray *barListDicArr) {
             [weakself endrefresh];
+            _shopType = ZSHBarShopType;
             _hotelListDicArr = barListDicArr;
             [weakself initViewModel];
         } fail:nil];
@@ -100,15 +102,15 @@ static NSString *ZSHHotelCellID = @"ZSHHotelCell";
             if (i==_hotelListDicArr.count-1) {
                 cell.separatorInset = UIEdgeInsetsMake(0, 0, 0, MAXFLOAT);
             }
-            cell.fromClassType = ZSHFromHotelVCToHotelDetailVC;
+            cell.shopType = _shopType;
             NSDictionary *paramDic = _hotelListDicArr[indexPath.row];
             [cell updateCellWithParamDic:paramDic];
             return cell;
         };
         
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
-            NSDictionary *hotelParamDic = _hotelListDicArr[indexPath.row];
-            NSDictionary *nextParamDic = @{KFromClassType:@(ZSHFromHotelVCToHotelDetailVC),@"shopId":hotelParamDic[@"SORTHOTEL_ID"]};
+            NSDictionary *paramDic = _hotelListDicArr[indexPath.row];
+            NSDictionary *nextParamDic = @{KFromClassType:@(ZSHFromHotelVCToHotelDetailVC),@"shopId":paramDic[@"SORTHOTEL_ID"]};
             ZSHHotelDetailViewController *hotelDetailVC = [[ZSHHotelDetailViewController alloc]initWithParamDic:nextParamDic];
             [weakself.navigationController pushViewController:hotelDetailVC animated:YES];
         };

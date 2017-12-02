@@ -54,7 +54,8 @@
 
 - (void)loadData{
     self.indicatorHeight = 0.0;
-    switch ([self.paramDic[KFromClassType]integerValue]) {
+    //
+    switch (kFromClassTypeValue) {
         case FromLiveTabBarVCToTitleContentVC:{
             self.titleArr = @[@"推荐",@"附近",@"分类"];
             self.indicatorHeight = 1.0;
@@ -94,7 +95,7 @@
             [self createTileViewUI];
             [self createSearchNaviUI];
             self.contentVCS = @[@"ZSHHotelViewController",@"ZSHHotelViewController",@"ZSHHotelViewController"];
-            self.paramArr = @[@{KFromClassType:@(ZSHHotelShopType)},@{KFromClassType:@(ZSHHotelShopType)},@{KFromClassType:@(ZSHHotelShopType)}];
+            self.paramArr = @[@{KFromClassType:@(kFromClassTypeValue)},@{KFromClassType:@(kFromClassTypeValue)},@{KFromClassType:@(kFromClassTypeValue)}];
         }
             break;
         case FromFoodVCToTitleContentVC:{
@@ -153,7 +154,7 @@
             self.contentVCS = @[@"ZSHHotelViewController",
                                 @"ZSHHotelViewController",
                                 @"ZSHHotelViewController"];
-            self.paramArr = @[@{KFromClassType:@(ZSHBarShopType)},@{KFromClassType:@(ZSHBarShopType)},@{KFromClassType:@(ZSHBarShopType)}];
+            self.paramArr = @[@{KFromClassType:@(kFromClassTypeValue)},@{KFromClassType:@(kFromClassTypeValue)},@{KFromClassType:@(kFromClassTypeValue)}];
             [self createSearchNaviUI];
             break;
             
@@ -165,7 +166,7 @@
             self.contentVCS = @[@"ZSHMoreListViewController",
                                 @"ZSHMoreListViewController",
                                 @"ZSHMoreListViewController"];
-            self.paramArr = @[@{KFromClassType:@([self.paramDic[KFromClassType]integerValue])},@{KFromClassType:@([self.paramDic[KFromClassType]integerValue])},@{KFromClassType:@([self.paramDic[KFromClassType]integerValue])}];
+            self.paramArr = @[@{KFromClassType:@(kFromClassTypeValue)},@{KFromClassType:@(kFromClassTypeValue)},@{KFromClassType:@(kFromClassTypeValue)}];
             [self createTileViewUI];
             [self createSearchNaviUI];
         }

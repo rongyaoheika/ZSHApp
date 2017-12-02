@@ -67,11 +67,11 @@
     self.paramArr = @[
                       @{KFromClassType:@(FromFoodVCToTitleContentVC)},
                       @{KFromClassType:@(FromHotelVCToTitleContentVC)},
-                      @{KFromClassType:@(FromHotelVCToTitleContentVC)},
+                      @{KFromClassType:@(FromBarVCToTitleContentVC)},
                       @{KFromClassType:@(FromKTVVCToTitleContentVC)},
                       @{KFromClassType:@(ZSHFromHomeTrainVCToAirPlaneVC),@"title":@"火车票预订"},
                       @{KFromClassType:@(ZSHHomeAirPlaneVCToAirPlaneVC),@"title":@"机票预订"},
-                      @{KFromClassType:@(FromHorseVCToTitleContentVC)},
+                      @{KFromClassType:@(ZSHHorseType)},
                       @{KFromClassType:@(FromShipVCToTitleContentVC)},
                       @{KFromClassType:@(FromLuxcarVCToTitleContentVC)},
                       @{KFromClassType:@(ZSHPlaneType),@"title":@"飞机"},

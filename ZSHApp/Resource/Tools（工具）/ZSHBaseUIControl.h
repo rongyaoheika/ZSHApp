@@ -119,7 +119,7 @@ typedef NS_ENUM (NSInteger,ZSHToGuideView) {
     FromNoneVCToGuideView
 };
 
-typedef NS_ENUM(NSInteger,ZSHToTitleContentVC){
+typedef NS_ENUM(NSUInteger,ZSHToTitleContentVC){
     FromLiveTabBarVCToTitleContentVC,        //尚播（推荐，附近，分类）
     FromFindVCToTitleContentVC,              //发现（精选，数码，亲子。。。）
     FromAllOrderVCToTitleContentVC,          //我的订单（全部，待付款，待收货，待评价，退款售后)

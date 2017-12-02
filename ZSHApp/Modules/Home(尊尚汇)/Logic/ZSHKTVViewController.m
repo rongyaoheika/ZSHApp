@@ -83,7 +83,7 @@ static NSString *ZSHHotelCellID = @"ZSHHotelCell";
             if (i==_KTVArr.count-1) {
                 cell.separatorInset = UIEdgeInsetsMake(0, 0, 0, MAXFLOAT);
             }
-            cell.fromClassType = ZSHFromHomeKTVVCToHotelDetailVC;
+            cell.shopType = ZSHKTVShopType;
             NSDictionary *paramDic = _KTVArr[indexPath.row];
             [cell updateCellWithParamDic:paramDic];
             return cell;

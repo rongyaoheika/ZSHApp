@@ -398,7 +398,7 @@
 //请求地址：/appsbarin/bardetaillist.do?BARDETAIL(混淆码)
 #define kUrlBarDetailList [NSString stringWithFormat:@"/appsbarin/bardetaillist.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"BARDETAIL"]]
 
-//79. 获得首页特权酒吧店铺列表
+//79. 获得首页特权酒吧店铺列表（完成）
 //参数：HONOURUSER_ID 某用户的ID
 //请求地址：/appsbarin/sbar.do?SORTBAR(混淆码)
 #define kUrlSBar [NSString stringWithFormat:@"/appsbarin/sbar.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SORTBAR"]]
