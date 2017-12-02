@@ -14,9 +14,10 @@
 
 @interface ZSHHotelViewController ()<UISearchBarDelegate>
 
-@property (nonatomic, strong) ZSHHotelLogic             *hotelLogic;
+@property (nonatomic, strong) ZSHHotelLogic              *hotelLogic;
+@property (nonatomic, assign) ZSHShopType                shopType;
 @property (nonatomic, strong) NSArray <ZSHHotelModel *>  *hotelModelArr;
-@property (nonatomic, strong) NSArray <NSDictionary *>   *hotelArr;
+@property (nonatomic, strong) NSArray <NSDictionary *>   *hotelListDicArr;
 
 @end
 
@@ -36,20 +37,34 @@ static NSString *ZSHHotelCellID = @"ZSHHotelCell";
 - (void)loadData{
    
     [self requestHotelListData];
-     [self initViewModel];
+    [self initViewModel];
 }
 
 - (void)requestHotelListData{
     kWeakSelf(self);
     _hotelLogic = [[ZSHHotelLogic alloc]init];
-    [_hotelLogic loadHotelListDataWithParamDic:@{@"HONOURUSER_ID":@"d6a3779de8204dfd9359403f54f7d27c"}];
-    _hotelLogic.requestDataCompleted = ^(NSDictionary *paramDic){
-        weakself.hotelArr = paramDic[@"hotelArr"];
-        weakself.hotelModelArr = paramDic[@"hotelModelArr"];
-        [weakself.tableView.mj_header endRefreshing];
-        [weakself.tableView.mj_footer endRefreshing];
-        [weakself initViewModel];
-    };
+    NSDictionary *paramDic = @{@"HONOURUSER_ID":@"d6a3779de8204dfd9359403f54f7d27c"};
+    if (kFromClassTypeValue == FromHotelVCToTitleContentVC) {//酒店
+        [_hotelLogic loadHotelListDataWithParamDic:paramDic success:^(NSArray *hotelListDicArr) {
+            [weakself endrefresh];
+            _shopType = ZSHHotelShopType;
+            _hotelListDicArr = hotelListDicArr;
+            [weakself initViewModel];
+            
+        } fail:nil];
+    } else if (kFromClassTypeValue == FromBarVCToTitleContentVC){//酒吧
+        [_hotelLogic loadBarListDataWithParamDic:paramDic success:^(NSArray *barListDicArr) {
+            [weakself endrefresh];
+            _shopType = ZSHBarShopType;
+            _hotelListDicArr = barListDicArr;
+            [weakself initViewModel];
+        } fail:nil];
+    }
+}
+
+- (void)endrefresh{
+    [self.tableView.mj_header endRefreshing];
+    [self.tableView.mj_footer endRefreshing];
 }
 
 - (void)createUI{
@@ -78,24 +93,24 @@ static NSString *ZSHHotelCellID = @"ZSHHotelCell";
 - (ZSHBaseTableViewSectionModel*)storeListSection {
     kWeakSelf(self);
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
-    for (int i = 0; i < _hotelArr.count; i++) {
+    for (int i = 0; i < _hotelListDicArr.count; i++) {
         ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
         cellModel.height = kRealValue(110);
         [sectionModel.cellModelArray addObject:cellModel];
         cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
             ZSHHotelCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHHotelCellID forIndexPath:indexPath];
-            if (i==_hotelArr.count-1) {
+            if (i==_hotelListDicArr.count-1) {
                 cell.separatorInset = UIEdgeInsetsMake(0, 0, 0, MAXFLOAT);
             }
-            cell.fromClassType = ZSHFromHotelVCToHotelDetailVC;
-            NSDictionary *paramDic = _hotelArr[indexPath.row];
+            cell.shopType = _shopType;
+            NSDictionary *paramDic = _hotelListDicArr[indexPath.row];
             [cell updateCellWithParamDic:paramDic];
             return cell;
         };
         
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
-            ZSHHotelModel *hotelModel = _hotelModelArr[indexPath.row];
-            NSDictionary *nextParamDic = @{KFromClassType:@(ZSHFromHotelVCToHotelDetailVC),@"shopId":hotelModel.SORTHOTEL_ID};
+            NSDictionary *paramDic = _hotelListDicArr[indexPath.row];
+            NSDictionary *nextParamDic = @{KFromClassType:@(ZSHFromHotelVCToHotelDetailVC),@"shopId":paramDic[@"SORTHOTEL_ID"]};
             ZSHHotelDetailViewController *hotelDetailVC = [[ZSHHotelDetailViewController alloc]initWithParamDic:nextParamDic];
             [weakself.navigationController pushViewController:hotelDetailVC animated:YES];
         };

@@ -120,10 +120,10 @@
 
 - (void)setFromClassType:(ZSHFromVCToEnterTainmentCell)fromClassType{
     _fromClassType = fromClassType;
-    if (fromClassType == ZSHFromActivityVCToEnterTainmentCell) {
-        self.headView.hidden = YES;
-        self.headView.frame = CGRectZero;
-    }
+//    if (fromClassType == ZSHFromActivityVCToEnterTainmentCell) {
+//        self.headView.hidden = YES;
+//        self.headView.frame = CGRectZero;
+//    }
 }
 
 #pragma getter

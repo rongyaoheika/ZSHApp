@@ -49,14 +49,20 @@
                         @"ZSHTitleContentViewController",     //豪车
                         @"ZSHSubscribeViewController",        //飞机
                         @"ZSHTitleContentViewController",     //高尔夫汇
+
+                        @"ZSHPersonalTailorViewController",   //私人定制
                         
-//                        @"ZSHTailorDetailViewController",  //私人定制
-                        @"ZSHSubscribeViewController",//私人定制
-                        @"ZSHSubscribeViewController",//品牌杂志
-                        @"ZSHSubscribeViewController",//健康养生
-                        @"ZSHSubscribeViewController",//高端品鉴
-//                        @"ZSHMoreSubscribeViewController"
-                        @"ZSHSubscribeViewController" //定制理财
+                        @"ZSHTitleContentViewController",     //马术
+                        @"ZSHTitleContentViewController",     //游艇
+                        @"ZSHTitleContentViewController",     //豪车
+                        @"ZSHTitleContentViewController",     //高尔夫汇
+                      
+                        
+//                        @"ZSHSubscribeViewController",//品牌杂志
+//                        @"ZSHSubscribeViewController",//健康养生
+//                        @"ZSHSubscribeViewController",//高端品鉴
+////                        @"ZSHMoreSubscribeViewController"
+//                        @"ZSHSubscribeViewController" //定制理财
                         ];
     self.paramArr = @[
                       @{KFromClassType:@(FromFoodVCToTitleContentVC)},
@@ -65,16 +71,22 @@
                       @{KFromClassType:@(FromKTVVCToTitleContentVC)},
                       @{KFromClassType:@(ZSHFromHomeTrainVCToAirPlaneVC),@"title":@"火车票预订"},
                       @{KFromClassType:@(ZSHHomeAirPlaneVCToAirPlaneVC),@"title":@"机票预订"},
-                      @{KFromClassType:@(FromHorseVCToTitleContentVC)},
+                      @{KFromClassType:@(ZSHHorseType)},
                       @{KFromClassType:@(FromShipVCToTitleContentVC)},
                       @{KFromClassType:@(FromLuxcarVCToTitleContentVC)},
                       @{KFromClassType:@(ZSHPlaneType),@"title":@"飞机"},
                       @{KFromClassType:@(FromGolfVCToTitleContentVC)},
-                      @{KFromClassType:@(ZSHShipType),@"title":@"私人定制"},
-                      @{KFromClassType:@(ZSHShipType),@"title":@"品牌杂志"},
-                      @{KFromClassType:@(ZSHShipType),@"title":@"健康养生"},
-                      @{KFromClassType:@(ZSHShipType),@"title":@"高端品鉴"},
-                      @{KFromClassType:@(ZSHShipType),@"title":@"定制理财"},
+                      @{@"title":@"私人定制"},
+                      
+                      @{KFromClassType:@(FromHorseVCToTitleContentVC)},
+                      @{KFromClassType:@(FromShipVCToTitleContentVC)},
+                      @{KFromClassType:@(FromLuxcarVCToTitleContentVC)},
+                      @{KFromClassType:@(FromGolfVCToTitleContentVC)},
+                      
+//                      @{KFromClassType:@(ZSHShipType),@"title":@"品牌杂志"},
+//                      @{KFromClassType:@(ZSHShipType),@"title":@"健康养生"},
+//                      @{KFromClassType:@(ZSHShipType),@"title":@"高端品鉴"},
+//                      @{KFromClassType:@(ZSHShipType),@"title":@"定制理财"},
                        ];
 }
 

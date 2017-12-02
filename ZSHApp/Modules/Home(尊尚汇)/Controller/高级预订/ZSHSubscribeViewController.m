@@ -295,7 +295,7 @@
     [_middleImageView sd_setImageWithURL:[NSURL URLWithString:_imageArr[1]]];
     [_bottomImageView sd_setImageWithURL:[NSURL URLWithString:_imageArr[2]]];
     
-    _titleLabel.text = _listDataDicArr[0][@"PDOWNINTROTITLE"];
+    _titleLabel.text = _listDataDicArr[0][@"PUPINTROTITLE"];
     _contentLabel.text = _listDataDicArr[0][@"PUPINTROCONTENT"];
     _noticeLabel.text = _listDataDicArr[0][@"PDOWNINTROTITLE"];
     _noticeDetailLabel.text = _listDataDicArr[0][@"PDOWNINTROCONTENT"];

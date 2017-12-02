@@ -391,8 +391,9 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
         ZSHHotelDetailDeviceCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHHotelDetailDeviceCellID forIndexPath:indexPath];
         cell.separatorInset = UIEdgeInsetsMake(0, 0, 0, MAXFLOAT);
         cell.backgroundColor = KWhiteColor;
-        cell.fromClassType = ZSHFromHotelPayVCToHotelDetailVC;
-        [cell updateCellWithModel:self.model];
+        cell.fromClassType = ZSHFromHotelDetailBottomVCToHotelPayVC;
+        NSDictionary *paramDic = self.paramDic[@"deviceDic"];
+        [cell updateCellWithParamDic:paramDic];
         return cell;
     };
     
@@ -401,6 +402,7 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
 
 //酒店详情
 - (ZSHBaseTableViewSectionModel*)storeHotelDetailSection {
+    kWeakSelf(self);
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     sectionModel.headerHeight = kRealValue(20);
     sectionModel.headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, kRealValue(20))];
@@ -410,6 +412,8 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHHotelPayHeadCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHHotelPayHeadCellID forIndexPath:indexPath];
         cell.fromClassType = ZSHFromHotelDetailBottomVCToHotelPayVC;
+        cell.liveInfo = weakself.paramDic[@"liveInfoStr"];
+        [cell updateCellWithParamDic:weakself.paramDic[@"listDic"]];
         return cell;
     };
     

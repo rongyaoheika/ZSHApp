@@ -361,6 +361,11 @@
 //参数：HONOURUSER_ID 上传头像人员id
 //请求地址：/appuserin/up?UPPORT
 #define kUrlUp [NSString stringWithFormat:@"/appuserin/up?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"UPPORT"]]
+
+
+
+
+
 //71. 获得某家酒吧的综合评价
 //参数：SORTBAR_ID   酒吧的id
 //请求地址：/appsbarin/getbarmeaneva.do?GETBARMEANEVA（混淆码）
@@ -398,9 +403,10 @@
 //参数：SORTBAR_ID 某BAR id
 //请求地址：/appsbarin/bardetaillist.do?BARDETAIL(混淆码)
 #define kUrlBarDetailList [NSString stringWithFormat:@"/appsbarin/bardetaillist.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"BARDETAIL"]]
-//79. 获得首页特权酒吧店铺列表
-//参数：HONOURUSER_ID 某用户的ID
+//79. 获得首页特权酒吧店铺列表（完成）
 //请求地址：/appsbarin/sbar.do?SORTBAR(混淆码)
+#define kUrlSBar [NSString stringWithFormat:@"/appsbarin/sbar.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SORTBAR"]]
+
 //80. 获得首页汇聚玩趴图片 （完成）
 //参数：无参数
 //请求地址：/apphomein/partyimg.do?PARTY(混淆码)

@@ -129,14 +129,14 @@
     [_hotelmageView sd_setImageWithURL:[NSURL URLWithString:dic[@"SHOWIMAGES"]]];
     _distanceLabel.text = [NSString stringWithFormat:@"%.1f公里",[dic[@"distance"]floatValue] ];
     
-    if (self.fromClassType == ZSHFromHotelVCToHotelDetailVC) {//酒店详情
+    if (_shopType == ZSHHotelShopType) {//酒店详情
         _hotelDescLabel.text = dic[@"HOTELNAMES"];
         _hotelAddressLabel.text = dic[@"HOTELADDRESS"];
         _priceLabel.text = [NSString stringWithFormat:@"¥%.0f",[dic[@"HOTELPRICE"]floatValue] ];
         _commentLabel.text = [NSString stringWithFormat:@"（%ld条评价）",(long)[dic[@"HOTELEVACOUNT"]intValue]];
         _starView.scorePercent = [dic[@"HOTELEVALUATE"]floatValue]/5.0;
         
-    } else if (self.fromClassType == ZSHFromHomeKTVVCToHotelDetailVC) {//KTV详情
+    } else if (_shopType == ZSHKTVShopType) {//KTV详情
         _hotelDescLabel.text = dic[@"KTVNAMES"];
         _hotelAddressLabel.text = dic[@"KTVADDRESS"];
         _priceLabel.text  = [NSString stringWithFormat:@"¥%.0f",[dic[@"KTVPRICE"]floatValue] ];
@@ -146,6 +146,12 @@
         _hotelDescLabel.text = dic[@"SHOPNAMES"];
         _hotelAddressLabel.text = dic[@"SHOPADDRESS"];
         _priceLabel.text  = [NSString stringWithFormat:@"¥%.0f",[dic[@"SHOPPRICE"]floatValue] ];
+        _commentLabel.text = [NSString stringWithFormat:@"（%ld条评价）",(long)[dic[@"SHOPEVACOUNT"]intValue]];
+        _starView.scorePercent = [dic[@"SHOPEVALUATE"]floatValue]/5.0;
+    } else if (_shopType == ZSHBarShopType) {//酒吧
+        _hotelDescLabel.text = dic[@"BARNAMES"];
+        _hotelAddressLabel.text = dic[@"BARADDRESS"];
+        _priceLabel.text  = [NSString stringWithFormat:@"¥%.0f",[dic[@"BARPRICE"]floatValue] ];
         _commentLabel.text = [NSString stringWithFormat:@"（%ld条评价）",(long)[dic[@"SHOPEVACOUNT"]intValue]];
         _starView.scorePercent = [dic[@"SHOPEVALUATE"]floatValue]/5.0;
     }
