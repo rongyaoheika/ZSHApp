@@ -18,7 +18,7 @@ typedef NS_ENUM(NSInteger,ZSHShopType){
     ZSHFoodShopType,     //美食
     ZSHKTVShopType,      //KTV
     ZSHHotelShopType,    //酒店
-    ZSHBarType,          //酒吧
+    ZSHBarShopType,      //酒吧
     ZSHHorseType,        //马术
     ZSHShipType,         //游艇
     ZSHPlaneType,        //飞机

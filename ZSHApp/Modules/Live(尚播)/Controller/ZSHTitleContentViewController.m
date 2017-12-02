@@ -54,6 +54,7 @@
 }
 
 - (void)loadData{
+    self.indicatorHeight = 0.0;
     switch ([self.paramDic[KFromClassType]integerValue]) {
         case FromLiveTabBarVCToTitleContentVC:{
             self.titleArr = @[@"推荐",@"附近",@"分类"];
@@ -66,13 +67,11 @@
             break;
         case FromFindVCToTitleContentVC:{
             self.titleArr = @[@"精选",@"数码",@"亲子",@"时尚",@"美食"];
-            self.indicatorHeight = 0.0;
             self.contentVCS = @[@"ZSHFindViewController",@"ZSHFindViewController",@"ZSHFindViewController",@"ZSHFindViewController",@"ZSHFindViewController"];
         }
             break;
         case FromAllOrderVCToTitleContentVC:{
             self.titleArr = @[@"全部",@"待付款",@"待收货",@"待评价",@"退款售后"];
-            self.indicatorHeight = 0.0;
             // @"ZSHCommentViewController",@"ZSHApplyServiceViewController"
             self.contentVCS = @[@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHOrderSubViewController"];
             NSMutableArray *arr = [[NSMutableArray alloc] init];
@@ -93,33 +92,22 @@
             break;
         }
         case FromHotelVCToTitleContentVC:{
-            self.titleArr = @[@"排序",@"品牌",@"筛选"];
-            self.titleBtnImage = [UIImage imageNamed:@"hotel_btn"];
-            self.imageStyle = XYButtonEdgeInsetsStyleRight;
-            self.imageTitleSpace = kRealValue(6.0);
-            self.indicatorHeight = 0.0;
-            [self createHotelNaviUI];
+            [self createTileViewUI];
+            [self createSearchNaviUI];
             self.contentVCS = @[@"ZSHHotelViewController",@"ZSHHotelViewController",@"ZSHHotelViewController"];
+            self.paramArr = @[@{KFromClassType:@(ZSHHotelShopType)},@{KFromClassType:@(ZSHHotelShopType)},@{KFromClassType:@(ZSHHotelShopType)}];
         }
             break;
         case FromFoodVCToTitleContentVC:{
-            self.titleArr = @[@"排序",@"品牌",@"筛选"];
-            self.titleBtnImage = [UIImage imageNamed:@"hotel_btn"];
-            self.imageStyle = XYButtonEdgeInsetsStyleRight;
-            self.imageTitleSpace = kRealValue(6.0);
-            self.indicatorHeight = 0.0;
-            [self createHotelNaviUI];
+            [self createTileViewUI];
+            [self createSearchNaviUI];
             self.contentVCS = @[@"ZSHFoodViewController",@"ZSHFoodViewController",@"ZSHFoodViewController"];
             
         }
             break;
         case FromKTVVCToTitleContentVC:{
-            self.titleArr = @[@"排序",@"品牌",@"筛选"];
-            self.titleBtnImage = [UIImage imageNamed:@"hotel_btn"];
-            self.imageStyle = XYButtonEdgeInsetsStyleRight;
-            self.imageTitleSpace = kRealValue(6.0);
-            self.indicatorHeight = 0.0;
-            [self createHotelNaviUI];
+            [self createTileViewUI];
+            [self createSearchNaviUI];
             self.contentVCS = @[@"ZSHKTVViewController",@"ZSHKTVViewController",@"ZSHKTVViewController"];
         }
             break;
@@ -129,7 +117,6 @@
             self.titleBtnImage = [UIImage imageNamed:@"hotel_btn"];
             self.imageStyle = XYButtonEdgeInsetsStyleRight;
             self.imageTitleSpace = kRealValue(6.0);
-            self.indicatorHeight = 0.0;
             [self createTicketNaviUI];
             self.contentVCS = @[@"ZSHMoreTicketViewController",@"ZSHMoreTicketViewController",@"ZSHMoreTicketViewController"];
             
@@ -137,20 +124,17 @@
             break;
         case FromActivityCenterVCToTitleContentVC:{
             self.titleArr = @[@"我发布的",@"我参与的"];
-            self.indicatorHeight = 0.0;
             self.contentVCS = @[@"ZSHActivityViewController",@"ZSHActivityViewController"];
             
         }
             break;
         case FromMineLevelVCToTitleContentVC: {
             self.titleArr = @[@"用户等级", @"主播等级"];
-            self.indicatorHeight = 0.0;
             self.contentVCS = @[@"ZSHLiveUserLevelViewController",@"ZSHLivePlayerLevelViewController"];
         }
             break;
         case FromContributionListVCToTitleContentVC: {
             self.titleArr = @[@"日榜", @"周榜", @"月榜", @"总榜"];
-            self.indicatorHeight = 0.0;
             self.contentVCS = @[@"ZSHLiveDayListViewController",
                                 @"ZSHLiveDayListViewController",
                                 @"ZSHLiveDayListViewController",
@@ -160,27 +144,32 @@
             break;
         case FromPeronalCenterVCToTitleContentVC:{
             self.titleArr = @[@"商品",@"详情",@"评价"];
-            self.indicatorHeight = 0.0;
             self.contentVCS = @[@"ZSHWeiboViewController",
                                 @"ZSHWeiboViewController",
                                 @"ZSHWeiboViewController"];
         }
             break;
+        case FromBarVCToTitleContentVC:{//酒吧
+            [self createTileViewUI];
+            self.contentVCS = @[@"ZSHHotelViewController",
+                                @"ZSHHotelViewController",
+                                @"ZSHHotelViewController"];
+            self.paramArr = @[@{KFromClassType:@(ZSHBarShopType)},@{KFromClassType:@(ZSHBarShopType)},@{KFromClassType:@(ZSHBarShopType)}];
+            [self createSearchNaviUI];
+            break;
+            
+    }
             
         case FromHorseVCToTitleContentVC://马术
         case FromShipVCToTitleContentVC://游艇
         case FromGolfVCToTitleContentVC://游艇
         case FromLuxcarVCToTitleContentVC:{//豪车
-            self.titleArr = @[@"排序",@"品牌",@"筛选"];
-            self.indicatorHeight = 0.0;
-            self.titleBtnImage = [UIImage imageNamed:@"hotel_btn"];
-            self.imageStyle = XYButtonEdgeInsetsStyleRight;
-            self.imageTitleSpace = kRealValue(6.0);
             self.contentVCS = @[@"ZSHMoreListViewController",
                                 @"ZSHMoreListViewController",
                                 @"ZSHMoreListViewController"];
             self.paramArr = @[@{KFromClassType:@([self.paramDic[KFromClassType]integerValue])},@{KFromClassType:@([self.paramDic[KFromClassType]integerValue])},@{KFromClassType:@([self.paramDic[KFromClassType]integerValue])}];
-            [self createHotelNaviUI];
+            [self createTileViewUI];
+            [self createSearchNaviUI];
         }
             break;
         default:{
@@ -188,7 +177,6 @@
             self.titleBtnImage = [UIImage imageNamed:@"hotel_btn"];
             self.imageStyle = XYButtonEdgeInsetsStyleRight;
             self.imageTitleSpace = kRealValue(6.0);
-            self.indicatorHeight = 0.0;
             self.contentVCS = self.paramDic[@"contentVCS"];
             if (!self.contentVCS.count) {
                 NSMutableArray *mContentVCS = [[NSMutableArray alloc]init];
@@ -198,7 +186,7 @@
                 self.contentVCS = mContentVCS;
             }
            
-            [self createHotelNaviUI];
+            [self createSearchNaviUI];
             
         }
        
@@ -207,12 +195,19 @@
     self.titleWidth = KScreenWidth/(self.titleArr.count);
 }
 
+- (void)createTileViewUI{
+    self.titleArr = @[@"排序",@"品牌",@"筛选"];
+    self.titleBtnImage = [UIImage imageNamed:@"hotel_btn"];
+    self.imageStyle = XYButtonEdgeInsetsStyleRight;
+    self.imageTitleSpace = kRealValue(6.0);
+}
+
 - (void)createLiveNaviUI{
     [self addNavigationItemWithImageName:@"nav_back" isLeft:YES target:self action:@selector(backAction) tag:1];
     [self addNavigationItemWithImageName:@"live_search" isLeft:NO target:self action:@selector(searchAction) tag:2];
 }
 
-- (void)createHotelNaviUI{
+- (void)createSearchNaviUI{
     [self.navigationItem setTitleView:self.searchView];
     self.searchView.searchBar.delegate = self;
 }

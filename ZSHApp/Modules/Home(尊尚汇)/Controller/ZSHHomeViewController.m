@@ -64,21 +64,22 @@ static NSString *Identify_MusicCell = @"musicCell";
                         @"ZSHTitleContentViewController",
                         @"ZSHAirPlaneViewController",
                         @"ZSHAirPlaneViewController",
-                        @"ZSHSubscribeViewController",
-                        @"ZSHSubscribeViewController",
-                        @"ZSHSubscribeViewController",
-                        @"ZSHMoreSubscribeViewController"];
+                        
+                        @"ZSHTitleContentViewController",     //马术
+                        @"ZSHTitleContentViewController",     //游艇
+                        @"ZSHTitleContentViewController",     //豪车
+        
+                        @"ZSHMoreSubscribeViewController"];   //更多
     
     self.paramArr = @[
                       @{KFromClassType:@(FromFoodVCToTitleContentVC)},
                       @{KFromClassType:@(FromHotelVCToTitleContentVC)},
                       @{KFromClassType:@(ZSHFromHomeTrainVCToAirPlaneVC),@"title":@"火车票预订"},
                       @{KFromClassType:@(ZSHHomeAirPlaneVCToAirPlaneVC),@"title":@"机票预订"},
-                      @{KFromClassType:@(ZSHHorseType  ),@"title":@"马术"},
-                      @{KFromClassType:@(ZSHShipType),@"title":@"游艇"},
-                      @{KFromClassType:@(ZSHLuxcarType),@"title":@"豪车"},
-                      @{KFromClassType:@(ZSHPlaneType),@"title":@"飞机"},
-                      @{KFromClassType:@(ZSHGolfType),@"title":@"高尔夫汇"}
+                      @{KFromClassType:@(FromHorseVCToTitleContentVC)},  //马术
+                      @{KFromClassType:@(FromShipVCToTitleContentVC)},   //游艇
+                      @{KFromClassType:@(FromLuxcarVCToTitleContentVC)}, //豪车
+                      @{}
                       ];
     self.menuPushVCsArr = @[@"",
                             @"ZSHServiceCenterViewController",

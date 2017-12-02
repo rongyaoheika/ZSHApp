@@ -13,11 +13,22 @@
 
 
 //酒店列表
-- (void)loadHotelListDataWithParamDic:(NSDictionary *)paramDic;
+- (void)loadHotelListDataWithParamDic:(NSDictionary *)paramDic success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail;
 
 //酒店详情
 - (void)loadHotelDetailDataWithParamDic:(NSDictionary *)paramDic;
 
 //酒店详情列表
 - (void)loadHotelDetailListDataWithParamDic:(NSDictionary *)paramDic success:(ResponseSuccessBlock)successBlock fail:(ResponseFailBlock)failBlock;
+
+//酒吧列表
+- (void)loadBarListDataWithParamDic:(NSDictionary *)paramDic success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail;
+
+//酒吧详情
+- (void)loadBarDetailDataWithParamDic:(NSDictionary *)paramDic success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail;
+
+//酒吧详情列表
+- (void)loadBarDetailListDataWithParamDic:(NSDictionary *)paramDic success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail;
+
+
 @end

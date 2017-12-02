@@ -10,17 +10,11 @@
 
 @implementation ZSHHotelLogic
 
-
-- (void)loadHotelListDataWithParamDic:(NSDictionary *)paramDic{
-    kWeakSelf(self);
+- (void)loadHotelListDataWithParamDic:(NSDictionary *)paramDic success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail{
     [PPNetworkHelper POST:kUrlSHotelDo parameters:paramDic success:^(id responseObject) {
         RLog(@"酒店列表数据==%@",responseObject)
-        NSArray *hotelArr = responseObject[@"pd"];
-        NSArray *hotelModelArr =  [ZSHHotelModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"]];
-        NSDictionary *paramDic = @{@"hotelArr":hotelArr,@"hotelModelArr":hotelModelArr};
-        if (weakself.requestDataCompleted) {
-            weakself.requestDataCompleted(paramDic);
-        }
+       NSArray *hotelListDicArr = responseObject[@"pd"];
+        success(hotelListDicArr);
         
     } failure:^(NSError *error) {
        
@@ -46,6 +40,39 @@
 - (void)loadHotelDetailListDataWithParamDic:(NSDictionary *)paramDic success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail {
     [PPNetworkHelper POST:kUrlHotelDetailList parameters:paramDic success:^(id responseObject) {
         RLog(@"酒店详情列表数据==%@",responseObject)
+        NSArray *hotelDetaiDicListArr = responseObject[@"pd"];
+        success(hotelDetaiDicListArr);
+    } failure:^(NSError *error) {
+        RLog(@"请求失败");
+    }];
+}
+
+//酒吧列表
+- (void)loadBarListDataWithParamDic:(NSDictionary *)paramDic success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail{
+    [PPNetworkHelper POST:kUrlSBar parameters:paramDic success:^(id responseObject) {
+        RLog(@"酒吧列表数据==%@",responseObject)
+        NSArray *barListDicArr = responseObject[@"pd"];
+        success(barListDicArr);
+    } failure:^(NSError *error) {
+        RLog(@"请求失败");
+    }];
+}
+
+//酒吧详情
+- (void)loadBarDetailDataWithParamDic:(NSDictionary *)paramDic success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail{
+    [PPNetworkHelper POST:kUrlBarDetailList parameters:paramDic success:^(id responseObject) {
+        RLog(@"酒吧详情数据==%@",responseObject)
+        NSArray *hotelDetaiDicListArr = responseObject[@"pd"];
+        success(hotelDetaiDicListArr);
+    } failure:^(NSError *error) {
+        RLog(@"请求失败");
+    }];
+}
+
+//酒吧详情列表
+- (void)loadBarDetailListDataWithParamDic:(NSDictionary *)paramDic success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail{
+    [PPNetworkHelper POST:kUrlBarDetailList parameters:paramDic success:^(id responseObject) {
+        RLog(@"酒吧详情列表数据==%@",responseObject)
         NSArray *hotelDetaiDicListArr = responseObject[@"pd"];
         success(hotelDetaiDicListArr);
     } failure:^(NSError *error) {

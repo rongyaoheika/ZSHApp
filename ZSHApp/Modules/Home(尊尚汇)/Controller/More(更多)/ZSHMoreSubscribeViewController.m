@@ -49,9 +49,8 @@
                         @"ZSHTitleContentViewController",     //豪车
                         @"ZSHSubscribeViewController",        //飞机
                         @"ZSHTitleContentViewController",     //高尔夫汇
-                        
-//                        @"ZSHTailorDetailViewController",  //私人定制
-                        @"ZSHSubscribeViewController",//私人定制
+
+                        @"ZSHPersonalTailorViewController",   //私人定制
                         @"ZSHSubscribeViewController",//品牌杂志
                         @"ZSHSubscribeViewController",//健康养生
                         @"ZSHSubscribeViewController",//高端品鉴
@@ -61,7 +60,7 @@
     self.paramArr = @[
                       @{KFromClassType:@(FromFoodVCToTitleContentVC)},
                       @{KFromClassType:@(FromHotelVCToTitleContentVC)},
-                      @{KFromClassType:@(FromBarVCToTitleContentVC)},
+                      @{KFromClassType:@(FromHotelVCToTitleContentVC)},
                       @{KFromClassType:@(FromKTVVCToTitleContentVC)},
                       @{KFromClassType:@(ZSHFromHomeTrainVCToAirPlaneVC),@"title":@"火车票预订"},
                       @{KFromClassType:@(ZSHHomeAirPlaneVCToAirPlaneVC),@"title":@"机票预订"},
@@ -70,7 +69,7 @@
                       @{KFromClassType:@(FromLuxcarVCToTitleContentVC)},
                       @{KFromClassType:@(ZSHPlaneType),@"title":@"飞机"},
                       @{KFromClassType:@(FromGolfVCToTitleContentVC)},
-                      @{KFromClassType:@(ZSHShipType),@"title":@"私人定制"},
+                      @{@"title":@"私人定制"},
                       @{KFromClassType:@(ZSHShipType),@"title":@"品牌杂志"},
                       @{KFromClassType:@(ZSHShipType),@"title":@"健康养生"},
                       @{KFromClassType:@(ZSHShipType),@"title":@"高端品鉴"},
