@@ -48,8 +48,9 @@ static NSString *bottomCellIdentifier   = @"LiveListCell";
 
 - (void)createUI{
     self.title = @"我的";
+
     [self addNavigationItemWithImageName:@"nav_back" isLeft:YES target:self action:@selector(backAction) tag:1];
-    
+
     self.tableView.frame = CGRectMake(0, KNavigationBarHeight, KScreenWidth, KScreenHeight-KNavigationBarHeight-KBottomNavH);
     [self.view addSubview:self.tableView];
     self.tableView.delegate = self.tableViewModel;

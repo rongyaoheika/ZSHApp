@@ -49,6 +49,13 @@
 
 }
 
+- (void)updateCellWithParamDic:(NSDictionary *)dic{
+    if (_shopType == ZSHBarShopType) {//酒吧
+        [_headView updateViewWithParamDic:@{@"dataArr":dic[@"BARDETAILSIMGS"]}];
+        _detailLabel.text = dic[@"BARNAMES"];
+    }
+}
+
 - (void)updateCellWithModel:(ZSHBaseModel *)model{
     if (self.fromClassType == ZSHFromFoodVCToHotelDetailVC) {//美食
         ZSHFoodDetailModel *foodDetailModel = (ZSHFoodDetailModel *)model;

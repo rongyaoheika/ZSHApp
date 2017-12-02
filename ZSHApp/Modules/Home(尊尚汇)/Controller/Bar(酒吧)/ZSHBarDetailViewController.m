@@ -1,12 +1,12 @@
 //
-//  ZSHHotelDetailViewController.m
+//  ZSHBarDetailViewController.m
 //  ZSHApp
 //
-//  Created by zhaoweiwei on 2017/10/27.
+//  Created by zhaoweiwei on 2017/12/2.
 //  Copyright © 2017年 apple. All rights reserved.
 //
 
-#import "ZSHHotelDetailViewController.h"
+#import "ZSHBarDetailViewController.h"
 #import "ZSHHotelDetailHeadCell.h"
 #import "ZSHHotelDetailDeviceCell.h"
 #import "ZSHHotelCalendarCell.h"
@@ -19,12 +19,13 @@
 #import "ZSHHotelLogic.h"
 #import "ZSHShopCommentViewController.h"
 
-@interface ZSHHotelDetailViewController ()
+@interface ZSHBarDetailViewController ()
 
 @property (nonatomic, copy)   NSString                  *shopId;
 @property (nonatomic, strong) ZSHHotelLogic             *hotelLogic;
 @property (nonatomic, strong) ZSHHotelDetailModel       *hotelDetailModel;
-@property (nonatomic, strong) NSDictionary              *hotelDetailParamDic;
+@property (nonatomic, strong) NSDictionary              *barDetailDic;
+@property (nonatomic, strong) NSArray                   *barDetailListDicArr;
 @property (nonatomic, strong) NSArray                   *modelNameArr;
 
 @property (nonatomic, strong) NSArray                   *hotelDetailListDicArr;
@@ -43,7 +44,8 @@ static NSString *ZSHBookCellID = @"ZSHBookCell";
 static NSString *ZSHHotelCalendarCellID = @"ZSHHotelCalendarCell";
 static NSString *ZSHHotelListCellID = @"ZSHHotelListCell";
 
-@implementation ZSHHotelDetailViewController
+
+@implementation ZSHBarDetailViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -62,23 +64,20 @@ static NSString *ZSHHotelListCellID = @"ZSHHotelListCell";
 - (void)requestData{
     kWeakSelf(self);
     _hotelLogic = [[ZSHHotelLogic alloc]init];
-    NSDictionary *paramDic = @{@"SORTHOTEL_ID":self.shopId};
-    [_hotelLogic loadHotelDetailDataWithParamDic:paramDic];
-    _hotelLogic.requestDataCompleted = ^(NSDictionary *paramDic){
-        weakself.hotelDetailModel = paramDic[@"hotelDetailModel"];
-        weakself.hotelDetailParamDic = paramDic[@"hotelDetailParamDic"];
-        [weakself.tableView.mj_header endRefreshing];
-        [weakself.tableView.mj_footer endRefreshing];
+    NSDictionary *paramDic = @{@"SORTBAR_ID":self.shopId};
+    [_hotelLogic loadBarDetailDataWithParamDic:paramDic success:^(NSDictionary *barDetailDic) {
+       _barDetailDic = barDetailDic;
         [weakself initViewModel];
-    };
-    
-    [_hotelLogic loadHotelDetailListDataWithParamDic:paramDic success:^(NSArray *hotelDetailListDicArr) {
-        _hotelDetailListDicArr = hotelDetailListDicArr;
+    } fail:nil];
+   
+    [_hotelLogic loadBarDetailListDataWithParamDic:paramDic success:^(NSArray *barDetailListDicArr) {
+        _barDetailListDicArr = barDetailListDicArr;
         weakself.tableViewModel.sectionModelArray[3] = [weakself storHotelListSection];
         NSIndexSet *indexSet = [[NSIndexSet alloc]initWithIndex:3];
         [weakself updateSectionDatWithSet:indexSet];
-        
     } fail:nil];
+    
+   
 }
 
 - (void)updateSectionDatWithSet:(NSIndexSet *)indexSet{
@@ -123,10 +122,11 @@ static NSString *ZSHHotelListCellID = @"ZSHHotelListCell";
     cellModel.height = kRealValue(225);
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHHotelDetailHeadCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHHotelDetailHeadCellID forIndexPath:indexPath];
-        cell.fromClassType = [self.paramDic[KFromClassType]integerValue];
-        if (weakself.hotelDetailModel) {
-            [cell updateCellWithModel:_hotelDetailModel];
+        cell.shopType = ZSHBarShopType;
+        if (_barDetailDic) {
+            [cell updateCellWithParamDic:weakself.barDetailDic];
         }
+        
         return cell;
         
     };
@@ -138,9 +138,7 @@ static NSString *ZSHHotelListCellID = @"ZSHHotelListCell";
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHHotelDetailDeviceCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHHotelDetailDeviceCellID forIndexPath:indexPath];
         cell.fromClassType = [self.paramDic[KFromClassType]integerValue];
-        if (weakself.hotelDetailParamDic) {
-            [cell updateCellWithParamDic:_hotelDetailParamDic];
-        }
+        [cell updateCellWithParamDic:weakself.barDetailDic];
         [self hideSeparatorLineWithCell:cell hide:YES];
         return cell;
     };
@@ -154,8 +152,8 @@ static NSString *ZSHHotelListCellID = @"ZSHHotelListCell";
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     NSArray *arrowImageArr = @[@"hotel_map",@"hotel_phone"];
     NSArray *titleArr = @[@"三亚市天涯区黄山路94号",@"0898-86868686"];
-    if (_hotelDetailModel) {
-      titleArr =  @[_hotelDetailModel.HOTELADDRESS,_hotelDetailModel.HOTELPHONE];
+    if (_barDetailDic) {
+        titleArr =  @[_barDetailDic[@"BARADDRESS"],_barDetailDic[@"BARPHONE"]];
     }
     
     for (int i = 0; i <arrowImageArr.count; i++) {
@@ -226,7 +224,6 @@ static NSString *ZSHHotelListCellID = @"ZSHHotelListCell";
     cellModel.height = kRealValue(65);
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHHotelCalendarCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHHotelCalendarCellID forIndexPath:indexPath];
-        [self hideSeparatorLineWithCell:cell hide:YES];
         _liveInfoStr = @"8-8入住，8-9离开，1天";
         cell.dateViewTapBlock = ^(NSInteger tag) {//tag = 1入住
             NSDictionary *paramDic = _hotelDetailListDicArr[indexPath.row];
@@ -243,22 +240,23 @@ static NSString *ZSHHotelListCellID = @"ZSHHotelListCell";
 - (ZSHBaseTableViewSectionModel*)storHotelListSection{
     kWeakSelf(self);
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
-    for (int i = 0; i<_hotelDetailListDicArr.count; i++) {
+    for (int i = 0; i<_barDetailListDicArr.count; i++) {
         ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
         [sectionModel.cellModelArray addObject:cellModel];
         cellModel.height = kRealValue(75);
         cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
             ZSHHotelListCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHHotelListCellID forIndexPath:indexPath];
-            NSDictionary *paramDic = _hotelDetailListDicArr[indexPath.row];
+            cell.shopType = ZSHBarShopType;
+            NSDictionary *paramDic = _barDetailListDicArr[indexPath.row];
             [cell updateCellWithParamDic:paramDic];
             return cell;
         };
         
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
-            NSDictionary *paramDic = _hotelDetailListDicArr[indexPath.row];
-            NSDictionary *nextParamDic = @{KFromClassType:@(ZSHFromHotelDetailConfirmOrderVCToBottomBlurPopView),@"deviceDic":weakself.hotelDetailParamDic,@"listDic":paramDic,@"liveInfoStr":_liveInfoStr};
-            weakself.bottomBlurPopView = [weakself createBottomBlurPopViewWithParamDic:nextParamDic];
-            [kAppDelegate.window addSubview:weakself.bottomBlurPopView];
+//            NSDictionary *paramDic = _hotelDetailListDicArr[indexPath.row];
+//            NSDictionary *nextParamDic = @{KFromClassType:@(ZSHFromHotelDetailConfirmOrderVCToBottomBlurPopView),@"deviceDic":weakself.hotelDetailParamDic,@"listDic":paramDic,@"liveInfoStr":_liveInfoStr};
+//            weakself.bottomBlurPopView = [weakself createBottomBlurPopViewWithParamDic:nextParamDic];
+//            [kAppDelegate.window addSubview:weakself.bottomBlurPopView];
         };
     }
     
@@ -293,12 +291,13 @@ static NSString *ZSHHotelListCellID = @"ZSHHotelListCell";
 
 
 -(void)footerRereshing{
-     [self.tableView.mj_footer endRefreshing];
+    [self.tableView.mj_footer endRefreshing];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 
 @end

@@ -114,6 +114,11 @@
         _hotelNameLabel.text = dic[@"HOTELDETNAME"];
         _hotelBottomLabel.text = [NSString stringWithFormat:@"%@㎡   %@",dic[@"HOTELDETROOMSIZE"],dic[@"HOTELDETBEDTYPE"] ];
         _priceLabel.text = [NSString stringWithFormat:@"¥%.0f",[dic[@"SHOPPRICE"]floatValue] ];
+    } else if(_shopType == ZSHBarShopType){
+        [_hotelmageView sd_setImageWithURL:[NSURL URLWithString:dic[@"PRIVILEGEIMGS"]]];
+        _hotelNameLabel.text = dic[@"BARDETTITLE"];
+        _hotelBottomLabel.text = @"";
+        _priceLabel.text = [NSString stringWithFormat:@"¥%.0f",[dic[@"BARDETPRICE"]floatValue] ];
     }
     
 }

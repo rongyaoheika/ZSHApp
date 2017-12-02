@@ -138,7 +138,11 @@
              commentStr = [NSString stringWithFormat:@"%.1f",[dic[@"KTVEVALUATE"]floatValue] ];
              break;
         }
-            
+           
+        case ZSHFromHomeBarVCToHotelDetailVC:{//酒吧详情（无此字段）
+            commentStr = [NSString stringWithFormat:@"%.1f",[dic[@"BarEVALUATE"]floatValue] ];
+            break;
+        }
         default:
             break;
     }

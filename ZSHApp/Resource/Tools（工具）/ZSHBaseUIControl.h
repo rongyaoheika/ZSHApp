@@ -43,6 +43,7 @@ typedef NS_ENUM(NSUInteger,ZSHFromVCToHotelDetailVC){//** -> 详情页面
     ZSHFromFoodVCToHotelDetailVC,      //美食-美食详情
     ZSHFromHotelVCToHotelDetailVC,     //酒店-酒店详情
     ZSHFromHomeKTVVCToHotelDetailVC,   //KTV-KTV详情
+    ZSHFromHomeBarVCToHotelDetailVC,   //酒吧-酒吧详情
     ZSHFromHotelPayVCToHotelDetailVC,  //酒店确认订单-底部弹窗
     ZSHFromNoneVCToHotelDetailVC
 };

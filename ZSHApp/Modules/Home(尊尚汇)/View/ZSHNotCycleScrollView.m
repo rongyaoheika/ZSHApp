@@ -78,6 +78,7 @@
             
             if (self.fromClassType == FromKTVRoomTypeVCToNoticeView && btn.layer.borderWidth) {
                 btn.layer.borderColor = KZSHColorF29E19.CGColor;
+                [btn setTitleColor:KZSHColorF29E19 forState:UIControlStateSelected];
             }
         }
         
@@ -100,6 +101,7 @@
 
             if (self.fromClassType == FromKTVRoomTypeVCToNoticeView && btn.layer.borderWidth) {
                 btn.layer.borderColor = KZSHColorF29E19.CGColor;
+                [btn setTitleColor:KZSHColorF29E19 forState:UIControlStateSelected];
             }
         } else {
             btn.selected = NO;

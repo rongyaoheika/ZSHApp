@@ -60,10 +60,10 @@
 
 //酒吧详情
 - (void)loadBarDetailDataWithParamDic:(NSDictionary *)paramDic success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail{
-    [PPNetworkHelper POST:kUrlBarDetailList parameters:paramDic success:^(id responseObject) {
+    [PPNetworkHelper POST:kUrlBarSyn parameters:paramDic success:^(id responseObject) {
         RLog(@"酒吧详情数据==%@",responseObject)
-        NSArray *hotelDetaiDicListArr = responseObject[@"pd"];
-        success(hotelDetaiDicListArr);
+        NSDictionary *barDetailDic = responseObject[@"pd"];
+        success(barDetailDic);
     } failure:^(NSError *error) {
         RLog(@"请求失败");
     }];
@@ -73,8 +73,8 @@
 - (void)loadBarDetailListDataWithParamDic:(NSDictionary *)paramDic success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail{
     [PPNetworkHelper POST:kUrlBarDetailList parameters:paramDic success:^(id responseObject) {
         RLog(@"酒吧详情列表数据==%@",responseObject)
-        NSArray *hotelDetaiDicListArr = responseObject[@"pd"];
-        success(hotelDetaiDicListArr);
+        NSArray *barDetailListDicArr = responseObject[@"pd"];
+        success(barDetailListDicArr);
     } failure:^(NSError *error) {
         RLog(@"请求失败");
     }];

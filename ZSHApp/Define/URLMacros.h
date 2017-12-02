@@ -411,6 +411,14 @@
 //参数：无参数
 //请求地址：/apphomein/partyimg.do?PARTY(混淆码)
 #define kUrlPartyimg [NSString stringWithFormat:@"/apphomein/partyimg.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"PARTY"]]
+
+
+//81. 根据酒吧店铺id获取美食店铺综合详细
+//参数：SORTBAR_ID 酒吧id
+//请求地址：/appsbarin/barsyn.do?BARSYN(混淆码)
+#define kUrlBarSyn [NSString stringWithFormat:@"/appsbarin/barsyn.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"BARSYN"]]
+
+
 //82. 获得荣耀服务高尔夫列表（完成）
 //参数：HONOURUSER_ID 用户id
 //请求地址：/appserverin/sgolflist.do?SORTHIGHGOLF(混淆码)

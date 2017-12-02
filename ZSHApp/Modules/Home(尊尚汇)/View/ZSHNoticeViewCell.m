@@ -78,17 +78,7 @@
     self.paramDic = paramDic;
     _btnArr = [[NSMutableArray alloc]init];
     
-    if ([paramDic[KFromClassType]integerValue]  == FromHomeServiceVCToNoticeView) {
-
-        _itemScrollView.itemWidth = kRealValue(130);
-        for (int i = 1; i<4; i++) {
-            NSString *imageName = [NSString stringWithFormat:@"home_service%d",i];
-            UIButton *btn = [[UIButton alloc]init];
-            [btn setBackgroundImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
-            [_btnArr addObject:btn];
-        }
-        
-    }  else if ([paramDic[KFromClassType]integerValue]  == FromHomeMagazineVCToNoticeView) {
+    if ([paramDic[KFromClassType]integerValue]  == FromHomeMagazineVCToNoticeView) {
         _itemScrollView.itemWidth = kRealValue(95);
         
         for (int i = 1; i<5; i++) {

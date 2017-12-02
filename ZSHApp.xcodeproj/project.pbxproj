@@ -159,6 +159,7 @@
 		FE1F76371F8F7E1100C45B83 /* LXScrollContentView.h in Sources */ = {isa = PBXBuildFile; fileRef = FE1F762C1F8F7B0500C45B83 /* LXScrollContentView.h */; };
 		FE1F76381F8F7E1100C45B83 /* LXScrollContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE1F762D1F8F7B0500C45B83 /* LXScrollContentView.m */; };
 		FE248E8C1FA828FE00FFE126 /* ZSHKTVModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FE248E8B1FA828FE00FFE126 /* ZSHKTVModel.m */; };
+		FE2555131FD2AB33002B3786 /* ZSHBarDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE2555121FD2AB33002B3786 /* ZSHBarDetailViewController.m */; };
 		FE291EE61F8CCC2700D4BBE7 /* ZSHTogetherViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE291EE51F8CCC2700D4BBE7 /* ZSHTogetherViewController.m */; };
 		FE291EE91F8CCC5900D4BBE7 /* ZSHMineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE291EE81F8CCC5900D4BBE7 /* ZSHMineViewController.m */; };
 		FE291EF31F8CCD2200D4BBE7 /* ZSHLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE291EF21F8CCD2200D4BBE7 /* ZSHLoginViewController.m */; };
@@ -706,6 +707,8 @@
 		FE1F76321F8F7D0500C45B83 /* ZSHLiveContentFirstViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHLiveContentFirstViewController.m; sourceTree = "<group>"; };
 		FE248E8A1FA828FE00FFE126 /* ZSHKTVModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHKTVModel.h; sourceTree = "<group>"; };
 		FE248E8B1FA828FE00FFE126 /* ZSHKTVModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHKTVModel.m; sourceTree = "<group>"; };
+		FE2555111FD2AB33002B3786 /* ZSHBarDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHBarDetailViewController.h; sourceTree = "<group>"; };
+		FE2555121FD2AB33002B3786 /* ZSHBarDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHBarDetailViewController.m; sourceTree = "<group>"; };
 		FE291EE41F8CCC2700D4BBE7 /* ZSHTogetherViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHTogetherViewController.h; sourceTree = "<group>"; };
 		FE291EE51F8CCC2700D4BBE7 /* ZSHTogetherViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHTogetherViewController.m; sourceTree = "<group>"; };
 		FE291EE71F8CCC5900D4BBE7 /* ZSHMineViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHMineViewController.h; sourceTree = "<group>"; };
@@ -3268,6 +3271,8 @@
 		FEC00D211FD28FB00061A705 /* Bar(酒吧) */ = {
 			isa = PBXGroup;
 			children = (
+				FE2555111FD2AB33002B3786 /* ZSHBarDetailViewController.h */,
+				FE2555121FD2AB33002B3786 /* ZSHBarDetailViewController.m */,
 			);
 			path = "Bar(酒吧)";
 			sourceTree = "<group>";
@@ -3808,6 +3813,7 @@
 				FE5538651F47049D00803128 /* OpenUDID.m in Sources */,
 				181AD3251FCD45000015D004 /* ZSHBuyOrderModel.m in Sources */,
 				1874B9661FB99E9700059184 /* ZSHLivePersonInfoView.m in Sources */,
+				FE2555131FD2AB33002B3786 /* ZSHBarDetailViewController.m in Sources */,
 				FE1F761C1F8F191300C45B83 /* ZSHGoodsListView.m in Sources */,
 				FEADBD2A1FBEBBC00065B94B /* ZSHCardCustomizedThird.m in Sources */,
 				FEF416001FAB70EB00137F0A /* ZSHAirTicketDetailViewController.m in Sources */,
