@@ -11,5 +11,5 @@
 @interface ZSHHotelPayHeadCell : ZSHBaseCell
 
 @property (nonatomic, assign)ZSHFromVCToHotelPayVC   fromClassType;
-
+@property (nonatomic, copy)  NSString                *liveInfo;
 @end

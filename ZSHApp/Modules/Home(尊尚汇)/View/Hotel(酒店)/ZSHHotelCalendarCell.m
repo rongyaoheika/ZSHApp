@@ -8,6 +8,14 @@
 
 #import "ZSHHotelCalendarCell.h"
 
+@interface ZSHHotelCalendarCell()
+
+@property (nonatomic, strong) UIButton *checkBtn;
+@property (nonatomic, strong) UIButton *dateBtn;
+@property (nonatomic, strong) UIButton *leaveBtn;
+
+@end
+
 @implementation ZSHHotelCalendarCell
 
 - (void)setup{
@@ -24,10 +32,10 @@
         make.width.mas_equalTo(kRealValue(40));
         make.height.mas_equalTo(kRealValue(35));
     }];
+    _checkBtn = checkBtn;
     
     NSDictionary *dateBtnDic = @{@"title":@"共一天",@"font":kPingFangMedium(15)};
     UIButton *dateBtn = [ZSHBaseUIControl createBtnWithParamDic:dateBtnDic];
-    
     [self.contentView addSubview:dateBtn];
     [dateBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.mas_equalTo(self);
@@ -36,6 +44,7 @@
         make.width.mas_equalTo(kRealValue(70));
     }];
      [ZSHSpeedy zsh_chageControlCircularWith:dateBtn AndSetCornerRadius:kRealValue(12) SetBorderWidth:1 SetBorderColor:KZSHColor979797 canMasksToBounds:YES];
+    _dateBtn = dateBtn;
     
     NSDictionary *rightTopDic = @{@"text":@"离开",@"font":kPingFangRegular(11),@"textAlignment":@(NSTextAlignmentCenter),@"height":@(11)};
     NSDictionary *rightBottomDic = @{@"text":@"8-9",@"font":kPingFangRegular(15),@"textAlignment":@(NSTextAlignmentCenter),@"height":@(15)};
@@ -49,6 +58,7 @@
         make.width.mas_equalTo(checkBtn);
         make.height.mas_equalTo(checkBtn);
     }];
+    _leaveBtn = leaveBtn;
 }
 
 - (void)checkBtnAction:(UIButton *)btn{

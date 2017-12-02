@@ -1889,6 +1889,7 @@
 		FE291EAD1F8CAEDC00D4BBE7 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				FEC00D211FD28FB00061A705 /* Bar(酒吧) */,
 				FEA018D01FCBFAB600989FB2 /* Comment(评论) */,
 				FE0ED7D81FC2CB34008299C5 /* 城市 */,
 				183C65731FC037920081DCFF /* 头条 */,
@@ -3260,6 +3261,13 @@
 			name = "Food(美食)";
 			path = "ZSHApp/Modules/Home(尊尚汇)/Model/Food(美食)";
 			sourceTree = SOURCE_ROOT;
+		};
+		FEC00D211FD28FB00061A705 /* Bar(酒吧) */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Bar(酒吧)";
+			sourceTree = "<group>";
 		};
 		FEDF29211FB6CF9200CD5756 /* Wallet */ = {
 			isa = PBXGroup;

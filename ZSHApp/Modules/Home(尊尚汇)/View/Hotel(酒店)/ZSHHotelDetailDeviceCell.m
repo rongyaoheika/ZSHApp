@@ -121,14 +121,26 @@
     //好评
     UILabel *topLabel = [_commentBtn viewWithTag:1];
     NSString *commentStr = @"4.9";
-    if (self.fromClassType == ZSHFromFoodVCToHotelDetailVC) {//美食详情
-        commentStr = [NSString stringWithFormat:@"%.1f",[dic[@"SHOPEVALUATE"]floatValue] ];
-    } else if (self.fromClassType == ZSHFromHotelPayVCToHotelDetailVC) {//酒店订单详情
-        commentStr = [NSString stringWithFormat:@"%.1f",[dic[@"HOTELEVALUATE"]floatValue]];
-    } else if (self.fromClassType == ZSHFromHotelVCToHotelDetailVC) {// 酒店详情
-        commentStr = [NSString stringWithFormat:@"%.1f",[dic[@"HOTELEVALUATE"]floatValue]];
-    } else if (self.fromClassType == ZSHFromHomeKTVVCToHotelDetailVC) {//KTV详情
-        commentStr = [NSString stringWithFormat:@"%.1f",[dic[@"KTVEVALUATE"]floatValue] ];
+    
+    switch (self.fromClassType) {
+        case ZSHFromFoodVCToHotelDetailVC:{//美食详情
+            commentStr = [NSString stringWithFormat:@"%.1f",[dic[@"SHOPEVALUATE"]floatValue] ];
+            break;
+        }
+            
+        case ZSHFromHotelVCToHotelDetailVC://酒店详情
+        case ZSHFromHotelPayVCToHotelDetailVC:{//酒店订单详情
+            commentStr = [NSString stringWithFormat:@"%.1f",[dic[@"SHOPEVALUATE"]floatValue] ];
+            break;
+        }
+            
+        case ZSHFromHomeKTVVCToHotelDetailVC:{//KTV详情
+             commentStr = [NSString stringWithFormat:@"%.1f",[dic[@"KTVEVALUATE"]floatValue] ];
+             break;
+        }
+            
+        default:
+            break;
     }
     
     topLabel.text = commentStr;

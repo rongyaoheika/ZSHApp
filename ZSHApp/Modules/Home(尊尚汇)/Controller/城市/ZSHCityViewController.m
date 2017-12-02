@@ -52,8 +52,6 @@
     [_sectionIndexView setBackgroundViewFrame];
 }
 
-
-
 - (void)createData{
     NSArray *stringsToSort = [NSArray arrayWithObjects:
                               @"鞍山",@"安康",@"安阳",

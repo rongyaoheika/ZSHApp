@@ -131,9 +131,20 @@
 
 - (void)setFromClassType:(ZSHFromVCToHotelPayVC)fromClassType{
     _fromClassType = fromClassType;
-    
     [self layoutIfNeeded];
 }
+
+- (void)updateCellWithParamDic:(NSDictionary *)dic{
+     if (self.fromClassType == ZSHFromHotelDetailBottomVCToHotelPayVC) {//订单支付
+         [_hotelmageView sd_setImageWithURL:[NSURL URLWithString:dic[@"HOTELDETIMGS"]]];
+         _hotelNameLabel.text = dic[@"HOTELDETNAME"];
+         _hotelLiveInfoLabel.text = _liveInfo;
+         _sizeInfoLabel.text = [NSString stringWithFormat:@"%@㎡   %@",dic[@"HOTELDETROOMSIZE"],dic[@"HOTELDETBEDTYPE"] ];
+         _priceLabel.text = [NSString stringWithFormat:@"¥%.0f",[dic[@"HOTELDETPRICE"]floatValue] ];
+     }
+    
+}
+
 
 - (void)updateCellWithModel:(ZSHBaseModel *)model{
     if (self.fromClassType == ZSHFromKTVDetailVCToHotelPayVC) {
