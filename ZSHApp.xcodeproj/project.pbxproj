@@ -45,6 +45,7 @@
 		1816F5251F566F320060C4BE /* libUMSocialLog.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1816F51A1F566F320060C4BE /* libUMSocialLog.a */; };
 		1816F5261F566F320060C4BE /* UMSocialSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1816F51C1F566F320060C4BE /* UMSocialSDKResources.bundle */; };
 		1816F5271F566F320060C4BE /* UShareUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1816F51D1F566F320060C4BE /* UShareUI.framework */; };
+		18177E8F1FD29C7500213B3B /* area.plist in Resources */ = {isa = PBXBuildFile; fileRef = 18177E8E1FD29C7500213B3B /* area.plist */; };
 		181AD3141FCCF1EE0015D004 /* ZSHMineLogic.m in Sources */ = {isa = PBXBuildFile; fileRef = 181AD3131FCCF1EE0015D004 /* ZSHMineLogic.m */; };
 		181AD3171FCCF3C30015D004 /* ZSHAddrModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 181AD3161FCCF3C30015D004 /* ZSHAddrModel.m */; };
 		181AD31B1FCD30650015D004 /* ZSHGoodsMineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 181AD31A1FCD30650015D004 /* ZSHGoodsMineViewController.m */; };
@@ -488,6 +489,7 @@
 		1816F51A1F566F320060C4BE /* libUMSocialLog.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libUMSocialLog.a; sourceTree = "<group>"; };
 		1816F51C1F566F320060C4BE /* UMSocialSDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = UMSocialSDKResources.bundle; sourceTree = "<group>"; };
 		1816F51D1F566F320060C4BE /* UShareUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UShareUI.framework; sourceTree = "<group>"; };
+		18177E8E1FD29C7500213B3B /* area.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = area.plist; sourceTree = "<group>"; };
 		181AD3121FCCF1EE0015D004 /* ZSHMineLogic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHMineLogic.h; sourceTree = "<group>"; };
 		181AD3131FCCF1EE0015D004 /* ZSHMineLogic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHMineLogic.m; sourceTree = "<group>"; };
 		181AD3151FCCF3C30015D004 /* ZSHAddrModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHAddrModel.h; sourceTree = "<group>"; };
@@ -2399,6 +2401,7 @@
 		FE4DB1F21F99A233008E12E9 /* Plist(本地文件) */ = {
 			isa = PBXGroup;
 			children = (
+				18177E8E1FD29C7500213B3B /* area.plist */,
 				FE0F9DBF1F94A20E004F8D2A /* cellData.plist */,
 				FEA1058B1F9B43AD008652D6 /* ClassiftyGoods02.plist */,
 				FEA105871F9B437D008652D6 /* ClassiftyGoods03.plist */,
@@ -3538,6 +3541,7 @@
 				185C6D761FC2C168004EA461 /* cart_selected_btn@2x.png in Resources */,
 				185C6D701FC2C168004EA461 /* back_button@2x.png in Resources */,
 				FE5538501F47049D00803128 /* LaunchScreen.storyboard in Resources */,
+				18177E8F1FD29C7500213B3B /* area.plist in Resources */,
 				FE55384F1F47049D00803128 /* Assets.xcassets in Resources */,
 				185C6D741FC2C168004EA461 /* cart_cutBtn_nomal@2x.png in Resources */,
 			);

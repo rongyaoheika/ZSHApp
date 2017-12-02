@@ -183,18 +183,18 @@
         cell.imageView.image = [UIImage imageNamed:@"entertainment_add"];
         cell.deleteBtn.hidden = YES;
         cell.gifLable.hidden = YES;
+        cell.imageView.contentMode = UIViewContentModeCenter;
     } else {
         cell.imageView.image = _selectedPhotos[indexPath.row];
         cell.asset = _selectedAssets[indexPath.row];
         cell.deleteBtn.hidden = NO;
+        cell.imageView.contentMode = UIViewContentModeScaleAspectFill;
     }
     // allowPickingGif
     cell.gifLable.hidden = YES;
     cell.deleteBtn.tag = indexPath.row;
     [cell.deleteBtn addTarget:self action:@selector(deleteBtnClik:) forControlEvents:UIControlEventTouchUpInside];
-    cell.backgroundColor = KZSHColor929292;
-    cell.imageView.contentMode = UIViewContentModeScaleAspectFill;
-    cell.imageView.layer.backgroundColor = KZSHColor929292.CGColor;
+    
     return cell;
 }
 
@@ -277,7 +277,7 @@
 
 - (void)pushTZImagePickerController {
 
-    TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:4 columnNumber:3 delegate:self pushPhotoPickerVc:YES];
+    TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:4 columnNumber:4 delegate:self pushPhotoPickerVc:YES];
     // imagePickerVc.navigationBar.translucent = NO;
     
 #pragma mark - 五类个性化设置，这些参数都可以不传，此时会走默认设置

@@ -70,19 +70,10 @@
         }
             break;
         case FromAllOrderVCToTitleContentVC:{
-            self.titleArr = @[@"全部",@"待付款",@"待收货",@"待评价",@"退款售后"];
+//            self.titleArr = @[@"全部",@"待付款",@"待收货",@"待评价",@"退款售后"];
+            self.titleArr = self.paramDic[@"titleArr"];
+            self.contentVCS = self.paramDic[@"contentVCS"];
             self.indicatorHeight = 0.0;
-            // @"ZSHCommentViewController",@"ZSHApplyServiceViewController"
-            self.contentVCS = @[@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHOrderSubViewController"];
-            NSMutableArray *arr = [[NSMutableArray alloc] init];
-            NSMutableDictionary *muDic = [NSMutableDictionary dictionaryWithDictionary:self.paramDic];
-            NSArray *values = @[@"0040000", @"0040001", @"0040002", @"0040003", @"0040004"];
-            for (int i = 0; i<5; i++) {
-                [muDic setObject:values[i] forKey:@"ORDERSTATUS"];
-                [arr addObject:[muDic mutableCopy]];
-            }
-            self.paramArr = [arr copy];
-//            self.paramArr = @[@{@"":@""},@{@"ORDERSTATUS":@"0040001"}, @{@"ORDERSTATUS":@"0040002"}, @{@"ORDERSTATUS":@"0040003"}, @{@"ORDERSTATUS":@"0040004"}];
             break;
         }
         case FromIntegralVCToTitleContentVC:{
@@ -276,7 +267,7 @@
     
     RootViewController *vc  = nil;
 
-    if (kFromClassTypeValue == FromNoneToTitleContentVC) {
+    if (kFromClassTypeValue == FromAllOrderVCToTitleContentVC) {
         for (int i = 0;i< [self.paramDic[@"titleArr"] count]; i++) {
             NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:self.paramDic];
             [dic setValue:self.paramDic[@"ORDERSTATUS"][i] forKey:@"ORDERSTATUS"];
@@ -288,7 +279,7 @@
         for (int i = 0; i<self.titleArr.count; i++) {
             Class className = NSClassFromString(self.contentVCS[i]);
             if (kFromClassTypeValue == FromLiveTabBarVCToTitleContentVC) {
-                vc = [[className alloc]initWithParamDic:self.paramArr[i]];
+                vc = [[className alloc]initWithParamDic:self.paramArr[i]]; 
             } else {
                vc = [[className alloc]init];
             }

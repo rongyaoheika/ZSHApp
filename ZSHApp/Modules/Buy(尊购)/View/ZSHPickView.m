@@ -32,7 +32,7 @@ NSInteger yearSatrt = 1900;
 @property (nonatomic, assign) NSInteger            currentDay;
 @property (nonatomic, assign) NSInteger            selectedRow;
 
-@property (nonatomic, strong) NSArray              *dataArr;
+@property (nonatomic, strong) NSMutableArray       *dataArr;
 @property (nonatomic, copy)   NSString             *midTitle;
 @end
 
@@ -42,7 +42,7 @@ NSInteger yearSatrt = 1900;
     self = [super initWithFrame:frame];
     if (self) {
         _showType = [paramDic[@"type"]integerValue];
-        _dataArr = paramDic[@"dataArr"];
+        _dataArr = [paramDic[@"dataArr"] mutableCopy];
         _midTitle = paramDic[@"midTitle"];
         
         [self createData];
@@ -230,14 +230,23 @@ NSInteger yearSatrt = 1900;
             break;
         }
         case WindowTime:{
-            RLog(@"选择年份%ld",row);
+            RLog(@"选择年份%li",row);
             [self refreshMonth];
             break;
         }
         case WindowPrice:
             [self refreshPrice];
+            break;
+        case WindowRegion:{
+            if (component == 0) {
+                [self refreshCityAndDistrict];
+            } else if (component== 1) {
+                [self refreshDistrict];
+            }
+            break;
+        }
         default:{
-             RLog(@"选择行数%ld",row);
+             RLog(@"选择行数%li",row);
         }
             break;
     }
@@ -283,9 +292,9 @@ NSInteger yearSatrt = 1900;
             break;
         }
         case WindowRegion:{
-             [_pickerView selectRow:1 inComponent:0 animated:NO];
-             [_pickerView selectRow:1 inComponent:1 animated:NO];
-             [_pickerView selectRow:1 inComponent:2 animated:NO];
+             [_pickerView selectRow:0 inComponent:0 animated:NO];
+             [_pickerView selectRow:0 inComponent:1 animated:NO];
+             [_pickerView selectRow:0 inComponent:2 animated:NO];
             break;
         }
         case WindowTime:{
@@ -386,6 +395,72 @@ NSInteger yearSatrt = 1900;
     }
     [self dismiss];
 }
+
+
+- (void)refreshCityAndDistrict {
+    
+    NSInteger index = [_pickerView selectedRowInComponent:0];
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"area.plist" ofType:@""];
+    
+    NSArray *areaArr = [NSArray arrayWithContentsOfFile:path];
+    NSMutableArray *provinces = _dataArr[0];
+//    for (NSDictionary *dic in areaArr) {
+//        [provinces addObject:dic[@"state"]];
+//    }
+    
+    NSMutableArray *citys = [NSMutableArray array];
+    for (NSDictionary *dic in areaArr) {
+        if ([dic[@"state"] isEqualToString:provinces[index]]) {
+            for (NSDictionary *city in dic[@"cities"]) {
+                [citys addObject:city[@"city"]];
+                if ([city[@"city"] isEqualToString:citys[0]]) {
+                    if ([city[@"areas"] count]) {
+                        _dataArr[2] = city[@"areas"];
+                        [_pickerView reloadComponent:2];
+                    } else {
+                        _dataArr[2] = @[@""];
+                        [_pickerView reloadComponent:2];
+                    }
+                }
+            }
+            _dataArr[1] = [citys copy];
+            [_pickerView reloadComponent:1];
+            break;
+        }
+        
+    }
+    
+}
+
+
+- (void)refreshDistrict {
+    
+    NSInteger index = [_pickerView selectedRowInComponent:0];
+    NSInteger index1 = [_pickerView selectedRowInComponent:1];
+    
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"area.plist" ofType:@""];
+    
+    NSArray *areaArr = [NSArray arrayWithContentsOfFile:path];
+    NSMutableArray *provinces = _dataArr[0];
+//    for (NSDictionary *dic in areaArr) {
+//        [provinces addObject:dic[@"state"]];
+//    }
+//    
+    for (NSDictionary *dic in areaArr) {
+        if ([dic[@"state"] isEqualToString:provinces[index]]) {
+            for (NSDictionary *city in dic[@"cities"]) {
+                if ([city[@"city"] isEqualToString:_dataArr[1][index1]]) {
+                    _dataArr[2] = city[@"areas"];
+                    [_pickerView reloadComponent:2];
+                    break;
+                }
+            }
+            break;
+        }
+        
+    }
+}
+
 
 - (void)refreshPrice {
     

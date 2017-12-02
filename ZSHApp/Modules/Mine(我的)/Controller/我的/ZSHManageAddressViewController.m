@@ -140,10 +140,34 @@
 
 #pragma pickView
 -(ZSHPickView *)createPickViewWithType:(NSUInteger)type{
-   NSArray *regionArr = @[@[@"北京",@"天津",@"河北省",@"山东省"],
-                          @[@"北京市",@"天津市",@"石家庄",@"聊城市"],
-                          @[@"朝阳区",@"滨海新区",@"北辰区",@"聊城"]
-                       ];
+    
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"area.plist" ofType:@""];
+    
+    NSArray *areaArr = [NSArray arrayWithContentsOfFile:path];
+    NSMutableArray *provinces = [NSMutableArray array];
+    for (NSDictionary *dic in areaArr) {
+        [provinces addObject:dic[@"state"]];
+    }
+    
+    NSMutableArray *citys = [NSMutableArray array];
+    NSMutableArray *districts = [NSMutableArray array];
+    for (NSDictionary *dic in areaArr) {
+        if ([dic[@"state"] isEqualToString:@"北京"]) {
+            for (NSDictionary *city in dic[@"cities"]) {
+                [citys addObject:city[@"city"]];
+                if ([city[@"city"] isEqualToString:citys[0]]) {
+                    if (city[@"areas"]) {
+                        districts = city[@"areas"];
+                    }
+                }
+            }
+            break;
+        }
+        
+    }
+    
+    
+    NSMutableArray *regionArr = [NSMutableArray arrayWithObjects:provinces, citys, districts, nil];
     NSDictionary *nextParamDic = @{@"type":@(type),@"midTitle":@"城市区域选择",@"dataArr":regionArr};
     _pickView = [[ZSHPickView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight) paramDic:nextParamDic];
     _pickView.controller = self;
