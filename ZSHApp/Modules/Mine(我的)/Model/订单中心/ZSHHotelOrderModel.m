@@ -9,5 +9,10 @@
 #import "ZSHHotelOrderModel.h"
 
 @implementation ZSHHotelOrderModel
+@end
 
+@implementation ZSHKtvOrderModel
+@end
+
+@implementation ZSHBarorderOrderModel
 @end

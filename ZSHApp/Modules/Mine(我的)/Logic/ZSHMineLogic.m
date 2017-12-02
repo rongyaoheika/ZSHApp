@@ -81,8 +81,11 @@
             weakself.hotlOrderModelArr = [ZSHHotelOrderModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"]];
             success(weakself.hotlOrderModelArr);
         } else if ([url isEqualToString:kUrlKtvOrderAllList]) {
-            weakself.hotlOrderModelArr = [ZSHHotelOrderModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"]];
-            success(weakself.hotlOrderModelArr);
+            weakself.ktvOrderModelArr = [ZSHKtvOrderModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"]];
+            success(weakself.ktvOrderModelArr);
+        } else if ([url isEqualToString:kUrlBarorderAllList]) {
+            weakself.barorderOrderModelArr = [ZSHBarorderOrderModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"]];
+            success(weakself.barorderOrderModelArr);
         }
         
     } failure:^(NSError *error) {

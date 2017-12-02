@@ -19,6 +19,8 @@
 @property (nonatomic, strong) NSMutableArray<ZSHAddrModel *>   *addrModelArr;
 @property (nonatomic, strong) NSArray<ZSHGoodOrderModel *>     *goodOrderModelArr;
 @property (nonatomic, strong) NSArray<ZSHHotelOrderModel *>    *hotlOrderModelArr;
+@property (nonatomic, strong) NSArray<ZSHKtvOrderModel *>      *ktvOrderModelArr;
+@property (nonatomic, strong) NSArray<ZSHBarorderOrderModel *> *barorderOrderModelArr;
 
 
 // 获取用户收货地址列表

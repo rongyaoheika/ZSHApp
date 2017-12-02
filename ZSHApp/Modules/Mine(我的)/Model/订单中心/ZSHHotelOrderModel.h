@@ -8,17 +8,10 @@
 
 #import "ZSHBaseModel.h"
 
+
+//酒店
 @interface ZSHHotelOrderModel : ZSHBaseModel
 
-@property (nonatomic, copy) NSString *ORDERREMARK;
-@property (nonatomic, copy) NSString *ORDERUNAME;
-@property (nonatomic, copy) NSString *ORDERCHECKDATE;
-@property (nonatomic, copy) NSString *ORDERPHONE;
-@property (nonatomic, copy) NSString *ORDERROOMNUM;
-@property (nonatomic, copy) NSString *ORDERLEAVEDATE;
-@property (nonatomic, copy) NSString *ORDERNUMBER;
-@property (nonatomic, copy) NSString *ORDERTIME;
-@property (nonatomic, copy) NSString *ORDERDAYS;
 @property (nonatomic, copy) NSString *ORDERSTATUS;
 @property (nonatomic, copy) NSString *HONOURUSER_ID;
 @property (nonatomic, copy) NSString *HOTELORDER_ID;
@@ -27,14 +20,37 @@
 @property (nonatomic, copy) NSString *HOTELDETNAME;
 @property (nonatomic, copy) NSString *SORTHOTEL_ID;
 @property (nonatomic, copy) NSString *SHOWIMAGES;
-//HOTELORDER_ID = e4899e9777f447a9b6419abbbf47b81f;
-//HOTELDETAIL_ID = 53b4f3c1dfa84ee697469ce762c400c5;
-//HOTELDETNAME = 豪华双人间;
-//ORDERMONEY = 444;
-//SORTHOTEL_ID = 53443f6feed94a1bbce17a65e63dae28;
-//HONOURUSER_ID = d6a3779de8204dfd9359403f54f7d27c;
-//ORDERSTATUS = 0040001;
-//SHOWIMAGES = http://47.104.16.215:8088/sortimgs/sorthotelimgs/sorthotelshowimgs/f849b0edd3264537992a11fd9b093e81.png;
-//}
+
+@end
+
+
+// KTV
+@interface ZSHKtvOrderModel : ZSHBaseModel
+
+@property (nonatomic, copy) NSString *KTVORDER_ID;
+@property (nonatomic, copy) NSString *ORDERMONEY;
+@property (nonatomic, copy) NSString *KTVDETAIL_ID;
+@property (nonatomic, copy) NSString *SORTKTV_ID;
+@property (nonatomic, copy) NSString *ORDERSTATUS;
+@property (nonatomic, copy) NSString *SHOWIMAGES;
+@property (nonatomic, copy) NSString *HONOURUSER_ID;
+@property (nonatomic, copy) NSString *KTVDETTITLE;
+
+
+@end
+
+
+// 酒吧
+@interface ZSHBarorderOrderModel : ZSHBaseModel
+
+@property (nonatomic, copy) NSString *BARORDER_ID;
+@property (nonatomic, copy) NSString *BARDETAIL_ID;
+@property (nonatomic, copy) NSString *SORTBAR_ID;
+@property (nonatomic, copy) NSString *ORDERMONEY;
+@property (nonatomic, copy) NSString *HONOURUSER_ID;
+@property (nonatomic, copy) NSString *BARDETTITLE;
+@property (nonatomic, copy) NSString *SHOWIMAGES;
+@property (nonatomic, copy) NSString *ORDERSTATUS;
+
 
 @end

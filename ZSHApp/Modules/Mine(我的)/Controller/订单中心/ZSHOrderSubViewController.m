@@ -79,10 +79,12 @@ static NSString *cellIdentifier = @"listCell";
             ZSHBaseModel *orderModel = weakself.dataArr[indexPath.row];
             if ([self.paramDic[@"tag"] integerValue] == 0) {// 尊购
                 [cell updateCellWithModel:orderModel];
-            } else if ([self.paramDic[@"tag"] integerValue] == 3) {// 酒店全部订单
+            } else if ([self.paramDic[@"tag"] integerValue] == 3) {// 酒店订单
                 [cell updateCellWithHotel:(ZSHHotelOrderModel *)orderModel];
-            } else if ([self.paramDic[@"tag"] integerValue] == 4) {// KTV 全部订单
-//                [cell updateCellWithKtv:orderModel];
+            } else if ([self.paramDic[@"tag"] integerValue] == 4) {// KTV订单
+                [cell updateCellWithKtv:(ZSHKtvOrderModel *)orderModel];
+            } else if ([self.paramDic[@"tag"] integerValue] == 6) {// 酒吧订单
+                [cell updateCellWithBarorder:(ZSHBarorderOrderModel *)orderModel];
             }
             return cell;
         };
@@ -101,7 +103,7 @@ static NSString *cellIdentifier = @"listCell";
     kWeakSelf(self);
    
     
-    NSArray *urls = @[@"", @"", @"", kUrlHotelOrderAllList, kUrlKtvOrderAllList, @"", @"", @""];
+    NSArray *urls = @[@"", @"", @"", kUrlHotelOrderAllList, kUrlKtvOrderAllList, @"", kUrlBarorderAllList, @""];
     
     if ([self.paramDic[@"tag"] integerValue] == 0) {
          if ([self.paramDic[@"ORDERSTATUS"] isEqualToString:@""]) {// 带条件查询

@@ -361,7 +361,39 @@
 //参数：HONOURUSER_ID 上传头像人员id
 //请求地址：/appuserin/up?UPPORT
 #define kUrlUp [NSString stringWithFormat:@"/appuserin/up?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"UPPORT"]]
-
+//71. 获得某家酒吧的综合评价
+//参数：SORTBAR_ID   酒吧的id
+//请求地址：/appsbarin/getbarmeaneva.do?GETBARMEANEVA（混淆码）
+//72. 获得某家酒吧的评价数量
+//参数：SORTBAR_ID   BAR的id
+//请求地址：/appsbarin/getbarcounteva.do?GETBARCOUNTEVA(混淆码)
+//73. 获得某家酒吧的具体服务接口
+//参数：SHOP_ID 对应酒吧的id
+//请求地址：/appsbarin/sbarserv.do?SBARSERV(混淆码)
+//74. 酒吧店铺添加用户评价接口
+//参数：SORTBAR_ID 所属酒吧的id/HONOURUSER_ID 评价用户id/EVALUATECONTENT 评价内容/EVALUATECOINT 评价分数/ISSHOW  是否匿名显示昵称0为显示1为匿名
+//请求地址：/appsbarin/addbareva.do?ADDBAREVA(混淆码)
+//75. 生成酒吧订单接口（未产生交易）
+//参数：ORDERUNAME 入住人姓名/ORDERPHONE 入住人手机号码/ORDERREMARK 订单备注/ORDERMONEY 订单价格/ORDERROOMNUM 预定BAR套餐数量/ORDERROOMBEGIN 开始时间/ORDERROOMEND 结束时间
+///BARDETAIL_ID 所关联的BAR套餐id/HONOURUSER_ID 提交订单用户id
+//请求地址：/appsbarin/addbarorder.do?ADDBARORDER(混淆码)
+//76. 修改酒吧订单状态(改为支付成功,用户已支付)
+//参数：ORDERSTATUS 订单状态编码/HONOURUSER_ID 提交订单的用户id /ORDERNUMBER 订单编号
+//请求地址：/appsbarin/updbarstaupd.do?&UPDBARORDERUPD(混淆码)
+//77.获得用户名下所有酒吧订单列表
+//参数：HONOURUSER_ID 需要查询的用户id  /ORDERSTATUS
+//（0040001）为待付款状态
+//(0040002) 为待使用状态
+//(0040003) 为待评价状态
+//(0040004) 为已完成订单状态
+//请求地址：/appsbarin/barorderalllist.do?ALLBARORDER(混淆码)
+#define kUrlBarorderAllList [NSString stringWithFormat:@"/appsbarin/barorderalllist.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"ALLBARORDER"]]
+//78. 获取某酒吧详情列表
+//参数：SORTBAR_ID 某BAR id
+//请求地址：/appsbarin/bardetaillist.do?BARDETAIL(混淆码)
+//79. 获得首页特权酒吧店铺列表
+//参数：HONOURUSER_ID 某用户的ID
+//请求地址：/appsbarin/sbar.do?SORTBAR(混淆码)
 //80. 获得首页汇聚玩趴图片 （完成）
 //参数：无参数
 //请求地址：/apphomein/partyimg.do?PARTY(混淆码)
@@ -413,21 +445,84 @@
 //请求地址：/appserverin/yachtdetail.do?YACHTDETAIL(混淆码)
 #define kUrlYachtDetail [NSString stringWithFormat:@"/appserverin/yachtdetail.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"YACHTDETAIL"]]
 
-
+//81. 根据酒吧店铺id获取美食店铺综合详细
+//参数：SORTBAR_ID 酒吧id
+//请求地址：/appsbarin/barsyn.do?BARSYN(混淆码)
+//82. 获得荣耀服务高尔夫列表
+//参数：HONOURUSER_ID 用户id
+//请求地址：/appserverin/sgolflist.do?SORTHIGHGOLF(混淆码)
+//83. 获得荣耀服务马术列表
+//参数：HONOURUSER_ID 用户id
+//请求地址：/appserverin/shorselist.do?SORTHIGHHORSE(混淆码)
+//84. 获得荣耀服务豪车列表
+//参数：HONOURUSER_ID 用户id
+//请求地址：/appserverin/sluxcarlist.do?SORTHIGHLUXCAR(混淆码)
+//85. 获得荣耀服务飞机列表
+//参数：HONOURUSER_ID 用户id
+//请求地址：/appserverin/splanelist.do?SORTHIGHPLANE(混淆码)
+//86. 获得荣耀服务游艇列表
+//参数：HONOURUSER_ID 用户id
+//请求地址：/appserverin/syachtlist.do?SORTHIGHYACHT(混淆码)
+//87. 获取高尔夫详情接口
+//参数：GOLFSHOP_ID 高尔夫店id
+//请求地址：/appserverin/golfdetail.do?GOLFDETAIL(混淆码)
+//88. 获取马术详情接口
+//参数：HORSESHOP_ID   马术店id
+//请求地址：/appserverin/horsedetail.do?HORSEDETAIL(混淆码)
+//89. 获取豪车详情接口
+//参数：LUXCARSHOP_ID   豪车店id
+//请求地址：/appserverin/luxcardetail.do?LUXCARDETAIL(混淆码)
+//90. 获取飞机详情接口
+//参数：无
+//请求地址：/appserverin/planedetail.do?HORSEDETAIL(混淆码)
+//91. 获得服务游艇接口
+//参数：YACHTSHOP_ID  游艇id
+//请求地址：/appserverin/yachtdetail.do?YACHTDETAIL(混淆码)
 //92. 获得首页特权KTV分类列表（完成）
 //参数：HONOURUSER_ID 用户id
 //请求地址：/appsktvin/sktv.do?SORTKTV(混淆码)
 #define kUrlSktvlist [NSString stringWithFormat:@"/appsktvin/sktv.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SORTKTV"]]
-
-//97. 获取首页推荐荣耀音乐列表（完成）
-//参数：无参数
-//请求地址：/appmusicin/musicreclist.do?MUSICLIST(混淆码)
-#define kUrlMusicreclist [NSString stringWithFormat:@"/appmusicin/musicreclist.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"MUSICLIST"]]
-
+//93. 随机产生酒店列表
+//参数：HONOURUSER_ID 用户id
+//请求地址：/appshotelin/shotellistrand.do?SORTHOTELRAND(混淆码)
+//94. 随机产生KTV列表
+//参数：HONOURUSER_ID 用户id
+//请求地址：/appsktvin/sktvlistrand.do?SORTKTVRAND(混淆码)
+//95. 随机产生酒吧列表
+//参数：HONOURUSER_ID 用户id
+//请求地址：/appsbarin/sbarlistrand.do?SORTBARRAND(混淆码)
 //96. 随机产生美食店铺列表(完成)
 //参数：HONOURUSER_ID 用户id
 //请求地址：/appsfoodin/sfoodlistrand.do?SORTFOODRAND(混淆码)
 #define kUrlSfoodlistrand [NSString stringWithFormat:@"/appsfoodin/sfoodlistrand.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SORTFOODRAND"]]
+//97. 根据美食评价分数，价格，距离,品牌,类型升序或者降序排序
+//参数：HONOURUSER_ID 用户id   /COLUMN 排序字段（SHOPPRICE,SHOPEVALUATE）  /SEQUENCE  升序ASC降序DESC
+//BRAND  品牌   /STYLE  类型
+//请求地址：//appsfoodin/sfoodlistsequence.do?SORTFOODSEQUENCE
+//97. 获取首页推荐荣耀音乐列表（完成）
+//参数：无参数
+//请求地址：/appmusicin/musicreclist.do?MUSICLIST(混淆码)
+#define kUrlMusicreclist [NSString stringWithFormat:@"/appmusicin/musicreclist.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"MUSICLIST"]]
+//98. 根据酒店评价分数，价格，距离,品牌,类型升序或者降序排序
+//参数：HONOURUSER_ID 用户id   /COLUMN 排序字段（HOTELPRICE,HOTELEVALUATE）  /SEQUENCE  升序ASC降序DESC
+//BRAND  品牌   /STYLE  类型
+//请求地址：/appshotelin/shotellistsequence.do?SORTHOTELSEQUENCE(混淆码)
+//
+//99. 根据KTV评价分数，价格，距离,品牌,类型升序或者降序排序
+//参数：HONOURUSER_ID 用户id   /COLUMN 排序字段（KTVPRICE,KTVEVALUATE）  /SEQUENCE  升序ASC降序DESC
+//BRAND  品牌   /STYLE  类型
+//请求地址：/appsktvin/sktvlistsequence.do?SORTKTVSEQUENCE(混淆码)
+//
+//100. 根据酒吧评价分数，价格，距离,品牌,类型升序或者降序排序
+//参数：HONOURUSER_ID 用户id   /COLUMN 排序字段（BARPRICE,BAREVALUATE）  /SEQUENCE  升序ASC降序DESC
+//BRAND  品牌   /STYLE  类型
+//请求地址：/appsbarin/sbarlistsequence.do?SORTBARSEQUENCE(混淆码)
+
+
+
+
+
+
 
 
 #endif /* URLMacros_h */

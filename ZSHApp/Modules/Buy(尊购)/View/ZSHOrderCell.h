@@ -12,7 +12,10 @@
 
 @interface ZSHOrderCell : ZSHBaseCell
 
-
+// 酒店
 - (void)updateCellWithHotel:(ZSHHotelOrderModel *)model;
-
+// 酒吧
+- (void)updateCellWithBarorder:(ZSHBarorderOrderModel *)model;
+// KTV
+- (void)updateCellWithKtv:(ZSHKtvOrderModel *)model;
 @end

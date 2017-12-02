@@ -59,7 +59,7 @@ static NSString *headerViewIdentifier = @"hederview";
 - (void)createUI{
     
     self.navigationItem.titleView = self.titleBtn;
-    self.titleBtn.frame = self.navigationItem.titleView.bounds;
+    self.titleBtn.frame = CGRectMake(0, 0, 60, 20);
     [self.titleBtn layoutButtonWithEdgeInsetsStyle:XYButtonEdgeInsetsStyleRight imageTitleSpace:kRealValue(10)];
 
     UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout *)self.collectionView.collectionViewLayout;
@@ -242,15 +242,6 @@ static NSString *headerViewIdentifier = @"hederview";
                           @[@{},@{},@{},@{}],
                           @[@{},@{},@{},@{}]
                           ];
-//        self.paramArr = @[@[@{KFromClassType:@(FromNoneToTitleContentVC),@"title":@"我的订单",@"tag":@(_typeIndex), @"titleArr":@[@"全部",@"待付款",@"待收货",@"待评价",@"退款售后"], @"contentVCS":@[@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHOrderSubViewController"], @"ORDERSTATUS":@[@"", @"0040001", @"0040002", @"0040003", @"0040004"], @"selectedIndex":@"1"},
-//                            @{KFromClassType:@(FromNoneToTitleContentVC),@"title":@"我的订单",@"tag":@(_typeIndex), @"titleArr":@[@"全部",@"待付款",@"待收货",@"待评价",@"退款售后"], @"contentVCS":@[@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHOrderSubViewController"], @"ORDERSTATUS":@[@"", @"0040001", @"0040002", @"0040003", @"0040004"], @"selectedIndex":@"2"},
-//                            @{KFromClassType:@(ZSHFromGoodsMineVCToCommentVC),@"tag":@(_typeIndex)},
-//                            @{KFromClassType:@(ZSHFromGoodsMineVCToApplyServiceVC),@"tag":@(_typeIndex)}],
-//                          @[@{},@{},@{},@{}],
-//                          @[@{},@{},@{},@{}],
-//                          @[@{},@{},@{},@{}]
-//                          ];
-
     } else {
         self.sectionTitleArr = @[@"我的订单"];
         self.dataArr = @[@[@{@"image":@"goods_mine_allOrder",@"desc":@"全部订单", @"tag":@(1)},
@@ -277,16 +268,17 @@ static NSString *headerViewIdentifier = @"hederview";
 }
 
 //选中某种订单列表
-
 - (void)orderTypeBtnAction:(UIButton *)orderBtn {
     _typeIndex = orderBtn.tag-1;
+    NSArray *titleArr = @[@"尊购", @"火车票", @"机票", @"酒店", @"KTV", @"美食", @"酒吧", @"电影"];
+    [_titleBtn setTitle:titleArr[_typeIndex] forState:UIControlStateNormal];
     switch (orderBtn.tag) {
         case 1:{//尊购
-//            [self loadData];
             [self changeDataSource:0];
             [self.collectionView reloadData];
             [self changeButtonObject:_titleBtn TransformAngle:0];
             _titleBtn.selected = !_titleBtn.selected;
+            
              break;
         }
         case 2:// 火车票
@@ -302,10 +294,8 @@ static NSString *headerViewIdentifier = @"hederview";
             _titleBtn.selected = !_titleBtn.selected;
             break;
         }
-        default:{
-            
+        default:
             break;
-        }
     }
 }
 
