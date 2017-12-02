@@ -30,7 +30,8 @@
 
 /**开发服务器*/
 
-#define kUrlRoot                    @"http://192.168.1.108:8080/ZSHINTER/"
+#define kUrlRoot                    @"http://192.168.1.134:8081/ZSHINTER/"
+//#define kUrlRoot                  @"http://192.168.1.108:8080/ZSHINTER/"
 
 
 #elif TestSever
@@ -266,9 +267,13 @@
 //参数：ORDERSTATUS 订单状态编码/HONOURUSER_ID 提交订单的用户id /ORDERNUMBER 订单编号
 //请求地址：/appshotelin/shiporderstaupd?SHIPHORELORDERUPD(混淆码)
 #define kUrlShipOrderStauPd [NSString stringWithFormat:@"/appshotelin/shiporderstaupd?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SHIPHORELORDERUPD"]]
-//49. 获得用户名下所有酒店订单列表
-//参数：HONOURUSER_ID 需要查询的用户id
-//请求地址：/appshotelin/hotelorderalllist.do?ALLHOTELORDER(混淆码)
+//49.获得用户名下所有酒店订单列表
+//参数：HONOURUSER_ID 需要查询的用户id    /ORDERSTATUS
+//（0040001）为待付款状态
+//(0040002) 为待使用状态
+//(0040003) 为待评价状态
+//(0040004) 为已完成订单状态
+//请求地址：/apphotelin/hotelorderalllist.do?ALLHOTELORDER(混淆码)
 #define kUrlHotelOrderAllList [NSString stringWithFormat:@"/appshotelin/hotelorderalllist.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"ALLHOTELORDER"]]
 //50. 获取某酒店详情列表（完成）
 //参数：SORTHOTEL_ID 某酒店id

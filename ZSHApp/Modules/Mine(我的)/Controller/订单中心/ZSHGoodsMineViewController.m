@@ -53,47 +53,7 @@ static NSString *headerViewIdentifier = @"hederview";
 
 - (void)loadData{
     _typeIndex = 0;
-    self.sectionTitleArr = @[@"我的订单",@"必备工具",@"钱包中心"];
-    
-    self.dataArr = @[
-     @[@{@"image":@"goods_mine_payment",@"desc":@"待付款", @"tag":@(1)},
-       @{@"image":@"goods_mine_receipt",@"desc":@"待收货",@"tag":@(2)},
-       @{@"image":@"goods_mine_judge",@"desc":@"待评价",@"tag":@(3)},
-       @{@"image":@"goods_mine_service",@"desc":@"售后",@"tag":@(4)}],
-     @[@{@"image":@"goods_mine_vip",@"desc":@"会员中心",@"tag":@(1)},
-       @{@"image":@"goods_mine_collect",@"desc":@"炫购收藏",@"tag":@(2)},
-       @{@"image":@"goods_mine_locate",@"desc":@"地址管理",@"tag":@(3)},
-       @{@"image":@"goods_mine_phoneService",@"desc":@"客服中心",@"tag":@(4)}],
-     @[@{@"image":@"goods_mine_discount",@"desc":@"优惠券",@"tag":@(1)},
-       @{@"image":@"goods_mine_integral",@"desc":@"积分",@"tag":@(2)},
-       @{@"image":@"goods_mine_gift",@"desc":@"礼品",@"tag":@(3)}]
-       ];
-    
-    
-    self.pushVCsArr = @[
-      @[@"ZSHTitleContentViewController",
-        @"ZSHTitleContentViewController",
-        @"ZSHCommentViewController",
-        @"ZSHApplyServiceViewController"],
-      
-      @[@"",
-        @"",
-        @"ZSHManageAddressListViewController",
-        @""],
-      
-      @[@"ZSHCouponViewController",
-        @"ZSHIntegralViewController",
-        @""]
-                    ];
-    
-    self.paramArr = @[@[@{KFromClassType:@(FromAllOrderVCToTitleContentVC),@"title":@"我的订单",@"tag":@(_typeIndex)},
-                        @{KFromClassType:@(FromAllOrderVCToTitleContentVC),@"title":@"我的订单",@"tag":@(_typeIndex)},
-                        @{KFromClassType:@(ZSHFromGoodsMineVCToCommentVC),@"tag":@(_typeIndex)},
-                        @{KFromClassType:@(ZSHFromGoodsMineVCToApplyServiceVC),@"tag":@(_typeIndex)}],
-                      @[@{},@{},@{},@{}],
-                      @[@{},@{},@{},@{}],
-                      @[@{},@{},@{},@{}]
-                      ];
+    [self changeDataSource:0];
 }
 
 - (void)createUI{
@@ -156,7 +116,6 @@ static NSString *headerViewIdentifier = @"hederview";
         [header updateWithTitle:self.sectionTitleArr[indexPath.section]];
         header.userInteractionEnabled = YES;
         header.tag = indexPath.section + 1;
-//        header = [self createHeaderiewWithTitle:self.sectionTitleArr[indexPath.section]];
         [header addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(headViewAction:)]];
         return header;
     }
@@ -170,24 +129,12 @@ static NSString *headerViewIdentifier = @"hederview";
     RLog(@"didSelectItemAtIndexPath:, indexPath.row=%ld ", (long)indexPath.row);
 }
 
-//创建头视图
-- (UIView *)createHeaderiewWithTitle:(NSString *)title{
-    UIView *headView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, kRealValue(44))];
-    NSDictionary *headLabellDic = @{@"text":title, @"font":kPingFangMedium(15),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentLeft)};
-    UILabel *headLabel = [ZSHBaseUIControl createLabelWithParamDic:headLabellDic];
-    [headView addSubview:headLabel];
-    [headLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(headView).offset(kRealValue(13));
-        make.bottom.mas_equalTo(headView).offset(-kRealValue(18));
-        make.width.mas_equalTo(KScreenWidth -2*kRealValue(13));
-        make.height.mas_equalTo(kRealValue(15));
-    }];
-    return headView;
-}
 
 - (void)headViewAction:(UITapGestureRecognizer *)gesture{
     if (gesture.view.tag == 1) {//我的订单
-        NSDictionary *nextParamDic = @{KFromClassType:@(FromAllOrderVCToTitleContentVC),@"title":@"我的订单",@"tag":@(_typeIndex)};
+        [self changeDataSource:0];
+        
+        NSDictionary *nextParamDic = @{KFromClassType:@(FromNoneToTitleContentVC),@"title":@"我的订单",@"tag":@(_typeIndex), @"titleArr":@[@"全部",@"待付款",@"待收货",@"待评价",@"退款售后"], @"contentVCS":@[@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHOrderSubViewController"], @"ORDERSTATUS":@[@"", @"0040001", @"0040002", @"0040003", @"0040004"]};
         ZSHTitleContentViewController *liveVC = [[ZSHTitleContentViewController alloc]initWithParamDic:nextParamDic];
         [self.navigationController pushViewController:liveVC animated:YES];
     }
@@ -252,12 +199,91 @@ static NSString *headerViewIdentifier = @"hederview";
     return bottomBlurPopView;
 }
 
+// 切换数据源
+- (void)changeDataSource:(NSInteger )index {
+    if (index == 0) {
+        self.sectionTitleArr = @[@"我的订单",@"必备工具",@"钱包中心"];
+        
+        self.dataArr = @[
+                         @[@{@"image":@"goods_mine_payment",@"desc":@"待付款", @"tag":@(1)},
+                           @{@"image":@"goods_mine_receipt",@"desc":@"待收货",@"tag":@(2)},
+                           @{@"image":@"goods_mine_judge",@"desc":@"待评价",@"tag":@(3)},
+                           @{@"image":@"goods_mine_service",@"desc":@"售后",@"tag":@(4)}],
+                         @[@{@"image":@"goods_mine_vip",@"desc":@"会员中心",@"tag":@(1)},
+                           @{@"image":@"goods_mine_collect",@"desc":@"炫购收藏",@"tag":@(2)},
+                           @{@"image":@"goods_mine_locate",@"desc":@"地址管理",@"tag":@(3)},
+                           @{@"image":@"goods_mine_phoneService",@"desc":@"客服中心",@"tag":@(4)}],
+                         @[@{@"image":@"goods_mine_discount",@"desc":@"优惠券",@"tag":@(1)},
+                           @{@"image":@"goods_mine_integral",@"desc":@"积分",@"tag":@(2)},
+                           @{@"image":@"goods_mine_gift",@"desc":@"礼品",@"tag":@(3)}]
+                         ];
+        
+        
+        self.pushVCsArr = @[
+                            @[@"ZSHTitleContentViewController",
+                              @"ZSHTitleContentViewController",
+                              @"ZSHTitleContentViewController",
+                              @"ZSHTitleContentViewController"],
+                            
+                            @[@"",
+                              @"",
+                              @"ZSHManageAddressListViewController",
+                              @""],
+                            
+                            @[@"ZSHCouponViewController",
+                              @"ZSHIntegralViewController",
+                              @""]
+                            ];
+        self.paramArr = @[@[@{KFromClassType:@(FromNoneToTitleContentVC),@"title":@"我的订单",@"tag":@(_typeIndex), @"titleArr":@[@"全部",@"待付款",@"待收货",@"待评价",@"退款售后"], @"contentVCS":@[@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHOrderSubViewController"], @"ORDERSTATUS":@[@"", @"0040001", @"0040002", @"0040003", @"0040004"], @"selectedIndex":@"1"},
+                            @{KFromClassType:@(FromNoneToTitleContentVC),@"title":@"我的订单",@"tag":@(_typeIndex), @"titleArr":@[@"全部",@"待付款",@"待收货",@"待评价",@"退款售后"], @"contentVCS":@[@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHOrderSubViewController"], @"ORDERSTATUS":@[@"", @"0040001", @"0040002", @"0040003", @"0040004"], @"selectedIndex":@"2"},
+                            @{KFromClassType:@(FromNoneToTitleContentVC),@"title":@"我的订单",@"tag":@(_typeIndex), @"titleArr":@[@"全部",@"待付款",@"待收货",@"待评价",@"退款售后"], @"contentVCS":@[@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHOrderSubViewController"], @"ORDERSTATUS":@[@"", @"0040001", @"0040002", @"0040003", @"0040004"], @"selectedIndex":@"3"},
+                            @{KFromClassType:@(FromNoneToTitleContentVC),@"title":@"我的订单",@"tag":@(_typeIndex), @"titleArr":@[@"全部",@"待付款",@"待收货",@"待评价",@"退款售后"], @"contentVCS":@[@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHOrderSubViewController"], @"ORDERSTATUS":@[@"", @"0040001", @"0040002", @"0040003", @"0040004"], @"selectedIndex":@"4"}],
+                          @[@{},@{},@{},@{}],
+                          @[@{},@{},@{},@{}],
+                          @[@{},@{},@{},@{}]
+                          ];
+//        self.paramArr = @[@[@{KFromClassType:@(FromNoneToTitleContentVC),@"title":@"我的订单",@"tag":@(_typeIndex), @"titleArr":@[@"全部",@"待付款",@"待收货",@"待评价",@"退款售后"], @"contentVCS":@[@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHOrderSubViewController"], @"ORDERSTATUS":@[@"", @"0040001", @"0040002", @"0040003", @"0040004"], @"selectedIndex":@"1"},
+//                            @{KFromClassType:@(FromNoneToTitleContentVC),@"title":@"我的订单",@"tag":@(_typeIndex), @"titleArr":@[@"全部",@"待付款",@"待收货",@"待评价",@"退款售后"], @"contentVCS":@[@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHOrderSubViewController"], @"ORDERSTATUS":@[@"", @"0040001", @"0040002", @"0040003", @"0040004"], @"selectedIndex":@"2"},
+//                            @{KFromClassType:@(ZSHFromGoodsMineVCToCommentVC),@"tag":@(_typeIndex)},
+//                            @{KFromClassType:@(ZSHFromGoodsMineVCToApplyServiceVC),@"tag":@(_typeIndex)}],
+//                          @[@{},@{},@{},@{}],
+//                          @[@{},@{},@{},@{}],
+//                          @[@{},@{},@{},@{}]
+//                          ];
+
+    } else {
+        self.sectionTitleArr = @[@"我的订单"];
+        self.dataArr = @[@[@{@"image":@"goods_mine_allOrder",@"desc":@"全部订单", @"tag":@(1)},
+                           @{@"image":@"goods_mine_payment",@"desc":@"待付款",@"tag":@(2)},
+                           @{@"image":@"goods_mine_noUse",@"desc":@"待使用",@"tag":@(3)},
+                           @{@"image":@"goods_mine_judge",@"desc":@"待评价",@"tag":@(4)}]
+                         ];
+        self.pushVCsArr = @[
+                            @[@"ZSHTitleContentViewController",
+                              @"ZSHTitleContentViewController",
+                              @"ZSHCommentViewController",
+                              @"ZSHApplyServiceViewController"]
+                            ];
+        self.paramArr = @[
+                          @[@{KFromClassType:@(FromNoneToTitleContentVC),@"title":@"我的订单",@"tag":@(_typeIndex), @"titleArr":@[@"全部",@"待付款",@"待使用",@"待评价"], @"contentVCS":@[@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHOrderSubViewController"], @"ORDERSTATUS":@[@"", @"0040001", @"0040002", @"0040003", @"0040004"]},
+                            @{KFromClassType:@(FromNoneToTitleContentVC),@"title":@"我的订单",@"tag":@(_typeIndex), @"titleArr":@[@"全部",@"待付款",@"待使用",@"待评价"], @"contentVCS":@[@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHOrderSubViewController"], @"ORDERSTATUS":@[@"", @"0040001", @"0040002", @"0040003", @"0040004"], @"selectedIndex":@"1"},
+                            @{KFromClassType:@(ZSHFromGoodsMineVCToCommentVC),@"tag":@(_typeIndex)},
+                            @{KFromClassType:@(ZSHFromGoodsMineVCToApplyServiceVC),@"tag":@(_typeIndex)}]
+                          ];
+        
+ 
+        
+    }
+}
+
 //选中某种订单列表
+
 - (void)orderTypeBtnAction:(UIButton *)orderBtn {
     _typeIndex = orderBtn.tag-1;
     switch (orderBtn.tag) {
         case 1:{//尊购
-            [self loadData];
+//            [self loadData];
+            [self changeDataSource:0];
             [self.collectionView reloadData];
             [self changeButtonObject:_titleBtn TransformAngle:0];
             _titleBtn.selected = !_titleBtn.selected;
@@ -270,27 +296,7 @@ static NSString *headerViewIdentifier = @"hederview";
         case 6:// 美食
         case 7:// 酒吧
         case 8:{// 电影
-            self.sectionTitleArr = @[@"我的订单"];
-            self.dataArr = @[@[@{@"image":@"goods_mine_allOrder",@"desc":@"全部订单", @"tag":@(1)},
-                               @{@"image":@"goods_mine_payment",@"desc":@"待付款",@"tag":@(2)},
-                               @{@"image":@"goods_mine_noUse",@"desc":@"待使用",@"tag":@(3)},
-                               @{@"image":@"goods_mine_judge",@"desc":@"待评价",@"tag":@(4)}]
-                             ];
-            self.pushVCsArr = @[
-                                @[@"ZSHTitleContentViewController",
-                                  @"ZSHTitleContentViewController",
-                                  @"ZSHCommentViewController",
-                                  @"ZSHApplyServiceViewController"]
-                                ];
-            self.paramArr = @[
-                              @[@{KFromClassType:@(FromAllOrderVCToTitleContentVC),@"title":@"我的订单",@"tag":@(_typeIndex)},
-                                @{KFromClassType:@(FromAllOrderVCToTitleContentVC),@"title":@"我的订单",@"tag":@(_typeIndex)},
-                                @{KFromClassType:@(ZSHFromGoodsMineVCToCommentVC),@"tag":@(_typeIndex)},
-                                @{KFromClassType:@(ZSHFromGoodsMineVCToApplyServiceVC),@"tag":@(_typeIndex)}]
-                              ];
-            
-
-            
+            [self changeDataSource:1];
             [self.collectionView reloadData];
             [self changeButtonObject:_titleBtn TransformAngle:0];
             _titleBtn.selected = !_titleBtn.selected;

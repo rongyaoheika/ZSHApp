@@ -154,12 +154,21 @@
 #pragma mark - setter
 
 - (void)setSelectedIndex:(NSInteger)selectedIndex{
+    [self.titleButtons enumerateObjectsUsingBlock:^(UIButton *btn , NSUInteger idx, BOOL * _Nonnull stop) {
+        if (btn.tag-100 == selectedIndex) {
+            btn.selected = !btn.selected;
+            btn.titleLabel.font = self.selectedTitleFont;
+        } else {
+            btn.selected = NO;
+            btn.titleLabel.font = self.normalTitleFont;
+        }
+    }];
+    
     if (_selectedIndex == selectedIndex) {
         return;
     }
     _selectedIndex = selectedIndex;
     [self setSelectedIndicator:YES];
-    
 }
 
 - (void)setNormalColor:(UIColor *)normalColor{

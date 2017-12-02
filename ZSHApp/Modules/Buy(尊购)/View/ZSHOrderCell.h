@@ -8,7 +8,11 @@
 
 #import "ZSHBaseCell.h"
 #import "ZSHGoodOrderModel.h"
+#import "ZSHHotelOrderModel.h"
 
 @interface ZSHOrderCell : ZSHBaseCell
+
+
+- (void)updateCellWithHotel:(ZSHHotelOrderModel *)model;
 
 @end

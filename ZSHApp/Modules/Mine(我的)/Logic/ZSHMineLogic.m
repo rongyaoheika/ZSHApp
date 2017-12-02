@@ -54,7 +54,7 @@
     kWeakSelf(self);
     [PPNetworkHelper POST:kUrlOrderAllList parameters:@{@"HONOURUSER_ID":@"d6a3779de8204dfd9359403f54f7d27c"} success:^(id responseObject) {
         weakself.goodOrderModelArr = [ZSHGoodOrderModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"]];
-        success(nil);
+        success(weakself.goodOrderModelArr);
     } failure:^(NSError *error) {
         RLog(@"请求失败");
     }];
@@ -66,23 +66,41 @@
     kWeakSelf(self);
     [PPNetworkHelper POST:kUrlOrderConList parameters:@{@"HONOURUSER_ID":@"d6a3779de8204dfd9359403f54f7d27c", @"ORDERSTATUS":orderStatus} success:^(id responseObject) {
         weakself.goodOrderModelArr = [ZSHGoodOrderModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"]];
-        success(nil);
+        success(weakself.goodOrderModelArr);
     } failure:^(NSError *error) {
         RLog(@"请求失败");
     }];
 }
 
-//ALLHOTELORDER
+
 // 获得用户名下所有酒店订单列表
-- (void)requestAllHotelOrder:(void (^)(id response))success {
+- (void)requestOrderWithURL:(NSString *)url orderStatus:(NSString *)orderStatus success:(void (^)(id response))success {
     kWeakSelf(self);
-    [PPNetworkHelper POST:kUrlHotelOrderAllList parameters:@{@"HONOURUSER_ID":@"d6a3779de8204dfd9359403f54f7d27c"} success:^(id responseObject) {
-        RLog(@"%@", responseObject);
-        success(nil);
+    [PPNetworkHelper POST:url parameters:@{@"HONOURUSER_ID":@"d6a3779de8204dfd9359403f54f7d27c", @"ORDERSTATUS":orderStatus} success:^(id responseObject) {
+        if([url isEqualToString:kUrlHotelOrderAllList]) {
+            weakself.hotlOrderModelArr = [ZSHHotelOrderModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"]];
+            success(weakself.hotlOrderModelArr);
+        } else if ([url isEqualToString:kUrlKtvOrderAllList]) {
+            weakself.hotlOrderModelArr = [ZSHHotelOrderModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"]];
+            success(weakself.hotlOrderModelArr);
+        }
+        
     } failure:^(NSError *error) {
         RLog(@"请求失败");
     }];
 }
+
+// 获得用户名下所有KTV订单列表
+- (void)requestKtvOrderAllList:(void (^)(id response))success {
+    
+//    kWeakSelf(self);
+    [PPNetworkHelper POST:kUrlKtvOrderAllList parameters:@{@"HONOURUSER_ID":@"d6a3779de8204dfd9359403f54f7d27c"} success:^(id responseObject) {
+       
+    } failure:^(NSError *error) {
+        RLog(@"请求失败");
+    }];
+}
+
 
 // 生成订单接口（未产生交易）状态为待付款（购物车结算）
 - (void)requestShipOrderWithModel:(ZSHBuyOrderModel *)model success:(void (^)(id response))success {
