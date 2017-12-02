@@ -166,7 +166,42 @@
                                 @"ZSHWeiboViewController"];
         }
             break;
-        default:
+            
+        case FromHorseVCToTitleContentVC://马术
+        case FromShipVCToTitleContentVC://游艇
+        case FromGolfVCToTitleContentVC://游艇
+        case FromLuxcarVCToTitleContentVC:{//豪车
+            self.titleArr = @[@"排序",@"品牌",@"筛选"];
+            self.indicatorHeight = 0.0;
+            self.titleBtnImage = [UIImage imageNamed:@"hotel_btn"];
+            self.imageStyle = XYButtonEdgeInsetsStyleRight;
+            self.imageTitleSpace = kRealValue(6.0);
+            self.contentVCS = @[@"ZSHMoreListViewController",
+                                @"ZSHMoreListViewController",
+                                @"ZSHMoreListViewController"];
+            self.paramArr = @[@{KFromClassType:@([self.paramDic[KFromClassType]integerValue])},@{KFromClassType:@([self.paramDic[KFromClassType]integerValue])},@{KFromClassType:@([self.paramDic[KFromClassType]integerValue])}];
+            [self createHotelNaviUI];
+        }
+            break;
+        default:{
+            self.titleArr = self.paramDic[@"titleArr"];
+            self.titleBtnImage = [UIImage imageNamed:@"hotel_btn"];
+            self.imageStyle = XYButtonEdgeInsetsStyleRight;
+            self.imageTitleSpace = kRealValue(6.0);
+            self.indicatorHeight = 0.0;
+            self.contentVCS = self.paramDic[@"contentVCS"];
+            if (!self.contentVCS.count) {
+                NSMutableArray *mContentVCS = [[NSMutableArray alloc]init];
+                for (int i = 0; i<self.titleArr.count; i++) {
+                    [mContentVCS addObject:@"RootViewController"];
+                }
+                self.contentVCS = mContentVCS;
+            }
+           
+            [self createHotelNaviUI];
+            
+        }
+       
             break;
     }
     self.titleWidth = KScreenWidth/(self.titleArr.count);

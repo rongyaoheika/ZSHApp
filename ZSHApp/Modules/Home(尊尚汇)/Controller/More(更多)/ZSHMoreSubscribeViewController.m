@@ -21,6 +21,8 @@
 @property (nonatomic, strong) ZSHHomeLogic                   *homeLogic;
 @property (nonatomic, strong) NSArray<ZSHPrivlegeModel *>    *privlegeModelArr;
 
+@property (nonatomic, strong) NSArray                        *titleArr;
+@property (nonatomic, strong) NSMutableArray                 *mContentVCS;
 @end
 
 @implementation ZSHMoreSubscribeViewController
@@ -41,11 +43,12 @@
                         @"ZSHTitleContentViewController",  //KTV
                         @"ZSHAirPlaneViewController",      //火车票
                         @"ZSHAirPlaneViewController",      //飞机票
-                        @"ZSHSubscribeViewController",     //马术
-                        @"ZSHSubscribeViewController",     //游艇
-                        @"ZSHSubscribeViewController",     //豪车
-                        @"ZSHSubscribeViewController",     //飞机
-                        @"ZSHSubscribeViewController",     //高尔夫汇
+                        
+                        @"ZSHTitleContentViewController",     //马术
+                        @"ZSHTitleContentViewController",     //游艇
+                        @"ZSHTitleContentViewController",     //豪车
+                        @"ZSHSubscribeViewController",        //飞机
+                        @"ZSHTitleContentViewController",     //高尔夫汇
                         
 //                        @"ZSHTailorDetailViewController",  //私人定制
                         @"ZSHSubscribeViewController",//私人定制
@@ -58,22 +61,24 @@
     self.paramArr = @[
                       @{KFromClassType:@(FromFoodVCToTitleContentVC)},
                       @{KFromClassType:@(FromHotelVCToTitleContentVC)},
-                      @{KFromClassType:@(FromHotelVCToTitleContentVC)},
+                      @{KFromClassType:@(FromBarVCToTitleContentVC)},
                       @{KFromClassType:@(FromKTVVCToTitleContentVC)},
                       @{KFromClassType:@(ZSHFromHomeTrainVCToAirPlaneVC),@"title":@"火车票预订"},
                       @{KFromClassType:@(ZSHHomeAirPlaneVCToAirPlaneVC),@"title":@"机票预订"},
-                      @{KFromClassType:@(FromHorseVCToSubscribeVC),@"title":@"马术"},
-                      @{KFromClassType:@(FromShipVCToSubscribeVC),@"title":@"游艇"},
-                      @{KFromClassType:@(FromCarVCToSubscribeVC),@"title":@"豪车"},
-                      @{KFromClassType:@(FromHelicopterVCToSubscribeVC),@"title":@"飞机"},
-                      @{KFromClassType:@(FromGolfVCToSubscribeVC),@"title":@"高尔夫汇"},
-                      @{KFromClassType:@(FromShipVCToSubscribeVC),@"title":@"私人定制"},
-                      @{KFromClassType:@(FromShipVCToSubscribeVC),@"title":@"品牌杂志"},
-                      @{KFromClassType:@(FromShipVCToSubscribeVC),@"title":@"健康养生"},
-                      @{KFromClassType:@(FromShipVCToSubscribeVC),@"title":@"高端品鉴"},
-                      @{KFromClassType:@(FromShipVCToSubscribeVC),@"title":@"定制理财"},
+                      @{KFromClassType:@(FromHorseVCToTitleContentVC)},
+                      @{KFromClassType:@(FromShipVCToTitleContentVC)},
+                      @{KFromClassType:@(FromLuxcarVCToTitleContentVC)},
+                      @{KFromClassType:@(ZSHPlaneType),@"title":@"飞机"},
+                      @{KFromClassType:@(FromGolfVCToTitleContentVC)},
+                      @{KFromClassType:@(ZSHShipType),@"title":@"私人定制"},
+                      @{KFromClassType:@(ZSHShipType),@"title":@"品牌杂志"},
+                      @{KFromClassType:@(ZSHShipType),@"title":@"健康养生"},
+                      @{KFromClassType:@(ZSHShipType),@"title":@"高端品鉴"},
+                      @{KFromClassType:@(ZSHShipType),@"title":@"定制理财"},
                        ];
 }
+
+
 
 - (void)requestData{
     kWeakSelf(self);
@@ -110,7 +115,6 @@
 
 - (void)headBtnClick:(UITapGestureRecognizer *)gesture {
     NSInteger tag = gesture.view.tag - 10;
-//    NSInteger tag = sender.tag-10;
     NSString *privilegeID = _privlegeModelArr[tag].PRIVILEGE_ID;
     
     NSArray *privilegeIDs = @[@"383387957278539776", @"383557677113933824", @"385379959020978176", @"385380016873013248", @"383557751072096256", @"383557820093562880", @"383557868474859520", @"383557942164586496", @"383557992391376896", @"383558270297571328", @"383558332801089536", @"383558377935994880", @"383558448089923584", @"383558527584567296", @"383558605036584960", @"383558664083996672"];

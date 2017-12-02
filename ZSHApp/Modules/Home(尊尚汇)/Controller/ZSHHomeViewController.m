@@ -74,11 +74,11 @@ static NSString *Identify_MusicCell = @"musicCell";
                       @{KFromClassType:@(FromHotelVCToTitleContentVC)},
                       @{KFromClassType:@(ZSHFromHomeTrainVCToAirPlaneVC),@"title":@"火车票预订"},
                       @{KFromClassType:@(ZSHHomeAirPlaneVCToAirPlaneVC),@"title":@"机票预订"},
-                      @{KFromClassType:@(FromHorseVCToSubscribeVC),@"title":@"马术"},
-                      @{KFromClassType:@(FromShipVCToSubscribeVC),@"title":@"游艇"},
-                      @{KFromClassType:@(FromCarVCToSubscribeVC),@"title":@"豪车"},
-                      @{KFromClassType:@(FromHelicopterVCToSubscribeVC),@"title":@"飞机"},
-                      @{KFromClassType:@(FromGolfVCToSubscribeVC),@"title":@"高尔夫汇"}
+                      @{KFromClassType:@(ZSHHorseType  ),@"title":@"马术"},
+                      @{KFromClassType:@(ZSHShipType),@"title":@"游艇"},
+                      @{KFromClassType:@(ZSHLuxcarType),@"title":@"豪车"},
+                      @{KFromClassType:@(ZSHPlaneType),@"title":@"飞机"},
+                      @{KFromClassType:@(ZSHGolfType),@"title":@"高尔夫汇"}
                       ];
     self.menuPushVCsArr = @[@"",
                             @"ZSHServiceCenterViewController",
@@ -127,7 +127,6 @@ static NSString *Identify_MusicCell = @"musicCell";
       [weakself updateSectionDatWithSet:indexSet];
     } fail:nil];
     
-   
 }
 
 - (void)updateSectionDatWithSet:(NSIndexSet *)indexSet{
@@ -214,8 +213,8 @@ static NSString *Identify_MusicCell = @"musicCell";
     cellModel.height = kRealValue(135);
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHBaseTitleButtonCell *cell = [tableView dequeueReusableCellWithIdentifier:Identify_NoticeCell forIndexPath:indexPath];
-        cell.itemClickBlock = ^(NSInteger tag) {
-            if(tag == 3){
+        cell.itemClickBlock = ^(NSInteger tag) {//ktv
+            if(tag == 2){
             NSDictionary *subDic = _homeLogic.noticeArr[tag];
             NSDictionary *nextParamDic = @{KFromClassType:@(ZSHFromHomeKTVVCToHotelDetailVC),@"shopId":subDic[@"SORT_ID"]};
             ZSHKTVDetailViewController *KTVDetailVC = [[ZSHKTVDetailViewController alloc]initWithParamDic:nextParamDic];

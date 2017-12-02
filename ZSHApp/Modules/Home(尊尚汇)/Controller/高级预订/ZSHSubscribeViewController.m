@@ -7,6 +7,7 @@
 //
 
 #import "ZSHSubscribeViewController.h"
+#import "ZSHMoreLogic.h"
 
 @interface ZSHSubscribeViewController ()
 
@@ -23,6 +24,10 @@
 
 
 @property (nonatomic, strong) NSArray      *dataArr;
+@property (nonatomic, strong) ZSHMoreLogic *moreLogic;
+@property (nonatomic, strong) NSArray      *listDataDicArr;
+@property (nonatomic, strong) NSArray      *listDic;
+@property (nonatomic, strong) NSArray      *imageArr;
 
 @end
 
@@ -35,8 +40,10 @@
 }
 
 - (void)loadData{
+    [self requestListData];
+    
     switch ([self.paramDic[KFromClassType]integerValue]) {
-        case FromHorseVCToSubscribeVC:{
+        case ZSHHorseType  :{
             self.dataArr = @[@"horse_image_1",
                              @"2017年夏季诺唯真喜悦号正式首航! 为您提供真正的海上头等舱体验",
                              @"horse_image_2",
@@ -46,7 +53,7 @@
                              @"1、用300元保证300万：【中国人保】为荣耀黑卡持卡人，特地推出三款豪车租赁险种。无忧出行从此开始：用均价三百元保险，轻松保障三百万豪车\n2、预订时间：持卡人需要至少提前48小时预定\n3、关于定金：用户线上支付的¥2000定金，将全数抵扣 租金"];
         }
             break;
-        case FromShipVCToSubscribeVC:{
+        case ZSHShipType:{
             self.dataArr = @[@"ship_image_1",
                              @"2017年夏季诺唯真喜悦号正式首航! 为您提供真正的海上头等舱体验",
                              @"ship_image_2",
@@ -56,7 +63,7 @@
                              @"1、用300元保证300万：【中国人保】为荣耀黑卡持卡人，特地推出三款豪车租赁险种。无忧出行从此开始：用均价三百元保险，轻松保障三百万豪车\n2、预订时间：持卡人需要至少提前48小时预定\n3、关于定金：用户线上支付的¥2000定金，将全数抵扣 租金"];
         }
             break;
-        case FromCarVCToSubscribeVC:{
+        case ZSHLuxcarType:{
             self.dataArr = @[@"car_image_1",
                              @"保时捷首日免费体验权，72小时内，101个名额，仅供荣耀黑卡持卡人专享。荣耀黑卡为您重塑18岁的梦",
                              @"car_image_2",
@@ -66,7 +73,7 @@
                              @"1、用300元保证300万：【中国人保】为荣耀黑卡持卡人，特地推出三款豪车租赁险种。无忧出行从此开始：用均价三百元保险，轻松保障三百万豪车\n2、预订时间：持卡人需要至少提前48小时预定\n3、关于定金：用户线上支付的¥2000定金，将全数抵扣 租金"];
         }
             break;
-        case FromHelicopterVCToSubscribeVC:{
+        case ZSHPlaneType:{
             self.dataArr = @[@"hlicopter_image_1",
                              @"2017年夏季诺唯真喜悦号正式首航! 为您提供真正的海上头等舱体验",
                              @"hlicopter_image_2",
@@ -76,7 +83,7 @@
                              @"1、用300元保证300万：【中国人保】为荣耀黑卡持卡人，特地推出三款豪车租赁险种。无忧出行从此开始：用均价三百元保险，轻松保障三百万豪车\n2、预订时间：持卡人需要至少提前48小时预定\n3、关于定金：用户线上支付的¥2000定金，将全数抵扣 租金"];
         }
             break;
-        case FromGolfVCToSubscribeVC:{
+        case ZSHGolfType:{
             self.dataArr = @[@"golf_image_1",
                              @"保时捷首日免费体验权，72小时内，101个名额，仅供荣耀黑卡持卡人专享。荣耀黑卡为您重塑18岁的梦",
                              @"golf_image_2",
@@ -91,26 +98,99 @@
     }
 }
 
+- (void)requestListData{
+    kWeakSelf(self);
+    _moreLogic = [[ZSHMoreLogic alloc]init];
+    ZSHShopType shopType = [self.paramDic[@"localDic"][KFromClassType] integerValue];
+    NSDictionary *requestDic = self.paramDic[@"requestDic"];
+    NSDictionary *paramDic = nil;
+    if (!shopType) {//飞机
+        shopType = kFromClassTypeValue;
+    }
+    
+    switch (shopType) {
+        case ZSHHorseType:{//马术
+            paramDic = @{@"HORSESHOP_ID":requestDic[@"HORSESHOP_ID"]};
+            [_moreLogic requestHorseDetailWithParamDic:paramDic success:^(NSArray *horseDetailDicArr) {
+                _listDataDicArr = horseDetailDicArr;
+                _imageArr = _listDataDicArr[0][@"HORSEDETIMGS"];
+                _subTitleLabel.text = _listDataDicArr[0][@"HORSEDETINTRO"];
+                [weakself updateUI];
+            } fail:nil];
+            
+            break;
+        }
+        case ZSHShipType:{//游艇
+            paramDic = @{@"YACHTSHOP_ID":requestDic[@"YACHTSHOP_ID"]};
+            [_moreLogic requestYachtDetailWithParamDic:paramDic success:^(NSArray *yachtDetailDicArr) {
+                _listDataDicArr = yachtDetailDicArr;
+                _imageArr = _listDataDicArr[0][@"YACHTDETIMGS"];
+                _subTitleLabel.text = _listDataDicArr[0][@"YACHTDETINTRO"];
+                [weakself updateUI];
+            } fail:nil];
+            
+            break;
+        }
+        case ZSHGolfType:{//高尔夫汇
+            paramDic = @{@"GOLFSHOP_ID":requestDic[@"GOLFSHOP_ID"]};
+            [_moreLogic requestGolfDetailWithParamDic:paramDic success:^(NSArray *golfDetailDicArr) {
+                _listDataDicArr = golfDetailDicArr;
+                _imageArr = _listDataDicArr[0][@"GOLFDETIMGS"];
+                _subTitleLabel.text = _listDataDicArr[0][@"GOLFDETINTRO"];
+                [weakself updateUI];
+            } fail:nil];
+            
+            break;
+        }
+        case ZSHLuxcarType:{//豪车
+           paramDic = @{@"LUXCARSHOP_ID":requestDic[@"LUXCARSHOP_ID"]};
+            [_moreLogic requestLuxcarDetailWithParamDic:paramDic success:^(NSArray *luxcarDetailDicArr) {
+               _listDataDicArr = luxcarDetailDicArr;
+               _imageArr = _listDataDicArr[0][@"LUXCARDETIMGS"];
+               _subTitleLabel.text = _listDataDicArr[0][@"LUXCARDETINTRO"];
+               [weakself updateUI];
+            } fail:nil];
+            
+            break;
+        }
+        case ZSHPlaneType:{//飞机
+            [_moreLogic requestPlaneDetailWithParamDic:nil success:^(NSArray *luxcarDetailDicArr) {
+                _listDataDicArr = luxcarDetailDicArr;
+                _imageArr = _listDataDicArr[0][@"PLANEDETIMGS"];
+                _subTitleLabel.text = _listDataDicArr[0][@"PLANEDETINTRO"];
+                [weakself updateUI];
+            } fail:nil];
+            
+            break;
+        }
+            
+        default:
+            break;
+    }
+}
 
 - (void)createUI{
     
     // height 1167
     _scrollView = [[UIScrollView alloc] init];
     _scrollView.scrollEnabled = true;
+    _scrollView.contentSize = CGSizeMake(KScreenWidth, 0);
     [self.view addSubview:_scrollView];
     [_scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.view);
     }];
     
     _headImageView = [[UIImageView alloc] init];
-    _headImageView.image = [UIImage imageNamed:self.dataArr[0]];
+//    _headImageView.image = [UIImage imageNamed:self.dataArr[0]];
     [_scrollView addSubview:_headImageView];
     [_headImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.left.right.mas_equalTo(_scrollView);
+        make.top.left.mas_equalTo(_scrollView);
         make.height.mas_equalTo(kRealValue(225));
+        make.width.mas_equalTo(KScreenWidth);
     }];
     
-    NSDictionary *titleLabelDic = @{@"text":self.dataArr[1], @"font":kPingFangRegular(12),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentLeft)};
+    //self.dataArr[1]
+    NSDictionary *titleLabelDic = @{@"text":@"", @"font":kPingFangRegular(12),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentLeft)};
     _titleLabel = [ZSHBaseUIControl createLabelWithParamDic:titleLabelDic];
     _titleLabel.numberOfLines = 0;
     [_scrollView addSubview:_titleLabel];
@@ -122,7 +202,7 @@
     
     
     _middleImageView = [[UIImageView alloc] init];
-    _middleImageView.image = [UIImage imageNamed:self.dataArr[2]];
+//    _middleImageView.image = [UIImage imageNamed:self.dataArr[2]];
     [_scrollView addSubview:_middleImageView];
     [_middleImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(_titleLabel).offset(kRealValue(51));
@@ -131,7 +211,7 @@
     }];
     
     _bottomImageView = [[UIImageView alloc] init];
-    _bottomImageView.image = [UIImage imageNamed:self.dataArr[3]];
+//    _bottomImageView.image = [UIImage imageNamed:self.dataArr[3]];
     [_scrollView addSubview:_bottomImageView];
     [_bottomImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(_middleImageView).offset(kRealValue(250));
@@ -139,7 +219,8 @@
         make.size.mas_equalTo(CGSizeMake(kRealValue(375), kRealValue(240)));
     }];
     
-    NSDictionary *subTitleDic = @{@"text":self.dataArr[4], @"font":kPingFangMedium(15),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentCenter)};
+    //self.dataArr[4],
+    NSDictionary *subTitleDic = @{@"text":@"", @"font":kPingFangMedium(15),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentCenter)};
     _subTitleLabel = [ZSHBaseUIControl createLabelWithParamDic:subTitleDic];
     [_scrollView addSubview:_subTitleLabel];
     [_subTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -157,7 +238,8 @@
                           NSParagraphStyleAttributeName:paraStyle,
                           NSKernAttributeName:@0.11f
                           };
-    _contentLabel.attributedText = [[NSAttributedString alloc] initWithString:self.dataArr[5] attributes:dic];
+//    self.dataArr[5]
+    _contentLabel.attributedText = [[NSAttributedString alloc] initWithString:@"aa" attributes:dic];
     [_scrollView addSubview:_contentLabel];
     [_contentLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(_subTitleLabel).offset(kRealValue(31));
@@ -185,7 +267,8 @@
                           NSParagraphStyleAttributeName:contentStyle,
                           NSKernAttributeName:@0.11f
                           };
-    _noticeDetailLabel.attributedText = [[NSAttributedString alloc] initWithString:self.dataArr[6] attributes:contentDic];
+    //self.dataArr[6]
+    _noticeDetailLabel.attributedText = [[NSAttributedString alloc] initWithString:@"bb" attributes:contentDic];
     _noticeDetailLabel.numberOfLines = 0;
     [_scrollView addSubview:_noticeDetailLabel];
     [_noticeDetailLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -204,6 +287,19 @@
         make.width.mas_equalTo(kRealValue(KScreenWidth));
         make.height.mas_equalTo(kRealValue(49));
     }];
+}
+
+- (void)updateUI{
+    
+    [_headImageView sd_setImageWithURL:[NSURL URLWithString:_imageArr[0]]];
+    [_middleImageView sd_setImageWithURL:[NSURL URLWithString:_imageArr[1]]];
+    [_bottomImageView sd_setImageWithURL:[NSURL URLWithString:_imageArr[2]]];
+    
+    _titleLabel.text = _listDataDicArr[0][@"PDOWNINTROTITLE"];
+    _contentLabel.text = _listDataDicArr[0][@"PUPINTROCONTENT"];
+    _noticeLabel.text = _listDataDicArr[0][@"PDOWNINTROTITLE"];
+    _noticeDetailLabel.text = _listDataDicArr[0][@"PDOWNINTROCONTENT"];
+    
 }
 
 @end

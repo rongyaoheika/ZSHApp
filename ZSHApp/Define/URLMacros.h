@@ -23,8 +23,8 @@
  */
 
 #define DevelopSever    0
-#define TestSever       1
-#define ProductSever    0
+#define TestSever       0
+#define ProductSever    1
 
 #if DevelopSever
 
@@ -361,6 +361,53 @@
 //参数：无参数
 //请求地址：/apphomein/partyimg.do?PARTY(混淆码)
 #define kUrlPartyimg [NSString stringWithFormat:@"/apphomein/partyimg.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"PARTY"]]
+
+//82. 获得荣耀服务高尔夫列表（完成）
+//参数：HONOURUSER_ID 用户id
+//请求地址：/appserverin/sgolflist.do?SORTHIGHGOLF(混淆码)
+#define kUrlSGolflist [NSString stringWithFormat:@"/appserverin/sgolflist.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SORTHIGHGOLF"]]
+
+//83. 获得荣耀服务马术列表（完成）
+//参数：HONOURUSER_ID 用户id
+//请求地址：/appserverin/shorselist.do?SORTHIGHHORSE(混淆码)
+#define kUrlSHorseList [NSString stringWithFormat:@"/appserverin/shorselist.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SORTHIGHHORSE"]]
+
+//84. 获得荣耀服务豪车列表（完成）
+//参数：HONOURUSER_ID 用户id
+//请求地址：/appserverin/sluxcarlist.do?SORTHIGHLUXCAR(混淆码)
+#define kUrlSLuxcarlist [NSString stringWithFormat:@"/appserverin/sluxcarlist.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SORTHIGHLUXCAR"]]
+
+//86. 获得荣耀服务游艇列表（完成）
+//参数：HONOURUSER_ID 用户id
+//请求地址：/appserverin/syachtlist.do?SORTHIGHYACHT(混淆码)
+#define kUrlSYachtlist [NSString stringWithFormat:@"/appserverin/syachtlist.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SORTHIGHYACHT"]]
+
+
+//87. 获取高尔夫详情接口（完成）
+//参数：GOLFSHOP_ID 高尔夫店id
+//请求地址：/appserverin/golfdetail.do?GOLFDETAIL(混淆码)
+#define kUrlGolfDetail [NSString stringWithFormat:@"/appserverin/golfdetail.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"GOLFDETAIL"]]
+
+//88. 获取马术详情接口（完成）
+//参数：HORSESHOP_ID   马术店id
+//请求地址：/appserverin/horsedetail.do?HORSEDETAIL(混淆码)
+#define kUrlHorseDetail [NSString stringWithFormat:@"/appserverin/horsedetail.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"HORSEDETAIL"]]
+
+//89. 获取豪车详情接口（完成）
+//参数：LUXCARSHOP_ID   豪车店id
+//请求地址：/appserverin/luxcardetail.do?LUXCARDETAIL(混淆码)
+#define kUrlLuxcarDetail [NSString stringWithFormat:@"/appserverin/luxcardetail.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"LUXCARDETAIL"]]
+
+//90. 获取飞机详情接口(完成)
+//参数：无
+//请求地址：/appserverin/planedetail.do?HORSEDETAIL(混淆码)
+#define kUrlPlaneDetail [NSString stringWithFormat:@"/appserverin/planedetail.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"HORSEDETAIL"]]
+
+//91. 获得服务游艇接口（完成）
+//参数：YACHTSHOP_ID  游艇id
+//请求地址：/appserverin/yachtdetail.do?YACHTDETAIL(混淆码)
+#define kUrlYachtDetail [NSString stringWithFormat:@"/appserverin/yachtdetail.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"YACHTDETAIL"]]
+
 
 //92. 获得首页特权KTV分类列表（完成）
 //参数：HONOURUSER_ID 用户id

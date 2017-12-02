@@ -344,6 +344,9 @@
 		FEAEE3EE1FA86CBA00F73EEA /* NSCalendar+ST.m in Sources */ = {isa = PBXBuildFile; fileRef = FEAEE3E91FA86CBA00F73EEA /* NSCalendar+ST.m */; };
 		FEAEE3EF1FA86CBA00F73EEA /* STCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = FEAEE3EB1FA86CBA00F73EEA /* STCalendar.m */; };
 		FEAEE3F01FA86CBA00F73EEA /* STCalendarItem.m in Sources */ = {isa = PBXBuildFile; fileRef = FEAEE3ED1FA86CBA00F73EEA /* STCalendarItem.m */; };
+		FEB0990F1FD1257800E8F03D /* ZSHMoreListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEB0990E1FD1257800E8F03D /* ZSHMoreListViewController.m */; };
+		FEB099121FD125BE00E8F03D /* ZSHMoreLogic.m in Sources */ = {isa = PBXBuildFile; fileRef = FEB099111FD125BE00E8F03D /* ZSHMoreLogic.m */; };
+		FEB099161FD127F300E8F03D /* ZSHMoreListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FEB099151FD127F300E8F03D /* ZSHMoreListCell.m */; };
 		FEB305851F95DFC700E4A061 /* ZSHGoodsGridCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FEB305841F95DFC700E4A061 /* ZSHGoodsGridCell.m */; };
 		FEB3058B1F95F9EB00E4A061 /* ZSHGoodsMineGridCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FEB3058A1F95F9EB00E4A061 /* ZSHGoodsMineGridCell.m */; };
 		FEBD36E71FB53AB800959BD8 /* ZSHScoreDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FEBD36E61FB53AB800959BD8 /* ZSHScoreDetailCell.m */; };
@@ -1043,6 +1046,12 @@
 		FEAEE3EB1FA86CBA00F73EEA /* STCalendar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STCalendar.m; sourceTree = "<group>"; };
 		FEAEE3EC1FA86CBA00F73EEA /* STCalendarItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STCalendarItem.h; sourceTree = "<group>"; };
 		FEAEE3ED1FA86CBA00F73EEA /* STCalendarItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STCalendarItem.m; sourceTree = "<group>"; };
+		FEB0990D1FD1257800E8F03D /* ZSHMoreListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHMoreListViewController.h; sourceTree = "<group>"; };
+		FEB0990E1FD1257800E8F03D /* ZSHMoreListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHMoreListViewController.m; sourceTree = "<group>"; };
+		FEB099101FD125BE00E8F03D /* ZSHMoreLogic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHMoreLogic.h; sourceTree = "<group>"; };
+		FEB099111FD125BE00E8F03D /* ZSHMoreLogic.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHMoreLogic.m; sourceTree = "<group>"; };
+		FEB099141FD127F300E8F03D /* ZSHMoreListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHMoreListCell.h; sourceTree = "<group>"; };
+		FEB099151FD127F300E8F03D /* ZSHMoreListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHMoreListCell.m; sourceTree = "<group>"; };
 		FEB305831F95DFC700E4A061 /* ZSHGoodsGridCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHGoodsGridCell.h; sourceTree = "<group>"; };
 		FEB305841F95DFC700E4A061 /* ZSHGoodsGridCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHGoodsGridCell.m; sourceTree = "<group>"; };
 		FEB305891F95F9EB00E4A061 /* ZSHGoodsMineGridCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHGoodsMineGridCell.h; sourceTree = "<group>"; };
@@ -1541,6 +1550,8 @@
 			children = (
 				185BB9C81FB5BDB9007A96FF /* ZSHMoreSubscribeViewController.h */,
 				185BB9C91FB5BDB9007A96FF /* ZSHMoreSubscribeViewController.m */,
+				FEB0990D1FD1257800E8F03D /* ZSHMoreListViewController.h */,
+				FEB0990E1FD1257800E8F03D /* ZSHMoreListViewController.m */,
 			);
 			path = "More(更多)";
 			sourceTree = "<group>";
@@ -1905,6 +1916,7 @@
 		FE291EB01F8CAEDC00D4BBE7 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				FEB099131FD127DD00E8F03D /* More */,
 				FEA018D11FCBFB0000989FB2 /* Comment */,
 				FE9E6D6D1FC4227600F7AD95 /* HomeCell */,
 				FE0ED7DF1FC2CC45008299C5 /* 城市 */,
@@ -3196,6 +3208,15 @@
 			path = STCalendar;
 			sourceTree = "<group>";
 		};
+		FEB099131FD127DD00E8F03D /* More */ = {
+			isa = PBXGroup;
+			children = (
+				FEB099141FD127F300E8F03D /* ZSHMoreListCell.h */,
+				FEB099151FD127F300E8F03D /* ZSHMoreListCell.m */,
+			);
+			path = More;
+			sourceTree = "<group>";
+		};
 		FEBD7C9A1FA6F45100CE2BA6 /* Hotel(酒店) */ = {
 			isa = PBXGroup;
 			children = (
@@ -3267,6 +3288,8 @@
 				FE04EF081FC831520012C5AC /* ZSHKTVLogic.m */,
 				FEA018C91FCBF4C700989FB2 /* ZSHShopCommentLogic.h */,
 				FEA018CA1FCBF4C700989FB2 /* ZSHShopCommentLogic.m */,
+				FEB099101FD125BE00E8F03D /* ZSHMoreLogic.h */,
+				FEB099111FD125BE00E8F03D /* ZSHMoreLogic.m */,
 			);
 			path = Logic;
 			sourceTree = "<group>";
@@ -3619,6 +3642,7 @@
 				FE9CC3D51FA05D2200285475 /* ZSHOrderDetailViewController.m in Sources */,
 				FEBD7CBA1FA75FBC00CE2BA6 /* ZSHFoodCell.m in Sources */,
 				FEA105811F9B292B008652D6 /* ZSHBrandsSortHeadView.m in Sources */,
+				FEB099161FD127F300E8F03D /* ZSHMoreListCell.m in Sources */,
 				FEA018BF1FCBB5E800989FB2 /* ZSHFoodDetailViewController.m in Sources */,
 				18063C5B1FC9140B000F5A00 /* ZSHCollectModel.m in Sources */,
 				185DDCD31FBEDD79004D4688 /* ZSHShareView.m in Sources */,
@@ -3890,6 +3914,7 @@
 				FE04EF091FC831520012C5AC /* ZSHKTVLogic.m in Sources */,
 				FE2CD0B31F98F4B400E9E519 /* ZSHExchangeViewController.m in Sources */,
 				FEFDB4191F7A36D90069F867 /* ChineseString.m in Sources */,
+				FEB0990F1FD1257800E8F03D /* ZSHMoreListViewController.m in Sources */,
 				FEC273A71F8E1FD700A0F91A /* ZSHNoticeViewCell.m in Sources */,
 				FE5CFA411FA1B32500A55644 /* ZSHHotelCell.m in Sources */,
 				FEA018C51FCBE59100989FB2 /* ZSHKTVViewController.m in Sources */,
@@ -3917,6 +3942,7 @@
 				1811057A1FBC125E0046D229 /* ZSHLikeViewController.m in Sources */,
 				FE55387F1F470BAF00803128 /* IMManager.m in Sources */,
 				1813E26A1FBD2B6E00624405 /* ZSHTrainTicketListCell.m in Sources */,
+				FEB099121FD125BE00E8F03D /* ZSHMoreLogic.m in Sources */,
 				FEA018CF1FCBF66200989FB2 /* ZSHShopCommentModel.m in Sources */,
 				FEF415F31FAAEDBA00137F0A /* ZSHAirPlaneViewController.m in Sources */,
 				FE5538161F47049D00803128 /* TabBarBadge.m in Sources */,
