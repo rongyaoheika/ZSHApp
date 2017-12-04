@@ -195,7 +195,7 @@ static NSString *ZSHKTVListCellID = @"ZSHKTVListCell";
     
     cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
         //用户评价
-        NSDictionary *nextParamDic = @{@"shopId":self.shopId};
+        NSDictionary *nextParamDic = @{KFromClassType:@(ZSHKTVShopType), @"shopId":self.shopId};
         ZSHShopCommentViewController *shopCommentVC = [[ZSHShopCommentViewController alloc]initWithParamDic:nextParamDic];
         [weakself.navigationController pushViewController:shopCommentVC animated:YES];
     };

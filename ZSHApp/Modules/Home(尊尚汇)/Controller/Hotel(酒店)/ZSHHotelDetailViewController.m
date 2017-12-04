@@ -206,7 +206,7 @@ static NSString *ZSHHotelListCellID = @"ZSHHotelListCell";
     
     cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
         //用户评价
-        NSDictionary *nextParamDic = @{@"shopId":self.shopId};
+        NSDictionary *nextParamDic = @{KFromClassType:@(ZSHHotelShopType), @"shopId":self.shopId};
         ZSHShopCommentViewController *shopCommentVC = [[ZSHShopCommentViewController alloc]initWithParamDic:nextParamDic];
         [weakself.navigationController pushViewController:shopCommentVC animated:YES];
     };

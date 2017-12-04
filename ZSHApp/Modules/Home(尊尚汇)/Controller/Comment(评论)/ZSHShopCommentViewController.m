@@ -61,23 +61,46 @@ static NSString *ZSHShopCommentCellID = @"ZSHShopCommentCell";
 - (void)requestData{
     kWeakSelf(self);
     _commentLogic = [[ZSHShopCommentLogic alloc]init];
-    NSDictionary *requestParamDic = @{@"SORTHOTEL_ID":self.shopId};
-    
-    if (kFromClassTypeValue == ZSHFromFoodVCToHotelDetailVC) {//美食评论
-         [_commentLogic requestHotelShopCommentListDataWithParamDic:requestParamDic];
-    } else if(kFromClassTypeValue == ZSHFromHotelVCToHotelDetailVC){ //酒店评论
-         [_commentLogic requestHotelShopCommentListDataWithParamDic:requestParamDic];
-    } else if(kFromClassTypeValue == ZSHFromHomeKTVVCToHotelDetailVC){ //KTV评论
-        [_commentLogic requestKTVShopCommentListDataWithParamDic:requestParamDic];
+    switch (kFromClassTypeValue) {
+        case ZSHFoodShopType:{//美食评论
+            [_commentLogic requestFoodShopCommentListDataWithParamDic: @{@"SORTFOOD_ID":self.shopId} success:^(NSArray *commentArr) {
+                _commentArr = commentArr;
+                [weakself updateUI];
+            } fail:nil];
+             break;
+        }
+        case ZSHHotelShopType:{//酒店评论
+            [_commentLogic requestHotelShopCommentListDataWithParamDic: @{@"SORTHOTEL_ID":self.shopId} success:^(NSArray *commentArr) {
+                _commentArr = commentArr;
+                [weakself updateUI];
+            } fail:nil];
+            break;
+        }
+        case ZSHKTVShopType:{//KTV评论
+            [_commentLogic requestKTVShopCommentListDataWithParamDic: @{@"SORTKTV_ID":self.shopId} success:^(NSArray *commentArr) {
+                _commentArr = commentArr;
+                [weakself updateUI];
+            } fail:nil];
+            break;
+        }
+        case ZSHBarShopType:{//酒吧评论
+            [_commentLogic requestBarShopCommentListDataWithParamDic: @{@"SORTBAR_ID":self.shopId} success:^(NSArray *commentArr) {
+                _commentArr = commentArr;
+                [weakself updateUI];
+            } fail:nil];
+            break;
+        }
+           
+        default:
+            break;
     }
-    
-   
-    _commentLogic.requestDataCompleted = ^(NSArray *commentArr){
-        weakself.commentArr = commentArr;
-        [weakself.tableView.mj_header endRefreshing];
-        [weakself.tableView.mj_footer endRefreshing];
-        [weakself initViewModel];
-    };
+
+}
+
+- (void)updateUI{
+    [self.tableView.mj_header endRefreshing];
+    [self.tableView.mj_footer endRefreshing];
+    [self initViewModel];
 }
 
 - (void)initViewModel {

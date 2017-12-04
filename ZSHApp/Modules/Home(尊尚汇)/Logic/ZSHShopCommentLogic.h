@@ -10,8 +10,13 @@
 #import "ZSHShopCommentModel.h"
 @interface ZSHShopCommentLogic : ZSHBaseLogic
 
-- (void)requestHotelShopCommentListDataWithParamDic:(NSDictionary *)paramDic;
+//酒店评论详情
+- (void)requestHotelShopCommentListDataWithParamDic:(NSDictionary *)paramDic success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail;
+//美食评论详情
+- (void)requestFoodShopCommentListDataWithParamDic:(NSDictionary *)paramDic success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail;
+//KTV评论详情
+- (void)requestKTVShopCommentListDataWithParamDic:(NSDictionary *)paramDic success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail;
 
-- (void)requestFoodShopCommentListDataWithParamDic:(NSDictionary *)paramDic;
-- (void)requestKTVShopCommentListDataWithParamDic:(NSDictionary *)paramDic;
+//酒吧评论详情
+- (void)requestBarShopCommentListDataWithParamDic:(NSDictionary *)paramDic success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail;
 @end

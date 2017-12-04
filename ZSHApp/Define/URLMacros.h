@@ -22,9 +22,9 @@
  这样做切换方便,不用来回每个网络请求修改请求域名,降低出错事件
  */
 
-#define DevelopSever    1
+#define DevelopSever    0
 #define TestSever       0
-#define ProductSever    0
+#define ProductSever    1
 
 #if DevelopSever
 
@@ -348,15 +348,19 @@
 //请求地址：/appsfoodin/foodevalist?FOODEVA
 //返回参数：EVALUATEDATE 	评价日期/EVALUATECONTENT 评价内容/PORTRAIT 用户头像/NICKNAME 用户昵称
 #define kUrlFoodEvaList [NSString stringWithFormat:@"/appsfoodin/foodevalist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"FOODEVA"]]
-//68.获得KTV店铺评论列表
-//参数：SORTKTV_ID 某KTVid
-//请求地址：/appsktvin/ktvevalist?KTVEVA
-//返回参数：EVALUATEDATE 	评价日期/EVALUATECONTENT 评价内容/PORTRAIT 用户头像/NICKNAME 用户昵称
-//69.获得KTV店铺评论列表（完成）
+
+//68.获得KTV店铺评论列表（完成）
 //参数：SORTKTV_ID 某KTVid
 //请求地址：/appsktvin/ktvevalist?KTVEVA
 //返回参数：EVALUATEDATE 	评价日期/EVALUATECONTENT 评价内容/PORTRAIT 用户头像/NICKNAME 用户昵称
 #define kUrlKtvEvaList [NSString stringWithFormat:@"/appsktvin/ktvevalist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"KTVEVA"]]
+
+//69.获得酒吧店铺评论列表
+//参数：SORTBAR_ID 某酒吧id
+//请求地址：/appsbarin/barevalist?BAREVA
+//返回参数：EVALUATEDATE     评价日期/EVALUATECONTENT 评价内容/PORTRAIT 用户头像/NICKNAME 用户昵称
+#define kUrlBarevaList [NSString stringWithFormat:@"/appsbarin/barevalist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"BAREVA"]]
+
 //70.用户上传头像的方法
 //参数：HONOURUSER_ID 上传头像人员id
 //请求地址：/appuserin/up?UPPORT
@@ -413,7 +417,7 @@
 #define kUrlPartyimg [NSString stringWithFormat:@"/apphomein/partyimg.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"PARTY"]]
 
 
-//81. 根据酒吧店铺id获取美食店铺综合详细
+//81. 根据酒吧店铺id获取美食店铺综合详细(完成)
 //参数：SORTBAR_ID 酒吧id
 //请求地址：/appsbarin/barsyn.do?BARSYN(混淆码)
 #define kUrlBarSyn [NSString stringWithFormat:@"/appsbarin/barsyn.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"BARSYN"]]
