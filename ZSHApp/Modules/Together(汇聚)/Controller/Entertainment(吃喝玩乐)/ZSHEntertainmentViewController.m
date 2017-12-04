@@ -10,6 +10,7 @@
 #import "ZSHEnterTainmentCell.h"
 #import "ZSHEntertainmentModel.h"
 #import "ZSHEntertainmentDetailViewController.h"
+#import "ZSHEntertainmentDisViewController.h"
 #import "ZSHTogetherLogic.h"
 
 @interface ZSHEntertainmentViewController ()
@@ -94,7 +95,8 @@ static NSString *ZSHEnterTainmentCellID = @"ZSHEnterTainmentCell";
 
 #pragma action
 - (void)distributeAction{
-   
+    ZSHEntertainmentDisViewController *disVC = [[ZSHEntertainmentDisViewController alloc]init];
+    [self.navigationController pushViewController:disVC animated:YES];
 }
 
 - (void)requestData {

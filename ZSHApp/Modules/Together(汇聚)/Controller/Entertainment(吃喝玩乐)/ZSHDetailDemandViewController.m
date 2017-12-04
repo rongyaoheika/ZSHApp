@@ -51,7 +51,6 @@
     
     _selectedPhotos = [NSMutableArray array];
     _selectedAssets = [NSMutableArray array];
-    [self configCollectionView];
     
     [self initViewModel];
 }
@@ -59,7 +58,7 @@
 - (void)createUI{
     self.title = @"详细要求";
     
-    [self addNavigationItemWithTitles:@[@"发布"] isLeft:NO target:self action:@selector(distributeAction) tags:@[@(1)]];
+    [self addNavigationItemWithTitles:@[@"保存"] isLeft:NO target:self action:@selector(saveAction) tags:@[@(1)]];
     
     
     _titleTextView = [[XXTextView alloc] init];
@@ -68,6 +67,8 @@
     _titleTextView.textContainerInset = UIEdgeInsetsMake(10, 10, 10, 10);
     _titleTextView.font = [UIFont systemFontOfSize:15];
     _titleTextView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
+    ZSHEnterDisModel *model = self.paramDic[@"EnterDisModel"];
+    _titleTextView.text = model.CONVERGETITLE;
     _titleTextView.xx_placeholder = @"标题";
     _titleTextView.xx_placeholderFont = [UIFont systemFontOfSize:15];
     _titleTextView.xx_placeholderColor = KZSHColor454545;
@@ -85,6 +86,7 @@
     _contentTextView.textContainerInset = UIEdgeInsetsMake(10, 10, 10, 10);
     _contentTextView.font = [UIFont systemFontOfSize:15];
     _contentTextView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
+    _contentTextView.text = model.CONVERGEDET;
     _contentTextView.xx_placeholder = @"请输入内容";
     _contentTextView.xx_placeholderFont = [UIFont systemFontOfSize:15];
     _contentTextView.xx_placeholderColor = KZSHColor454545;
@@ -103,14 +105,8 @@
         make.left.mas_equalTo(self.view).offset(kRealValue(25));
         make.size.mas_equalTo(CGSizeMake(kRealValue(200), kRealValue(15)));
     }];
-//
-//    UIButton *addPicBtn = [ZSHBaseUIControl createBtnWithParamDic:@{@"withImage":@(YES),@"normalImage":@"entertainment_add"}];
-//    [self.view addSubview:addPicBtn];
-//    [addPicBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.mas_equalTo(self.view).offset(kRealValue(298.5));
-//        make.left.mas_equalTo(self.view).offset(kRealValue(25));
-//        make.size.mas_equalTo(CGSizeMake(kRealValue(41), kRealValue(41)));
-//    }];
+
+    [self configCollectionView];
 }
 
 - (void)configCollectionView {
@@ -640,16 +636,15 @@
 }
 
 #pragma action
-- (void)distributeAction{
+- (void)saveAction {
     if (_titleTextView.text.length && _contentTextView.text.length) {
         ZSHEnterDisModel *model = self.paramDic[@"EnterDisModel"];
         model.CONVERGETITLE = _titleTextView.text;
         model.CONVERGEDET = _contentTextView.text;
-        model.HONOURUSER_ID = @"d6a3779de8204dfd9359403f54f7d27c";
-        ZSHTogetherLogic *togetherLogic = [[ZSHTogetherLogic alloc] init];
-        [togetherLogic requestAddDetailParty:model.mj_keyValues success:^(id response) {
-            
-        }];
+        if (_saveBlock) {
+            _saveBlock(model);
+        }
+        [self.navigationController popViewControllerAnimated:true];
     }
 }
 

@@ -24,6 +24,8 @@
 #import "ZSHHomeLogic.h"
 #import "ZSHHotelViewController.h"
 #import "ZSHKTVDetailViewController.h"
+#import "PYSearchViewController.h"
+#import "ZSHGoodsTitleContentViewController.h"
 
 static NSString *Identify_HeadCell = @"headCell";
 static NSString *Identify_NoticeCell = @"noticeCell";
@@ -145,8 +147,20 @@ static NSString *Identify_MusicCell = @"musicCell";
 - (void)createUI{
     [self addNavigationItemWithImageName:@"nav_home_more" title:@"三亚" locate:XYButtonEdgeInsetsStyleRight isLeft:YES target:self action:@selector(locateBtnAction) tag:10];
     [self addNavigationItemWithImageName:@"nav_home_menu" isLeft:NO target:self action:@selector(menuBtntClick:) tag:11];
-    self.navigationItem.titleView = self.searchView;
-    self.searchView.searchBar.delegate = self;
+    
+    UIButton *searchBtn = [ZSHBaseUIControl createBtnWithParamDic:@{@"title":@"搜索",@"font":kPingFangRegular(14),@"withImage":@(YES),@"normalImage":@"nav_home_search"}];
+    searchBtn.frame = CGRectMake(0, 0, kRealValue(270), 30);
+    searchBtn.backgroundColor = KZSHColor1A1A1A;
+    searchBtn.layer.cornerRadius = 5.0;
+    searchBtn.layer.masksToBounds = YES;
+    kWeakSelf(self);
+    [searchBtn addTapBlock:^(UIButton *btn) {
+        [weakself searchAction];
+    }];
+    [self.navigationItem setTitleView:searchBtn];
+    
+//    self.navigationItem.titleView = self.searchView;
+//    self.searchView.searchBar.delegate = self;
 
     self.tableView.frame = CGRectMake(0, KNavigationBarHeight + kRealValue(25), KScreenWidth, KScreenHeight-KNavigationBarHeight- kRealValue(25) - KBottomNavH);
     [self.view addSubview:self.tableView];
@@ -404,6 +418,31 @@ static NSString *Identify_MusicCell = @"musicCell";
 }
 
 #pragma action
+- (void)searchAction {
+    // 1. Create an Array of popular search
+    NSArray *hotSeaches = @[@"阿哲", @"散打哥", @"天佑", @"赵小磊", @"赵雷", @"陈山", @"PHP", @"C#", @"Perl", @"Go", @"JavaScript", @"R", @"Ruby", @"MATLAB"];
+    // 2. Create a search view controller
+    kWeakSelf(self);
+    PYSearchViewController *searchViewController = [PYSearchViewController searchViewControllerWithHotSearches:hotSeaches searchBarPlaceholder:NSLocalizedString(@"PYExampleSearchPlaceholderText", @"搜索编程语言") didSearchBlock:^(PYSearchViewController *searchViewController, UISearchBar *searchBar, NSString *searchText) {
+        // Called when search begain.
+        // eg：Push to a temp view conroller
+        ZSHGoodsTitleContentViewController *goodContentVC = [[ZSHGoodsTitleContentViewController alloc]initWithParamDic:@{@"searchText":searchText,KFromClassType:@(FromSearchResultVCTOGoodsTitleVC)}];
+        [weakself.navigationController pushViewController:goodContentVC animated:YES];
+    }];
+    // 3. Set style for popular search and search history
+    searchViewController.hotSearchStyle = PYHotSearchStyleARCBorderTag;
+    searchViewController.searchHistoryStyle = PYSearchHistoryStyleARCBorderTag;
+    searchViewController.searchBarBackgroundColor = KZSHColor1A1A1A;
+    
+    // 4. Set delegate
+    searchViewController.delegate = self;
+    // 5. Present a navigation controller
+    //    RootNavigationController *nav = [[RootNavigationController alloc] initWithRootViewController:searchViewController];
+    //    [self presentViewController:nav animated:YES completion:nil];
+    [self.navigationController pushViewController:searchViewController animated:YES];
+}
+
+
 - (void)menuBtntClick:(UIButton *)menuBtn{
     kWeakSelf(self);
     NSDictionary *nextParamDic = @{KFromClassType:@(ZSHFromHomeMenuVCToBottomBlurPopView)};

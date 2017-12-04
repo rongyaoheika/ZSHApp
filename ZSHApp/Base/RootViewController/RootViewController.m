@@ -10,6 +10,7 @@
 #import "ZSHLoginViewController.h"
 #import <UShareUI/UShareUI.h>
 #import "UIImage+BlurGlass.h"
+#import "PYSearchViewController.h"
 
 @interface RootViewController ()
 

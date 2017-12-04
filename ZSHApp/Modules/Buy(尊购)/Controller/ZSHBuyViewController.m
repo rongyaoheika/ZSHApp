@@ -45,7 +45,6 @@ static NSString *ZSHGoodsListViewID = @"ZSHGoodsListView";
 }
 
 - (void)createUI{
-//    [self.navigationItem setTitleView:self.searchView];
     
     UIButton *searchBtn = [ZSHBaseUIControl createBtnWithParamDic:@{@"title":@"搜索",@"font":kPingFangRegular(14),@"withImage":@(YES),@"normalImage":@"nav_home_search"}];
     searchBtn.frame = CGRectMake(0, 0, kRealValue(270), 30);
@@ -54,11 +53,12 @@ static NSString *ZSHGoodsListViewID = @"ZSHGoodsListView";
     searchBtn.layer.masksToBounds = YES;
     kWeakSelf(self);
     [searchBtn addTapBlock:^(UIButton *btn) {
-        [weakself requestShipDimQuery];
+        [weakself searchAction];
     }];
     [self.navigationItem setTitleView:searchBtn];
     
-    self.searchView.searchBar.delegate = self;
+//    [self.navigationItem setTitleView:self.searchView];
+//    self.searchView.searchBar.delegate = self;
 
     [self addNavigationItemWithImageName:@"nav_buy_mine" isLeft:YES target:self action:@selector(mineBtntAction) tag:11];
     
@@ -191,11 +191,6 @@ static NSString *ZSHGoodsListViewID = @"ZSHGoodsListView";
 
 - (void)scanBtntAction:(UIButton *)scanBtn{
     
-}
-
-- (void)requestShipDimQuery {
-    [self searchAction];
-
 }
 
 

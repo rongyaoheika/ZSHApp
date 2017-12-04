@@ -8,6 +8,10 @@
 
 #import "RootViewController.h"
 
+typedef void(^SaveBlock)(id );
+
 @interface ZSHDetailDemandViewController : RootViewController
+
+@property (nonatomic, copy) SaveBlock saveBlock;
 
 @end

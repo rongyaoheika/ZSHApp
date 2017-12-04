@@ -23,8 +23,10 @@
  */
 
 #define DevelopSever    0
+
 #define TestSever       1
 #define ProductSever    0
+
 
 #if DevelopSever
 
@@ -62,7 +64,7 @@
 
 // 1首页推荐（完成）
 #define kUrlUserHome [NSString stringWithFormat:@"/apphomein/getrecommendlist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"COMMEND"]]
-// 2用户注册
+// 2用户注册 (完成)
 #define kUrlUserRegister [NSString stringWithFormat:@"/appuserin/userregister?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"REGISTER"]]
 // 3用户登录
 //  手机号登录
@@ -71,18 +73,18 @@
 //  卡密登录
 //  参数：CARDNO 登录会员卡号/PASSWORD 登录密码
 #define kUrlUserLoginCard [NSString stringWithFormat:@"/appuserin/userlogincard?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"LOGIN"]]
-// 4获取用户收货地址列表
+// 4获取用户收货地址列表 （完成）
 #define kUrlUserShipAdr [NSString stringWithFormat:@"/appuserin/usershipadr?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SHIPADR"]]
-// 5添加用户收货地址
+// 5添加用户收货地址 （完成）
 //  参数：CONSIGNEE 收货人姓名/ADRPHONE 收货人电话/PROVINCE  收货人所在地区/ADDRESS  收货人详细地址
 #define kUrlUserAddShipAdr [NSString stringWithFormat:@"/appuserin/useraddshipadr?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SHIPADR"]]
-// 6修改用户收货地址
+// 6修改用户收货地址 （完成）
 // 参数：ADDRESS_ID 收货地址ID/CONSIGNEE 收货人姓名/ADRPHONE 收货人电话/PROVINCE 收货人所在地区/ADDRESS 收货人详细地址
 #define kUrlUserEdiShipAdr [NSString stringWithFormat:@"/appuserin/useredishipadr?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SHIPADR"]]
-//7.删除用户收货地址
+//7.删除用户收货地址（完成）
 //参数：ADDRESS_ID 当前收货地址id
 #define kUrlUserDelShipAdr [NSString stringWithFormat:@"/appuserin/userdelshipadr?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SHIPADR"]]
-//8.获取商品具体详情
+//8.获取商品具体详情 （完成）
 //参数：PRODUCT_ID 商品具体id
 //请求地址：/appshipin/shipdetails?SHIPDT(混淆码)
 #define kUrlShipDetails [NSString stringWithFormat:@"/appshipin/shipdetails?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SHIPDT"]]
@@ -98,7 +100,7 @@
 //参数：无参数
 //请求地址：/appshipin/shipbrandlist?SHIPBR(混淆码)
 #define kUrlShipBrandList [NSString stringWithFormat:@"/appshipin/shipbrandlist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SHIPBR"]]
-//12.尊购首页专区点击之后的列表
+//12.尊购首页专区点击之后的列表（完成）
 //参数：BRAND_ID 类型参数id
 //(手表id:1b4ed4c57ef04933b97e8def48fc423a)
 //(包袋id:a34d1f14a4b7481e8284ad4ba97a496b)
@@ -109,11 +111,11 @@
 //(高尔夫汇id：暂无)
 //请求地址：/appshipin/shipprefecture?SHIPPRE(混淆码)
 #define kUrlShipPrefecture [NSString stringWithFormat:@"/appshipin/shipprefecture?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SHIPPRE"]]
-//13.获得用户名下所有订单列表
+//13.获得用户名下所有订单列表 （完成）
 //参数：HONOURUSER_ID 用户id
 //请求地址：/apporderin/orderalllist?ALLORDER(混淆码)
 #define kUrlOrderAllList [NSString stringWithFormat:@"/apporderin/orderalllist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"ALLORDER"]]
-//14.获取用户名带条件查询的订单列表（待付款，待收货，待评价，已完成）
+//14.获取用户名带条件查询的订单列表（待付款，待收货，待评价，已完成）（完成）
 //参数：HONOURUSER_ID 用户id/CONORDER 查询状态
 //（0040001）为待付款状态
 //(0040002) 为待收货状态
@@ -121,19 +123,19 @@
 //(0040004) 为已完成订单状态
 //请求地址：/apporderin/orderconlist?CONORDER(混淆码)
 #define kUrlOrderConList [NSString stringWithFormat:@"/apporderin/orderconlist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"CONORDER"]]
-//15.购物车列表
+//15.购物车列表 （完成）
 //参数：HONOURUSER_ID 用户id
 //请求地址：/apporderin/shoppingcart?SHOPPINGCART(混淆码)
 #define kUrlShoppingCart [NSString stringWithFormat:@"/apporderin/shoppingcart?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SHOPPINGCART"]]
-//16.添加商品到购物车
+//16.添加商品到购物车 （完成）
 //参数: PRODUCT_ID 添加商品id/HONOURUSER_ID 当前用户id
 //请求地址：/apporderin/shoppingcartadd?SHIPCARTADD(混淆码)
 #define kUrlShoppingCartAdd [NSString stringWithFormat:@"/apporderin/shoppingcartadd?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SHIPCARTADD"]]
-//17.从购物车删除商品
+//17.从购物车删除商品 （完成）
 //参数：PRODUCT_ID 删除商品id/HONOURUSER_ID 当前用户id
 //请求地址：/apporderin/shoppingcartdel?SHIPCARTDEL(混淆码)
 #define kUrlShoppingCartDel [NSString stringWithFormat:@"/apporderin/shoppingcartdel?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SHIPCARTDEL"]]
-//18.生成订单接口（未产生交易）状态为待付款（购物车结算）
+//18.生成订单接口（未产生交易）状态为待付款（购物车结算） （完成）
 //参数：ORDERADDRESS 订单地址/ORDERMONEY 订单总金额/ORDERDELIVERY 配送方式（顺丰...）/HONOURUSER_ID         用户id/PRODUCT_ID 生成订单的商品id/PRODUCTCOUNT 商品数量
 //请求地址：/apporderin/shiporder?SHIPORDER(混淆码)
 #define kUrlShipOrder [NSString stringWithFormat:@"/apporderin/shiporder?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SHIPORDER"]]
@@ -145,19 +147,19 @@
 //(0040004) 为已完成订单状态
 //请求地址：/apporderin/shiporderstaupd?SHIPORDERUPD(混淆码)
 #define kUrlShipOrderStauPb [NSString stringWithFormat:@"/apporderin/shiporderstaupd?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SHIPORDERUPD"]]
-//20.尊购里模糊查询
+//20.尊购里模糊查询 （完成）
 //参数：KEYWORDS 关键字
 //请求地址：/appshipin/shipdimquery?SHIPDIMQ(混淆码)
 #define kUrlShipDimQuery [NSString stringWithFormat:@"/appshipin/shipdimquery?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SHIPDIMQ"]]
-//21.炫购收藏列表
+//21.炫购收藏列表 （完成）
 //参数：HONOURUSER_ID 用户id
 //请求地址：/appshipin/shipcollect?SHIPCOL(混淆码)
 #define kUrlShipCollect [NSString stringWithFormat:@"/appshipin/shipcollect?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SHIPCOL"]]
-//22.添加商品到炫购收藏
+//22.添加商品到炫购收藏 （完成）
 //参数：HONOURUSER_ID 用户id/PRODUCT_ID 商品id
 //请求地址：/appshipin/shipcollectadd?SHIPCOLADD(混淆码)
 #define kUrlShipCollectAdd [NSString stringWithFormat:@"/appshipin/shipcollectadd?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SHIPCOLADD"]]
-//23.从炫购收藏删除商品
+//23.从炫购收藏删除商品 （完成）
 //参数：COLLECT_ID 炫购收藏id
 //请求地址：/appshipin/shipcollectdel?SHIPCOLDEL(混淆码)
 #define kUrlShipCollectDel [NSString stringWithFormat:@"/appshipin/shipcollectdel?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SHIPCOLDEL"]]
@@ -181,11 +183,11 @@
 //参数：SORTFOOD_ID 需要查询的店铺id
 //请求地址：/appsfoodin/sfoodserv?SFOODSERV(混淆码)
 #define kUrlSFoodServ [NSString stringWithFormat:@"/appsfoodin/sfoodserv?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SFOODSERV"]]
-//29.获得所有私人定制列表接口
+//29.获得所有私人定制列表接口 （完成）
 //参数：无参数
 //请求地址：/apppersonalin/personallist?PERSONAL(混淆码)
 #define kUrlPersonalList [NSString stringWithFormat:@"/apppersonalin/personallist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"PERSONAL"]]
-//30.获取私人订制详情接口
+//30.获取私人订制详情接口 （完成）
 //参数：PERSONAL_ID 私人定制id
 //请求地址：/apppersonalin/personaldet?PERSONALDET(混淆码)
 #define kUrlPersonalDet [NSString stringWithFormat:@"/apppersonalin/personaldet?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"PERSONALDET"]]
@@ -217,19 +219,19 @@
 //参数：NEWS_ID 评价新闻id/HONOURUSER_ID 评价用户id /NEWSEVACONTENT 评论内容
 //请求地址：/apphomein/getnewsevaadd?NEWSEVAADD(混淆码)
 #define kUrlGetNewsEvaAdd [NSString stringWithFormat:@"/apphomein/getnewsevaadd?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"NEWSEVAADD"]]
-//38.获取汇聚列表接口
+//38.获取汇聚列表接口 （完成）
 //参数：无参数
 //请求地址：/appconvergein/convergelist?CONVERGELIST(混淆码)
 #define kUrlConvergeList [NSString stringWithFormat:@"/appconvergein/convergelist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"CONVERGELIST"]]
-//39.获得指定汇聚下所有聚会列表
+//39.获得指定汇聚下所有聚会列表 （完成）
 //参数：CONVERGE_ID 汇聚列表下汇聚id
 //请求地址：/appconvergein/getpartylist?PARTYLIST(混淆码)
 #define kUrlGetPartyList [NSString stringWithFormat:@"/appconvergein/getpartylist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"PARTYLIST"]]
-//40.查看指定聚会详情
+//40.查看指定聚会详情 （完成）
 //参数：CONVERGEDETAIL_ID 指定聚会id
 //请求地址：/appconvergein/getdetailbyid?DETAILID(混淆码)
 #define kUrlGetDetaiByID [NSString stringWithFormat:@"/appconvergein/getdetailbyid?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"DETAILID"]]
-//41.发布聚会
+//41.发布聚会 （完成）
 //参数：STARTTIME 聚会开始时间/ENDTIME 聚会结束时间/PRICEMIN 期望价格最低值/PRICEMAX 期望价格最高值/
 //CONVERGEPER 人数要求/CONVERGESEX 性别要求（0为女1为男2为不限）/AGEMIN 年龄要求下限/
 //AGEMAX 年龄要求上限/CONVERGETYPE 聚会方式/CONVERGEDET 聚会详细要求/
@@ -265,7 +267,7 @@
 //参数：ORDERSTATUS 订单状态编码/HONOURUSER_ID 提交订单的用户id /ORDERNUMBER 订单编号
 //请求地址：/appshotelin/shiporderstaupd?SHIPHORELORDERUPD(混淆码)
 #define kUrlShipOrderStauPd [NSString stringWithFormat:@"/appshotelin/shiporderstaupd?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SHIPHORELORDERUPD"]]
-//49.获得用户名下所有酒店订单列表
+//49.获得用户名下所有酒店订单列表 （完成）
 //参数：HONOURUSER_ID 需要查询的用户id    /ORDERSTATUS
 //（0040001）为待付款状态
 //(0040002) 为待使用状态
@@ -302,7 +304,7 @@
 //参数：ORDERSTATUS 订单状态编码/HONOURUSER_ID 提交订单的用户id /ORDERNUMBER 订单编号
 //请求地址：/appsktvin/shipktvstaupd?SHIPKTVORDERUPD(混淆码)
 #define kUrlShipKtvStauPd [NSString stringWithFormat:@"/appsktvin/shipktvstaupd?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SHIPKTVORDERUPD"]]
-//57 获得用户名下所有KTV订单列表
+//57 获得用户名下所有KTV订单列表 （完成）
 //参数：HONOURUSER_ID 需要查询的用户id
 //请求地址：/appsktvin/ktvorderalllist?ALLKTVORDER(混淆码)
 #define kUrlKtvOrderAllList [NSString stringWithFormat:@"/appsktvin/ktvorderalllist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"ALLKTVORDER"]]
@@ -310,7 +312,7 @@
 //参数：SORTKTV_ID 某KTVid
 //请求地址：/appsktvin/ktvdetaillist?KTVDETAIL(混淆码)
 #define kUrlKtvDetailList [NSString stringWithFormat:@"/appsktvin/ktvdetaillist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"KTVDETAIL"]]
-//59. 根据状态获取轮播图
+//59. 根据状态获取轮播图 （完成）
 //参数：无
 //请求地址：/appshipin/scarouselfigure?SCAROUSELFIGURE(混淆码)
 #define kUrlScarouselfigure [NSString stringWithFormat:@"/appshipin/scarouselfigure?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SCAROUSELFIGURE"]]
@@ -361,14 +363,10 @@
 //返回参数：EVALUATEDATE     评价日期/EVALUATECONTENT 评价内容/PORTRAIT 用户头像/NICKNAME 用户昵称
 #define kUrlBarevaList [NSString stringWithFormat:@"/appsbarin/barevalist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"BAREVA"]]
 
-//70.用户上传头像的方法
+//70.用户上传头像的方法 （完成）
 //参数：HONOURUSER_ID 上传头像人员id
 //请求地址：/appuserin/up?UPPORT
 #define kUrlUp [NSString stringWithFormat:@"/appuserin/up?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"UPPORT"]]
-
-
-
-
 
 //71. 获得某家酒吧的综合评价
 //参数：SORTBAR_ID   酒吧的id
@@ -395,7 +393,7 @@
 //参数：ORDERSTATUS 订单状态编码/HONOURUSER_ID 提交订单的用户id /ORDERNUMBER 订单编号
 //请求地址：/appsbarin/updbarstaupd.do?&UPDBARORDERUPD(混淆码)
 #define kUrlUpdBarStauPd [NSString stringWithFormat:@"/appsbarin/updbarstaupd.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"UPDBARORDERUPD"]]
-//77.获得用户名下所有酒吧订单列表
+//77.获得用户名下所有酒吧订单列表 （完成）
 //参数：HONOURUSER_ID 需要查询的用户id  /ORDERSTATUS
 //（0040001）为待付款状态
 //(0040002) 为待使用状态

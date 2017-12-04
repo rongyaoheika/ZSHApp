@@ -9,7 +9,6 @@
 #import "ZSHEntertainmentDetailViewController.h"
 #import "ZSHEntertainmentHeadView.h"
 #import "ZSHEntertainmentDetailCell.h"
-#import "ZSHEntertainmentDisViewController.h"
 #import "ZSHTogetherLogic.h"
 
 @interface ZSHEntertainmentDetailViewController ()
@@ -38,8 +37,6 @@ static NSString *ZSHEntertainmentDetailCellID = @"ZSHEntertainmentDetailCell";
 
 - (void)createUI{
     self.title = @"吃喝玩乐";
-    
-    [self addNavigationItemWithTitles:@[@"去发布"] isLeft:NO target:self action:@selector(distributeAction) tags:@[@(1)]];
     
     self.tableView.frame = CGRectMake(0, KNavigationBarHeight, KScreenWidth, kScreenHeight - KNavigationBarHeight - KBottomNavH);
     [self.view addSubview:self.tableView];
@@ -119,11 +116,6 @@ static NSString *ZSHEntertainmentDetailCellID = @"ZSHEntertainmentDetailCell";
 #pragma action
 - (void)contactAction{
     
-}
-
-- (void)distributeAction{
-    ZSHEntertainmentDisViewController *disVC = [[ZSHEntertainmentDisViewController alloc]init];
-    [self.navigationController pushViewController:disVC animated:YES];
 }
 
 #pragma getter

@@ -18,7 +18,8 @@ static NSString *cellIdentifier = @"listCell";
 
 @property (nonatomic, strong) NSMutableArray *dataArr;
 @property (nonatomic, strong) ZSHMineLogic   *mineLogic;
-
+@property (nonatomic, strong) UIImageView    *emptyView;
+@property (nonatomic, strong) UILabel        *emptyNotice;
 
 @end
 
@@ -32,14 +33,10 @@ static NSString *cellIdentifier = @"listCell";
 }
 
 - (void)loadData{
-    self.dataArr = [[NSMutableArray alloc]init];
-//    for (int i = 0; i<5; i++) {
-//        NSDictionary *dataDic = @{@"imageName":@"good_watch_little",@"descText":@"卡地亚Cartier伦敦SOLO手表 石英男表W6701005",@"bottomText":@"共1件商品 实付款¥49200",@"result":@"已发货"};
-//        ZSHOrderModel *orderModel = [ZSHOrderModel modelWithDictionary:dataDic];
-//        [self.dataArr addObject:orderModel];
-//    }
-    [self initViewModel];
+    _dataArr = [[NSMutableArray alloc] init];
     _mineLogic = [[ZSHMineLogic alloc] init];
+    
+    [self initViewModel];
     [self requestData];
 }
 
@@ -52,12 +49,38 @@ static NSString *cellIdentifier = @"listCell";
     self.tableView.delegate = self.tableViewModel;
     self.tableView.dataSource = self.tableViewModel;
     
+    
+    _emptyView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"order_empty"]];
+    _emptyView.hidden  = false;
+    [self.view addSubview:_emptyView];
+    [_emptyView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(self.view).offset(69);
+        make.centerX.mas_equalTo(self.view);
+        make.size.mas_equalTo(CGSizeMake(170, 165));
+    }];
+    
+    _emptyNotice = [ZSHBaseUIControl createLabelWithParamDic:@{@"text":@"没有找到你想要的～",@"font":kPingFangMedium(12),@"textColor":KZSHColor929292}];
+    _emptyNotice.hidden = true;
+    [self.view addSubview:_emptyNotice];
+    [_emptyNotice mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(self.view).offset(323);
+        make.centerX.mas_equalTo(self.view);
+        make.size.mas_equalTo(CGSizeMake(120, 17));
+    }];
 }
 
 - (void)initViewModel {
     [self.tableViewModel.sectionModelArray removeAllObjects];
     [self.tableViewModel.sectionModelArray addObject:[self storeListSection]];
     [self.tableView reloadData];
+    
+    if (_dataArr.count) {
+        _emptyView.hidden = true;
+        _emptyNotice.hidden = true;
+    } else {
+        _emptyView.hidden = false;
+        _emptyNotice.hidden = false;
+    }
 }
 
 //list
@@ -77,6 +100,7 @@ static NSString *cellIdentifier = @"listCell";
             }
             //            weakcellModel.height = [ZSHOrderCell getCellHeightWithModel:orderModel];
             ZSHBaseModel *orderModel = weakself.dataArr[indexPath.row];
+            
             if ([self.paramDic[@"tag"] integerValue] == 0) {// 尊购
                 [cell updateCellWithModel:orderModel];
             } else if ([self.paramDic[@"tag"] integerValue] == 3) {// 酒店订单
@@ -101,10 +125,7 @@ static NSString *cellIdentifier = @"listCell";
 
 - (void)requestData {
     kWeakSelf(self);
-   
-    
     NSArray *urls = @[@"", @"", @"", kUrlHotelOrderAllList, kUrlKtvOrderAllList, @"", kUrlBarorderAllList, @""];
-    
     if ([self.paramDic[@"tag"] integerValue] == 0) {
          if ([self.paramDic[@"ORDERSTATUS"] isEqualToString:@""]) {// 带条件查询
              [_mineLogic requestOrderAllList:^(id response) {

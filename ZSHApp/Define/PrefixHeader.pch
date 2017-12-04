@@ -35,7 +35,8 @@
 #import "ZSHSpeedy.h"
 #import "ZSHBaseCell.h"
 #import "ZSHBaseFunction.h"
-
+#import "NSArray+Log.h"
+#import "NSDictionary+Log.h"
 
 //第三方
 #import <YYKit.h>

@@ -177,8 +177,12 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
                     _togetherLogic.enterDisModel.AGEMAX = arr[1];
                 };
             } else if (indexPath.row == 7) {//详细要求
-                ZSHDetailDemandViewController *hotelDetailVC = [[ZSHDetailDemandViewController alloc] initWithParamDic:@{@"EnterDisModel":_togetherLogic.enterDisModel}];
-                [weakself.navigationController pushViewController:hotelDetailVC animated:YES];
+                ZSHDetailDemandViewController *demandDetailVC = [[ZSHDetailDemandViewController alloc] initWithParamDic:@{@"EnterDisModel":_togetherLogic.enterDisModel}];
+                
+                demandDetailVC.saveBlock = ^(ZSHEnterDisModel *model) {
+                    weakself.togetherLogic.enterDisModel = model;
+                };
+                [weakself.navigationController pushViewController:demandDetailVC animated:YES];
             }
         };
     }
@@ -187,7 +191,16 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 
 #pragma action
 - (void)distributeAction{
-    
+    kWeakSelf(self);
+    _togetherLogic.enterDisModel.HONOURUSER_ID = @"d6a3779de8204dfd9359403f54f7d27c";
+    [_togetherLogic requestAddDetailParty:_togetherLogic.enterDisModel.mj_keyValues success:^(id response) {
+        UIAlertController *ac = [UIAlertController alertControllerWithTitle:@"提示" message:@"发布成功" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+            [weakself.navigationController popViewControllerAnimated:true];
+        }];
+        [ac addAction:cancelAction];
+        [weakself presentViewController:ac animated:YES completion:nil];
+    }];
 }
 
 #pragma getter

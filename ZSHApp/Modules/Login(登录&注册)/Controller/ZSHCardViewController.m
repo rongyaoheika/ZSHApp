@@ -17,6 +17,7 @@
 #import "ZSHCardPayCell.h"
 #import "ZSHCardCommitBottomView.h"
 #import "ZSHLoginLogic.h"
+#import "ZSHRegisterModel.h"
 
 @interface ZSHCardViewController ()
 
@@ -25,7 +26,7 @@
 @property (nonatomic, strong) NSArray            *paramArr;
 @property (nonatomic, assign) CGFloat            *headHeight;
 @property (nonatomic, strong) NSMutableArray     *selectedArr;
-
+@property (nonatomic, strong) ZSHRegisterModel   *registerModel;
 
 
 
@@ -43,6 +44,7 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
 }
 
 - (void)loadData{
+    _registerModel = [[ZSHRegisterModel alloc] init];
     self.imageArr = @[@"glory_card_big",@"glory_card_big",@"glory_card_big"];
     _selectedArr = [NSMutableArray arrayWithObjects:@"0",@"0",@"0",@"0",@"0",@"0",@"0", nil];
     [self initViewModel];
@@ -270,6 +272,7 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
                     cellModel.height = kRealValue(1420);
                     cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
                         ZSHSelectCardNumCell *cell = [[ZSHSelectCardNumCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@""];
+                        
 //                        [cell selectedByIndex:1];
 //                        weakcellModel.height = [cell rowHeightWithCellModel:nil];
                         return cell;

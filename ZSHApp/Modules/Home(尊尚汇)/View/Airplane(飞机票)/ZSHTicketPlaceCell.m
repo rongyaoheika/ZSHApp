@@ -7,6 +7,7 @@
 //
 
 #import "ZSHTicketPlaceCell.h"
+#import "ZSHCityViewController.h"
 
 @interface ZSHTicketPlaceCell()
 
@@ -20,6 +21,7 @@
 @implementation ZSHTicketPlaceCell
 
 - (void)setup{
+    kWeakSelf(self);
     _beginPlaceBtn = [[YYLabel alloc] init];
     _beginPlaceBtn.text = @"北京";
     _beginPlaceBtn.font = kPingFangMedium(17);
@@ -28,7 +30,7 @@
     _beginPlaceBtn.textAlignment = NSTextAlignmentLeft;
     _beginPlaceBtn.textVerticalAlignment = YYTextVerticalAlignmentCenter;
     _beginPlaceBtn.textTapAction = ^(UIView * _Nonnull containerView, NSAttributedString * _Nonnull text, NSRange range, CGRect rect) {
-        
+        [weakself selectCity];
     };
     [self addSubview:_beginPlaceBtn];
     [_beginPlaceBtn mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -54,7 +56,7 @@
     _endPlaceBtn.textAlignment = NSTextAlignmentRight;
     _endPlaceBtn.textVerticalAlignment = YYTextVerticalAlignmentCenter;
     _endPlaceBtn.textTapAction = ^(UIView * _Nonnull containerView, NSAttributedString * _Nonnull text, NSRange range, CGRect rect) {
-        
+        [weakself selectCity];
     };
     [self addSubview:_endPlaceBtn];
     [_endPlaceBtn mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -64,6 +66,12 @@
         make.height.mas_equalTo(_beginPlaceBtn);
     }];
     
+}
+
+
+- (void)selectCity {
+    ZSHCityViewController *cityVC = [[ZSHCityViewController alloc]init];
+    [[kAppDelegate getCurrentUIVC].navigationController pushViewController:cityVC animated:YES];
 }
 
 @end
