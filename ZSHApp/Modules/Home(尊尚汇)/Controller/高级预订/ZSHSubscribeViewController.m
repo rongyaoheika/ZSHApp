@@ -275,16 +275,6 @@
     
     NSDictionary *noticeDetailLabelDic = @{@"text":@"", @"font":kPingFangRegular(12),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentLeft)};
     _noticeDetailLabel = [ZSHBaseUIControl createLabelWithParamDic:noticeDetailLabelDic];
-    
-    NSMutableParagraphStyle *contentStyle = [[NSMutableParagraphStyle alloc] init];
-    contentStyle.lineSpacing = 6.0; //设置行间距
-    contentStyle.paragraphSpacing = 4.0;
-    NSDictionary *contentDic = @{
-                          NSParagraphStyleAttributeName:contentStyle,
-                          NSKernAttributeName:@0.11f
-                          };
-    //self.dataArr[6]
-    _noticeDetailLabel.attributedText = [[NSAttributedString alloc] initWithString:@"bb" attributes:contentDic];
     _noticeDetailLabel.numberOfLines = 0;
     [_scrollView addSubview:_noticeDetailLabel];
     [_noticeDetailLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -315,6 +305,13 @@
     _contentLabel.text = _listDataDicArr[0][@"PUPINTROCONTENT"];
     _noticeLabel.text = _listDataDicArr[0][@"PDOWNINTROTITLE"];
     _noticeDetailLabel.text = _listDataDicArr[0][@"PDOWNINTROCONTENT"];
+    
+    NSMutableParagraphStyle  *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    [paragraphStyle  setLineSpacing:5];
+    [paragraphStyle setParagraphSpacing:22];
+    NSMutableAttributedString  *setString = [[NSMutableAttributedString alloc] initWithString:_listDataDicArr[0][@"PDOWNINTROCONTENT"]];
+    [setString  addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, [_listDataDicArr[0][@"PDOWNINTROCONTENT"] length])];
+    [_noticeDetailLabel  setAttributedText:setString];
     
 }
 

@@ -23,9 +23,8 @@
  */
 
 #define DevelopSever    0
-
-#define TestSever       1
-#define ProductSever    0
+#define TestSever       0
+#define ProductSever    1
 
 
 #if DevelopSever
@@ -171,15 +170,15 @@
 //参数：SORTFOOD_ID 店铺id/HONOURUSER_ID 评价用户id/EVALUATECONTENT 评价内容/EVALUATECOINT 评价分数
 //请求地址：/appsfoodin/sfoodaddeva?SFOODADDEVA（混淆码）
 #define kUrlSFoodAddEva [NSString stringWithFormat:@"/appsfoodin/sfoodaddeva?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SFOODADDEVA"]]
-//26.美食店铺综合评价分数
+//26.美食店铺综合评价分数（暂无用）
 //参数：SORTFOOD_ID 需要查询的店铺id
 //请求地址：/appsfoodin/sfoodmeaneva?SFOODMEANEVA(混淆码)
 #define kUrlSFoodMeanEva [NSString stringWithFormat:@"/appsfoodin/sfoodmeaneva?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SFOODMEANEVA"]]
-//27.获得某家店铺评价数量
+//27.获得某家店铺评价数量（暂无用）
 //参数：SORTFOOD_ID 需要查询的店铺id
 //请求地址：/appsfoodin/sfoodcounteva?SFOODCOUNTEVA(混淆码)
 #define kUrlSFoodCountEva [NSString stringWithFormat:@"/appsfoodin/sfoodcounteva?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SFOODCOUNTEVA"]]
-//28.获得某家店铺具体服务接口
+//28.获得某家店铺具体服务接口（暂无用）
 //参数：SORTFOOD_ID 需要查询的店铺id
 //请求地址：/appsfoodin/sfoodserv?SFOODSERV(混淆码)
 #define kUrlSFoodServ [NSString stringWithFormat:@"/appsfoodin/sfoodserv?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SFOODSERV"]]
@@ -195,7 +194,7 @@
 //参数：from 始发站/to 终点站/date 出发日期/tt 是否为高铁动车（不打勾不需要传递，打勾需要传递’D’）
 //请求地址：/apppersonalin/trainselect?TRAINSELECT(混淆码)
 #define kUrlTrainSelect [NSString stringWithFormat:@"/apppersonalin/trainselect?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"TRAINSELECT"]]
-//32.首页中获取所有特权接口
+//32.首页中获取所有特权接口（完成）
 //参数：无参数
 //请求地址：/apphomein/privilegelist?PRIVILIST(混淆码)
 #define kUrlPrivilegelist [NSString stringWithFormat:@"/apphomein/privilegelist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"PRIVILIST"]]
@@ -203,7 +202,7 @@
 //参数：PRIVILEGE_ID 特权id
 //请求地址：/apphomein/privilegedet?PRIVIDET(混淆码)
 #define kUrlPrivilegeDet [NSString stringWithFormat:@"/apphomein/privilegedet?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"PRIVIDET"]]
-//34.首页中新闻标题列表
+//34.首页中新闻标题列表（完成）
 //参数：暂无
 //请求地址：/apphomein/getnewslist?NEWSLIST(混淆码)
 #define kUrlGetNewsList [NSString stringWithFormat:@"/apphomein/getnewslist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"NEWSLIST"]]
@@ -242,15 +241,15 @@
 //参数：SORTHOTEL_ID 酒店id
 //请求地址：/appshotelin/shotel.do?SORTHOTEL（混淆码）
 #define kUrlSHotelDo [NSString stringWithFormat:@"/appshotelin/shotel.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SORTHOTEL"]]
-//43. 获得某家酒店的综合评价
+//43. 获得某家酒店的综合评价（暂时无用）
 //参数：SORTHOTEL_ID 酒店id
 //请求地址：/appshotelin/shotelmeaneva?SHOTELMEANEVA（混淆码）
 #define kUrlSHotelMeanEva [NSString stringWithFormat:@"/appshotelin/shotelmeaneva?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SHOTELMEANEVA"]]
-//44. 获得某家店铺的评价数量
+//44. 获得某家店铺的评价数量（暂时无用）
 //参数：SORTHOTEL_ID酒店id
 //请求地址：/appshotelin/shotelcounteva?SHOTELCOUNTEVA(混淆码)
 #define kUrlSHotelCountEva [NSString stringWithFormat:@"/appshotelin/shotelcounteva?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SHOTELCOUNTEVA"]]
-//45. 获得某家酒店的具体服务接口
+//45. 获得某家酒店的具体服务接口（暂时无用）
 //参数：SHOP_ID 对应店铺id
 //请求地址：/appshotelin/shotelserv?SHOTELSERV(混淆码)
 #define kUrlSHotelServ [NSString stringWithFormat:@"/appshotelin/shotelserv?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SHOTELSERV"]]
@@ -279,15 +278,15 @@
 //参数：SORTHOTEL_ID 某酒店id
 //请求地址：/appshotelin/hoteldetaillist?HOTELDETAIL(混淆码)
 #define kUrlHotelDetailList [NSString stringWithFormat:@"/appshotelin/hoteldetaillist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"HOTELDETAIL"]]
-//51. 获得某家KTV的综合评价
+//51. 获得某家KTV的综合评价（暂时无用）
 //参数：SORTKTV_ID   KTV的id
 //请求地址：/appsktvin/sktvmeaneva?SKTVMEANEVA（混淆码）
 #define kUrlSKtvMeanEva [NSString stringWithFormat:@"/appsktvin/sktvmeaneva?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SKTVMEANEVA"]]
-//52. 获得某家KTV的评价数量
+//52. 获得某家KTV的评价数量（暂时无用）
 //参数：SORTKTV_ID   KTV的id
 //请求地址：/appsktvin/sktvcounteva?SKTVCOUNTEVA(混淆码)
 #define kUrlSKtvMeanEva [NSString stringWithFormat:@"/appsktvin/sktvmeaneva?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SKTVMEANEVA"]]
-//53. 获得某家KTV的具体服务接口
+//53. 获得某家KTV的具体服务接口（暂时无用）
 //参数：SHOP_ID 对应KTV的id
 //请求地址：/appsktvin/sktvserv?SKTVSERV(混淆码)
 #define kUrlSKtvServ [NSString stringWithFormat:@"/appsktvin/sktvserv?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SKTVSERV"]]
@@ -368,15 +367,19 @@
 //请求地址：/appuserin/up?UPPORT
 #define kUrlUp [NSString stringWithFormat:@"/appuserin/up?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"UPPORT"]]
 
-//71. 获得某家酒吧的综合评价
+
+
+
+
+//71. 获得某家酒吧的综合评价（暂时无用）
 //参数：SORTBAR_ID   酒吧的id
 //请求地址：/appsbarin/getbarmeaneva.do?GETBARMEANEVA（混淆码）
 #define kUrlGetBarmeanEva [NSString stringWithFormat:@"/appsbarin/getbarmeaneva.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"GETBARMEANEVA"]]
-//72. 获得某家酒吧的评价数量
+//72. 获得某家酒吧的评价数量 （暂时无用）
 //参数：SORTBAR_ID   BAR的id
 //请求地址：/appsbarin/getbarcounteva.do?GETBARCOUNTEVA(混淆码)
 #define kUrlGetBarcountEva [NSString stringWithFormat:@"/appsbarin/getbarcounteva.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"GETBARCOUNTEVA"]]
-//73. 获得某家酒吧的具体服务接口
+//73. 获得某家酒吧的具体服务接口（暂时无用）
 //参数：SHOP_ID 对应酒吧的id
 //请求地址：/appsbarin/sbarserv.do?SBARSERV(混淆码)
 #define kUrlSBarServ [NSString stringWithFormat:@"/appsbarin/sbarserv.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SBARSERV"]]

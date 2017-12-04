@@ -52,10 +52,10 @@
 
                         @"ZSHPersonalTailorViewController",   //私人定制
                         
-                        @"ZSHTitleContentViewController",     //马术
-                        @"ZSHTitleContentViewController",     //游艇
-                        @"ZSHTitleContentViewController",     //豪车
-                        @"ZSHTitleContentViewController",     //高尔夫汇
+                        @"ZSHGoodsViewController",            //品牌杂志
+                        @"ZSHTitleContentViewController",     //健康养生
+                        @"ZSHTitleContentViewController",     //高端品鉴
+                        @"ZSHTitleContentViewController",     //定制理财
                       
                         
 //                        @"ZSHSubscribeViewController",//品牌杂志
@@ -78,7 +78,7 @@
                       @{KFromClassType:@(FromGolfVCToTitleContentVC)},
                       @{@"title":@"私人定制"},
                       
-                      @{KFromClassType:@(FromHorseVCToTitleContentVC)},
+                      @{@"currentSelectIndex":@(13)}, //品牌杂志
                       @{KFromClassType:@(FromShipVCToTitleContentVC)},
                       @{KFromClassType:@(FromLuxcarVCToTitleContentVC)},
                       @{KFromClassType:@(FromGolfVCToTitleContentVC)},

@@ -202,7 +202,7 @@
 }
 
 - (void)headerRereshing{
-    
+    [_tableView.mj_footer endRefreshing];
 }
 
 - (void)footerRereshing{

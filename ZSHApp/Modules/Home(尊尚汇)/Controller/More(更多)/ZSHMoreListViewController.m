@@ -55,7 +55,7 @@ static NSString *ZSHMoreListCellID = @"ZSHMoreListCell";
         }
         case FromShipVCToTitleContentVC:{//游艇
             _shopType = ZSHShipType;
-            _pushNextParamDic = @{KFromClassType:@(ZSHShipType),@"title":@"游艇"},
+            _pushNextParamDic = @{KFromClassType:@(ZSHShipType),@"title":@"游艇"};
             [_moreLogic requestYachtListWithParamDic:paramDic success:^(NSArray *golfDicArr) {
                 weakself.listDataArr = golfDicArr;
                 [weakself initViewModel];
@@ -75,7 +75,7 @@ static NSString *ZSHMoreListCellID = @"ZSHMoreListCell";
         }
         case FromLuxcarVCToTitleContentVC:{//豪车
             _shopType = ZSHLuxcarType;
-            _pushNextParamDic = @{KFromClassType:@(ZSHLuxcarType),@"title":@"豪车",},
+            _pushNextParamDic = @{KFromClassType:@(ZSHLuxcarType),@"title":@"豪车"};
             [_moreLogic requestLuxcarListWithParamDic:paramDic success:^(NSArray *golfDicArr) {
                 weakself.listDataArr = golfDicArr;
                 [weakself initViewModel];

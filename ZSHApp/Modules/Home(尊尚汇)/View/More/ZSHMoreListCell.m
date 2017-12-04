@@ -89,6 +89,9 @@
     }  else if (_shopType == ZSHGolfType) {//高尔夫列表
         _nameLabel.text = dic[@"GOLFNAMES"];
         _addressLabel.text = dic[@"GOLFADDRESS"];
+    } else if (_shopType == ZSHLuxcarType) {//豪车
+        _nameLabel.text = dic[@"LUXCARNAMES"];
+        _addressLabel.text = dic[@"LUXCARADDRESS"];
     }
     
     

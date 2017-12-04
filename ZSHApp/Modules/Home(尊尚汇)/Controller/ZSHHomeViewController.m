@@ -81,7 +81,7 @@ static NSString *Identify_MusicCell = @"musicCell";
                       @{KFromClassType:@(FromHotelVCToTitleContentVC)},
                       @{KFromClassType:@(ZSHFromHomeTrainVCToAirPlaneVC),@"title":@"火车票预订"},
                       @{KFromClassType:@(ZSHHomeAirPlaneVCToAirPlaneVC),@"title":@"机票预订"},
-                      @{KFromClassType:@(ZSHHorseType)},  //马术
+                      @{KFromClassType:@(FromHorseVCToTitleContentVC)},  //马术
                       @{KFromClassType:@(FromShipVCToTitleContentVC)},   //游艇
                       @{KFromClassType:@(FromLuxcarVCToTitleContentVC)}, //豪车
                       @{}
