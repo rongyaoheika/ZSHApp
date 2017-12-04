@@ -513,7 +513,15 @@
 //请求地址：/appsbarin/sbarlistsequence.do?SORTBARSEQUENCE(混淆码)
 #define kUrlSbarListSequence [NSString stringWithFormat:@"/appsbarin/sbarlistsequence.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SORTBARSEQUENCE"]]
 
-
+//4.获得美食套餐页列表 FOODDETAIL
+//http://localhost:8081/ZSHINTER//appsfoodin/fooddetaillist.do?FOODDETAIL&SORTFOOD_ID=382585520535896064
+//5.生成美食订单接口（未产生交易）SHIPFOODORDER
+//http://localhost:8081/ZSHINTER//appsfoodin/shipfoodorder.do?SHIPFOODORDER&ORDERUNAME=yu&ORDERPHONE=17601680524&ORDERREMARK=不要辣&ORDERMONEY=136&ORDERROOMNUM=1&ORDERCHECKDATE=2017-8-14&ORDERLEAVEDATE=2017-8-14&FOODDETAIL_ID=387192633518194688&HONOURUSER_ID=d6a3779de8204dfd9359403f54f7d27c
+//6.获得用户名下所有美食订单列表     ALLFOODORDER
+//http://localhost:8081/ZSHINTER//appsfoodin/foodorderalllist.do?ALLFOODORDER&HONOURUSER_ID=d6a3779de8204dfd9359403f54f7d27c&ORDERSTATUS=0040001
+//
+//7.修改美食订单状态(改为支付成功)   SHIPFOODORDERUPD
+//http://localhost:8081/ZSHINTER//appsfoodin/shiporderstaupd.do?SHIPFOODORDERUPD&ORDERSTATUS=0040002&HONOURUSER_ID=d6a3779de8204dfd9359403f54f7d27c&ORDERNUMBER=171204145440166937d27c
 
 
 #endif /* URLMacros_h */

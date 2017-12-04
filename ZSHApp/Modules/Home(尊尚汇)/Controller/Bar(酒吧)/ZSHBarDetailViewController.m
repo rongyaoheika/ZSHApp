@@ -28,9 +28,6 @@
 @property (nonatomic, strong) NSArray                   *barDetailListDicArr;
 @property (nonatomic, strong) NSArray                   *modelNameArr;
 
-@property (nonatomic, strong) NSArray                   *hotelDetailListDicArr;
-@property (nonatomic, strong) NSArray                   *hotelDetailListModelArr;
-
 @property (nonatomic, strong) ZSHBottomBlurPopView      *bottomBlurPopView;
 @property (nonatomic, copy)   NSString                  *liveInfoStr;
 @property (nonatomic, assign) BOOL                      showSeparatorLine;
@@ -135,6 +132,7 @@ static NSString *ZSHHotelListCellID = @"ZSHHotelListCell";
     cellModel.height = kRealValue(80);
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHHotelDetailDeviceCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHHotelDetailDeviceCellID forIndexPath:indexPath];
+        cell.showCellType = ZSHNormalType;
         cell.shopType = ZSHBarShopType;
         [cell updateCellWithParamDic:weakself.barDetailDic];
         [self hideSeparatorLineWithCell:cell hide:YES];
@@ -222,9 +220,10 @@ static NSString *ZSHHotelListCellID = @"ZSHHotelListCell";
     cellModel.height = kRealValue(65);
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHHotelCalendarCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHHotelCalendarCellID forIndexPath:indexPath];
+        [weakself hideSeparatorLineWithCell:cell hide:YES];
         _liveInfoStr = @"8-8入住，8-9离开，1天";
         cell.dateViewTapBlock = ^(NSInteger tag) {//tag = 1入住
-            NSDictionary *paramDic = _hotelDetailListDicArr[indexPath.row];
+            NSDictionary *paramDic = _barDetailListDicArr[indexPath.row];
             NSDictionary *nextParamDic = @{KFromClassType:@(ZSHFromHotelDetailCalendarVCToBottomBlurPopView),@"dic":paramDic};
             self.bottomBlurPopView = [weakself createBottomBlurPopViewWithParamDic:nextParamDic];
             [kAppDelegate.window addSubview:self.bottomBlurPopView];
@@ -251,10 +250,10 @@ static NSString *ZSHHotelListCellID = @"ZSHHotelListCell";
         };
         
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
-//            NSDictionary *paramDic = _hotelDetailListDicArr[indexPath.row];
-//            NSDictionary *nextParamDic = @{KFromClassType:@(ZSHFromHotelDetailConfirmOrderVCToBottomBlurPopView),@"deviceDic":weakself.hotelDetailParamDic,@"listDic":paramDic,@"liveInfoStr":_liveInfoStr};
-//            weakself.bottomBlurPopView = [weakself createBottomBlurPopViewWithParamDic:nextParamDic];
-//            [kAppDelegate.window addSubview:weakself.bottomBlurPopView];
+            NSDictionary *paramDic = _barDetailListDicArr[indexPath.row];
+            NSDictionary *nextParamDic = @{KFromClassType:@(ZSHConfirmOrderToBottomBlurPopView),@"shopType":@(ZSHBarShopType), @"deviceDic":_barDetailDic,@"listDic":paramDic,@"liveInfoStr":@"酒吧无此字段"};
+            weakself.bottomBlurPopView = [weakself createBottomBlurPopViewWithParamDic:nextParamDic];
+            [kAppDelegate.window addSubview:weakself.bottomBlurPopView];
         };
     }
     

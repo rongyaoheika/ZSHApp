@@ -125,6 +125,7 @@ static NSString *ZSHKTVListCellID = @"ZSHKTVListCell";
     cellModel.height = kRealValue(80);
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHHotelDetailDeviceCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHHotelDetailDeviceCellID forIndexPath:indexPath];
+        cell.showCellType = ZSHNormalType;
         cell.shopType = ZSHKTVShopType;
         if (_KTVDetailParamDic) {
             [cell updateCellWithParamDic:_KTVDetailParamDic];
@@ -232,6 +233,7 @@ static NSString *ZSHKTVListCellID = @"ZSHKTVListCell";
 
 //KTV底部列表
 - (ZSHBaseTableViewSectionModel*)storKTVListSection{
+    kWeakSelf(self);
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     for (int i = 0; i<_KTVDetailListArr.count; i++){
         ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
@@ -245,9 +247,10 @@ static NSString *ZSHKTVListCellID = @"ZSHKTVListCell";
         };
         
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
-//            NSDictionary *nextParamDic = @{KFromClassType:@(ZSHFromKTVDetailVCToHotelPayVC),@"model":self.model};
-//            ZSHHotelPayViewController *hotelPayVC = [[ZSHHotelPayViewController alloc]initWithParamDic:nextParamDic];
-//            [[kAppDelegate getCurrentUIVC].navigationController pushViewController:hotelPayVC animated:YES];
+            NSDictionary *paramDic = _KTVDetailListArr[indexPath.row];
+            NSDictionary *nextParamDic = @{KFromClassType:@(ZSHConfirmOrderToBottomBlurPopView),@"shopType":@(ZSHKTVShopType), @"deviceDic":weakself.KTVDetailParamDic,@"listDic":paramDic,@"liveInfoStr":@""};
+            weakself.bottomBlurPopView = [weakself createBottomBlurPopViewWithParamDic:nextParamDic];
+            [kAppDelegate.window addSubview:weakself.bottomBlurPopView];
         };
     }
     return sectionModel;
@@ -255,10 +258,8 @@ static NSString *ZSHKTVListCellID = @"ZSHKTVListCell";
 
 
 #pragma getter
-- (ZSHBottomBlurPopView *)createBottomBlurPopViewWith:(ZSHFromVCToBottomBlurPopView)fromClassType{
-//    NSDictionary *nextParamDic = @{KFromClassType:@(fromClassType),@"model":self.model};
-     NSDictionary *nextParamDic = @{KFromClassType:@(fromClassType)};
-    ZSHBottomBlurPopView *bottomBlurPopView = [[ZSHBottomBlurPopView alloc]initWithFrame:kAppDelegate.window.bounds paramDic:nextParamDic];
+- (ZSHBottomBlurPopView *)createBottomBlurPopViewWithParamDic:(NSDictionary *)paramDic{
+    ZSHBottomBlurPopView *bottomBlurPopView = [[ZSHBottomBlurPopView alloc]initWithFrame:kAppDelegate.window.bounds paramDic:paramDic];
     bottomBlurPopView.blurRadius = 20;
     bottomBlurPopView.dynamic = NO;
     bottomBlurPopView.tintColor = KClearColor;

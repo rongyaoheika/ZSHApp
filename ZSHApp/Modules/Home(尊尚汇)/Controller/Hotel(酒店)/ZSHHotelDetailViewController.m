@@ -135,6 +135,7 @@ static NSString *ZSHHotelListCellID = @"ZSHHotelListCell";
     cellModel.height = kRealValue(80);
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHHotelDetailDeviceCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHHotelDetailDeviceCellID forIndexPath:indexPath];
+        cell.showCellType = ZSHNormalType;
         cell.shopType = ZSHHotelShopType;
         if (weakself.hotelDetailParamDic) {
             [cell updateCellWithParamDic:_hotelDetailParamDic];
@@ -247,6 +248,7 @@ static NSString *ZSHHotelListCellID = @"ZSHHotelListCell";
         cellModel.height = kRealValue(75);
         cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
             ZSHHotelListCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHHotelListCellID forIndexPath:indexPath];
+            cell.shopType = ZSHHotelShopType;
             NSDictionary *paramDic = _hotelDetailListDicArr[indexPath.row];
             [cell updateCellWithParamDic:paramDic];
             return cell;
@@ -254,7 +256,7 @@ static NSString *ZSHHotelListCellID = @"ZSHHotelListCell";
         
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
             NSDictionary *paramDic = _hotelDetailListDicArr[indexPath.row];
-            NSDictionary *nextParamDic = @{KFromClassType:@(ZSHFromHotelDetailConfirmOrderVCToBottomBlurPopView),@"deviceDic":weakself.hotelDetailParamDic,@"listDic":paramDic,@"liveInfoStr":_liveInfoStr};
+            NSDictionary *nextParamDic = @{KFromClassType:@(ZSHConfirmOrderToBottomBlurPopView),@"shopType":@(ZSHHotelShopType), @"deviceDic":weakself.hotelDetailParamDic,@"listDic":paramDic,@"liveInfoStr":_liveInfoStr};
             weakself.bottomBlurPopView = [weakself createBottomBlurPopViewWithParamDic:nextParamDic];
             [kAppDelegate.window addSubview:weakself.bottomBlurPopView];
         };

@@ -10,7 +10,7 @@
 
 @interface ZSHHotelDetailDeviceCell : ZSHBaseCell
 
-@property (nonatomic, assign)ZSHFromVCToHotelDetailVC  fromClassType;
+@property (nonatomic, assign)ShowCellType  showCellType;
 @property (nonatomic, assign)ZSHShopType   shopType;
 
 @end

@@ -122,28 +122,37 @@
     UILabel *topLabel = [_commentBtn viewWithTag:1];
     NSString *commentStr = @"4.9";
     
+    
     switch (_shopType) {
         case ZSHFoodShopType:{//美食详情
+            _titleLabel.text = dic[@"SHOPNAMES"];
             commentStr = [NSString stringWithFormat:@"%.1f",[dic[@"SHOPEVALUATE"]floatValue] ];
             break;
         }
             
         case ZSHHotelShopType:{//酒店详情(酒店订单详情)
+            _titleLabel.text = dic[@"HOTELNAMES"];
             commentStr = [NSString stringWithFormat:@"%.1f",[dic[@"SHOPEVALUATE"]floatValue] ];
             break;
         }
             
         case ZSHKTVShopType:{//KTV详情
+             _titleLabel.text = dic[@"KTVNAMES"];
              commentStr = [NSString stringWithFormat:@"%.1f",[dic[@"KTVEVALUATE"]floatValue] ];
              break;
         }
            
         case ZSHBarShopType:{//酒吧详情（无此字段）
+            _titleLabel.text = dic[@"BARNAMES"];
             commentStr = [NSString stringWithFormat:@"%.1f",[dic[@"BarEVALUATE"]floatValue] ];
             break;
         }
         default:
             break;
+    }
+    
+    if (_showCellType == ZSHNormalType) {
+        _titleLabel.text = @"配备最先进的有氧运动设备";
     }
     
     topLabel.text = commentStr;

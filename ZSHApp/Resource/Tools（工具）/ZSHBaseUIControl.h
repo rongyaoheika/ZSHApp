@@ -56,7 +56,7 @@ typedef NS_ENUM(NSUInteger,ZSHFromVCToHotelVC){//** -> 酒店列表页面
 };
 
 typedef NS_ENUM(NSUInteger,ZSHFromVCToHotelPayVC){//** -> 订单支付页面
-    ZSHFromHotelDetailVCToHotelPayVC,               //酒店详情-酒店支付
+    ZSHFromHotelDetailVCToHotelPayVC = 1,           //酒店详情-酒店支付
     ZSHFromHotelDetailBottomVCToHotelPayVC,         //酒店详情(底部弹窗)-酒店支付
     ZSHFromKTVDetailVCToHotelPayVC,                 //KTV详情-KTV支付
     ZSHFromNoneVCToHotelPayVC
@@ -76,6 +76,7 @@ typedef NS_ENUM(NSInteger, ShowPickViewWindowType) {
     WindowSeat,                    // 座位选择
     WindowPapers,                  // 证件选择
     WindowPrice,                   // 价格
+    WindowSort,                    // 排序
     WindowKTVNone
 };
 
@@ -142,6 +143,12 @@ typedef NS_ENUM(NSUInteger,ZSHToTitleContentVC){
     FromContributionListVCToTitleContentVC,  //贡献榜（日榜，周榜，月榜，总榜）
     FromPeronalCenterVCToTitleContentVC,     //个人中心（黑微博，小视频， 资料）
     FromNoneToTitleContentVC
+};
+
+typedef NS_ENUM(NSInteger, ShowCellType) {
+    ZSHNormalType,                     // 正常形式（确认订单-支付页面）
+    ZSHPopType,                        // 弹框形式（确认订单弹窗）
+    ZSHOtherType,                      // 其他
 };
 
 @interface ZSHBaseUIControl : NSObject

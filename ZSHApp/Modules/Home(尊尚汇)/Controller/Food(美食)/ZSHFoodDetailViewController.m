@@ -121,6 +121,7 @@ static NSString *ZSHHotelListCellID = @"ZSHHotelListCell";
     cellModel.height = kRealValue(80);
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHHotelDetailDeviceCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHHotelDetailDeviceCellID forIndexPath:indexPath];
+        cell.showCellType = ZSHNormalType;
         cell.shopType = ZSHFoodShopType;
         if (_foodDetailParamDic) {
             [cell updateCellWithParamDic:_foodDetailParamDic];
@@ -207,11 +208,14 @@ static NSString *ZSHHotelListCellID = @"ZSHHotelListCell";
         cellModel.height = kRealValue(75);
         cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
             ZSHHotelListCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHHotelListCellID forIndexPath:indexPath];
+            cell.shopType = ZSHFoodShopType;
             return cell;
         };
         
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
-            weakself.bottomBlurPopView = [weakself createBottomBlurPopViewWith:ZSHFromHotelDetailConfirmOrderVCToBottomBlurPopView];
+            NSDictionary *paramDic = _foodDetailListDicArr[indexPath.row];
+            NSDictionary *nextParamDic = @{KFromClassType:@(ZSHConfirmOrderToBottomBlurPopView),@"shopType":@(ZSHFoodShopType), @"deviceDic":weakself.foodDetailParamDic,@"listDic":paramDic,@"liveInfoStr":@""};
+            weakself.bottomBlurPopView = [weakself createBottomBlurPopViewWithParamDic:nextParamDic];
             [kAppDelegate.window addSubview:weakself.bottomBlurPopView];
         };
     }
@@ -221,7 +225,6 @@ static NSString *ZSHHotelListCellID = @"ZSHHotelListCell";
 
 //更多商家
 - (ZSHBaseTableViewSectionModel*)storeMoreShopSection {
-    kWeakSelf(self);
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     sectionModel.headerHeight = kRealValue(40);
     NSDictionary *headTitleParamDic = @{@"text":@"更多商家",@"font":kPingFangMedium(15),@"textAlignment":@(NSTextAlignmentLeft)};
@@ -243,8 +246,7 @@ static NSString *ZSHHotelListCellID = @"ZSHHotelListCell";
         };
         
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
-            weakself.bottomBlurPopView = [weakself createBottomBlurPopViewWith:ZSHFromFoodDetailVCToBottomBlurPopView];
-            [kAppDelegate.window addSubview:weakself.bottomBlurPopView];
+           
         };
     }
     
@@ -253,9 +255,8 @@ static NSString *ZSHHotelListCellID = @"ZSHHotelListCell";
 
 
 #pragma getter
-- (ZSHBottomBlurPopView *)createBottomBlurPopViewWith:(ZSHFromVCToBottomBlurPopView)fromClassType{
-    NSDictionary *nextParamDic = @{KFromClassType:@(fromClassType)};
-    ZSHBottomBlurPopView *bottomBlurPopView = [[ZSHBottomBlurPopView alloc]initWithFrame:kAppDelegate.window.bounds paramDic:nextParamDic];
+- (ZSHBottomBlurPopView *)createBottomBlurPopViewWithParamDic:(NSDictionary *)paramDic{
+    ZSHBottomBlurPopView *bottomBlurPopView = [[ZSHBottomBlurPopView alloc]initWithFrame:kAppDelegate.window.bounds paramDic:paramDic];
     bottomBlurPopView.blurRadius = 20;
     bottomBlurPopView.dynamic = NO;
     bottomBlurPopView.tintColor = KClearColor;

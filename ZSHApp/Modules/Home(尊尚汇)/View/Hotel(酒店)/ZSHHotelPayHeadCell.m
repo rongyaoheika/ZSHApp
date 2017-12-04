@@ -11,13 +11,17 @@
 
 @interface ZSHHotelPayHeadCell()
 
-@property (nonatomic, strong) UIImageView               *hotelmageView;
-@property (nonatomic, strong) UILabel                   *hotelNameLabel;
-@property (nonatomic, strong) UILabel                   *hotelTypeLabel;
-@property (nonatomic, strong) UILabel                   *sizeInfoLabel;
-@property (nonatomic, strong) UILabel                   *hotelLiveInfoLabel;
-@property (nonatomic, strong) UILabel                   *discountLabel;
-@property (nonatomic, strong) UILabel                   *priceLabel;
+@property (nonatomic, strong) UIImageView            *hotelmageView;
+@property (nonatomic, strong) UILabel                *hotelNameLabel;
+@property (nonatomic, strong) UILabel                *hotelTypeLabel;
+@property (nonatomic, strong) UILabel                *sizeInfoLabel;
+@property (nonatomic, strong) UILabel                *hotelLiveInfoLabel;
+@property (nonatomic, strong) UILabel                *discountLabel;
+@property (nonatomic, strong) UILabel                *priceLabel;
+
+@property (nonatomic, copy)   NSString               *liveInfo; //中间居住信息（pop：8-8入住，8-9离开，共1天，payVC：豪华贵宾房）
+@property (nonatomic, strong) NSDictionary           *deviceDic;
+@property (nonatomic, strong) NSDictionary           *listDic;
 
 @end
 
@@ -65,7 +69,7 @@
 
 - (void)layoutSubviews{
     [super layoutSubviews];
-    if (self.fromClassType == ZSHFromHotelDetailVCToHotelPayVC || self.fromClassType == ZSHFromKTVDetailVCToHotelPayVC){//订单支付(酒店，KTV)
+    if (_showCellType == ZSHNormalType){//订单支付页面
         [_hotelmageView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.mas_equalTo(self).offset(KLeftMargin);
             make.top.mas_equalTo(self).offset(kRealValue(20));
@@ -92,14 +96,13 @@
             make.right.mas_equalTo(_hotelNameLabel);
             make.height.mas_equalTo(kRealValue(11));
         }];
-    } else if (self.fromClassType == ZSHFromHotelDetailBottomVCToHotelPayVC) {//底部弹窗
+    } else {//底部弹窗
         [_hotelmageView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.mas_equalTo(self).offset(KLeftMargin);
             make.top.mas_equalTo(self).offset(kRealValue(10));
             make.size.mas_equalTo(CGSizeMake(kRealValue(55), kRealValue(55)));
         }];
         
-        _hotelNameLabel.text = @"豪华贵宾房";
         [_hotelNameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.mas_equalTo(_hotelmageView.mas_right).offset(kRealValue(10));
             make.right.mas_equalTo(self).offset(-KLeftMargin);
@@ -129,29 +132,85 @@
     }
 }
 
-- (void)setFromClassType:(ZSHFromVCToHotelPayVC)fromClassType{
-    _fromClassType = fromClassType;
+- (void)setShopType:(ZSHShopType)shopType{
+    _shopType = shopType;
     [self layoutIfNeeded];
 }
 
 - (void)updateCellWithParamDic:(NSDictionary *)dic{
-     if (self.fromClassType == ZSHFromHotelDetailBottomVCToHotelPayVC) {//订单支付
-         [_hotelmageView sd_setImageWithURL:[NSURL URLWithString:dic[@"HOTELDETIMGS"]]];
-         _hotelNameLabel.text = dic[@"HOTELDETNAME"];
-         _hotelLiveInfoLabel.text = _liveInfo;
-         _sizeInfoLabel.text = [NSString stringWithFormat:@"%@㎡   %@",dic[@"HOTELDETROOMSIZE"],dic[@"HOTELDETBEDTYPE"] ];
-         _priceLabel.text = [NSString stringWithFormat:@"¥%.0f",[dic[@"HOTELDETPRICE"]floatValue] ];
-     }
     
-}
+    self.deviceDic = dic[@"deviceDic"];  //详情页上半部分数据
+    self.listDic = dic[@"listDic"];      //详情页下半部分列表数据
+    self.liveInfo = dic[@"liveInfoStr"]; //酒店居住时间信息
+    
+    switch (_shopType) {
+        case ZSHHotelShopType:{//酒店
+            [_hotelmageView sd_setImageWithURL:[NSURL URLWithString:self.listDic[@"HOTELDETIMGS"]]];
+            _hotelLiveInfoLabel.text = self.liveInfo;
+           
+            if (_showCellType == ZSHNormalType) {//订单支付页面
+                _hotelNameLabel.text = self.deviceDic[@"HOTELNAMES"];
+                _hotelTypeLabel.text = self.listDic[@"HOTELDETNAME"];
+              
+            } else if (_showCellType == ZSHPopType){
+                _hotelNameLabel.text = self.listDic[@"HOTELDETNAME"];
+                _sizeInfoLabel.text = [NSString stringWithFormat:@"%@㎡   %@", self.listDic[@"HOTELDETROOMSIZE"], self.listDic[@"HOTELDETBEDTYPE"] ];
+                _priceLabel.text = [NSString stringWithFormat:@"¥%.0f",[self.listDic[@"HOTELDETPRICE"]floatValue] ];
+            }
+            
+             break;
+        }
+        case ZSHFoodShopType:{//美食
+            [_hotelmageView sd_setImageWithURL:[NSURL URLWithString:self.listDic[@"HOTELDETIMGS"]]];
+            _hotelLiveInfoLabel.text = _liveInfo;
+           
+            if (_showCellType == ZSHNormalType) {//订单支付页面
+                _hotelNameLabel.text = self.deviceDic[@"SHOPNAMES"];
+                _hotelTypeLabel.text = self.listDic[@"SHOPNAMES"];
+                
+            } else if (_showCellType == ZSHPopType){
+                _hotelNameLabel.text = self.listDic[@"HOTELDETNAME"];
+                _sizeInfoLabel.text = [NSString stringWithFormat:@"%@㎡   %@", self.listDic[@"HOTELDETROOMSIZE"], self.listDic[@"HOTELDETBEDTYPE"] ];
+                _priceLabel.text = [NSString stringWithFormat:@"¥%.0f",[self.listDic[@"HOTELDETPRICE"]floatValue] ];
+            }
+            
+            break;
+        }
+            
+        case ZSHBarShopType:{//酒吧
+            [_hotelmageView sd_setImageWithURL:[NSURL URLWithString:self.listDic[@"HOTELDETIMGS"]]];
+            _hotelLiveInfoLabel.text = _liveInfo;
 
-
-- (void)updateCellWithModel:(ZSHBaseModel *)model{
-    if (self.fromClassType == ZSHFromKTVDetailVCToHotelPayVC) {
-        ZSHKTVModel  *KTVModel = (ZSHKTVModel *)model;
-        _hotelNameLabel.text = KTVModel.KTVName;
-        _hotelTypeLabel.text = KTVModel.roomType;
-        _hotelLiveInfoLabel.text = KTVModel.time;
+            if (_showCellType == ZSHNormalType) {//订单支付页面
+                _hotelNameLabel.text = self.deviceDic[@"BARNAMES"];
+                _hotelTypeLabel.text = self.listDic[@"BARDETTITLE"];
+                
+            } else if (_showCellType == ZSHPopType){
+                _hotelNameLabel.text = self.listDic[@"BARDETTITLE"];
+                _sizeInfoLabel.text = @"酒吧面积信息";
+                _priceLabel.text = @"无";
+            }
+            break;
+        }
+            
+        case ZSHKTVShopType:{//KTV
+            [_hotelmageView sd_setImageWithURL:[NSURL URLWithString:self.listDic[@"HOTELDETIMGS"]]];
+            _hotelLiveInfoLabel.text = _liveInfo;
+            
+            if (_showCellType == ZSHNormalType) {//订单支付页面
+                _hotelNameLabel.text = self.deviceDic[@"KTVNAMES"];
+                _hotelTypeLabel.text = self.listDic[@"KTVNAMES"];
+            } else if (_showCellType == ZSHPopType) {
+                _hotelNameLabel.text = self.listDic[@"KTVNAMES"];
+                _sizeInfoLabel.text = @"KTV面积信息";
+                _priceLabel.text = @"无";
+            }
+            break;
+        }
+            
+        default:
+            break;
     }
 }
+
 @end

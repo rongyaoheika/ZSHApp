@@ -58,6 +58,14 @@
 @property (nonatomic, strong) UIView          *weekView;
 @property (nonatomic, strong, nullable) STCalendar *calender;
 
+//确认订单
+@property (nonatomic, assign) ZSHShopType            shopType;
+@property (nonatomic, strong) NSDictionary           *deviceDic;
+@property (nonatomic, strong) NSDictionary           *listDic;
+@property (nonatomic, copy)   NSString               *liveInfo;
+
+
+
 //底部年龄弹出框
 @property (nonatomic, strong) ZSHAgeView            *ageView;
 @property (nonatomic, copy)   NSString              *ageRangeStr;
@@ -107,7 +115,13 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
         self.typeText = @"请选择兑换数量";
     } else if (kFromClassTypeValue == ZSHFromHotelDetailCalendarVCToBottomBlurPopView){
         self.typeText = @"请选择入住离店时间";
-    } else if (kFromClassTypeValue == ZSHFromHotelDetailConfirmOrderVCToBottomBlurPopView){
+    } else if (kFromClassTypeValue == ZSHConfirmOrderToBottomBlurPopView){
+        self.shopType = [self.paramDic[@"shopType"]integerValue]; //弹窗类型
+        self.deviceDic = self.paramDic[@"deviceDic"];  //详情页上半部分数据
+        self.listDic = self.paramDic[@"listDic"];      //详情页下半部分列表数据
+        self.liveInfo = self.paramDic[@"liveInfoStr"]; //酒店居住时间信息
+        
+        
         self.model = (ZSHHotelModel *)_paramDic[@"model"];
     } else if (kFromClassTypeValue == ZSHFromKTVConfirmOrderVCToBottomBlurPopView){
         self.model = (ZSHKTVModel *)_paramDic[@"model"];
@@ -144,7 +158,7 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
         [self.subTab registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHHeadCellID];
         [self.subTab registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHNumCountCellID];
         [self.subTab registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHExchangeSecondCellID];
-    } else if (kFromClassTypeValue == ZSHFromHotelDetailConfirmOrderVCToBottomBlurPopView || kFromClassTypeValue == ZSHFromKTVConfirmOrderVCToBottomBlurPopView ||kFromClassTypeValue == ZSHFromFoodDetailVCToBottomBlurPopView) {//酒店(KTV)确认订单
+    } else if (kFromClassTypeValue == ZSHConfirmOrderToBottomBlurPopView) {//确认订单
         _subTabHeight = kRealValue(410);
         
         self.subTab.backgroundColor = KWhiteColor;
@@ -251,12 +265,12 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
         [self.tableViewModel.sectionModelArray addObject:[self storeHeadSection]];
         [self.tableViewModel.sectionModelArray addObject:[self storeNumCountSectionWithTitle:@"购买数量"]];
         [self.tableViewModel.sectionModelArray addObject:[self storeExchangeSecondSection]];
-    } else if (kFromClassTypeValue == ZSHFromHotelDetailConfirmOrderVCToBottomBlurPopView){//酒店确认订单
+    } else if (kFromClassTypeValue == ZSHConfirmOrderToBottomBlurPopView){//确认订单
         
         [self.tableViewModel.sectionModelArray removeAllObjects];
         [self.tableViewModel.sectionModelArray addObject:[self storePayHeadSection]];
         [self.tableViewModel.sectionModelArray addObject:[self storeHotelDetailSection]];
-        [self.tableViewModel.sectionModelArray addObject:[self storeNumCountSectionWithTitle:@"房间数量"]];
+        [self.tableViewModel.sectionModelArray addObject:[self storeNumCountSectionWithTitle:@"数量"]];
         [self.tableViewModel.sectionModelArray addObject:[self storeHotelDetailOtherSection]];
         [self.tableViewModel.sectionModelArray addObject:[self storeConfirmBtnSection]];
     } else if (kFromClassTypeValue == ZSHFromHotelDetailCalendarVCToBottomBlurPopView||kFromClassTypeValue == ZSHFromAirplaneCalendarVCToBottomBlurPopView){//酒店入住日历(机票选择日历)
@@ -311,7 +325,7 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
     return sectionModel;
 }
 
-//酒店弹窗
+//酒店排序弹窗
 - (ZSHBaseTableViewSectionModel*)storeListSection {
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     sectionModel.headerHeight = kRealValue(16);
@@ -343,7 +357,7 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
     [sectionModel.cellModelArray addObject:cellModel];
-    if ([self.paramDic[KFromClassType]integerValue] == ZSHFromHotelDetailConfirmOrderVCToBottomBlurPopView) {
+    if ([self.paramDic[KFromClassType]integerValue] == ZSHConfirmOrderToBottomBlurPopView) {
         cellModel.height = kRealValue(47);
     } else {
         cellModel.height = kRealValue(60);
@@ -381,8 +395,10 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
     return sectionModel;
 }
 
+/**确认订单弹窗**/
 //酒店确定订单-图片，设备
 - (ZSHBaseTableViewSectionModel*)storePayHeadSection {
+    kWeakSelf(self);
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
     [sectionModel.cellModelArray addObject:cellModel];
@@ -391,16 +407,20 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
         ZSHHotelDetailDeviceCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHHotelDetailDeviceCellID forIndexPath:indexPath];
         cell.separatorInset = UIEdgeInsetsMake(0, 0, 0, MAXFLOAT);
         cell.backgroundColor = KWhiteColor;
-        cell.shopType = ZSHHotelShopType;
-        NSDictionary *paramDic = self.paramDic[@"deviceDic"];
-        [cell updateCellWithParamDic:paramDic];
+        if (weakself.deviceDic) {
+            cell.showCellType = ZSHPopType;
+            cell.shopType = weakself.shopType;
+            NSDictionary *paramDic = weakself.deviceDic;
+            [cell updateCellWithParamDic:paramDic];
+        }
+       
         return cell;
     };
     
     return sectionModel;
 }
 
-//酒店详情
+//酒店图片等详情
 - (ZSHBaseTableViewSectionModel*)storeHotelDetailSection {
     kWeakSelf(self);
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
@@ -411,9 +431,10 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
     cellModel.height = kRealValue(75);
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHHotelPayHeadCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHHotelPayHeadCellID forIndexPath:indexPath];
-        cell.fromClassType = ZSHFromHotelDetailBottomVCToHotelPayVC;
-        cell.liveInfo = weakself.paramDic[@"liveInfoStr"];
-        [cell updateCellWithParamDic:weakself.paramDic[@"listDic"]];
+        cell.showCellType = ZSHPopType;
+        cell.shopType = weakself.shopType;
+        [cell updateCellWithParamDic:weakself.paramDic];
+       
         return cell;
     };
     
@@ -423,7 +444,7 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
 //酒店其他
 - (ZSHBaseTableViewSectionModel*)storeHotelDetailOtherSection {
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
-    NSArray *titleArr = @[@"入住人",@"手机号码",@"备注"];
+    NSArray *titleArr = @[@"联系人",@"手机号码",@"备注"];
     NSArray *placeHolderArr = @[@"请输入您的姓名",@"18888888888",@"安排视野宽阔的房间"];
     NSArray *widtArr = @[@(kRealValue(100)),@(kRealValue(95)),@(kRealValue(130))];
     for (int i = 0; i<3; i++) {
@@ -474,6 +495,7 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
     
     return sectionModel;
 }
+
 
 //入住日历
 - (ZSHBaseTableViewSectionModel*)storeCalendarDetailSection {
@@ -801,6 +823,7 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
 
 //确认订单
 - (void)confirmBtnAction{
+    kWeakSelf(self);
     [UIView animateWithDuration:0.5 animations:^{
         CGRect mainFrame = _subTab.frame;
         mainFrame.origin.y = self.frame.size.height;
@@ -809,8 +832,13 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
         [self removeFromSuperview];
         [self setHidden:YES];
         
-        if ( kFromClassTypeValue == ZSHFromHotelDetailConfirmOrderVCToBottomBlurPopView) {
-            NSDictionary *nextParamDic = @{@"model":self.model};
+        self.shopType = [self.paramDic[@"shopType"]integerValue]; //弹窗类型
+        self.deviceDic = self.paramDic[@"deviceDic"];  //详情页上半部分数据
+        self.listDic = self.paramDic[@"listDic"];      //详情页下半部分列表数据
+        self.liveInfo = self.paramDic[@"liveInfoStr"]; //酒店居住时间信息
+        
+        if ( kFromClassTypeValue == ZSHConfirmOrderToBottomBlurPopView) {
+            NSDictionary *nextParamDic = @{@"shopType":@(self.shopType), @"deviceDic":weakself.deviceDic,@"listDic":weakself.listDic,@"liveInfoStr":weakself.liveInfo};
             ZSHHotelPayViewController *hotelPayVC = [[ZSHHotelPayViewController alloc]initWithParamDic:nextParamDic];
             [[kAppDelegate getCurrentUIVC].navigationController pushViewController:hotelPayVC animated:YES];
         }
