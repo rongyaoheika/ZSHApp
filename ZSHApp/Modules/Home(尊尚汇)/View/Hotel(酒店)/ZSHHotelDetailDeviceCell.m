@@ -122,24 +122,23 @@
     UILabel *topLabel = [_commentBtn viewWithTag:1];
     NSString *commentStr = @"4.9";
     
-    switch (self.fromClassType) {
-        case ZSHFromFoodVCToHotelDetailVC:{//美食详情
+    switch (_shopType) {
+        case ZSHFoodShopType:{//美食详情
             commentStr = [NSString stringWithFormat:@"%.1f",[dic[@"SHOPEVALUATE"]floatValue] ];
             break;
         }
             
-        case ZSHFromHotelVCToHotelDetailVC://酒店详情
-        case ZSHFromHotelPayVCToHotelDetailVC:{//酒店订单详情
+        case ZSHHotelShopType:{//酒店详情(酒店订单详情)
             commentStr = [NSString stringWithFormat:@"%.1f",[dic[@"SHOPEVALUATE"]floatValue] ];
             break;
         }
             
-        case ZSHFromHomeKTVVCToHotelDetailVC:{//KTV详情
+        case ZSHKTVShopType:{//KTV详情
              commentStr = [NSString stringWithFormat:@"%.1f",[dic[@"KTVEVALUATE"]floatValue] ];
              break;
         }
            
-        case ZSHFromHomeBarVCToHotelDetailVC:{//酒吧详情（无此字段）
+        case ZSHBarShopType:{//酒吧详情（无此字段）
             commentStr = [NSString stringWithFormat:@"%.1f",[dic[@"BarEVALUATE"]floatValue] ];
             break;
         }

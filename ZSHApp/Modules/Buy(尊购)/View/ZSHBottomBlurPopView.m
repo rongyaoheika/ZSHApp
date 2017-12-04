@@ -391,7 +391,7 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
         ZSHHotelDetailDeviceCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHHotelDetailDeviceCellID forIndexPath:indexPath];
         cell.separatorInset = UIEdgeInsetsMake(0, 0, 0, MAXFLOAT);
         cell.backgroundColor = KWhiteColor;
-        cell.fromClassType = ZSHFromHotelDetailBottomVCToHotelPayVC;
+        cell.shopType = ZSHHotelShopType;
         NSDictionary *paramDic = self.paramDic[@"deviceDic"];
         [cell updateCellWithParamDic:paramDic];
         return cell;

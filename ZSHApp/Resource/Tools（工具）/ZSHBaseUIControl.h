@@ -24,6 +24,7 @@ typedef NS_ENUM(NSInteger,ZSHShopType){
     ZSHPlaneType,        //飞机
     ZSHGolfType,         //高尔夫
     ZSHLuxcarType,       //豪车
+    ZSHServiceType,      //服务
     ZSHOtherShopType,   //其它
 };
 

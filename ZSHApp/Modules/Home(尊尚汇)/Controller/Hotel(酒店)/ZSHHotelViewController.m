@@ -113,7 +113,7 @@ static NSString *ZSHHotelCellID = @"ZSHHotelCell";
             switch (kFromClassTypeValue) {
                 case FromHotelVCToTitleContentVC:{//酒店
                     NSDictionary *paramDic = _hotelListDicArr[indexPath.row];
-                    NSDictionary *nextParamDic = @{KFromClassType:@(ZSHFromHotelVCToHotelDetailVC),@"shopId":paramDic[@"SORTHOTEL_ID"]};
+                    NSDictionary *nextParamDic = @{@"shopId":paramDic[@"SORTHOTEL_ID"]};
                     ZSHHotelDetailViewController *hotelDetailVC = [[ZSHHotelDetailViewController alloc]initWithParamDic:nextParamDic];
                     [weakself.navigationController pushViewController:hotelDetailVC animated:YES];
                      break;
@@ -121,7 +121,7 @@ static NSString *ZSHHotelCellID = @"ZSHHotelCell";
                 }
                 case FromBarVCToTitleContentVC:{//酒吧
                     NSDictionary *paramDic = _hotelListDicArr[indexPath.row];
-                    NSDictionary *nextParamDic = @{KFromClassType:@(ZSHFromHotelVCToHotelDetailVC),@"shopId":paramDic[@"SORTBAR_ID"]};
+                    NSDictionary *nextParamDic = @{@"shopId":paramDic[@"SORTBAR_ID"]};
                     ZSHBarDetailViewController *barlDetailVC = [[ZSHBarDetailViewController alloc]initWithParamDic:nextParamDic];
                     [weakself.navigationController pushViewController:barlDetailVC animated:YES];
                     break;

@@ -76,7 +76,7 @@ static NSString *ZSHFoodCellID = @"ZSHFoodCell";
         
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
             ZSHFoodModel *foodModel = _foodLogic.foodListArr[indexPath.row];
-            NSDictionary *nextParamDic = @{KFromClassType:@(ZSHFromFoodVCToHotelDetailVC),@"shopId":foodModel.SORTFOOD_ID};
+            NSDictionary *nextParamDic = @{@"shopId":foodModel.SORTFOOD_ID};
             ZSHFoodDetailViewController *foodDetailVC = [[ZSHFoodDetailViewController alloc]initWithParamDic:nextParamDic];
             [weakself.navigationController pushViewController:foodDetailVC animated:YES];
         };

@@ -103,12 +103,10 @@ static NSString *ZSHHotelListCellID = @"ZSHHotelListCell";
 
 - (void)initViewModel {
     [self.tableViewModel.sectionModelArray removeAllObjects];
-    if(kFromClassTypeValue == ZSHFromHotelVCToHotelDetailVC){//酒店详情
-        [self.tableViewModel.sectionModelArray addObject:[self storeHeadSection]];
-        [self.tableViewModel.sectionModelArray addObject:[self storeSubSection]];
-        [self.tableViewModel.sectionModelArray addObject:[self storeCalendarSection]];
-        [self.tableViewModel.sectionModelArray addObject:[self storHotelListSection]];
-    }
+    [self.tableViewModel.sectionModelArray addObject:[self storeHeadSection]];
+    [self.tableViewModel.sectionModelArray addObject:[self storeSubSection]];
+    [self.tableViewModel.sectionModelArray addObject:[self storeCalendarSection]];
+    [self.tableViewModel.sectionModelArray addObject:[self storHotelListSection]];
     
     [self.tableView reloadData];
 }
@@ -137,7 +135,7 @@ static NSString *ZSHHotelListCellID = @"ZSHHotelListCell";
     cellModel.height = kRealValue(80);
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHHotelDetailDeviceCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHHotelDetailDeviceCellID forIndexPath:indexPath];
-        cell.fromClassType = [self.paramDic[KFromClassType]integerValue];
+        cell.shopType = ZSHBarShopType;
         [cell updateCellWithParamDic:weakself.barDetailDic];
         [self hideSeparatorLineWithCell:cell hide:YES];
         return cell;

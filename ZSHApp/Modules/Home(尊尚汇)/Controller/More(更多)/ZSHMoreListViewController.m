@@ -65,7 +65,7 @@ static NSString *ZSHMoreListCellID = @"ZSHMoreListCell";
         }
         case FromGolfVCToTitleContentVC:{//高尔夫汇
             _shopType = ZSHGolfType;
-            _pushNextParamDic = @{KFromClassType:@(ZSHGolfType),@"title":@"高尔夫汇"},
+            _pushNextParamDic = @{KFromClassType:@(ZSHGolfType),@"title":@"高尔夫汇"};
             [_moreLogic requestGolfListWithParamDic:paramDic success:^(NSArray *golfDicArr) {
                 weakself.listDataArr = golfDicArr;
                 [weakself initViewModel];

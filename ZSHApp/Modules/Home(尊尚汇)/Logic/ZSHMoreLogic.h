@@ -39,4 +39,7 @@
 
 //飞机详情
 - (void)requestPlaneDetailWithParamDic:(NSDictionary *)paramDic success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail;
+
+//荣耀服务详情
+- (void)requestServiceDetailDataWithParamDic:(NSDictionary *)paramDic Success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail;
 @end

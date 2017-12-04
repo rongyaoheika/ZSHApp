@@ -91,7 +91,7 @@ static NSString *ZSHHotelCellID = @"ZSHHotelCell";
         
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
             ZSHKTVModel *KTVModel = _KTVModelArr[indexPath.row];
-            NSDictionary *nextParamDic = @{KFromClassType:@(ZSHFromHomeKTVVCToHotelDetailVC),@"shopId":KTVModel.SORTKTV_ID};
+            NSDictionary *nextParamDic = @{@"shopId":KTVModel.SORTKTV_ID};
             ZSHKTVDetailViewController *KTVDetailVC = [[ZSHKTVDetailViewController alloc]initWithParamDic:nextParamDic];
             [weakself.navigationController pushViewController:KTVDetailVC animated:YES];
         };

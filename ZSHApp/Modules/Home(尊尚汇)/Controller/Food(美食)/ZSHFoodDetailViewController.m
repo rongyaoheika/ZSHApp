@@ -107,9 +107,9 @@ static NSString *ZSHHotelListCellID = @"ZSHHotelListCell";
     cellModel.height = kRealValue(225);
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHHotelDetailHeadCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHHotelDetailHeadCellID forIndexPath:indexPath];
-        cell.fromClassType = [self.paramDic[KFromClassType]integerValue];
-        if (_foodDetailModel) {
-            [cell updateCellWithModel:_foodDetailModel];
+        cell.shopType = ZSHFoodShopType;
+        if (_foodDetailParamDic) {
+            [cell updateCellWithParamDic:_foodDetailParamDic];
         }
         return cell;
         
@@ -121,7 +121,7 @@ static NSString *ZSHHotelListCellID = @"ZSHHotelListCell";
     cellModel.height = kRealValue(80);
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHHotelDetailDeviceCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHHotelDetailDeviceCellID forIndexPath:indexPath];
-        cell.fromClassType = [self.paramDic[KFromClassType]integerValue];
+        cell.shopType = ZSHFoodShopType;
         if (_foodDetailParamDic) {
             [cell updateCellWithParamDic:_foodDetailParamDic];
         }

@@ -34,22 +34,6 @@
     }];
 }
 
-//荣耀服务详情
-- (void)loadServiceDetailDataWithParamDic:(NSDictionary *)paramDic{
-    kWeakSelf(self);
-    [PPNetworkHelper POST:kUrlGetNewsList parameters:paramDic success:^(id responseObject) {
-        RLog(@"荣耀服务详情%@",responseObject);
-        weakself.newsArr = responseObject[@"pd"];
-        if (weakself.requestDataCompleted) {
-            weakself.requestDataCompleted(self.serviceArr);
-        }
-        
-    } failure:^(NSError *error) {
-        
-    }];
-}
-
-
 //新闻头条轮播信息
 - (void)loadNewsCellDataSuccess:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail{
     kWeakSelf(self);

@@ -50,25 +50,30 @@
 }
 
 - (void)updateCellWithParamDic:(NSDictionary *)dic{
-    if (_shopType == ZSHBarShopType) {//酒吧
-        [_headView updateViewWithParamDic:@{@"dataArr":dic[@"BARDETAILSIMGS"]}];
-        _detailLabel.text = dic[@"BARNAMES"];
-    }
-}
-
-- (void)updateCellWithModel:(ZSHBaseModel *)model{
-    if (self.fromClassType == ZSHFromFoodVCToHotelDetailVC) {//美食
-        ZSHFoodDetailModel *foodDetailModel = (ZSHFoodDetailModel *)model;
-        [_headView updateViewWithParamDic:@{@"dataArr":foodDetailModel.SHOPDETAILSIMGS}];
-        _detailLabel.text = foodDetailModel.SHOPNAMES;
-    } else if (self.fromClassType == ZSHFromHotelVCToHotelDetailVC) {//酒店
-        ZSHHotelDetailModel *hotelDetailModel = (ZSHHotelDetailModel *)model;
-        [_headView updateViewWithParamDic:@{@"dataArr":hotelDetailModel.HOTELDETAILSIMGS}];
-        _detailLabel.text = hotelDetailModel.HOTELNAMES;
-    } else if (self.fromClassType == ZSHFromHomeKTVVCToHotelDetailVC) {//KTV
-        ZSHKTVDetailModel *KTVDetailModel = (ZSHKTVDetailModel *)model;
-        [_headView updateViewWithParamDic:@{@"dataArr":KTVDetailModel.KTVDETAILSIMGS}];
-        _detailLabel.text = KTVDetailModel.KTVNAMES;
+    switch (_shopType) {
+        case ZSHFoodShopType:{//美食
+            [_headView updateViewWithParamDic:@{@"dataArr":dic[@"SHOPDETAILSIMGS"]}];
+            _detailLabel.text = dic[@"SHOPNAMES"];
+            break;
+        }
+        case ZSHHotelShopType:{//酒店
+            [_headView updateViewWithParamDic:@{@"dataArr":dic[@"HOTELDETAILSIMGS"]}];
+            _detailLabel.text = dic[@"HOTELNAMES"];
+            break;
+        }
+        case ZSHKTVShopType:{//KTV
+            [_headView updateViewWithParamDic:@{@"dataArr":dic[@"KTVDETAILSIMGS"]}];
+            _detailLabel.text = dic[@"KTVNAMES"];
+            break;
+        }
+        case ZSHBarShopType:{//酒吧
+            [_headView updateViewWithParamDic:@{@"dataArr":dic[@"BARDETAILSIMGS"]}];
+            _detailLabel.text = dic[@"BARNAMES"];
+            break;
+        }
+            
+        default:
+            break;
     }
     
 }

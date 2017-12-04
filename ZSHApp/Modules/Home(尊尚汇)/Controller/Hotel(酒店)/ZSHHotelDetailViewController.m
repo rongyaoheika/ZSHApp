@@ -104,12 +104,10 @@ static NSString *ZSHHotelListCellID = @"ZSHHotelListCell";
 
 - (void)initViewModel {
     [self.tableViewModel.sectionModelArray removeAllObjects];
-    if(kFromClassTypeValue == ZSHFromHotelVCToHotelDetailVC){//酒店详情
-        [self.tableViewModel.sectionModelArray addObject:[self storeHeadSection]];
-        [self.tableViewModel.sectionModelArray addObject:[self storeSubSection]];
-        [self.tableViewModel.sectionModelArray addObject:[self storeCalendarSection]];
-        [self.tableViewModel.sectionModelArray addObject:[self storHotelListSection]];
-    }
+    [self.tableViewModel.sectionModelArray addObject:[self storeHeadSection]];
+    [self.tableViewModel.sectionModelArray addObject:[self storeSubSection]];
+    [self.tableViewModel.sectionModelArray addObject:[self storeCalendarSection]];
+    [self.tableViewModel.sectionModelArray addObject:[self storHotelListSection]];
     
     [self.tableView reloadData];
 }
@@ -123,9 +121,9 @@ static NSString *ZSHHotelListCellID = @"ZSHHotelListCell";
     cellModel.height = kRealValue(225);
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHHotelDetailHeadCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHHotelDetailHeadCellID forIndexPath:indexPath];
-        cell.fromClassType = [self.paramDic[KFromClassType]integerValue];
-        if (weakself.hotelDetailModel) {
-            [cell updateCellWithModel:_hotelDetailModel];
+        cell.shopType = ZSHHotelShopType;
+        if (_hotelDetailParamDic) {
+            [cell updateCellWithParamDic:_hotelDetailParamDic];
         }
         return cell;
         
@@ -137,7 +135,7 @@ static NSString *ZSHHotelListCellID = @"ZSHHotelListCell";
     cellModel.height = kRealValue(80);
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHHotelDetailDeviceCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHHotelDetailDeviceCellID forIndexPath:indexPath];
-        cell.fromClassType = [self.paramDic[KFromClassType]integerValue];
+        cell.shopType = ZSHHotelShopType;
         if (weakself.hotelDetailParamDic) {
             [cell updateCellWithParamDic:_hotelDetailParamDic];
         }

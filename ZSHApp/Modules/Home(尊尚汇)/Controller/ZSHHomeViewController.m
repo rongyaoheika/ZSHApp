@@ -44,6 +44,8 @@ static NSString *Identify_MusicCell = @"musicCell";
 @property (nonatomic, strong) ZSHBottomBlurPopView   *bottomBlurPopView;
 
 @property (nonatomic, strong) ZSHHomeLogic           *homeLogic;
+@property (nonatomic, strong) NSArray                *noticePushVCsArr;
+@property (nonatomic, strong) NSArray                *noticeParamArr;
 
 @end
 
@@ -60,6 +62,7 @@ static NSString *Identify_MusicCell = @"musicCell";
     //加载网络数据
     [self requestData];
     
+    //更多列表
     self.pushVCsArr = @[@"ZSHTitleContentViewController",
                         @"ZSHTitleContentViewController",
                         @"ZSHAirPlaneViewController",
@@ -92,6 +95,9 @@ static NSString *Identify_MusicCell = @"musicCell";
                             @{KFromClassType:@(ZSHFromHomeMenuVCToServiceCenterVC),@"title":@"消息中心",@"titleArr":@[@"评论／回复我的",@"赞我的"],@"imageArr":@[@"menu_news",@"menu_love"]},
                             @{KFromClassType:@(ZSHFromHomeMenuVCToServiceCenterVC),@"title":@"系统通知",@"titleArr":@[@"荣耀黑卡官方帐号"],@"imageArr":@[@"menu_noti"]},
                             @""];
+    
+    //酒吧，美食，ktv，酒店
+    self.noticePushVCsArr = @[@"ZSHBarDetailViewController",@"ZSHFoodDetailViewController", @"ZSHKTVDetailViewController",@"ZSHHotelDetailViewController"];
 
 }
 
@@ -214,13 +220,20 @@ static NSString *Identify_MusicCell = @"musicCell";
     cellModel.height = kRealValue(135);
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHBaseTitleButtonCell *cell = [tableView dequeueReusableCellWithIdentifier:Identify_NoticeCell forIndexPath:indexPath];
-        cell.itemClickBlock = ^(NSInteger tag) {//ktv
-            if(tag == 2){
-            NSDictionary *subDic = _homeLogic.noticeArr[tag];
-            NSDictionary *nextParamDic = @{KFromClassType:@(ZSHFromHomeKTVVCToHotelDetailVC),@"shopId":subDic[@"SORT_ID"]};
-            ZSHKTVDetailViewController *KTVDetailVC = [[ZSHKTVDetailViewController alloc]initWithParamDic:nextParamDic];
-            [weakself.navigationController pushViewController:KTVDetailVC animated:YES];
+        cell.itemClickBlock = ^(NSInteger tag) {
+             NSDictionary *subDic = _homeLogic.noticeArr[tag];
+            if (tag < weakself.noticePushVCsArr.count) {
+                NSDictionary *nextParamDic = @{@"shopId":subDic[@"SORT_ID"]};
+                Class className = NSClassFromString(weakself.noticePushVCsArr[tag]);
+                RootViewController *vc = [[className alloc]initWithParamDic:nextParamDic];
+                [weakself.navigationController pushViewController:vc animated:YES];
+            } else {//游艇(4)
+                NSDictionary *nextParamDic = @{KFromClassType:@(ZSHShipType),@"shopId":subDic[@"SORT_ID"]};
+                ZSHSubscribeViewController *subScribeVC = [[ZSHSubscribeViewController alloc]initWithParamDic:nextParamDic];
+                [weakself.navigationController pushViewController:subScribeVC animated:YES];
+                
             }
+            
         };
         
         if(_homeLogic.noticeArr){
@@ -237,6 +250,7 @@ static NSString *Identify_MusicCell = @"musicCell";
 
 //荣耀服务
 - (ZSHBaseTableViewSectionModel*)storeServiceSection {
+    kWeakSelf(self);
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     sectionModel.headerHeight = kRealValue(55);
     sectionModel.headerView = [self createHeaderiewWithTitle:@"荣耀服务"];
@@ -246,7 +260,10 @@ static NSString *Identify_MusicCell = @"musicCell";
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHBaseTitleButtonCell *cell = [tableView dequeueReusableCellWithIdentifier:Identify_ServiceCell forIndexPath:indexPath];
         cell.itemClickBlock = ^(NSInteger tag) {//荣耀服务详情
-           
+            NSDictionary *subDic = _homeLogic.serviceArr[tag];
+            NSDictionary *nextParamDic = @{KFromClassType:@(ZSHServiceType),@"shopId":subDic[@"SERVER_ID"]};
+            ZSHSubscribeViewController *subScribeVC = [[ZSHSubscribeViewController alloc]initWithParamDic:nextParamDic];
+            [weakself.navigationController pushViewController:subScribeVC animated:YES];
         };
         
         if(_homeLogic.serviceArr){

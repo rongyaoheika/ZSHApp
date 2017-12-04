@@ -109,6 +109,17 @@
     }];
 }
 
+//荣耀服务详情
+- (void)requestServiceDetailDataWithParamDic:(NSDictionary *)paramDic Success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail{
+    [PPNetworkHelper POST:kUrlServerDetailList parameters:paramDic success:^(id responseObject) {
+       RLog(@"荣耀服务详情==%@",responseObject);
+       NSArray *serviceDetailDicArr = responseObject[@"pd"];
+        success(serviceDetailDicArr);
+        
+    } failure:^(NSError *error) {
+        
+    }];
+}
 
 
 

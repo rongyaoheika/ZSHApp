@@ -111,9 +111,9 @@ static NSString *ZSHKTVListCellID = @"ZSHKTVListCell";
     cellModel.height = kRealValue(225);
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHHotelDetailHeadCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHHotelDetailHeadCellID forIndexPath:indexPath];
-        cell.fromClassType = [self.paramDic[KFromClassType]integerValue];
-        if (_KTVDetailModel) {
-            [cell updateCellWithModel:_KTVDetailModel];
+        cell.shopType = ZSHKTVShopType;
+        if (_KTVDetailParamDic) {
+            [cell updateCellWithParamDic:_KTVDetailParamDic];
         }
         return cell;
         
@@ -125,7 +125,7 @@ static NSString *ZSHKTVListCellID = @"ZSHKTVListCell";
     cellModel.height = kRealValue(80);
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHHotelDetailDeviceCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHHotelDetailDeviceCellID forIndexPath:indexPath];
-        cell.fromClassType = [self.paramDic[KFromClassType]integerValue];
+        cell.shopType = ZSHKTVShopType;
         if (_KTVDetailParamDic) {
             [cell updateCellWithParamDic:_KTVDetailParamDic];
         }

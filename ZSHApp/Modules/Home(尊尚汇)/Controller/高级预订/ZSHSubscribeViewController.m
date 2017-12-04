@@ -103,6 +103,7 @@
     _moreLogic = [[ZSHMoreLogic alloc]init];
     ZSHShopType shopType = [self.paramDic[@"localDic"][KFromClassType] integerValue];
     NSDictionary *requestDic = self.paramDic[@"requestDic"];
+   
     NSDictionary *paramDic = nil;
     if (!shopType) {//飞机
         shopType = kFromClassTypeValue;
@@ -111,8 +112,8 @@
     switch (shopType) {
         case ZSHHorseType:{//马术
             paramDic = @{@"HORSESHOP_ID":requestDic[@"HORSESHOP_ID"]};
-            [_moreLogic requestHorseDetailWithParamDic:paramDic success:^(NSArray *horseDetailDicArr) {
-                _listDataDicArr = horseDetailDicArr;
+            [_moreLogic requestHorseDetailWithParamDic:paramDic success:^(NSArray *dataArr) {
+                _listDataDicArr = dataArr;
                 _imageArr = _listDataDicArr[0][@"HORSEDETIMGS"];
                 _subTitleLabel.text = _listDataDicArr[0][@"HORSEDETINTRO"];
                 [weakself updateUI];
@@ -121,9 +122,13 @@
             break;
         }
         case ZSHShipType:{//游艇
-            paramDic = @{@"YACHTSHOP_ID":requestDic[@"YACHTSHOP_ID"]};
-            [_moreLogic requestYachtDetailWithParamDic:paramDic success:^(NSArray *yachtDetailDicArr) {
-                _listDataDicArr = yachtDetailDicArr;
+            if (self.paramDic[@"shopId"]) {//主页推荐-游艇
+                paramDic = @{@"YACHTSHOP_ID":self.paramDic[@"shopId"]};
+            } else {//更多特权-列表-详情
+               paramDic = @{@"YACHTSHOP_ID":requestDic[@"YACHTSHOP_ID"]};
+            }
+            [_moreLogic requestYachtDetailWithParamDic:paramDic success:^(NSArray *dataArr) {
+                _listDataDicArr = dataArr;
                 _imageArr = _listDataDicArr[0][@"YACHTDETIMGS"];
                 _subTitleLabel.text = _listDataDicArr[0][@"YACHTDETINTRO"];
                 [weakself updateUI];
@@ -133,8 +138,8 @@
         }
         case ZSHGolfType:{//高尔夫汇
             paramDic = @{@"GOLFSHOP_ID":requestDic[@"GOLFSHOP_ID"]};
-            [_moreLogic requestGolfDetailWithParamDic:paramDic success:^(NSArray *golfDetailDicArr) {
-                _listDataDicArr = golfDetailDicArr;
+            [_moreLogic requestGolfDetailWithParamDic:paramDic success:^(NSArray *dataArr) {
+                _listDataDicArr = dataArr;
                 _imageArr = _listDataDicArr[0][@"GOLFDETIMGS"];
                 _subTitleLabel.text = _listDataDicArr[0][@"GOLFDETINTRO"];
                 [weakself updateUI];
@@ -144,8 +149,8 @@
         }
         case ZSHLuxcarType:{//豪车
            paramDic = @{@"LUXCARSHOP_ID":requestDic[@"LUXCARSHOP_ID"]};
-            [_moreLogic requestLuxcarDetailWithParamDic:paramDic success:^(NSArray *luxcarDetailDicArr) {
-               _listDataDicArr = luxcarDetailDicArr;
+            [_moreLogic requestLuxcarDetailWithParamDic:paramDic success:^(NSArray *dataArr) {
+               _listDataDicArr = dataArr;
                _imageArr = _listDataDicArr[0][@"LUXCARDETIMGS"];
                _subTitleLabel.text = _listDataDicArr[0][@"LUXCARDETINTRO"];
                [weakself updateUI];
@@ -154,10 +159,21 @@
             break;
         }
         case ZSHPlaneType:{//飞机
-            [_moreLogic requestPlaneDetailWithParamDic:nil success:^(NSArray *luxcarDetailDicArr) {
-                _listDataDicArr = luxcarDetailDicArr;
+            [_moreLogic requestPlaneDetailWithParamDic:nil success:^(NSArray *dataArr) {
+                _listDataDicArr = dataArr;
                 _imageArr = _listDataDicArr[0][@"PLANEDETIMGS"];
                 _subTitleLabel.text = _listDataDicArr[0][@"PLANEDETINTRO"];
+                [weakself updateUI];
+            } fail:nil];
+            
+            break;
+        }
+        case ZSHServiceType:{//服务
+            paramDic = @{@"SERVER_ID":self.paramDic[@"shopId"]};
+            [_moreLogic requestServiceDetailDataWithParamDic:paramDic Success:^(NSArray *dataArr) {
+                _listDataDicArr = dataArr;
+                _imageArr = _listDataDicArr[0][@"HORSEDETIMGS"];
+                _subTitleLabel.text = _listDataDicArr[0][@"HORSEDETINTRO"];
                 [weakself updateUI];
             } fail:nil];
             
