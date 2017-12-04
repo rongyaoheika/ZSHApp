@@ -61,7 +61,6 @@
 - (TYCyclePagerView *)pagerView {
     if (!_pagerView) {
         _pagerView = [[TYCyclePagerView alloc]init];
-        _pagerView.layer.borderWidth = 1;
         _pagerView.isInfiniteLoop = [self.paramDic[@"infinite"] boolValue];
 //        _pagerView.autoScrollInterval = 3.0;
         _pagerView.dataSource = self;

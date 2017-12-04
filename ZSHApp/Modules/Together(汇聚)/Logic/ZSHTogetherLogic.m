@@ -30,7 +30,7 @@
 
 - (void)requestPartyListWithConvergeID:(NSString *)convergeID success:(void(^)(id response))success {
     kWeakSelf(self);
-    [PPNetworkHelper POST:kUrlGetPartyList parameters:@{@"CONVERGE_ID":convergeID} success:^(id responseObject) {
+    [PPNetworkHelper POST:kUrlGetPartyList parameters:@{@"CONVERGE_ID":convergeID, @"HONOURUSER_ID":@"", @"STATUS":@""} success:^(id responseObject) {
         weakself.entertainModelArr = [ZSHEntertainmentModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"]];
         success(nil);
     } failure:^(NSError *error) {
