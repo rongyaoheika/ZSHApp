@@ -110,10 +110,10 @@
         _hotelBottomLabel.text = [NSString stringWithFormat:@"%@㎡   %@",dic[@"HOTELDETROOMSIZE"],dic[@"HOTELDETBEDTYPE"] ];
         _priceLabel.text = [NSString stringWithFormat:@"¥%.0f",[dic[@"HOTELDETPRICE"]floatValue] ];
     } else if(_shopType == ZSHFoodShopType){//美食
-        [_hotelmageView sd_setImageWithURL:[NSURL URLWithString:dic[@"HOTELDETIMGS"]]];
-        _hotelNameLabel.text = dic[@"HOTELDETNAME"];
-        _hotelBottomLabel.text = [NSString stringWithFormat:@"%@㎡   %@",dic[@"HOTELDETROOMSIZE"],dic[@"HOTELDETBEDTYPE"] ];
-        _priceLabel.text = [NSString stringWithFormat:@"¥%.0f",[dic[@"SHOPPRICE"]floatValue] ];
+        [_hotelmageView sd_setImageWithURL:[NSURL URLWithString:dic[@"FOODDETIMGS"]]];
+        _hotelNameLabel.text = dic[@"FOODDETNAME"];
+        _hotelBottomLabel.text = dic[@"FOODDETREMARK"];
+        _priceLabel.text = [NSString stringWithFormat:@"¥%.0f",[dic[@"FOODDETPRICE"]floatValue] ];
     } else if(_shopType == ZSHBarShopType){//酒吧
         [_hotelmageView sd_setImageWithURL:[NSURL URLWithString:dic[@"PRIVILEGEIMGS"]]];
         _hotelNameLabel.text = dic[@"BARDETTITLE"];

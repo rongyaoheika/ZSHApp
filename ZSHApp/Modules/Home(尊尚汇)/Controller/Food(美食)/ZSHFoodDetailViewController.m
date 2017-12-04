@@ -21,6 +21,7 @@
 @property (nonatomic, strong) ZSHFoodDetailModel        *foodDetailModel;
 @property (nonatomic, strong) NSDictionary              *foodDetailParamDic;
 @property (nonatomic, strong) ZSHBottomBlurPopView      *bottomBlurPopView;
+@property (nonatomic, strong) NSArray                   *foodDetailSetDicArr;
 @property (nonatomic, strong) NSArray                   *foodDetailListDicArr;
 
 @end
@@ -62,6 +63,14 @@ static NSString *ZSHHotelListCellID = @"ZSHHotelListCell";
         [weakself initViewModel];
     };
     
+    [_foodLogic loadFoodDetailSetWithParamDic:paramDic success:^(id responseObject) {
+        _foodDetailSetDicArr = responseObject;
+        weakself.tableViewModel.sectionModelArray[2] = [weakself storeSetMenuSection];
+        NSIndexSet *indexSet = [[NSIndexSet alloc]initWithIndex:2];
+        [weakself updateSectionDatWithSet:indexSet];
+    } fail:nil];
+   
+    
     NSDictionary *detailListParamDic = @{@"HONOURUSER_ID":HONOURUSER_IDValue};
     [_foodLogic loadFoodDetailListDataWithParamDic:detailListParamDic success:^(NSArray *foodDetaiDicListArr) {
         _foodDetailListDicArr = foodDetaiDicListArr;
@@ -70,6 +79,8 @@ static NSString *ZSHHotelListCellID = @"ZSHHotelListCell";
         [weakself updateSectionDatWithSet:indexSet];
         
     } fail:nil];
+    
+    
 }
 
 - (void)updateSectionDatWithSet:(NSIndexSet *)indexSet{
@@ -202,18 +213,21 @@ static NSString *ZSHHotelListCellID = @"ZSHHotelListCell";
     NSDictionary *headTitleParamDic = @{@"text":@"套餐",@"font":kPingFangMedium(15),@"textAlignment":@(NSTextAlignmentLeft)};
     sectionModel.headerView = [ZSHBaseUIControl createTabHeadLabelViewWithParamDic:headTitleParamDic];
     
-    for (int i = 0; i<2; i++) {
+    for (int i = 0; i<_foodDetailSetDicArr.count; i++) {
         ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
         [sectionModel.cellModelArray addObject:cellModel];
         cellModel.height = kRealValue(75);
         cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
             ZSHHotelListCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHHotelListCellID forIndexPath:indexPath];
             cell.shopType = ZSHFoodShopType;
+            NSDictionary *paramDic = _foodDetailSetDicArr[indexPath.row];
+            [cell updateCellWithParamDic:paramDic];
+            
             return cell;
         };
         
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
-            NSDictionary *paramDic = _foodDetailListDicArr[indexPath.row];
+            NSDictionary *paramDic = _foodDetailSetDicArr[indexPath.row];
             NSDictionary *nextParamDic = @{KFromClassType:@(ZSHConfirmOrderToBottomBlurPopView),@"shopType":@(ZSHFoodShopType), @"deviceDic":weakself.foodDetailParamDic,@"listDic":paramDic,@"liveInfoStr":@""};
             weakself.bottomBlurPopView = [weakself createBottomBlurPopViewWithParamDic:nextParamDic];
             [kAppDelegate.window addSubview:weakself.bottomBlurPopView];

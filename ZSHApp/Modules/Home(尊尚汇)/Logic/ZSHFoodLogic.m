@@ -40,6 +40,17 @@
     }];
 }
 
+- (void)loadFoodDetailSetWithParamDic:(NSDictionary *)paramDic success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail{
+    [PPNetworkHelper POST:kUrlFoodDetailList parameters:paramDic success:^(id responseObject) {
+        RLog(@"美食套餐列表：返回数据&%@",responseObject);
+        NSArray *foodSetArr = responseObject[@"pd"];
+        success(foodSetArr);
+        
+    } failure:^(NSError *error) {
+        
+    }];
+}
+
 - (void)loadFoodDetailListDataWithParamDic:(NSDictionary *)paramDic success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail {
     [PPNetworkHelper POST:kUrlSfoodlistrand parameters:paramDic success:^(id responseObject) {
         RLog(@"美食详情列表数据==%@",responseObject)

@@ -19,6 +19,9 @@
 //美食详情
 - (void)loadFoodDetailDataWithParamDic:(NSDictionary *)paramDic;
 
-//美食详情列表
+//美食套餐列表
+- (void)loadFoodDetailSetWithParamDic:(NSDictionary *)paramDic success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail;
+
+//美食更多商家
 - (void)loadFoodDetailListDataWithParamDic:(NSDictionary *)paramDic success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail;
 @end

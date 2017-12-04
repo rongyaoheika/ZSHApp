@@ -161,17 +161,16 @@
              break;
         }
         case ZSHFoodShopType:{//美食
-            [_hotelmageView sd_setImageWithURL:[NSURL URLWithString:self.listDic[@"HOTELDETIMGS"]]];
-            _hotelLiveInfoLabel.text = _liveInfo;
-           
+            [_hotelmageView sd_setImageWithURL:[NSURL URLWithString:self.listDic[@"FOODDETIMGS"]]];
+            _hotelLiveInfoLabel.text = self.listDic[@"FOODDETREMARK"];
             if (_showCellType == ZSHNormalType) {//订单支付页面
                 _hotelNameLabel.text = self.deviceDic[@"SHOPNAMES"];
-                _hotelTypeLabel.text = self.listDic[@"SHOPNAMES"];
-                
+                _hotelTypeLabel.text = self.listDic[@"FOODDETNAME"];
+        
             } else if (_showCellType == ZSHPopType){
-                _hotelNameLabel.text = self.listDic[@"HOTELDETNAME"];
-                _sizeInfoLabel.text = [NSString stringWithFormat:@"%@㎡   %@", self.listDic[@"HOTELDETROOMSIZE"], self.listDic[@"HOTELDETBEDTYPE"] ];
-                _priceLabel.text = [NSString stringWithFormat:@"¥%.0f",[self.listDic[@"HOTELDETPRICE"]floatValue] ];
+                _hotelNameLabel.text = self.listDic[@"FOODDETNAME"];
+                _sizeInfoLabel.text = @"会员专享价";
+                _priceLabel.text = [NSString stringWithFormat:@"¥%.0f",[self.listDic[@"FOODDETPRICE"]floatValue] ];
             }
             
             break;

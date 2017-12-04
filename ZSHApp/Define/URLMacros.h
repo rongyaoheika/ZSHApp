@@ -23,8 +23,8 @@
  */
 
 #define DevelopSever    0
-#define TestSever       0
-#define ProductSever    1
+#define TestSever       1
+#define ProductSever    0
 
 #if DevelopSever
 
@@ -513,10 +513,14 @@
 //请求地址：/appsbarin/sbarlistsequence.do?SORTBARSEQUENCE(混淆码)
 #define kUrlSbarListSequence [NSString stringWithFormat:@"/appsbarin/sbarlistsequence.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SORTBARSEQUENCE"]]
 
-//4.获得美食套餐页列表 FOODDETAIL
+//4.获得美食套餐页列表 FOODDETAIL（完成）
 //http://localhost:8081/ZSHINTER//appsfoodin/fooddetaillist.do?FOODDETAIL&SORTFOOD_ID=382585520535896064
+#define kUrlFoodDetailList [NSString stringWithFormat:@"/appsfoodin/fooddetaillist.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"FOODDETAIL"]]
+
 //5.生成美食订单接口（未产生交易）SHIPFOODORDER
 //http://localhost:8081/ZSHINTER//appsfoodin/shipfoodorder.do?SHIPFOODORDER&ORDERUNAME=yu&ORDERPHONE=17601680524&ORDERREMARK=不要辣&ORDERMONEY=136&ORDERROOMNUM=1&ORDERCHECKDATE=2017-8-14&ORDERLEAVEDATE=2017-8-14&FOODDETAIL_ID=387192633518194688&HONOURUSER_ID=d6a3779de8204dfd9359403f54f7d27c
+//#define kUrlShipFoodOrdert [NSString stringWithFormat:@"/appsfoodin/shipfoodorder.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SHIPFOODORDER"]]
+
 //6.获得用户名下所有美食订单列表     ALLFOODORDER
 //http://localhost:8081/ZSHINTER//appsfoodin/foodorderalllist.do?ALLFOODORDER&HONOURUSER_ID=d6a3779de8204dfd9359403f54f7d27c&ORDERSTATUS=0040001
 //

@@ -15,6 +15,7 @@
 @interface ZSHHotelPayViewController ()
 
 @property (nonatomic, strong) ZSHPayView             *payView;
+@property (nonatomic, copy)   NSString               *priceStr;
 @property (nonatomic, assign) NSInteger              selectedCellRow;
 @property (nonatomic, strong) NSArray                *cellParamArr;
 
@@ -34,8 +35,32 @@ static NSString *ZSHBasePriceCellID = @"ZSHBasePriceCell";
 }
 
 - (void)loadData{
+    NSDictionary *paramDic = self.paramDic[@"listDic"];
+    switch ([self.paramDic[@"shopType"]integerValue]) {
+        case ZSHFoodShopType:{
+             _priceStr = [NSString stringWithFormat:@"订单金额¥%@",paramDic[@"FOODDETPRICE"]];
+            break;
+        }
+        case ZSHHotelShopType:{
+            _priceStr = [NSString stringWithFormat:@"订单金额¥%@",paramDic[@"HOTELDETPRICE"]];
+            break;
+        }
+        case ZSHKTVShopType:{
+            _priceStr = [NSString stringWithFormat:@"订单金额¥%@",paramDic[@"KTVDETPRICE"]];
+            break;
+        }
+        case ZSHBarShopType:{
+            _priceStr = [NSString stringWithFormat:@"订单金额¥%@",paramDic[@"BarDETPRICE"]];
+            break;
+        }
+            
+        default:
+            break;
+    }
+   
+    [self initViewModel];
     
-     [self initViewModel];
+    
 }
 
 - (void)createUI{
@@ -98,8 +123,7 @@ static NSString *ZSHBasePriceCellID = @"ZSHBasePriceCell";
     cellModel.height = kRealValue(40);
     cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHBaseCell *cell = [[ZSHBaseCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ZSHBasePriceCellID];
-        NSDictionary *paramDic = self.paramDic[@"listDic"];
-        cell.textLabel.text = [NSString stringWithFormat:@"订单金额¥%@",paramDic[@"HOTELDETPRICE"]];// @"订单金额¥000";
+        cell.textLabel.text = _priceStr;
         return cell;
     };
     
