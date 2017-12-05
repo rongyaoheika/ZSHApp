@@ -39,6 +39,9 @@
 //我的-订单列表
 #import "ZSHCardBtnListView.h"
 
+//确认订单
+#import "ZSHConfirmOrderLogic.h"
+
 @interface ZSHBottomBlurPopView ()<STCalendarDelegate>
 
 @property (nonatomic, strong) NSDictionary           *paramDic;
@@ -63,7 +66,7 @@
 @property (nonatomic, strong) NSDictionary           *deviceDic;
 @property (nonatomic, strong) NSDictionary           *listDic;
 @property (nonatomic, copy)   NSString               *liveInfo;
-
+@property (nonatomic, strong) ZSHConfirmOrderLogic   *orderLogic;
 
 
 //底部年龄弹出框
@@ -101,8 +104,10 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
     self = [super initWithFrame:frame];
     if (self) {
         _paramDic = paramDic;
+    
         [self loadData];
         [self createUI];
+       
     }
     return self;
 }
@@ -143,6 +148,7 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
     
     if (kFromClassTypeValue != ZSHFromPersonInfoVCToBottomBlurPopView && kFromClassTypeValue != ZSHFromLiveMidVCToBottomBlurPopView && kFromClassTypeValue != ZSHFromGoodsMineVCToToBottomBlurPopView) {
         self.subTab = [ZSHBaseUIControl createTableView];
+        self.subTab.backgroundColor = KWhiteColor;
         self.subTab.scrollEnabled = NO;
         self.subTab.tag = 2;
         [self addSubview: self.subTab];
@@ -160,29 +166,22 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
         [self.subTab registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHExchangeSecondCellID];
     } else if (kFromClassTypeValue == ZSHConfirmOrderToBottomBlurPopView) {//确认订单
         _subTabHeight = kRealValue(410);
-        
-        self.subTab.backgroundColor = KWhiteColor;
         [self.subTab registerClass:[ZSHHotelDetailDeviceCell class] forCellReuseIdentifier:ZSHHotelDetailDeviceCellID];
         [self.subTab registerClass:[ZSHHotelPayHeadCell class] forCellReuseIdentifier:ZSHHotelPayHeadCellID];
     } else if (kFromClassTypeValue == ZSHFromHotelDetailCalendarVCToBottomBlurPopView||kFromClassTypeValue == ZSHFromAirplaneCalendarVCToBottomBlurPopView) {//酒店入住(机票预订)日历
         _subTabHeight = kRealValue(360);
-        
-        self.subTab.backgroundColor = KWhiteColor;
         [self.subTab registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHHeadCellID];
         [self.subTab registerClass:[ZSHHotelPayHeadCell class] forCellReuseIdentifier:ZSHHotelPayHeadCellID];
     } else if (kFromClassTypeValue == ZSHFromAirplaneUserInfoVCToBottomBlurPopView) {//机票个人信息
         _subTabHeight = kRealValue(310.5);
-        
-        self.subTab.backgroundColor = KWhiteColor;
         [self.subTab registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHHeadCellID];
     } else if (kFromClassTypeValue == ZSHFromAirplaneAgeVCToBottomBlurPopView) {//吃喝玩乐年龄
         _subTabHeight = kRealValue(165);
-        
-        self.subTab.backgroundColor = KWhiteColor;
         [self.subTab registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHHeadCellID];
     }  else if (kFromClassTypeValue == ZSHFromHomeMenuVCToBottomBlurPopView) {//首页-菜单栏
         
         self.subTab.frame = CGRectMake(KScreenWidth - kRealValue(7.5) - kRealValue(100), 0, kRealValue(100),kRealValue(128));
+        self.subTab.backgroundColor = KClearColor;
         UIImageView *tbBgImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"list_bg"]];
         tbBgImageView.frame = self.subTab.bounds;
         self.subTab.backgroundView = tbBgImageView;
@@ -208,9 +207,7 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
         [self addSubview:livePopView];
         return;
     }  else if (kFromClassTypeValue == ZSHFromLiveNearSearchVCToBottomBlurPopView) {//直播-筛选播主
-        
         _subTabHeight = kRealValue(217);
-        self.subTab.backgroundColor = KWhiteColor;
         [self.subTab registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHHeadCellID];
         [self.subTab registerClass:[ZSHSearchLiveFirstCell class] forCellReuseIdentifier:ZSHSearchLiveFirstCellID];
         [self.subTab registerClass:[ZSHSearchLiveSecondCell class] forCellReuseIdentifier:ZSHSearchLiveSecondCellID];
@@ -226,8 +223,6 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
         return;
     } else if (kFromClassTypeValue == ZSHFromTrainUserInfoVCToBottomBlurPopView) {//火车票个人信息
         _subTabHeight = kRealValue(266.5);
-        
-        self.subTab.backgroundColor = KWhiteColor;
         [self.subTab registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHHeadCellID];
     } else if (kFromClassTypeValue == ZSHFromGoodsMineVCToToBottomBlurPopView) { //我的-订单中心-订单列表
         NSArray *titleArr = @[@"尊购",@"火车票",@"机票",@"酒店",@"KTV",@"美食",@"酒吧",@"电影"];
@@ -303,6 +298,7 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
         [self.tableViewModel.sectionModelArray addObject:[self stroreTrainUserInfo]];
         [self.tableViewModel.sectionModelArray addObject:[self storeConfirmBtnSection]];
     }
+
 }
 
 //head
@@ -758,7 +754,6 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
 }
 
 #pragma mark - event response 日历事件相应
-
 - (void)calendarResultWithBeginDate:(NSString *)beginDate endDate:(NSString *)endDate
 {
     NSString *resultStr = [beginDate stringByAppendingString:endDate];
@@ -804,8 +799,8 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
     }];
 }
 
+
 - (void)addUserBtnAction{
-    
     [UIView animateWithDuration:0.5 animations:^{
         CGRect mainFrame = _subTab.frame;
         mainFrame.origin.y = self.frame.size.height;
@@ -842,7 +837,7 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
             ZSHHotelPayViewController *hotelPayVC = [[ZSHHotelPayViewController alloc]initWithParamDic:nextParamDic];
             [[kAppDelegate getCurrentUIVC].navigationController pushViewController:hotelPayVC animated:YES];
         }
-//        ZSHFromTrainUserInfoVCToBottomBlurPopView
+
     }];
 }
 
@@ -880,6 +875,14 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
     if (touch.view.tag != 2) {
         kFromClassTypeValue!= ZSHFromHomeMenuVCToBottomBlurPopView?[self dismiss]:self.dissmissViewBlock?self.dissmissViewBlock(self,nil):nil;
     }
+}
+
+- (void)requestData{
+    _orderLogic = [[ZSHConfirmOrderLogic alloc]init];
+    NSDictionary *paramDic = @[];
+    [_orderLogic requestConfirmOrderWithParamDic:paramDic Success:^(id responseObject) {
+        
+    } fail:nil];
 }
 
 @end

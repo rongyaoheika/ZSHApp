@@ -100,5 +100,16 @@
         RLog(@"音乐列表请求失败");
     }];
 }
+//杂志
+- (void)loadMagzineCellDataSuccess:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail{
+    kWeakSelf(self);
+    [PPNetworkHelper POST:kUrlMagazineList parameters:nil success:^(id responseObject) {
+        RLog(@"杂志列表%@",responseObject);
+        weakself.magzineArr = responseObject[@"pd"];
+        success(nil);
+    } failure:^(NSError *error) {
+        RLog(@"音乐列表请求失败");
+    }];
+}
 
 @end

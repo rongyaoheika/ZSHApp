@@ -130,6 +130,13 @@ static NSString *Identify_MusicCell = @"musicCell";
         [weakself updateSectionDatWithSet:indexSet];
     } fail:nil];
     
+    [_homeLogic loadMagzineCellDataSuccess:^(id responseObject) {
+        weakself.tableViewModel.sectionModelArray[4] = [weakself storeMagazineSection];
+        NSIndexSet *indexSet = [[NSIndexSet alloc]initWithIndex:4];
+        [weakself updateSectionDatWithSet:indexSet];
+    } fail:nil];
+    
+    
     [_homeLogic loadMusicCellDataSuccess:^(id data) {
       weakself.tableViewModel.sectionModelArray[5] = [weakself storeMusicSection];
       NSIndexSet *indexSet = [[NSIndexSet alloc]initWithIndex:5];
@@ -172,7 +179,7 @@ static NSString *Identify_MusicCell = @"musicCell";
      [self.tableView registerClass:[ZSHBaseTitleButtonCell class] forCellReuseIdentifier:Identify_ServiceCell];
 
 	[self.tableView registerClass:[ZSHNoticeViewCell class] forCellReuseIdentifier:Identify_PlayCell];
-    [self.tableView registerClass:[ZSHNoticeViewCell class] forCellReuseIdentifier:Identify_MagazineCell];
+    [self.tableView registerClass:[ZSHBaseTitleButtonCell class] forCellReuseIdentifier:Identify_MagazineCell];
     [self.tableView registerClass:[ZSHBaseTitleButtonCell class] forCellReuseIdentifier:Identify_MusicCell];
     
     [self initViewModel];
@@ -333,9 +340,10 @@ static NSString *Identify_MusicCell = @"musicCell";
     [sectionModel.cellModelArray addObject:cellModel];
     cellModel.height = kRealValue(113.5);
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
-        ZSHNoticeViewCell *cell = [tableView dequeueReusableCellWithIdentifier:Identify_MagazineCell forIndexPath:indexPath];
-        NSDictionary *nextParamDic = @{KFromClassType:@(FromHomeMagazineVCToNoticeView)};
-        [cell updateCellWithParamDic:nextParamDic];
+        ZSHBaseTitleButtonCell *cell = [tableView dequeueReusableCellWithIdentifier:Identify_MagazineCell forIndexPath:indexPath];
+        if(_homeLogic.magzineArr){
+            [cell updateCellWithDataArr:_homeLogic.magzineArr paramDic:@{KFromClassType:@(FromHomeMagazineVCToNoticeView)}];
+        }
         return cell;
     };
     

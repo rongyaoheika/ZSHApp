@@ -274,6 +274,7 @@
 		FE7F00151F9203430006E9A3 /* ZSHBaseTableViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FEA483D21F91F3CA00219CFE /* ZSHBaseTableViewModel.m */; };
 		FE7F00161F9203430006E9A3 /* ZSHBaseTableViewSectionModel.h in Sources */ = {isa = PBXBuildFile; fileRef = FEA483D31F91F3CA00219CFE /* ZSHBaseTableViewSectionModel.h */; };
 		FE7F00171F9203430006E9A3 /* ZSHBaseTableViewSectionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FEA483D41F91F3CA00219CFE /* ZSHBaseTableViewSectionModel.m */; };
+		FE8CFE001FD64A21001A6545 /* ZSHConfirmOrderLogic.m in Sources */ = {isa = PBXBuildFile; fileRef = FE8CFDFF1FD64A21001A6545 /* ZSHConfirmOrderLogic.m */; };
 		FE8FD0731FADA833005F1184 /* ZSHMemberCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE8FD0721FADA833005F1184 /* ZSHMemberCenterViewController.m */; };
 		FE8FD0771FADAA9F005F1184 /* ZSHMemberCenterHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE8FD0761FADAA9F005F1184 /* ZSHMemberCenterHeadView.m */; };
 		FE8FD07B1FADBCFF005F1184 /* ZSHActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE8FD07A1FADBCFF005F1184 /* ZSHActivityViewController.m */; };
@@ -922,6 +923,8 @@
 		FE7CA9E61F9DC59300A2B15D /* ZSHGoodsDetailCountCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHGoodsDetailCountCell.m; sourceTree = "<group>"; };
 		FE7CA9E81F9DD15300A2B15D /* ZSHLiveListModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHLiveListModel.h; sourceTree = "<group>"; };
 		FE7CA9E91F9DD15300A2B15D /* ZSHLiveListModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHLiveListModel.m; sourceTree = "<group>"; };
+		FE8CFDFE1FD64A21001A6545 /* ZSHConfirmOrderLogic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHConfirmOrderLogic.h; sourceTree = "<group>"; };
+		FE8CFDFF1FD64A21001A6545 /* ZSHConfirmOrderLogic.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHConfirmOrderLogic.m; sourceTree = "<group>"; };
 		FE8FD0711FADA833005F1184 /* ZSHMemberCenterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHMemberCenterViewController.h; sourceTree = "<group>"; };
 		FE8FD0721FADA833005F1184 /* ZSHMemberCenterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHMemberCenterViewController.m; sourceTree = "<group>"; };
 		FE8FD0751FADAA9F005F1184 /* ZSHMemberCenterHeadView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHMemberCenterHeadView.h; sourceTree = "<group>"; };
@@ -1663,6 +1666,8 @@
 			children = (
 				1891C1311FC6A67F000AFEFB /* ZSHBuyLogic.h */,
 				1891C1321FC6A67F000AFEFB /* ZSHBuyLogic.m */,
+				FE8CFDFE1FD64A21001A6545 /* ZSHConfirmOrderLogic.h */,
+				FE8CFDFF1FD64A21001A6545 /* ZSHConfirmOrderLogic.m */,
 			);
 			path = Logic;
 			sourceTree = "<group>";
@@ -3942,6 +3947,7 @@
 				1813E2701FBD3F6C00624405 /* ZSHTrainTicketDetailViewController.m in Sources */,
 				FEECC2321FCEA11C000DF4F4 /* ZSHPrivlegeModel.m in Sources */,
 				181105871FBC396B0046D229 /* ZSHEnergyExchangeViewController.m in Sources */,
+				FE8CFE001FD64A21001A6545 /* ZSHConfirmOrderLogic.m in Sources */,
 				FEA30A4A1F9F053100AB0FFC /* ZSHLogisticsDetailViewController.m in Sources */,
 				185BB9BB1FB559CA007A96FF /* ZSHLiveTotalListViewController.m in Sources */,
 				FE1377C11F97AE29003C8DFB /* ZSHManageAddressListViewController.m in Sources */,
@@ -4249,8 +4255,8 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zoe.TC168;
 				PRODUCT_NAME = "荣耀黑卡";
-				PROVISIONING_PROFILE = "e2470df0-5b6d-48f3-9d7d-f29fbffad7e9";
-				PROVISIONING_PROFILE_SPECIFIER = "dev_profile(1130)";
+				PROVISIONING_PROFILE = "5ca4af54-c8b9-4cde-9b41-d3a355790eaf";
+				PROVISIONING_PROFILE_SPECIFIER = "dev_profile(1205)";
 				SKIP_INSTALL = NO;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/ZSHApp/Define";
@@ -4353,8 +4359,8 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zoe.TC168;
 				PRODUCT_NAME = "荣耀黑卡";
-				PROVISIONING_PROFILE = "bbd780fa-e905-4a03-8e8b-a20cd8afdcf9";
-				PROVISIONING_PROFILE_SPECIFIER = "dis_profile(1130)";
+				PROVISIONING_PROFILE = "c37d750d-2ed5-4a3a-9165-19b299432641";
+				PROVISIONING_PROFILE_SPECIFIER = "dis_profile(1205)";
 				SKIP_INSTALL = NO;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/ZSHApp/Define";
@@ -4555,8 +4561,8 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zoe.TC168;
 				PRODUCT_NAME = "荣耀黑卡";
-				PROVISIONING_PROFILE = "bbd780fa-e905-4a03-8e8b-a20cd8afdcf9";
-				PROVISIONING_PROFILE_SPECIFIER = "dis_profile(1130)";
+				PROVISIONING_PROFILE = "c37d750d-2ed5-4a3a-9165-19b299432641";
+				PROVISIONING_PROFILE_SPECIFIER = "dis_profile(1205)";
 				SKIP_INSTALL = NO;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/ZSHApp/Define";

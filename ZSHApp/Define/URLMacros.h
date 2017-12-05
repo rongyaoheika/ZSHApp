@@ -206,15 +206,15 @@
 //参数：暂无
 //请求地址：/apphomein/getnewslist?NEWSLIST(混淆码)
 #define kUrlGetNewsList [NSString stringWithFormat:@"/apphomein/getnewslist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"NEWSLIST"]]
-//35.获取新闻详情
+//35.获取新闻详情(完成)
 //参数：NEWS_ID 新闻id
 //请求地址：/apphomein/getnewsdet?NEWSDET(混淆码)
 #define kUrlGetNewsDet [NSString stringWithFormat:@"/apphomein/getnewsdet?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"NEWSDET"]]
-//36.获取新闻所有评论
+//36.获取新闻所有评论（暂无用）
 //参数：NEWS_ID 新闻id
 //请求地址：/apphomein/getnewseva?NEWSEVA(混淆码)
 #define kUrlGetNewsEva [NSString stringWithFormat:@"/apphomein/getnewseva?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"NEWSEVA"]]
-//37.添加新闻评论
+//37.添加新闻评论（暂无用）
 //参数：NEWS_ID 评价新闻id/HONOURUSER_ID 评价用户id /NEWSEVACONTENT 评论内容
 //请求地址：/apphomein/getnewsevaadd?NEWSEVAADD(混淆码)
 #define kUrlGetNewsEvaAdd [NSString stringWithFormat:@"/apphomein/getnewsevaadd?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"NEWSEVAADD"]]
@@ -514,7 +514,12 @@
 //请求地址：/appsbarin/sbarlistsequence.do?SORTBARSEQUENCE(混淆码)
 #define kUrlSbarListSequence [NSString stringWithFormat:@"/appsbarin/sbarlistsequence.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SORTBARSEQUENCE"]]
 
-//4.获得美食套餐页列表 FOODDETAIL（完成）
+//101. 首页杂志
+//参数：无
+//请求地址：/apphomein/magazinelist?MAGAZINE(混淆码)
+#define kUrlMagazineList [NSString stringWithFormat:@"/apphomein/magazinelist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"MAGAZINE"]]
+
+//102.获得美食套餐页列表 FOODDETAIL（完成）
 //http://localhost:8081/ZSHINTER//appsfoodin/fooddetaillist.do?FOODDETAIL&SORTFOOD_ID=382585520535896064
 #define kUrlFoodDetailList [NSString stringWithFormat:@"/appsfoodin/fooddetaillist.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"FOODDETAIL"]]
 

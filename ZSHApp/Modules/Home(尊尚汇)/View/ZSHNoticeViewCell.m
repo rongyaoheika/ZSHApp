@@ -38,10 +38,11 @@
     [super layoutSubviews];
     
     [self.itemScrollView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(self);
-        make.top.mas_equalTo(self);
-        make.bottom.mas_equalTo(self);
-        make.width.mas_equalTo(KScreenWidth);
+        make.edges.mas_equalTo(self);
+//        make.left.mas_equalTo(self);
+//        make.top.mas_equalTo(self);
+//        make.bottom.mas_equalTo(self);
+//        make.width.mas_equalTo(KScreenWidth);
     }];
 }
 
@@ -78,16 +79,7 @@
     self.paramDic = paramDic;
     _btnArr = [[NSMutableArray alloc]init];
     
-    if ([paramDic[KFromClassType]integerValue]  == FromHomeMagazineVCToNoticeView) {
-        _itemScrollView.itemWidth = kRealValue(95);
-        
-        for (int i = 1; i<5; i++) {
-            NSString *imageName = [NSString stringWithFormat:@"home_magazine%d",i];
-            UIButton *btn = [[UIButton alloc]init];
-            [btn setBackgroundImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
-            [_btnArr addObject:btn];
-        }
-    } else if ([paramDic[KFromClassType]integerValue] == FromKTVCalendarVCToNoticeView) {
+     if ([paramDic[KFromClassType]integerValue] == FromKTVCalendarVCToNoticeView) {
         _itemScrollView.itemWidth = kRealValue(70);
         _itemScrollView.fromClassType = FromKTVCalendarVCToNoticeView;
         NSArray *topTitleArr = @[@"今天",@"周三",@"周四",@"周五",@"周六",@"周日",@"周一"];

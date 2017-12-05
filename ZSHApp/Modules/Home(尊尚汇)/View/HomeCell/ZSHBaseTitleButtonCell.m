@@ -50,9 +50,16 @@
             [btnView mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.width.mas_equalTo(kRealValue(130));
             }];
+        } else if ([paramDic[KFromClassType]integerValue] == FromHomeMagazineVCToNoticeView) {
+            btnView.showLabel = NO;
+            [btnView.imageView sd_setImageWithURL:[NSURL URLWithString:subParamDic[@"ICONIMGS"]]];
+            [btnView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.width.mas_equalTo(kRealValue(95));
+            }];
         }
         
         [_scrollView addSubview:btnView];
+        
         [btnView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.mas_equalTo(self);
             make.bottom.mas_equalTo(self);
@@ -64,9 +71,8 @@
         }];
 
         lastBtnView = btnView;
-        
-        
     }
+    
     [self.scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.mas_equalTo(self);
         make.right.mas_equalTo(lastBtnView).offset(KLeftMargin);

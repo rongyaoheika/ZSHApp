@@ -17,7 +17,6 @@
 
 @end
 
-#define  leftSpacing 15
 #define  midSpacing 7.5
 @implementation ZSHNotCycleScrollView
 
@@ -72,7 +71,7 @@
             btn.selected = YES;
             if (self.fromClassType == FromKTVCalendarVCToNoticeView) {
                 for (UILabel *subLabel in btn.subviews) {
-                        subLabel.textColor = KZSHColorF29E19;
+                    subLabel.textColor = KZSHColorF29E19;
                 }
             }
             
@@ -129,7 +128,7 @@
     self.temBtn = nil;
     
     self.scrollView.frame = self.bounds;
-    self.scrollView.contentSize = CGSizeMake(self.titleButtons.count * self.itemWidth+2*leftSpacing + (self.titleButtons.count-1)*midSpacing, self.frame.size.height);
+    self.scrollView.contentSize = CGSizeMake(self.titleButtons.count * self.itemWidth+2*KLeftMargin + (self.titleButtons.count-1)*midSpacing, self.frame.size.height);
     NSInteger i = 0;
 
     for (UIButton *btn in self.titleButtons) {
@@ -151,12 +150,8 @@
             btn.frame = CGRectMake(leftX, (CGRectGetHeight(self.frame)-kRealValue(25))/2, _itemWidth, kRealValue(25));
             i++;
         } else {
-            
-            btn.frame = CGRectMake(leftSpacing + (midSpacing + _itemWidth)*i++, 0, _itemWidth, CGRectGetHeight(self.frame));
-        }
-    
-        if (btn.titleLabel.text&&btn.imageView.image) {
-            [btn layoutButtonWithEdgeInsetsStyle:XYButtonEdgeInsetsStyleTop imageTitleSpace:kRealValue(10)];
+            btn.frame = CGRectMake(KLeftMargin + (midSpacing + _itemWidth)*i++, 0, _itemWidth, CGRectGetHeight(self.frame));
+            btn.backgroundColor = [UIColor redColor];
         }
     }
    

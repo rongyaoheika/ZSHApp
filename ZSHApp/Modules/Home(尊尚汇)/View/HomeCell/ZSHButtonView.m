@@ -11,7 +11,11 @@
 @implementation ZSHButtonView
 
 - (void)setup{
+    _showLabel = YES;
+    
     _imageView = [[UIImageView alloc]init];
+    _imageView.contentMode = UIViewContentModeScaleAspectFill;
+    _imageView.clipsToBounds = YES;
     [self addSubview:_imageView];
     [_imageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.mas_equalTo(self).insets(UIEdgeInsetsMake(0, 0, kRealValue(20), 0));
@@ -25,6 +29,22 @@
         make.left.and.width.mas_equalTo(self);
         make.height.mas_equalTo(kRealValue(12));
     }];
+}
+
+
+- (void)setShowLabel:(BOOL)showLabel{
+    _showLabel = showLabel;
+    if (!_showLabel) {
+        [_imageView mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.edges.mas_equalTo(self).insets(UIEdgeInsetsMake(0, 0, 0, 0));;
+        }];
+        
+        [_label mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.bottom.mas_equalTo(_imageView);
+            make.left.and.width.mas_equalTo(0);
+            make.height.mas_equalTo(kRealValue(0));
+        }];
+    }
 }
 
 @end
