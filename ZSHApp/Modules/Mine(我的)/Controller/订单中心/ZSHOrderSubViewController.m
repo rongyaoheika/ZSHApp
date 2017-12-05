@@ -107,6 +107,8 @@ static NSString *cellIdentifier = @"listCell";
                 [cell updateCellWithHotel:(ZSHHotelOrderModel *)orderModel];
             } else if ([self.paramDic[@"tag"] integerValue] == 4) {// KTV订单
                 [cell updateCellWithKtv:(ZSHKtvOrderModel *)orderModel];
+            } else if ([self.paramDic[@"tag"] integerValue] == 5) {// 美食订单
+                [cell updateCellWithFood:(ZSHFoodOrderModel *)orderModel];
             } else if ([self.paramDic[@"tag"] integerValue] == 6) {// 酒吧订单
                 [cell updateCellWithBarorder:(ZSHBarorderOrderModel *)orderModel];
             }
@@ -125,7 +127,7 @@ static NSString *cellIdentifier = @"listCell";
 
 - (void)requestData {
     kWeakSelf(self);
-    NSArray *urls = @[@"", @"", @"", kUrlHotelOrderAllList, kUrlKtvOrderAllList, @"", kUrlBarorderAllList, @""];
+    NSArray *urls = @[@"", @"", @"", kUrlHotelOrderAllList, kUrlKtvOrderAllList, kUrlFoodOrderAllList, kUrlBarorderAllList, @""];
     if ([self.paramDic[@"tag"] integerValue] == 0) {
          if ([self.paramDic[@"ORDERSTATUS"] isEqualToString:@""]) {// 带条件查询
              [_mineLogic requestOrderAllList:^(id response) {

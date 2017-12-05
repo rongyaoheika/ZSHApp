@@ -7,7 +7,6 @@
 //
 
 #import "ZSHHotelOrderModel.h"
-
 @implementation ZSHHotelOrderModel
 @end
 
@@ -15,4 +14,7 @@
 @end
 
 @implementation ZSHBarorderOrderModel
+@end
+
+@implementation ZSHFoodOrderModel
 @end

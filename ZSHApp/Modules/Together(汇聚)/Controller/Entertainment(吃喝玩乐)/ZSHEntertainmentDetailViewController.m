@@ -31,8 +31,10 @@ static NSString *ZSHEntertainmentDetailCellID = @"ZSHEntertainmentDetailCell";
 }
 
 - (void)loadData{
-    [self  requestData];
+    _togetherLogic = [[ZSHTogetherLogic alloc] init];
+    
     [self initViewModel];
+    [self requestData];
 }
 
 - (void)createUI{
@@ -63,7 +65,7 @@ static NSString *ZSHEntertainmentDetailCellID = @"ZSHEntertainmentDetailCell";
 //head
 - (ZSHBaseTableViewSectionModel*)storeListSection {
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
-    
+    kWeakSelf(self);
     //头部cell
     ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
     cellModel.height = kRealValue(60);
@@ -80,6 +82,19 @@ static NSString *ZSHEntertainmentDetailCellID = @"ZSHEntertainmentDetailCell";
     //中间cell
     NSArray *titleArr = @[@"开始时间",@"结束时间",@"期望价格",@"方式",@"人数要求",@"性别要求",@"年龄要求"];
     NSArray *valueArr = @[@"2017-10-1",@"2017-10-7",@"0-1000",@"AA互动趴",@"一对一",@"不限",@"18-30岁"];
+    if (_togetherLogic.enterDisModel.STARTTIME.length) {
+        ZSHEnterDisModel *model= _togetherLogic.enterDisModel;
+        NSString *sex = @"";
+        if ([model.CONVERGESEX  isEqualToString:@"0"]) {
+            sex = @"女";
+        }else if ([model.CONVERGESEX  isEqualToString:@"1"]) {
+            sex = @"男";
+        } else if ([model.CONVERGESEX  isEqualToString:@"2"]) {
+            sex = @"不限";
+        }
+        valueArr = @[model.STARTTIME,model.ENDTIME,NSStringFormat(@"%@-%@",model.PRICEMIN,model.PRICEMAX) ,model.CONVERGETYPE
+                              ,model.CONVERGEPER, sex,NSStringFormat(@"%@-%@",model.AGEMIN,model.AGEMAX)];
+    }
     for (int i = 0; i<titleArr.count; i++) {
         cellModel = [[ZSHBaseTableViewCellModel alloc] init];
         cellModel.height = kRealValue(40);
@@ -90,6 +105,7 @@ static NSString *ZSHEntertainmentDetailCellID = @"ZSHEntertainmentDetailCell";
                 cell = [[ZSHBaseCell alloc] initWithStyle:UITableViewCellStyleValue1
                                               reuseIdentifier:@"cellid"];
             }
+
             cell.textLabel.text = titleArr[i];
             cell.detailTextLabel.text = valueArr[i];
             return cell;
@@ -107,6 +123,9 @@ static NSString *ZSHEntertainmentDetailCellID = @"ZSHEntertainmentDetailCell";
     cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHEntertainmentDetailCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHEntertainmentDetailCellID];
         cell.separatorInset = UIEdgeInsetsMake(0, 0, 0, MAXFLOAT);
+        if (weakself.togetherLogic.enterDisModel.CONVERGEDET.length) {
+            [cell updateCellWithModel:weakself.togetherLogic.enterDisModel];
+        }
         return cell;
     };
     
@@ -115,7 +134,12 @@ static NSString *ZSHEntertainmentDetailCellID = @"ZSHEntertainmentDetailCell";
 
 #pragma action
 - (void)contactAction{
-    
+    [_togetherLogic requestAddOtherPartyWithConvergeDetailID:self.paramDic[@"CONVERGEDETAIL_ID"] success:^(id response) {
+        UIAlertController *ac = [UIAlertController alertControllerWithTitle:@"提示" message:@"成功" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleCancel handler:nil];
+        [ac addAction:cancelAction];
+        [self presentViewController:ac animated:YES completion:nil];
+    }];
 }
 
 #pragma getter
@@ -128,7 +152,7 @@ static NSString *ZSHEntertainmentDetailCellID = @"ZSHEntertainmentDetailCell";
 
 - (void)requestData {
     kWeakSelf(self);
-    _togetherLogic = [[ZSHTogetherLogic alloc] init];
+    
     [_togetherLogic requestPartyListWithConvergeDetailID:self.paramDic[@"CONVERGEDETAIL_ID"] success:^(id response) {
         [weakself initViewModel];
     }];

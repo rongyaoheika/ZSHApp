@@ -16,6 +16,8 @@
 - (void)updateCellWithHotel:(ZSHHotelOrderModel *)model;
 // 酒吧
 - (void)updateCellWithBarorder:(ZSHBarorderOrderModel *)model;
+// 美食
+- (void)updateCellWithFood:(ZSHFoodOrderModel *)model;
 // KTV
 - (void)updateCellWithKtv:(ZSHKtvOrderModel *)model;
 @end

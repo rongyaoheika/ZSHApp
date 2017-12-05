@@ -79,7 +79,7 @@ static NSString *cellIdentifier = @"listCell";
 - (ZSHBaseTableViewSectionModel*)storeListSection {
     kWeakSelf(self);
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
-    for (int i = 0; i<_togetherLogic.dataArr.count; i++) {
+    for (int i = 0; i<_togetherLogic.togertherDataArr.count; i++) {
         
         ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
         [sectionModel.cellModelArray addObject:cellModel];
@@ -87,12 +87,12 @@ static NSString *cellIdentifier = @"listCell";
         cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
             ZSHTogetherView *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
             [cell setParamDic:@{KFromClassType:@(ZSHFromTogetherVCToTogetherView)}];
-            [cell updateCellWithModel:_togetherLogic.dataArr[i]];
+            [cell updateCellWithModel:_togetherLogic.togertherDataArr[i]];
             return cell;
         };
         
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
-            ZSHTogetherModel *model = _togetherLogic.dataArr[i];
+            ZSHTogetherModel *model = _togetherLogic.togertherDataArr[i];
             Class className = NSClassFromString(weakself.pushVCsArr[indexPath.row]);
             RootViewController *vc = [[className alloc]initWithParamDic:@{@"CONVERGE_ID":model.CONVERGE_ID,@"Title":model.IMGCNCHAR}];
             [weakself.navigationController pushViewController:vc animated:YES];

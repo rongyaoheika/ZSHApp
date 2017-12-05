@@ -328,6 +328,7 @@
             }
         }
 #endif
+        
         UIBarButtonItem * item = [[UIBarButtonItem alloc] initWithCustomView:btn];
         [items addObject:item];
     }

@@ -18,19 +18,21 @@
 }
 
 
+// 获取汇聚列表
 - (void)requestConvergeList:(void(^)(id ))success {
     kWeakSelf(self);
     [PPNetworkHelper POST:kUrlConvergeList parameters:@{} success:^(id responseObject) {
-        weakself.dataArr = [ZSHTogetherModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"]];
+        weakself.togertherDataArr = [ZSHTogetherModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"]];
         success(nil);
     } failure:^(NSError *error) {
         RLog(@"请求失败");
     }];
 }
 
-- (void)requestPartyListWithConvergeID:(NSString *)convergeID success:(void(^)(id response))success {
+// 获得指定汇聚下所有聚会列表 (我发布,我参与) 
+- (void)requestPartyListWithDic:(NSDictionary *)dic success:(void(^)(id response))success {
     kWeakSelf(self);
-    [PPNetworkHelper POST:kUrlGetPartyList parameters:@{@"CONVERGE_ID":convergeID, @"HONOURUSER_ID":@"", @"STATUS":@""} success:^(id responseObject) {
+    [PPNetworkHelper POST:kUrlGetPartyList parameters:dic success:^(id responseObject) {
         weakself.entertainModelArr = [ZSHEntertainmentModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"]];
         success(nil);
     } failure:^(NSError *error) {
@@ -38,18 +40,29 @@
     }];
 }
 
+
+// 获取聚会详情
 - (void)requestPartyListWithConvergeDetailID:(NSString *)convergeDetailID success:(void(^)(id response))success {
     kWeakSelf(self);
     [PPNetworkHelper POST:kUrlGetDetaiByID parameters:@{@"CONVERGEDETAIL_ID":convergeDetailID} success:^(id responseObject) {
-        weakself.enterDetilModelArr = [ZSHEnterDetailModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"]];
+        weakself.enterDisModel = [ZSHEnterDisModel mj_objectWithKeyValues:responseObject[@"pd"]];
         success(nil);
     } failure:^(NSError *error) {
         RLog(@"请求失败");
     }];
 }
 
+// 发布聚会
 - (void)requestAddDetailParty:(NSDictionary *)dic success:(void(^)(id response))success {
     [PPNetworkHelper POST:kUrlAddDetailParty parameters:dic success:^(id responseObject) {
+        success(responseObject);
+    } failure:^(NSError *error) {
+        RLog(@"请求失败");
+    }];
+}
+// 加入聚会
+- (void)requestAddOtherPartyWithConvergeDetailID:(NSString *)convergeDetailID success:(void(^)(id response))success {
+    [PPNetworkHelper POST:kUrlAddOtherParty parameters:@{@"CONVERGEDETAIL_ID":convergeDetailID, @"HONOURUSER_ID":@"d6a3779de8204dfd9359403f54f7d27c"} success:^(id responseObject) {
         success(responseObject);
     } failure:^(NSError *error) {
         RLog(@"请求失败");

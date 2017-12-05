@@ -12,6 +12,7 @@
 #import "ZSHBuyOrderModel.h"
 #import "ZSHHotelOrderModel.h"
 
+
 @interface ZSHMineLogic : ZSHLoginLogic
 
 @property (nonatomic, strong) ZSHAddrModel                     *addNewAddr;
@@ -20,6 +21,7 @@
 @property (nonatomic, strong) NSArray<ZSHGoodOrderModel *>     *goodOrderModelArr;
 @property (nonatomic, strong) NSArray<ZSHHotelOrderModel *>    *hotlOrderModelArr;
 @property (nonatomic, strong) NSArray<ZSHKtvOrderModel *>      *ktvOrderModelArr;
+@property (nonatomic, strong) NSArray<ZSHFoodOrderModel *>     *foodOrderModelArr;
 @property (nonatomic, strong) NSArray<ZSHBarorderOrderModel *> *barorderOrderModelArr;
 
 

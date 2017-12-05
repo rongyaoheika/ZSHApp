@@ -71,7 +71,7 @@ static NSString *ZSHEnterTainmentCellID = @"ZSHEnterTainmentCell";
         };
         
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
-            ZSHEntertainmentDetailViewController *enterTainMentDetailVC = [[ZSHEntertainmentDetailViewController alloc]initWithParamDic:@{@"CONVERGEDETAIL_ID":_togetherLogic.entertainModelArr[indexPath.row].CONVERGEDETAIL_ID}];
+            ZSHEntertainmentDetailViewController *enterTainMentDetailVC = [[ZSHEntertainmentDetailViewController alloc]initWithParamDic:@{@"CONVERGEDETAIL_ID":weakself.togetherLogic.entertainModelArr[indexPath.row].CONVERGEDETAIL_ID}];
             [weakself.navigationController pushViewController:enterTainMentDetailVC animated:YES];
         };
     }
@@ -102,7 +102,7 @@ static NSString *ZSHEnterTainmentCellID = @"ZSHEnterTainmentCell";
 - (void)requestData {
     kWeakSelf(self);
     _togetherLogic = [[ZSHTogetherLogic alloc] init];
-    [_togetherLogic requestPartyListWithConvergeID:self.paramDic[@"CONVERGE_ID"] success:^(id response) {
+    [_togetherLogic requestPartyListWithDic:@{@"CONVERGE_ID":self.paramDic[@"CONVERGE_ID"], @"HONOURUSER_ID":@"", @"STATUS":@""} success:^(id response) {
         [weakself initViewModel];
     }];
 }

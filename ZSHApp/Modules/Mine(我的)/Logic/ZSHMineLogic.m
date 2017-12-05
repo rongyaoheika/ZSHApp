@@ -83,11 +83,13 @@
         } else if ([url isEqualToString:kUrlKtvOrderAllList]) {
             weakself.ktvOrderModelArr = [ZSHKtvOrderModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"]];
             success(weakself.ktvOrderModelArr);
+        } else if ([url isEqualToString:kUrlFoodOrderAllList]) {
+            weakself.foodOrderModelArr = [ZSHFoodOrderModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"]];
+            success(weakself.foodOrderModelArr);
         } else if ([url isEqualToString:kUrlBarorderAllList]) {
             weakself.barorderOrderModelArr = [ZSHBarorderOrderModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"]];
             success(weakself.barorderOrderModelArr);
         }
-        
     } failure:^(NSError *error) {
         RLog(@"请求失败");
     }];

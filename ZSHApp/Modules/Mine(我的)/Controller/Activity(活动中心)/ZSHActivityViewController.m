@@ -9,10 +9,13 @@
 #import "ZSHActivityViewController.h"
 #import "ZSHEnterTainmentCell.h"
 #import "ZSHEntertainmentModel.h"
+#import "ZSHTogetherLogic.h"
+#import "ZSHEntertainmentDetailViewController.h"
+
 
 @interface ZSHActivityViewController ()
 
-@property (nonatomic, strong)NSMutableArray           *dataArr;
+@property (nonatomic, strong) ZSHTogetherLogic         *togetherLogic;
 
 @end
 
@@ -29,14 +32,10 @@ static NSString *ZSHEnterTainmentCellID = @"ZSHEnterTainmentCell";
 }
 
 - (void)loadData{
-    
-    NSArray *baseDataArr = @[
-                             @{@"avatarPicture":@"weibo_head_image",@"name":@"完成全部任务",@"gender":@(0),@"distance":@(1.7),@"age":@(19),@"constellation":@"摩羯座",@"title":@"麦乐迪KTV嗨起来 ",@"detailImage":@"entertainment_image_1",@"beginTime":@"2017年10月1日",@"endTime":@"2017年10月8日",@"personCount":@"一对一",@"mode":@"AA互动趴"},
-                             @{@"avatarPicture":@"weibo_head_image",@"name":@"完成全部任务",@"gender":@(1),@"distance":@(2.7),@"age":@(29),@"constellation":@"金牛座",@"title":@"麦乐迪KTV嗨起来 ",@"detailImage":@"entertainment_image_1",@"beginTime":@"2017年10月1日",@"endTime":@"2017年10月8日",@"personCount":@"一对一",@"mode":@"AA互动趴"}
-                             ];
-    self.dataArr = [ZSHEntertainmentModel mj_objectArrayWithKeyValuesArray:baseDataArr];
     [self initViewModel];
     
+    _togetherLogic = [[ZSHTogetherLogic alloc] init];
+    [self requestData];
 }
 
 - (void)createUI{
@@ -57,33 +56,55 @@ static NSString *ZSHEnterTainmentCellID = @"ZSHEnterTainmentCell";
     UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, 0.5)];
     lineView.backgroundColor = KZSHColor1D1D1D;
     [self.view addSubview:lineView];
-    [self.tableView reloadData];
+    
 }
 
 - (void)initViewModel {
     [self.tableViewModel.sectionModelArray removeAllObjects];
     [self.tableViewModel.sectionModelArray addObject:[self storeListSection]];
+    [self.tableView reloadData];
 }
 
 //head
 - (ZSHBaseTableViewSectionModel*)storeListSection {
+    kWeakSelf(self);
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
-    for (int i = 0; i<self.dataArr.count; i++) {
+    for (int i = 0; i<_togetherLogic.entertainModelArr.count; i++) {
         ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
         [sectionModel.cellModelArray addObject:cellModel];
-        cellModel.height = kRealValue(190);
+        cellModel.height = kRealValue(250);
         cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
             ZSHEnterTainmentCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHEnterTainmentCellID];
             cell.fromClassType = ZSHFromActivityVCToEnterTainmentCell;
-            ZSHEntertainmentModel *model = self.dataArr[indexPath.row];
-            [cell updateCellWithModel:model];
+            [cell updateCellWithModel:weakself.togetherLogic.entertainModelArr[indexPath.row]];
             return cell;
         };
         
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
+            ZSHEntertainmentDetailViewController *enterTainMentDetailVC = [[ZSHEntertainmentDetailViewController alloc]initWithParamDic:@{@"CONVERGEDETAIL_ID":weakself.togetherLogic.entertainModelArr[indexPath.row].CONVERGEDETAIL_ID}];
+            [weakself.navigationController pushViewController:enterTainMentDetailVC animated:YES];
         };
     }
     return sectionModel;
+}
+
+
+
+- (void)requestData {
+    kWeakSelf(self);
+    [_togetherLogic requestPartyListWithDic:@{@"CONVERGE_ID":@"", @"HONOURUSER_ID":@"d6a3779de8204dfd9359403f54f7d27c", @"STATUS":self.paramDic[@"STATUS"]} success:^(id response) {
+        [weakself initViewModel];
+        [weakself.tableView.mj_header endRefreshing];
+        [weakself.tableView.mj_footer endRefreshing];
+    }];
+}
+
+- (void)headerRereshing{
+    [self requestData];
+}
+
+- (void)footerRereshing{
+    [self requestData];
 }
 
 

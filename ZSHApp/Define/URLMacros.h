@@ -65,7 +65,7 @@
 #define kUrlUserHome [NSString stringWithFormat:@"/apphomein/getrecommendlist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"COMMEND"]]
 // 2用户注册 (完成)
 #define kUrlUserRegister [NSString stringWithFormat:@"/appuserin/userregister?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"REGISTER"]]
-// 3用户登录
+// 3用户登录 (完成)
 //  手机号登录
 //  参数：PHONE 手机号
 #define kUrlUserLoginPhone [NSString stringWithFormat:@"/appuserin/userloginphone?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"LOGIN"]]
@@ -91,11 +91,11 @@
 //参数：无参数
 //请求地址：/appshipin/shiplistall?SHIPAll(混淆码)
 #define kUrlShipListAll [NSString stringWithFormat:@"/appshipin/shiplistall?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SHIPAll"]]
-//10.获得类别下商品品牌列表
+//10.获得类别下商品品牌列表 （完成）
 //参数：BRAND_ID 类型参数id
 //请求地址：/appshipin/shipbrandiconlist?SHIPBRIC(混淆码)
 #define kUrlShipBrandIconList [NSString stringWithFormat:@"/appshipin/shipbrandiconlist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SHIPBRIC"]]
-//11.获得商品类别列表
+//11.获得商品类别列表（完成）
 //参数：无参数
 //请求地址：/appshipin/shipbrandlist?SHIPBR(混淆码)
 #define kUrlShipBrandList [NSString stringWithFormat:@"/appshipin/shipbrandlist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SHIPBR"]]
@@ -513,6 +513,36 @@
 //BRAND  品牌   /STYLE  类型
 //请求地址：/appsbarin/sbarlistsequence.do?SORTBARSEQUENCE(混淆码)
 #define kUrlSbarListSequence [NSString stringWithFormat:@"/appsbarin/sbarlistsequence.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SORTBARSEQUENCE"]]
+//101. 首页杂志
+//参数：无
+//请求地址：/apphomein/magazinelist?MAGAZINE(混淆码)
+#define kUrlMagazineList [NSString stringWithFormat:@"/apphomein/magazinelist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"MAGAZINE"]]
+//102. 获得美食套餐页列表
+//参数：SORTFOOD_ID  所属美食店铺ID
+//请求地址：/appsfoodin/fooddetaillist.do?FOODDETAIL(混淆码)
+#define kUrlFoodDetailList [NSString stringWithFormat:@"/appsfoodin/fooddetaillist.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"FOODDETAIL"]]
+//103. 生成美食订单接口（未产生交易）
+//参数：ORDERUNAME 入住人姓名/ORDERPHONE 入住人手机号码/ORDERREMARK 订单备注/ORDERMONEY 订单价格/ORDERROOMNUM 套餐数量/ORDERROOMBEGIN 开始时间/ORDERROOMEND 结束时间
+///BARDETAIL_ID 所关联的套餐id/HONOURUSER_ID 提交订单用户id
+//请求地址：/appsfoodin/shipfoodorder.do?SHIPFOODORDER(混淆码)
+#define kUrlShipFoodOrder [NSString stringWithFormat:@"/appsfoodin/shipfoodorder.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SHIPFOODORDER"]]
+//104. 修改美食订单状态(改为支付成功,用户带使用0040002)
+//参数：ORDERSTATUS 订单状态编码/HONOURUSER_ID 提交订单的用户id /ORDERNUMBER 订单编号
+//请求地址：/appsfoodin/shiporderstaupd.do?SHIPFOODORDERUPD(混淆码)
+#define kUrlShipOrderStaupd [NSString stringWithFormat:@"/appsfoodin/shiporderstaupd.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SHIPFOODORDERUPD"]]
+//105.获得用户名下所有美食订单列表 （完成）
+//参数：HONOURUSER_ID 需要查询的用户id  /ORDERSTATUS
+//（0040001）为待付款状态
+//(0040002) 为待使用状态
+//(0040003) 为待评价状态
+//(0040004) 为已完成订单状态
+//请求地址：/appsfoodin/foodorderalllist.do?ALLFOODORDER(混淆码)
+#define kUrlFoodOrderAllList [NSString stringWithFormat:@"/appsfoodin/foodorderalllist.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"ALLFOODORDER"]]
+//106. 用户参加别人发起的聚会(添加聚会)
+//参数：CONVERGEDETAIL_ID    聚会详情ID/          HONOURUSER_ID 用户id
+//请求地址：/appconvergein/addotherparty.do?OTHRERPARTYADD(混淆码)
+#define kUrlAddOtherParty [NSString stringWithFormat:@"/appconvergein/addotherparty.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"OTHRERPARTYADD"]]
+
 
 //101. 首页杂志(完成)
 //参数：无

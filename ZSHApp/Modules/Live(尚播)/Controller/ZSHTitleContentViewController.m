@@ -118,6 +118,7 @@
         case FromActivityCenterVCToTitleContentVC:{
             self.titleArr = @[@"我发布的",@"我参与的"];
             self.contentVCS = @[@"ZSHActivityViewController",@"ZSHActivityViewController"];
+            self.paramArr = @[@{@"STATUS":@"0"}, @{@"STATUS":@"1"}];
             
         }
             break;

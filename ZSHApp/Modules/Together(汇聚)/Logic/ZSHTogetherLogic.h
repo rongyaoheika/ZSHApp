@@ -9,19 +9,24 @@
 #import "ZSHLoginLogic.h"
 #import "ZSHTogetherModel.h"
 #import "ZSHEntertainmentModel.h"
-#import "ZSHEnterDetailModel.h"
 #import "ZSHEnterDisModel.h"
 
 @interface ZSHTogetherLogic : ZSHLoginLogic
 
 
-@property (nonatomic, strong) NSArray<ZSHTogetherModel*>          *dataArr;
+@property (nonatomic, strong) NSArray<ZSHTogetherModel*>          *togertherDataArr;
 @property (nonatomic, strong) NSArray<ZSHEntertainmentModel*>     *entertainModelArr;
-@property (nonatomic, strong) NSArray<ZSHEnterDetailModel*>       *enterDetilModelArr;
+// 发布和详情
 @property (nonatomic, strong) ZSHEnterDisModel                    *enterDisModel;
 
+// 获取汇聚列表
 - (void)requestConvergeList:(void(^)(id response))success;
-- (void)requestPartyListWithConvergeID:(NSString *)convergeID success:(void(^)(id response))success;
+// 获得指定汇聚下所有聚会列表 (我发布,我参与)
+- (void)requestPartyListWithDic:(NSDictionary *)dic success:(void(^)(id response))success;
+// 获取聚会详情
 - (void)requestPartyListWithConvergeDetailID:(NSString *)convergeDetailID success:(void(^)(id response))success;
+// 发布聚会
 - (void)requestAddDetailParty:(NSDictionary *)dic success:(void(^)(id response))success;
+// 加入聚会
+- (void)requestAddOtherPartyWithConvergeDetailID:(NSString *)convergeDetailID success:(void(^)(id response))success;
 @end

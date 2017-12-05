@@ -39,6 +39,20 @@
 
 @end
 
+// 美食
+@interface ZSHFoodOrderModel : ZSHBaseModel
+
+@property (nonatomic, copy) NSString *SORTFOOD_ID;
+@property (nonatomic, copy) NSString *FOODDETNAME;
+@property (nonatomic, copy) NSString *ORDERMONEY;
+@property (nonatomic, copy) NSString *FOODDETAIL_ID;
+@property (nonatomic, copy) NSString *FOODORDER_ID;
+@property (nonatomic, copy) NSString *ORDERSTATUS;
+@property (nonatomic, copy) NSString *SHOWIMAGES;
+@property (nonatomic, copy) NSString *HONOURUSER_ID;
+
+@end
+
 
 // 酒吧
 @interface ZSHBarorderOrderModel : ZSHBaseModel

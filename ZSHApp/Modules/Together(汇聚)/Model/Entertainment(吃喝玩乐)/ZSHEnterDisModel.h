@@ -7,21 +7,8 @@
 //
 
 #import "ZSHBaseModel.h"
-
+// 发布和详情
 @interface ZSHEnterDisModel : ZSHBaseModel
-
-//NSDictionary *dic = @{@"STARTTIME":@"",
-//@"ENDTIME":@"",
-//@"PRICEMIN":@"",
-//@"PRICEMAX":@"",
-//@"CONVERGETYPE":@"",
-//@"CONVERGEPER":@"",
-//@"CONVERGESEX":@"",
-//@"AGEMIN":@"",
-//@"AGEMAX":@"",
-//@"CONVERGEDET":@"",
-//@"CONVERGETITLE":@"",
-//@"HONOURUSER_ID":@""};
 
 @property (nonatomic, copy) NSString *STARTTIME;
 @property (nonatomic, copy) NSString *ENDTIME;
@@ -35,6 +22,8 @@
 @property (nonatomic, copy) NSString *CONVERGEDET;
 @property (nonatomic, copy) NSString *CONVERGETITLE;
 @property (nonatomic, copy) NSString *HONOURUSER_ID;
+@property (nonatomic, copy) NSString *CONVERGEDETAIL_ID;
+
 
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "ZSHEntertainmentDetailCell.h"
+#import "ZSHEnterDisModel.h"
 
 @implementation ZSHEntertainmentDetailCell
 
@@ -34,6 +35,7 @@
     [detailLabel setAttributedText:setString];
 
     [self.contentView addSubview:detailLabel];
+    self.detailLabel = detailLabel;
     [detailLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self).offset(KLeftMargin);
         make.top.mas_equalTo(topLabel.mas_bottom).offset(kRealValue(10));
@@ -42,4 +44,14 @@
     }];
     
 }
+
+- (void)updateCellWithModel:(ZSHEnterDisModel *)model {
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    [paragraphStyle  setLineSpacing:5];
+    NSString *detailStr = model.CONVERGEDET;
+    NSMutableAttributedString *setString = [[NSMutableAttributedString alloc] initWithString:detailStr];
+    [setString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, [detailStr length])];
+    [_detailLabel setAttributedText:setString];
+}
+
 @end
