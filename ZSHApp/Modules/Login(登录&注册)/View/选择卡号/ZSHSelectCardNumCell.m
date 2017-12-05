@@ -64,7 +64,7 @@
         make.top.mas_equalTo(self).offset(kRealValue(50));
         make.left.mas_equalTo(self);
         make.width.mas_equalTo(kScreenWidth);
-        make.height.mas_equalTo(kRealValue(2380));
+        make.height.mas_equalTo(kRealValue(2150));
 //        if (_selectIndex == 1) {
 //            make.height.mas_equalTo(kRealValue(63));
 //        } else if(_selectIndex == 2) {

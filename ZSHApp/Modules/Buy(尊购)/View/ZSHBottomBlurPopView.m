@@ -827,6 +827,9 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
         [self removeFromSuperview];
         [self setHidden:YES];
         
+        //生成订单
+        [weakself requestData];
+        
         self.shopType = [self.paramDic[@"shopType"]integerValue]; //弹窗类型
         self.deviceDic = self.paramDic[@"deviceDic"];  //详情页上半部分数据
         self.listDic = self.paramDic[@"listDic"];      //详情页下半部分列表数据
@@ -879,9 +882,13 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
 
 - (void)requestData{
     _orderLogic = [[ZSHConfirmOrderLogic alloc]init];
-    NSDictionary *paramDic = @[];
+    
+    ////参数：ORDERUNAME 入住人姓名/ORDERPHONE 入住人手机号码/ORDERREMARK 订单备注/ORDERMONEY 订单价格/ORDERROOMNUM 预定酒店房间数量/ORDERCHECKDATE 入住日期/ORDERLEAVEDATE 离开日期
+    ///ORDERDAYS 入住天数 /HOTELDETAIL_ID 预定房间类型id/HONOURUSER_ID 提交订单用户id
+    
+    NSDictionary *paramDic = @{@"ORDERUNAME":@"彩薇",@"ORDERPHONE":@"18888888888",@"ORDERREMARK":@"大房",@"ORDERMONEY":@(199),@"ORDERROOMNUM":@(1),@"ORDERCHECKDATE":@(2017-12-05),@"ORDERLEAVEDATE":@(2017-12-20)};
     [_orderLogic requestConfirmOrderWithParamDic:paramDic Success:^(id responseObject) {
-        
+        RLog(@"");
     } fail:nil];
 }
 

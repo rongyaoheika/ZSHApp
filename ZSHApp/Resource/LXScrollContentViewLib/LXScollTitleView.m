@@ -95,16 +95,6 @@
 }
 
 - (void)btnClick:(UIButton *)titleBtn{
-    [self.titleButtons enumerateObjectsUsingBlock:^(UIButton *btn , NSUInteger idx, BOOL * _Nonnull stop) {
-        if (btn == titleBtn) {
-            btn.selected = !btn.selected;
-            btn.titleLabel.font = self.selectedTitleFont;
-        } else {
-            btn.selected = NO;
-            btn.titleLabel.font = self.normalTitleFont;
-        }
-    }];
-
     NSInteger btnIndex = titleBtn.tag - 100;
     self.selectedIndex = btnIndex;
     if (self.selectedBlock) {

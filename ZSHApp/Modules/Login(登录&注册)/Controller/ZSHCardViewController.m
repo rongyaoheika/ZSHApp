@@ -269,7 +269,7 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
                     ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
                     [sectionModel.cellModelArray addObject:cellModel];
 //                     kWeakSelf(cellModel);
-                    cellModel.height = kRealValue(1420);
+                    cellModel.height = kRealValue(1200);
                     cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
                         ZSHSelectCardNumCell *cell = [[ZSHSelectCardNumCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@""];
                         

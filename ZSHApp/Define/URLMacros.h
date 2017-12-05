@@ -87,7 +87,7 @@
 //参数：PRODUCT_ID 商品具体id
 //请求地址：/appshipin/shipdetails?SHIPDT(混淆码)
 #define kUrlShipDetails [NSString stringWithFormat:@"/appshipin/shipdetails?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SHIPDT"]]
-//9.获取所有商品列表
+//9.获取所有商品列表（暂无用）
 //参数：无参数
 //请求地址：/appshipin/shiplistall?SHIPAll(混淆码)
 #define kUrlShipListAll [NSString stringWithFormat:@"/appshipin/shiplistall?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SHIPAll"]]
@@ -514,7 +514,7 @@
 //请求地址：/appsbarin/sbarlistsequence.do?SORTBARSEQUENCE(混淆码)
 #define kUrlSbarListSequence [NSString stringWithFormat:@"/appsbarin/sbarlistsequence.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SORTBARSEQUENCE"]]
 
-//101. 首页杂志
+//101. 首页杂志(完成)
 //参数：无
 //请求地址：/apphomein/magazinelist?MAGAZINE(混淆码)
 #define kUrlMagazineList [NSString stringWithFormat:@"/apphomein/magazinelist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"MAGAZINE"]]
@@ -523,15 +523,18 @@
 //http://localhost:8081/ZSHINTER//appsfoodin/fooddetaillist.do?FOODDETAIL&SORTFOOD_ID=382585520535896064
 #define kUrlFoodDetailList [NSString stringWithFormat:@"/appsfoodin/fooddetaillist.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"FOODDETAIL"]]
 
-//5.生成美食订单接口（未产生交易）SHIPFOODORDER
+//103.生成美食订单接口（未产生交易）SHIPFOODORDER
 //http://localhost:8081/ZSHINTER//appsfoodin/shipfoodorder.do?SHIPFOODORDER&ORDERUNAME=yu&ORDERPHONE=17601680524&ORDERREMARK=不要辣&ORDERMONEY=136&ORDERROOMNUM=1&ORDERCHECKDATE=2017-8-14&ORDERLEAVEDATE=2017-8-14&FOODDETAIL_ID=387192633518194688&HONOURUSER_ID=d6a3779de8204dfd9359403f54f7d27c
 //#define kUrlShipFoodOrdert [NSString stringWithFormat:@"/appsfoodin/shipfoodorder.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SHIPFOODORDER"]]
 
-//6.获得用户名下所有美食订单列表     ALLFOODORDER
+//104. 修改美食订单状态(改为支付成功,用户带使用0040002)
+//参数：ORDERSTATUS 订单状态编码/HONOURUSER_ID 提交订单的用户id /ORDERNUMBER 订单编号
+//请求地址：/appsfoodin/shiporderstaupd.do?SHIPFOODORDERUPD(混淆码)
+
+
+//105.获得用户名下所有美食订单列表     ALLFOODORDER
 //http://localhost:8081/ZSHINTER//appsfoodin/foodorderalllist.do?ALLFOODORDER&HONOURUSER_ID=d6a3779de8204dfd9359403f54f7d27c&ORDERSTATUS=0040001
-//
-//7.修改美食订单状态(改为支付成功)   SHIPFOODORDERUPD
-//http://localhost:8081/ZSHINTER//appsfoodin/shiporderstaupd.do?SHIPFOODORDERUPD&ORDERSTATUS=0040002&HONOURUSER_ID=d6a3779de8204dfd9359403f54f7d27c&ORDERNUMBER=171204145440166937d27c
+
 
 
 #endif /* URLMacros_h */

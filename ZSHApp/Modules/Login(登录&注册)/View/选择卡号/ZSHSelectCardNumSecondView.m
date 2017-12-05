@@ -50,17 +50,16 @@
     
     NSArray *sectionParmaDicArr = @[@{KFromClassType:@(FromCardNumCellToCardSubHeadView),@"title":@"自选号码 自选仅需+20元选号费",@"btnTitle":@"换一批",@"tag":@(10)},
           @{KFromClassType:@(FromCardNumCellToCardSubHeadView),@"title":@"贵宾号码",@"btnTitle":@"换一批",@"tag":@(11)},
-          @{KFromClassType:@(FromCardNumCellToCardSubHeadView),@"title":@"功能定制",@"btnTitle":@"换一批",@"tag":@(12)},
-          @{KFromClassType:@(FromCardNumCellToCardSubHeadView),@"title":@"金钻号码",@"btnTitle":@"换一批",@"tag":@(13)},
-          @{KFromClassType:@(FromCardNumCellToCardSubHeadView),@"title":@"荣耀号码",@"btnTitle":@"换一批",@"tag":@(14)},
-          @{KFromClassType:@(FromCardNumCellToCardSubHeadView),@"title":@"超级黑卡靓号",@"btnTitle":@"换一批",@"tag":@(15)}];
+          @{KFromClassType:@(FromCardNumCellToCardSubHeadView),@"title":@"金钻号码",@"btnTitle":@"换一批",@"tag":@(12)},
+          @{KFromClassType:@(FromCardNumCellToCardSubHeadView),@"title":@"荣耀号码",@"btnTitle":@"换一批",@"tag":@(13)},
+          @{KFromClassType:@(FromCardNumCellToCardSubHeadView),@"title":@"超级黑卡靓号",@"btnTitle":@"换一批",@"tag":@(14)}];
     for (NSDictionary *paramDic in sectionParmaDicArr) {
         ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
         sectionModel.headerHeight = kRealValue(65);
         sectionModel.headerView = [self createHeadViewWithParamDic:paramDic];
         [self.tableViewModel.sectionModelArray addObject:sectionModel];
         
-        if ([paramDic[@"tag"]integerValue] == 15) {
+        if ([paramDic[@"tag"]integerValue] == 14) {
             [self addBlackCardCellModelToSection:[paramDic[@"tag"]integerValue] ];
         } else {
            [self addCellModelToSection:[paramDic[@"tag"]integerValue] ];
