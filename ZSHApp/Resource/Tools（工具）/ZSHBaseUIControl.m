@@ -87,7 +87,9 @@
 
 + (UIView *)createTabHeadLabelViewWithParamDic:(NSDictionary *)paramDic{
    UIView *headView = [[UIView alloc]initWithFrame:CGRectZero];
+    
     UILabel *headLabel = [ZSHBaseUIControl createLabelWithParamDic:paramDic];
+    headLabel.tag = 1;
     [headView addSubview:headLabel];
     [headLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         if ([paramDic[@"textAlignment"]integerValue] == NSTextAlignmentLeft) {
@@ -100,6 +102,19 @@
         make.width.mas_equalTo(headView);
         make.centerY.mas_equalTo(headView);
     }];
+    
+    NSDictionary *btnDic = @{@"title":@"换一批",@"titleColor":KZSHColor929292,@"selectedTitleColor":KZSHColorF29E19,@"font":kPingFangMedium(15)};
+    UIButton *refreshBtn = [ZSHBaseUIControl createBtnWithParamDic:btnDic];
+    refreshBtn.tag = 2;
+    refreshBtn.hidden = YES;
+    [headView addSubview:refreshBtn];
+    [refreshBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.mas_equalTo(headView);
+        make.width.mas_equalTo(kRealValue(50));
+        make.height.mas_equalTo(headView);
+        make.right.mas_equalTo(headView).offset(-KLeftMargin);
+    }];
+    
     return headView;
 }
 

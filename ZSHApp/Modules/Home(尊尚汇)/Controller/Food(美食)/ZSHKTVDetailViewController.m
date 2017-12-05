@@ -18,6 +18,8 @@
 #import "ZSHHotelListCell.h"
 #import "ZSHHotelPayViewController.h"
 #import "ZSHShopCommentViewController.h"
+#import "ZSHHotelCell.h"
+
 @interface ZSHKTVDetailViewController ()
 
 @property (nonatomic, copy)   NSString                  *shopId;
@@ -26,7 +28,9 @@
 @property (nonatomic, strong) NSDictionary              *KTVDetailParamDic;
 @property (nonatomic, strong) ZSHBottomBlurPopView      *bottomBlurPopView;
 
+@property (nonatomic, strong) NSArray                    *KTVDetailSetDicArr;
 @property (nonatomic, strong) NSArray                    *KTVDetailListArr;
+
 @end
 
 static NSString *ZSHHotelDetailHeadCellID = @"ZSHHotelDetailHeadCell";
@@ -35,6 +39,8 @@ static NSString *ZSHBookCellID = @"ZSHBookCell";
 static NSString *ZSHBaseSubCellID = @"ZSHBaseSubCell";
 static NSString *ZSHKTVCalendarCellID = @"ZSHNoticeViewCell";
 static NSString *ZSHKTVListCellID = @"ZSHKTVListCell";
+static NSString *ZSHHotelCellID = @"ZSHHotelCell";
+
 @implementation ZSHKTVDetailViewController
 
 - (void)viewDidLoad {
@@ -65,11 +71,27 @@ static NSString *ZSHKTVListCellID = @"ZSHKTVListCell";
         [weakself initViewModel];
     };
     
-    [_KTVLogic loadKTVDetailListDataWithParamDic:paramDic success:^(NSArray *KTVDetailListArr) {
-        _KTVDetailListArr = KTVDetailListArr;
-        weakself.tableViewModel.sectionModelArray[3] = [weakself storKTVListSection];
+    //KTV套餐
+    [_KTVLogic loadKTVDetailSetDataWithParamDic:paramDic success:^(id responseObject) {
+        _KTVDetailSetDicArr = responseObject;
+        weakself.tableViewModel.sectionModelArray[3] = [weakself storKTVSetSection];
         NSIndexSet *indexSet = [[NSIndexSet alloc]initWithIndex:3];
         [weakself updateSectionDatWithSet:indexSet];
+    } fail:nil];
+    
+    [weakself loadDetailListData];
+}
+
+- (void)loadDetailListData{
+    kWeakSelf(self);
+    //更多商家（换一批）
+    NSDictionary *detailListParamDic = @{@"HONOURUSER_ID":HONOURUSER_IDValue};
+    [_KTVLogic loadKTVDetailListDataWithParamDic:detailListParamDic success:^(id responseObject) {
+        _KTVDetailListArr = responseObject;
+        weakself.tableViewModel.sectionModelArray[4] = [weakself storKTVMorShopSection];
+        NSIndexSet *indexSet = [[NSIndexSet alloc]initWithIndex:4];
+        [weakself updateSectionDatWithSet:indexSet];
+        
     } fail:nil];
 }
 
@@ -91,6 +113,7 @@ static NSString *ZSHKTVListCellID = @"ZSHKTVListCell";
     [self.tableView registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHBookCellID];
     [self.tableView registerClass:[ZSHNoticeViewCell class] forCellReuseIdentifier:ZSHKTVCalendarCellID];
     [self.tableView registerClass:[ZSHKTVListCell class] forCellReuseIdentifier:ZSHKTVListCellID];
+     [self.tableView registerClass:[ZSHHotelCell class] forCellReuseIdentifier:ZSHHotelCellID];
     
 }
 
@@ -99,9 +122,12 @@ static NSString *ZSHKTVListCellID = @"ZSHKTVListCell";
     [self.tableViewModel.sectionModelArray addObject:[self storeHeadSection]];
     [self.tableViewModel.sectionModelArray addObject:[self storeSubSection]];
     [self.tableViewModel.sectionModelArray addObject:[self storKTVCalendarSection]];
-    [self.tableViewModel.sectionModelArray addObject:[self storKTVListSection]];
+    [self.tableViewModel.sectionModelArray addObject:[self storKTVSetSection]];
+    [self.tableViewModel.sectionModelArray addObject:[self storKTVMorShopSection]];
     [self.tableView reloadData];
 }
+
+
 
 //图片，设备
 - (ZSHBaseTableViewSectionModel*)storeHeadSection {
@@ -231,18 +257,58 @@ static NSString *ZSHKTVListCellID = @"ZSHKTVListCell";
     return sectionModel;
 }
 
-//KTV底部列表
-- (ZSHBaseTableViewSectionModel*)storKTVListSection{
+//KTV套餐列表
+- (ZSHBaseTableViewSectionModel*)storKTVSetSection{
     kWeakSelf(self);
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
-    for (int i = 0; i<_KTVDetailListArr.count; i++){
+    sectionModel.headerHeight = kRealValue(40);
+    NSDictionary *headTitleParamDic = @{@"text":@"套餐",@"font":kPingFangMedium(15),@"textAlignment":@(NSTextAlignmentLeft)};
+    sectionModel.headerView = [ZSHBaseUIControl createTabHeadLabelViewWithParamDic:headTitleParamDic];
+    
+    for (int i = 0; i<_KTVDetailSetDicArr.count; i++){
         ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
         [sectionModel.cellModelArray addObject:cellModel];
         cellModel.height = kRealValue(75);
         cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
             ZSHKTVListCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHKTVListCellID forIndexPath:indexPath];
-            NSDictionary *nextParamDic = _KTVDetailListArr[indexPath.row];
+            NSDictionary *nextParamDic = _KTVDetailSetDicArr[indexPath.row];
             [cell updateCellWithParamDic:nextParamDic];
+            return cell;
+        };
+        
+        cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
+            NSDictionary *paramDic = _KTVDetailListArr[indexPath.row];
+            NSDictionary *nextParamDic = @{KFromClassType:@(ZSHConfirmOrderToBottomBlurPopView),@"shopType":@(ZSHKTVShopType), @"deviceDic":weakself.KTVDetailParamDic,@"listDic":paramDic,@"liveInfoStr":@""};
+            weakself.bottomBlurPopView = [weakself createBottomBlurPopViewWithParamDic:nextParamDic];
+            [kAppDelegate.window addSubview:weakself.bottomBlurPopView];
+        };
+    }
+    return sectionModel;
+}
+
+//KTV更多商家
+- (ZSHBaseTableViewSectionModel*)storKTVMorShopSection{
+    kWeakSelf(self);
+    ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
+    sectionModel.headerHeight = kRealValue(40);
+    NSDictionary *headTitleParamDic = @{@"text":@"更多商家",@"font":kPingFangMedium(15),@"textAlignment":@(NSTextAlignmentLeft)};
+    sectionModel.headerView = [ZSHBaseUIControl createTabHeadLabelViewWithParamDic:headTitleParamDic];
+    UIButton *btn = [sectionModel.headerView viewWithTag:2];
+    btn.hidden = NO;
+    [btn addTarget:self action:@selector(loadDetailListData) forControlEvents:UIControlEventTouchUpInside];
+    
+    for (int i = 0; i<_KTVDetailListArr.count; i++){
+        ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
+        [sectionModel.cellModelArray addObject:cellModel];
+        cellModel.height = kRealValue(110);
+        cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
+            ZSHHotelCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHHotelCellID forIndexPath:indexPath];
+            cell.shopType = ZSHKTVShopType;
+            if (i==_KTVDetailListArr.count-1) {
+                cell.separatorInset = UIEdgeInsetsMake(0, 0, 0, MAXFLOAT);
+            }
+            NSDictionary *paramDic = _KTVDetailListArr[indexPath.row];
+            [cell updateCellWithParamDic:paramDic];
             return cell;
         };
         

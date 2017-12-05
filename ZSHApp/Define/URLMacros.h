@@ -404,7 +404,7 @@
 //(0040004) 为已完成订单状态
 //请求地址：/appsbarin/barorderalllist.do?ALLBARORDER(混淆码)
 #define kUrlBarorderAllList [NSString stringWithFormat:@"/appsbarin/barorderalllist.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"ALLBARORDER"]]
-//78. 获取某酒吧详情列表
+//78. 获取某酒吧详情列表(完成)
 //参数：SORTBAR_ID 某BAR id
 //请求地址：/appsbarin/bardetaillist.do?BARDETAIL(混淆码)
 #define kUrlBarDetailList [NSString stringWithFormat:@"/appsbarin/bardetaillist.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"BARDETAIL"]]
@@ -473,22 +473,22 @@
 //参数：HONOURUSER_ID 用户id
 //请求地址：/appsktvin/sktv.do?SORTKTV(混淆码)
 #define kUrlSktvlist [NSString stringWithFormat:@"/appsktvin/sktv.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SORTKTV"]]
-//93. 随机产生酒店列表
+//93. 随机产生酒店列表（完成）
 //参数：HONOURUSER_ID 用户id
 //请求地址：/appshotelin/shotellistrand.do?SORTHOTELRAND(混淆码)
 #define kUrlSHotelListRand [NSString stringWithFormat:@"/appshotelin/shotellistrand.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SORTHOTELRAND"]]
-//94. 随机产生KTV列表
+//94. 随机产生KTV列表(完成)
 //参数：HONOURUSER_ID 用户id
 //请求地址：/appsktvin/sktvlistrand.do?SORTKTVRAND(混淆码)
 #define kUrlSKtvListRand [NSString stringWithFormat:@"/appsktvin/sktvlistrand.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SORTKTVRAND"]]
-//95. 随机产生酒吧列表
+//95. 随机产生酒吧列表（完成）
 //参数：HONOURUSER_ID 用户id
 //请求地址：/appsbarin/sbarlistrand.do?SORTBARRAND(混淆码)
 #define kUrlSBarListRand [NSString stringWithFormat:@"/appsbarin/sbarlistrand.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SORTBARRAND"]]
 //96. 随机产生美食店铺列表(完成)
 //参数：HONOURUSER_ID 用户id
 //请求地址：/appsfoodin/sfoodlistrand.do?SORTFOODRAND(混淆码)
-#define kUrlSfoodlistrand [NSString stringWithFormat:@"/appsfoodin/sfoodlistrand.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SORTFOODRAND"]]
+#define kUrlSfoodlistRand [NSString stringWithFormat:@"/appsfoodin/sfoodlistrand.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SORTFOODRAND"]]
 //97. 根据美食评价分数，价格，距离,品牌,类型升序或者降序排序
 //参数：HONOURUSER_ID 用户id   /COLUMN 排序字段（SHOPPRICE,SHOPEVALUATE）  /SEQUENCE  升序ASC降序DESC
 //BRAND  品牌   /STYLE  类型

@@ -338,7 +338,7 @@ static NSString *Identify_MusicCell = @"musicCell";
     sectionModel.headerView = [self createHeaderiewWithTitle:@"荣耀杂志"];
     ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
     [sectionModel.cellModelArray addObject:cellModel];
-    cellModel.height = kRealValue(113.5);
+    cellModel.height = kRealValue(120);
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHBaseTitleButtonCell *cell = [tableView dequeueReusableCellWithIdentifier:Identify_MagazineCell forIndexPath:indexPath];
         if(_homeLogic.magzineArr){

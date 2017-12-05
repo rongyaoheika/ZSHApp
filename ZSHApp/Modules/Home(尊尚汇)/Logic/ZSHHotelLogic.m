@@ -37,9 +37,19 @@
     }];
 }
 
-- (void)loadHotelDetailListDataWithParamDic:(NSDictionary *)paramDic success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail {
+- (void)loadHotelDetailSetDataWithParamDic:(NSDictionary *)paramDic success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail {
     [PPNetworkHelper POST:kUrlHotelDetailList parameters:paramDic success:^(id responseObject) {
-        RLog(@"酒店详情列表数据==%@",responseObject)
+        RLog(@"酒店套餐列表数据==%@",responseObject)
+        NSArray *hotelDetaiDicListArr = responseObject[@"pd"];
+        success(hotelDetaiDicListArr);
+    } failure:^(NSError *error) {
+        RLog(@"请求失败");
+    }];
+}
+
+- (void)loadHotelDetailListDataWithParamDic:(NSDictionary *)paramDic success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail {
+    [PPNetworkHelper POST:kUrlSHotelListRand parameters:paramDic success:^(id responseObject) {
+        RLog(@"酒店更多商家列表数据==%@",responseObject)
         NSArray *hotelDetaiDicListArr = responseObject[@"pd"];
         success(hotelDetaiDicListArr);
     } failure:^(NSError *error) {
@@ -70,7 +80,7 @@
 }
 
 //酒吧详情列表
-- (void)loadBarDetailListDataWithParamDic:(NSDictionary *)paramDic success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail{
+- (void)loadBarDetailSetDataWithParamDic:(NSDictionary *)paramDic success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail{
     [PPNetworkHelper POST:kUrlBarDetailList parameters:paramDic success:^(id responseObject) {
         RLog(@"酒吧详情列表数据==%@",responseObject)
         NSArray *barDetailListDicArr = responseObject[@"pd"];
@@ -79,5 +89,17 @@
         RLog(@"请求失败");
     }];
 }
+
+//酒吧更多商家列表
+- (void)loadBarDetailMoreShopDataWithParamDic:(NSDictionary *)paramDic success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail{
+    [PPNetworkHelper POST:kUrlSBarListRand parameters:paramDic success:^(id responseObject) {
+        RLog(@"酒吧更多商家数据==%@",responseObject)
+        NSArray *barDetailListDicArr = responseObject[@"pd"];
+        success(barDetailListDicArr);
+    } failure:^(NSError *error) {
+        RLog(@"请求失败");
+    }];
+}
+
 
 @end

@@ -136,7 +136,7 @@
         _commentLabel.text = [NSString stringWithFormat:@"（%ld条评价）",(long)[dic[@"HOTELEVACOUNT"]intValue]];
         _starView.scorePercent = [dic[@"HOTELEVALUATE"]floatValue]/5.0;
         
-    } else if (_shopType == ZSHKTVShopType) {//KTV详情
+    } else if (_shopType == ZSHKTVShopType) {//KTV详情(更多商家)
         _hotelDescLabel.text = dic[@"KTVNAMES"];
         _hotelAddressLabel.text = dic[@"KTVADDRESS"];
         _priceLabel.text  = [NSString stringWithFormat:@"¥%.0f",[dic[@"KTVPRICE"]floatValue] ];

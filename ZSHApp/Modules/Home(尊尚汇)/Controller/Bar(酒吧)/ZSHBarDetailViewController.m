@@ -18,6 +18,7 @@
 #import "ZSHGoodsCommentSubViewController.h"
 #import "ZSHHotelLogic.h"
 #import "ZSHShopCommentViewController.h"
+#import "ZSHHotelCell.h"
 
 @interface ZSHBarDetailViewController ()
 
@@ -25,8 +26,8 @@
 @property (nonatomic, strong) ZSHHotelLogic             *hotelLogic;
 @property (nonatomic, strong) ZSHHotelDetailModel       *hotelDetailModel;
 @property (nonatomic, strong) NSDictionary              *barDetailDic;
-@property (nonatomic, strong) NSArray                   *barDetailListDicArr;
-@property (nonatomic, strong) NSArray                   *modelNameArr;
+@property (nonatomic, strong) NSArray                   *barDetailSetDicArr;
+@property (nonatomic, strong) NSArray                   *barMoreShopDicArr;
 
 @property (nonatomic, strong) ZSHBottomBlurPopView      *bottomBlurPopView;
 @property (nonatomic, copy)   NSString                  *liveInfoStr;
@@ -40,7 +41,7 @@ static NSString *ZSHBaseSubCellID = @"ZSHBaseSubCell";
 static NSString *ZSHBookCellID = @"ZSHBookCell";
 static NSString *ZSHHotelCalendarCellID = @"ZSHHotelCalendarCell";
 static NSString *ZSHHotelListCellID = @"ZSHHotelListCell";
-
+static NSString *ZSHHotelCellID = @"ZSHHotelCell";
 
 @implementation ZSHBarDetailViewController
 
@@ -67,14 +68,28 @@ static NSString *ZSHHotelListCellID = @"ZSHHotelListCell";
         [weakself initViewModel];
     } fail:nil];
    
-    [_hotelLogic loadBarDetailListDataWithParamDic:paramDic success:^(NSArray *barDetailListDicArr) {
-        _barDetailListDicArr = barDetailListDicArr;
-        weakself.tableViewModel.sectionModelArray[3] = [weakself storHotelListSection];
+    //套餐
+    [_hotelLogic loadBarDetailSetDataWithParamDic:paramDic success:^(NSArray *barDetailSetDicArr) {
+        _barDetailSetDicArr = barDetailSetDicArr;
+        weakself.tableViewModel.sectionModelArray[3] = [weakself storeBarSetSection];
         NSIndexSet *indexSet = [[NSIndexSet alloc]initWithIndex:3];
         [weakself updateSectionDatWithSet:indexSet];
     } fail:nil];
     
-   
+    //更多商家
+    [self loadDetailListData];
+}
+
+- (void)loadDetailListData{
+    kWeakSelf(self);
+    //更多商家（换一批）
+    NSDictionary *detailListParamDic = @{@"HONOURUSER_ID":HONOURUSER_IDValue};
+    [_hotelLogic loadBarDetailMoreShopDataWithParamDic:detailListParamDic success:^(id responseObject) {
+        _barMoreShopDicArr = responseObject;
+        weakself.tableViewModel.sectionModelArray[4] = [weakself storeBarMoreShopSection];
+        NSIndexSet *indexSet = [[NSIndexSet alloc]initWithIndex:4];
+        [weakself updateSectionDatWithSet:indexSet];
+    } fail:nil];
 }
 
 - (void)updateSectionDatWithSet:(NSIndexSet *)indexSet{
@@ -95,6 +110,7 @@ static NSString *ZSHHotelListCellID = @"ZSHHotelListCell";
     [self.tableView registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHBaseSubCellID];
     [self.tableView registerClass:[ZSHHotelCalendarCell class] forCellReuseIdentifier:ZSHHotelCalendarCellID];
     [self.tableView registerClass:[ZSHHotelListCell class] forCellReuseIdentifier:ZSHHotelListCellID];
+     [self.tableView registerClass:[ZSHHotelCell class] forCellReuseIdentifier:ZSHHotelCellID];
     
 }
 
@@ -103,8 +119,8 @@ static NSString *ZSHHotelListCellID = @"ZSHHotelListCell";
     [self.tableViewModel.sectionModelArray addObject:[self storeHeadSection]];
     [self.tableViewModel.sectionModelArray addObject:[self storeSubSection]];
     [self.tableViewModel.sectionModelArray addObject:[self storeCalendarSection]];
-    [self.tableViewModel.sectionModelArray addObject:[self storHotelListSection]];
-    
+    [self.tableViewModel.sectionModelArray addObject:[self storeBarSetSection]];
+    [self.tableViewModel.sectionModelArray addObject:[self storeBarMoreShopSection]];
     [self.tableView reloadData];
 }
 
@@ -223,7 +239,7 @@ static NSString *ZSHHotelListCellID = @"ZSHHotelListCell";
         [weakself hideSeparatorLineWithCell:cell hide:YES];
         _liveInfoStr = @"8-8入住，8-9离开，1天";
         cell.dateViewTapBlock = ^(NSInteger tag) {//tag = 1入住
-            NSDictionary *paramDic = _barDetailListDicArr[indexPath.row];
+            NSDictionary *paramDic = _barDetailSetDicArr[indexPath.row];
             NSDictionary *nextParamDic = @{KFromClassType:@(ZSHFromHotelDetailCalendarVCToBottomBlurPopView),@"dic":paramDic};
             self.bottomBlurPopView = [weakself createBottomBlurPopViewWithParamDic:nextParamDic];
             [kAppDelegate.window addSubview:self.bottomBlurPopView];
@@ -233,24 +249,28 @@ static NSString *ZSHHotelListCellID = @"ZSHHotelListCell";
     return sectionModel;
 }
 
-//酒店列单
-- (ZSHBaseTableViewSectionModel*)storHotelListSection{
+//酒吧套餐
+- (ZSHBaseTableViewSectionModel*)storeBarSetSection{
     kWeakSelf(self);
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
-    for (int i = 0; i<_barDetailListDicArr.count; i++) {
+    sectionModel.headerHeight = kRealValue(40);
+    NSDictionary *headTitleParamDic = @{@"text":@"套餐",@"font":kPingFangMedium(15),@"textAlignment":@(NSTextAlignmentLeft)};
+    sectionModel.headerView = [ZSHBaseUIControl createTabHeadLabelViewWithParamDic:headTitleParamDic];
+    
+    for (int i = 0; i<_barDetailSetDicArr.count; i++) {
         ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
         [sectionModel.cellModelArray addObject:cellModel];
         cellModel.height = kRealValue(75);
         cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
             ZSHHotelListCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHHotelListCellID forIndexPath:indexPath];
             cell.shopType = ZSHBarShopType;
-            NSDictionary *paramDic = _barDetailListDicArr[indexPath.row];
+            NSDictionary *paramDic = _barDetailSetDicArr[indexPath.row];
             [cell updateCellWithParamDic:paramDic];
             return cell;
         };
         
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
-            NSDictionary *paramDic = _barDetailListDicArr[indexPath.row];
+            NSDictionary *paramDic = _barDetailSetDicArr[indexPath.row];
             NSDictionary *nextParamDic = @{KFromClassType:@(ZSHConfirmOrderToBottomBlurPopView),@"shopType":@(ZSHBarShopType), @"deviceDic":_barDetailDic,@"listDic":paramDic,@"liveInfoStr":@"酒吧无此字段"};
             weakself.bottomBlurPopView = [weakself createBottomBlurPopViewWithParamDic:nextParamDic];
             [kAppDelegate.window addSubview:weakself.bottomBlurPopView];
@@ -259,6 +279,39 @@ static NSString *ZSHHotelListCellID = @"ZSHHotelListCell";
     
     return sectionModel;
 }
+
+//酒吧更多商家
+- (ZSHBaseTableViewSectionModel*)storeBarMoreShopSection{
+    ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
+    sectionModel.headerHeight = kRealValue(40);
+    NSDictionary *headTitleParamDic = @{@"text":@"更多商家",@"font":kPingFangMedium(15),@"textAlignment":@(NSTextAlignmentLeft)};
+    sectionModel.headerView = [ZSHBaseUIControl createTabHeadLabelViewWithParamDic:headTitleParamDic];
+    UIButton *btn = [sectionModel.headerView viewWithTag:2];
+    btn.hidden = NO;
+    [btn addTarget:self action:@selector(loadDetailListData) forControlEvents:UIControlEventTouchUpInside];
+    
+    for (int i = 0; i<_barMoreShopDicArr.count; i++){
+        ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
+        [sectionModel.cellModelArray addObject:cellModel];
+        cellModel.height = kRealValue(110);
+        cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
+            ZSHHotelCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHHotelCellID forIndexPath:indexPath];
+            cell.shopType = ZSHBarShopType;
+            if (i==_barMoreShopDicArr.count-1) {
+                cell.separatorInset = UIEdgeInsetsMake(0, 0, 0, MAXFLOAT);
+            }
+            NSDictionary *paramDic = _barMoreShopDicArr[indexPath.row];
+            [cell updateCellWithParamDic:paramDic];
+            return cell;
+        };
+        
+        cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
+           
+        };
+    }
+    return sectionModel;
+}
+
 
 #pragma getter
 - (ZSHBottomBlurPopView *)createBottomBlurPopViewWithParamDic:(NSDictionary *)paramDic{

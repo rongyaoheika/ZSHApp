@@ -63,6 +63,7 @@ static NSString *ZSHHotelListCellID = @"ZSHHotelListCell";
         [weakself initViewModel];
     };
     
+    //套餐
     [_foodLogic loadFoodDetailSetWithParamDic:paramDic success:^(id responseObject) {
         _foodDetailSetDicArr = responseObject;
         weakself.tableViewModel.sectionModelArray[2] = [weakself storeSetMenuSection];
@@ -70,7 +71,13 @@ static NSString *ZSHHotelListCellID = @"ZSHHotelListCell";
         [weakself updateSectionDatWithSet:indexSet];
     } fail:nil];
    
+    [self loadDetailListData];
     
+}
+
+- (void)loadDetailListData{
+    kWeakSelf(self);
+    //换一批
     NSDictionary *detailListParamDic = @{@"HONOURUSER_ID":HONOURUSER_IDValue};
     [_foodLogic loadFoodDetailListDataWithParamDic:detailListParamDic success:^(NSArray *foodDetaiDicListArr) {
         _foodDetailListDicArr = foodDetaiDicListArr;
@@ -79,8 +86,6 @@ static NSString *ZSHHotelListCellID = @"ZSHHotelListCell";
         [weakself updateSectionDatWithSet:indexSet];
         
     } fail:nil];
-    
-    
 }
 
 - (void)updateSectionDatWithSet:(NSIndexSet *)indexSet{
@@ -243,6 +248,9 @@ static NSString *ZSHHotelListCellID = @"ZSHHotelListCell";
     sectionModel.headerHeight = kRealValue(40);
     NSDictionary *headTitleParamDic = @{@"text":@"更多商家",@"font":kPingFangMedium(15),@"textAlignment":@(NSTextAlignmentLeft)};
     sectionModel.headerView = [ZSHBaseUIControl createTabHeadLabelViewWithParamDic:headTitleParamDic];
+    UIButton *btn = [sectionModel.headerView viewWithTag:2];
+    btn.hidden = NO;
+    [btn addTarget:self action:@selector(loadDetailListData) forControlEvents:UIControlEventTouchUpInside];
     
     for (int i = 0; i<_foodDetailListDicArr.count; i++) {
         ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];

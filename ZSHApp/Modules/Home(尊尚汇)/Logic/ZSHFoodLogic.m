@@ -52,7 +52,7 @@
 }
 
 - (void)loadFoodDetailListDataWithParamDic:(NSDictionary *)paramDic success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail {
-    [PPNetworkHelper POST:kUrlSfoodlistrand parameters:paramDic success:^(id responseObject) {
+    [PPNetworkHelper POST:kUrlSfoodlistRand parameters:paramDic success:^(id responseObject) {
         RLog(@"美食详情列表数据==%@",responseObject)
         NSArray *foodDetaiDicListArr = responseObject[@"pd"];
         success(foodDetaiDicListArr);
@@ -60,5 +60,7 @@
         RLog(@"请求失败");
     }];
 }
+
+
 
 @end

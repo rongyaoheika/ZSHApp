@@ -42,10 +42,22 @@
 }
 
 
-- (void)loadKTVDetailListDataWithParamDic:(NSDictionary *)paramDic success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail {
+- (void)loadKTVDetailSetDataWithParamDic:(NSDictionary *)paramDic success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail {
     [PPNetworkHelper POST:kUrlKtvDetailList parameters:paramDic success:^(id responseObject) {
         
-        RLog(@"KTV详情列表数据==%@",responseObject)
+        RLog(@"KTV套餐列表数据==%@",responseObject)
+        NSArray *KTVDetailSetArr = responseObject[@"pd"];
+        success(KTVDetailSetArr);
+        
+    } failure:^(NSError *error) {
+        RLog(@"请求失败");
+    }];
+}
+
+- (void)loadKTVDetailListDataWithParamDic:(NSDictionary *)paramDic success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail {
+    [PPNetworkHelper POST:kUrlSKtvListRand parameters:paramDic success:^(id responseObject) {
+
+        RLog(@"KTV更多商家列表数据==%@",responseObject)
         NSArray *KTVDetailListArr = responseObject[@"pd"];
         success(KTVDetailListArr);
         
@@ -53,6 +65,5 @@
         RLog(@"请求失败");
     }];
 }
-
 
 @end

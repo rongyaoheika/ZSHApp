@@ -19,7 +19,10 @@
 - (void)loadHotelDetailDataWithParamDic:(NSDictionary *)paramDic;
 
 //酒店详情列表
-- (void)loadHotelDetailListDataWithParamDic:(NSDictionary *)paramDic success:(ResponseSuccessBlock)successBlock fail:(ResponseFailBlock)failBlock;
+- (void)loadHotelDetailSetDataWithParamDic:(NSDictionary *)paramDic success:(ResponseSuccessBlock)successBlock fail:(ResponseFailBlock)failBlock;
+
+//酒店更多商家
+- (void)loadHotelDetailListDataWithParamDic:(NSDictionary *)paramDic success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail;
 
 //酒吧列表
 - (void)loadBarListDataWithParamDic:(NSDictionary *)paramDic success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail;
@@ -27,8 +30,10 @@
 //酒吧详情
 - (void)loadBarDetailDataWithParamDic:(NSDictionary *)paramDic success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail;
 
-//酒吧详情列表
-- (void)loadBarDetailListDataWithParamDic:(NSDictionary *)paramDic success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail;
+//酒吧套餐列表
+- (void)loadBarDetailSetDataWithParamDic:(NSDictionary *)paramDic success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail;
 
+//酒吧更多商家
+- (void)loadBarDetailMoreShopDataWithParamDic:(NSDictionary *)paramDic success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail;
 
 @end

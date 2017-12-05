@@ -17,6 +17,9 @@
 //KTV详情
 - (void)loadKTVDetailDataWithParamDic:(NSDictionary *)paramDic;
 
-//KTV详情列表
+//KTV套餐列表
+- (void)loadKTVDetailSetDataWithParamDic:(NSDictionary *)paramDic success:(ResponseSuccessBlock)successBlock fail:(ResponseFailBlock)failBlock;
+
+//KTV更多商家列表
 - (void)loadKTVDetailListDataWithParamDic:(NSDictionary *)paramDic success:(ResponseSuccessBlock)successBlock fail:(ResponseFailBlock)failBlock;
 @end
