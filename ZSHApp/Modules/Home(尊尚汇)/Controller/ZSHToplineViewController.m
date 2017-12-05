@@ -8,10 +8,17 @@
 
 #import "ZSHToplineViewController.h"
 #import "ZSHToplineCell.h"
-
+#import "ZSHMoreLogic.h"
 static NSString *ZSHToplineCellID = @"ZSHToplineCellID";
 
 @interface ZSHToplineViewController ()
+
+@property (nonatomic, copy)   NSString                  *shopId;
+@property (nonatomic, strong) ZSHMoreLogic              *moreLogic;
+@property (nonatomic, strong) NSDictionary              *dataDic;
+@property (nonatomic, strong) UILabel                   *titleLabel;
+@property (nonatomic, strong) UIImageView               *contentView;
+@property (nonatomic, strong) UILabel                   *contentLabel;
 
 @end
 
@@ -24,7 +31,23 @@ static NSString *ZSHToplineCellID = @"ZSHToplineCellID";
 }
 
 - (void)loadData{
+    self.shopId = self.paramDic[@"shopId"];
+    [self requestData];
     [self initViewModel];
+}
+
+- (void)requestData{
+    kWeakSelf(self);
+    _moreLogic = [[ZSHMoreLogic alloc]init];
+    NSDictionary *paramDic = @{@"NEWS_ID":self.shopId};
+    [_moreLogic requestNewsDetailWithParamDic:paramDic Success:^(id responseObject) {
+        RLog(@"新闻详情的数据==%@",responseObject);
+        _dataDic = responseObject;
+        
+        [weakself updateUI];
+        [weakself initViewModel];
+        
+    } fail:nil];
 }
 
 - (void)createUI{
@@ -46,6 +69,7 @@ static NSString *ZSHToplineCellID = @"ZSHToplineCellID";
 - (void)initViewModel {
     [self.tableViewModel.sectionModelArray removeAllObjects];
     [self.tableViewModel.sectionModelArray addObject:[self storeListSection]];
+    [self.tableView reloadData];
 }
 
 - (void)createBottomLine {
@@ -98,30 +122,26 @@ static NSString *ZSHToplineCellID = @"ZSHToplineCellID";
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, kRealValue(375))];
     
     
-    UILabel *titleLabel = [ZSHBaseUIControl createLabelWithParamDic:@{@"text":@"21cake蛋糕预订",@"font": kPingFangMedium(15)}];
+    UILabel *titleLabel = [ZSHBaseUIControl createLabelWithParamDic:@{@"text":@"",@"font": kPingFangMedium(15)}];
     [view addSubview:titleLabel];
     [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(view).offset(kRealValue(10));
         make.left.mas_equalTo(view).offset(kRealValue(KLeftMargin));
         make.size.mas_equalTo(CGSizeMake(kRealValue(300), kRealValue(16)));
     }];
+    _titleLabel = titleLabel;
 
-    UIImageView *contentView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"head_image_3"]];
+    UIImageView *contentView = [[UIImageView alloc] init];
     [view addSubview:contentView];
     [contentView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(view).offset(kRealValue(45));
         make.left.mas_equalTo(view).offset(kRealValue(KLeftMargin));
         make.size.mas_equalTo(CGSizeMake(kRealValue(345), kRealValue(200)));
     }];
+    _contentView = contentView;
+    
     
     UILabel *contentLabel = [ZSHBaseUIControl createLabelWithParamDic:@{@"font": kPingFangRegular(12)}];
-    NSMutableParagraphStyle  *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-    [paragraphStyle  setLineSpacing:5];
-    [paragraphStyle setParagraphSpacing:22];
-    NSString *str = @"我敬重每一枚出炉的糕点，除了感谢它带给我甜蜜的愉悦，吃完之后将体会到的宇宙级美好，还神经质的认为手上捧着的是三四个世纪前的配方，它融化在我的舌尖，世间万物在一瞬变得渺小。\n本周，荣耀黑卡特权局联合21cake为持卡人精选了8款定制蛋糕";
-    NSMutableAttributedString  *setString = [[NSMutableAttributedString alloc] initWithString:str];
-    [setString  addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, [str length])];
-    [contentLabel  setAttributedText:setString];
     contentLabel.numberOfLines = 0;
     [view addSubview:contentLabel];
     [contentLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -129,7 +149,7 @@ static NSString *ZSHToplineCellID = @"ZSHToplineCellID";
         make.left.mas_equalTo(view).offset(kRealValue(KLeftMargin));
         make.size.mas_equalTo(CGSizeMake(kRealValue(345), kRealValue(112)));
     }];
-
+    _contentLabel = contentLabel;
     
     return view;
 }
@@ -138,13 +158,18 @@ static NSString *ZSHToplineCellID = @"ZSHToplineCellID";
 //list
 - (ZSHBaseTableViewSectionModel*)storeListSection {
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
-    NSArray *titleArr = @[@"芒果姆斯", @"朗姆芝士", @"栗蓉暗香"];
-    NSArray *subtitleArr = @[@"使用马达加斯加香草荚制作戚风香草坯", @"使用马达加斯加香草荚制作戚风香草坯", @"使用马达加斯加香草荚制作戚风香草坯"];
-    NSArray *imageArr = @[@"head_image_4", @"head_image_5", @"head_image_6"];
-    for (int i = 0; i < 3; i++) {
+    NSArray *titleArr = [NSArray array];
+    NSArray *subtitleArr = [NSArray array];
+    NSArray *imageArr = [NSArray array];
+    if (_dataDic) {
+        titleArr =  @[_dataDic[@"TITLEPIECEONE"],_dataDic[@"TITLEPIECETWO"],_dataDic[@"TITLEPIECETHREE"]];
+        subtitleArr = @[_dataDic[@"CONTENTPIECEONE"],_dataDic[@"CONTENTPIECETWO"],_dataDic[@"CONTENTPIECETHREE"]];
+        imageArr = @[_dataDic[@"IMGPIECEONE"],_dataDic[@"IMGPIECETWO"],_dataDic[@"IMGPIECETHREE"]];
+    }
+    for (int i = 0; i < titleArr.count; i++) {
         ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
-        cellModel.height = kRealValue(270);
         [sectionModel.cellModelArray addObject:cellModel];
+        cellModel.height = kRealValue(270);
         cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
             ZSHToplineCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHToplineCellID forIndexPath:indexPath];
             [cell updateCellWithParamDic:@{@"title":titleArr[indexPath.row],@"subtitle":subtitleArr[indexPath.row], @"image":imageArr[indexPath.row]}];
@@ -159,5 +184,21 @@ static NSString *ZSHToplineCellID = @"ZSHToplineCellID";
     return sectionModel;
 }
 
+
+- (void)updateUI{
+    _titleLabel.text = _dataDic[@"NEWSTITLE"];
+    
+    _contentLabel.text = _dataDic[@"NEWSCONTENT"];
+    NSMutableParagraphStyle  *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    [paragraphStyle  setLineSpacing:5];
+    [paragraphStyle setParagraphSpacing:22];
+    NSString *str = _contentLabel.text;
+    NSMutableAttributedString  *setString = [[NSMutableAttributedString alloc] initWithString:str];
+    [setString  addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, [str length])];
+    [_contentLabel  setAttributedText:setString];
+    
+    
+    [_contentView sd_setImageWithURL:[NSURL URLWithString:_dataDic[@"NEWSIMG"]]];
+}
 
 @end

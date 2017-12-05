@@ -121,6 +121,16 @@
     }];
 }
 
+- (void)requestNewsDetailWithParamDic:(NSDictionary *)paramDic Success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail{
+    [PPNetworkHelper POST:kUrlGetNewsDet parameters:paramDic success:^(id responseObject) {
+        RLog(@"新闻头条详情==%@",responseObject);
+        NSDictionary *newsDetailDic = responseObject[@"pd"];
+        success(newsDetailDic);
+        
+    } failure:^(NSError *error) {
+        
+    }];
+}
 
 
 @end

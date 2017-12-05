@@ -50,8 +50,8 @@
     
     _titleLabel.text = dic[@"title"];
     _subtitleLabel.text = dic[@"subtitle"];
-    _contentImageView.image = [UIImage imageNamed:dic[@"image"]];
     
+    [_contentImageView sd_setImageWithURL:[NSURL URLWithString:dic[@"image"]]];
     [self setNeedsLayout];
 }
 

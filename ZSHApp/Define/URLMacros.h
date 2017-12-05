@@ -23,8 +23,8 @@
  */
 
 #define DevelopSever    0
-#define TestSever       0
-#define ProductSever    1
+#define TestSever       1
+#define ProductSever    0
 
 
 #if DevelopSever
@@ -198,7 +198,7 @@
 //参数：无参数
 //请求地址：/apphomein/privilegelist?PRIVILIST(混淆码)
 #define kUrlPrivilegelist [NSString stringWithFormat:@"/apphomein/privilegelist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"PRIVILIST"]]
-//33.首页中对应特权详情（仅马术，游艇，飞机，高尔夫，豪车）
+//33.首页中对应特权详情（仅马术，游艇，飞机，高尔夫，豪车）（暂无用）
 //参数：PRIVILEGE_ID 特权id
 //请求地址：/apphomein/privilegedet?PRIVIDET(混淆码)
 #define kUrlPrivilegeDet [NSString stringWithFormat:@"/apphomein/privilegedet?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"PRIVIDET"]]

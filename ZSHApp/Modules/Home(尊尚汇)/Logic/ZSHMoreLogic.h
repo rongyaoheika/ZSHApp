@@ -42,4 +42,7 @@
 
 //荣耀服务详情
 - (void)requestServiceDetailDataWithParamDic:(NSDictionary *)paramDic Success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail;
+
+//新闻详情
+- (void)requestNewsDetailWithParamDic:(NSDictionary *)paramDic Success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail;
 @end

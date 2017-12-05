@@ -224,7 +224,8 @@ static NSString *Identify_MusicCell = @"musicCell";
     cellView.dataArr = mTitleArr;
     kWeakSelf(self);
     cellView.itemClickBlock = ^(NSInteger index) {
-        ZSHToplineViewController *toplineVC = [[ZSHToplineViewController alloc] init];
+        NSDictionary *nextParamDic = @{@"shopId":_homeLogic.newsArr[index][@"NEWS_ID"]};
+        ZSHToplineViewController *toplineVC = [[ZSHToplineViewController alloc] initWithParamDic:nextParamDic];
         [weakself.navigationController pushViewController:toplineVC animated:YES];
     };
     sectionModel.headerView = cellView;
