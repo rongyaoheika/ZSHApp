@@ -238,7 +238,10 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+    if (_saveCityBlock) {
+        _saveCityBlock(_letterResultArr[indexPath.section][indexPath.row]);
+    }
+    [self.navigationController popViewControllerAnimated:true];
 }
 
 #pragma mark DSectionIndexViewDataSource && delegate method

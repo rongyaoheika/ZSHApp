@@ -853,8 +853,15 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
         [self removeFromSuperview];
         [self setHidden:YES];
         
+        NSDictionary *preParamDic;
+        if (kFromClassTypeValue == ZSHFromAirplaneCalendarVCToBottomBlurPopView) {
+            preParamDic = @{@"trainDate":_currentDateLabel.text};
+            
+        } else if (ZSHFromAirplaneAgeVCToBottomBlurPopView) {
+            preParamDic = @{@"ageRange":self.ageView.ageRangeStr};
+        }
+        
          //保存年龄
-        NSDictionary *preParamDic = @{@"ageRange":self.ageView.ageRangeStr};
         if (self.confirmOrderBlock) {
             self.confirmOrderBlock(preParamDic);
         }

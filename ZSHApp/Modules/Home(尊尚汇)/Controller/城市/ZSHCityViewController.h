@@ -8,6 +8,10 @@
 
 #import "RootViewController.h"
 
+typedef void(^SaveCityBlock)(NSString *city);
+
 @interface ZSHCityViewController : RootViewController
+
+@property (nonatomic, copy) SaveCityBlock saveCityBlock;
 
 @end

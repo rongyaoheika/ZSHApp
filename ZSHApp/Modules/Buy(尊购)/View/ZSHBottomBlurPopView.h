@@ -12,7 +12,7 @@
 typedef NS_ENUM(NSUInteger,ZSHFromVCToBottomBlurPopView){
     ZSHFromHotelVCToBottomBlurPopView,                       //酒店-底部弹出
     ZSHFromExchangeVCToBottomBlurPopView,                    //兑换-底部弹出
-    ZSHConfirmOrderToBottomBlurPopView,     //酒店订单-底部弹出
+    ZSHConfirmOrderToBottomBlurPopView,                      //酒店订单-底部弹出
     ZSHFromFoodDetailVCToBottomBlurPopView,                  //餐厅订单-底部弹窗
     ZSHFromHotelDetailCalendarVCToBottomBlurPopView,         //酒店入住日历-底部弹出
     ZSHFromKTVConfirmOrderVCToBottomBlurPopView,             //KTV订单-底部弹出

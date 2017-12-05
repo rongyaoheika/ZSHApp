@@ -30,7 +30,7 @@
     _beginPlaceBtn.textAlignment = NSTextAlignmentLeft;
     _beginPlaceBtn.textVerticalAlignment = YYTextVerticalAlignmentCenter;
     _beginPlaceBtn.textTapAction = ^(UIView * _Nonnull containerView, NSAttributedString * _Nonnull text, NSRange range, CGRect rect) {
-        [weakself selectCity];
+        [weakself selectCity:@"0"];
     };
     [self addSubview:_beginPlaceBtn];
     [_beginPlaceBtn mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -56,7 +56,7 @@
     _endPlaceBtn.textAlignment = NSTextAlignmentRight;
     _endPlaceBtn.textVerticalAlignment = YYTextVerticalAlignmentCenter;
     _endPlaceBtn.textTapAction = ^(UIView * _Nonnull containerView, NSAttributedString * _Nonnull text, NSRange range, CGRect rect) {
-        [weakself selectCity];
+        [weakself selectCity:@"1"];
     };
     [self addSubview:_endPlaceBtn];
     [_endPlaceBtn mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -69,8 +69,19 @@
 }
 
 
-- (void)selectCity {
+- (void)selectCity:(NSString *)tag {
+    kWeakSelf(self);
     ZSHCityViewController *cityVC = [[ZSHCityViewController alloc]init];
+    cityVC.saveCityBlock = ^(NSString *city) {
+        if ([tag isEqualToString:@"0"]) {
+            weakself.beginPlaceBtn.text = city;
+        } else {
+            weakself.endPlaceBtn.text = city;
+        }
+        if (weakself.saveBlock) {
+            weakself.saveBlock(weakself.beginPlaceBtn.text, weakself.endPlaceBtn.text);
+        }
+    };
     [[kAppDelegate getCurrentUIVC].navigationController pushViewController:cityVC animated:YES];
 }
 

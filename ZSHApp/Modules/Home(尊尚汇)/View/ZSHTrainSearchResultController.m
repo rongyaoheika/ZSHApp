@@ -11,6 +11,7 @@
 #import "ZSHTrainTicketListCell.h"
 #import "ZSHTicketPlaceCell.h"
 #import "ZSHTrainTicketDetailViewController.h"
+#import "ZSHTrainLogic.h"
 
 
 static NSString *ZSHKTVCalendarCellID = @"ZSHKTVCalendarCellID";
@@ -18,8 +19,8 @@ static NSString *ZSHTrainTicketListCellID = @"ZSHTrainTicketListCellID";
 
 @interface ZSHTrainSearchResultController ()
 
-@property (nonatomic, strong) ZSHTicketPlaceCell     *ticketView;
-
+@property (nonatomic, strong) ZSHTicketPlaceCell    *ticketView;
+@property (nonatomic, strong) ZSHTrainLogic         *trainLogic;
 
 @end
 
@@ -32,9 +33,9 @@ static NSString *ZSHTrainTicketListCellID = @"ZSHTrainTicketListCellID";
 }
 
 - (void)loadData{
-    
+    _trainLogic = [[ZSHTrainLogic alloc] init];
     [self initViewModel];
-    
+    [self requestData];
 }
 
 - (void)createUI{
@@ -111,5 +112,12 @@ static NSString *ZSHTrainTicketListCellID = @"ZSHTrainTicketListCellID";
     [self.navigationItem setTitleView:self.ticketView];
 }
 
+- (void)requestData {
+    // kWeakSelf(self);//参数：from 始发站/to 终点站/date 出发日期/tt 是否为高铁动车（不打勾不需要传递，打勾需要传递’D’）
+    // @{@"from":@"",@"to":@"",@"date":@"",@"tt":@""}
+    [_trainLogic requestTrainSelectWithDic:[self.paramDic[@"trainModel"] mj_keyValues] success:^(id response) {
+        
+    }];
+}
 
 @end

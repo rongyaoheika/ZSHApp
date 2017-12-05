@@ -12,11 +12,13 @@
 #import "ZSHTitleContentViewController.h"
 #import "ZSHPickView.h"
 #import "ZSHTrainSearchResultController.h"
+#import "ZSHTrainModel.h"
 
 @interface ZSHAirPlaneViewController ()
 
 @property (nonatomic, strong) ZSHBottomBlurPopView      *bottomBlurPopView;
 @property (nonatomic, strong) ZSHPickView               *pickView;
+@property (nonatomic, strong) ZSHTrainModel             *trainModel;
 
 @end
 
@@ -33,7 +35,11 @@ static NSString *ZSHBaseTicketDateCellID = @"ZSHBaseTicketDateCell";
 }
 
 - (void)loadData{
-    
+    _trainModel = [[ZSHTrainModel alloc] init];
+    _trainModel.from = @"北京";
+    _trainModel.to = @"上海";
+    _trainModel.date = @"2017-9-25";
+    _trainModel.tt = @"D";
     [self initViewModel];
 }
 
@@ -71,6 +77,10 @@ static NSString *ZSHBaseTicketDateCellID = @"ZSHBaseTicketDateCell";
         //起始位置
         ZSHBaseCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHTicketPlaceCellID];
         ZSHTicketPlaceCell *ticketView = [[ZSHTicketPlaceCell alloc]initWithFrame:CGRectZero paramDic:nil];
+        ticketView.saveBlock = ^(NSString *from, NSString *to) {
+            weakself.trainModel.from = from;
+            weakself.trainModel.to = to;
+        };
         ticketView.tag = 2;
         [cell.contentView addSubview:ticketView];
         [ticketView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -155,16 +165,23 @@ static NSString *ZSHBaseTicketDateCellID = @"ZSHBaseTicketDateCell";
             ZSHBaseCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHBaseTicketDateCellID];
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             cell.textLabel.text = @"出发日期";
-            NSDictionary *dateLabelDic = @{@"text":@"2017-9-25"};
-            UILabel *dateLabel = [ZSHBaseUIControl createLabelWithParamDic:dateLabelDic];
-            dateLabel.tag = 3;
-            [cell.contentView addSubview:dateLabel];
-            [dateLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.left.mas_equalTo(cell).offset(kRealValue(100));
-                make.height.mas_equalTo(cell);
-                make.top.mas_equalTo(cell);
-                make.right.mas_equalTo(cell).offset(-kRealValue(50));
-            }];
+            NSString *dateString = @"";
+            if (weakself.trainModel.date.length) {
+                dateString = weakself.trainModel.date;
+            } else {
+                dateString = @"2017-9-25";
+            }
+            cell.detailTextLabel.text = dateString;
+//            NSDictionary *dateLabelDic = @{@"text":dateString};
+//            UILabel *dateLabel = [ZSHBaseUIControl createLabelWithParamDic:dateLabelDic];
+//            dateLabel.tag = 3;
+//            [cell.contentView addSubview:dateLabel];
+//            [dateLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//                make.left.mas_equalTo(cell).offset(kRealValue(100));
+//                make.height.mas_equalTo(cell);
+//                make.top.mas_equalTo(cell);
+//                make.right.mas_equalTo(cell).offset(-kRealValue(50));
+//            }];
             
             return cell;
         };
@@ -172,6 +189,10 @@ static NSString *ZSHBaseTicketDateCellID = @"ZSHBaseTicketDateCell";
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
             if (indexPath.row == 1) {//出发日期
                 self.bottomBlurPopView = [weakself createBottomBlurPopViewWith:ZSHFromAirplaneCalendarVCToBottomBlurPopView];
+                weakself.bottomBlurPopView.confirmOrderBlock = ^(NSDictionary *dic) {
+                    weakself.trainModel.date = dic[@"trainDate"];
+                    [weakself.tableView reloadData];
+                };
                 [kAppDelegate.window addSubview:self.bottomBlurPopView];
             }
         };
@@ -231,7 +252,7 @@ static NSString *ZSHBaseTicketDateCellID = @"ZSHBaseTicketDateCell";
         }
             break;
         case ZSHFromHomeTrainVCToAirPlaneVC:{
-            ZSHTrainSearchResultController *searchResultVC = [[ZSHTrainSearchResultController alloc]init];
+            ZSHTrainSearchResultController *searchResultVC = [[ZSHTrainSearchResultController alloc]initWithParamDic:@{@"trainModel":_trainModel}];
             [self.navigationController pushViewController:searchResultVC animated:YES];
         }
             break;

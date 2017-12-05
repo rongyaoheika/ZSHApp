@@ -61,6 +61,8 @@
 		1826CDAD1FBAE1F000A0ECE2 /* ZSHVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1826CDAC1FBAE1F000A0ECE2 /* ZSHVideoViewController.m */; };
 		1826CDB01FBAE20C00A0ECE2 /* ZSHPersonalDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1826CDAF1FBAE20C00A0ECE2 /* ZSHPersonalDetailViewController.m */; };
 		1826CDB41FBAFD3D00A0ECE2 /* ZSHApplyServiceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1826CDB31FBAFD3D00A0ECE2 /* ZSHApplyServiceViewController.m */; };
+		183218051FD692A800320022 /* ZSHTrainLogic.m in Sources */ = {isa = PBXBuildFile; fileRef = 183218041FD692A800320022 /* ZSHTrainLogic.m */; };
+		183218091FD69A5300320022 /* ZSHTrainModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 183218081FD69A5300320022 /* ZSHTrainModel.m */; };
 		183C65721FC037510081DCFF /* ZSHReviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 183C65711FC037510081DCFF /* ZSHReviewViewController.m */; };
 		183C65761FC037B60081DCFF /* ZSHToplineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 183C65751FC037B60081DCFF /* ZSHToplineViewController.m */; };
 		183C657A1FC03B400081DCFF /* ZSHToplineCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 183C65791FC03B400081DCFF /* ZSHToplineCell.m */; };
@@ -526,6 +528,10 @@
 		1826CDAF1FBAE20C00A0ECE2 /* ZSHPersonalDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHPersonalDetailViewController.m; sourceTree = "<group>"; };
 		1826CDB21FBAFD3D00A0ECE2 /* ZSHApplyServiceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHApplyServiceViewController.h; sourceTree = "<group>"; };
 		1826CDB31FBAFD3D00A0ECE2 /* ZSHApplyServiceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHApplyServiceViewController.m; sourceTree = "<group>"; };
+		183218031FD692A800320022 /* ZSHTrainLogic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHTrainLogic.h; sourceTree = "<group>"; };
+		183218041FD692A800320022 /* ZSHTrainLogic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHTrainLogic.m; sourceTree = "<group>"; };
+		183218071FD69A5300320022 /* ZSHTrainModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHTrainModel.h; sourceTree = "<group>"; };
+		183218081FD69A5300320022 /* ZSHTrainModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHTrainModel.m; sourceTree = "<group>"; };
 		18342C701F4C04C500FF8C98 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		183C65701FC037510081DCFF /* ZSHReviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHReviewViewController.h; sourceTree = "<group>"; };
 		183C65711FC037510081DCFF /* ZSHReviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHReviewViewController.m; sourceTree = "<group>"; };
@@ -1467,6 +1473,15 @@
 			name = "ApplyService(申请售后)";
 			sourceTree = "<group>";
 		};
+		183218061FD69A3F00320022 /* 火车票 */ = {
+			isa = PBXGroup;
+			children = (
+				183218071FD69A5300320022 /* ZSHTrainModel.h */,
+				183218081FD69A5300320022 /* ZSHTrainModel.m */,
+			);
+			path = "火车票";
+			sourceTree = "<group>";
+		};
 		183C656F1FC037030081DCFF /* 写评论 */ = {
 			isa = PBXGroup;
 			children = (
@@ -1931,6 +1946,7 @@
 		FE291EAF1F8CAEDC00D4BBE7 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				183218061FD69A3F00320022 /* 火车票 */,
 				FEA018CC1FCBF64000989FB2 /* Comment(评论) */,
 				FE9E6D711FC4274300F7AD95 /* Home */,
 				FE248E891FA828E500FFE126 /* KTV */,
@@ -3336,6 +3352,8 @@
 				FEA018CA1FCBF4C700989FB2 /* ZSHShopCommentLogic.m */,
 				FEB099101FD125BE00E8F03D /* ZSHMoreLogic.h */,
 				FEB099111FD125BE00E8F03D /* ZSHMoreLogic.m */,
+				183218031FD692A800320022 /* ZSHTrainLogic.h */,
+				183218041FD692A800320022 /* ZSHTrainLogic.m */,
 			);
 			path = Logic;
 			sourceTree = "<group>";
@@ -3958,6 +3976,7 @@
 				181105761FBBD69A0046D229 /* UILabel+Spacing.m in Sources */,
 				FE7527B11F7AB9E400858561 /* ZSHBaseView.m in Sources */,
 				FEADBD251FBEBBC00065B94B /* ZSHBlackCardPhoneNumView.m in Sources */,
+				183218091FD69A5300320022 /* ZSHTrainModel.m in Sources */,
 				FE5538831F470BAF00803128 /* UserManager.m in Sources */,
 				FEBD7CA01FA7161D00CE2BA6 /* ZSHGoodsCommentSubViewController.m in Sources */,
 				FEBD7C901FA6C47300CE2BA6 /* ZSHHotelListCell.m in Sources */,
@@ -3989,6 +4008,7 @@
 				FE0ED82C1FC34703008299C5 /* StepSlider.m in Sources */,
 				FEAE11261FB41A95008DCB3E /* ZSHWithdrawViewController.m in Sources */,
 				FE5538131F47049D00803128 /* RootViewController.m in Sources */,
+				183218051FD692A800320022 /* ZSHTrainLogic.m in Sources */,
 				FE55385C1F47049D00803128 /* AESCipher.m in Sources */,
 				185C6D861FC2D97E004EA461 /* LZCartTableViewCell.m in Sources */,
 				1811057A1FBC125E0046D229 /* ZSHLikeViewController.m in Sources */,
