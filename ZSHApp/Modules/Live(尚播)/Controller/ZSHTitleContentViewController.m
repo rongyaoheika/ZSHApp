@@ -86,7 +86,8 @@
             self.contentVCS = @[@"ZSHIntegralBillViewController",@"ZSHIntegralBillViewController",@"ZSHIntegralBillViewController"];
             break;
         }
-        case FromHotelVCToTitleContentVC:{
+        case FromHotelVCToTitleContentVC:
+        case FromBarVCToTitleContentVC:{
             [self createTileViewUI];
             [self createSearchNaviUI];
             self.contentVCS = @[@"ZSHHotelViewController",@"ZSHHotelViewController",@"ZSHHotelViewController"];
@@ -145,16 +146,7 @@
                                 @"ZSHWeiboViewController"];
         }
             break;
-        case FromBarVCToTitleContentVC:{//酒吧
-            [self createTileViewUI];
-            self.contentVCS = @[@"ZSHHotelViewController",
-                                @"ZSHHotelViewController",
-                                @"ZSHHotelViewController"];
-            self.paramArr = @[@{KFromClassType:@(kFromClassTypeValue)},@{KFromClassType:@(kFromClassTypeValue)},@{KFromClassType:@(kFromClassTypeValue)}];
-            [self createSearchNaviUI];
-            break;
-            
-    }
+
         case FromHorseVCToTitleContentVC://马术
         case FromShipVCToTitleContentVC://游艇
         case FromGolfVCToTitleContentVC://游艇
@@ -264,8 +256,6 @@
     
     [self.titleView reloadViewWithTitles:self.titleArr];
     self.vcs = [[NSMutableArray alloc]init];
-    
-    
     RootViewController *vc  = nil;
 
     if (kFromClassTypeValue == FromAllOrderVCToTitleContentVC) {
@@ -319,18 +309,21 @@
     //0:排序  1：品牌  2：筛选
     NSArray *paramArr = nil;
     switch (kFromClassTypeValue) {
-        case FromHotelVCToTitleContentVC:{//酒店排序
+        case FromHotelVCToTitleContentVC://酒店排序
+        case FromBarVCToTitleContentVC:{//酒吧排序
             paramArr = @[@{@"shopSortArr":@[@"推荐",@"距离由近到远",@"评分由高到低",@"价格由高到低",@"价格由低到高"],@"midTitle":@"排序"},
                          @{@"shopSortArr":@[@"全部品牌",@"如家",@"7天",@"汉庭",@"锦江之星"],@"midTitle":@"品牌"},
                          @{@"shopSortArr":@[@"经济型酒店",@"高端酒店",@"主题酒店",@"度假酒店",@"公寓型酒店",@"客栈",@"青年旅社"],@"midTitle":@"筛选"}];
         }
-        case FromFoodVCToTitleContentVC:{//美食排序
+        case FromFoodVCToTitleContentVC://美食排序
+        case FromKTVVCToTitleContentVC:{//KTV排序
             paramArr = @[@{@"shopSortArr":@[@"推荐",@"距离由近到远",@"评分由高到低",@"价格由高到低",@"价格由低到高"],@"midTitle":@"排序"},
                          @{@"shopSortArr":@[@"全聚德",@"海底捞",@"眉州小吃",@"呷浦呷哺",@"肯德基",@"必胜客"
 ],@"midTitle":@"品牌"},
                          @{@"shopSortArr":@[@"甜点饮品",@"火锅",@"自助餐",@"小吃快餐",@"日韩料理",@"西餐",@"烧烤烤肉",@"素食"],@"midTitle":@"筛选"}];
         }
-            
+         
+        
             
         default:
             break;

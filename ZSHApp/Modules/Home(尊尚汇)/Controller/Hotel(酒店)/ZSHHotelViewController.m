@@ -36,11 +36,19 @@ static NSString *ZSHHotelCellID = @"ZSHHotelCell";
     [self loadData];
 }
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    if (!_hotelListDicArr) {
+        [self requestHotelListData];
+    }
+}
+
 - (void)loadData{
    
     [self requestHotelListData];
     [self initViewModel];
 }
+
 
 - (void)requestHotelListData{
     kWeakSelf(self);
@@ -141,7 +149,8 @@ static NSString *ZSHHotelCellID = @"ZSHHotelCell";
 - (void)updateListData:(NSNotification *)notification{
     kWeakSelf(self);
     ZSHToTitleContentVC type = [notification.object[KFromClassType]integerValue];
-    if (type != FromHotelVCToTitleContentVC) {
+    
+    if (type != FromHotelVCToTitleContentVC && type != FromBarVCToTitleContentVC) {
         return;
     }
     //类型
@@ -150,28 +159,43 @@ static NSString *ZSHHotelCellID = @"ZSHHotelCell";
     NSInteger row = [notification.object[@"row"] integerValue];
     //行标题
     NSString *rowTitle = notification.object[@"rowTitle"];
+    NSString *paramPRICE;
+    NSString *paramEVALUATE;
+    if (type == FromHotelVCToTitleContentVC) {
+        paramPRICE = @"HOTELPRICE";
+        paramEVALUATE = @"HOTELEVALUATE";
+    } else if (type == FromBarVCToTitleContentVC){
+        paramPRICE = @"BARPRICE";
+        paramEVALUATE = @"BAREVALUATE";
+    }
     NSDictionary *paramDic = nil;
     NSArray *paramArr = nil;
     if ([midTitle containsString:@"排序"]) {
         //0:推荐  1：距离由近到远  2：评分由高到低 3：价格由高到低 4：价格由低到高
-    paramArr = @[@{},@{},
- @{@"HONOURUSER_ID":HONOURUSER_IDValue,@"COLUMN":@"HOTELEVALUATE",@"SEQUENCE":@"DESC",@"BRAND":@"",@"STYLE":@""}, @{@"HONOURUSER_ID":HONOURUSER_IDValue,@"COLUMN":@"HOTELPRICE",@"SEQUENCE":@"DESC",@"BRAND":@"",@"STYLE":@""}, @{@"HONOURUSER_ID":HONOURUSER_IDValue,@"COLUMN":@"HOTELPRICE",@"SEQUENCE":@"ASC",@"BRAND":@"",@"STYLE":@""}];
+        paramArr = @[@{},@{},
+                     @{@"HONOURUSER_ID":HONOURUSER_IDValue,@"COLUMN":paramEVALUATE,@"SEQUENCE":@"DESC",@"BRAND":@"",@"STYLE":@""}, @{@"HONOURUSER_ID":HONOURUSER_IDValue,@"COLUMN":paramPRICE,@"SEQUENCE":@"DESC",@"BRAND":@"",@"STYLE":@""}, @{@"HONOURUSER_ID":HONOURUSER_IDValue,@"COLUMN":paramPRICE,@"SEQUENCE":@"ASC",@"BRAND":@"",@"STYLE":@""}];
         paramDic = paramArr[row];
-    
+      
     } else if ([midTitle containsString:@"品牌"]){
         paramDic =  @{@"HONOURUSER_ID":HONOURUSER_IDValue,@"COLUMN":@"",@"SEQUENCE":@"",@"BRAND":rowTitle,@"STYLE":@""};
         
     } else if ([midTitle containsString:@"筛选"]){
        paramDic =  @{@"HONOURUSER_ID":HONOURUSER_IDValue,@"COLUMN":@"",@"SEQUENCE":@"",@"BRAND":@"",@"STYLE":rowTitle};
-        
     }
     
-    [_hotelLogic loadHotelSortWithParamDic:paramDic success:^(id responseObject) {
-        RLog(@"排序后的数据==%@",responseObject);
-        _hotelListDicArr = responseObject;
-        [weakself initViewModel];
-    } fail:nil];
-   
+    if (type == FromHotelVCToTitleContentVC) {
+        [_hotelLogic loadHotelSortWithParamDic:paramDic success:^(id responseObject) {
+            RLog(@"排序后的数据==%@",responseObject);
+            _hotelListDicArr = responseObject;
+            [weakself initViewModel];
+        } fail:nil];
+    } else if (type == FromBarVCToTitleContentVC) {
+        [_hotelLogic loadBarSortWithParamDic:paramDic success:^(id responseObject) {
+            RLog(@"酒吧排序后的数据==%@",responseObject);
+            _hotelListDicArr = responseObject;
+            [weakself initViewModel];
+        } fail:nil];
+    }
     
 }
 

@@ -23,8 +23,8 @@
  */
 
 #define DevelopSever    0
-#define TestSever       0
-#define ProductSever    1
+#define TestSever       1
+#define ProductSever    0
 
 
 #if DevelopSever
@@ -508,7 +508,7 @@
 //BRAND  品牌   /STYLE  类型
 //请求地址：/appsktvin/sktvlistsequence.do?SORTKTVSEQUENCE(混淆码)
 #define kUrlSKtvListSequence [NSString stringWithFormat:@"/appsktvin/sktvlistsequence.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SORTKTVSEQUENCE"]]
-//100. 根据酒吧评价分数，价格，距离,品牌,类型升序或者降序排序
+//100. 根据酒吧评价分数，价格，距离,品牌,类型升序或者降序排序(完成)
 //参数：HONOURUSER_ID 用户id   /COLUMN 排序字段（BARPRICE,BAREVALUATE）  /SEQUENCE  升序ASC降序DESC
 //BRAND  品牌   /STYLE  类型
 //请求地址：/appsbarin/sbarlistsequence.do?SORTBARSEQUENCE(混淆码)

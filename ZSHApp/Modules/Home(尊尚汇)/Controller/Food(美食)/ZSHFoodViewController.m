@@ -39,6 +39,16 @@ static NSString *ZSHFoodCellID = @"ZSHFoodCell";
     [self initViewModel];
 }
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    
+    if (!_foodListArr) {
+        [self requestData];
+    }
+   
+}
+
+
 - (void)createUI{
     
     [self.view addSubview:self.tableView];

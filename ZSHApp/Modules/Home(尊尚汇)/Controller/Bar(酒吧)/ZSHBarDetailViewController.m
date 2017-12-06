@@ -59,6 +59,7 @@ static NSString *ZSHHotelCellID = @"ZSHHotelCell";
     [self initViewModel];
 }
 
+
 - (void)requestData{
     kWeakSelf(self);
     _hotelLogic = [[ZSHHotelLogic alloc]init];
@@ -71,8 +72,8 @@ static NSString *ZSHHotelCellID = @"ZSHHotelCell";
     //套餐
     [_hotelLogic loadBarDetailSetDataWithParamDic:paramDic success:^(NSArray *barDetailSetDicArr) {
         _barDetailSetDicArr = barDetailSetDicArr;
-        weakself.tableViewModel.sectionModelArray[3] = [weakself storeBarSetSection];
-        NSIndexSet *indexSet = [[NSIndexSet alloc]initWithIndex:3];
+        weakself.tableViewModel.sectionModelArray[2] = [weakself storeBarSetSection];
+        NSIndexSet *indexSet = [[NSIndexSet alloc]initWithIndex:2];
         [weakself updateSectionDatWithSet:indexSet];
     } fail:nil];
     
@@ -86,8 +87,8 @@ static NSString *ZSHHotelCellID = @"ZSHHotelCell";
     NSDictionary *detailListParamDic = @{@"HONOURUSER_ID":HONOURUSER_IDValue};
     [_hotelLogic loadBarDetailMoreShopDataWithParamDic:detailListParamDic success:^(id responseObject) {
         _barMoreShopDicArr = responseObject;
-        weakself.tableViewModel.sectionModelArray[4] = [weakself storeBarMoreShopSection];
-        NSIndexSet *indexSet = [[NSIndexSet alloc]initWithIndex:4];
+        weakself.tableViewModel.sectionModelArray[3] = [weakself storeBarMoreShopSection];
+        NSIndexSet *indexSet = [[NSIndexSet alloc]initWithIndex:3];
         [weakself updateSectionDatWithSet:indexSet];
     } fail:nil];
 }
@@ -118,7 +119,7 @@ static NSString *ZSHHotelCellID = @"ZSHHotelCell";
     [self.tableViewModel.sectionModelArray removeAllObjects];
     [self.tableViewModel.sectionModelArray addObject:[self storeHeadSection]];
     [self.tableViewModel.sectionModelArray addObject:[self storeSubSection]];
-    [self.tableViewModel.sectionModelArray addObject:[self storeCalendarSection]];
+//    [self.tableViewModel.sectionModelArray addObject:[self storeCalendarSection]];
     [self.tableViewModel.sectionModelArray addObject:[self storeBarSetSection]];
     [self.tableViewModel.sectionModelArray addObject:[self storeBarMoreShopSection]];
     [self.tableView reloadData];
@@ -225,29 +226,29 @@ static NSString *ZSHHotelCellID = @"ZSHHotelCell";
 }
 
 //日历
-- (ZSHBaseTableViewSectionModel*)storeCalendarSection {
-    kWeakSelf(self);
-    ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
-    sectionModel.headerHeight = kRealValue(25);
-    sectionModel.headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, sectionModel.headerHeight)];
-    
-    ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
-    [sectionModel.cellModelArray addObject:cellModel];
-    cellModel.height = kRealValue(65);
-    cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
-        ZSHHotelCalendarCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHHotelCalendarCellID forIndexPath:indexPath];
-        [weakself hideSeparatorLineWithCell:cell hide:YES];
-        _liveInfoStr = @"8-8入住，8-9离开，1天";
-        cell.dateViewTapBlock = ^(NSInteger tag) {//tag = 1入住
-            NSDictionary *paramDic = _barDetailSetDicArr[indexPath.row];
-            NSDictionary *nextParamDic = @{KFromClassType:@(ZSHFromHotelDetailCalendarVCToBottomBlurPopView),@"dic":paramDic};
-            self.bottomBlurPopView = [weakself createBottomBlurPopViewWithParamDic:nextParamDic];
-            [kAppDelegate.window addSubview:self.bottomBlurPopView];
-        };
-        return cell;
-    };
-    return sectionModel;
-}
+//- (ZSHBaseTableViewSectionModel*)storeCalendarSection {
+//    kWeakSelf(self);
+//    ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
+//    sectionModel.headerHeight = kRealValue(25);
+//    sectionModel.headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, sectionModel.headerHeight)];
+//
+//    ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
+//    [sectionModel.cellModelArray addObject:cellModel];
+//    cellModel.height = kRealValue(65);
+//    cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
+//        ZSHHotelCalendarCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHHotelCalendarCellID forIndexPath:indexPath];
+//        [weakself hideSeparatorLineWithCell:cell hide:YES];
+//        _liveInfoStr = @"8-8入住，8-9离开，1天";
+//        cell.dateViewTapBlock = ^(NSInteger tag) {//tag = 1入住
+//            NSDictionary *paramDic = _barDetailSetDicArr[indexPath.row];
+//            NSDictionary *nextParamDic = @{KFromClassType:@(ZSHFromHotelDetailCalendarVCToBottomBlurPopView),@"dic":paramDic};
+//            self.bottomBlurPopView = [weakself createBottomBlurPopViewWithParamDic:nextParamDic];
+//            [kAppDelegate.window addSubview:self.bottomBlurPopView];
+//        };
+//        return cell;
+//    };
+//    return sectionModel;
+//}
 
 //酒吧套餐
 - (ZSHBaseTableViewSectionModel*)storeBarSetSection{

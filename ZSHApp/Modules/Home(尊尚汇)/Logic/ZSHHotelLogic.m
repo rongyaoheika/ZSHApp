@@ -69,7 +69,7 @@
 
 //酒吧列表
 - (void)loadBarListDataWithParamDic:(NSDictionary *)paramDic success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail{
-    [PPNetworkHelper POST:kUrlSbarListSequence parameters:paramDic success:^(id responseObject) {
+    [PPNetworkHelper POST:kUrlSBar parameters:paramDic success:^(id responseObject) {
         RLog(@"酒吧列表数据==%@",responseObject)
         NSArray *barListDicArr = responseObject[@"pd"];
         success(barListDicArr);
@@ -92,7 +92,7 @@
 //酒吧详情列表
 - (void)loadBarDetailSetDataWithParamDic:(NSDictionary *)paramDic success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail{
     [PPNetworkHelper POST:kUrlBarDetailList parameters:paramDic success:^(id responseObject) {
-        RLog(@"酒吧详情列表数据==%@",responseObject)
+        RLog(@"酒吧套餐数据==%@",responseObject)
         NSArray *barDetailListDicArr = responseObject[@"pd"];
         success(barDetailListDicArr);
     } failure:^(NSError *error) {
@@ -111,8 +111,9 @@
     }];
 }
 
+//酒吧排序
 - (void)loadBarSortWithParamDic:(NSDictionary *)paramDic success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail {
-    [PPNetworkHelper POST:kUrlSHotelListRand parameters:paramDic success:^(id responseObject) {
+    [PPNetworkHelper POST:kUrlSbarListSequence parameters:paramDic success:^(id responseObject) {
         RLog(@"酒吧排序数据==%@",responseObject)
         NSArray *hotelDetaiDicListArr = responseObject[@"pd"];
         success(hotelDetaiDicListArr);

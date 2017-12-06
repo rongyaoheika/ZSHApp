@@ -31,6 +31,16 @@ static NSString *ZSHHotelCellID = @"ZSHHotelCell";
     [self loadData];
 }
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    
+    if (!_KTVArr) {
+         [self requestKTVListData];
+    }
+   
+}
+
+
 - (void)loadData{
     
     [self requestKTVListData];
@@ -122,7 +132,7 @@ static NSString *ZSHHotelCellID = @"ZSHHotelCell";
     if ([midTitle containsString:@"排序"]) {
         //0:推荐  1：距离由近到远  2：评分由高到低 3：价格由高到低 4：价格由低到高
         paramArr = @[@{},@{},
-                     @{@"HONOURUSER_ID":HONOURUSER_IDValue,@"COLUMN":@"SHOPEVALUATE",@"SEQUENCE":@"DESC",@"BRAND":@"",@"STYLE":@""}, @{@"HONOURUSER_ID":HONOURUSER_IDValue,@"COLUMN":@"SHOPPRICE",@"SEQUENCE":@"DESC",@"BRAND":@"",@"STYLE":@""}, @{@"HONOURUSER_ID":HONOURUSER_IDValue,@"COLUMN":@"SHOPPRICE",@"SEQUENCE":@"ASC",@"BRAND":@"",@"STYLE":@""}];
+                     @{@"HONOURUSER_ID":HONOURUSER_IDValue,@"COLUMN":@"KTVEVALUATE",@"SEQUENCE":@"DESC",@"BRAND":@"",@"STYLE":@""}, @{@"HONOURUSER_ID":HONOURUSER_IDValue,@"COLUMN":@"KTVPRICE",@"SEQUENCE":@"DESC",@"BRAND":@"",@"STYLE":@""}, @{@"HONOURUSER_ID":HONOURUSER_IDValue,@"COLUMN":@"KTVPRICE",@"SEQUENCE":@"ASC",@"BRAND":@"",@"STYLE":@""}];
         paramDic = paramArr[row];
         
     } else if ([midTitle containsString:@"品牌"]){
