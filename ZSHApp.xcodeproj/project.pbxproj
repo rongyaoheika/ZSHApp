@@ -1989,7 +1989,6 @@
 			isa = PBXGroup;
 			children = (
 				FE291EB21F8CAEDC00D4BBE7 /* Controller */,
-				FE291EB31F8CAEDC00D4BBE7 /* Logic */,
 				FE291EB41F8CAEDC00D4BBE7 /* Model */,
 				FE291EB51F8CAEDC00D4BBE7 /* View */,
 			);
@@ -2022,13 +2021,6 @@
 				18F902551FB6E5200044967F /* ZSHRewardViewController.m */,
 			);
 			path = Controller;
-			sourceTree = "<group>";
-		};
-		FE291EB31F8CAEDC00D4BBE7 /* Logic */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Logic;
 			sourceTree = "<group>";
 		};
 		FE291EB41F8CAEDC00D4BBE7 /* Model */ = {

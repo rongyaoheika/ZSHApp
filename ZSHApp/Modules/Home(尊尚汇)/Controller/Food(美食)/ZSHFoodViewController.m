@@ -16,7 +16,7 @@
 
 @interface ZSHFoodViewController ()
 
-@property (nonatomic, strong) NSMutableArray           *dataArr;
+@property (nonatomic, strong) NSArray                  *foodListArr;
 @property (nonatomic, strong) ZSHFoodLogic             *foodLogic;
 
 @end
@@ -28,6 +28,7 @@ static NSString *ZSHFoodCellID = @"ZSHFoodCell";
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateListData:) name:KUpdateDataWithSort object:nil];
     [self createUI];
     [self loadData];
 }
@@ -61,22 +62,20 @@ static NSString *ZSHFoodCellID = @"ZSHFoodCell";
 - (ZSHBaseTableViewSectionModel*)storeListSection {
     kWeakSelf(self);
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
-    for (int i = 0; i < _foodLogic.foodListArr.count; i++) {
+    for (int i = 0; i < _foodListArr.count; i++) {
         ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
         [sectionModel.cellModelArray addObject:cellModel];
-        kWeakSelf(cellModel);
+        cellModel.height = kRealValue(250);
         cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
             ZSHFoodCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHFoodCellID forIndexPath:indexPath];
-            ZSHFoodModel *foodModel = _foodLogic.foodListArr[indexPath.row];
-            [cell updateCellWithModel:foodModel];
-            weakcellModel.height = foodModel.cellHeight;
+            NSDictionary *foodDic = _foodListArr[indexPath.row];
+            [cell updateCellWithParamDic:foodDic];
             return cell;
         };
         
-        
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
-            ZSHFoodModel *foodModel = _foodLogic.foodListArr[indexPath.row];
-            NSDictionary *nextParamDic = @{@"shopId":foodModel.SORTFOOD_ID};
+            NSDictionary *foodDic = _foodListArr[indexPath.row];
+            NSDictionary *nextParamDic = @{@"shopId":foodDic[@"SORTFOOD_ID"]};
             ZSHFoodDetailViewController *foodDetailVC = [[ZSHFoodDetailViewController alloc]initWithParamDic:nextParamDic];
             [weakself.navigationController pushViewController:foodDetailVC animated:YES];
         };
@@ -87,22 +86,65 @@ static NSString *ZSHFoodCellID = @"ZSHFoodCell";
 
 - (void)requestData{
     kWeakSelf(self);
-    [_foodLogic loadFoodListDataWithParamDic:@{@"HONOURUSER_ID":@"d6a3779de8204dfd9359403f54f7d27c"}];
-    _foodLogic.requestDataCompleted = ^(id data){
+    [_foodLogic loadFoodListDataWithParamDic:@{@"HONOURUSER_ID":HONOURUSER_IDValue} success:^(id responseObject) {
         [weakself.tableView.mj_header endRefreshing];
         [weakself.tableView.mj_footer endRefreshing];
+        _foodListArr = responseObject;
         [weakself initViewModel];
-    };
+    } fail:nil];
+
 }
 
 -(void)headerRereshing{
     [self requestData];
 }
 
-#pragma mark ————— 上拉刷新 —————
+
 -(void)footerRereshing{
      [self.tableView.mj_footer endRefreshing];
 }
+
+
+- (void)updateListData:(NSNotification *)notification{
+    kWeakSelf(self);
+   
+    ZSHToTitleContentVC type = [notification.object[KFromClassType]integerValue];
+    if (type != FromFoodVCToTitleContentVC) {
+        return;
+    }
+    
+    //类型
+    NSString *midTitle = notification.object[@"midTitle"];
+    //行数
+    NSInteger row = [notification.object[@"row"] integerValue];
+    //行标题
+    NSString *rowTitle = notification.object[@"rowTitle"];
+    
+    NSDictionary *paramDic = nil;
+    NSArray *paramArr = nil;
+    if ([midTitle containsString:@"排序"]) {
+        //0:推荐  1：距离由近到远  2：评分由高到低 3：价格由高到低 4：价格由低到高
+        paramArr = @[@{},@{},
+                     @{@"HONOURUSER_ID":HONOURUSER_IDValue,@"COLUMN":@"SHOPEVALUATE",@"SEQUENCE":@"DESC",@"BRAND":@"",@"STYLE":@""}, @{@"HONOURUSER_ID":HONOURUSER_IDValue,@"COLUMN":@"SHOPPRICE",@"SEQUENCE":@"DESC",@"BRAND":@"",@"STYLE":@""}, @{@"HONOURUSER_ID":HONOURUSER_IDValue,@"COLUMN":@"SHOPPRICE",@"SEQUENCE":@"ASC",@"BRAND":@"",@"STYLE":@""}];
+        paramDic = paramArr[row];
+        
+    } else if ([midTitle containsString:@"品牌"]){
+        paramDic =  @{@"HONOURUSER_ID":HONOURUSER_IDValue,@"COLUMN":@"",@"SEQUENCE":@"",@"BRAND":rowTitle,@"STYLE":@""};
+        
+    } else if ([midTitle containsString:@"筛选"]){
+        paramDic =  @{@"HONOURUSER_ID":HONOURUSER_IDValue,@"COLUMN":@"",@"SEQUENCE":@"",@"BRAND":@"",@"STYLE":rowTitle};
+        
+    }
+    
+    [_foodLogic loadFoodSortWithParamDic:paramDic success:^(id responseObject) {
+        RLog(@"排序后的数据==%@",responseObject);
+         _foodListArr = responseObject;
+        [weakself initViewModel];
+    } fail:nil];
+    
+    
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

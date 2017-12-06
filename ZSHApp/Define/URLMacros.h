@@ -489,7 +489,7 @@
 //参数：HONOURUSER_ID 用户id
 //请求地址：/appsfoodin/sfoodlistrand.do?SORTFOODRAND(混淆码)
 #define kUrlSfoodlistRand [NSString stringWithFormat:@"/appsfoodin/sfoodlistrand.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SORTFOODRAND"]]
-//97. 根据美食评价分数，价格，距离,品牌,类型升序或者降序排序
+//97. 根据美食评价分数，价格，距离,品牌,类型升序或者降序排序(完成)
 //参数：HONOURUSER_ID 用户id   /COLUMN 排序字段（SHOPPRICE,SHOPEVALUATE）  /SEQUENCE  升序ASC降序DESC
 //BRAND  品牌   /STYLE  类型
 //请求地址：//appsfoodin/sfoodlistsequence.do?SORTFOODSEQUENCE
@@ -498,7 +498,7 @@
 //参数：无参数
 //请求地址：/appmusicin/musicreclist.do?MUSICLIST(混淆码)
 #define kUrlMusicreclist [NSString stringWithFormat:@"/appmusicin/musicreclist.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"MUSICLIST"]]
-//98. 根据酒店评价分数，价格，距离,品牌,类型升序或者降序排序
+//98. 根据酒店评价分数，价格，距离,品牌,类型升序或者降序排序（完成）
 //参数：HONOURUSER_ID 用户id   /COLUMN 排序字段（HOTELPRICE,HOTELEVALUATE）  /SEQUENCE  升序ASC降序DESC
 //BRAND  品牌   /STYLE  类型
 //请求地址：/appshotelin/shotellistsequence.do?SORTHOTELSEQUENCE(混淆码)
@@ -513,11 +513,11 @@
 //BRAND  品牌   /STYLE  类型
 //请求地址：/appsbarin/sbarlistsequence.do?SORTBARSEQUENCE(混淆码)
 #define kUrlSbarListSequence [NSString stringWithFormat:@"/appsbarin/sbarlistsequence.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SORTBARSEQUENCE"]]
-//101. 首页杂志
+//101. 首页杂志（完成）
 //参数：无
 //请求地址：/apphomein/magazinelist?MAGAZINE(混淆码)
 #define kUrlMagazineList [NSString stringWithFormat:@"/apphomein/magazinelist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"MAGAZINE"]]
-//102. 获得美食套餐页列表
+//102. 获得美食套餐页列表（完成）
 //参数：SORTFOOD_ID  所属美食店铺ID
 //请求地址：/appsfoodin/fooddetaillist.do?FOODDETAIL(混淆码)
 #define kUrlFoodDetailList [NSString stringWithFormat:@"/appsfoodin/fooddetaillist.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"FOODDETAIL"]]
@@ -542,29 +542,6 @@
 //参数：CONVERGEDETAIL_ID    聚会详情ID/          HONOURUSER_ID 用户id
 //请求地址：/appconvergein/addotherparty.do?OTHRERPARTYADD(混淆码)
 #define kUrlAddOtherParty [NSString stringWithFormat:@"/appconvergein/addotherparty.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"OTHRERPARTYADD"]]
-
-
-//101. 首页杂志(完成)
-//参数：无
-//请求地址：/apphomein/magazinelist?MAGAZINE(混淆码)
-#define kUrlMagazineList [NSString stringWithFormat:@"/apphomein/magazinelist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"MAGAZINE"]]
-
-//102.获得美食套餐页列表 FOODDETAIL（完成）
-//http://localhost:8081/ZSHINTER//appsfoodin/fooddetaillist.do?FOODDETAIL&SORTFOOD_ID=382585520535896064
-#define kUrlFoodDetailList [NSString stringWithFormat:@"/appsfoodin/fooddetaillist.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"FOODDETAIL"]]
-
-//103.生成美食订单接口（未产生交易）SHIPFOODORDER
-//http://localhost:8081/ZSHINTER//appsfoodin/shipfoodorder.do?SHIPFOODORDER&ORDERUNAME=yu&ORDERPHONE=17601680524&ORDERREMARK=不要辣&ORDERMONEY=136&ORDERROOMNUM=1&ORDERCHECKDATE=2017-8-14&ORDERLEAVEDATE=2017-8-14&FOODDETAIL_ID=387192633518194688&HONOURUSER_ID=d6a3779de8204dfd9359403f54f7d27c
-//#define kUrlShipFoodOrdert [NSString stringWithFormat:@"/appsfoodin/shipfoodorder.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SHIPFOODORDER"]]
-
-//104. 修改美食订单状态(改为支付成功,用户带使用0040002)
-//参数：ORDERSTATUS 订单状态编码/HONOURUSER_ID 提交订单的用户id /ORDERNUMBER 订单编号
-//请求地址：/appsfoodin/shiporderstaupd.do?SHIPFOODORDERUPD(混淆码)
-
-
-//105.获得用户名下所有美食订单列表     ALLFOODORDER
-//http://localhost:8081/ZSHINTER//appsfoodin/foodorderalllist.do?ALLFOODORDER&HONOURUSER_ID=d6a3779de8204dfd9359403f54f7d27c&ORDERSTATUS=0040001
-
 
 
 #endif /* URLMacros_h */

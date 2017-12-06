@@ -12,6 +12,7 @@
 #import "ZSHBarDetailViewController.h"
 #import "ZSHHotelModel.h"
 #import "ZSHHotelLogic.h"
+#import "ZSHPickView.h"
 
 @interface ZSHHotelViewController ()<UISearchBarDelegate>
 
@@ -30,7 +31,7 @@ static NSString *ZSHHotelCellID = @"ZSHHotelCell";
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-   
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateListData:) name:KUpdateDataWithSort object:nil];
     [self createUI];
     [self loadData];
 }
@@ -44,7 +45,7 @@ static NSString *ZSHHotelCellID = @"ZSHHotelCell";
 - (void)requestHotelListData{
     kWeakSelf(self);
     _hotelLogic = [[ZSHHotelLogic alloc]init];
-    NSDictionary *paramDic = @{@"HONOURUSER_ID":@"d6a3779de8204dfd9359403f54f7d27c"};
+    NSDictionary *paramDic = @{@"HONOURUSER_ID":HONOURUSER_IDValue};
     if (kFromClassTypeValue == FromHotelVCToTitleContentVC) {//酒店
         [_hotelLogic loadHotelListDataWithParamDic:paramDic success:^(NSArray *hotelListDicArr) {
             [weakself endrefresh];
@@ -125,11 +126,9 @@ static NSString *ZSHHotelCellID = @"ZSHHotelCell";
                     ZSHBarDetailViewController *barlDetailVC = [[ZSHBarDetailViewController alloc]initWithParamDic:nextParamDic];
                     [weakself.navigationController pushViewController:barlDetailVC animated:YES];
                     break;
-                    
+    
                 }
-                    
-                   
-                    
+ 
                 default:
                     break;
             }
@@ -138,6 +137,44 @@ static NSString *ZSHHotelCellID = @"ZSHHotelCell";
     
     return sectionModel;
 }
+
+- (void)updateListData:(NSNotification *)notification{
+    kWeakSelf(self);
+    ZSHToTitleContentVC type = [notification.object[KFromClassType]integerValue];
+    if (type != FromHotelVCToTitleContentVC) {
+        return;
+    }
+    //类型
+    NSString *midTitle = notification.object[@"midTitle"];
+    //行数
+    NSInteger row = [notification.object[@"row"] integerValue];
+    //行标题
+    NSString *rowTitle = notification.object[@"rowTitle"];
+    NSDictionary *paramDic = nil;
+    NSArray *paramArr = nil;
+    if ([midTitle containsString:@"排序"]) {
+        //0:推荐  1：距离由近到远  2：评分由高到低 3：价格由高到低 4：价格由低到高
+    paramArr = @[@{},@{},
+ @{@"HONOURUSER_ID":HONOURUSER_IDValue,@"COLUMN":@"HOTELEVALUATE",@"SEQUENCE":@"DESC",@"BRAND":@"",@"STYLE":@""}, @{@"HONOURUSER_ID":HONOURUSER_IDValue,@"COLUMN":@"HOTELPRICE",@"SEQUENCE":@"DESC",@"BRAND":@"",@"STYLE":@""}, @{@"HONOURUSER_ID":HONOURUSER_IDValue,@"COLUMN":@"HOTELPRICE",@"SEQUENCE":@"ASC",@"BRAND":@"",@"STYLE":@""}];
+        paramDic = paramArr[row];
+    
+    } else if ([midTitle containsString:@"品牌"]){
+        paramDic =  @{@"HONOURUSER_ID":HONOURUSER_IDValue,@"COLUMN":@"",@"SEQUENCE":@"",@"BRAND":rowTitle,@"STYLE":@""};
+        
+    } else if ([midTitle containsString:@"筛选"]){
+       paramDic =  @{@"HONOURUSER_ID":HONOURUSER_IDValue,@"COLUMN":@"",@"SEQUENCE":@"",@"BRAND":@"",@"STYLE":rowTitle};
+        
+    }
+    
+    [_hotelLogic loadHotelSortWithParamDic:paramDic success:^(id responseObject) {
+        RLog(@"排序后的数据==%@",responseObject);
+        _hotelListDicArr = responseObject;
+        [weakself initViewModel];
+    } fail:nil];
+   
+    
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

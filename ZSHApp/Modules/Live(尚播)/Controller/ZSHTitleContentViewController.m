@@ -19,6 +19,7 @@
 #import "ZSHTicketPlaceCell.h"
 #import "ZSHActivityViewController.h"
 #import "PYSearchViewController.h"
+#import "ZSHPickView.h"
 
 @interface ZSHTitleContentViewController ()<UISearchBarDelegate,PYSearchViewControllerDelegate>
 
@@ -39,6 +40,7 @@
 @property (nonatomic, strong) NSArray             *subContentVCs;
 
 @property (nonatomic, strong) ZSHBottomBlurPopView *bottomBlurPopView;
+@property (nonatomic, strong) ZSHPickView          *pickView;
 @property (nonatomic, strong) ZSHTicketPlaceCell   *ticketView;
 
 @end
@@ -220,6 +222,7 @@
 }
 
 - (LXScollTitleView *)titleView{
+    kWeakSelf(self);
     if (!_titleView) {
         _titleView = [[LXScollTitleView alloc] initWithFrame:CGRectMake(0, KNavigationBarHeight, KScreenWidth, kRealValue(35))];
 
@@ -235,9 +238,7 @@
         _titleView.selectedBlock = ^(NSInteger index){
             __weak typeof(self) strongSelf = weakSelf;
             strongSelf.contentView.currentIndex = index;
-            if ([weakSelf.paramDic[KFromClassType]integerValue] == FromHotelVCToTitleContentVC && index == 0) {
-                [kAppDelegate.window addSubview:weakSelf.bottomBlurPopView];
-            }
+            [weakself titleViewSelectChangeWithIndex:index];
         };
         _titleView.backgroundColor = [UIColor clearColor];
         _titleView.titleWidth = self.titleWidth;
@@ -304,7 +305,46 @@
     return _bottomBlurPopView;
 }
 
+-(ZSHPickView *)createPickViewWithParamDic:(NSDictionary *)paramDic{
+    ZSHPickView *pickView = [[ZSHPickView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight) paramDic:paramDic];
+    pickView.controller = self;
+    return pickView;
+}
+
+
 #pragma action
+- (void)titleViewSelectChangeWithIndex:(NSInteger)index{
+    kWeakSelf(self);
+    
+    //0:排序  1：品牌  2：筛选
+    NSArray *paramArr = nil;
+    switch (kFromClassTypeValue) {
+        case FromHotelVCToTitleContentVC:{//酒店排序
+            paramArr = @[@{@"shopSortArr":@[@"推荐",@"距离由近到远",@"评分由高到低",@"价格由高到低",@"价格由低到高"],@"midTitle":@"排序"},
+                         @{@"shopSortArr":@[@"全部品牌",@"如家",@"7天",@"汉庭",@"锦江之星"],@"midTitle":@"品牌"},
+                         @{@"shopSortArr":@[@"经济型酒店",@"高端酒店",@"主题酒店",@"度假酒店",@"公寓型酒店",@"客栈",@"青年旅社"],@"midTitle":@"筛选"}];
+        }
+        case FromFoodVCToTitleContentVC:{//美食排序
+            paramArr = @[@{@"shopSortArr":@[@"推荐",@"距离由近到远",@"评分由高到低",@"价格由高到低",@"价格由低到高"],@"midTitle":@"排序"},
+                         @{@"shopSortArr":@[@"全聚德",@"海底捞",@"眉州小吃",@"呷浦呷哺",@"肯德基",@"必胜客"
+],@"midTitle":@"品牌"},
+                         @{@"shopSortArr":@[@"甜点饮品",@"火锅",@"自助餐",@"小吃快餐",@"日韩料理",@"西餐",@"烧烤烤肉",@"素食"],@"midTitle":@"筛选"}];
+        }
+            
+            
+        default:
+            break;
+    }
+    
+    NSDictionary *nextParamDic = @{@"type":@(WindowDefault),@"midTitle":paramArr[index][@"midTitle"],@"dataArr":paramArr[index][@"shopSortArr"]};
+    weakself.pickView = [weakself createPickViewWithParamDic:nextParamDic];
+    [weakself.pickView show:WindowDefault];
+    weakself.pickView.saveChangeBlock = ^(NSString *rowTitle, NSInteger tag) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:KUpdateDataWithSort object:@{@"row":@(tag),@"midTitle":paramArr[index][@"midTitle"],@"rowTitle":rowTitle,KFromClassType:@(kFromClassTypeValue)}];
+    };
+    
+}
+
 - (void)locateBtnAction{
     
 }
@@ -338,6 +378,7 @@
 //    [self presentViewController:nav animated:YES completion:nil];
     [self.navigationController pushViewController:searchViewController animated:YES];
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

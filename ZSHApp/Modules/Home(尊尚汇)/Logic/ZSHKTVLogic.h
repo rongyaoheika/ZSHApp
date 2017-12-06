@@ -22,4 +22,7 @@
 
 //KTV更多商家列表
 - (void)loadKTVDetailListDataWithParamDic:(NSDictionary *)paramDic success:(ResponseSuccessBlock)successBlock fail:(ResponseFailBlock)failBlock;
+
+//KTV排序
+- (void)loadKTVSortWithParamDic:(NSDictionary *)paramDic success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail;
 @end

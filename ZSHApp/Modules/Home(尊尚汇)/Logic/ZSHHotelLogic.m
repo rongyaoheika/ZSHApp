@@ -57,9 +57,19 @@
     }];
 }
 
+- (void)loadHotelSortWithParamDic:(NSDictionary *)paramDic success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail {
+    [PPNetworkHelper POST:kUrlSHotelListSequence parameters:paramDic success:^(id responseObject) {
+        RLog(@"酒店排序数据==%@",responseObject)
+        NSArray *hotelSortArr = responseObject[@"pd"];
+        success(hotelSortArr);
+    } failure:^(NSError *error) {
+        RLog(@"请求失败");
+    }];
+}
+
 //酒吧列表
 - (void)loadBarListDataWithParamDic:(NSDictionary *)paramDic success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail{
-    [PPNetworkHelper POST:kUrlSBar parameters:paramDic success:^(id responseObject) {
+    [PPNetworkHelper POST:kUrlSbarListSequence parameters:paramDic success:^(id responseObject) {
         RLog(@"酒吧列表数据==%@",responseObject)
         NSArray *barListDicArr = responseObject[@"pd"];
         success(barListDicArr);
@@ -101,5 +111,14 @@
     }];
 }
 
+- (void)loadBarSortWithParamDic:(NSDictionary *)paramDic success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail {
+    [PPNetworkHelper POST:kUrlSHotelListRand parameters:paramDic success:^(id responseObject) {
+        RLog(@"酒吧排序数据==%@",responseObject)
+        NSArray *hotelDetaiDicListArr = responseObject[@"pd"];
+        success(hotelDetaiDicListArr);
+    } failure:^(NSError *error) {
+        RLog(@"请求失败");
+    }];
+}
 
 @end

@@ -77,7 +77,7 @@ typedef NS_ENUM(NSInteger, ShowPickViewWindowType) {
     WindowPapers,                  // 证件选择
     WindowPrice,                   // 价格
     WindowSort,                    // 排序
-    WindowKTVNone
+    WindowDefault
 };
 
 typedef NS_ENUM(NSInteger,ZSHToSimpleCellView){

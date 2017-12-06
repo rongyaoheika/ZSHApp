@@ -11,13 +11,11 @@
 
 @implementation ZSHFoodLogic
 
-- (void)loadFoodListDataWithParamDic:(NSDictionary *)paramDic{
-    kWeakSelf(self);
+- (void)loadFoodListDataWithParamDic:(NSDictionary *)paramDic success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail{
     [PPNetworkHelper POST:kUrlSFood parameters:paramDic success:^(id responseObject) {
-        weakself.foodListArr = [ZSHFoodModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"]];
-        if (weakself.requestDataCompleted) {
-            weakself.requestDataCompleted(nil);
-        }
+        RLog(@"美食列表数据==%@",responseObject[@"pd"]);
+        NSArray *foodListArr = responseObject[@"pd"];
+        success(foodListArr);
 
     } failure:^(NSError *error) {
         
@@ -62,5 +60,13 @@
 }
 
 
-
+- (void)loadFoodSortWithParamDic:(NSDictionary *)paramDic success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail {
+    [PPNetworkHelper POST:kUrlSFoodListSequence parameters:paramDic success:^(id responseObject) {
+        RLog(@"美食排序列表数据==%@",responseObject)
+        NSArray *foodDetaiDicListArr = responseObject[@"pd"];
+        success(foodDetaiDicListArr);
+    } failure:^(NSError *error) {
+        RLog(@"请求失败");
+    }];
+}
 @end

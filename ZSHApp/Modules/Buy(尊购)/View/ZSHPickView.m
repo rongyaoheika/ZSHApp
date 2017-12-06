@@ -390,7 +390,15 @@ NSInteger yearSatrt = 1900;
             }
             break;
         }
-        default:
+        default:{//其他排序
+            NSInteger index = [_pickerView selectedRowInComponent:0];
+            NSString *dateStr = [NSString stringWithFormat:@"%@",_dataArr[index]];
+            if (self.saveChangeBlock) {
+                self.saveChangeBlock(dateStr,index);
+            }
+            
+            
+        }
             break;
     }
     [self dismiss];

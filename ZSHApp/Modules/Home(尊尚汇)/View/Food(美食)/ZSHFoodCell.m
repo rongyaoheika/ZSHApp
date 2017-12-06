@@ -94,14 +94,12 @@
     
 }
 
-- (void)updateCellWithModel:(ZSHFoodModel *)model{
-    
-    [_foodImageView sd_setImageWithURL:[NSURL URLWithString:model.SHOWIMAGES]];
-    _priceLabel.text = [NSString stringWithFormat:@"¥%.0f／位",model.SHOPPRICE];
-    _foodNameLabel.text = model.SHOPNAMES;
-    _commentLabel.text = [NSString stringWithFormat:@"（%ld条评价）",(long)model.SHOPEVACOUNT];
-    _starView.scorePercent = model.SHOPEVALUATE/5.0;
-
+- (void)updateCellWithParamDic:(NSDictionary *)dic{
+    [_foodImageView sd_setImageWithURL:[NSURL URLWithString:dic[@"SHOWIMAGES"]]];
+    _priceLabel.text = [NSString stringWithFormat:@"¥%.0f／位",[dic[@"SHOPPRICE"]floatValue] ];
+    _foodNameLabel.text = dic[@"SHOPNAMES"];
+    _commentLabel.text = [NSString stringWithFormat:@"（%ld条评价）",(long)[dic[@"SHOPEVACOUNT"]integerValue] ];
+    _starView.scorePercent = [dic[@"SHOPEVALUATE"]floatValue] /5.0;
 }
 
 - (CGFloat)rowHeightWithCellModel:(ZSHFoodModel *)model{

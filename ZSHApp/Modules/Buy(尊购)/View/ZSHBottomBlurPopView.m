@@ -344,7 +344,13 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
             cell.textLabel.textColor = KZSHColor929292;
             return cell;
         };
+        
+        cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
+           
+        };
     }
+    
+    
     return sectionModel;
 }
 
@@ -388,6 +394,9 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
         cell.textLabel.textColor = KZSHColor929292;
         return cell;
     };
+    
+    
+    
     return sectionModel;
 }
 

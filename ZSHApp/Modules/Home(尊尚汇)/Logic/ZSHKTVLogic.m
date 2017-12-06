@@ -66,4 +66,16 @@
     }];
 }
 
+- (void)loadKTVSortWithParamDic:(NSDictionary *)paramDic success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail {
+    [PPNetworkHelper POST:kUrlSKtvListSequence parameters:paramDic success:^(id responseObject) {
+        
+        RLog(@"KTV排序数据==%@",responseObject)
+        NSArray *KTVDetailListArr = responseObject[@"pd"];
+        success(KTVDetailListArr);
+        
+    } failure:^(NSError *error) {
+        RLog(@"请求失败");
+    }];
+}
+
 @end

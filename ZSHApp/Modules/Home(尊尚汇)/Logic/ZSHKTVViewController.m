@@ -26,6 +26,7 @@ static NSString *ZSHHotelCellID = @"ZSHHotelCell";
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateListData:) name:KUpdateDataWithSort object:nil];
     [self createUI];
     [self loadData];
 }
@@ -90,14 +91,54 @@ static NSString *ZSHHotelCellID = @"ZSHHotelCell";
         };
         
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
-            ZSHKTVModel *KTVModel = _KTVModelArr[indexPath.row];
-            NSDictionary *nextParamDic = @{@"shopId":KTVModel.SORTKTV_ID};
+//            ZSHKTVModel *KTVModel = _KTVModelArr[indexPath.row];
+            NSDictionary *paramDic = _KTVArr[indexPath.row];
+            NSDictionary *nextParamDic = @{@"shopId":paramDic[@"SORTKTV_ID"]};
             ZSHKTVDetailViewController *KTVDetailVC = [[ZSHKTVDetailViewController alloc]initWithParamDic:nextParamDic];
             [weakself.navigationController pushViewController:KTVDetailVC animated:YES];
         };
     }
     
     return sectionModel;
+}
+
+- (void)updateListData:(NSNotification *)notification{
+    kWeakSelf(self);
+    
+    ZSHToTitleContentVC type = [notification.object[KFromClassType]integerValue];
+    if (type != FromKTVVCToTitleContentVC) {
+        return;
+    }
+    
+    //类型
+    NSString *midTitle = notification.object[@"midTitle"];
+    //行数
+    NSInteger row = [notification.object[@"row"] integerValue];
+    //行标题
+    NSString *rowTitle = notification.object[@"rowTitle"];
+    
+    NSDictionary *paramDic = nil;
+    NSArray *paramArr = nil;
+    if ([midTitle containsString:@"排序"]) {
+        //0:推荐  1：距离由近到远  2：评分由高到低 3：价格由高到低 4：价格由低到高
+        paramArr = @[@{},@{},
+                     @{@"HONOURUSER_ID":HONOURUSER_IDValue,@"COLUMN":@"SHOPEVALUATE",@"SEQUENCE":@"DESC",@"BRAND":@"",@"STYLE":@""}, @{@"HONOURUSER_ID":HONOURUSER_IDValue,@"COLUMN":@"SHOPPRICE",@"SEQUENCE":@"DESC",@"BRAND":@"",@"STYLE":@""}, @{@"HONOURUSER_ID":HONOURUSER_IDValue,@"COLUMN":@"SHOPPRICE",@"SEQUENCE":@"ASC",@"BRAND":@"",@"STYLE":@""}];
+        paramDic = paramArr[row];
+        
+    } else if ([midTitle containsString:@"品牌"]){
+        paramDic =  @{@"HONOURUSER_ID":HONOURUSER_IDValue,@"COLUMN":@"",@"SEQUENCE":@"",@"BRAND":rowTitle,@"STYLE":@""};
+        
+    } else if ([midTitle containsString:@"筛选"]){
+        paramDic =  @{@"HONOURUSER_ID":HONOURUSER_IDValue,@"COLUMN":@"",@"SEQUENCE":@"",@"BRAND":@"",@"STYLE":rowTitle};
+    }
+    
+    [_KTVLogic loadKTVSortWithParamDic:paramDic success:^(id responseObject) {
+        RLog(@"排序后的数据==%@",responseObject);
+        _KTVArr = responseObject;
+        [weakself initViewModel];
+    } fail:nil];
+    
+    
 }
 
 

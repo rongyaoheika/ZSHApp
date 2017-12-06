@@ -14,7 +14,7 @@
 @property (nonatomic, strong) NSArray <ZSHFoodModel *>    *foodListArr;
 
 //美食列表
-- (void)loadFoodListDataWithParamDic:(NSDictionary *)paramDic;
+- (void)loadFoodListDataWithParamDic:(NSDictionary *)paramDic success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail;
 
 //美食详情
 - (void)loadFoodDetailDataWithParamDic:(NSDictionary *)paramDic;
@@ -24,4 +24,7 @@
 
 //美食更多商家
 - (void)loadFoodDetailListDataWithParamDic:(NSDictionary *)paramDic success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail;
+
+//美食排序
+- (void)loadFoodSortWithParamDic:(NSDictionary *)paramDic success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail;
 @end
