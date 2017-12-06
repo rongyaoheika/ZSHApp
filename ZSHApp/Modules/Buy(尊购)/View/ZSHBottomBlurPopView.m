@@ -518,8 +518,9 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
         [confirmOrderBtn addTarget:self action:@selector(confirmBtnAction) forControlEvents:UIControlEventTouchUpInside];
         [cell.contentView addSubview:confirmOrderBtn];
         [confirmOrderBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.center.mas_equalTo(cell);
+            make.left.mas_equalTo(cell);
             make.width.and.height.mas_equalTo(cell);
+            make.bottom.mas_equalTo(cell);
         }];
        
         return cell;
@@ -937,8 +938,8 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
     ///ORDERDAYS 入住天数 /HOTELDETAIL_ID 预定房间类型id/HONOURUSER_ID 提交订单用户id
     
     NSDictionary *paramDic = @{@"ORDERUNAME":@"彩薇",@"ORDERPHONE":@"18888888888",@"ORDERREMARK":@"大房",@"ORDERMONEY":@(199),@"ORDERROOMNUM":@(1),@"ORDERCHECKDATE":@(2017-12-05),@"ORDERLEAVEDATE":@(2017-12-20)};
-    [_orderLogic requestConfirmOrderWithParamDic:paramDic Success:^(id responseObject) {
-        RLog(@"");
+    [_orderLogic requestHotelConfirmOrderWithParamDic:paramDic Success:^(id responseObject) {
+        RLog(@"确认订单数据==%@",responseObject);
     } fail:nil];
 }
 

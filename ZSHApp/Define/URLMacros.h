@@ -503,7 +503,7 @@
 //BRAND  品牌   /STYLE  类型
 //请求地址：/appshotelin/shotellistsequence.do?SORTHOTELSEQUENCE(混淆码)
 #define kUrlSHotelListSequence [NSString stringWithFormat:@"/appshotelin/shotellistsequence.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SORTHOTELSEQUENCE"]]
-//99. 根据KTV评价分数，价格，距离,品牌,类型升序或者降序排序
+//99. 根据KTV评价分数，价格，距离,品牌,类型升序或者降序排序(完成)
 //参数：HONOURUSER_ID 用户id   /COLUMN 排序字段（KTVPRICE,KTVEVALUATE）  /SEQUENCE  升序ASC降序DESC
 //BRAND  品牌   /STYLE  类型
 //请求地址：/appsktvin/sktvlistsequence.do?SORTKTVSEQUENCE(混淆码)
