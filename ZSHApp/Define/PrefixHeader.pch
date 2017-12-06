@@ -37,6 +37,7 @@
 #import "ZSHBaseFunction.h"
 #import "NSArray+Log.h"
 #import "NSDictionary+Log.h"
+#import "NSDictionary+Safe.h"
 
 //第三方
 #import <YYKit.h>

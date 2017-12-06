@@ -67,9 +67,9 @@
 #define kUrlUserRegister [NSString stringWithFormat:@"/appuserin/userregister?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"REGISTER"]]
 // 3用户登录 (完成)
 //  手机号登录
-//  参数：PHONE 手机号
+//  参数：PHONE 手机号 (暂无用)
 #define kUrlUserLoginPhone [NSString stringWithFormat:@"/appuserin/userloginphone?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"LOGIN"]]
-//  卡密登录
+//  卡密登录 （完成）
 //  参数：CARDNO 登录会员卡号/PASSWORD 登录密码
 #define kUrlUserLoginCard [NSString stringWithFormat:@"/appuserin/userlogincard?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"LOGIN"]]
 // 4获取用户收货地址列表 （完成）
@@ -538,10 +538,9 @@
 //(0040004) 为已完成订单状态
 //请求地址：/appsfoodin/foodorderalllist.do?ALLFOODORDER(混淆码)
 #define kUrlFoodOrderAllList [NSString stringWithFormat:@"/appsfoodin/foodorderalllist.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"ALLFOODORDER"]]
-//106. 用户参加别人发起的聚会(添加聚会)
+//106. 用户参加别人发起的聚会(添加聚会)（完成）
 //参数：CONVERGEDETAIL_ID    聚会详情ID/          HONOURUSER_ID 用户id
 //请求地址：/appconvergein/addotherparty.do?OTHRERPARTYADD(混淆码)
 #define kUrlAddOtherParty [NSString stringWithFormat:@"/appconvergein/addotherparty.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"OTHRERPARTYADD"]]
-
 
 #endif /* URLMacros_h */

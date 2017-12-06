@@ -14,6 +14,7 @@
 #import "ZSHTrainSearchResultController.h"
 #import "ZSHTrainModel.h"
 
+
 @interface ZSHAirPlaneViewController ()
 
 @property (nonatomic, strong) ZSHBottomBlurPopView      *bottomBlurPopView;
@@ -54,17 +55,18 @@ static NSString *ZSHBaseTicketDateCellID = @"ZSHBaseTicketDateCell";
     [self.tableView setSeparatorColor:KZSHColor1D1D1D];
     [self.tableView setSeparatorInset:UIEdgeInsetsMake(0, 0, 0, 0)];
     [self.tableView registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHTicketPlaceCellID];
-    [self.tableView registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHBaseTicketDateCellID];
+//    [self.tableView registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHBaseTicketDateCellID];
     
     [self.view addSubview:self.bottomBtn];
     [self.bottomBtn setTitle:@"开始搜索" forState:UIControlStateNormal];
     [self.bottomBtn addTarget:self action:@selector(searchTicketAction) forControlEvents:UIControlEventTouchUpInside];
-    [self.tableView reloadData];
+ 
 }
 
 - (void)initViewModel {
     [self.tableViewModel.sectionModelArray removeAllObjects];
     [self.tableViewModel.sectionModelArray addObject:[self storeListSection]];
+    [self.tableView reloadData];
 }
 
 - (ZSHBaseTableViewSectionModel*)storeListSection {
@@ -104,18 +106,23 @@ static NSString *ZSHBaseTicketDateCellID = @"ZSHBaseTicketDateCell";
             [sectionModel.cellModelArray addObject:cellModel];
             cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
                 ZSHBaseCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHBaseTicketDateCellID];
+                if (!cell) {
+                    cell = [[ZSHBaseCell alloc] initWithStyle:UITableViewCellStyleValue2
+                                              reuseIdentifier:ZSHBaseTicketDateCellID];
+                }
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
                 cell.textLabel.text = titleArr[i];
-                NSDictionary *dateLabelDic = @{@"text":valueArr[i]};
-                UILabel *dateLabel = [ZSHBaseUIControl createLabelWithParamDic:dateLabelDic];
-                dateLabel.tag = 3;
-                [cell.contentView addSubview:dateLabel];
-                [dateLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-                    make.left.mas_equalTo(cell).offset(kRealValue(100));
-                    make.height.mas_equalTo(cell);
-                    make.top.mas_equalTo(cell);
-                    make.right.mas_equalTo(cell).offset(-kRealValue(50));
-                }];
+                cell.detailTextLabel.text = valueArr[i];
+//                NSDictionary *dateLabelDic = @{@"text":valueArr[i]};
+//                UILabel *dateLabel = [ZSHBaseUIControl createLabelWithParamDic:dateLabelDic];
+//                dateLabel.tag = 3;
+//                [cell.contentView addSubview:dateLabel];
+//                [dateLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//                    make.left.mas_equalTo(cell).offset(kRealValue(100));
+//                    make.height.mas_equalTo(cell);
+//                    make.top.mas_equalTo(cell);
+//                    make.right.mas_equalTo(cell).offset(-kRealValue(50));
+//                }];
                 
                 return cell;
             };
@@ -163,6 +170,10 @@ static NSString *ZSHBaseTicketDateCellID = @"ZSHBaseTicketDateCell";
         [sectionModel.cellModelArray addObject:cellModel];
         cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
             ZSHBaseCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHBaseTicketDateCellID];
+            if (!cell) {
+                cell = [[ZSHBaseCell alloc] initWithStyle:UITableViewCellStyleValue2
+                                          reuseIdentifier:ZSHBaseTicketDateCellID];
+            }
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             cell.textLabel.text = @"出发日期";
             NSString *dateString = @"";
@@ -188,10 +199,10 @@ static NSString *ZSHBaseTicketDateCellID = @"ZSHBaseTicketDateCell";
         
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
             if (indexPath.row == 1) {//出发日期
-                self.bottomBlurPopView = [weakself createBottomBlurPopViewWith:ZSHFromAirplaneCalendarVCToBottomBlurPopView];
+                self.bottomBlurPopView = [weakself createBottomBlurPopViewWith:ZSHFromTrainCalendarVCToBottomBlurPopView];
                 weakself.bottomBlurPopView.confirmOrderBlock = ^(NSDictionary *dic) {
                     weakself.trainModel.date = dic[@"trainDate"];
-                    [weakself.tableView reloadData];
+                    [weakself initViewModel];
                 };
                 [kAppDelegate.window addSubview:self.bottomBlurPopView];
             }
@@ -202,7 +213,7 @@ static NSString *ZSHBaseTicketDateCellID = @"ZSHBaseTicketDateCell";
         [sectionModel.cellModelArray addObject:cellModel];
         cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
             ZSHBaseCell *cell = [[ZSHBaseCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                                   reuseIdentifier:ZSHBaseTicketDateCellID];
+                                                   reuseIdentifier:@"ZSHStudent"];
             NSDictionary *childBtnDic = @{@"title":@"学生票",@"font":kPingFangRegular(12),@"withImage":@(YES),@"normalImage":@"airplane_press"};
             UIButton *childBtn = [ZSHBaseUIControl createBtnWithParamDic:childBtnDic];
             [cell.contentView addSubview:childBtn];

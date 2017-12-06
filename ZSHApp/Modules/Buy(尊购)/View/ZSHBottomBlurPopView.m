@@ -41,8 +41,9 @@
 
 //确认订单
 #import "ZSHConfirmOrderLogic.h"
+#import <FSCalendar.h>
 
-@interface ZSHBottomBlurPopView ()<STCalendarDelegate>
+@interface ZSHBottomBlurPopView ()<STCalendarDelegate, FSCalendarDataSource, FSCalendarDelegate>
 
 @property (nonatomic, strong) NSDictionary           *paramDic;
 @property (nonatomic, strong) ZSHBaseModel           *model;
@@ -72,6 +73,8 @@
 //底部年龄弹出框
 @property (nonatomic, strong) ZSHAgeView            *ageView;
 @property (nonatomic, copy)   NSString              *ageRangeStr;
+
+@property (strong , nonatomic) FSCalendar *calendar;
 
 @end
 
@@ -130,10 +133,9 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
         self.model = (ZSHHotelModel *)_paramDic[@"model"];
     } else if (kFromClassTypeValue == ZSHFromKTVConfirmOrderVCToBottomBlurPopView){
         self.model = (ZSHKTVModel *)_paramDic[@"model"];
-    } else if (kFromClassTypeValue == ZSHFromAirplaneCalendarVCToBottomBlurPopView){//机票日期选择
+    } else if (kFromClassTypeValue == ZSHFromAirplaneCalendarVCToBottomBlurPopView || kFromClassTypeValue == ZSHFromTrainCalendarVCToBottomBlurPopView){//机票日期选择
         self.typeText = @"请选择出发时间";
     }
-    
     if (self.paramDic[@"typeText"]) {
         self.typeText = self.paramDic[@"typeText"];
     }
@@ -232,7 +234,32 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
         listView.tag = 2;
         [self addSubview:listView];
         return;
+    }else if (kFromClassTypeValue == ZSHFromTrainCalendarVCToBottomBlurPopView) {// 火车票
+        kWeakSelf(self);
+        [self addSubview:self.topLineView];
+        self.topLineView.backgroundColor = [UIColor whiteColor];
+        self.topLineView.frame = CGRectMake(0, kScreenHeight-364, KScreenWidth, 50);
+        self.topLineView.btnActionBlock = ^(NSInteger tag) {
+            tag == 0? [weakself dismiss]:[weakself saveChange];
+        };
+        FSCalendar *calendar = [[FSCalendar alloc] initWithFrame:CGRectMake(0, kScreenHeight-314, KScreenWidth, 314)];
+        calendar.backgroundColor = [UIColor whiteColor];
+        calendar.dataSource = self;
+        calendar.delegate = self;
+        calendar.calendarHeaderView.backgroundColor = [UIColor colorWithHexString:@"F7F7F7"];
+        calendar.appearance.weekdayTextColor = KZSHColorFD5739;
+        calendar.appearance.todayColor = KZSHColorFD5739;
+        calendar.appearance.headerTitleColor = KZSHColor929292;
+        calendar.appearance.selectionColor = KZSHColorD8D8D8;
+        calendar.appearance.headerDateFormat = @"YYYY年M月";
+        calendar.appearance.headerTitleFont  = kPingFangRegular(12);
+        calendar.headerHeight = 30.0;
+        calendar.weekdayHeight = 50.0;
+        [self addSubview:calendar];
+        self.calendar = calendar;
+        return;
     }
+    
     
     self.subTab.delegate = self.tableViewModel;
     self.subTab.dataSource = self.tableViewModel;
@@ -508,7 +535,7 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
     sectionModel.headerHeight = kRealValue(80);
     sectionModel.headerView = self.calendarHeadView;
     
-    
+    kWeakSelf(self);
     ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
     [sectionModel.cellModelArray addObject:cellModel];
     cellModel.height = kRealValue(280);
@@ -522,7 +549,7 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
         [calender returnDate:^(NSString * _Nullable stringDate) {
             NSString *labelDate  = stringDate;
             RLog(@"现在的日期==%@",labelDate);
-            _currentDateLabel.text = labelDate;
+            weakself.currentDateLabel.text = labelDate;
         }];
         
         calender.delegate = self;
@@ -719,7 +746,14 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
     
     return sectionModel;
 }
-
+#pragma mark- FSCalendarDelegate
+- (void)calendar:(FSCalendar *)calendar didSelectDate:(NSDate *)date atMonthPosition:(FSCalendarMonthPosition)monthPosition {
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    self.currentDateLabel.text = [dateFormatter stringFromDate:date];
+    
+}
 
 #pragma getter
 - (ZSHTopLineView *)topLineView{
@@ -767,6 +801,7 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
 {
     NSString *resultStr = [beginDate stringByAppendingString:endDate];
     RLog(@"选择的日期==%@",resultStr);
+    self.currentDateLabel.text = resultStr;
 }
 
 - (void)nextMonth:(UIButton *)button
@@ -866,10 +901,9 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
         if (kFromClassTypeValue == ZSHFromAirplaneCalendarVCToBottomBlurPopView) {
             preParamDic = @{@"trainDate":_currentDateLabel.text};
             
-        } else if (ZSHFromAirplaneAgeVCToBottomBlurPopView) {
-            preParamDic = @{@"ageRange":self.ageView.ageRangeStr};
+        } else if (kFromClassTypeValue == ZSHFromAirplaneAgeVCToBottomBlurPopView) {
+            preParamDic = @{@"ageRange":self.ageView.ageRangeStr, @"trainDate":_currentDateLabel.text};
         }
-        
          //保存年龄
         if (self.confirmOrderBlock) {
             self.confirmOrderBlock(preParamDic);

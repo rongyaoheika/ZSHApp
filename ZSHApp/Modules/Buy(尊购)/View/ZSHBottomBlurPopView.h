@@ -26,6 +26,7 @@ typedef NS_ENUM(NSUInteger,ZSHFromVCToBottomBlurPopView){
     ZSHFromTrainUserInfoVCToBottomBlurPopView,               //火车票个人信息-底部弹出
     ZSHFromShareVCToToBottomBlurPopView,                     //分享
     ZSHFromGoodsMineVCToToBottomBlurPopView,                 //我的—订单下拉列表
+    ZSHFromTrainCalendarVCToBottomBlurPopView,               //火车票日期选择
     ZSHFromNoneVCToBottomBlurPopView
 };
 

@@ -114,6 +114,7 @@
 		185DE3081FC01E6000720CAF /* ADPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 185DE3071FC01E6000720CAF /* ADPlayer.m */; };
 		1865D8D61FC7CD5A004170F1 /* ZSHEnterDisModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1865D8D51FC7CD5A004170F1 /* ZSHEnterDisModel.m */; };
 		186858F71FCBBD6500585CBC /* ZSHGoodDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 186858F61FCBBD6500585CBC /* ZSHGoodDetailModel.m */; };
+		1869C92F1FD78A37002F2E37 /* NSDictionary+Safe.m in Sources */ = {isa = PBXBuildFile; fileRef = 1869C92E1FD78A37002F2E37 /* NSDictionary+Safe.m */; };
 		186C8F1C1FD0FEC200B6CDB5 /* ZSHHotelOrderModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 186C8F1B1FD0FEC200B6CDB5 /* ZSHHotelOrderModel.m */; };
 		1874B9661FB99E9700059184 /* ZSHLivePersonInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1874B9651FB99E9700059184 /* ZSHLivePersonInfoView.m */; };
 		1891C1331FC6A67F000AFEFB /* ZSHBuyLogic.m in Sources */ = {isa = PBXBuildFile; fileRef = 1891C1321FC6A67F000AFEFB /* ZSHBuyLogic.m */; };
@@ -625,6 +626,8 @@
 		1865D8D51FC7CD5A004170F1 /* ZSHEnterDisModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHEnterDisModel.m; sourceTree = "<group>"; };
 		186858F51FCBBD6500585CBC /* ZSHGoodDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHGoodDetailModel.h; sourceTree = "<group>"; };
 		186858F61FCBBD6500585CBC /* ZSHGoodDetailModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHGoodDetailModel.m; sourceTree = "<group>"; };
+		1869C92D1FD78A37002F2E37 /* NSDictionary+Safe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Safe.h"; sourceTree = "<group>"; };
+		1869C92E1FD78A37002F2E37 /* NSDictionary+Safe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Safe.m"; sourceTree = "<group>"; };
 		186C8F1A1FD0FEC200B6CDB5 /* ZSHHotelOrderModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHHotelOrderModel.h; sourceTree = "<group>"; };
 		186C8F1B1FD0FEC200B6CDB5 /* ZSHHotelOrderModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHHotelOrderModel.m; sourceTree = "<group>"; };
 		1874B9641FB99E9700059184 /* ZSHLivePersonInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHLivePersonInfoView.h; sourceTree = "<group>"; };
@@ -2727,6 +2730,8 @@
 				184313461FD4E9E20046B128 /* NSDictionary+Log.m */,
 				184313471FD4E9E20046B128 /* NSString+unicode.h */,
 				184313481FD4E9E20046B128 /* NSString+unicode.m */,
+				1869C92D1FD78A37002F2E37 /* NSDictionary+Safe.h */,
+				1869C92E1FD78A37002F2E37 /* NSDictionary+Safe.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -3902,6 +3907,7 @@
 				FE443FDF1FB04FF100B7F7A5 /* ZSHMultiInfoViewController.m in Sources */,
 				1826CDB01FBAE20C00A0ECE2 /* ZSHPersonalDetailViewController.m in Sources */,
 				FE7AF2321FA307F400E1A648 /* ZSHTopLineView.m in Sources */,
+				1869C92F1FD78A37002F2E37 /* NSDictionary+Safe.m in Sources */,
 				FE55381B1F47049D00803128 /* RxWebViewController.m in Sources */,
 				FE0ED7E21FC2CC46008299C5 /* ZSHCityView.m in Sources */,
 				FE1377931F977628003C8DFB /* ZSHManageAddressViewController.m in Sources */,

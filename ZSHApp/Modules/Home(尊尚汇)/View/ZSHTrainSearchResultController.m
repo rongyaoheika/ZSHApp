@@ -35,7 +35,7 @@ static NSString *ZSHTrainTicketListCellID = @"ZSHTrainTicketListCellID";
 - (void)loadData{
     _trainLogic = [[ZSHTrainLogic alloc] init];
     [self initViewModel];
-    [self requestData];
+//    [self requestData];
 }
 
 - (void)createUI{

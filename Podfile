@@ -12,5 +12,6 @@ pod 'SDWebImage',    '~>3.8'
 pod 'MJExtension'
 pod 'IQKeyboardManager'
 pod 'TZImagePickerController'
+pod 'FSCalendar'
 
 end
