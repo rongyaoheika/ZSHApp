@@ -837,7 +837,7 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
         [self removeFromSuperview];
         [self setHidden:YES];
         
-        ZSHWeiboViewController *weiboVC = [[ZSHWeiboViewController alloc]initWithParamDic:@{KFromClassType:@(FromPersonalVCToWeiboVC)}];
+        ZSHWeiboViewController *weiboVC = [[ZSHWeiboViewController alloc]initWithParamDic:@{KFromClassType:@(FromSelectToWeiboVC)}];
         [[kAppDelegate getCurrentUIVC].navigationController pushViewController:weiboVC animated:YES];
     }];
 }

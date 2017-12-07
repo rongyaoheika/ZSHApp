@@ -40,7 +40,7 @@
         [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.edges.mas_equalTo(self.view);
         }];
-    } else if (kFromClassTypeValue == FromTabbarToWeiboVC) {
+    } else if (kFromClassTypeValue == FromTabbarToWeiboVC ||kFromClassTypeValue == FromSelectToWeiboVC) {
         [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.mas_equalTo(self.view).insets(UIEdgeInsetsMake(KNavigationBarHeight, 0, 0, 0));
         }];
