@@ -29,9 +29,9 @@
                         @"ZSHCoinViewController",
                         @"ZSHFollowViewController"];
     self.paramArr = @[
-                      @{KFromClassType:@(FromHorseVCToFollowVC),@"title":@"关注"},
+                      @{KFromClassType:@(FromHorseVCToFollowVC),@"title":@"关注", @"follow":@"0"},
                       @{},
-                      @{KFromClassType:@(FromShipVCToFollowVC),@"title":@"粉丝"}];
+                      @{KFromClassType:@(FromShipVCToFollowVC),@"title":@"粉丝", @"follow":@"1"}];
     
     UIImageView *headImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"weibo_head_image"]];
     headImageView.layer.cornerRadius = kRealValue(50)/2;

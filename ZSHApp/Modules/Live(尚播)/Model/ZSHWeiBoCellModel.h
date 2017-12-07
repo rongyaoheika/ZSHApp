@@ -10,10 +10,19 @@
 
 @interface ZSHWeiBoCellModel : ZSHBaseModel
 
-@property (nonatomic,copy)  NSString *avatarPicture;
-@property (nonatomic,copy)  NSString *name;
-@property (nonatomic,copy)  NSString *detailText;
-@property (nonatomic,copy)  NSString *detailPicture;
+@property (nonatomic, copy)  NSString *avatarPicture;
+@property (nonatomic, copy)  NSString *name;
+@property (nonatomic, copy)  NSString *detailText;
+@property (nonatomic, copy)  NSString *detailPicture;
+
+
+@property (nonatomic, copy) NSString *dotAgreeCount;
+@property (nonatomic, copy) NSString *CIRCLE_ID;
+@property (nonatomic, copy) NSString *HONOURUSER_ID;
+@property (nonatomic, copy) NSString *CONTENT;
+@property (nonatomic, copy) NSString *PUBLISHTIME;
+@property (nonatomic, copy) NSString *SHOWIMAGES;
+@property (nonatomic, copy) NSString *commentCount;
 
 //子控件的可变frame（根据内容显示不同，frame变化）
 //@property (nonatomic,assign)  CGRect  avatarFrame;

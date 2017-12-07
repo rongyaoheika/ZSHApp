@@ -17,4 +17,7 @@ typedef NS_ENUM(NSUInteger,ZSHFromVCToWeiBoCell){
 
 @interface ZSHWeiBoCell : ZSHBaseCell
 
+
+- (CGFloat)getCellHeightWithModel:(ZSHWeiBoCellModel *)model;
+
 @end

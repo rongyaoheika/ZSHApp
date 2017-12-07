@@ -69,4 +69,29 @@
     }];
 }
 
+
+// 添加朋友
+- (void)requestAddFriendWithReHonouruserID:(NSString *)reHonouruserID success:(void (^)(id response))success {
+    [PPNetworkHelper POST:kUrlAddFriend parameters:@{@"HONOURUSER_ID":@"d6a3779de8204dfd9359403f54f7d27c", @"REHONOURUSER_ID":reHonouruserID} success:^(id responseObject) {
+        RLog(@"%@",responseObject);
+        //responseObject[@"pd"];
+        success(nil);
+        
+    } failure:^(NSError *error) {
+        RLog(@"%@", error);
+    }];
+}
+
+// 删除好友
+- (void)requestDelFriendWithReHonouruserID:(NSString *)reHonouruserID success:(void (^)(id response))success {
+    [PPNetworkHelper POST:kUrlDelFriend parameters:@{@"HONOURUSER_ID":@"d6a3779de8204dfd9359403f54f7d27c", @"REHONOURUSER_ID":@"382890302907613184"} success:^(id responseObject) {
+        RLog(@"%@",responseObject);
+        //responseObject[@"pd"];
+        success(nil);
+        
+    } failure:^(NSError *error) {
+        RLog(@"%@", error);
+    }];
+}
+
 @end

@@ -7,7 +7,10 @@
 //
 
 #import "ZSHBaseView.h"
+#import "ZSHWeiBoCellModel.h"
 
 @interface ZSHWeiBoBottomView : ZSHBaseView
+
+- (void)updateCellWithModel:(ZSHWeiBoCellModel *)model;
 
 @end

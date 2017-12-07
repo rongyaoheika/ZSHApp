@@ -7,6 +7,7 @@
 //
 
 #import "ZSHFollowCell.h"
+#import "ZSHFriendListModel.h"
 
 @interface ZSHFollowCell()
 
@@ -22,6 +23,8 @@
 - (void)setup {
     
     _headImageView = [[UIImageView alloc] init];
+    _headImageView.layer.cornerRadius = 20.0;
+    _headImageView.layer.masksToBounds = true;
     [self addSubview:_headImageView];
     
     NSDictionary *nicknameLabelDic = @{@"text":@"吃喝玩乐区",@"font":kPingFangRegular(14),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentLeft)};
@@ -67,4 +70,13 @@
     [self layoutIfNeeded];
     
 }
+
+
+- (void)updateCellWithModel:(ZSHFriendListModel *)model {
+    [_headImageView sd_setImageWithURL:[NSURL URLWithString:model.PORTRAIT]];
+    _nicknameLabel.text = model.NICKNAME;
+    _valueLabel.text = [NSString stringWithFormat:@"粉丝数：%@", model.FANSCOUNT];
+    [self layoutIfNeeded];
+}
+
 @end

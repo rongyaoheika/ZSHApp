@@ -12,7 +12,9 @@
 
 @implementation ZSHLivePersonInfoView
 
-
+- (void)setup {
+    _togetherLogic = [[ZSHTogetherLogic alloc] init];
+}
 
 
 - (void)drawRect:(CGRect)rect {
@@ -99,11 +101,15 @@
     
     
     //
-    NSDictionary *addFriendBtnDic = @{@"title":@"",@"titleColor":KZSHColorFF2068,@"font":kPingFangMedium(17),@"backgroundColor":KZSHColorFF2068,@"withImage":@"1",@"normalImage":@"room_image_1"};
+    NSDictionary *addFriendBtnDic = @{@"title":@"",@"titleColor":KZSHColorFF2068,@"font":kPingFangMedium(17),@"backgroundColor":KZSHColorFF2068};
     UIButton *addFriendBtn = [ZSHBaseUIControl createBtnWithParamDic:addFriendBtnDic];
     addFriendBtn.layer.cornerRadius = 15.0;
     addFriendBtn.layer.masksToBounds = true;
+    [addFriendBtn setImage:[UIImage imageNamed:@"room_unfollow"] forState:UIControlStateNormal];
+    [addFriendBtn setImage:[UIImage imageNamed:@"room_follow"] forState:UIControlStateSelected];
+    [addFriendBtn addTarget:self action:@selector(addFriendAction:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:addFriendBtn];
+    self.addFriendBtn = addFriendBtn;
     [addFriendBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.mas_equalTo(self);
         make.bottom.mas_equalTo(self).offset(kRealValue(-20));
@@ -117,5 +123,22 @@
         [[kAppDelegate getCurrentUIVC].navigationController pushViewController:vc animated:YES];
     }];
 }
+
+
+- (void)addFriendAction:(UIButton *)btn {
+    
+    kWeakSelf(self);
+    if (_addFriendBtn.selected) {
+        [_togetherLogic requestDelFriendWithReHonouruserID:@"382890302907613184" success:^(id response) {
+            weakself.addFriendBtn.selected = false;
+        }];
+    } else {
+        [_togetherLogic requestAddFriendWithReHonouruserID:@"382890302907613184" success:^(id response) {
+            weakself.addFriendBtn.selected = true;
+        }];
+    }
+    
+}
+
 
 @end

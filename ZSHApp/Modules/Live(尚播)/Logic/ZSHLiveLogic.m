@@ -1,0 +1,61 @@
+
+//
+//  ZSHLiveLogic.m
+//  ZSHApp
+//
+//  Created by apple on 2017/12/7.
+//  Copyright © 2017年 apple. All rights reserved.
+//
+
+#import "ZSHLiveLogic.h"
+
+@implementation ZSHLiveLogic
+
+// 关注
+- (void)requestFriendList:(void (^)(id response))success {
+    kWeakSelf(self);
+    [PPNetworkHelper POST:kUrlFriendList parameters:@{@"HONOURUSER_ID":@"d6a3779de8204dfd9359403f54f7d27c"} success:^(id responseObject) {
+        weakself.friendListModelArr = [ZSHFriendListModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"]];
+        RLog(@"%@",responseObject);
+        success(nil);
+    } failure:^(NSError *error) {
+        RLog(@"%@", error);
+    }];
+}
+
+// 粉丝
+- (void)requestReFriendList:(void (^)(id response))success {
+    kWeakSelf(self);
+    [PPNetworkHelper POST:kUrlRefriendList parameters:@{@"HONOURUSER_ID":@"d6a3779de8204dfd9359403f54f7d27c"} success:^(id responseObject) {
+        weakself.friendListModelArr = [ZSHFriendListModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"]];
+        RLog(@"%@",responseObject);
+        success(nil);
+    } failure:^(NSError *error) {
+        RLog(@"%@", error);
+    }];
+}
+
+// 发布内容到我的圈子
+- (void)requestAddCircle:(NSDictionary *)dic success:(void (^)(id response))success {
+    [PPNetworkHelper POST:kUrlAddCircle parameters:dic success:^(id responseObject) {
+        success(responseObject);
+    } failure:^(NSError *error) {
+        RLog(@"%@", error);
+    }];
+}
+
+
+// 获取我和我关注的好友的所有圈子并根据时间排序
+- (void)requestCircleList:(void (^)(id response))success {
+    kWeakSelf(self);
+    [PPNetworkHelper POST:kUrlCircleList parameters:@{@"HONOURUSER_ID":@"d6a3779de8204dfd9359403f54f7d27c"} success:^(id responseObject) {
+        weakself.weiboCellModelArr = [ZSHWeiBoCellModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"]];
+        success(weakself.weiboCellModelArr);
+    } failure:^(NSError *error) {
+        RLog(@"%@", error);
+    }];
+}
+
+
+
+@end

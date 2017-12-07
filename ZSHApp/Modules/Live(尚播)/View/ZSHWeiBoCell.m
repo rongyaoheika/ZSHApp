@@ -44,8 +44,6 @@
     self.detailLabel = [ZSHBaseUIControl createLabelWithParamDic:detailLabelDic];
     self.detailLabel.numberOfLines = 0;
     [self.detailLabel setLineBreakMode:NSLineBreakByWordWrapping];
-    
-    
     [self.contentView addSubview:self.detailLabel];
     
     self.detailImageView = [[UIImageView alloc]init];
@@ -107,13 +105,13 @@
 
 - (void)updateCellWithModel:(ZSHWeiBoCellModel *)model{
     //子控件数据的更新
-    [self.avatarImageView setImage:[UIImage imageNamed:model.avatarPicture]];
-    [self.nameLabel setText:model.name];
-    [self.detailLabel setText:model.detailText];
+    [self.avatarImageView sd_setImageWithURL:[NSURL URLWithString:model.SHOWIMAGES]];
+//    [self.nameLabel setText:model.name];
+    [self.detailLabel setText:model.CONTENT];
+    self.dateLabel.text = model.PUBLISHTIME;
+    CGSize detailLabelSize = [model.CONTENT boundingRectWithSize:CGSizeMake(kScreenWidth-kRealValue(30), MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:self.detailLabel.font,NSForegroundColorAttributeName:KZSHColor929292} context:nil].size;
     
-    CGSize detailLabelSize = [model.detailText boundingRectWithSize:CGSizeMake(kScreenWidth-kRealValue(30), MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:self.detailLabel.font,NSForegroundColorAttributeName:KZSHColor929292} context:nil].size;
-    
-    if (!model.detailText.length) {
+    if ([model.CONTENT isEqualToString:@""]) {
         [self.detailLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.top.mas_equalTo(self.avatarImageView.mas_bottom).offset(kRealValue(17.5));
             make.left.mas_equalTo(self.avatarImageView);
@@ -123,8 +121,8 @@
     } else {
         NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
         [paragraphStyle setLineSpacing:5];
-        NSString *detailStr = model.detailText;
-        NSMutableAttributedString *setString = [[NSMutableAttributedString alloc] initWithString: model.detailText];
+        NSString *detailStr = model.CONTENT;
+        NSMutableAttributedString *setString = [[NSMutableAttributedString alloc] initWithString: model.CONTENT];
         [setString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, [detailStr length])];
         [self.detailLabel setAttributedText:setString];
 
@@ -135,29 +133,41 @@
             make.right.mas_equalTo(self).offset(-kRealValue(15));
         }];
     }
-    [self.detailImageView setImage:[UIImage imageNamed:model.detailPicture]];
-    if (!model.detailPicture) {
+    if ([model.SHOWIMAGES isEqualToString:@""]) {
         [self.detailImageView mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.top.mas_equalTo(self.detailLabel.mas_bottom);
             make.left.mas_equalTo(self.avatarImageView);
             make.height.mas_equalTo(0);
             make.width.mas_equalTo(0);
         }];
+    } else {
+        [self.detailImageView sd_setImageWithURL:[NSURL URLWithString:model.SHOWIMAGES]];
     }
 
     [self layoutIfNeeded];
+    [_bottomView updateCellWithModel:model];
 }
 
 - (void)updateCellWithParamDic:(NSDictionary *)dic{
     self.paramDic  = dic;
 }
 
-+ (CGFloat)getCellHeightWithModel:(ZSHWeiBoCellModel *)model{
-    ZSHWeiBoCell *cell = [[ZSHWeiBoCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:NSStringFromClass([ZSHWeiBoCell class])];
-    [cell updateCellWithModel:model];
+- (CGFloat)getCellHeightWithModel:(ZSHWeiBoCellModel *)model{
+//    ZSHWeiBoCell *cell = [[ZSHWeiBoCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:NSStringFromClass([ZSHWeiBoCell class])];
+//    [cell updateCellWithModel:model];
     
-    RLog(@"控件的高度==%f ==%f  ==%f  ==%f",CGRectGetMaxY(cell.detailImageView.frame),CGRectGetMaxY(cell.detailLabel.frame),CGRectGetMaxY(cell.bottomView.frame),CGRectGetHeight(cell.bottomView.frame));
-    return (CGRectGetMaxY(cell.bottomView.frame));
+    
+    CGSize detailLabelSize = [model.CONTENT boundingRectWithSize:CGSizeMake(kScreenWidth-kRealValue(30), MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:self.detailLabel.font,NSForegroundColorAttributeName:KZSHColor929292} context:nil].size;
+    
+    if (![model.SHOWIMAGES isEqualToString:@""]) {
+        return 67.5+detailLabelSize.height+10.0+100+18.5+22;
+    } else {
+        return 67.5+detailLabelSize.height+10.0+18.5+22;
+    }
+    
+    
+//    RLog(@"控件的高度==%f ==%f  ==%f  ==%f",CGRectGetMaxY(cell.detailImageView.frame),CGRectGetMaxY(cell.detailLabel.frame),CGRectGetMaxY(cell.bottomView.frame),CGRectGetHeight(cell.bottomView.frame));
+//    return (CGRectGetMaxY(cell.bottomView.frame));
 }
 
 

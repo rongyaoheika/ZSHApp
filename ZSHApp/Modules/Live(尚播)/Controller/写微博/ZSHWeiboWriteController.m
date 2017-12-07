@@ -1,13 +1,12 @@
 //
-//  ZSHDetailDemandViewController.m
+//  ZSHWeiboWriteController.m
 //  ZSHApp
 //
-//  Created by Apple on 2017/11/9.
+//  Created by apple on 2017/12/7.
 //  Copyright © 2017年 apple. All rights reserved.
 //
 
-#import "ZSHDetailDemandViewController.h"
-#import "XXTextView.h"
+#import "ZSHWeiboWriteController.h"
 #import <TZImageManager.h>
 #import "LxGridViewFlowLayout.h"
 #import <AssetsLibrary/AssetsLibrary.h>
@@ -18,10 +17,10 @@
 #import <UIView+Layout.h>
 #import <TZGifPhotoPreviewController.h>
 #import <TZVideoPlayerController.h>
-#import "ZSHEnterDisModel.h"
-#import "ZSHTogetherLogic.h"
+#import "XXTextView.h"
+#import "ZSHLiveLogic.h"
 
-@interface ZSHDetailDemandViewController ()<TZImagePickerControllerDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+@interface ZSHWeiboWriteController ()<TZImagePickerControllerDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 {
     NSMutableArray *_selectedPhotos;
     NSMutableArray *_selectedAssets;
@@ -32,14 +31,13 @@
 }
 @property (nonatomic, strong) UIImagePickerController        *imagePickerVc;
 @property (strong, nonatomic) UICollectionViewFlowLayout     *layout;
-@property (strong, nonatomic) CLLocation                     *location;
 
-@property (nonatomic, strong) XXTextView                     *titleTextView;
-@property (nonatomic, strong) XXTextView                     *contentTextView;
+@property (nonatomic, strong) ZSHLiveLogic *liveLogic;
+@property (nonatomic, strong) XXTextView *contentTextView;
 
 @end
 
-@implementation ZSHDetailDemandViewController
+@implementation ZSHWeiboWriteController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -47,56 +45,33 @@
     [self createUI];
 }
 
-- (void)loadData{
-    
+- (void)loadData {
+    _liveLogic = [[ZSHLiveLogic alloc] init];
     _selectedPhotos = [NSMutableArray array];
     _selectedAssets = [NSMutableArray array];
-    
-    [self initViewModel];
 }
 
-- (void)createUI{
-    self.title = @"详细要求";
+- (void)createUI {
+    self.title = @"发微博";
+    [self addNavigationItemWithTitles:@[@"取消"] isLeft:true target:self action:@selector(cancelAction) tags:@[@(1)]];
+    [self addNavigationItemWithTitles:@[@"去发布"] isLeft:NO target:self action:@selector(distributeAction) tags:@[@(2)]];
     
-    [self addNavigationItemWithTitles:@[@"保存"] isLeft:NO target:self action:@selector(saveAction) tags:@[@(1)]];
-    
-    
-    _titleTextView = [[XXTextView alloc] init];
-    _titleTextView.backgroundColor = KZSHColor181818;
-    _titleTextView.textColor = [UIColor whiteColor];
-    _titleTextView.textContainerInset = UIEdgeInsetsMake(10, 10, 10, 10);
-    _titleTextView.font = [UIFont systemFontOfSize:15];
-    _titleTextView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
-    ZSHEnterDisModel *model = self.paramDic[@"EnterDisModel"];
-    _titleTextView.text = model.CONVERGETITLE;
-    _titleTextView.xx_placeholder = @"标题";
-    _titleTextView.xx_placeholderFont = [UIFont systemFontOfSize:15];
-    _titleTextView.xx_placeholderColor = KZSHColor454545;
-    [self.view addSubview:_titleTextView];
-    [_titleTextView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.view).offset(kRealValue(79));
-        make.left.mas_equalTo(self.view).offset(kRealValue(15));
-        make.right.mas_equalTo(self.view).offset(kRealValue(-15));
-        make.height.mas_equalTo(kRealValue(43.5));
+    XXTextView *contentTextView = [[XXTextView alloc] init];
+    contentTextView.backgroundColor = KZSHColor181818;
+    contentTextView.textColor = [UIColor whiteColor];
+    contentTextView.font = [UIFont systemFontOfSize:15];
+    contentTextView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
+    contentTextView.keyboardAppearance = UIKeyboardAppearanceDark;
+    contentTextView.xx_placeholder = @"请输入内容";
+    contentTextView.xx_placeholderFont = [UIFont systemFontOfSize:15];
+    contentTextView.xx_placeholderColor = KZSHColor454545;
+    [self.view addSubview:contentTextView];
+    [contentTextView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(self.view).offset(kRealValue(KLeftMargin+KNavigationBarHeight));
+        make.left.mas_equalTo(self.view).offset(kRealValue(KLeftMargin));
+        make.size.mas_equalTo(CGSizeMake(KScreenWidth-30, kRealValue(177)));
     }];
-    
-    _contentTextView = [[XXTextView alloc] init];
-    _contentTextView.backgroundColor = KZSHColor181818;
-    _contentTextView.textColor = [UIColor whiteColor];
-    _contentTextView.textContainerInset = UIEdgeInsetsMake(10, 10, 10, 10);
-    _contentTextView.font = [UIFont systemFontOfSize:15];
-    _contentTextView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
-    _contentTextView.text = model.CONVERGEDET;
-    _contentTextView.xx_placeholder = @"请输入内容";
-    _contentTextView.xx_placeholderFont = [UIFont systemFontOfSize:15];
-    _contentTextView.xx_placeholderColor = KZSHColor454545;
-    [self.view addSubview:_contentTextView];
-    [_contentTextView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.view).offset(kRealValue(123));
-        make.left.mas_equalTo(self.view).offset(kRealValue(15));
-        make.right.mas_equalTo(self.view).offset(kRealValue(-15));
-        make.height.mas_equalTo(kRealValue(144));
-    }];
+    self.contentTextView = contentTextView;
     
     UILabel *noticeLabel = [ZSHBaseUIControl createLabelWithParamDic:@{@"text":@"最多支持4张图片上传，点击删除图片",@"font":kPingFangRegular(11),@"textColor":KZSHColor454545,@"textAlignment":@(NSTextAlignmentLeft)}];
     [self.view addSubview:noticeLabel];
@@ -105,10 +80,27 @@
         make.left.mas_equalTo(self.view).offset(kRealValue(25));
         make.size.mas_equalTo(CGSizeMake(kRealValue(200), kRealValue(15)));
     }];
-
+    
     [self configCollectionView];
+    
+}
+- (void)toolButtonAction:(UIBarButtonItem *)btn {
+    
 }
 
+
+- (void)distributeAction {
+    if (_contentTextView.text.length) {
+        [_liveLogic requestAddCircle:@{@"HONOURUSER_ID":@"d6a3779de8204dfd9359403f54f7d27c", @"CONTENT":_contentTextView.text, @"SHOWIMAGES":@""} success:^(id response) {
+        }];
+    }
+}
+
+- (void)cancelAction {
+    [self.navigationController popViewControllerAnimated:true];
+}
+
+#pragma mark - 选择图片
 - (void)configCollectionView {
     // 如不需要长按排序效果，将LxGridViewFlowLayout类改成UICollectionViewFlowLayout即可
     _layout = [[UICollectionViewFlowLayout alloc] init];
@@ -272,14 +264,14 @@
 #pragma mark - TZImagePickerController
 
 - (void)pushTZImagePickerController {
-
+    
     TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:4 columnNumber:4 delegate:self pushPhotoPickerVc:YES];
     // imagePickerVc.navigationBar.translucent = NO;
     
 #pragma mark - 五类个性化设置，这些参数都可以不传，此时会走默认设置
     imagePickerVc.isSelectOriginalPhoto = _isSelectOriginalPhoto;
     
-
+    
     imagePickerVc.selectedAssets = _selectedAssets; // 目前已经选中的图片数组
     imagePickerVc.allowTakePicture = YES; // 在内部显示拍照按钮
     
@@ -409,12 +401,12 @@
 // 调用相机
 - (void)pushImagePickerController {
     // 提前定位
-    __weak typeof(self) weakSelf = self;
-    [[TZLocationManager manager] startLocationWithSuccessBlock:^(CLLocation *location, CLLocation *oldLocation) {
-        weakSelf.location = location;
-    } failureBlock:^(NSError *error) {
-        weakSelf.location = nil;
-    }];
+//    __weak typeof(self) weakSelf = self;
+//    [[TZLocationManager manager] startLocationWithSuccessBlock:^(CLLocation *location, CLLocation *oldLocation) {
+//        weakSelf.location = location;
+//    } failureBlock:^(NSError *error) {
+//        weakSelf.location = nil;
+//    }];
     
     UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypeCamera;
     if ([UIImagePickerController isSourceTypeAvailable: UIImagePickerControllerSourceTypeCamera]) {
@@ -438,7 +430,7 @@
         UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
         
         // save photo and get asset / 保存图片，获取到asset
-        [[TZImageManager manager] savePhotoWithImage:image location:self.location completion:^(NSError *error){
+        [[TZImageManager manager] savePhotoWithImage:image location:nil completion:^(NSError *error){
             if (error) {
                 [tzImagePickerVc hideProgressHUD];
                 NSLog(@"图片保存失败 %@",error);
@@ -635,17 +627,5 @@
     }
 }
 
-#pragma action
-- (void)saveAction {
-    if (_titleTextView.text.length && _contentTextView.text.length) {
-        ZSHEnterDisModel *model = self.paramDic[@"EnterDisModel"];
-        model.CONVERGETITLE = _titleTextView.text;
-        model.CONVERGEDET = _contentTextView.text;
-        if (_saveBlock) {
-            _saveBlock(model);
-        }
-        [self.navigationController popViewControllerAnimated:true];
-    }
-}
 
 @end

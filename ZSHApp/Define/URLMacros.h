@@ -23,8 +23,8 @@
  */
 
 #define DevelopSever    0
-#define TestSever       0
-#define ProductSever    1
+#define TestSever       1
+#define ProductSever    0
 
 
 #if DevelopSever
@@ -513,10 +513,10 @@
 //BRAND  品牌   /STYLE  类型
 //请求地址：/appsbarin/sbarlistsequence.do?SORTBARSEQUENCE(混淆码)
 #define kUrlSbarListSequence [NSString stringWithFormat:@"/appsbarin/sbarlistsequence.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SORTBARSEQUENCE"]]
-//101. 首页杂志（完成）
+//101. 首页杂志（完成）(删除 108新增)
 //参数：无
 //请求地址：/apphomein/magazinelist?MAGAZINE(混淆码)
-#define kUrlMagazineList [NSString stringWithFormat:@"/apphomein/magazinelist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"MAGAZINE"]]
+//#define kUrlMagazineList [NSString stringWithFormat:@"/apphomein/magazinelist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"MAGAZINE"]]
 //102. 获得美食套餐页列表（完成）
 //参数：SORTFOOD_ID  所属美食店铺ID
 //请求地址：/appsfoodin/fooddetaillist.do?FOODDETAIL(混淆码)
@@ -542,5 +542,49 @@
 //参数：CONVERGEDETAIL_ID    聚会详情ID/          HONOURUSER_ID 用户id
 //请求地址：/appconvergein/addotherparty.do?OTHRERPARTYADD(混淆码)
 #define kUrlAddOtherParty [NSString stringWithFormat:@"/appconvergein/addotherparty.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"OTHRERPARTYADD"]]
+
+//107.添加关注（加好友功能）(完成)
+//参数：HONOURUSER_ID 关注人ID/        REHONOURUSER_ID 被关注人ID
+//请求地址：/appfriendin/addfriend?FRIENDADD(混淆码)
+#define kUrlAddFriend [NSString stringWithFormat:@"/appfriendin/addfriend?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"FRIENDADD"]]
+//108.获得首页荣耀杂志推荐接口
+//参数：无
+//请求地址：/apphomein/magazinelist?MAGAZINE(混淆码)
+#define kUrlMagazineList [NSString stringWithFormat:@"/apphomein/magazinelist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"MAGAZINE"]]
+//109.获取我关注的好友的列表接口（完成）
+//参数：HONOURUSER_ID  查询的用户Id
+//请求地址：/appfriendin/friendlist?FLIST (混淆码)
+#define kUrlFriendList [NSString stringWithFormat:@"/appfriendin/friendlist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"FLIST"]]
+//110.获取关注我的好友的列表接口（完成）
+//参数：HONOURUSER_ID  查询的用户Id
+//请求地址：/appfriendin/refriendlist?REFLIST(混淆码)
+#define kUrlRefriendList [NSString stringWithFormat:@"/appfriendin/refriendlist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"REFLIST"]]
+//111.删除我关注的好友接口（取消关注）（完成）
+//参数：HONOURUSER_ID 当前登录用户Id/    REHONOURUSER_ID  被取消用户Id
+//请求地址：/appfriendin/delfriend?FRIENDDEL(混淆码)
+#define kUrlDelFriend [NSString stringWithFormat:@"/appfriendin/delfriend?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"FRIENDDEL"]]
+//112.获取发现中所有的菜单项
+//参数：无
+//请求地址：/appdiscoverin/caidan.do?CAIDAN(混淆码)
+#define kUrlCaidan [NSString stringWithFormat:@"/appdiscoverin/caidan.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"CAIDAN"]]
+//113.根据发现菜单ID获取视频和图片
+//参数：CAIDAN_ID 所属的菜单Id
+//请求地址：/appdiscoverin/discoverlist.do?DISCOVERLIST(混淆码)
+#define kUrlDiscoverList [NSString stringWithFormat:@"/appdiscoverin/discoverlist.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"DISCOVERLIST"]]
+//114.查询所有美食,酒店,KTV,酒吧品牌或者类型
+//参数：TYPE  (0代表品牌，1代表筛选)          SORTNAME  (0代表美食，1酒店，2KTV，3酒吧)
+//请求地址：/appsfoodin/brandstylelist.do?BRANDLIST(混淆码)
+#define kUrlBrandstyleList [NSString stringWithFormat:@"/appsfoodin/brandstylelist.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"BRANDLIST"]]
+//115.发布内容到我的圈子
+//参数：HONOURUSER_ID 用户的Id/    CONTENT   发布的内容/    SHOWIMAGES  上传的图片（参数可选）
+//请求地址：/appcirclein/addcircle.do?CIRCLEADD(混淆码)
+#define kUrlAddCircle [NSString stringWithFormat:@"/appcirclein/addcircle.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"CIRCLEADD"]]
+//116.获取我和我关注的好友的所有圈子并根据时间排序
+//参数：HONOURUSER_ID 用户的Id
+//请求地址：/appcirclein/circlelist.do?CIRCLELIST(混淆码)
+#define kUrlCircleList [NSString stringWithFormat:@"/appcirclein/circlelist.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"CIRCLELIST"]]
+
+
+
 
 #endif /* URLMacros_h */

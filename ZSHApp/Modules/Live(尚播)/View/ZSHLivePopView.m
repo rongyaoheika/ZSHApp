@@ -53,7 +53,7 @@
 
 #pragma getter
 - (void)clickButton:(NSInteger)index {
-    NSArray *VCS = @[@"ZSHWeiboViewController",@"ZSHVideoViewController",@"ZSHPersonalDetailViewController"];
+    NSArray *VCS = @[@"ZSHWeiboWriteController",@"ZSHVideoViewController",@"ZSHPersonalDetailViewController"];
     NSArray *fromclassTypes = @[@(FromTabbarToWeiboVC),@(FromTabbarToVideoVC), @(FromTabbarToPersonalDetailVC)];
     Class className = NSClassFromString(VCS[index-1]);
     RootViewController *vc =  [[className alloc] initWithParamDic:@{KFromClassType:fromclassTypes[index-1]}];

@@ -8,6 +8,8 @@
 
 #import "ZSHEntertainmentHeadView.h"
 #import "ZSHEntertainmentModel.h"
+#import "ZSHTogetherLogic.h"
+
 @interface ZSHEntertainmentHeadView()
 
 @property (nonatomic, strong) UIImageView         *avatarImageView;
@@ -15,12 +17,16 @@
 @property (nonatomic, strong) UILabel             *nameLabel;
 @property (nonatomic, strong) UILabel             *detailLabel;
 @property (nonatomic, strong) UIButton            *addFriendBtn;
+@property (nonatomic, strong) ZSHTogetherLogic    *togetherLogic;
+@property (nonatomic, copy)   NSString            *HONOURUSER_ID;
 
 @end
 
 @implementation ZSHEntertainmentHeadView
 
 - (void)setup{
+    
+    _togetherLogic = [[ZSHTogetherLogic alloc] init];
     
     //头像
     self.avatarImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"weibo_head_image"]];
@@ -50,6 +56,7 @@
     _addFriendBtn.layer.cornerRadius = kRealValue(7.0);
     _addFriendBtn.layer.borderColor = KZSHColor929292.CGColor;
     _addFriendBtn.layer.borderWidth = 0.5;
+    [_addFriendBtn addTarget:self action:@selector(addFriendAction) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:_addFriendBtn];
 }
 
@@ -97,8 +104,18 @@
     if (model.gender) {
         
     }
-    
+    _HONOURUSER_ID = model.HONOURUSER_ID;
     _detailLabel.text = [NSString stringWithFormat:@"%.1fkm %ld岁%@",model.distance,model.age,model.constellation];
+}
+
+- (void)addFriendAction {
+    [_togetherLogic requestAddFriendWithReHonouruserID:_HONOURUSER_ID success:^(id response) {
+        UIAlertController *ac = [UIAlertController alertControllerWithTitle:@"提示" message:@"添加成功" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        }];
+        [ac addAction:cancelAction];
+        [[kAppDelegate getCurrentUIVC].navigationController presentViewController:ac animated:YES completion:nil];
+    }];
 }
 
 

@@ -29,4 +29,9 @@
 - (void)requestAddDetailParty:(NSDictionary *)dic success:(void(^)(id response))success;
 // 加入聚会
 - (void)requestAddOtherPartyWithConvergeDetailID:(NSString *)convergeDetailID success:(void(^)(id response))success;
+// 添加朋友
+- (void)requestAddFriendWithReHonouruserID:(NSString *)reHonouruserID success:(void (^)(id response))success;
+// 删除好友
+- (void)requestDelFriendWithReHonouruserID:(NSString *)reHonouruserID success:(void (^)(id response))success;
+
 @end

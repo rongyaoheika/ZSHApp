@@ -9,10 +9,12 @@
 #import "ZSHWeiboViewController.h"
 #import "ZSHWeiBoCell.h"
 #import "ZSHWeiBoCellModel.h"
+#import "ZSHLiveLogic.h"
 
 @interface ZSHWeiboViewController ()
 
-@property (nonatomic,strong)NSArray *dataArr;
+@property (nonatomic, strong) NSArray           *dataArr;
+@property (nonatomic, strong) ZSHLiveLogic      *liveLogic;
 
 @end
 
@@ -26,8 +28,11 @@
 }
 
 - (void)loadData{
-    self.dataArr = [ZSHWeiBoCellModel mj_objectArrayWithFilename:@"cellData.plist"];
+//    self.dataArr = [ZSHWeiBoCellModel mj_objectArrayWithFilename:@"cellData.plist"];
+    _dataArr = [NSArray array];
+    _liveLogic = [[ZSHLiveLogic alloc] init];
     [self initViewModel];
+    [self requestData];
 }
 
 - (void)createUI{
@@ -52,12 +57,13 @@
     self.tableView.delegate = self.tableViewModel;
     self.tableView.dataSource = self.tableViewModel;
     [self.tableView registerClass:[ZSHWeiBoCell class] forCellReuseIdentifier:NSStringFromClass([ZSHWeiBoCell class])];
-     [self.tableView reloadData];
+    
 }
 
 - (void)initViewModel {
     [self.tableViewModel.sectionModelArray removeAllObjects];
     [self.tableViewModel.sectionModelArray addObject:[self storeListSection]];
+    [self.tableView reloadData];
 }
 
 //head
@@ -69,18 +75,36 @@
         kWeakSelf(cellModel);
         [sectionModel.cellModelArray addObject:cellModel];
         cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
-            ZSHWeiBoCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([ZSHWeiBoCell class])];
+            ZSHWeiBoCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([ZSHWeiBoCell class]) forIndexPath:indexPath];
             cell.backgroundColor = KClearColor;
             ZSHWeiBoCellModel *model = weakself.dataArr[indexPath.row];
-             weakcellModel.height = [ZSHWeiBoCell getCellHeightWithModel:model];
+            weakcellModel.height = [cell getCellHeightWithModel:model];
             NSDictionary *ndextParamDic = @{KFromClassType:@(ZSHWeiboVCToWeiBoCell)};
             [cell updateCellWithParamDic:ndextParamDic];
             [cell updateCellWithModel:model];
+            [cell setNeedsUpdateConstraints];
+            [cell updateConstraintsIfNeeded];
             return cell;
         };
     }
 
     return sectionModel;
+}
+
+- (void)requestData {
+    kWeakSelf(self);
+    [_liveLogic requestCircleList:^(id response) {
+        weakself.dataArr = response;
+        [weakself initViewModel];
+    }];
+}
+
+- (void)headerRereshing{
+    [self.tableView.mj_header endRefreshing];
+}
+
+- (void)footerRereshing{
+    [self.tableView.mj_footer endRefreshing];
 }
 
 - (void)didReceiveMemoryWarning {

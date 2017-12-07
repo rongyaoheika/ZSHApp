@@ -14,7 +14,7 @@
     
     self.backgroundColor = KClearColor;
     NSArray *imageArr = @[@"weibo_love",@"weibo_comment",@"weibo_present"];
-    NSArray *titleArr = @[@"18",@"56",@"56"];
+    NSArray *titleArr = @[@"0",@"0",@"0"];
     for (int i = 0; i<3; i++) {
         NSDictionary *btnDic = @{@"title":titleArr[i],@"titleColor":KZSHColor929292,@"font":kPingFangRegular(18),@"backgroundColor":KClearColor};
         UIButton *btn = [ZSHBaseUIControl createBtnWithParamDic:btnDic];
@@ -36,6 +36,15 @@
 
 - (void)btnAction:(UIButton*)btn{
     
+}
+
+- (void)updateCellWithModel:(ZSHWeiBoCellModel *)model {
+    UIButton *btn = [self viewWithTag:1];
+    btn.titleLabel.text = model.dotAgreeCount;
+    UIButton *btn1 = [self viewWithTag:2];
+    btn1.titleLabel.text = model.commentCount;
+    UIButton *btn2 = [self viewWithTag:3];
+    btn2.titleLabel.text = model.commentCount;
 }
 
 @end
