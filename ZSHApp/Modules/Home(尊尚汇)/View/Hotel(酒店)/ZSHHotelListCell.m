@@ -119,11 +119,11 @@
         _hotelNameLabel.text = dic[@"BARDETTITLE"];
         _hotelBottomLabel.text = [NSString stringWithFormat:@"%@ -%@",dic[@"BARDETBEGIN"],dic[@"BARDETEND"]];
         _priceLabel.text = [NSString stringWithFormat:@"¥%.0f",[dic[@"BARDETPRICE"]floatValue] ];
-    } else if(_shopType == ZSHBarShopType){//KTV
-        [_hotelmageView sd_setImageWithURL:[NSURL URLWithString:dic[@"PRIVILEGEIMGS"]]];
-        _hotelNameLabel.text = dic[@"BARDETTITLE"];
-        _hotelBottomLabel.text = @"";
-        _priceLabel.text = [NSString stringWithFormat:@"¥%.0f",[dic[@"BARDETPRICE"]floatValue] ];
+    } else if(_shopType == ZSHKTVShopType){//KTV
+        [_hotelmageView sd_setImageWithURL:[NSURL URLWithString:dic[@"KTVDETIMG"]]];
+        _hotelNameLabel.text = dic[@"KTVDETTITLE"];
+        _hotelBottomLabel.text = [NSString stringWithFormat:@"%@ -%@",dic[@"KTVDETBEGIN"],dic[@"KTVDETEND"]];;
+        _priceLabel.text = [NSString stringWithFormat:@"¥%.0f",[dic[@"KTVDETPRICE"]floatValue] ];
     }
     
 }

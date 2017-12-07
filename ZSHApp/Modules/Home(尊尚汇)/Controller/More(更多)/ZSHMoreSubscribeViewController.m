@@ -71,7 +71,7 @@
                       @{KFromClassType:@(FromKTVVCToTitleContentVC)},
                       @{KFromClassType:@(ZSHFromHomeTrainVCToAirPlaneVC),@"title":@"火车票预订"},
                       @{KFromClassType:@(ZSHHomeAirPlaneVCToAirPlaneVC),@"title":@"机票预订"},
-                      @{KFromClassType:@(ZSHHorseType)},
+                      @{KFromClassType:@(FromHorseVCToTitleContentVC)},
                       @{KFromClassType:@(FromShipVCToTitleContentVC)},
                       @{KFromClassType:@(FromLuxcarVCToTitleContentVC)},
                       @{KFromClassType:@(ZSHPlaneType),@"title":@"飞机"},

@@ -40,6 +40,7 @@ static NSString *ZSHBaseSubCellID = @"ZSHBaseSubCell";
 static NSString *ZSHKTVCalendarCellID = @"ZSHNoticeViewCell";
 static NSString *ZSHKTVListCellID = @"ZSHKTVListCell";
 static NSString *ZSHHotelCellID = @"ZSHHotelCell";
+static NSString *ZSHHotelListCellID = @"ZSHHotelListCell";
 
 @implementation ZSHKTVDetailViewController
 
@@ -112,7 +113,8 @@ static NSString *ZSHHotelCellID = @"ZSHHotelCell";
     [self.tableView registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHBaseSubCellID];
     [self.tableView registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHBookCellID];
     [self.tableView registerClass:[ZSHNoticeViewCell class] forCellReuseIdentifier:ZSHKTVCalendarCellID];
-    [self.tableView registerClass:[ZSHKTVListCell class] forCellReuseIdentifier:ZSHKTVListCellID];
+//    [self.tableView registerClass:[ZSHKTVListCell class] forCellReuseIdentifier:ZSHKTVListCellID];
+     [self.tableView registerClass:[ZSHHotelListCell class] forCellReuseIdentifier:ZSHHotelListCellID];
      [self.tableView registerClass:[ZSHHotelCell class] forCellReuseIdentifier:ZSHHotelCellID];
     
 }
@@ -270,9 +272,14 @@ static NSString *ZSHHotelCellID = @"ZSHHotelCell";
         [sectionModel.cellModelArray addObject:cellModel];
         cellModel.height = kRealValue(75);
         cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
-            ZSHKTVListCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHKTVListCellID forIndexPath:indexPath];
-            NSDictionary *nextParamDic = _KTVDetailSetDicArr[indexPath.row];
-            [cell updateCellWithParamDic:nextParamDic];
+//            ZSHKTVListCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHKTVListCellID forIndexPath:indexPath];
+//            NSDictionary *nextParamDic = _KTVDetailSetDicArr[indexPath.row];
+//            [cell updateCellWithParamDic:nextParamDic];
+//
+            ZSHHotelListCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHHotelListCellID forIndexPath:indexPath];
+            cell.shopType = ZSHKTVShopType;
+            NSDictionary *paramDic = _KTVDetailSetDicArr[indexPath.row];
+            [cell updateCellWithParamDic:paramDic];
             return cell;
         };
         
