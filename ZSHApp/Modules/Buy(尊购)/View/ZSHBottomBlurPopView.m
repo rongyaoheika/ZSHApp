@@ -937,7 +937,7 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
     ////参数：ORDERUNAME 入住人姓名/ORDERPHONE 入住人手机号码/ORDERREMARK 订单备注/ORDERMONEY 订单价格/ORDERROOMNUM 预定酒店房间数量/ORDERCHECKDATE 入住日期/ORDERLEAVEDATE 离开日期
     ///ORDERDAYS 入住天数 /HOTELDETAIL_ID 预定房间类型id/HONOURUSER_ID 提交订单用户id
     
-    NSDictionary *paramDic = @{@"ORDERUNAME":@"彩薇",@"ORDERPHONE":@"18888888888",@"ORDERREMARK":@"大房",@"ORDERMONEY":@(199),@"ORDERROOMNUM":@(1),@"ORDERCHECKDATE":@(2017-12-05),@"ORDERLEAVEDATE":@(2017-12-20)};
+    NSDictionary *paramDic = @{@"ORDERUNAME":@"彩薇",@"ORDERPHONE":@"18888888888",@"ORDERREMARK":@"大房",@"ORDERMONEY":@(199),@"ORDERROOMNUM":@(1),@"ORDERCHECKDATE":@"20171205",@"ORDERLEAVEDATE":@"20171220",@"ORDERDAYS":@(1),@"HOTELDETAIL_ID":@"经济型",@"HONOURUSER_ID":HONOURUSER_IDValue};
     [_orderLogic requestHotelConfirmOrderWithParamDic:paramDic Success:^(id responseObject) {
         RLog(@"确认订单数据==%@",responseObject);
     } fail:nil];

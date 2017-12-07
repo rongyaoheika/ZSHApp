@@ -230,7 +230,10 @@
         _titleView.selectedBlock = ^(NSInteger index){
             __weak typeof(self) strongSelf = weakSelf;
             strongSelf.contentView.currentIndex = index;
-            [weakself titleViewSelectChangeWithIndex:index];
+            if (kFromClassTypeValue == FromHotelVCToTitleContentVC||kFromClassTypeValue == FromBarVCToTitleContentVC||kFromClassTypeValue == FromFoodVCToTitleContentVC|| kFromClassTypeValue ==FromKTVVCToTitleContentVC ) {
+                [weakself titleViewSelectChangeWithIndex:index];
+            }
+           
         };
         _titleView.backgroundColor = [UIColor clearColor];
         _titleView.titleWidth = self.titleWidth;
@@ -314,6 +317,8 @@
             paramArr = @[@{@"shopSortArr":@[@"推荐",@"距离由近到远",@"评分由高到低",@"价格由高到低",@"价格由低到高"],@"midTitle":@"排序"},
                          @{@"shopSortArr":@[@"全部品牌",@"如家",@"7天",@"汉庭",@"锦江之星"],@"midTitle":@"品牌"},
                          @{@"shopSortArr":@[@"经济型酒店",@"高端酒店",@"主题酒店",@"度假酒店",@"公寓型酒店",@"客栈",@"青年旅社"],@"midTitle":@"筛选"}];
+            
+            break;
         }
         case FromFoodVCToTitleContentVC://美食排序
         case FromKTVVCToTitleContentVC:{//KTV排序
@@ -321,6 +326,7 @@
                          @{@"shopSortArr":@[@"全聚德",@"海底捞",@"眉州小吃",@"呷浦呷哺",@"肯德基",@"必胜客"
 ],@"midTitle":@"品牌"},
                          @{@"shopSortArr":@[@"甜点饮品",@"火锅",@"自助餐",@"小吃快餐",@"日韩料理",@"西餐",@"烧烤烤肉",@"素食"],@"midTitle":@"筛选"}];
+            break;
         }
          
         

@@ -175,7 +175,7 @@ static NSString *Identify_MusicCell = @"musicCell";
     self.tableView.dataSource = self.tableViewModel;
     
 	[self.tableView registerClass:[ZSHHomeHeadView class] forCellReuseIdentifier:Identify_HeadCell];
-	[self.tableView registerClass:[ZSHBaseTitleButtonCell class] forCellReuseIdentifier:Identify_NoticeCell];
+    [self.tableView registerClass:[ZSHBaseTitleButtonCell class] forCellReuseIdentifier:Identify_NoticeCell];
      [self.tableView registerClass:[ZSHBaseTitleButtonCell class] forCellReuseIdentifier:Identify_ServiceCell];
 
 	[self.tableView registerClass:[ZSHNoticeViewCell class] forCellReuseIdentifier:Identify_PlayCell];
@@ -219,6 +219,7 @@ static NSString *Identify_MusicCell = @"musicCell";
 
 //新闻推荐
 - (ZSHBaseTableViewSectionModel*)storeNoticeSection {
+    kWeakSelf(self);
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     sectionModel.headerHeight = floor(kRealValue(55));
     NSMutableArray *mTitleArr = [[NSMutableArray alloc]init];
@@ -229,7 +230,7 @@ static NSString *Identify_MusicCell = @"musicCell";
     cellView.scrollDirection =  ZSHCycleScrollViewVertical;
     cellView.autoScroll = YES;
     cellView.dataArr = mTitleArr;
-    kWeakSelf(self);
+   
     cellView.itemClickBlock = ^(NSInteger index) {
         NSDictionary *nextParamDic = @{@"shopId":_homeLogic.newsArr[index][@"NEWS_ID"]};
         ZSHToplineViewController *toplineVC = [[ZSHToplineViewController alloc] initWithParamDic:nextParamDic];
@@ -254,9 +255,9 @@ static NSString *Identify_MusicCell = @"musicCell";
                 ZSHSubscribeViewController *subScribeVC = [[ZSHSubscribeViewController alloc]initWithParamDic:nextParamDic];
                 [weakself.navigationController pushViewController:subScribeVC animated:YES];
                 
-            }
-            
+            };
         };
+       
         
         if(_homeLogic.noticeArr){
             [cell updateCellWithDataArr:_homeLogic.noticeArr paramDic:@{KFromClassType:@(FromHomeNoticeVCToNoticeView)}];

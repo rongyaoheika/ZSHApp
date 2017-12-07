@@ -71,7 +71,7 @@
     }];
     
     //好友
-    NSDictionary *friendBtnTopDic = @{@"text":@"好友",@"font":kPingFangRegular(14),@"textAlignment":@(NSTextAlignmentCenter),@"height":@(14)};
+    NSDictionary *friendBtnTopDic = @{@"text":@"优惠券",@"font":kPingFangRegular(14),@"textAlignment":@(NSTextAlignmentCenter),@"height":@(14)};
     NSDictionary *friendBtnBottomDic = @{@"text":@"99",@"font":kPingFangMedium(18),@"textAlignment":@(NSTextAlignmentCenter),@"height":@(14)};
     _friendBtn = [ZSHBaseUIControl createLabelBtnWithTopDic:friendBtnTopDic bottomDic:friendBtnBottomDic];
     _friendBtn.tag = 1;
