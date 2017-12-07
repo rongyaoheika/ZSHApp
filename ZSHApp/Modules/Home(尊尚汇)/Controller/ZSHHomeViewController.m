@@ -175,8 +175,9 @@ static NSString *Identify_MusicCell = @"musicCell";
     self.tableView.dataSource = self.tableViewModel;
     
 	[self.tableView registerClass:[ZSHHomeHeadView class] forCellReuseIdentifier:Identify_HeadCell];
-    [self.tableView registerClass:[ZSHBaseTitleButtonCell class] forCellReuseIdentifier:Identify_NoticeCell];
-     [self.tableView registerClass:[ZSHBaseTitleButtonCell class] forCellReuseIdentifier:Identify_ServiceCell];
+
+//	[self.tableView registerClass:[ZSHBaseTitleButtonCell class] forCellReuseIdentifier:Identify_NoticeCell];
+    [self.tableView registerClass:[ZSHBaseTitleButtonCell class] forCellReuseIdentifier:Identify_ServiceCell];
 
 	[self.tableView registerClass:[ZSHNoticeViewCell class] forCellReuseIdentifier:Identify_PlayCell];
     [self.tableView registerClass:[ZSHBaseTitleButtonCell class] forCellReuseIdentifier:Identify_MagazineCell];
@@ -187,7 +188,6 @@ static NSString *Identify_MusicCell = @"musicCell";
 
 - (void)initViewModel {
     [self.tableViewModel.sectionModelArray removeAllObjects];
-    
     [self.tableViewModel.sectionModelArray addObject:[self storeHeadSection]];
     [self.tableViewModel.sectionModelArray addObject:[self storeNoticeSection]];
     [self.tableViewModel.sectionModelArray addObject:[self storeServiceSection]];
@@ -242,22 +242,27 @@ static NSString *Identify_MusicCell = @"musicCell";
     [sectionModel.cellModelArray addObject:cellModel];
     cellModel.height = kRealValue(135);
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
-        ZSHBaseTitleButtonCell *cell = [tableView dequeueReusableCellWithIdentifier:Identify_NoticeCell forIndexPath:indexPath];
-        cell.itemClickBlock = ^(NSInteger tag) {
-             NSDictionary *subDic = _homeLogic.noticeArr[tag];
-            if (tag < weakself.noticePushVCsArr.count) {
-                NSDictionary *nextParamDic = @{@"shopId":subDic[@"SORT_ID"]};
-                Class className = NSClassFromString(weakself.noticePushVCsArr[tag]);
-                RootViewController *vc = [[className alloc]initWithParamDic:nextParamDic];
-                [weakself.navigationController pushViewController:vc animated:YES];
-            } else {//游艇(4)
-                NSDictionary *nextParamDic = @{KFromClassType:@(ZSHShipType),@"shopId":subDic[@"SORT_ID"]};
-                ZSHSubscribeViewController *subScribeVC = [[ZSHSubscribeViewController alloc]initWithParamDic:nextParamDic];
-                [weakself.navigationController pushViewController:subScribeVC animated:YES];
+//        ZSHBaseTitleButtonCell *cell = [tableView dequeueReusableCellWithIdentifier:Identify_NoticeCell forIndexPath:indexPath];
+        ZSHBaseTitleButtonCell *cell = [tableView dequeueReusableCellWithIdentifier:Identify_NoticeCell];
+        if (!cell) {
+            cell = [[ZSHBaseTitleButtonCell alloc] init];
+            cell.itemClickBlock = ^(NSInteger tag) {
+                NSDictionary *subDic = _homeLogic.noticeArr[tag];
+                if (tag < weakself.noticePushVCsArr.count) {
+                    NSDictionary *nextParamDic = @{@"shopId":subDic[@"SORT_ID"]};
+                    Class className = NSClassFromString(weakself.noticePushVCsArr[tag]);
+                    RootViewController *vc = [[className alloc]initWithParamDic:nextParamDic];
+                    [weakself.navigationController pushViewController:vc animated:YES];
+                } else {//游艇(4)
+                    NSDictionary *nextParamDic = @{KFromClassType:@(ZSHShipType),@"shopId":subDic[@"SORT_ID"]};
+                    ZSHSubscribeViewController *subScribeVC = [[ZSHSubscribeViewController alloc]initWithParamDic:nextParamDic];
+                    [weakself.navigationController pushViewController:subScribeVC animated:YES];
+                    
+                }
                 
             };
-        };
-       
+        }
+    
         
         if(_homeLogic.noticeArr){
             [cell updateCellWithDataArr:_homeLogic.noticeArr paramDic:@{KFromClassType:@(FromHomeNoticeVCToNoticeView)}];

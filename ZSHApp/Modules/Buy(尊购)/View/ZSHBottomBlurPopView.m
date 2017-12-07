@@ -74,7 +74,8 @@
 @property (nonatomic, strong) ZSHAgeView            *ageView;
 @property (nonatomic, copy)   NSString              *ageRangeStr;
 
-@property (strong , nonatomic) FSCalendar *calendar;
+@property (strong, nonatomic) FSCalendar *calendar;
+@property (strong, nonatomic) NSString *currentDate;
 
 @end
 
@@ -750,7 +751,7 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd"];
-    self.currentDateLabel.text = [dateFormatter stringFromDate:date];
+    self.currentDate = [dateFormatter stringFromDate:date];
     
 }
 
@@ -901,7 +902,9 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
             preParamDic = @{@"trainDate":_currentDateLabel.text};
             
         } else if (kFromClassTypeValue == ZSHFromAirplaneAgeVCToBottomBlurPopView) {
-            preParamDic = @{@"ageRange":self.ageView.ageRangeStr, @"trainDate":_currentDateLabel.text};
+            preParamDic = @{@"ageRange":self.ageView.ageRangeStr};
+        } else if (kFromClassTypeValue == ZSHFromTrainCalendarVCToBottomBlurPopView) {
+            preParamDic = @{@"trainDate":_currentDate};
         }
          //保存年龄
         if (self.confirmOrderBlock) {
