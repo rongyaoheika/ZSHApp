@@ -177,32 +177,34 @@
         }
             
         case ZSHBarShopType:{//酒吧
-            [_hotelmageView sd_setImageWithURL:[NSURL URLWithString:self.listDic[@"HOTELDETIMGS"]]];
-            _hotelLiveInfoLabel.text = _liveInfo;
-
+            [_hotelmageView sd_setImageWithURL:[NSURL URLWithString:self.listDic[@"BARDETIMG"]]];
+            
             if (_showCellType == ZSHNormalType) {//订单支付页面
                 _hotelNameLabel.text = self.deviceDic[@"BARNAMES"];
                 _hotelTypeLabel.text = self.listDic[@"BARDETTITLE"];
+                _hotelLiveInfoLabel.text = [NSString stringWithFormat:@"%@-%@",self.listDic[@"BARDETBEGIN"],self.listDic[@"BARDETEND"]];;
                 
             } else if (_showCellType == ZSHPopType){
                 _hotelNameLabel.text = self.listDic[@"BARDETTITLE"];
-                _sizeInfoLabel.text = @"酒吧面积信息";
-                _priceLabel.text = @"无";
+                _sizeInfoLabel.text = [NSString stringWithFormat:@"%@-%@",self.listDic[@"BARDETBEGIN"],self.listDic[@"BARDETEND"]];
+                _priceLabel.text = [NSString stringWithFormat:@"¥%.0f",[self.listDic[@"BARDETPRICE"]floatValue] ];
+                _hotelLiveInfoLabel.text = @"";
             }
             break;
         }
             
         case ZSHKTVShopType:{//KTV
-            [_hotelmageView sd_setImageWithURL:[NSURL URLWithString:self.listDic[@"HOTELDETIMGS"]]];
-            _hotelLiveInfoLabel.text = _liveInfo;
+            [_hotelmageView sd_setImageWithURL:[NSURL URLWithString:self.listDic[@"KTVDETIMG"]]];
             
             if (_showCellType == ZSHNormalType) {//订单支付页面
                 _hotelNameLabel.text = self.deviceDic[@"KTVNAMES"];
-                _hotelTypeLabel.text = self.listDic[@"KTVNAMES"];
+                _hotelTypeLabel.text = self.listDic[@"KTVDETTYPE"];
+                _hotelLiveInfoLabel.text = [NSString stringWithFormat:@"%@-%@",self.listDic[@"KTVDETBEGIN"],self.listDic[@"KTVDETEND"]];;
             } else if (_showCellType == ZSHPopType) {
-                _hotelNameLabel.text = self.listDic[@"KTVNAMES"];
-                _sizeInfoLabel.text = @"KTV面积信息";
-                _priceLabel.text = @"无";
+                _hotelNameLabel.text = self.listDic[@"KTVDETTITLE"];
+                _hotelLiveInfoLabel.text = self.listDic[@"KTVDETTYPE"];
+                _sizeInfoLabel.text = [NSString stringWithFormat:@"%@-%@",self.listDic[@"KTVDETBEGIN"],self.listDic[@"KTVDETEND"]];
+                _priceLabel.text = [NSString stringWithFormat:@"¥%.0f",[self.listDic[@"KTVDETPRICE"]floatValue] ];
             }
             break;
         }

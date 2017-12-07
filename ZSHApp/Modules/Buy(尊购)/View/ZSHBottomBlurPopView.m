@@ -214,7 +214,7 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
         [self.subTab registerClass:[ZSHSearchLiveFirstCell class] forCellReuseIdentifier:ZSHSearchLiveFirstCellID];
         [self.subTab registerClass:[ZSHSearchLiveSecondCell class] forCellReuseIdentifier:ZSHSearchLiveSecondCellID];
         [self.subTab registerClass:[ZSHSearchLiveThirdCell class] forCellReuseIdentifier:ZSHSearchLiveThirdCellID];
-    } else if (kFromClassTypeValue == ZSHFromShareVCToToBottomBlurPopView) { // 分享
+    } else if (kFromClassTypeValue == ZSHFromShareVCToToBottomBlurPopView) { //分享
         
         ZSHShareView *shareView = [[ZSHShareView alloc] init];
         [self addSubview:shareView];
@@ -421,9 +421,7 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
         cell.textLabel.textColor = KZSHColor929292;
         return cell;
     };
-    
-    
-    
+
     return sectionModel;
 }
 

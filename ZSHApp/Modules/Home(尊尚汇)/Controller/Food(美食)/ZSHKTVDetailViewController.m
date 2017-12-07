@@ -272,10 +272,6 @@ static NSString *ZSHHotelListCellID = @"ZSHHotelListCell";
         [sectionModel.cellModelArray addObject:cellModel];
         cellModel.height = kRealValue(75);
         cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
-//            ZSHKTVListCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHKTVListCellID forIndexPath:indexPath];
-//            NSDictionary *nextParamDic = _KTVDetailSetDicArr[indexPath.row];
-//            [cell updateCellWithParamDic:nextParamDic];
-//
             ZSHHotelListCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHHotelListCellID forIndexPath:indexPath];
             cell.shopType = ZSHKTVShopType;
             NSDictionary *paramDic = _KTVDetailSetDicArr[indexPath.row];
@@ -284,8 +280,9 @@ static NSString *ZSHHotelListCellID = @"ZSHHotelListCell";
         };
         
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
-            NSDictionary *paramDic = _KTVDetailListArr[indexPath.row];
-            NSDictionary *nextParamDic = @{KFromClassType:@(ZSHConfirmOrderToBottomBlurPopView),@"shopType":@(ZSHKTVShopType), @"deviceDic":weakself.KTVDetailParamDic,@"listDic":paramDic,@"liveInfoStr":@""};
+            NSDictionary *paramDic = _KTVDetailSetDicArr[indexPath.row];
+            NSString *liveInfoStr = [NSString stringWithFormat:@"%@-%@",paramDic[@"KTVDETBEGIN"],paramDic[@"KTVDETEND"]];
+            NSDictionary *nextParamDic = @{KFromClassType:@(ZSHConfirmOrderToBottomBlurPopView),@"shopType":@(ZSHKTVShopType), @"deviceDic":weakself.KTVDetailParamDic,@"listDic":paramDic,@"liveInfoStr":liveInfoStr};
             weakself.bottomBlurPopView = [weakself createBottomBlurPopViewWithParamDic:nextParamDic];
             [kAppDelegate.window addSubview:weakself.bottomBlurPopView];
         };
@@ -295,7 +292,6 @@ static NSString *ZSHHotelListCellID = @"ZSHHotelListCell";
 
 //KTV更多商家
 - (ZSHBaseTableViewSectionModel*)storKTVMorShopSection{
-    kWeakSelf(self);
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     sectionModel.headerHeight = kRealValue(40);
     NSDictionary *headTitleParamDic = @{@"text":@"更多商家",@"font":kPingFangMedium(15),@"textAlignment":@(NSTextAlignmentLeft)};
@@ -320,10 +316,7 @@ static NSString *ZSHHotelListCellID = @"ZSHHotelListCell";
         };
         
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
-            NSDictionary *paramDic = _KTVDetailListArr[indexPath.row];
-            NSDictionary *nextParamDic = @{KFromClassType:@(ZSHConfirmOrderToBottomBlurPopView),@"shopType":@(ZSHKTVShopType), @"deviceDic":weakself.KTVDetailParamDic,@"listDic":paramDic,@"liveInfoStr":@""};
-            weakself.bottomBlurPopView = [weakself createBottomBlurPopViewWithParamDic:nextParamDic];
-            [kAppDelegate.window addSubview:weakself.bottomBlurPopView];
+            
         };
     }
     return sectionModel;
