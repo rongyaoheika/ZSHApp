@@ -77,13 +77,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 }
 
 - (void)requestData{
-    kWeakSelf(self);
-//    [_foodLogic loadFoodListDataWithParamDic:@{@"HONOURUSER_ID":HONOURUSER_IDValue} success:^(id responseObject) {
-//        [weakself.tableView.mj_header endRefreshing];
-//        [weakself.tableView.mj_footer endRefreshing];
-//        _foodListArr = responseObject;
-//        [weakself initViewModel];
-//    } fail:nil];
+
     
 }
 
