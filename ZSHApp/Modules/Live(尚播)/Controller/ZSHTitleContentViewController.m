@@ -159,6 +159,7 @@
             [self createSearchNaviUI];
         }
             break;
+            
         default:{
             self.titleArr = self.paramDic[@"titleArr"];
             self.titleBtnImage = [UIImage imageNamed:@"hotel_btn"];

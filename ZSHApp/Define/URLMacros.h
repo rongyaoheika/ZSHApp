@@ -22,8 +22,8 @@
  这样做切换方便,不用来回每个网络请求修改请求域名,降低出错事件
  */
 
-#define DevelopSever    0
-#define TestSever       1
+#define DevelopSever    1
+#define TestSever       0
 #define ProductSever    0
 
 
@@ -31,8 +31,8 @@
 
 /**开发服务器*/
 
-#define kUrlRoot                    @"http://192.168.1.134:8081/ZSHINTER/"
-//#define kUrlRoot                  @"http://192.168.1.108:8080/ZSHINTER/"
+//#define kUrlRoot                    @"http://192.168.1.134:8081/ZSHINTER/"
+#define kUrlRoot                  @"http://192.168.1.108:8080/ZSHINTER/"
 
 
 #elif TestSever
@@ -584,7 +584,41 @@
 //请求地址：/appcirclein/circlelist.do?CIRCLELIST(混淆码)
 #define kUrlCircleList [NSString stringWithFormat:@"/appcirclein/circlelist.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"CIRCLELIST"]]
 
+//107. 电台列表
+//请求地址：/ZSHINTER/appmusicin/getcategorylist?CATELIST(混淆码)
+#define kUrlRadioStation [NSString stringWithFormat:@"/appmusicin/getcategorylist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"CATELIST"]]
 
+//107. 获取某个电台下的歌曲列表接口
+//请求地址： /appmusicin/getchannelsong?CANNELSONG
+//参数:ch_name 电台名称
+#define kUrlChannelSong [NSString stringWithFormat:@"/appmusicin/getchannelsong?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"CANNELSONG"]]
 
+//108. 获取歌曲详细接口
+//请求地址： /appmusicin/getsongplay?SONGPLAY
+//参数:songid 歌曲id
+#define kUrlChannelSong [NSString stringWithFormat:@"/appmusicin/getchannelsong?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"CANNELSONG"]]
+
+//110:获得所有模糊查询的歌曲列表接口
+//请求地址： /appmusicin/getsearchsong?SEARCHSONG
+//参数:query  查询字段
+#define kUrlChannelSong [NSString stringWithFormat:@"/appmusicin/getchannelsong?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"CANNELSONG"]]
+
+//111:获得音乐排行榜列表接口
+//请求地址： /appmusicin/getbilllist?BILLLIST
+// 参数:type  类型(1-新歌榜,2-热歌榜,11-摇滚榜,12-爵士,16-流行,21-欧美金曲榜,22-经典老歌榜,23-情歌对唱榜,24-影视金曲榜,25-网络歌曲榜) offset偏移数(页码)
+#define kUrlBillList [NSString stringWithFormat:@"/appmusicin/getbilllist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"BILLLIST"]]
+
+//112:获得歌曲歌词
+//请求地址： appmusicin/getlry?LRY&songid=877578
+// 参数:songid 歌曲id
+#define kUrlLry [NSString stringWithFormat:@"/appmusicin/getlry?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"LRY"]]
+
+//113:每日推荐歌曲(固定10首)   appmusicin/getrecommandsonglist?SONGLIST
+//参数：songid 歌曲id()根据歌曲类型推荐10首歌曲
+#define kUrlSongList  [NSString stringWithFormat:@"appmusicin/getrecommandsonglist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SONGLIST"]]
+
+//114:每日推荐歌曲(固定10首)   appmusicin/getrecommandsonglist?SONGLIST
+//参数：songid 歌曲id()根据歌曲类型推荐10首歌曲
+#define kUrlSongList  [NSString stringWithFormat:@"appmusicin/getrecommandsonglist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SONGLIST"]]
 
 #endif /* URLMacros_h */

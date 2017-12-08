@@ -38,7 +38,7 @@
     UIColor *bgColor = paramDic[@"backgroundColor"]?paramDic[@"backgroundColor"]:KClearColor;
     [btn setBackgroundColor:bgColor];
     
-    UIFont *titleFont = paramDic[@"font"]? paramDic[@"font"]:kPingFangRegular(14);
+    UIFont *titleFont = paramDic[@"font"]? paramDic[@"font"]:kPingFangRegular(15);
     btn.titleLabel.font = titleFont;
     if ([paramDic[@"withImage"]integerValue]) {
         [btn setImage:[UIImage imageNamed:paramDic[@"normalImage"]] forState:UIControlStateNormal];

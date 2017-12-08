@@ -49,6 +49,8 @@ static NSString *Identify_MusicCell = @"musicCell";
 @property (nonatomic, strong) NSArray                *noticePushVCsArr;
 @property (nonatomic, strong) NSArray                *noticeParamArr;
 
+@property (nonatomic, strong) NSArray                *musicPushVCsArr;
+@property (nonatomic, strong) NSArray                *musicParamArr;
 @end
 
 @implementation ZSHHomeViewController
@@ -100,6 +102,9 @@ static NSString *Identify_MusicCell = @"musicCell";
     
     //酒吧，美食，ktv，酒店
     self.noticePushVCsArr = @[@"ZSHBarDetailViewController",@"ZSHFoodDetailViewController", @"ZSHKTVDetailViewController",@"ZSHHotelDetailViewController"];
+    
+    //歌手，排行榜，曲库，电台
+    self.musicPushVCsArr = @[@"",@"ZSHMusicRankViewController",@"ZSHMusicLibraryViewController",@"ZSHMusicRadioViewController"];
 
 }
 
@@ -373,9 +378,9 @@ static NSString *Identify_MusicCell = @"musicCell";
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHBaseTitleButtonCell *cell = [tableView dequeueReusableCellWithIdentifier:Identify_MusicCell forIndexPath:indexPath];
         cell.itemClickBlock = ^(NSInteger tag) {
-            NSDictionary *nextParamDic = @{KFromClassType:@(FromKTVVCToTitleContentVC)};
-            ZSHHotelDetailViewController *hotelDetailVC = [[ZSHHotelDetailViewController alloc]initWithParamDic:nextParamDic];
-            [weakself.navigationController pushViewController:hotelDetailVC animated:YES];
+            Class className = NSClassFromString(weakself.musicPushVCsArr[tag]);
+            RootViewController *vc = [[className alloc]init];
+            [weakself.navigationController pushViewController:vc animated:YES];
         };
         
         if(_homeLogic.musicArr){
@@ -386,9 +391,7 @@ static NSString *Identify_MusicCell = @"musicCell";
    
     
     cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
-        [tableView deselectRowAtIndexPath:indexPath animated:YES];
-        
-        
+       
     };
     return sectionModel;
 }

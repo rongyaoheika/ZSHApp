@@ -151,7 +151,6 @@
             i++;
         } else {
             btn.frame = CGRectMake(KLeftMargin + (midSpacing + _itemWidth)*i++, 0, _itemWidth, CGRectGetHeight(self.frame));
-            btn.backgroundColor = [UIColor redColor];
         }
     }
    
