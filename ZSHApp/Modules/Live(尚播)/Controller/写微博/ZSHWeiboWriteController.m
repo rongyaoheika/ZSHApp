@@ -91,7 +91,14 @@
 
 - (void)distributeAction {
     if (_contentTextView.text.length) {
-        [_liveLogic requestAddCircle:@{@"HONOURUSER_ID":@"d6a3779de8204dfd9359403f54f7d27c", @"CONTENT":_contentTextView.text, @"SHOWIMAGES":@""} success:^(id response) {
+        NSMutableArray *fileNames = [NSMutableArray arrayWithCapacity:_selectedAssets.count];
+        for (PHAsset *asset in _selectedAssets) {
+            [fileNames addObject:[asset valueForKey:@"filename"]];
+//            [fileNames addObject:@"fileList"];
+        }
+        
+        [_liveLogic requestAddCircle:@{@"HONOURUSER_ID":@"d6a3779de8204dfd9359403f54f7d27c", @"CONTENT":_contentTextView.text} images:_selectedPhotos fileNames:fileNames success:^(id response) {
+            
         }];
     }
 }

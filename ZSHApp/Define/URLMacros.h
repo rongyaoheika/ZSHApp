@@ -575,15 +575,14 @@
 //参数：TYPE  (0代表品牌，1代表筛选)          SORTNAME  (0代表美食，1酒店，2KTV，3酒吧)
 //请求地址：/appsfoodin/brandstylelist.do?BRANDLIST(混淆码)
 #define kUrlBrandstyleList [NSString stringWithFormat:@"/appsfoodin/brandstylelist.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"BRANDLIST"]]
-//115.发布内容到我的圈子
+//115.发布内容到我的圈子 （完成）
 //参数：HONOURUSER_ID 用户的Id/    CONTENT   发布的内容/    SHOWIMAGES  上传的图片（参数可选）
 //请求地址：/appcirclein/addcircle.do?CIRCLEADD(混淆码)
 #define kUrlAddCircle [NSString stringWithFormat:@"/appcirclein/addcircle.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"CIRCLEADD"]]
-//116.获取我和我关注的好友的所有圈子并根据时间排序
+//116.获取我和我关注的好友的所有圈子并根据时间排序 (完成)
 //参数：HONOURUSER_ID 用户的Id
 //请求地址：/appcirclein/circlelist.do?CIRCLELIST(混淆码)
 #define kUrlCircleList [NSString stringWithFormat:@"/appcirclein/circlelist.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"CIRCLELIST"]]
-
 //107. 电台列表
 //请求地址：/ZSHINTER/appmusicin/getcategorylist?CATELIST(混淆码)
 #define kUrlRadioStation [NSString stringWithFormat:@"/appmusicin/getcategorylist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"CATELIST"]]
@@ -620,5 +619,40 @@
 //114:每日推荐歌曲(固定10首)   appmusicin/getrecommandsonglist?SONGLIST
 //参数：songid 歌曲id()根据歌曲类型推荐10首歌曲
 #define kUrlSongList  [NSString stringWithFormat:@"appmusicin/getrecommandsonglist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SONGLIST"]]
+//117.点赞
+//参数：HONOURUSER_ID 用户的Id    /CIRCLE_ID  所评论的圈子ID
+//请求地址：/appcirclein/dotAgree.do?DOTAGREE(混淆码)
+#define kUrlDotAgree [NSString stringWithFormat:@"/appcirclein/dotAgree.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"DOTAGREE"]]
+//118.添加评论到用户圈子
+//参数：HONOURUSER_ID 用户的Id    /CIRCLE_ID  所评论的圈子ID    /COMCONTENT   评论内容
+//请求地址：/appcirclein/addcomment.do?COMMENTADD(混淆码)
+#define kUrlAddComment [NSString stringWithFormat:@"/appcirclein/addcomment.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"COMMENTADD"]]
+//119.通过圈子ID获取所有评论
+//参数：/CIRCLE_ID  所评论的圈子ID
+//请求地址：/appcirclein/commentlist.do?COMMENTLIST(混淆码)
+#define kUrlCommentList [NSString stringWithFormat:@"/appcirclein/commentlist.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"COMMENTLIST"]]
+//120.获取所有电台
+//参数：无
+//请求地址：/appmusicin/getcategorylist?CATELIST(混淆码)
+#define kUrlGetCategoryList [NSString stringWithFormat:@"/appmusicin/getcategorylist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"CATELIST"]]
+//121.根据电台名称获取频道列表
+//参数：ch_name   电台名称
+//请求地址：/appmusicin/getchannelsong?CANNELSONG(混淆码)
+#define kUrlGetChannelSong [NSString stringWithFormat:@"/appmusicin/getchannelsong?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"CANNELSONG"]]
+//122.获取歌曲详细接口
+//参数：songid 歌曲id
+//请求地址：/appmusicin/getsongplay?SONGPLAY(混淆码)
+#define kUrlGetSongPlay [NSString stringWithFormat:@"/appmusicin/getsongplay?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SONGPLAY"]]
+//123.获得所有模糊查询的歌曲列表接口
+//参数：query  查询字段
+//请求地址：/appmusicin/getsearchsong?SEARCHSONG  (混淆码)
+#define kUrlGetSearchSong [NSString stringWithFormat:@"/appmusicin/getsearchsong?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SONGPLAY"]]
+//124.修改用户个人资料
+//参数：HONOURUSER_ID 用户的Id  /
+//以下参数可选： ADDRESS  详细地址/ NICKNAME 用户昵称/  SEX  用户性别/
+//BIRTHDAY  用户生日/ PORTRAIT  用户头像/ PAYPASSWORD  支付密码 / SIGNNAME  个性签名
+//请求地址：/appuserin/userpersonalinfo.do?UPDPERSONALINFO  (混淆码)
+#define kUrlUserPersonalInfo [NSString stringWithFormat:@"/appuserin/userpersonalinfo.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"UPDPERSONALINFO"]]
+
 
 #endif /* URLMacros_h */

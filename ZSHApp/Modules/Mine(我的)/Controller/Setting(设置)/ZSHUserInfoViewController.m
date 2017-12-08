@@ -260,10 +260,10 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL isSelectOriginalPhoto) {
         weakself.headImage = [photos firstObject];
         [weakself initViewModel];
-//        [weakself.mineLogic uploadImage:photos name:@[@"showfile"] success:^(id response) {
-//            weakself.headImage = [photos firstObject];
-//            [weakself initViewModel];
-//        }];
+        [weakself.mineLogic uploadImage:photos name:@[@"showfile"] success:^(id response) {
+            weakself.headImage = [photos firstObject];
+            [weakself initViewModel];
+        }];
     }];
     
     [self presentViewController:imagePickerVc animated:YES completion:nil];

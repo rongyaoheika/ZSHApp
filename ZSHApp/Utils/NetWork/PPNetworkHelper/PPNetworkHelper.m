@@ -224,7 +224,6 @@ static AFHTTPSessionManager *_sessionManager;
                                   success:(PPHttpRequestSuccess)success
                                   failure:(PPHttpRequestFailed)failure {
     NSString *requestUrl = [NSString stringWithFormat:@"%@%@", kUrlRoot, URL];
-    
     NSURLSessionTask *sessionTask = [_sessionManager POST:requestUrl parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         
         for (NSUInteger i = 0; i < images.count; i++) {
@@ -239,7 +238,7 @@ static AFHTTPSessionManager *_sessionManager;
             
             [formData appendPartWithFileData:imageData
                                         name:name
-                                    fileName:fileNames ? NSStringFormat(@"%@.%@",fileNames[i],imageType?:@"jpg") : imageFileName
+                                    fileName:fileNames[i] //? NSStringFormat(@"%@.%@",fileNames[i],imageType?:@"jpg") : imageFileName
                                     mimeType:NSStringFormat(@"image/%@",imageType ?: @"jpg")];
         }
         

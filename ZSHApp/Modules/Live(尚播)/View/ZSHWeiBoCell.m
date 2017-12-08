@@ -53,8 +53,8 @@
     [self.contentView addSubview:self.bottomView];
 }
 
-- (void)layoutSubviews{
-    [super layoutSubviews];
+- (void)updateConstraints{
+    [super updateConstraints];
     
     [self.avatarImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self).offset(kRealValue(15));
@@ -111,7 +111,7 @@
     self.dateLabel.text = model.PUBLISHTIME;
     CGSize detailLabelSize = [model.CONTENT boundingRectWithSize:CGSizeMake(kScreenWidth-kRealValue(30), MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:self.detailLabel.font,NSForegroundColorAttributeName:KZSHColor929292} context:nil].size;
     
-    if ([model.CONTENT isEqualToString:@""]) {
+    if ([model.CONTENT isEqualToString:@""] || !model.CONTENT) {
         [self.detailLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.top.mas_equalTo(self.avatarImageView.mas_bottom).offset(kRealValue(17.5));
             make.left.mas_equalTo(self.avatarImageView);
@@ -144,7 +144,7 @@
         [self.detailImageView sd_setImageWithURL:[NSURL URLWithString:model.SHOWIMAGES]];
     }
 
-    [self layoutIfNeeded];
+    
     [_bottomView updateCellWithModel:model];
 }
 

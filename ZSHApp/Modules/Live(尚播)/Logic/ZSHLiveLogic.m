@@ -9,6 +9,7 @@
 
 #import "ZSHLiveLogic.h"
 
+
 @implementation ZSHLiveLogic
 
 // 关注
@@ -36,12 +37,15 @@
 }
 
 // 发布内容到我的圈子
-- (void)requestAddCircle:(NSDictionary *)dic success:(void (^)(id response))success {
-    [PPNetworkHelper POST:kUrlAddCircle parameters:dic success:^(id responseObject) {
-        success(responseObject);
+- (void)requestAddCircle:(NSDictionary *)dic images:(NSArray *)images fileNames:(NSArray *)fileNmaes success:(void (^)(id response))success {
+    [PPNetworkHelper uploadImagesWithURL:kUrlAddCircle parameters:dic name:@"fileList" images:images fileNames:fileNmaes imageScale:1.0 imageType:nil progress:^(NSProgress *progress) {
+
+    } success:^(id responseObject) {
+
     } failure:^(NSError *error) {
-        RLog(@"%@", error);
+
     }];
+
 }
 
 
@@ -56,6 +60,35 @@
     }];
 }
 
+
+// 获取我和我关注的好友的所有圈子并根据时间排序
+- (void)requestDotAgreeWithCircleID:(NSString *)circleID success:(void (^)(id response))success {
+    [PPNetworkHelper POST:kUrlDotAgree parameters:@{@"HONOURUSER_ID":@"d6a3779de8204dfd9359403f54f7d27c",@"CIRCLE_ID":circleID} success:^(id responseObject) {
+        success(nil);
+    } failure:^(NSError *error) {
+        RLog(@"%@", error);
+    }];
+}
+
+
+// 通过圈子ID获取所有评论
+- (void)requestCommentListWithCircleID:(NSString *)circleID success:(void (^)(id response))success {
+    [PPNetworkHelper POST:kUrlCommentList parameters:@{@"CIRCLE_ID":circleID} success:^(id responseObject) {
+        NSArray *array = [ZSHCommentListModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"]];
+        success(array);
+    } failure:^(NSError *error) {
+        RLog(@"%@", error);
+    }];
+}
+
+// 通过圈子ID评论
+- (void)requestAddCommentWithDic:(NSDictionary *)dic success:(void (^)(id response))success {
+    [PPNetworkHelper POST:kUrlAddComment parameters:dic success:^(id responseObject) {
+        success(responseObject);
+    } failure:^(NSError *error) {
+        RLog(@"%@", error);
+    }];
+}
 
 
 @end

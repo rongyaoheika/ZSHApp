@@ -7,6 +7,14 @@
 //
 
 #import "ZSHWeiBoBottomView.h"
+#import "ZSHLiveLogic.h"
+#import "ZSHReviewViewController.h"
+
+@interface ZSHWeiBoBottomView ()
+
+@property (nonatomic, strong) ZSHLiveLogic            *liveLogic;
+@property (nonatomic, strong) ZSHWeiBoCellModel       *weiboCellModel;
+@end
 
 @implementation ZSHWeiBoBottomView
 
@@ -35,16 +43,26 @@
 }
 
 - (void)btnAction:(UIButton*)btn{
-    
+    if (btn.tag == 1) {// 点赞
+        [_liveLogic requestDotAgreeWithCircleID:_weiboCellModel.CIRCLE_ID success:^(id response) {
+            
+        }];
+    } else if (btn.tag == 2) { // 评论
+        ZSHReviewViewController *reviewVC = [[ZSHReviewViewController alloc] initWithParamDic:@{@"CircleID":_weiboCellModel.CIRCLE_ID}];
+        [[kAppDelegate getCurrentUIVC].navigationController pushViewController:reviewVC animated:true];
+    } else if (btn.tag == 3) { // 礼物
+        
+    }
 }
 
 - (void)updateCellWithModel:(ZSHWeiBoCellModel *)model {
     UIButton *btn = [self viewWithTag:1];
-    btn.titleLabel.text = model.dotAgreeCount;
+    [btn setTitle:model.dotAgreeCount forState:UIControlStateNormal];
     UIButton *btn1 = [self viewWithTag:2];
-    btn1.titleLabel.text = model.commentCount;
+    [btn1 setTitle:model.commentCount forState:UIControlStateNormal];
     UIButton *btn2 = [self viewWithTag:3];
-    btn2.titleLabel.text = model.commentCount;
+    [btn2 setTitle:model.commentCount forState:UIControlStateNormal];
+    self.weiboCellModel = model;
 }
 
 @end

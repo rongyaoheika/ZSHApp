@@ -119,7 +119,7 @@
 
 // 上传头像
 - (void)uploadImage:(NSArray *)imageArr name:(NSArray *)nameArr success:(void (^)(id response))success {
-    [PPNetworkHelper uploadImagesWithURL:kUrlUp parameters:@{@"HONOURUSER_ID":@"d6a3779de8204dfd9359403f54f7d27c"} name:@"showfile" images:imageArr fileNames:nameArr imageScale:1.0 imageType:@"image/jpeg" progress:^(NSProgress *progress) {
+    [PPNetworkHelper uploadImagesWithURL:kUrlUp parameters:@{@"HONOURUSER_ID":@"d6a3779de8204dfd9359403f54f7d27c"} name:@"showfile" images:imageArr fileNames:@[@"fileName"] imageScale:1.0 imageType:@"image/jpeg" progress:^(NSProgress *progress) {
         
     } success:^(id responseObject) {
         success(responseObject);
