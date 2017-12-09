@@ -71,10 +71,10 @@ static NSString *ZSHMusicLibraryCellID = @"ZSHMusicLibraryCell";
 //    } fail:nil];
     
 //    
-//    [_musicLogic loadLryWithParamDic:@{@"songid":@"877578"} Success:^(id responseObject) {
-//        RLog(@"歌词数据成功== %@",responseObject);
-//    } fail:nil];
-//
+    [_musicLogic loadLryWithParamDic:@{@"songid":@"877578"} Success:^(id responseObject) {
+        RLog(@"歌词数据成功== %@",responseObject);
+    } fail:nil];
+
 }
 
 #pragma collectionView delegate

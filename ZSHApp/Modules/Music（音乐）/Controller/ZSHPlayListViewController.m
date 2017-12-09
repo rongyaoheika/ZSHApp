@@ -9,16 +9,23 @@
 #import "ZSHPlayListViewController.h"
 #import "ZSHMusicLogic.h"
 #import "ZSHPlayListHeadView.h"
+#import "ZSHMusicPlayListCell.h"
+#import "AudioPlayerController.h"
+#import "ZSHSongDetailModel.h"
+#import "MusicModel.h"
 
 @interface ZSHPlayListViewController ()
 
 @property (nonatomic, strong) ZSHPlayListHeadView  *headView;
 @property (nonatomic, strong) UIView               *tabHeadView;
 @property (nonatomic, strong) UIView               *tabFootView;
+@property (nonatomic, strong) ZSHMusicLogic        *musicLogic;
+@property (nonatomic, strong) NSMutableArray       *songArr;
+@property (nonatomic, strong) NSArray              *rankModelArr;
 
 @end
 
-static NSString *ZSHBaseCellID = @"ZSHBaseCell";
+static NSString *ZSHMusicPlayListCellID = @"ZSHMusicPlayListCell";
 @implementation ZSHPlayListViewController
 
 - (void)viewDidLoad {
@@ -30,9 +37,21 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 }
 
 - (void)loadData{
-    
+    _musicLogic = [[ZSHMusicLogic alloc]init];
+    _rankModelArr = self.paramDic[@"dataArr"];
+    _songArr = [[NSMutableArray alloc]initWithCapacity:10];
 //    [self requestData];
     [self initViewModel];
+}
+
+- (void)requestData{
+    kWeakSelf(self);
+    _musicLogic = [[ZSHMusicLogic alloc]init];
+    [_musicLogic loadRankListWithParamDic:@{@"type":@(21),@"offset":@(1)} Success:^(id responseObject,id imageUrl) {
+         RLog(@"音乐排行榜数据==%@",responseObject);
+        _rankModelArr = responseObject;
+        [weakself initViewModel];
+    } fail:nil];
 }
 
 - (void)createUI{
@@ -43,13 +62,16 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     [self.view addSubview:_headView];
     
     [self.view addSubview:self.tableView];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    self.tableView.separatorColor = KZSHColor1D1D1D;
+    self.tableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.mas_equalTo(self.view).insets(UIEdgeInsetsMake(kRealValue(225), 0, 0, 0));
     }];
     
     self.tableView.delegate = self.tableViewModel;
     self.tableView.dataSource = self.tableViewModel;
-    [self.tableView registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHBaseCellID];
+    [self.tableView registerClass:[ZSHMusicPlayListCell class] forCellReuseIdentifier:ZSHMusicPlayListCellID];
 }
 
 - (void)initViewModel {
@@ -60,6 +82,8 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 
 //list
 - (ZSHBaseTableViewSectionModel*)storeListSection {
+    kWeakSelf(self);
+    
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     sectionModel.headerView = self.tabHeadView;
     sectionModel.headerHeight = kRealValue(40);
@@ -67,30 +91,33 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     sectionModel.footerView = self.tabFootView;
     sectionModel.footerHeight = KBottomNavH;
     
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < _rankModelArr.count; i++) {
         ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
         [sectionModel.cellModelArray addObject:cellModel];
         cellModel.height = kRealValue(60);
         cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
-            ZSHBaseCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-            if (cell == nil) {
-                cell = [[ZSHBaseCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
-            }
-            UIImage *icon = [UIImage imageNamed:@"music_image_1"];
-            CGSize imageSize = CGSizeMake(40, 40);
-            UIGraphicsBeginImageContextWithOptions(imageSize, NO,0.0);
-            CGRect imageRect = CGRectMake(0.0, 0.0, imageSize.width, imageSize.height);
-            [icon drawInRect:imageRect];
-            cell.imageView.image = UIGraphicsGetImageFromCurrentImageContext();
-            UIGraphicsEndImageContext();
             
-            cell.textLabel.text = @"说谎";
-            cell.detailTextLabel.text = [NSString stringWithFormat:@"%@  %@",@"林宥嘉",@"感官世界"];
-            cell.detailTextLabelEdgeInsets = UIEdgeInsetsMake(kRealValue(14), 0, 0, 0);
+            ZSHMusicPlayListCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHMusicPlayListCellID forIndexPath:indexPath];
+            ZSHRankModel *rankModel = _rankModelArr[indexPath.row];
+            [cell updateCellWithModel:rankModel];
             return cell;
         };
         
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
+             ZSHRankModel *rankModel = _rankModelArr[indexPath.row];
+            RLog(@"dasong_id == %@",rankModel.song_id);
+            [_musicLogic loadSongDetailtWithParamDic:@{@"songid":rankModel.song_id} Success:^(id responseObject) {
+                RLog(@"音乐详细数据== %@",responseObject);
+                MusicModel *model = responseObject;
+                if (model) {
+                    [_songArr removeAllObjects];
+                     [_songArr addObject:model];
+                }
+//                [self.songArr addObject:model];
+                AudioPlayerController *audio = [AudioPlayerController audioPlayerController];
+                [audio initWithArray:self.songArr index:0];
+                [weakself presentViewController:audio animated:YES completion:nil];
+            } fail:nil];
             
         };
     }
@@ -115,8 +142,6 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
             make.left.mas_equalTo(playBtn.mas_right);
             make.top.and.height.and.right.mas_equalTo(_tabHeadView);
         }];
-        
-        
     }
     return _tabHeadView;
 }
@@ -124,6 +149,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 - (UIView *)tabFootView{
     if (!_tabFootView) {
         _tabFootView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, KBottomNavH)];
+        _tabFootView.backgroundColor = KZSHColor0B0B0B;
         
         UIImageView *authorIV = [[UIImageView alloc]init];
         authorIV.image = [UIImage imageNamed:@"music_image_1"];

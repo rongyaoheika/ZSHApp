@@ -7,11 +7,11 @@
 //
 
 #import "ZSHMusicRankCell.h"
-
+#import "ZSHRankModel.h"
 @interface ZSHMusicRankCell()
 
-@property (nonatomic, strong)UIImageView  *rankIV;
-
+@property (nonatomic, strong)UIImageView      *rankIV;
+@property (nonatomic, strong)NSMutableArray   *labelArr;
 
 @end
 
@@ -28,6 +28,7 @@
         make.width.mas_equalTo(kRealValue(110));
     }];
     
+    _labelArr = [[NSMutableArray alloc]init];
     for (int i = 0; i<3; i++) {
         NSDictionary *paramDic = @{@"text":[NSString stringWithFormat:@"%d.连名带姓 - 张惠妹",i+1]};
         UILabel *rankSongLabel = [ZSHBaseUIControl createLabelWithParamDic:paramDic];
@@ -38,7 +39,23 @@
             make.left.mas_equalTo(_rankIV.mas_right).offset(KLeftMargin);
             make.right.mas_equalTo(self).offset(-KLeftMargin);
         }];
+        [_labelArr addObject:rankSongLabel];
     }
+}
+
+
+- (void)updateCellWithParamDic:(NSDictionary *)dic{
+//    [_rankIV sd_setImageWithURL:[NSURL URLWithString:dic[@""]]];
+    NSArray *rankModelArr = dic[@"rankModelArr"];
+    for (int i = 0; i<3; i++) {
+        UILabel *label = _labelArr[i];
+        ZSHRankModel *rankModel = rankModelArr[i];
+        label.text = [NSString stringWithFormat:@"%d. %@ - %@",i+1, rankModel.title, rankModel.artist_name];
+    }
+}
+
+- (void)setImageUrl:(NSString *)imageUrl{
+    [_rankIV sd_setImageWithURL:[NSURL URLWithString:imageUrl]];
 }
 
 @end

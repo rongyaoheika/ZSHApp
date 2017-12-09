@@ -104,7 +104,7 @@ static NSString *Identify_MusicCell = @"musicCell";
     self.noticePushVCsArr = @[@"ZSHBarDetailViewController",@"ZSHFoodDetailViewController", @"ZSHKTVDetailViewController",@"ZSHHotelDetailViewController"];
     
     //歌手，排行榜，曲库，电台
-    self.musicPushVCsArr = @[@"",@"ZSHMusicRankViewController",@"ZSHMusicLibraryViewController",@"ZSHMusicRadioViewController"];
+    self.musicPushVCsArr = @[@"ZSHSingerViewController",@"ZSHMusicRankViewController",@"ZSHMusicLibraryViewController",@"ZSHMusicRadioViewController"];
 
 }
 

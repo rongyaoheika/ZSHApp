@@ -1,26 +1,23 @@
 //
-//  ZSHMusicRadioViewController.m
+//  ZSHSingerViewController.m
 //  ZSHApp
 //
 //  Created by zhaoweiwei on 2017/12/8.
 //  Copyright © 2017年 apple. All rights reserved.
 //
 
-#import "ZSHMusicRadioViewController.h"
+#import "ZSHSingerViewController.h"
 #import "LXScollTitleView.h"
 #import "ZSHMusicLogic.h"
 
-@interface ZSHMusicRadioViewController ()
+@interface ZSHSingerViewController ()
 
-@property (nonatomic, strong) LXScollTitleView      *titleView;
-@property (nonatomic, strong) NSArray               *titleArr;
 @property (nonatomic, strong) ZSHMusicLogic         *musicLogic;
-@property (nonatomic, strong) NSArray               *audioArr;
+@property (nonatomic, strong) NSArray               *singerArr;
 
 @end
 
-static NSString *ZSHBaseCellID = @"ZSHBaseCell";
-@implementation ZSHMusicRadioViewController
+@implementation ZSHSingerViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -31,8 +28,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 }
 
 - (void)loadData{
-    self.titleArr = @[@"全部",@"傍晚",@"最近",@"情感",@"主题",@"场景",@"曲库"];
-    [self reloadListData];
+    
     _musicLogic = [[ZSHMusicLogic alloc]init];
     [self requestData];
     [self initViewModel];
@@ -40,28 +36,45 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    if (!_audioArr) {
+    if (!_singerArr) {
         [self requestData];
     }
+    
 }
 
+- (void)requestData{
+    [_musicLogic loadRadioListSuccess:^(id responseObject) {
+        _singerArr = responseObject;
+    } fail:nil];
+    
+}
 
 - (void)createUI{
-    self.title = @"电台";
-    [self.view addSubview:self.titleView];
-   
+    self.title = @"歌手";
+    [self addNavigationItemWithImageName:@"live_search" isLeft:NO target:self action:@selector(searchAction) tag:1];
+    
+    NSArray *titleArr = @[@[@"全部",@"内地",@"港台",@"欧美",@"日本",@"韩国",@"其它"],
+  @[@"全部",@"男",@"女",@"组合"],@[@"全部",@"流行",@"嘻哈",@"嘻哈",@"摇滚",@"电子",@"民谣",@"民歌"]];
+    for (int i = 0; i<titleArr.count; i++) {
+        LXScollTitleView *titleView = [self createTitleView];
+        titleView.frame = CGRectMake(0, KNavigationBarHeight+i*kRealValue(40), KScreenWidth, kRealValue(40));
+        [self.view addSubview:titleView];
+        
+        titleView.titleWidth = KScreenWidth /6.5;
+        [titleView reloadViewWithTitles:titleArr[i]];
+    }
+    
     [self.view addSubview:self.tableView];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     self.tableView.separatorColor = KZSHColor1D1D1D;
     self.tableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.titleView.mas_bottom);
+        make.top.mas_equalTo(KNavigationBarHeight + 3*kRealValue(40));
         make.left.and.right.and.bottom.mas_equalTo(self.view);
     }];
     
     self.tableView.delegate = self.tableViewModel;
     self.tableView.dataSource = self.tableViewModel;
-//    [self.tableView registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHBaseCellID];
     
 }
 
@@ -77,69 +90,57 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     for (int i = 0; i <10; i++) {
         ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
         [sectionModel.cellModelArray addObject:cellModel];
-        cellModel.height = kRealValue(60);
+        cellModel.height = kRealValue(50);
         cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
             ZSHBaseCell *cell = [tableView cellForRowAtIndexPath:indexPath];
             if (cell == nil) {
-                cell = [[ZSHBaseCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
+                cell = [[ZSHBaseCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
             }
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             UIImage *icon = [UIImage imageNamed:@"music_image_1"];
-            CGSize imageSize = CGSizeMake(40, 40);
+            CGSize imageSize = CGSizeMake(kRealValue(40), kRealValue(40));
             UIGraphicsBeginImageContextWithOptions(imageSize, NO,0.0);
             CGRect imageRect = CGRectMake(0.0, 0.0, imageSize.width, imageSize.height);
             [icon drawInRect:imageRect];
             cell.imageView.image = UIGraphicsGetImageFromCurrentImageContext();
+            cell.imageView.clipsToBounds = YES;
+            cell.imageView.layer.cornerRadius = kRealValue(40)/2;
             UIGraphicsEndImageContext();
             
-            cell.textLabel.text = @"歌手说";
-            cell.detailTextLabel.text = [NSString stringWithFormat:@"当前热度为%.1f万",53.9];
-            cell.detailTextLabel.font = kPingFangRegular(11);
+            cell.textLabel.text = @"薛之谦";
             return cell;
         };
         
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
-           
+            
         };
     }
     
     return sectionModel;
 }
 
-- (void)requestData{
-    [_musicLogic loadRadioListSuccess:^(id responseObject) {
-        _audioArr = responseObject;
-    } fail:nil];
-    
-}
 
 //getter
-- (LXScollTitleView *)titleView{
-    if (!_titleView) {
-        _titleView = [[LXScollTitleView alloc] initWithFrame:CGRectMake(0, KNavigationBarHeight, KScreenWidth, kRealValue(40))];
-        _titleView.normalTitleFont = kPingFangRegular(15);
-        _titleView.selectedTitleFont = kPingFangMedium(15);
-        _titleView.selectedColor = KZSHColor929292;
-        _titleView.normalColor = KZSHColor929292;
-        _titleView.indicatorHeight = 0;
-        _titleView.selectedBlock = ^(NSInteger index){
-           
-        };
+- (LXScollTitleView *)createTitleView{
+    LXScollTitleView *titleView = [[LXScollTitleView alloc] init];
+    titleView.normalTitleFont = kPingFangRegular(15);
+    titleView.selectedTitleFont = kPingFangMedium(15);
+    titleView.selectedColor = KZSHColor929292;
+    titleView.normalColor = KZSHColor929292;
+    titleView.indicatorHeight = 0;
+    titleView.selectedBlock = ^(NSInteger index){
         
-    }
-    return _titleView;
+    };
+    return titleView;
 }
 
-- (void)reloadListData{
-    _titleView.titleWidth = KScreenWidth /self.titleArr.count;
-    [self.titleView reloadViewWithTitles:self.titleArr];
+- (void)searchAction{
+    
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-
-
 
 @end

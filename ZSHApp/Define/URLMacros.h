@@ -595,17 +595,25 @@
 //108. 获取歌曲详细接口
 //请求地址： /appmusicin/getsongplay?SONGPLAY
 //参数:songid 歌曲id
-#define kUrlChannelSong [NSString stringWithFormat:@"/appmusicin/getchannelsong?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"CANNELSONG"]]
+#define kUrlSongPlay [NSString stringWithFormat:@"/appmusicin/getsongplay?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SONGPLAY"]]
+//@"http://tingapi.ting.baidu.com/v1/restserver/ting?from=qianqian&version=2.1.0&method=baidu.ting.song.getInfos&format=json&songid=8059247&ts=1408284347323&e=JoN56kTXnnbEpd9MVczkYJCSx%2FE1mkLx%2BPMIkTcOEu4%3D&nw=2&ucf=1&res=1"
+//[NSString stringWithFormat:@"/appmusicin/getsongplay?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SONGPLAY"]]
 
 //110:获得所有模糊查询的歌曲列表接口
 //请求地址： /appmusicin/getsearchsong?SEARCHSONG
 //参数:query  查询字段
-#define kUrlChannelSong [NSString stringWithFormat:@"/appmusicin/getchannelsong?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"CANNELSONG"]]
+#define kUrlSearchSong [NSString stringWithFormat:@"/appmusicin/getchannelsong?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SEARCHSONG"]]
 
 //111:获得音乐排行榜列表接口
 //请求地址： /appmusicin/getbilllist?BILLLIST
-// 参数:type  类型(1-新歌榜,2-热歌榜,11-摇滚榜,12-爵士,16-流行,21-欧美金曲榜,22-经典老歌榜,23-情歌对唱榜,24-影视金曲榜,25-网络歌曲榜) offset偏移数(页码)
+// 参数:type  类型(1-新歌榜,2-热歌榜,6-KTV热歌榜,8-Hito中文榜,11-摇滚榜,12-爵士,16-流行,21-欧美金 曲榜,22-经典老歌榜,23-情歌对唱榜,24-影视金曲榜,25-网络歌曲榜) offset偏移数(页码)
 #define kUrlBillList [NSString stringWithFormat:@"/appmusicin/getbilllist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"BILLLIST"]]
+//@"http://tingapi.ting.baidu.com/v1/restserver/ting?format=json&calback=&from=webapp_music&method=baidu.ting.billboard.billList&type=1&size=10&offset=0"
+//[NSString stringWithFormat:@"/appmusicin/getbilllist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"BILLLIST"]]
+
+
+
+
 
 //112:获得歌曲歌词
 //请求地址： appmusicin/getlry?LRY&songid=877578

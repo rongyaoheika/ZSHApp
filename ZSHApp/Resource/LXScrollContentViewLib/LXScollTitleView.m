@@ -31,9 +31,9 @@
         [self initData];
         [self setupUI];
         
-        [self.scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.mas_equalTo(self);
-        }];
+//        [self.scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.edges.mas_equalTo(self);
+//        }];
     }
     return self;
 }
@@ -104,16 +104,14 @@
 
 -(void)updateConstraints{
     
-    
-    
     [super updateConstraints];
 }
 
 - (void)layoutSubviews{
     [super layoutSubviews];
     
-//    self.scrollView.frame = self.bounds;
-//    self.scrollView.contentSize = CGSizeMake(self.titleButtons.count * self.titleWidth, self.frame.size.height);
+    self.scrollView.frame = self.bounds;
+    self.scrollView.contentSize = CGSizeMake(self.titleButtons.count * self.titleWidth, self.frame.size.height);
     NSInteger i = 0;
     for (UIButton *btn in self.titleButtons) {
         btn.frame = CGRectMake(self.titleWidth * i++, 0, self.titleWidth, self.frame.size.height);

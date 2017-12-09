@@ -10,4 +10,6 @@
 
 @interface ZSHMusicPlayListCell : ZSHBaseCell
 
+@property (nonatomic, copy) NSString    *imageUrl;
+
 @end
