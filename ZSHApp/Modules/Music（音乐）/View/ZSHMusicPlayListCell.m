@@ -55,7 +55,18 @@
      [_headImageView sd_setImageWithURL:[NSURL URLWithString:array[0]]];
     _titleLabel.text = model.title;
     _detailLabel.text = [NSString stringWithFormat:@"%@  %@",model.artist_name,model.album_title];
-    
+}
+
+- (void)updateCellWithRadioModel:(ZSHRadioSubModel *)radioSubModel{
+    [_headImageView sd_setImageWithURL:[NSURL URLWithString:radioSubModel.thumb]];
+    _titleLabel.text = radioSubModel.name;
+    _detailLabel.text = [NSString stringWithFormat:@"当前热度为%@万",radioSubModel.value];
+}
+
+- (void)updateCellWithRadioDetailModel:(ZSHRadioDetailSubModel *)radioDetailSubModel{
+    [_headImageView sd_setImageWithURL:[NSURL URLWithString:radioDetailSubModel.thumb]];
+    _titleLabel.text = radioDetailSubModel.title;
+    _detailLabel.text = radioDetailSubModel.artist;
 }
 
 @end

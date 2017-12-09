@@ -160,6 +160,7 @@
 		FE1377931F977628003C8DFB /* ZSHManageAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE1377921F977628003C8DFB /* ZSHManageAddressViewController.m */; };
 		FE1377961F977AC3003C8DFB /* ZSHPickView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE1377951F977AC3003C8DFB /* ZSHPickView.m */; };
 		FE1377C11F97AE29003C8DFB /* ZSHManageAddressListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE1377C01F97AE29003C8DFB /* ZSHManageAddressListViewController.m */; };
+		FE1783B51FDB8A880074A08A /* ZSHRadioDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FE1783B41FDB8A880074A08A /* ZSHRadioDetailModel.m */; };
 		FE1F761C1F8F191300C45B83 /* ZSHGoodsListView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE1F761B1F8F191300C45B83 /* ZSHGoodsListView.m */; };
 		FE1F761F1F8F3D4100C45B83 /* ZSHTogetherView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE1F761E1F8F3D4100C45B83 /* ZSHTogetherView.m */; };
 		FE1F76221F8F738700C45B83 /* ZSHLiveTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE1F76211F8F738700C45B83 /* ZSHLiveTabBarController.m */; };
@@ -761,6 +762,8 @@
 		FE1377951F977AC3003C8DFB /* ZSHPickView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHPickView.m; sourceTree = "<group>"; };
 		FE1377BF1F97AE29003C8DFB /* ZSHManageAddressListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHManageAddressListViewController.h; sourceTree = "<group>"; };
 		FE1377C01F97AE29003C8DFB /* ZSHManageAddressListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHManageAddressListViewController.m; sourceTree = "<group>"; };
+		FE1783B31FDB8A880074A08A /* ZSHRadioDetailModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHRadioDetailModel.h; sourceTree = "<group>"; };
+		FE1783B41FDB8A880074A08A /* ZSHRadioDetailModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHRadioDetailModel.m; sourceTree = "<group>"; };
 		FE1F761A1F8F191300C45B83 /* ZSHGoodsListView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHGoodsListView.h; sourceTree = "<group>"; };
 		FE1F761B1F8F191300C45B83 /* ZSHGoodsListView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHGoodsListView.m; sourceTree = "<group>"; };
 		FE1F761D1F8F3D4100C45B83 /* ZSHTogetherView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHTogetherView.h; sourceTree = "<group>"; };
@@ -2086,6 +2089,10 @@
 		FE24DA5A1FD9317900965DC8 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				FE3E00831FDA743200A0F7CA /* MusicModel.h */,
+				FE3E00841FDA743200A0F7CA /* MusicModel.m */,
+				FE1783B31FDB8A880074A08A /* ZSHRadioDetailModel.h */,
+				FE1783B41FDB8A880074A08A /* ZSHRadioDetailModel.m */,
 				FE24DA621FD942EC00965DC8 /* ZSHRadioModel.h */,
 				FE24DA631FD942EC00965DC8 /* ZSHRadioModel.m */,
 				FE3E009B1FDA7C5800A0F7CA /* ZSHRankModel.h */,
@@ -2522,7 +2529,6 @@
 				FE3E006A1FDA743200A0F7CA /* Tools */,
 				FE3E006F1FDA743200A0F7CA /* Image */,
 				FE3E007C1FDA743200A0F7CA /* Controller */,
-				FE3E00821FDA743200A0F7CA /* Model */,
 				FE3E00851FDA743200A0F7CA /* View */,
 			);
 			path = Player;
@@ -2568,15 +2574,6 @@
 				FE3E00811FDA743200A0F7CA /* AudioPlayerController.h */,
 			);
 			path = Controller;
-			sourceTree = "<group>";
-		};
-		FE3E00821FDA743200A0F7CA /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				FE3E00831FDA743200A0F7CA /* MusicModel.h */,
-				FE3E00841FDA743200A0F7CA /* MusicModel.m */,
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		FE3E00851FDA743200A0F7CA /* View */ = {
@@ -4196,6 +4193,7 @@
 				FE1F76221F8F738700C45B83 /* ZSHLiveTabBarController.m in Sources */,
 				FEBD7CA31FA716AC00CE2BA6 /* ZSHGoodsCommentCell.m in Sources */,
 				FE291EF31F8CCD2200D4BBE7 /* ZSHLoginViewController.m in Sources */,
+				FE1783B51FDB8A880074A08A /* ZSHRadioDetailModel.m in Sources */,
 				FEF2B63A1FAC5D39000AEA6E /* ZSHEntertainmentModel.m in Sources */,
 				FED308981FA414D900CD442B /* ZSHHotelDetailDeviceCell.m in Sources */,
 				181AD3171FCCF3C30015D004 /* ZSHAddrModel.m in Sources */,

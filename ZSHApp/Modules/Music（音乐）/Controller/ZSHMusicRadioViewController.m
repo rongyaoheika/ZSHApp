@@ -9,17 +9,20 @@
 #import "ZSHMusicRadioViewController.h"
 #import "LXScollTitleView.h"
 #import "ZSHMusicLogic.h"
+#import "ZSHMusicPlayListCell.h"
+#import "ZSHRadioModel.h"
+#import "ZSHPlayListViewController.h"
 
 @interface ZSHMusicRadioViewController ()
 
 @property (nonatomic, strong) LXScollTitleView      *titleView;
 @property (nonatomic, strong) NSArray               *titleArr;
 @property (nonatomic, strong) ZSHMusicLogic         *musicLogic;
-@property (nonatomic, strong) NSArray               *audioArr;
+@property (nonatomic, strong) NSArray               *radioModelArr;
 
 @end
 
-static NSString *ZSHBaseCellID = @"ZSHBaseCell";
+static NSString *ZSHMusicPlayListCellID = @"ZSHMusicPlayListCell";
 @implementation ZSHMusicRadioViewController
 
 - (void)viewDidLoad {
@@ -40,7 +43,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    if (!_audioArr) {
+    if (!_radioModelArr) {
         [self requestData];
     }
 }
@@ -61,7 +64,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     
     self.tableView.delegate = self.tableViewModel;
     self.tableView.dataSource = self.tableViewModel;
-//    [self.tableView registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHBaseCellID];
+    [self.tableView registerClass:[ZSHMusicPlayListCell class] forCellReuseIdentifier:ZSHMusicPlayListCellID];
     
 }
 
@@ -73,32 +76,28 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 
 //list
 - (ZSHBaseTableViewSectionModel*)storeListSection {
+    kWeakSelf(self);
+    //只显示"公共频道",不显示“歌手频道”
+    ZSHRadioModel *publicModel = _radioModelArr[0];
+    NSArray *radioDataArr = publicModel.channellist;
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
-    for (int i = 0; i <10; i++) {
+    for (int i = 0; i <radioDataArr.count; i++) {
         ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
         [sectionModel.cellModelArray addObject:cellModel];
         cellModel.height = kRealValue(60);
         cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
-            ZSHBaseCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-            if (cell == nil) {
-                cell = [[ZSHBaseCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
-            }
-            UIImage *icon = [UIImage imageNamed:@"music_image_1"];
-            CGSize imageSize = CGSizeMake(40, 40);
-            UIGraphicsBeginImageContextWithOptions(imageSize, NO,0.0);
-            CGRect imageRect = CGRectMake(0.0, 0.0, imageSize.width, imageSize.height);
-            [icon drawInRect:imageRect];
-            cell.imageView.image = UIGraphicsGetImageFromCurrentImageContext();
-            UIGraphicsEndImageContext();
-            
-            cell.textLabel.text = @"歌手说";
-            cell.detailTextLabel.text = [NSString stringWithFormat:@"当前热度为%.1f万",53.9];
-            cell.detailTextLabel.font = kPingFangRegular(11);
+            ZSHMusicPlayListCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHMusicPlayListCellID forIndexPath:indexPath];
+            ZSHRadioSubModel *radioSubModel = radioDataArr[indexPath.row];
+            [cell updateCellWithRadioModel:radioSubModel];
+
             return cell;
         };
         
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
-           
+            ZSHRadioSubModel *radioSubModel = radioDataArr[indexPath.row];
+            NSDictionary *paramDic = @{@"ch_name":radioSubModel.ch_name,KFromClassType:@(ZSHFromRadioVCToPlayListVC)};
+            ZSHPlayListViewController *playListVC = [[ZSHPlayListViewController alloc]initWithParamDic:paramDic];
+            [weakself.navigationController pushViewController:playListVC animated:YES];
         };
     }
     
@@ -106,8 +105,10 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 }
 
 - (void)requestData{
+    kWeakSelf(self);
     [_musicLogic loadRadioListSuccess:^(id responseObject) {
-        _audioArr = responseObject;
+        _radioModelArr = responseObject;
+        [weakself initViewModel];
     } fail:nil];
     
 }

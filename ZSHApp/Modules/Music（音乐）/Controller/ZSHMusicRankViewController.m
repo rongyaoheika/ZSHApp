@@ -65,18 +65,7 @@ static NSString *ZSHMusicRankCellID = @"ZSHMusicRankCell";
             }
         } fail:nil];
     }
-   
-    
-    
-//    [_musicLogic loadRankListWithParamDic:@{@"type":@(1),@"offset":@(1)} Success:^(id responseObject,NSString *imageUrl) {
-//        _rankModelArr = responseObject;
-//        _musicImageUrl = imageUrl;
-//        RLog(@"音乐排行榜数据==%@",responseObject);
-//
-//        [_leftImageArr addObject:_musicImageUrl];
-//        [_allMusicArr addObject:_rankModelArr];
-//        [weakself initViewModel];
-//    } fail:nil];
+
 
 // 本地数据
 //        NSString *str = [[NSBundle mainBundle]pathForResource:@"musicPaper" ofType:@"json"];
@@ -131,8 +120,10 @@ static NSString *ZSHMusicRankCellID = @"ZSHMusicRankCell";
         };
         
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
-            NSDictionary *paramDic = @{@"dataArr":_allMusicArr[indexPath.row]};
+            NSDictionary *paramDic = @{@"dataArr":_allMusicArr[indexPath.row],KFromClassType:@(ZSHFromRankVCToPlayListVC)};
+            
             ZSHPlayListViewController  *playListVC = [[ZSHPlayListViewController alloc]initWithParamDic:paramDic];
+            
             [weakself.navigationController pushViewController:playListVC animated:YES];
         };
     }

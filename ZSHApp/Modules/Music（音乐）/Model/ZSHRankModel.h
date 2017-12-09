@@ -36,5 +36,6 @@
 @property (nonatomic, copy) NSString        *ting_uid;      //歌手id
 @property (nonatomic, copy) NSString        *hot;           //热度
 
+
 @end
 

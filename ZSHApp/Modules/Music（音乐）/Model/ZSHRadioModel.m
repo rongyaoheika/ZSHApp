@@ -10,6 +10,13 @@
 
 @implementation ZSHRadioModel
 
+- (void)setValue:(id)value forKey:(NSString *)key{
+    if ([key isEqualToString:@"channellist"]) {
+        _channellist = [ZSHRadioSubModel mj_objectArrayWithKeyValuesArray:value];
+    }
+}
+
+
 @end
 
 

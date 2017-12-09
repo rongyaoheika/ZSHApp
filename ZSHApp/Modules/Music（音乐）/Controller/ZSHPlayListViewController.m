@@ -13,15 +13,18 @@
 #import "AudioPlayerController.h"
 #import "ZSHSongDetailModel.h"
 #import "MusicModel.h"
+#import "ZSHRadioModel.h"
+#import "ZSHRadioDetailModel.h"
 
 @interface ZSHPlayListViewController ()
 
 @property (nonatomic, strong) ZSHPlayListHeadView  *headView;
 @property (nonatomic, strong) UIView               *tabHeadView;
-@property (nonatomic, strong) UIView               *tabFootView;
+@property (nonatomic, strong) UIView               *footView;
 @property (nonatomic, strong) ZSHMusicLogic        *musicLogic;
 @property (nonatomic, strong) NSMutableArray       *songArr;
 @property (nonatomic, strong) NSArray              *rankModelArr;
+@property (nonatomic, strong) ZSHRadioDetailModel  *radioDetailModel;
 
 @end
 
@@ -38,20 +41,25 @@ static NSString *ZSHMusicPlayListCellID = @"ZSHMusicPlayListCell";
 
 - (void)loadData{
     _musicLogic = [[ZSHMusicLogic alloc]init];
-    _rankModelArr = self.paramDic[@"dataArr"];
     _songArr = [[NSMutableArray alloc]initWithCapacity:10];
-//    [self requestData];
-    [self initViewModel];
+    if (kFromClassTypeValue == ZSHFromRankVCToPlayListVC) {
+        _rankModelArr = self.paramDic[@"dataArr"];
+         [self initViewModel];
+    } else if (kFromClassTypeValue == ZSHFromRadioVCToPlayListVC) {
+        [self requestData];
+    }
+
 }
 
 - (void)requestData{
     kWeakSelf(self);
-    _musicLogic = [[ZSHMusicLogic alloc]init];
-    [_musicLogic loadRankListWithParamDic:@{@"type":@(21),@"offset":@(1)} Success:^(id responseObject,id imageUrl) {
-         RLog(@"音乐排行榜数据==%@",responseObject);
-        _rankModelArr = responseObject;
+    NSDictionary *paramDic = @{@"ch_name":self.paramDic[@"ch_name"]};
+    [_musicLogic loadRadioDetailWithParamDic:paramDic Success:^(id responseObject) {
+       _radioDetailModel = responseObject;
+        
         [weakself initViewModel];
     } fail:nil];
+    
 }
 
 - (void)createUI{
@@ -60,9 +68,11 @@ static NSString *ZSHMusicPlayListCellID = @"ZSHMusicPlayListCell";
     _headView = [[ZSHPlayListHeadView alloc]init];
     _headView.frame = CGRectMake(0, 0, kScreenWidth, kRealValue(225));
     [self.view addSubview:_headView];
+    [self.view addSubview:self.footView];
     
     [self.view addSubview:self.tableView];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    
     self.tableView.separatorColor = KZSHColor1D1D1D;
     self.tableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -83,34 +93,59 @@ static NSString *ZSHMusicPlayListCellID = @"ZSHMusicPlayListCell";
 //list
 - (ZSHBaseTableViewSectionModel*)storeListSection {
     kWeakSelf(self);
-    
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     sectionModel.headerView = self.tabHeadView;
     sectionModel.headerHeight = kRealValue(40);
+    NSArray *arr = nil;
+    switch (kFromClassTypeValue) {
+        case ZSHFromRankVCToPlayListVC:{//排行榜
+            arr = _rankModelArr;
+            break;
+        }
+        case ZSHFromRadioVCToPlayListVC:{//电台
+            arr = _radioDetailModel.songlist;
+            break;
+        }
+            
+        default:
+            break;
+    }
     
-    sectionModel.footerView = self.tabFootView;
-    sectionModel.footerHeight = KBottomNavH;
     
-    for (int i = 0; i < _rankModelArr.count; i++) {
+    for (int i = 0; i < arr.count; i++) {
         ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
         [sectionModel.cellModelArray addObject:cellModel];
         cellModel.height = kRealValue(60);
         cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
             
             ZSHMusicPlayListCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHMusicPlayListCellID forIndexPath:indexPath];
-            ZSHRankModel *rankModel = _rankModelArr[indexPath.row];
-            [cell updateCellWithModel:rankModel];
+            if (kFromClassTypeValue == ZSHFromRankVCToPlayListVC) {
+                ZSHRankModel *rankModel = _rankModelArr[indexPath.row];
+                [cell updateCellWithModel:rankModel];
+            } else if (kFromClassTypeValue == ZSHFromRadioVCToPlayListVC){
+                ZSHRadioDetailSubModel *radioDetailSubModel = _radioDetailModel.songlist[indexPath.row];
+                [cell updateCellWithRadioDetailModel:radioDetailSubModel];
+            }
+           
             return cell;
         };
         
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
-             ZSHRankModel *rankModel = _rankModelArr[indexPath.row];
-            RLog(@"dasong_id == %@",rankModel.song_id);
-            [_musicLogic loadSongDetailtWithParamDic:@{@"songid":rankModel.song_id} Success:^(id responseObject) {
+            NSString *songId = @"";
+            if (kFromClassTypeValue == ZSHFromRankVCToPlayListVC) {
+               ZSHRankModel *rankModel = _rankModelArr[indexPath.row];
+                songId = rankModel.song_id;
+            } else if (kFromClassTypeValue == ZSHFromRadioVCToPlayListVC){
+                ZSHRadioDetailSubModel *radioDetailSubModel = _radioDetailModel.songlist[indexPath.row];
+                songId = radioDetailSubModel.songid;
+            }
+            
+            RLog(@"歌曲id参数 == %@",songId);
+            [_musicLogic loadSongDetailtWithParamDic:@{@"songid":songId} Success:^(id responseObject) {
                 RLog(@"音乐详细数据== %@",responseObject);
                 MusicModel *model = responseObject;
                 if (model) {
-                    [_songArr removeAllObjects];
+                     [_songArr removeAllObjects];
                      [_songArr addObject:model];
                 }
 //                [self.songArr addObject:model];
@@ -125,10 +160,11 @@ static NSString *ZSHMusicPlayListCellID = @"ZSHMusicPlayListCell";
     return sectionModel;
 }
 
+
+
 - (UIView *)tabHeadView{
     if (!_tabHeadView) {
         _tabHeadView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kRealValue(40))];
-        
         NSDictionary *btnDic = @{@"title":@"随机播放",@"withImage":@(YES),@"normalImage":@"music_play"};
         UIButton *playBtn = [ZSHBaseUIControl createBtnWithParamDic:btnDic];
         playBtn.frame = CGRectMake(KLeftMargin, 0, kRealValue(100), kRealValue(40));
@@ -146,51 +182,51 @@ static NSString *ZSHMusicPlayListCellID = @"ZSHMusicPlayListCell";
     return _tabHeadView;
 }
 
-- (UIView *)tabFootView{
-    if (!_tabFootView) {
-        _tabFootView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, KBottomNavH)];
-        _tabFootView.backgroundColor = KZSHColor0B0B0B;
+- (UIView *)footView{
+    if (!_footView) {
+        _footView = [[UIView alloc]initWithFrame:CGRectMake(0, kScreenHeight - KBottomNavH, kScreenWidth, KBottomNavH)];
+        _footView.backgroundColor = KZSHColor0B0B0B;
         
         UIImageView *authorIV = [[UIImageView alloc]init];
         authorIV.image = [UIImage imageNamed:@"music_image_1"];
-        [_tabFootView addSubview:authorIV];
+        [_footView addSubview:authorIV];
         [authorIV mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.mas_equalTo(_tabFootView).offset(KLeftMargin);
-            make.centerY.mas_equalTo(_tabFootView);
+            make.left.mas_equalTo(_footView).offset(KLeftMargin);
+            make.centerY.mas_equalTo(_footView);
             make.size.mas_equalTo(CGSizeMake(kRealValue(40), kRealValue(40)));
         }];
         
         NSDictionary *songLabelDic = @{@"text":@"后来",@"font":kPingFangRegular(12)};
         UILabel *songLabel = [ZSHBaseUIControl createLabelWithParamDic:songLabelDic];
-        [_tabFootView addSubview:songLabel];
+        [_footView addSubview:songLabel];
         [songLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.mas_equalTo(authorIV.mas_right).offset(kRealValue(10));
-            make.height.mas_equalTo(_tabFootView);
-            make.centerY.mas_equalTo(_tabFootView);
+            make.height.mas_equalTo(_footView);
+            make.centerY.mas_equalTo(_footView);
             make.width.mas_equalTo(kRealValue(100));
         }];
         
         
         UIButton *stopBtn = [[UIButton alloc]init];
         [stopBtn setBackgroundImage:[UIImage imageNamed:@"music_stop"] forState:UIControlStateNormal];
-        [_tabFootView addSubview:stopBtn];
+        [_footView addSubview:stopBtn];
         [stopBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.right.mas_equalTo(_tabFootView).offset(-KLeftMargin);
+            make.right.mas_equalTo(_footView).offset(-KLeftMargin);
             make.size.mas_equalTo(CGSizeMake(kRealValue(25), kRealValue(25)));
-            make.centerY.mas_equalTo(_tabFootView);
+            make.centerY.mas_equalTo(_footView);
         }];
         
         UIButton *startBtn = [[UIButton alloc]init];
         [startBtn setBackgroundImage:[UIImage imageNamed:@"music_start"] forState:UIControlStateNormal];
-        [_tabFootView addSubview:startBtn];
+        [_footView addSubview:startBtn];
          [startBtn mas_makeConstraints:^(MASConstraintMaker *make) {
             make.right.mas_equalTo(stopBtn.mas_left).offset(-KLeftMargin);
-            make.centerY.mas_equalTo(_tabFootView);
+            make.centerY.mas_equalTo(_footView);
             make.size.mas_equalTo(CGSizeMake(kRealValue(25), kRealValue(25)));
         }];
         
     }
-    return _tabFootView;
+    return _footView;
 }
 
 - (void)didReceiveMemoryWarning {

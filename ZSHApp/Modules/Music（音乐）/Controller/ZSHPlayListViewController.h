@@ -8,6 +8,13 @@
 
 #import "RootViewController.h"
 
+typedef NS_ENUM(NSInteger, ZSHToPlayListVC) {
+    ZSHFromRankVCToPlayListVC,         //排行榜-播放列表
+    ZSHFromRadioVCToPlayListVC,        //电台-播放列表
+    ZSHFromOtherVCToPlayListVC,        //其他
+};
+
 @interface ZSHPlayListViewController : RootViewController
+
 
 @end

@@ -15,7 +15,7 @@
     [PPNetworkHelper POST:kUrlRadioStation parameters:nil success:^(id responseObject) {
         RLog(@"音乐电台列表数据%@",responseObject);
 
-        NSArray *modelArr = [ZSHRadioModel mj_objectArrayWithKeyValuesArray:responseObject[@"result"]];
+        NSArray *modelArr = [ZSHRadioModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"][@"result"]];
         RLog(@"音乐电台model列表数据%@",modelArr);
         success(modelArr);
         
@@ -23,6 +23,20 @@
         RLog(@"音乐电台列表数据获取失败");
     }];
 }
+
+
+- (void)loadRadioDetailWithParamDic:(NSDictionary *)paramDic Success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail{
+    [PPNetworkHelper POST:kUrlChannelSong parameters:paramDic success:^(id responseObject) {
+        RLog(@"电台详细歌单列表数据%@",responseObject);
+        ZSHRadioDetailModel *radioDetailModel = [ZSHRadioDetailModel mj_objectWithKeyValues:responseObject[@"pd"][@"result"]];
+        RLog(@"电台详细歌单列表数据%@",radioDetailModel);
+        success(radioDetailModel);
+        
+    } failure:^(NSError *error) {
+        RLog(@"电台详细歌单列表数据");
+    }];
+}
+
 
 - (void)loadRankListWithParamDic:(NSDictionary *)paramDic Success:(RequestMoreDataCompleted)success fail:(ResponseFailBlock)fail{
     RLog(@"paramDic == %@",paramDic);
