@@ -45,7 +45,6 @@
 
 
 - (void)updateCellWithParamDic:(NSDictionary *)dic{
-//    [_rankIV sd_setImageWithURL:[NSURL URLWithString:dic[@""]]];
     NSArray *rankModelArr = dic[@"rankModelArr"];
     for (int i = 0; i<3; i++) {
         UILabel *label = _labelArr[i];

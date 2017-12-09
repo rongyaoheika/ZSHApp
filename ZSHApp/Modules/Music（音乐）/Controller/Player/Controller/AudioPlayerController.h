@@ -10,7 +10,6 @@
 #import <AVFoundation/AVFoundation.h>
 #import <MediaPlayer/MediaPlayer.h>
 #import "MusicModel.h"
-#import "UIImage+ImageEffects.h" // 模糊效果
 #import "RotatingView.h"   // 旋转View
 
 /**

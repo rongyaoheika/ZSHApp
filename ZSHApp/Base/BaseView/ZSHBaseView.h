@@ -23,6 +23,7 @@ typedef void(^BtnClickBlock)(id);
 - (instancetype)initWithFrame:(CGRect)frame;
 - (instancetype)initWithFrame:(CGRect)frame paramDic:(NSDictionary *)paramDic;
 - (void)updateViewWithParamDic:(NSDictionary *)paramDic;
+- (void)updateViewWithModel:(ZSHBaseModel *)model;
 - (void)setup;
 
 @end

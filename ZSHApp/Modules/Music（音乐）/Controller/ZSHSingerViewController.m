@@ -9,14 +9,16 @@
 #import "ZSHSingerViewController.h"
 #import "LXScollTitleView.h"
 #import "ZSHMusicLogic.h"
-
+#import "ZSHMusicPlayListCell.h"
+#import "ZSHPlayListViewController.h"
 @interface ZSHSingerViewController ()
 
 @property (nonatomic, strong) ZSHMusicLogic         *musicLogic;
-@property (nonatomic, strong) NSArray               *singerArr;
+@property (nonatomic, strong) NSArray               *singerModelArr;
 
 @end
 
+static NSString *ZSHMusicPlayListCellID = @"ZSHMusicPlayListCell";
 @implementation ZSHSingerViewController
 
 - (void)viewDidLoad {
@@ -36,15 +38,17 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    if (!_singerArr) {
+    if (!_singerModelArr) {
         [self requestData];
     }
     
 }
 
 - (void)requestData{
-    [_musicLogic loadRadioListSuccess:^(id responseObject) {
-        _singerArr = responseObject;
+    kWeakSelf(self);
+    [_musicLogic loadSingerListWithParamDic:nil Success:^(id responseObject) {
+        _singerModelArr = responseObject;
+        [weakself initViewModel];
     } fail:nil];
     
 }
@@ -75,6 +79,7 @@
     
     self.tableView.delegate = self.tableViewModel;
     self.tableView.dataSource = self.tableViewModel;
+    [self.tableView registerClass:[ZSHMusicPlayListCell class] forCellReuseIdentifier:ZSHMusicPlayListCellID];
     
 }
 
@@ -86,33 +91,26 @@
 
 //list
 - (ZSHBaseTableViewSectionModel*)storeListSection {
+    kWeakSelf(self);
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
-    for (int i = 0; i <10; i++) {
+    for (int i = 0; i <_singerModelArr.count; i++) {
         ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
         [sectionModel.cellModelArray addObject:cellModel];
         cellModel.height = kRealValue(50);
         cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
-            ZSHBaseCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-            if (cell == nil) {
-                cell = [[ZSHBaseCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
-            }
+            ZSHMusicPlayListCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHMusicPlayListCellID forIndexPath:indexPath];
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-            UIImage *icon = [UIImage imageNamed:@"music_image_1"];
-            CGSize imageSize = CGSizeMake(kRealValue(40), kRealValue(40));
-            UIGraphicsBeginImageContextWithOptions(imageSize, NO,0.0);
-            CGRect imageRect = CGRectMake(0.0, 0.0, imageSize.width, imageSize.height);
-            [icon drawInRect:imageRect];
-            cell.imageView.image = UIGraphicsGetImageFromCurrentImageContext();
-            cell.imageView.clipsToBounds = YES;
-            cell.imageView.layer.cornerRadius = kRealValue(40)/2;
-            UIGraphicsEndImageContext();
             
-            cell.textLabel.text = @"薛之谦";
+            ZSHSingerModel *singerModel = _singerModelArr[indexPath.row];
+            [cell updateCellWithSingerModel:singerModel];
             return cell;
         };
         
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
-            
+            ZSHSingerModel *singerModel = _singerModelArr[indexPath.row];
+            NSDictionary *paramDic = @{@"headImage":singerModel.avatar_big, @"tinguid":singerModel.ting_uid, KFromClassType:@(ZSHFromSingerVCToPlayListVC)};
+            ZSHPlayListViewController  *playListVC = [[ZSHPlayListViewController alloc]initWithParamDic:paramDic];
+            [weakself.navigationController pushViewController:playListVC animated:YES];
         };
     }
     

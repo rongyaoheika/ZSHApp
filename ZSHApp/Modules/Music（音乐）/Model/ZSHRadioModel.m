@@ -16,9 +16,7 @@
     }
 }
 
-
 @end
-
 
 @implementation ZSHRadioSubModel
 

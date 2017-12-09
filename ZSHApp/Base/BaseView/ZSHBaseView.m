@@ -49,4 +49,8 @@
     
 }
 
+- (void)updateViewWithModel:(ZSHBaseModel *)model{
+    
+}
+
 @end

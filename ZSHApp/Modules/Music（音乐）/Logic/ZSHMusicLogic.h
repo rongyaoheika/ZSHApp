@@ -10,6 +10,7 @@
 #import "ZSHRadioModel.h"
 #import "ZSHRankModel.h"
 #import "ZSHRadioDetailModel.h"
+#import "ZSHSingerModel.h"
 @interface ZSHMusicLogic : ZSHBaseLogic
 
 //音乐电台列表
@@ -29,5 +30,11 @@
 
 //每日推荐歌曲
 - (void)loadkSongListWithParamDic:(NSDictionary *)paramDic Success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail;
+
+//歌手列表
+- (void)loadSingerListWithParamDic:(NSDictionary *)paramDic Success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail;
+
+//歌手歌曲列表
+- (void)loadSingerSongListWithParamDic:(NSDictionary *)paramDic Success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail;
 
 @end

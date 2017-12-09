@@ -7,7 +7,8 @@
 //
 
 #import "ZSHPlayListHeadView.h"
-
+#import "ZSHRankModel.h"
+#import "ZSHRadioDetailModel.h"
 @interface ZSHPlayListHeadView ()
 
 @property (nonatomic, strong) UIImageView   *bgImageView;
@@ -76,6 +77,15 @@
         make.bottom.mas_equalTo(_authorImageView);
         make.width.mas_equalTo(_loveBtn);
         make.height.mas_equalTo(_loveBtn);
+    }];
+}
+
+- (void)updateViewWithParamDic:(NSDictionary *)paramDic{
+     _bgImageView.image = [UIImage imageNamed:@"music_image_19"];
+    [_authorImageView sd_setImageWithURL:[NSURL URLWithString:paramDic[@"headImage"]] placeholderImage:[UIImage imageNamed:@"music_image_1"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        if (image) {
+            _bgImageView.image = [image applyDarkEffect];
+        }
     }];
 }
 

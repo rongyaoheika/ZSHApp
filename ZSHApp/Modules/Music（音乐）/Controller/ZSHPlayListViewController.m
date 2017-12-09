@@ -11,7 +11,7 @@
 #import "ZSHPlayListHeadView.h"
 #import "ZSHMusicPlayListCell.h"
 #import "AudioPlayerController.h"
-#import "ZSHSongDetailModel.h"
+#import "ZSHSingerModel.h"
 #import "MusicModel.h"
 #import "ZSHRadioModel.h"
 #import "ZSHRadioDetailModel.h"
@@ -24,7 +24,10 @@
 @property (nonatomic, strong) ZSHMusicLogic        *musicLogic;
 @property (nonatomic, strong) NSMutableArray       *songArr;
 @property (nonatomic, strong) NSArray              *rankModelArr;
+@property (nonatomic, strong) NSArray              *singerSongArr;
 @property (nonatomic, strong) ZSHRadioDetailModel  *radioDetailModel;
+@property (nonatomic, strong) NSArray              *librarySongArr;
+
 
 @end
 
@@ -42,24 +45,89 @@ static NSString *ZSHMusicPlayListCellID = @"ZSHMusicPlayListCell";
 - (void)loadData{
     _musicLogic = [[ZSHMusicLogic alloc]init];
     _songArr = [[NSMutableArray alloc]initWithCapacity:10];
-    if (kFromClassTypeValue == ZSHFromRankVCToPlayListVC) {
-        _rankModelArr = self.paramDic[@"dataArr"];
-         [self initViewModel];
-    } else if (kFromClassTypeValue == ZSHFromRadioVCToPlayListVC) {
-        [self requestData];
+    switch (kFromClassTypeValue) {
+        case ZSHFromRankVCToPlayListVC:{//排行榜
+            _rankModelArr = self.paramDic[@"dataArr"];
+            [self initViewModel];
+            break;
+        }
+        case ZSHFromRadioVCToPlayListVC:{//电台
+            [self requestRadioData];
+            break;
+        }
+        case ZSHFromSingerVCToPlayListVC:{//歌手歌单
+             [self requestSingerData];
+            break;
+        }
+        case ZSHFromLibraryVCToPlayListVC:{//曲库
+            [self requestLibraryRadioData];
+            break;
+        }
+        default:
+            break;
     }
-
+   
+    NSDictionary *headDic = @{@"headImage":self.paramDic[@"headImage"]};
+    [_headView updateViewWithParamDic:headDic];
 }
 
-- (void)requestData{
+//添加曲库歌单
+- (void)requestLibraryRadioData{
+    kWeakSelf(self);
+    switch ([self.paramDic[@"index"]integerValue]) {
+        case 0:{//推荐
+            [_musicLogic loadkSongListWithParamDic:nil Success:^(id responseObject) {
+                _rankModelArr = responseObject;
+               [weakself initViewModel];
+            } fail:nil];
+            break;
+        }
+        case 1:{//精选
+            [_musicLogic loadkSongListWithParamDic:nil Success:^(id responseObject) {
+                _rankModelArr = responseObject;
+                [weakself initViewModel];
+            } fail:nil];
+            break;
+        }
+        case 2:{//最热
+            [_musicLogic loadRankListWithParamDic:@{@"type":@(2),@"offset":@(0)} Success:^(id responseObject1, id responseObject2) {
+                _rankModelArr = responseObject1;
+                [weakself initViewModel];
+            } fail:nil];
+        }
+            
+        case 3:{//最新
+            [_musicLogic loadRankListWithParamDic:@{@"type":@(1),@"offset":@(0)} Success:^(id responseObject1, id responseObject2) {
+                _rankModelArr = responseObject1;
+                [weakself initViewModel];
+            } fail:nil];
+            break;
+        }
+            
+            
+        default:
+            break;
+    }
+    
+}
+
+- (void)requestRadioData{
     kWeakSelf(self);
     NSDictionary *paramDic = @{@"ch_name":self.paramDic[@"ch_name"]};
     [_musicLogic loadRadioDetailWithParamDic:paramDic Success:^(id responseObject) {
        _radioDetailModel = responseObject;
-        
         [weakself initViewModel];
     } fail:nil];
+}
+
+- (void)requestSingerData{
+    kWeakSelf(self);
     
+    NSDictionary *paramDic = @{@"tinguid":self.paramDic[@"tinguid"],@"offset":@(0)};
+    [_musicLogic loadSingerSongListWithParamDic:paramDic Success:^(id responseObject) {
+        _singerSongArr = responseObject;
+        [weakself initViewModel];
+    } fail:nil];
 }
 
 - (void)createUI{
@@ -76,7 +144,7 @@ static NSString *ZSHMusicPlayListCellID = @"ZSHMusicPlayListCell";
     self.tableView.separatorColor = KZSHColor1D1D1D;
     self.tableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.mas_equalTo(self.view).insets(UIEdgeInsetsMake(kRealValue(225), 0, 0, 0));
+        make.edges.mas_equalTo(self.view).insets(UIEdgeInsetsMake(kRealValue(225), 0, 0, KBottomNavH+KBottomHeight));
     }];
     
     self.tableView.delegate = self.tableViewModel;
@@ -106,7 +174,15 @@ static NSString *ZSHMusicPlayListCellID = @"ZSHMusicPlayListCell";
             arr = _radioDetailModel.songlist;
             break;
         }
-            
+        case ZSHFromSingerVCToPlayListVC:{//歌手
+            arr = _singerSongArr;
+            break;
+        }
+        case ZSHFromLibraryVCToPlayListVC:{//曲库
+            arr = _rankModelArr;
+            break;
+        }
+        
         default:
             break;
     }
@@ -125,6 +201,12 @@ static NSString *ZSHMusicPlayListCellID = @"ZSHMusicPlayListCell";
             } else if (kFromClassTypeValue == ZSHFromRadioVCToPlayListVC){
                 ZSHRadioDetailSubModel *radioDetailSubModel = _radioDetailModel.songlist[indexPath.row];
                 [cell updateCellWithRadioDetailModel:radioDetailSubModel];
+            } else if (kFromClassTypeValue == ZSHFromSingerVCToPlayListVC){
+                ZSHRankModel *rankModel = _singerSongArr[indexPath.row];
+                [cell updateCellWithModel:rankModel];
+            } else if (kFromClassTypeValue == ZSHFromLibraryVCToPlayListVC){
+                ZSHRankModel *rankModel = _rankModelArr[indexPath.row];
+                [cell updateCellWithModel:rankModel];
             }
            
             return cell;
@@ -138,6 +220,12 @@ static NSString *ZSHMusicPlayListCellID = @"ZSHMusicPlayListCell";
             } else if (kFromClassTypeValue == ZSHFromRadioVCToPlayListVC){
                 ZSHRadioDetailSubModel *radioDetailSubModel = _radioDetailModel.songlist[indexPath.row];
                 songId = radioDetailSubModel.songid;
+            } else if (kFromClassTypeValue == ZSHFromSingerVCToPlayListVC){
+                ZSHRankModel *rankModel = _singerSongArr[indexPath.row];
+                songId = rankModel.song_id;
+            } else if (kFromClassTypeValue == ZSHFromLibraryVCToPlayListVC){
+                ZSHRankModel *rankModel = _rankModelArr[indexPath.row];
+                songId = rankModel.song_id;
             }
             
             RLog(@"歌曲id参数 == %@",songId);
@@ -206,27 +294,31 @@ static NSString *ZSHMusicPlayListCellID = @"ZSHMusicPlayListCell";
             make.width.mas_equalTo(kRealValue(100));
         }];
         
-        
-        UIButton *stopBtn = [[UIButton alloc]init];
-        [stopBtn setBackgroundImage:[UIImage imageNamed:@"music_stop"] forState:UIControlStateNormal];
-        [_footView addSubview:stopBtn];
-        [stopBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.right.mas_equalTo(_footView).offset(-KLeftMargin);
-            make.size.mas_equalTo(CGSizeMake(kRealValue(25), kRealValue(25)));
-            make.centerY.mas_equalTo(_footView);
-        }];
-        
         UIButton *startBtn = [[UIButton alloc]init];
+        [startBtn setBackgroundImage:[UIImage imageNamed:@"music_stop"] forState:UIControlStateNormal];
         [startBtn setBackgroundImage:[UIImage imageNamed:@"music_start"] forState:UIControlStateNormal];
+        [startBtn addTarget:self action:@selector(playBtnAction:) forControlEvents:UIControlEventTouchUpInside];
         [_footView addSubview:startBtn];
          [startBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.right.mas_equalTo(stopBtn.mas_left).offset(-KLeftMargin);
+            make.right.mas_equalTo(_footView).offset(-KLeftMargin);
             make.centerY.mas_equalTo(_footView);
             make.size.mas_equalTo(CGSizeMake(kRealValue(25), kRealValue(25)));
         }];
         
     }
     return _footView;
+}
+
+- (void)playBtnAction:(UIButton *)btn{
+    RLog(@"点击播放按钮的点击");
+    btn.selected = !btn.selected;
+    
+}
+
+- (void)footerRereshing{
+    
+    
+    
 }
 
 - (void)didReceiveMemoryWarning {

@@ -9,10 +9,14 @@
 #import "ZSHBaseCell.h"
 #import "ZSHRadioModel.h"
 #import "ZSHRadioDetailModel.h"
+#import "ZSHSingerModel.h"
+#import "ZSHRankModel.h"
 @interface ZSHMusicPlayListCell : ZSHBaseCell
 
 @property (nonatomic, copy) NSString    *imageUrl;
 
 - (void)updateCellWithRadioModel:(ZSHRadioSubModel *)radioModel;
 - (void)updateCellWithRadioDetailModel:(ZSHRadioDetailSubModel *)radioDetailSubModel;
+- (void)updateCellWithSingerModel:(ZSHSingerModel *)singerModel;
+- (void)updateCellWithLibraryRankModel:(ZSHRankModel *)rankModel;
 @end

@@ -1,8 +1,12 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AudioPlayerController">
@@ -23,7 +27,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="音乐_播放器_默认模糊背景.png" translatesAutoresizingMaskIntoConstraints="NO" id="0Gw-Sj-mc0">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="music_image" translatesAutoresizingMaskIntoConstraints="NO" id="0Gw-Sj-mc0">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                 </imageView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lph-2h-INS">
@@ -44,7 +48,7 @@
                         <constraint firstAttribute="width" constant="44" id="SS9-zF-vRE"/>
                     </constraints>
                     <state key="normal" title="---">
-                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </state>
                     <connections>
                         <action selector="rightButtonAction:" destination="-1" eventType="touchUpInside" id="iVt-1p-YMB"/>
@@ -56,7 +60,7 @@
                         <constraint firstAttribute="height" constant="44" id="iru-60-r6r"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="19"/>
-                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="textColor" red="0.5725490196078431" green="0.5725490196078431" blue="0.5725490196078431" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="R7K-y7-xfe">
@@ -64,12 +68,12 @@
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="za4-Z5-IzC">
                             <rect key="frame" x="126" y="16" width="68" height="68"/>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="68" id="0QH-pW-BAM"/>
                                 <constraint firstAttribute="height" constant="68" id="KJd-EC-FWA"/>
                             </constraints>
-                            <state key="normal" image="MusicPlayer_暂停.png"/>
+                            <state key="normal" image="music_play_big"/>
                             <connections>
                                 <action selector="playAndPauseClick:" destination="-1" eventType="touchUpInside" id="eec-hH-ml5"/>
                             </connections>
@@ -80,7 +84,7 @@
                                 <constraint firstAttribute="height" constant="44" id="R68-EH-JVd"/>
                                 <constraint firstAttribute="width" constant="44" id="unP-pg-Vda"/>
                             </constraints>
-                            <state key="normal" image="MusicPlayer_上一个.png"/>
+                            <state key="normal" image="music_front"/>
                             <connections>
                                 <action selector="previousClick:" destination="-1" eventType="touchUpInside" id="dzA-Ed-8eA"/>
                             </connections>
@@ -91,7 +95,7 @@
                                 <constraint firstAttribute="width" constant="44" id="pDC-PU-VXW"/>
                                 <constraint firstAttribute="height" constant="44" id="qOy-Ns-3ph"/>
                             </constraints>
-                            <state key="normal" image="MusicPlayer_下一个.png"/>
+                            <state key="normal" image="music_next"/>
                             <connections>
                                 <action selector="nextClick:" destination="-1" eventType="touchUpInside" id="rh4-rs-Mgs"/>
                             </connections>
@@ -119,7 +123,7 @@
                             </connections>
                         </button>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstItem="za4-Z5-IzC" firstAttribute="centerY" secondItem="R7K-y7-xfe" secondAttribute="centerY" id="7sb-EA-4qw"/>
                         <constraint firstItem="CS1-UV-ELI" firstAttribute="centerY" secondItem="R7K-y7-xfe" secondAttribute="centerY" id="9dc-1i-0dB"/>
@@ -145,7 +149,7 @@
                                 <constraint firstAttribute="width" constant="60" id="CrZ-wE-Fxb"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="textColor" red="0.5725490196078431" green="0.5725490196078431" blue="0.5725490196078431" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OrN-Gs-b4F">
@@ -154,19 +158,19 @@
                                 <constraint firstAttribute="width" constant="60" id="Oim-fG-N8E"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="textColor" red="0.5725490196078431" green="0.5725490196078431" blue="0.5725490196078431" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="253-s6-NbK">
                             <rect key="frame" x="58" y="0.0" width="204" height="17"/>
-                            <color key="minimumTrackTintColor" red="1" green="0.37797992619999998" blue="0.2827742714" alpha="1" colorSpace="calibratedRGB"/>
-                            <color key="maximumTrackTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="minimumTrackTintColor" red="0.65098039215686276" green="0.10980392156862745" blue="0.90588235294117647" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="maximumTrackTintColor" red="0.5725490196078431" green="0.5725490196078431" blue="0.5725490196078431" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="changeSlider:" destination="-1" eventType="valueChanged" id="q4x-Rb-haL"/>
                             </connections>
                         </slider>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="bottom" secondItem="OrN-Gs-b4F" secondAttribute="bottom" id="0er-ay-rgL"/>
                         <constraint firstItem="253-s6-NbK" firstAttribute="top" secondItem="Vke-Cs-ubq" secondAttribute="top" id="4uw-h8-HhD"/>
@@ -187,12 +191,12 @@
                         <constraint firstAttribute="height" constant="20" id="Zzj-fd-RcF"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="textColor" red="0.5725490196078431" green="0.5725490196078431" blue="0.5725490196078431" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7iK-we-RJ8">
                     <rect key="frame" x="192" y="73" width="20" height="1"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" red="0.59215686274509804" green="0.59215686274509804" blue="0.59215686274509804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="20" id="3j6-sM-Ht6"/>
                         <constraint firstAttribute="height" constant="1" id="4Ct-Ky-xTx"/>
@@ -200,14 +204,14 @@
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wKZ-ME-88Q">
                     <rect key="frame" x="108" y="73" width="20" height="1"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" red="0.59215686274509804" green="0.59215686274509804" blue="0.59215686274509804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="1" id="UMa-Xd-yNR"/>
                         <constraint firstAttribute="width" constant="20" id="pKk-6t-rwm"/>
                     </constraints>
                 </view>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="lph-2h-INS" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="20" id="0i0-4I-vnZ"/>
                 <constraint firstItem="2Cy-lF-uQa" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="20" id="3NW-CI-2dX"/>
@@ -237,12 +241,12 @@
         </view>
     </objects>
     <resources>
-        <image name="MusicPlayer_上一个.png" width="40" height="40"/>
-        <image name="MusicPlayer_下一个.png" width="40" height="40"/>
         <image name="MusicPlayer_下载.png" width="23" height="21"/>
         <image name="MusicPlayer_后退.png" width="27" height="27"/>
-        <image name="MusicPlayer_暂停.png" width="68" height="68"/>
         <image name="MusicPlayer_顺序播放.png" width="17" height="19"/>
-        <image name="音乐_播放器_默认模糊背景.png" width="375" height="667"/>
+        <image name="music_front" width="26" height="26"/>
+        <image name="music_image" width="375" height="667"/>
+        <image name="music_next" width="26" height="26"/>
+        <image name="music_play_big" width="41" height="41"/>
     </resources>
 </document>

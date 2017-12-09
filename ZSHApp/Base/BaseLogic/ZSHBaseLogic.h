@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 typedef void (^RequestDataCompleted) (id);
-typedef void (^RequestMoreDataCompleted) (id, id);
+typedef void (^RequestMoreDataCompleted) (id responseObject1, id responseObject2);
 typedef void (^ResponseSuccessBlock) (id responseObject);
 typedef void (^ResponseFailBlock) (NSError *error);
 @interface ZSHBaseLogic : NSObject

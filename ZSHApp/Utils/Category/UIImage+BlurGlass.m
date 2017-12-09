@@ -12,7 +12,7 @@
 @implementation UIImage (BlurGlass)
 
 -(UIImage*) blurWithAlpha:(CGFloat)alpha radius:(CGFloat)radius saturation:(CGFloat)saturation {
-    UIColor *tintColor = [UIColor colorWithWhite:1.0 alpha:alpha];
+    UIColor *tintColor = [UIColor colorWithWhite:0.5 alpha:alpha];
     
     return [self blurWithRadius:radius tintColor:tintColor saturation:saturation maskImage:nil];
 }

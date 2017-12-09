@@ -38,6 +38,7 @@
 #import "NSArray+Log.h"
 #import "NSDictionary+Log.h"
 #import "NSDictionary+Safe.h"
+#import "UIImage+ImageEffects.h" 
 
 //第三方
 #import <YYKit.h>

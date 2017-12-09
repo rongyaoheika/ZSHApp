@@ -85,11 +85,33 @@
 
 - (void)loadkSongListWithParamDic:(NSDictionary *)paramDic Success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail{
     [PPNetworkHelper POST:kUrlSongList parameters:paramDic success:^(id responseObject) {
-        RLog(@"音乐列表数据=%@",responseObject);
-        
+        RLog(@"音乐推荐列表数据=%@",responseObject);
+         NSArray *rankModelArr = [ZSHRankModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"][@"result"][@"list"]];
+         success(rankModelArr);
     } failure:^(NSError *error) {
-        RLog(@"音乐列表数据获取失败");
+        RLog(@"音乐推荐列表数据获取失败");
     }];
 }
+
+- (void)loadSingerListWithParamDic:(NSDictionary *)paramDic Success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail{
+    [PPNetworkHelper POST:kUrlSingerList parameters:paramDic success:^(id responseObject) {
+        RLog(@"歌手列表数据%@",responseObject);
+        NSArray *singerModelArr = [ZSHSingerModel mj_objectArrayWithKeyValuesArray:responseObject[@"artist"]];
+        success(singerModelArr);
+    } failure:^(NSError *error) {
+        RLog(@"歌手列表获取失败");
+    }];
+}
+
+- (void)loadSingerSongListWithParamDic:(NSDictionary *)paramDic Success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail{
+    [PPNetworkHelper POST:kUrlSingerSongList parameters:paramDic success:^(id responseObject) {
+        RLog(@"歌手歌曲列表数据%@",responseObject);
+        NSArray *rankModelArr = [ZSHRankModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"][@"songlist"]];
+        success(rankModelArr);
+    } failure:^(NSError *error) {
+        RLog(@"歌手歌曲列表数据获取失败");
+    }];
+}
+
 
 @end

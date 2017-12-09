@@ -52,7 +52,7 @@ static AudioPlayerController *audioVC;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self.paceSlider setThumbImage:[UIImage imageNamed:@"Slider_控制点"] forState:UIControlStateNormal];
+    [self.paceSlider setThumbImage:[UIImage imageNamed:@"age_icon"] forState:UIControlStateNormal];
     [self creatViews];
 }
 
@@ -265,7 +265,7 @@ static AudioPlayerController *audioVC;
 - (void)play{
     isPlaying = YES;
     [self.player play];
-    [self.playButton setImage:[UIImage imageNamed:@"MusicPlayer_播放"] forState:UIControlStateNormal];
+    [self.playButton setImage:[UIImage imageNamed:@"music_stop_big"] forState:UIControlStateNormal];
     // 开始旋转
     [self.rotatingView resumeLayer];
 }
@@ -273,7 +273,7 @@ static AudioPlayerController *audioVC;
 - (void)stop{
     isPlaying = NO;
     [self.player pause];
-    [self.playButton setImage:[UIImage imageNamed:@"MusicPlayer_暂停"] forState:UIControlStateNormal];
+    [self.playButton setImage:[UIImage imageNamed:@"music_play_big"] forState:UIControlStateNormal];
     // 停止旋转
     [self.rotatingView pauseLayer];
 }

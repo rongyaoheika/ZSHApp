@@ -7,7 +7,7 @@
 //
 
 #import "ZSHMusicLibraryCell.h"
-
+#import "ZSHRankModel.h"
 @implementation ZSHMusicLibraryCell
 
 - (void)setup{
@@ -32,7 +32,13 @@
         make.right.mas_equalTo(_imageView).offset(-2.5);
         make.height.mas_equalTo(kRealValue(kRealValue(36)));
     }];
-    
 }
+
+- (void)updateCellWithModel:(ZSHRankModel *)model{
+    [_imageView sd_setImageWithURL:[NSURL URLWithString:model.pic_big]];
+    _label.text = model.title;
+     
+}
+
 
 @end

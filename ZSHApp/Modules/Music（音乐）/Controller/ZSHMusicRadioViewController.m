@@ -95,7 +95,7 @@ static NSString *ZSHMusicPlayListCellID = @"ZSHMusicPlayListCell";
         
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
             ZSHRadioSubModel *radioSubModel = radioDataArr[indexPath.row];
-            NSDictionary *paramDic = @{@"ch_name":radioSubModel.ch_name,KFromClassType:@(ZSHFromRadioVCToPlayListVC)};
+            NSDictionary *paramDic = @{@"ch_name":radioSubModel.ch_name,KFromClassType:@(ZSHFromRadioVCToPlayListVC),@"headImage":radioSubModel.thumb};
             ZSHPlayListViewController *playListVC = [[ZSHPlayListViewController alloc]initWithParamDic:paramDic];
             [weakself.navigationController pushViewController:playListVC animated:YES];
         };

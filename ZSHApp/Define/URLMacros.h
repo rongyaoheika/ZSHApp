@@ -583,16 +583,17 @@
 //参数：HONOURUSER_ID 用户的Id
 //请求地址：/appcirclein/circlelist.do?CIRCLELIST(混淆码)
 #define kUrlCircleList [NSString stringWithFormat:@"/appcirclein/circlelist.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"CIRCLELIST"]]
-//107. 电台列表
+
+//107. 电台列表(完成)
 //请求地址：/ZSHINTER/appmusicin/getcategorylist?CATELIST(混淆码)
 #define kUrlRadioStation [NSString stringWithFormat:@"/appmusicin/getcategorylist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"CATELIST"]]
 
-//107. 获取某个电台下的歌曲列表接口
+//107. 获取某个电台下的歌曲列表接口（完成）
 //请求地址： /appmusicin/getchannelsong?CANNELSONG
 //参数:ch_name 电台名称
 #define kUrlChannelSong [NSString stringWithFormat:@"/appmusicin/getchannelsong?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"CANNELSONG"]]
 
-//108. 获取歌曲详细接口
+//108. 获取歌曲详细接口（完成）
 //请求地址： /appmusicin/getsongplay?SONGPLAY
 //参数:songid 歌曲id
 #define kUrlSongPlay [NSString stringWithFormat:@"/appmusicin/getsongplay?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SONGPLAY"]]
@@ -604,16 +605,12 @@
 //参数:query  查询字段
 #define kUrlSearchSong [NSString stringWithFormat:@"/appmusicin/getchannelsong?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SEARCHSONG"]]
 
-//111:获得音乐排行榜列表接口
+//111:获得音乐排行榜列表接口（完成）
 //请求地址： /appmusicin/getbilllist?BILLLIST
 // 参数:type  类型(1-新歌榜,2-热歌榜,6-KTV热歌榜,8-Hito中文榜,11-摇滚榜,12-爵士,16-流行,21-欧美金 曲榜,22-经典老歌榜,23-情歌对唱榜,24-影视金曲榜,25-网络歌曲榜) offset偏移数(页码)
 #define kUrlBillList [NSString stringWithFormat:@"/appmusicin/getbilllist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"BILLLIST"]]
 //@"http://tingapi.ting.baidu.com/v1/restserver/ting?format=json&calback=&from=webapp_music&method=baidu.ting.billboard.billList&type=1&size=10&offset=0"
 //[NSString stringWithFormat:@"/appmusicin/getbilllist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"BILLLIST"]]
-
-
-
-
 
 //112:获得歌曲歌词
 //请求地址： appmusicin/getlry?LRY&songid=877578
@@ -624,9 +621,16 @@
 //参数：songid 歌曲id()根据歌曲类型推荐10首歌曲
 #define kUrlSongList  [NSString stringWithFormat:@"appmusicin/getrecommandsonglist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SONGLIST"]]
 
-//114:每日推荐歌曲(固定10首)   appmusicin/getrecommandsonglist?SONGLIST
-//参数：songid 歌曲id()根据歌曲类型推荐10首歌曲
-#define kUrlSongList  [NSString stringWithFormat:@"appmusicin/getrecommandsonglist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SONGLIST"]]
+//114:歌手列表
+//参数：
+#define kUrlSingerList  @"http://tingapi.ting.baidu.com/v1/restserver/ting?from=qianqian&version=2.1.0&method=baidu.ting.artist.get72HotArtist&format=json?=1&offset=0&limit=50"
+
+//115.通过歌手id获取其所有歌曲列表接口
+//参数：tinguid 歌手id  offset 偏移数(页码)
+//地址：/appmusicin/getsonglist?SONGLIST
+#define kUrlSingerSongList  [NSString stringWithFormat:@"/appmusicin/getsonglist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SONGLIST"]]
+
+
 //117.点赞
 //参数：HONOURUSER_ID 用户的Id    /CIRCLE_ID  所评论的圈子ID
 //请求地址：/appcirclein/dotAgree.do?DOTAGREE(混淆码)

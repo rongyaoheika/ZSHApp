@@ -328,7 +328,9 @@ static NSString *Identify_MusicCell = @"musicCell";
         [tableView dequeueReusableCellWithIdentifier:Identify_PlayCell forIndexPath:indexPath];
         if (![cell.contentView viewWithTag:2]) {
             UIImageView *imageView = [[UIImageView alloc]init];
-            [imageView sd_setImageWithURL:[NSURL URLWithString:_homeLogic.partyDic[@"PARTYIMG"]] placeholderImage:[UIImage imageNamed:@"home_play"]];
+            [imageView sd_setImageWithURL:[NSURL URLWithString:_homeLogic.partyDic[@"PARTYIMG"]]];
+            
+            
             imageView.tag = 2;
             imageView.frame = CGRectMake(15, 0, KScreenWidth-30, cellHeight);
             [cell.contentView addSubview:imageView];

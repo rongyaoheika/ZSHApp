@@ -18,7 +18,8 @@
 @property (nonatomic, strong) LXScollTitleView      *titleView;
 @property (nonatomic, strong) NSArray               *titleArr;
 @property (nonatomic, strong) ZSHMusicLogic         *musicLogic;
-@property (nonatomic, strong) NSArray               *modelArr;
+@property (nonatomic, strong) NSArray               *dataArr;
+@property (nonatomic, assign) NSInteger             index;
 
 @end
 
@@ -65,16 +66,49 @@ static NSString *ZSHMusicLibraryCellID = @"ZSHMusicLibraryCell";
 }
 
 - (void)requestData{
+    kWeakSelf(self);
     _musicLogic = [[ZSHMusicLogic alloc]init];
-//    [_musicLogic loadRadioListSuccess:^(id responseObject) {
-//        RLog(@"电台列表数据成功== %@",responseObject);
-//    } fail:nil];
-    
-//    
-    [_musicLogic loadLryWithParamDic:@{@"songid":@"877578"} Success:^(id responseObject) {
-        RLog(@"歌词数据成功== %@",responseObject);
-    } fail:nil];
+    switch (_index) {
+        case 0:{//推荐
+            [_musicLogic loadkSongListWithParamDic:nil Success:^(id responseObject) {
+                _dataArr = responseObject;
+                [weakself.collectionView reloadData];
+            } fail:nil];
+            break;
+        }
+        case 1:{//精选
+            [_musicLogic loadkSongListWithParamDic:nil Success:^(id responseObject) {
+                _dataArr = responseObject;
+                [weakself.collectionView reloadData];
+            } fail:nil];
+            break;
+        }
+        case 2:{//最热
+            [_musicLogic loadRankListWithParamDic:@{@"type":@(2),@"offset":@(0)} Success:^(id responseObject1, id responseObject2) {
+                _dataArr = responseObject1;
+                [weakself.collectionView reloadData];
+            } fail:nil];
+        }
+            
+        case 3:{//最新
+            [_musicLogic loadRankListWithParamDic:@{@"type":@(1),@"offset":@(0)} Success:^(id responseObject1, id responseObject2) {
+                _dataArr = responseObject1;
+                [weakself.collectionView reloadData];
+            } fail:nil];
+            break;
+        }
+            
+        default:
+            break;
+    }
+   
 
+}
+
+- (void)endRefresh{
+    [self.collectionView.mj_header endRefreshing];
+    [self.collectionView.mj_footer endRefreshing];
+    
 }
 
 #pragma collectionView delegate
@@ -83,22 +117,27 @@ static NSString *ZSHMusicLibraryCellID = @"ZSHMusicLibraryCell";
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    return 12;
+    return _dataArr.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     ZSHMusicLibraryCell *cell = (ZSHMusicLibraryCell *)[collectionView dequeueReusableCellWithReuseIdentifier:ZSHMusicLibraryCellID forIndexPath:indexPath];
+    ZSHRankModel *rankModel = _dataArr[indexPath.row];
+    [cell updateCellWithModel:rankModel];
     return cell;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    ZSHPlayListViewController *playListVC = [[ZSHPlayListViewController alloc]init];
+    ZSHRankModel *rankModel = _dataArr[indexPath.row];
+    NSDictionary *paramDic = @{KFromClassType:@(ZSHFromLibraryVCToPlayListVC),@"headImage":rankModel.pic_big,@"index":@(_index)};
+    ZSHPlayListViewController *playListVC = [[ZSHPlayListViewController alloc]initWithParamDic:paramDic];
     [self.navigationController pushViewController:playListVC animated:YES];
 }
 
 
 //getter
 - (LXScollTitleView *)titleView{
+    kWeakSelf(self)
     if (!_titleView) {
         _titleView = [[LXScollTitleView alloc] initWithFrame:CGRectMake(0, KNavigationBarHeight, KScreenWidth, kRealValue(40))];
         _titleView.normalTitleFont = kPingFangRegular(15);
@@ -106,8 +145,10 @@ static NSString *ZSHMusicLibraryCellID = @"ZSHMusicLibraryCell";
         _titleView.selectedColor = KZSHColor929292;
         _titleView.normalColor = KZSHColor929292;
         _titleView.indicatorHeight = 0;
+        _index = _titleView.selectedIndex;
         _titleView.selectedBlock = ^(NSInteger index){
-            
+            _index = index;
+            [weakself requestData];
         };
         
     }
@@ -119,6 +160,10 @@ static NSString *ZSHMusicLibraryCellID = @"ZSHMusicLibraryCell";
     [self.titleView reloadViewWithTitles:self.titleArr];
 }
 
+- (void)collectionHeaderRereshing {
+    [self requestData];
+    
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

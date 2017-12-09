@@ -7,7 +7,7 @@
 //
 
 #import "ZSHMusicPlayListCell.h"
-#import "ZSHRankModel.h"
+
 @interface ZSHMusicPlayListCell()
 
 @property (nonatomic, strong) UIImageView *headImageView;
@@ -54,7 +54,7 @@
      NSArray *array = [model.pic_small componentsSeparatedByString:@"@"];
      [_headImageView sd_setImageWithURL:[NSURL URLWithString:array[0]]];
     _titleLabel.text = model.title;
-    _detailLabel.text = [NSString stringWithFormat:@"%@  %@",model.artist_name,model.album_title];
+    _detailLabel.text = [NSString stringWithFormat:@"%@  %@",model.author,model.album_title];
 }
 
 - (void)updateCellWithRadioModel:(ZSHRadioSubModel *)radioSubModel{
@@ -67,6 +67,21 @@
     [_headImageView sd_setImageWithURL:[NSURL URLWithString:radioDetailSubModel.thumb]];
     _titleLabel.text = radioDetailSubModel.title;
     _detailLabel.text = radioDetailSubModel.artist;
+}
+
+- (void)updateCellWithSingerModel:(ZSHSingerModel *)singerModel{
+    [_headImageView sd_setImageWithURL:[NSURL URLWithString:singerModel.avatar_small]];
+    _titleLabel.text = singerModel.name;
+    _detailLabel.text = @"";
+    [_titleLabel mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.centerY.mas_equalTo(self);
+    }];
+}
+
+- (void)updateCellWithLibraryRankModel:(ZSHRankModel *)rankModel{
+    [_headImageView sd_setImageWithURL:[NSURL URLWithString:rankModel.pic_big]];
+    _titleLabel.text = rankModel.title;
+    _detailLabel.text = [NSString stringWithFormat:@"%@  %@",rankModel.author,rankModel.album_title];
 }
 
 @end
