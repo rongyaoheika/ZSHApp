@@ -22,6 +22,11 @@
 @property (nonatomic, assign) CGFloat            agreeBtnTop;
 @property (nonatomic, assign) CGFloat            agreeBtnHeight;
 @property (nonatomic, strong) ZSHMineLogic       *mineLogic;
+@property (nonatomic, copy)   NSString           *changedData;
+
+@property (nonatomic, copy)   NSString           *oldPwd;
+@property (nonatomic, copy)   NSString           *reNewPwd;
+@property (nonatomic, copy)   NSString           *rptPwd;
 
 @end
 
@@ -72,6 +77,18 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
         self.textFieldTypeArr = @[@(ZSHTextFieldViewUser),@(ZSHTextFieldViewPwd)];
         self.placeHolderArr = @[@"12345678",@"请输入密码"];
         self.toViewType = FromMultiInfoQQVCToTextFieldCellView;
+    }else if (kFromClassTypeValue ==  FromUserInfoResumeVCToMultiInfoVC) {
+        //个人简介
+        self.titleArr = @[@""];
+        self.textFieldTypeArr = @[@(ZSHTextFieldViewUser)];
+        self.placeHolderArr = @[@"请输入您的个人签名"];
+        self.toViewType = FromUserInfoResumeVCToMultiInfoVC;
+    }else if (kFromClassTypeValue ==  FromUserPasswordVCToMultiInfoVC) {
+        //修改登录密码
+        self.titleArr = @[@"当前密码",@"新密码", @"新密码"];
+        self.textFieldTypeArr = @[@(ZSHTextFieldViewPwd), @(ZSHTextFieldViewPwd), @(ZSHTextFieldViewPwd)];
+        self.placeHolderArr = @[@"", @"", @""];
+        self.toViewType = FromUserPasswordVCToMultiInfoVC;
     }
     [self initViewModel];
 }
@@ -79,12 +96,10 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 - (void)createUI{
     self.title = self.paramDic[@"title"];
    
-    if (kFromClassTypeValue == FromUserInfoNickNameVCToMultiInfoVC) {//修改昵称
+    if (kFromClassTypeValue == FromUserInfoNickNameVCToMultiInfoVC || kFromClassTypeValue == FromUserInfoResumeVCToMultiInfoVC) {//修改昵称
          [self addNavigationItemWithTitles:@[self.paramDic[@"rightNaviTitle"]] isLeft:NO target:self action:@selector(rightNaviBtnAction:) tags:@[@(kFromClassTypeValue)]];
         
-        [self.view addSubview:self.bottomBtn];
-        [self.bottomBtn setTitle:self.paramDic[@"bottomBtnTitle"] forState:UIControlStateNormal];
-        [self.bottomBtn addTarget:self action:@selector(nextBtnAction) forControlEvents:UIControlEventTouchUpInside];
+
     } else if (kFromClassTypeValue == FromUserInfoQQVCToMultiInfoVC){//QQ授权
        [self addNavigationItemWithTitles:@[self.paramDic[@"rightNaviTitle"]] isLeft:NO target:self action:@selector(rightNaviBtnAction:) tags:@[@(kFromClassTypeValue)]];
         
@@ -93,9 +108,14 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
         [self.bottomBtn setTitle:self.paramDic[@"bottomBtnTitle"] forState:UIControlStateNormal];
         [self.bottomBtn addTarget:self action:@selector(nextBtnAction) forControlEvents:UIControlEventTouchUpInside];
         
+    } else if (kFromClassTypeValue == FromUserPasswordVCToMultiInfoVC) {
+        
+        [self.view addSubview:self.bottomBtn];
+        [self.bottomBtn setTitle:self.paramDic[@"bottomBtnTitle"] forState:UIControlStateNormal];
+        [self.bottomBtn addTarget:self action:@selector(nextBtnAction) forControlEvents:UIControlEventTouchUpInside];
     }
     
-    self.tableView.frame = CGRectMake(0, KNavigationBarHeight, KScreenWidth, KScreenHeight - KNavigationBarHeight);
+    self.tableView.frame = CGRectMake(0, KNavigationBarHeight, KScreenWidth, KScreenHeight - KNavigationBarHeight - KBottomNavH);
     [self.view addSubview:self.tableView];
     self.tableView.delegate = self.tableViewModel;
     self.tableView.dataSource = self.tableViewModel;
@@ -106,7 +126,6 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     
     [self.tableView registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHBaseCellID];
     [self.tableView reloadData];
-
 }
 
 - (void)initViewModel {
@@ -116,6 +135,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 }
 
 - (ZSHBaseTableViewSectionModel*)storeListSection{
+    kWeakSelf(self);
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     for (int i = 0; i<self.titleArr.count; i++) {
         ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
@@ -123,13 +143,25 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
         cellModel.height = kRealValue(44);
         cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
             ZSHBaseCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHBaseCellID forIndexPath:indexPath];
-            if (![cell.contentView viewWithTag:2]) {
+//            if (![cell.contentView viewWithTag:2]) {
                 NSDictionary *paramDic = @{@"leftTitle":self.titleArr[indexPath.row],@"placeholder":self.placeHolderArr[indexPath.row],@"textFieldType":self.textFieldTypeArr[indexPath.row],KFromClassType:@(self.toViewType)};
                 ZSHTextFieldCellView *textFieldView = [[ZSHTextFieldCellView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, kRealValue(44)) paramDic:paramDic];
-                textFieldView.tag = 2;
-        
+                textFieldView.tag = 2+indexPath.row;
+                textFieldView.textFieldChanged = ^(NSString *str, NSInteger index) {
+                    if (kFromClassTypeValue == FromUserInfoNickNameVCToMultiInfoVC || kFromClassTypeValue == FromUserInfoResumeVCToMultiInfoVC){
+                        weakself.changedData = str;
+                    } else if (kFromClassTypeValue == FromUserPasswordVCToMultiInfoVC) {
+                        if (index == 2) {
+                            weakself.oldPwd = str;
+                        } else if (index == 3) {
+                            weakself.reNewPwd = str;
+                        } else if (index == 4) {
+                            weakself.rptPwd = str;
+                        }
+                    }
+                };
                 [cell.contentView addSubview:textFieldView];
-            }
+//            }
         
             return cell;
         };
@@ -144,13 +176,43 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 #pragma action
 
 - (void)rightNaviBtnAction:(UIButton *)btn{
+    kWeakSelf(self);
     if (kFromClassTypeValue == FromUserInfoNickNameVCToMultiInfoVC){
-//        _mineLogic
+        [_mineLogic requestUserInfoWithDic:@{@"HONOURUSER_ID":@"d6a3779de8204dfd9359403f54f7d27c", @"NICKNAME":_changedData} success:^(id response) {
+            if (weakself.saveBlock) {
+                weakself.saveBlock(weakself.changedData, weakself.index);
+            }
+            UIAlertController *ac = [UIAlertController alertControllerWithTitle:@"提示" message:@"修改成功" preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                [weakself.navigationController popViewControllerAnimated:true];
+            }];
+            [ac addAction:cancelAction];
+            [weakself presentViewController:ac animated:YES completion:nil];
+        }];
+    }else if (kFromClassTypeValue == FromUserInfoResumeVCToMultiInfoVC){
+        [_mineLogic requestUserInfoWithDic:@{@"HONOURUSER_ID":@"d6a3779de8204dfd9359403f54f7d27c", @"SIGNNAME":_changedData} success:^(id response) {
+            if (weakself.saveBlock) {
+                weakself.saveBlock(weakself.changedData, weakself.index);
+            }
+            UIAlertController *ac = [UIAlertController alertControllerWithTitle:@"提示" message:@"修改成功" preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                [weakself.navigationController popViewControllerAnimated:true];
+            }];
+            [ac addAction:cancelAction];
+            [weakself presentViewController:ac animated:YES completion:nil];
+        }];
     }
 }
 
 - (void)nextBtnAction{
     
+    if (kFromClassTypeValue == FromUserPasswordVCToMultiInfoVC) {
+        if ([_reNewPwd isEqualToString:_rptPwd]) {
+            [_mineLogic requestUserUpdPasswordWithDic:@{@"HONOURUSER_ID":@"d6a3779de8204dfd9359403f54f7d27c", @"PASSWORD":_reNewPwd, @"OLDPASSWORD":_oldPwd} success:^(id response) {
+                
+            }];
+        }
+    }
 }
 
 

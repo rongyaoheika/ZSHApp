@@ -8,7 +8,11 @@
 
 #import "RootViewController.h"
 
+typedef void(^SaveBlock)(id , NSInteger );
 
 @interface ZSHMultiInfoViewController : RootViewController
+
+@property (nonatomic, copy)   SaveBlock saveBlock;
+@property (nonatomic, assign) NSInteger index;
 
 @end

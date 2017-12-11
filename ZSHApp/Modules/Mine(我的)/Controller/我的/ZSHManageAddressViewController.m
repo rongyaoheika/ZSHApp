@@ -169,8 +169,10 @@
     
     NSMutableArray *regionArr = [NSMutableArray arrayWithObjects:provinces, citys, districts, nil];
     NSDictionary *nextParamDic = @{@"type":@(type),@"midTitle":@"城市区域选择",@"dataArr":regionArr};
+    
     _pickView = [[ZSHPickView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight) paramDic:nextParamDic];
     _pickView.controller = self;
+    
     return _pickView;
 }
 

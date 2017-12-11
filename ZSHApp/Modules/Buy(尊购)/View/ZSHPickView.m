@@ -366,9 +366,15 @@ NSInteger yearSatrt = 1900;
             NSInteger province = [_pickerView selectedRowInComponent:0];
             NSInteger city = [_pickerView selectedRowInComponent:1];
             NSInteger district = [_pickerView selectedRowInComponent:2];
-            NSString *addrStr = [NSString stringWithFormat:@"%@%@%@", _dataArr[0][province],_dataArr[1][city],_dataArr[2][district]];
+
+            NSString *addrStr = nil;
+            if ([_dataArr[2] count]) {
+                addrStr = [NSString stringWithFormat:@"%@%@%@", _dataArr[0][province],_dataArr[1][city],_dataArr[2][district]];
+            }else {
+                addrStr = [NSString stringWithFormat:@"%@%@", _dataArr[0][province],_dataArr[1][city]];
+            }
             if (self.saveChangeBlock) {
-                self.saveChangeBlock(addrStr,self.tag);
+                self.saveChangeBlock(addrStr, self.tag);
             }
             break;
         }

@@ -18,6 +18,15 @@
 @property (nonatomic, copy) NSString *PORTRAIT;
 @property (nonatomic, copy) NSString *PAYPASSWORD;
 @property (nonatomic, copy) NSString *SIGNNAME;
+@property (nonatomic, copy) NSString *PASSWORD;
+@property (nonatomic, copy) NSString *CUSTOM;
+@property (nonatomic, copy) NSString *USERIDCARD;
+@property (nonatomic, copy) NSString *SMALLCHANGE;
+@property (nonatomic, copy) NSString *CARDNO;
+@property (nonatomic, copy) NSString *PHONE;
+@property (nonatomic, copy) NSString *REALNAME;
+@property (nonatomic, copy) NSString *PROVINCE;
+
 
 
 @end

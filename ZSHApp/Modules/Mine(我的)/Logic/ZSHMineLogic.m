@@ -7,6 +7,7 @@
 //
 
 #import "ZSHMineLogic.h"
+#import "ZSHUserInfoModel.h"
 
 @implementation ZSHMineLogic
 
@@ -119,7 +120,7 @@
 
 // 上传头像
 - (void)uploadImage:(NSArray *)imageArr name:(NSArray *)nameArr success:(void (^)(id response))success {
-    [PPNetworkHelper uploadImagesWithURL:kUrlUp parameters:@{@"HONOURUSER_ID":@"d6a3779de8204dfd9359403f54f7d27c"} name:@"showfile" images:imageArr fileNames:@[@"fileName"] imageScale:1.0 imageType:@"image/jpeg" progress:^(NSProgress *progress) {
+    [PPNetworkHelper uploadImagesWithURL:kUrlUp parameters:@{@"HONOURUSER_ID":@"d6a3779de8204dfd9359403f54f7d27c"} name:@"showfile" images:imageArr fileNames:@[@"headImage.jpg"] imageScale:1.0 imageType:@"image/jpeg" progress:^(NSProgress *progress) {
         
     } success:^(id responseObject) {
         success(responseObject);
@@ -129,13 +130,33 @@
 }
 
 // 修改个人信息
-- (void)requestUserInfoWithModel:(ZSHUserInfoModel *)model success:(void (^)(id response))success {
-    [PPNetworkHelper POST:kUrlUserPersonalInfo parameters:model.mj_keyValues success:^(id responseObject) {
+- (void)requestUserInfoWithDic:(NSDictionary *)dic success:(void (^)(id response))success {
+    [PPNetworkHelper POST:kUrlUserPersonalInfo parameters:dic success:^(id responseObject) {
         success(responseObject);
     } failure:^(NSError *error) {
         RLog(@"请求失败");
     }];
 }
 
+
+// 获取个人信息
+- (void)requestGetUserInfo:(void (^)(id response))success {
+    [PPNetworkHelper POST:kUrlGetUserInfo parameters:@{@"HONOURUSER_ID":@"d6a3779de8204dfd9359403f54f7d27c"} success:^(id responseObject) {
+        ZSHUserInfoModel *userInfoModel = [ZSHUserInfoModel mj_objectWithKeyValues:responseObject[@"user"]];
+        success(userInfoModel);
+    } failure:^(NSError *error) {
+        RLog(@"请求失败");
+    }];
+}
+
+
+// 修改用户密码
+- (void)requestUserUpdPasswordWithDic:(NSDictionary *)dic success:(void (^)(id response))success {
+    [PPNetworkHelper POST:kUrlUserUpdPassword parameters:dic success:^(id responseObject) {
+        success(responseObject);
+    } failure:^(NSError *error) {
+        RLog(@"请求失败");
+    }];
+}
 
 @end

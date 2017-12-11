@@ -668,6 +668,13 @@
 //BIRTHDAY  用户生日/ PORTRAIT  用户头像/ PAYPASSWORD  支付密码 / SIGNNAME  个性签名
 //请求地址：/appuserin/userpersonalinfo.do?UPDPERSONALINFO  (混淆码)
 #define kUrlUserPersonalInfo [NSString stringWithFormat:@"/appuserin/userpersonalinfo.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"UPDPERSONALINFO"]]
-
+//126.获取用户的个人信息
+//参数： HONOURUSER_ID  用户ID/
+//请求地址：/appuserin/getuserinfo.do?GETUSERINFO  (混淆码)
+#define kUrlGetUserInfo [NSString stringWithFormat:@"/appuserin/getuserinfo.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"GETUSERINFO"]]
+//127.修改用户密码
+//参数： HONOURUSER_ID  用户ID/    PASSWORD  密码
+//请求地址：/appuserin/userupdpassword.do?UPDUSERPASSWORD  (混淆码)
+#define kUrlUserUpdPassword [NSString stringWithFormat:@"/appuserin/userupdpassword.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"UPDUSERPASSWORD"]]
 
 #endif /* URLMacros_h */

@@ -16,6 +16,9 @@
 #import <TZImageManager.h>
 //#import <TZLocationManager.h>
 #import "ZSHMineLogic.h"
+#import "ZSHPickView.h"
+#import "ZSHUserInfoModel.h"
+
 
 @interface ZSHUserInfoViewController ()<TZImagePickerControllerDelegate>
 {
@@ -29,6 +32,10 @@
 @property (nonatomic, strong) UIImagePickerController *imagePickerVc;
 @property (nonatomic, strong) ZSHMineLogic            *mineLogic;
 @property (nonatomic, strong) UIImage                 *headImage;
+@property (nonatomic, copy)   NSString                *changedData;
+@property (nonatomic, assign) NSInteger               changedDataIndex;
+@property (nonatomic, strong) ZSHPickView             *pickView;
+@property (nonatomic, strong) ZSHUserInfoModel        *model;
 
 @end
 static NSString *ZSHBaseCellID = @"ZSHBaseCell";
@@ -47,20 +54,26 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     self.titleArr = @[@[@"头像",@"昵称",@"姓名",@"性别",@"生日",@"卡号",@"地区",@"个性签名"],
                       @[@"身份证号",@"手机号",@"QQ号码",@"微信",@"新浪微博",@"支付宝"]
                       ];
-    self.detailTitleArr = @[@[@"UIImage",@"萌",@"江萌",@"女",@"1990年1月1日",@"86868686",@"北京市东城区",@"你是我最重要的决定"],
-                            @[@"130625********1456",@"18888888888",@"",@"未绑定",@"",@""]];
+    self.detailTitleArr = @[@[@"UIImage",@"",@"",@"",@"",@"",@"",@""],
+                            @[@"",@"",@"",@"",@"",@""]];
     
     self.pushVCsArr = @[
-    @[@"ZSHTitleContentViewController",@"ZSHMultiInfoViewController",@"",@"ZSHAirPlaneViewController",@"",@"",@"",@""],
-       @[@"",@"ZSHMultiInfoViewController",@"ZSHMultiInfoViewController",@"",@"",@""]
+                        @[@"",@"ZSHMultiInfoViewController",@"",@"",@"",@"",@"",@"ZSHMultiInfoViewController"],
+                        @[@"",@"ZSHMultiInfoViewController",@"ZSHMultiInfoViewController",@"",@"",@""]
 ];
     
     self.paramArr = @[
-                      @[@{},@{KFromClassType:@(FromUserInfoNickNameVCToMultiInfoVC),@"title":@"修改昵称",@"rightNaviTitle":@"保存"},@{},@{},@{},@{},@{},@{}],
-  @[@{},@{KFromClassType:@(FromUserInfoPhoneVCToMultiInfoVC),@"title":@"更改手机号码",@"bottomBtnTitle":@"提交"},@{KFromClassType:@(FromUserInfoQQVCToMultiInfoVC),@"title":@"绑定QQ帐号",@"rightNaviTitle":@"授权"},@{},@{},@{}]];
+                      @[@{},
+                        @{KFromClassType:@(FromUserInfoNickNameVCToMultiInfoVC),@"title":@"修改昵称",@"rightNaviTitle":@"保存"},
+                        @{},@{},@{},@{},@{},
+                        @{KFromClassType:@(FromUserInfoResumeVCToMultiInfoVC),@"title":@"修改个性签名",@"rightNaviTitle":@"保存"}],
+                      @[@{},
+                        @{KFromClassType:@(FromUserInfoPhoneVCToMultiInfoVC),@"title":@"更改手机号码",@"bottomBtnTitle":@"提交"},
+                        @{KFromClassType:@(FromUserInfoQQVCToMultiInfoVC),@"title":@"绑定QQ帐号",@"rightNaviTitle":@"授权"},
+                        @{},@{},@{}]];
     _mineLogic = [[ZSHMineLogic alloc] init];
-    _headImage = [UIImage imageNamed:@"weibo_head_image"];
     [self initViewModel];
+    [self requestData];
 }
 
 - (void)createUI{
@@ -95,29 +108,57 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
         cellModel.height = (i==0? kRealValue(55):kRealValue(43));
         cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
             ZSHBaseCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHBaseCellID forIndexPath:indexPath];
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-//            if (![cell.contentView viewWithTag:2]) { // 需要刷新上传头像
+            if (indexPath.row == 0 || indexPath.row == 1|| indexPath.row == 6|| indexPath.row == 7) {
+                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            }
+            if (![cell.contentView viewWithTag:29]) { // 需要刷新上传头像
                 NSDictionary *nextParamDic = @{@"leftTitle":weakself.titleArr[0][indexPath.row],@"rightTitle":weakself.detailTitleArr[0][indexPath.row],@"row":@(indexPath.row)};
                 ZSHSimpleCellView *cellView = [[ZSHSimpleCellView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kRealValue(43)) paramDic:nextParamDic];
-                if (indexPath.row == 0) {
-                    [cellView updateHeadImage:weakself.headImage];
-                }
-//                cellView.tag = 2;
+
+                cellView.tag = 29;
                 [cell.contentView addSubview:cellView];
                 [cellView mas_updateConstraints:^(MASConstraintMaker *make) {
                     make.edges.mas_equalTo(cell);
                 }];
-//            }
+            }
+            ZSHSimpleCellView *cellView = [cell.contentView viewWithTag:29];
+            if (weakself.model) {
+                [cellView updateViewWithModel:weakself.model index:indexPath.row];
+            }
+            
+            if (indexPath.row == 0) {
+                if (weakself.headImage) {
+                    [cellView updateHeadImage:weakself.headImage];
+                }
+            } else {
+                if (indexPath.row  == weakself.changedDataIndex) {
+                    [cellView updateRightText:weakself.changedData];
+                }
+            }
             return cell;
         };
         
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
             if (indexPath.row == 0) {
                 [weakself selectHeadPortrait];
-            } else  {
-            Class className = NSClassFromString(self.pushVCsArr[0][indexPath.row]);
-            RootViewController *vc = [[className alloc]initWithParamDic:weakself.paramArr[0][indexPath.row]];
-            [weakself.navigationController pushViewController:vc animated:YES];
+            } else if (indexPath.row == 1 || indexPath.row == 7) { // 1昵称  7个性签名
+                ZSHMultiInfoViewController *multiInfoVC = [[ZSHMultiInfoViewController alloc] initWithParamDic:weakself.paramArr[0][indexPath.row]];
+                multiInfoVC.index = indexPath.row;
+                multiInfoVC.saveBlock = ^(id str, NSInteger index) {
+                    weakself.changedData = str;
+                    weakself.changedDataIndex = index;
+                    [weakself.tableView reloadRow:index inSection:0 withRowAnimation:UITableViewRowAnimationNone];
+                };
+                [weakself.navigationController pushViewController:multiInfoVC animated:YES];
+            } else if (indexPath.row == 6) { // 地区选择
+                weakself.pickView = [weakself createPickViewWithType:WindowRegion];
+                weakself.pickView.tag = 6;
+                weakself.pickView.saveChangeBlock = ^(NSString *text, NSInteger index) {
+                    weakself.changedData = text;
+                    weakself.changedDataIndex = index;
+                    [weakself requestAddress];
+                };
+                [weakself.pickView show:WindowRegion];
             }
         };
     }
@@ -143,7 +184,9 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
         cellModel.height = kRealValue(43);
         cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
             ZSHBaseCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHBaseCellID forIndexPath:indexPath];
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            if (indexPath.row > 1) {
+                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            }
             if (![cell.contentView viewWithTag:2]) {
                 NSDictionary *nextParamDic = @{@"leftTitle":weakself.titleArr[1][indexPath.row],@"rightTitle":weakself.detailTitleArr[1][indexPath.row],@"row":@(indexPath.row)};
                 ZSHSimpleCellView *cellView = [[ZSHSimpleCellView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kRealValue(43)) paramDic:nextParamDic];
@@ -153,7 +196,8 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
                     make.edges.mas_equalTo(cell);
                 }];
             }
-           
+            ZSHSimpleCellView *cellView = [cell.contentView viewWithTag:2];
+            [cellView updateView2WithModel:weakself.model index:indexPath.row];
             return cell;
         };
         
@@ -166,6 +210,69 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     }
     return sectionModel;
 }
+//
+- (void)requestData {
+    kWeakSelf(self);
+    [_mineLogic requestGetUserInfo:^(id response) {
+        weakself.model = response;
+        [weakself initViewModel];
+    }];
+}
+
+// 提交住址
+- (void)requestAddress {
+    kWeakSelf(self);
+    [_mineLogic requestUserInfoWithDic:@{@"HONOURUSER_ID":@"d6a3779de8204dfd9359403f54f7d27c", @"ADDRESS":_changedData} success:^(id response) {
+        [weakself.tableView reloadRow:6 inSection:0 withRowAnimation:UITableViewRowAnimationNone];
+        UIAlertController *ac = [UIAlertController alertControllerWithTitle:@"提示" message:@"修改成功" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        }];
+        [ac addAction:cancelAction];
+        [weakself presentViewController:ac animated:YES completion:nil];
+    }];
+}
+
+
+#pragma pickView
+-(ZSHPickView *)createPickViewWithType:(NSUInteger)type{
+    
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"area.plist" ofType:@""];
+    
+    NSArray *areaArr = [NSArray arrayWithContentsOfFile:path];
+    NSMutableArray *provinces = [NSMutableArray array];
+    for (NSDictionary *dic in areaArr) {
+        [provinces addObject:dic[@"state"]];
+    }
+    
+    NSMutableArray *citys = [NSMutableArray array];
+    NSMutableArray *districts = [NSMutableArray array];
+    for (NSDictionary *dic in areaArr) {
+        if ([dic[@"state"] isEqualToString:@"北京"]) {
+            for (NSDictionary *city in dic[@"cities"]) {
+                [citys addObject:city[@"city"]];
+                if ([city[@"city"] isEqualToString:citys[0]]) {
+                    if (city[@"areas"]) {
+                        districts = city[@"areas"];
+                    }
+                }
+            }
+            break;
+        }
+        
+    }
+    
+    
+    NSMutableArray *regionArr = [NSMutableArray arrayWithObjects:provinces, citys, districts, nil];
+    NSDictionary *nextParamDic = @{@"type":@(type),@"midTitle":@"城市区域选择",@"dataArr":regionArr};
+    
+    _pickView = [[ZSHPickView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight) paramDic:nextParamDic];
+    _pickView.controller = self;
+    
+    return _pickView;
+}
+
+
+
 - (void)selectHeadPortrait {
     UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"拍照",@"去相册选择", nil];
     [sheet showInView:self.view];
