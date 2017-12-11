@@ -96,7 +96,7 @@
 - (void)loadSingerListWithParamDic:(NSDictionary *)paramDic Success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail{
     [PPNetworkHelper POST:kUrlSingerList parameters:paramDic success:^(id responseObject) {
         RLog(@"歌手列表数据%@",responseObject);
-        NSArray *singerModelArr = [ZSHSingerModel mj_objectArrayWithKeyValuesArray:responseObject[@"artist"]];
+        NSArray *singerModelArr = [ZSHSingerModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"][@"artist"]];
         success(singerModelArr);
     } failure:^(NSError *error) {
         RLog(@"歌手列表获取失败");

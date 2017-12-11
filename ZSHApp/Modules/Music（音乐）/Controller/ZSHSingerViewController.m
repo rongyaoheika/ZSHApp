@@ -14,7 +14,8 @@
 @interface ZSHSingerViewController ()
 
 @property (nonatomic, strong) ZSHMusicLogic         *musicLogic;
-@property (nonatomic, strong) NSArray               *singerModelArr;
+@property (nonatomic, strong) NSMutableArray        *singerModelArr;
+@property (nonatomic, assign) NSInteger             page;
 
 @end
 
@@ -32,6 +33,8 @@ static NSString *ZSHMusicPlayListCellID = @"ZSHMusicPlayListCell";
 - (void)loadData{
     
     _musicLogic = [[ZSHMusicLogic alloc]init];
+    _singerModelArr = [[NSMutableArray alloc]init];
+    _page = 0;
     [self requestData];
     [self initViewModel];
 }
@@ -46,8 +49,9 @@ static NSString *ZSHMusicPlayListCellID = @"ZSHMusicPlayListCell";
 
 - (void)requestData{
     kWeakSelf(self);
-    [_musicLogic loadSingerListWithParamDic:nil Success:^(id responseObject) {
-        _singerModelArr = responseObject;
+    _page++;
+    [_musicLogic loadSingerListWithParamDic:@{@"offset":@(_page)} Success:^(id responseObject) {
+        [_singerModelArr addObjectsFromArray:responseObject];
         [weakself initViewModel];
     } fail:nil];
     
@@ -131,6 +135,12 @@ static NSString *ZSHMusicPlayListCellID = @"ZSHMusicPlayListCell";
     };
     return titleView;
 }
+
+//上拉刷新
+-(void)footerRereshing{
+    [self requestData];
+}
+
 
 - (void)searchAction{
     
