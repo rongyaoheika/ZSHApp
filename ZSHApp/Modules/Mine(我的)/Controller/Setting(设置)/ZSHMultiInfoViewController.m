@@ -8,6 +8,7 @@
 
 #import "ZSHMultiInfoViewController.h"
 #import "ZSHTextFieldCellView.h"
+#import "ZSHMineLogic.h"
 
 @interface ZSHMultiInfoViewController ()
 
@@ -20,6 +21,7 @@
 @property (nonatomic, assign) CGFloat            bottomBtnTop;
 @property (nonatomic, assign) CGFloat            agreeBtnTop;
 @property (nonatomic, assign) CGFloat            agreeBtnHeight;
+@property (nonatomic, strong) ZSHMineLogic       *mineLogic;
 
 @end
 
@@ -35,7 +37,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 }
 
 - (void)loadData{
-
+    _mineLogic = [[ZSHMineLogic alloc] init];
     if (kFromClassTypeValue == FromAccountVCToMultiInfoVC) {
         //密码-找回登录密码
         self.titleArr = @[@"当前帐号",@"身份证号",@"手机号",@"验证码"];
@@ -110,6 +112,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 - (void)initViewModel {
     [self.tableViewModel.sectionModelArray removeAllObjects];
     [self.tableViewModel.sectionModelArray addObject:[self storeListSection]];
+    [self.tableView reloadData];
 }
 
 - (ZSHBaseTableViewSectionModel*)storeListSection{
@@ -124,9 +127,10 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
                 NSDictionary *paramDic = @{@"leftTitle":self.titleArr[indexPath.row],@"placeholder":self.placeHolderArr[indexPath.row],@"textFieldType":self.textFieldTypeArr[indexPath.row],KFromClassType:@(self.toViewType)};
                 ZSHTextFieldCellView *textFieldView = [[ZSHTextFieldCellView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, kRealValue(44)) paramDic:paramDic];
                 textFieldView.tag = 2;
+        
                 [cell.contentView addSubview:textFieldView];
             }
-           
+        
             return cell;
         };
         
@@ -140,7 +144,9 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 #pragma action
 
 - (void)rightNaviBtnAction:(UIButton *)btn{
-    
+    if (kFromClassTypeValue == FromUserInfoNickNameVCToMultiInfoVC){
+//        _mineLogic
+    }
 }
 
 - (void)nextBtnAction{

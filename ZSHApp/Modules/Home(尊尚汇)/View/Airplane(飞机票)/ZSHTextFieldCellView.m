@@ -25,12 +25,7 @@
     [self addSubview:self.getCaptchaBtn];
     [self addSubview:self.verticalLine];
     [self addSubview:self.bottomLine];
-    [self layoutIfNeeded];
-
-}
-
-- (void)layoutSubviews{
-    [super layoutSubviews];
+    
     if (self.paramDic[@"leftTitle"]) {
         [_leftLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.mas_equalTo(self).offset(KLeftMargin);
@@ -39,7 +34,7 @@
             make.height.mas_equalTo(kRealValue(15));
         }];
     }
-
+    
     if ([self.paramDic[@"textFieldType"] integerValue] != ZSHTextFieldViewNone) {
         [self.textField mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.mas_equalTo(self.leftLabel.mas_right);
@@ -56,7 +51,7 @@
             make.width.mas_equalTo(kRealValue(77));
             make.right.mas_equalTo(self).offset(-10);
         }];
-
+        
         [self.verticalLine mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.mas_equalTo(self).offset(kRealValue(12));
             make.bottom.mas_equalTo(self).offset(-kRealValue(12));
@@ -73,8 +68,8 @@
             make.right.mas_equalTo(self);
         }];
     }
-    
 }
+
 
 #pragma getter
 - (UILabel *)leftLabel{
