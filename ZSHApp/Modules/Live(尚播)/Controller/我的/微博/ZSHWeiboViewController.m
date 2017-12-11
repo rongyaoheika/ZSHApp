@@ -28,9 +28,9 @@
 }
 
 - (void)loadData{
-//    self.dataArr = [ZSHWeiBoCellModel mj_objectArrayWithFilename:@"cellData.plist"];
     _dataArr = [NSArray array];
     _liveLogic = [[ZSHLiveLogic alloc] init];
+    
     [self initViewModel];
     [self requestData];
 }
@@ -79,11 +79,11 @@
             cell.backgroundColor = KClearColor;
             ZSHWeiBoCellModel *model = weakself.dataArr[indexPath.row];
             weakcellModel.height = [cell getCellHeightWithModel:model];
+            NSLog(@"height:%zd&%f",indexPath.row,weakcellModel.height);
             NSDictionary *ndextParamDic = @{KFromClassType:@(ZSHWeiboVCToWeiBoCell)};
             [cell updateCellWithParamDic:ndextParamDic];
             [cell updateCellWithModel:model];
-            [cell setNeedsUpdateConstraints];
-            [cell updateConstraintsIfNeeded];
+            
             return cell;
         };
     }
@@ -95,7 +95,10 @@
     kWeakSelf(self);
     [_liveLogic requestCircleList:^(id response) {
         weakself.dataArr = response;
-        [weakself initViewModel];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [weakself initViewModel];
+        });
+
     }];
 }
 

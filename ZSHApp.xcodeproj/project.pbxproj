@@ -64,6 +64,20 @@
 		1826CDAD1FBAE1F000A0ECE2 /* ZSHVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1826CDAC1FBAE1F000A0ECE2 /* ZSHVideoViewController.m */; };
 		1826CDB01FBAE20C00A0ECE2 /* ZSHPersonalDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1826CDAF1FBAE20C00A0ECE2 /* ZSHPersonalDetailViewController.m */; };
 		1826CDB41FBAFD3D00A0ECE2 /* ZSHApplyServiceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1826CDB31FBAFD3D00A0ECE2 /* ZSHApplyServiceViewController.m */; };
+		182F578D1FDB91390085BFC6 /* KNActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 182F577A1FDB91390085BFC6 /* KNActionSheet.m */; };
+		182F578E1FDB91390085BFC6 /* KNActionSheetView.m in Sources */ = {isa = PBXBuildFile; fileRef = 182F577C1FDB91390085BFC6 /* KNActionSheetView.m */; };
+		182F578F1FDB91390085BFC6 /* KNPhotoBrower.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 182F577E1FDB91390085BFC6 /* KNPhotoBrower.bundle */; };
+		182F57901FDB91390085BFC6 /* KNPhotoBrower.m in Sources */ = {isa = PBXBuildFile; fileRef = 182F57801FDB91390085BFC6 /* KNPhotoBrower.m */; };
+		182F57911FDB91390085BFC6 /* KNPhotoBrowerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 182F57821FDB91390085BFC6 /* KNPhotoBrowerCell.m */; };
+		182F57921FDB91390085BFC6 /* KNPhotoBrowerImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 182F57841FDB91390085BFC6 /* KNPhotoBrowerImageView.m */; };
+		182F57931FDB91390085BFC6 /* KNPhotoBrowerNumView.m in Sources */ = {isa = PBXBuildFile; fileRef = 182F57861FDB91390085BFC6 /* KNPhotoBrowerNumView.m */; };
+		182F57941FDB91390085BFC6 /* KNProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 182F57881FDB91390085BFC6 /* KNProgressHUD.m */; };
+		182F57951FDB91390085BFC6 /* KNToast.m in Sources */ = {isa = PBXBuildFile; fileRef = 182F578A1FDB91390085BFC6 /* KNToast.m */; };
+		182F57961FDB91390085BFC6 /* UIView+PBExtesion.m in Sources */ = {isa = PBXBuildFile; fileRef = 182F578C1FDB91390085BFC6 /* UIView+PBExtesion.m */; };
+		182F579E1FDB949A0085BFC6 /* FLAnimatedImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 182F57991FDB949A0085BFC6 /* FLAnimatedImage.m */; };
+		182F579F1FDB949A0085BFC6 /* FLAnimatedImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 182F579B1FDB949A0085BFC6 /* FLAnimatedImageView+WebCache.m */; };
+		182F57A01FDB949A0085BFC6 /* FLAnimatedImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 182F579D1FDB949A0085BFC6 /* FLAnimatedImageView.m */; };
+		182F57A31FDBD2ED0085BFC6 /* ZSHUserInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 182F57A21FDBD2ED0085BFC6 /* ZSHUserInfoModel.m */; };
 		183218051FD692A800320022 /* ZSHTrainLogic.m in Sources */ = {isa = PBXBuildFile; fileRef = 183218041FD692A800320022 /* ZSHTrainLogic.m */; };
 		183218091FD69A5300320022 /* ZSHTrainModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 183218081FD69A5300320022 /* ZSHTrainModel.m */; };
 		183C65761FC037B60081DCFF /* ZSHToplineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 183C65751FC037B60081DCFF /* ZSHToplineViewController.m */; };
@@ -575,6 +589,34 @@
 		1826CDAF1FBAE20C00A0ECE2 /* ZSHPersonalDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHPersonalDetailViewController.m; sourceTree = "<group>"; };
 		1826CDB21FBAFD3D00A0ECE2 /* ZSHApplyServiceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHApplyServiceViewController.h; sourceTree = "<group>"; };
 		1826CDB31FBAFD3D00A0ECE2 /* ZSHApplyServiceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHApplyServiceViewController.m; sourceTree = "<group>"; };
+		182F57791FDB91390085BFC6 /* KNActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KNActionSheet.h; sourceTree = "<group>"; };
+		182F577A1FDB91390085BFC6 /* KNActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KNActionSheet.m; sourceTree = "<group>"; };
+		182F577B1FDB91390085BFC6 /* KNActionSheetView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KNActionSheetView.h; sourceTree = "<group>"; };
+		182F577C1FDB91390085BFC6 /* KNActionSheetView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KNActionSheetView.m; sourceTree = "<group>"; };
+		182F577D1FDB91390085BFC6 /* KNPch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KNPch.h; sourceTree = "<group>"; };
+		182F577E1FDB91390085BFC6 /* KNPhotoBrower.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = KNPhotoBrower.bundle; sourceTree = "<group>"; };
+		182F577F1FDB91390085BFC6 /* KNPhotoBrower.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KNPhotoBrower.h; sourceTree = "<group>"; };
+		182F57801FDB91390085BFC6 /* KNPhotoBrower.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KNPhotoBrower.m; sourceTree = "<group>"; };
+		182F57811FDB91390085BFC6 /* KNPhotoBrowerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KNPhotoBrowerCell.h; sourceTree = "<group>"; };
+		182F57821FDB91390085BFC6 /* KNPhotoBrowerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KNPhotoBrowerCell.m; sourceTree = "<group>"; };
+		182F57831FDB91390085BFC6 /* KNPhotoBrowerImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KNPhotoBrowerImageView.h; sourceTree = "<group>"; };
+		182F57841FDB91390085BFC6 /* KNPhotoBrowerImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KNPhotoBrowerImageView.m; sourceTree = "<group>"; };
+		182F57851FDB91390085BFC6 /* KNPhotoBrowerNumView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KNPhotoBrowerNumView.h; sourceTree = "<group>"; };
+		182F57861FDB91390085BFC6 /* KNPhotoBrowerNumView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KNPhotoBrowerNumView.m; sourceTree = "<group>"; };
+		182F57871FDB91390085BFC6 /* KNProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KNProgressHUD.h; sourceTree = "<group>"; };
+		182F57881FDB91390085BFC6 /* KNProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KNProgressHUD.m; sourceTree = "<group>"; };
+		182F57891FDB91390085BFC6 /* KNToast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KNToast.h; sourceTree = "<group>"; };
+		182F578A1FDB91390085BFC6 /* KNToast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KNToast.m; sourceTree = "<group>"; };
+		182F578B1FDB91390085BFC6 /* UIView+PBExtesion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+PBExtesion.h"; sourceTree = "<group>"; };
+		182F578C1FDB91390085BFC6 /* UIView+PBExtesion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+PBExtesion.m"; sourceTree = "<group>"; };
+		182F57981FDB949A0085BFC6 /* FLAnimatedImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLAnimatedImage.h; sourceTree = "<group>"; };
+		182F57991FDB949A0085BFC6 /* FLAnimatedImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLAnimatedImage.m; sourceTree = "<group>"; };
+		182F579A1FDB949A0085BFC6 /* FLAnimatedImageView+WebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FLAnimatedImageView+WebCache.h"; sourceTree = "<group>"; };
+		182F579B1FDB949A0085BFC6 /* FLAnimatedImageView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "FLAnimatedImageView+WebCache.m"; sourceTree = "<group>"; };
+		182F579C1FDB949A0085BFC6 /* FLAnimatedImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLAnimatedImageView.h; sourceTree = "<group>"; };
+		182F579D1FDB949A0085BFC6 /* FLAnimatedImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLAnimatedImageView.m; sourceTree = "<group>"; };
+		182F57A11FDBD2ED0085BFC6 /* ZSHUserInfoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHUserInfoModel.h; sourceTree = "<group>"; };
+		182F57A21FDBD2ED0085BFC6 /* ZSHUserInfoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHUserInfoModel.m; sourceTree = "<group>"; };
 		183218031FD692A800320022 /* ZSHTrainLogic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHTrainLogic.h; sourceTree = "<group>"; };
 		183218041FD692A800320022 /* ZSHTrainLogic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHTrainLogic.m; sourceTree = "<group>"; };
 		183218071FD69A5300320022 /* ZSHTrainModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHTrainModel.h; sourceTree = "<group>"; };
@@ -1592,6 +1634,54 @@
 			name = "ApplyService(申请售后)";
 			sourceTree = "<group>";
 		};
+		182F57771FDB91390085BFC6 /* KNPhotoBrower */ = {
+			isa = PBXGroup;
+			children = (
+				182F57781FDB91390085BFC6 /* KNActionSheet */,
+				182F577D1FDB91390085BFC6 /* KNPch.h */,
+				182F577E1FDB91390085BFC6 /* KNPhotoBrower.bundle */,
+				182F577F1FDB91390085BFC6 /* KNPhotoBrower.h */,
+				182F57801FDB91390085BFC6 /* KNPhotoBrower.m */,
+				182F57811FDB91390085BFC6 /* KNPhotoBrowerCell.h */,
+				182F57821FDB91390085BFC6 /* KNPhotoBrowerCell.m */,
+				182F57831FDB91390085BFC6 /* KNPhotoBrowerImageView.h */,
+				182F57841FDB91390085BFC6 /* KNPhotoBrowerImageView.m */,
+				182F57851FDB91390085BFC6 /* KNPhotoBrowerNumView.h */,
+				182F57861FDB91390085BFC6 /* KNPhotoBrowerNumView.m */,
+				182F57871FDB91390085BFC6 /* KNProgressHUD.h */,
+				182F57881FDB91390085BFC6 /* KNProgressHUD.m */,
+				182F57891FDB91390085BFC6 /* KNToast.h */,
+				182F578A1FDB91390085BFC6 /* KNToast.m */,
+				182F578B1FDB91390085BFC6 /* UIView+PBExtesion.h */,
+				182F578C1FDB91390085BFC6 /* UIView+PBExtesion.m */,
+			);
+			path = KNPhotoBrower;
+			sourceTree = "<group>";
+		};
+		182F57781FDB91390085BFC6 /* KNActionSheet */ = {
+			isa = PBXGroup;
+			children = (
+				182F57791FDB91390085BFC6 /* KNActionSheet.h */,
+				182F577A1FDB91390085BFC6 /* KNActionSheet.m */,
+				182F577B1FDB91390085BFC6 /* KNActionSheetView.h */,
+				182F577C1FDB91390085BFC6 /* KNActionSheetView.m */,
+			);
+			path = KNActionSheet;
+			sourceTree = "<group>";
+		};
+		182F57971FDB949A0085BFC6 /* FLAnimatedImage */ = {
+			isa = PBXGroup;
+			children = (
+				182F57981FDB949A0085BFC6 /* FLAnimatedImage.h */,
+				182F57991FDB949A0085BFC6 /* FLAnimatedImage.m */,
+				182F579A1FDB949A0085BFC6 /* FLAnimatedImageView+WebCache.h */,
+				182F579B1FDB949A0085BFC6 /* FLAnimatedImageView+WebCache.m */,
+				182F579C1FDB949A0085BFC6 /* FLAnimatedImageView.h */,
+				182F579D1FDB949A0085BFC6 /* FLAnimatedImageView.m */,
+			);
+			path = FLAnimatedImage;
+			sourceTree = "<group>";
+		};
 		183218061FD69A3F00320022 /* 火车票 */ = {
 			isa = PBXGroup;
 			children = (
@@ -2332,6 +2422,8 @@
 				FEA30A4F1F9F08FE00AB0FFC /* ZSHLogisticsDetailModel.m */,
 				181AD3151FCCF3C30015D004 /* ZSHAddrModel.h */,
 				181AD3161FCCF3C30015D004 /* ZSHAddrModel.m */,
+				182F57A11FDBD2ED0085BFC6 /* ZSHUserInfoModel.h */,
+				182F57A21FDBD2ED0085BFC6 /* ZSHUserInfoModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2897,6 +2989,8 @@
 		FE5537AA1F47049D00803128 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				182F57971FDB949A0085BFC6 /* FLAnimatedImage */,
+				182F57771FDB91390085BFC6 /* KNPhotoBrower */,
 				18063C5C1FC955CA000F5A00 /* LxGridViewFlowLayout */,
 				FE3005F41FC6779100A801C9 /* CWStarRateView */,
 				FE4E4B371FC03C1D00E3B2F4 /* SearchVC */,
@@ -3870,6 +3964,7 @@
 				1816F5261F566F320060C4BE /* UMSocialSDKResources.bundle in Resources */,
 				FE5538331F47049D00803128 /* MBHUD_Warn@2x.png in Resources */,
 				FE55382E1F47049D00803128 /* MBHUD_Error@3x.png in Resources */,
+				182F578F1FDB91390085BFC6 /* KNPhotoBrower.bundle in Resources */,
 				FE5538311F47049D00803128 /* MBHUD_Success@2x.png in Resources */,
 				FE5538511F47049D00803128 /* Info.plist in Resources */,
 				FE3E008F1FDA743200A0F7CA /* MusicPlayer_后退@2x.png in Resources */,
@@ -3994,6 +4089,7 @@
 				FE8FD08A1FADFF17005F1184 /* ZSHUserInfoViewController.m in Sources */,
 				181AD3221FCD33C30015D004 /* ZSHGoodOrderModel.m in Sources */,
 				FE9CC3D51FA05D2200285475 /* ZSHOrderDetailViewController.m in Sources */,
+				182F578E1FDB91390085BFC6 /* KNActionSheetView.m in Sources */,
 				FEBD7CBA1FA75FBC00CE2BA6 /* ZSHFoodCell.m in Sources */,
 				FEA105811F9B292B008652D6 /* ZSHBrandsSortHeadView.m in Sources */,
 				FEB099161FD127F300E8F03D /* ZSHMoreListCell.m in Sources */,
@@ -4001,6 +4097,7 @@
 				18063C5B1FC9140B000F5A00 /* ZSHCollectModel.m in Sources */,
 				185DDCD31FBEDD79004D4688 /* ZSHShareView.m in Sources */,
 				FEC702B41FB3195000D5BAA1 /* ZSHEntertainmentDisViewController.m in Sources */,
+				182F57941FDB91390085BFC6 /* KNProgressHUD.m in Sources */,
 				1822871A1FB4559300CA5B10 /* ZSHLiveMineViewController.m in Sources */,
 				FE2CD0991F984B5500E9E519 /* ZSHFindViewController.m in Sources */,
 				FE8FD0921FAE0997005F1184 /* ZSHServiceCenterViewController.m in Sources */,
@@ -4078,6 +4175,7 @@
 				185BB9BE1FB5762E007A96FF /* ZSHLiveDayListCell.m in Sources */,
 				FE2CD0A51F98841400E9E519 /* ZSHLuckCardView.m in Sources */,
 				FE7F00171F9203430006E9A3 /* ZSHBaseTableViewSectionModel.m in Sources */,
+				182F57911FDB91390085BFC6 /* KNPhotoBrowerCell.m in Sources */,
 				FEA483A91F91B96000219CFE /* RXLSideSlipViewController.h in Sources */,
 				18F902491FB6CF270044967F /* ZSHFollowViewController.m in Sources */,
 				183C657A1FC03B400081DCFF /* ZSHToplineCell.m in Sources */,
@@ -4085,6 +4183,7 @@
 				18F902501FB6DE460044967F /* ZSHChargeRecViewController.m in Sources */,
 				FE7CA9EA1F9DD15300A2B15D /* ZSHLiveListModel.m in Sources */,
 				1869C9331FD8DF7C002F2E37 /* ZSHLiveLogic.m in Sources */,
+				182F579E1FDB949A0085BFC6 /* FLAnimatedImage.m in Sources */,
 				185C6D811FC2D950004EA461 /* LZCartViewController.m in Sources */,
 				FEA483AA1F91B96000219CFE /* RXLSideSlipViewController.m in Sources */,
 				FEE697C01FC566B5002120F0 /* ZSHHomeLogic.m in Sources */,
@@ -4101,6 +4200,7 @@
 				FE1F76371F8F7E1100C45B83 /* LXScrollContentView.h in Sources */,
 				1813E26D1FBD3F5000624405 /* ZSHTrainTicketDetailCell.m in Sources */,
 				FEADBD2E1FBEBBC00065B94B /* ZSHGuideView.m in Sources */,
+				182F579F1FDB949A0085BFC6 /* FLAnimatedImageView+WebCache.m in Sources */,
 				FEA30A501F9F08FE00AB0FFC /* ZSHLogisticsDetailModel.m in Sources */,
 				1812E9FD1FDA60110056C170 /* ZSHReviewCell.m in Sources */,
 				FE1F76381F8F7E1100C45B83 /* LXScrollContentView.m in Sources */,
@@ -4182,7 +4282,9 @@
 				FE3E00971FDA743200A0F7CA /* AudioPlayerController.m in Sources */,
 				185DE3081FC01E6000720CAF /* ADPlayer.m in Sources */,
 				FE7527971F7AA48C00858561 /* DSectionIndexView.m in Sources */,
+				182F57A01FDB949A0085BFC6 /* FLAnimatedImageView.m in Sources */,
 				FE7527961F7AA48C00858561 /* DSectionIndexItemView.m in Sources */,
+				182F57931FDB91390085BFC6 /* KNPhotoBrowerNumView.m in Sources */,
 				FE5538661F47049D00803128 /* YYFPSLabel.m in Sources */,
 				FE55385B1F47049D00803128 /* AdPageView.m in Sources */,
 				FEBD7CBE1FA7608200CE2BA6 /* ZSHFoodModel.m in Sources */,
@@ -4223,6 +4325,7 @@
 				FE5538521F47049D00803128 /* main.m in Sources */,
 				18063C621FC95759000F5A00 /* TZTestCell.m in Sources */,
 				FE3E00891FDA743200A0F7CA /* NSString+time.m in Sources */,
+				182F57A31FDBD2ED0085BFC6 /* ZSHUserInfoModel.m in Sources */,
 				FE8FD07F1FADD306005F1184 /* ZSHGameCenterViewController.m in Sources */,
 				FEF2B6401FACBCE5000AEA6E /* ZSHEntertainmentDetailCell.m in Sources */,
 				FE1F76331F8F7D0500C45B83 /* ZSHLiveContentFirstViewController.m in Sources */,
@@ -4258,12 +4361,14 @@
 				FE55385E1F47049D00803128 /* UIButton+XYButton.m in Sources */,
 				FE443FE21FB059A800B7F7A5 /* ZSHChangeInfoViewController.m in Sources */,
 				18C0F3EF1FB43E9F0074605D /* ZSHDetailDemandViewController.m in Sources */,
+				182F57961FDB91390085BFC6 /* UIView+PBExtesion.m in Sources */,
 				1869C93E1FD94FBA002F2E37 /* ZSHWeiboViewController.m in Sources */,
 				FE2CD09C1F9857A800E9E519 /* ZSHIntegralViewController.m in Sources */,
 				185C6D8C1FC2D98A004EA461 /* LZGoodsModel.m in Sources */,
 				1843134E1FD550F90046B128 /* ZSHRegisterModel.m in Sources */,
 				FE1F76251F8F788100C45B83 /* ZSHTitleContentViewController.m in Sources */,
 				18A2C6511F483A66005F394F /* PPNetworkHelper.m in Sources */,
+				182F57921FDB91390085BFC6 /* KNPhotoBrowerImageView.m in Sources */,
 				FEBD7CB61FA75F3400CE2BA6 /* ZSHFoodViewController.m in Sources */,
 				1813E2701FBD3F6C00624405 /* ZSHTrainTicketDetailViewController.m in Sources */,
 				1812EA001FDA678C0056C170 /* ZSHCommentListModel.m in Sources */,
@@ -4309,6 +4414,7 @@
 				1813E2671FBD2A0800624405 /* ZSHTrainSearchResultController.m in Sources */,
 				FE5538801F470BAF00803128 /* ShareManager.m in Sources */,
 				FEBD7C931FA6CC1900CE2BA6 /* ZSHHotelPayViewController.m in Sources */,
+				182F57951FDB91390085BFC6 /* KNToast.m in Sources */,
 				FE7CA9DE1F9D97F100A2B15D /* ZSHBaseCollectionReusableView.m in Sources */,
 				FEBD7CA91FA72EBB00CE2BA6 /* ZSHGoodsDetailViewController.m in Sources */,
 				181AD3141FCCF1EE0015D004 /* ZSHMineLogic.m in Sources */,
@@ -4341,12 +4447,14 @@
 				FE5538101F47049D00803128 /* AppDelegate.m in Sources */,
 				FE2CD0AA1F98AEAC00E9E519 /* ZSHIntegralBillViewController.m in Sources */,
 				18F9024C1FB6CFDF0044967F /* ZSHFollowCell.m in Sources */,
+				182F578D1FDB91390085BFC6 /* KNActionSheet.m in Sources */,
 				FE1F761F1F8F3D4100C45B83 /* ZSHTogetherView.m in Sources */,
 				FE0F9DC31F94DB85004F8D2A /* ZSHWeiBoBottomView.m in Sources */,
 				FE4E4B281FC000E800E3B2F4 /* ZSHSearchLiveSecondCell.m in Sources */,
 				FE5538151F47049D00803128 /* TabBar.m in Sources */,
 				FE0F9DB81F949B4E004F8D2A /* ZSHWeiBoCellModel.m in Sources */,
 				18F902531FB6DED20044967F /* ZSHChargeRecCell.m in Sources */,
+				182F57901FDB91390085BFC6 /* KNPhotoBrower.m in Sources */,
 				FEA1057E1F9B27DC008652D6 /* ZSHBrandSortCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

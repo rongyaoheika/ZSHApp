@@ -11,6 +11,7 @@
 #import "ZSHGoodOrderModel.h"
 #import "ZSHBuyOrderModel.h"
 #import "ZSHHotelOrderModel.h"
+#import "ZSHUserInfoModel.h"
 
 
 @interface ZSHMineLogic : ZSHLoginLogic
@@ -45,6 +46,7 @@
 - (void)requestShipOrderWithModel:(ZSHBuyOrderModel *)model success:(void (^)(id response))success;
 // 上传头像
 - (void)uploadImage:(NSArray *)imageArr name:(NSArray *)nameArr success:(void (^)(id response))success;
-
+// 修改个人信息
+- (void)requestUserInfoWithModel:(ZSHUserInfoModel *)model success:(void (^)(id response))success;
 
 @end

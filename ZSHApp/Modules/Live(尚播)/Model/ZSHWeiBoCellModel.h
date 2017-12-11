@@ -23,6 +23,7 @@
 @property (nonatomic, copy) NSString *PUBLISHTIME;
 @property (nonatomic, copy) NSString *SHOWIMAGES;
 @property (nonatomic, copy) NSString *commentCount;
+@property (nonatomic, assign) CGFloat hight;// 图片开始的高度
 
 //子控件的可变frame（根据内容显示不同，frame变化）
 //@property (nonatomic,assign)  CGRect  avatarFrame;

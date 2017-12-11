@@ -128,4 +128,14 @@
     }];
 }
 
+// 修改个人信息
+- (void)requestUserInfoWithModel:(ZSHUserInfoModel *)model success:(void (^)(id response))success {
+    [PPNetworkHelper POST:kUrlUserPersonalInfo parameters:model.mj_keyValues success:^(id responseObject) {
+        success(responseObject);
+    } failure:^(NSError *error) {
+        RLog(@"请求失败");
+    }];
+}
+
+
 @end
