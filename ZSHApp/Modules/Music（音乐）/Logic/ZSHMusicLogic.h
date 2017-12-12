@@ -20,7 +20,10 @@
 - (void)loadRadioDetailWithParamDic:(NSDictionary *)paramDic Success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail;
 
 //音乐排行榜
-- (void)loadRankListWithParamDic:(NSDictionary *)paramDic Success:(RequestMoreDataCompleted)success fail:(ResponseFailBlock)fail;
+- (void)loadTotalRankListWithParamDic:(NSDictionary *)paramDic Success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail;
+
+//音乐排行榜详情
+- (void)loadRankListWithParamDic:(NSDictionary *)paramDic Success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail;
 
 //音乐详细数据
 - (void)loadSongDetailtWithParamDic:(NSDictionary *)paramDic Success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail;

@@ -203,6 +203,12 @@
 		FE2B2A811FB9FD26001F8A61 /* TLMenuButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE2B2A7F1FB9FD26001F8A61 /* TLMenuButtonView.m */; };
 		FE2BB0B81F8E03FB000D5800 /* ZSHHomeHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE2BB0B71F8E03FB000D5800 /* ZSHHomeHeadView.m */; };
 		FE2BB0C21F8E16C8000D5800 /* MainTabBarController.h in Sources */ = {isa = PBXBuildFile; fileRef = FE55374A1F47049D00803128 /* MainTabBarController.h */; };
+		FE2BC8911FDEA7A800E98B2B /* ZSHMusicLryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE2BC8901FDEA7A800E98B2B /* ZSHMusicLryViewController.m */; };
+		FE2BC8A01FDEAB7A00E98B2B /* QQLrcCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE2BC89C1FDEAB7900E98B2B /* QQLrcCell.xib */; };
+		FE2BC8A11FDEAB7A00E98B2B /* QQLrcCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE2BC89D1FDEAB7A00E98B2B /* QQLrcCell.m */; };
+		FE2BC8A21FDEAB7A00E98B2B /* QQLrcLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = FE2BC89F1FDEAB7A00E98B2B /* QQLrcLabel.m */; };
+		FE2BC8A51FDEAC0F00E98B2B /* QQLrcModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FE2BC8A31FDEAC0E00E98B2B /* QQLrcModel.m */; };
+		FE2BC8A81FDEBF5600E98B2B /* QQLrcDataTool.m in Sources */ = {isa = PBXBuildFile; fileRef = FE2BC8A61FDEBF5500E98B2B /* QQLrcDataTool.m */; };
 		FE2CD0931F9833DE00E9E519 /* ZSHAddressListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE2CD0921F9833DE00E9E519 /* ZSHAddressListCell.m */; };
 		FE2CD0991F984B5500E9E519 /* ZSHFindViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE2CD0981F984B5500E9E519 /* ZSHFindViewController.m */; };
 		FE2CD09C1F9857A800E9E519 /* ZSHIntegralViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE2CD09B1F9857A800E9E519 /* ZSHIntegralViewController.m */; };
@@ -216,6 +222,7 @@
 		FE2CD0B91F98F9C200E9E519 /* ZSHCouponViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE2CD0B81F98F9C200E9E519 /* ZSHCouponViewController.m */; };
 		FE3005F31FC65B0400A801C9 /* ZSHFoodLogic.m in Sources */ = {isa = PBXBuildFile; fileRef = FE3005F21FC65B0400A801C9 /* ZSHFoodLogic.m */; };
 		FE3005F71FC6779100A801C9 /* CWStarRateView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE3005F61FC6779100A801C9 /* CWStarRateView.m */; };
+		FE3583F91FDFAF8D003556AC /* ZSHBaseTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE3583F81FDFAF8D003556AC /* ZSHBaseTableView.m */; };
 		FE3683C01FBC02B300220477 /* ZSHCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE3683BF1FBC02B300220477 /* ZSHCardViewController.m */; };
 		FE3E005F1FDA269600A0F7CA /* ZSHMusicRankViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE3E005E1FDA269600A0F7CA /* ZSHMusicRankViewController.m */; };
 		FE3E00621FDA274300A0F7CA /* ZSHMusicRadioViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE3E00611FDA274300A0F7CA /* ZSHMusicRadioViewController.m */; };
@@ -856,6 +863,17 @@
 		FE2BB0B71F8E03FB000D5800 /* ZSHHomeHeadView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHHomeHeadView.m; sourceTree = "<group>"; };
 		FE2BB0C01F8E168B000D5800 /* ZSHHomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHHomeViewController.h; sourceTree = "<group>"; };
 		FE2BB0C11F8E168B000D5800 /* ZSHHomeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHHomeViewController.m; sourceTree = "<group>"; };
+		FE2BC88F1FDEA7A800E98B2B /* ZSHMusicLryViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHMusicLryViewController.h; sourceTree = "<group>"; };
+		FE2BC8901FDEA7A800E98B2B /* ZSHMusicLryViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHMusicLryViewController.m; sourceTree = "<group>"; };
+		FE2BC89B1FDEAB7900E98B2B /* QQLrcCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QQLrcCell.h; sourceTree = "<group>"; };
+		FE2BC89C1FDEAB7900E98B2B /* QQLrcCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QQLrcCell.xib; sourceTree = "<group>"; };
+		FE2BC89D1FDEAB7A00E98B2B /* QQLrcCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QQLrcCell.m; sourceTree = "<group>"; };
+		FE2BC89E1FDEAB7A00E98B2B /* QQLrcLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QQLrcLabel.h; sourceTree = "<group>"; };
+		FE2BC89F1FDEAB7A00E98B2B /* QQLrcLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QQLrcLabel.m; sourceTree = "<group>"; };
+		FE2BC8A31FDEAC0E00E98B2B /* QQLrcModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QQLrcModel.m; sourceTree = "<group>"; };
+		FE2BC8A41FDEAC0E00E98B2B /* QQLrcModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QQLrcModel.h; sourceTree = "<group>"; };
+		FE2BC8A61FDEBF5500E98B2B /* QQLrcDataTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QQLrcDataTool.m; sourceTree = "<group>"; };
+		FE2BC8A71FDEBF5500E98B2B /* QQLrcDataTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QQLrcDataTool.h; sourceTree = "<group>"; };
 		FE2CD0911F9833DE00E9E519 /* ZSHAddressListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHAddressListCell.h; sourceTree = "<group>"; };
 		FE2CD0921F9833DE00E9E519 /* ZSHAddressListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHAddressListCell.m; sourceTree = "<group>"; };
 		FE2CD0971F984B5500E9E519 /* ZSHFindViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHFindViewController.h; sourceTree = "<group>"; };
@@ -882,6 +900,8 @@
 		FE3005F21FC65B0400A801C9 /* ZSHFoodLogic.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHFoodLogic.m; sourceTree = "<group>"; };
 		FE3005F51FC6779100A801C9 /* CWStarRateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CWStarRateView.h; sourceTree = "<group>"; };
 		FE3005F61FC6779100A801C9 /* CWStarRateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CWStarRateView.m; sourceTree = "<group>"; };
+		FE3583F71FDFAF8D003556AC /* ZSHBaseTableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHBaseTableView.h; sourceTree = "<group>"; };
+		FE3583F81FDFAF8D003556AC /* ZSHBaseTableView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHBaseTableView.m; sourceTree = "<group>"; };
 		FE3683BE1FBC02B300220477 /* ZSHCardViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHCardViewController.h; sourceTree = "<group>"; };
 		FE3683BF1FBC02B300220477 /* ZSHCardViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHCardViewController.m; sourceTree = "<group>"; };
 		FE3E005D1FDA269600A0F7CA /* ZSHMusicRankViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHMusicRankViewController.h; sourceTree = "<group>"; };
@@ -2180,6 +2200,8 @@
 			isa = PBXGroup;
 			children = (
 				FE3E00831FDA743200A0F7CA /* MusicModel.h */,
+				FE2BC8A41FDEAC0E00E98B2B /* QQLrcModel.h */,
+				FE2BC8A31FDEAC0E00E98B2B /* QQLrcModel.m */,
 				FE3E00841FDA743200A0F7CA /* MusicModel.m */,
 				FE1783B31FDB8A880074A08A /* ZSHRadioDetailModel.h */,
 				FE1783B41FDB8A880074A08A /* ZSHRadioDetailModel.m */,
@@ -2629,6 +2651,8 @@
 		FE3E006A1FDA743200A0F7CA /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				FE2BC8A71FDEBF5500E98B2B /* QQLrcDataTool.h */,
+				FE2BC8A61FDEBF5500E98B2B /* QQLrcDataTool.m */,
 				FE3E006C1FDA743200A0F7CA /* NSString+time.h */,
 				FE3E006E1FDA743200A0F7CA /* NSString+time.m */,
 			);
@@ -2662,6 +2686,8 @@
 				FE3E007F1FDA743200A0F7CA /* AudioPlayerController.xib */,
 				FE3E00801FDA743200A0F7CA /* AudioPlayerController+methods.h */,
 				FE3E00811FDA743200A0F7CA /* AudioPlayerController.h */,
+				FE2BC88F1FDEA7A800E98B2B /* ZSHMusicLryViewController.h */,
+				FE2BC8901FDEA7A800E98B2B /* ZSHMusicLryViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -2669,6 +2695,11 @@
 		FE3E00851FDA743200A0F7CA /* View */ = {
 			isa = PBXGroup;
 			children = (
+				FE2BC89B1FDEAB7900E98B2B /* QQLrcCell.h */,
+				FE2BC89D1FDEAB7A00E98B2B /* QQLrcCell.m */,
+				FE2BC89C1FDEAB7900E98B2B /* QQLrcCell.xib */,
+				FE2BC89E1FDEAB7A00E98B2B /* QQLrcLabel.h */,
+				FE2BC89F1FDEAB7A00E98B2B /* QQLrcLabel.m */,
 				FE3E00861FDA743200A0F7CA /* RotatingView.m */,
 				FE3E009E1FDA8CD200A0F7CA /* musicPaper.json */,
 				FE3E00871FDA743200A0F7CA /* RotatingView.h */,
@@ -2897,6 +2928,8 @@
 				FE5537461F47049D00803128 /* RootViewController */,
 				FE5537491F47049D00803128 /* TabbarController */,
 				FE5537521F47049D00803128 /* WebViewController */,
+				FE3583F71FDFAF8D003556AC /* ZSHBaseTableView.h */,
+				FE3583F81FDFAF8D003556AC /* ZSHBaseTableView.m */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -3934,6 +3967,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FE3E008A1FDA743200A0F7CA /* MusicPlayer_上一个@2x.png in Resources */,
+				FE2BC8A01FDEAB7A00E98B2B /* QQLrcCell.xib in Resources */,
 				185C6D751FC2C168004EA461 /* cart_default_bg.png in Resources */,
 				FEA1059B1F9B5D06008652D6 /* ZSHSpeedy.h in Resources */,
 				FEA1059C1F9B5D06008652D6 /* ZSHSpeedy.m in Resources */,
@@ -4136,6 +4170,7 @@
 				FE24DA6A1FD94DDF00965DC8 /* ZSHMusicLibraryCell.m in Sources */,
 				FE4DB1E51F99970D008E12E9 /* ZSHGoodsCell.m in Sources */,
 				FE4E4B361FC025C500E3B2F4 /* YHSlider.m in Sources */,
+				FE2BC8A21FDEAB7A00E98B2B /* QQLrcLabel.m in Sources */,
 				1813E2761FBD43D700624405 /* ZSHAddPassengerViewController.m in Sources */,
 				181AD31B1FCD30650015D004 /* ZSHGoodsMineViewController.m in Sources */,
 				185B75D81FC51B16008CBD2B /* TYCyclePagerTransformLayout.m in Sources */,
@@ -4168,6 +4203,7 @@
 				185B75DA1FC51B17008CBD2B /* TYPageControl.m in Sources */,
 				FE4DB1E91F999747008E12E9 /* ZSHGoodModel.m in Sources */,
 				18F799E41FB31552004CDB0E /* ZSHTailorDetailView.m in Sources */,
+				FE2BC8A11FDEAB7A00E98B2B /* QQLrcCell.m in Sources */,
 				FEA105701F9B22BD008652D6 /* ZSHClassCategoryCell.m in Sources */,
 				FE7F00161F9203430006E9A3 /* ZSHBaseTableViewSectionModel.h in Sources */,
 				FEBD7CAF1FA730F600CE2BA6 /* ZSHGoodsDetailSubCell.m in Sources */,
@@ -4186,6 +4222,7 @@
 				182F579E1FDB949A0085BFC6 /* FLAnimatedImage.m in Sources */,
 				185C6D811FC2D950004EA461 /* LZCartViewController.m in Sources */,
 				FEA483AA1F91B96000219CFE /* RXLSideSlipViewController.m in Sources */,
+				FE2BC8911FDEA7A800E98B2B /* ZSHMusicLryViewController.m in Sources */,
 				FEE697C01FC566B5002120F0 /* ZSHHomeLogic.m in Sources */,
 				FEA483AB1F91B96000219CFE /* UIViewController+RXLSideMenu.h in Sources */,
 				FEA483AC1F91B96000219CFE /* UIViewController+RXLSideMenu.m in Sources */,
@@ -4211,6 +4248,7 @@
 				FEA1056D1F9B20A9008652D6 /* ZSHClassSubModel.m in Sources */,
 				FE2CD0931F9833DE00E9E519 /* ZSHAddressListCell.m in Sources */,
 				FE0F9DBB1F949C45004F8D2A /* ZSHWeiBoCell.m in Sources */,
+				FE3583F91FDFAF8D003556AC /* ZSHBaseTableView.m in Sources */,
 				18155C041FB4031D0060BD9D /* ZSHCommentViewController.m in Sources */,
 				185C6D901FC2DA5D004EA461 /* JSNummberCount.m in Sources */,
 				FE7CA9E71F9DC59300A2B15D /* ZSHGoodsDetailCountCell.m in Sources */,
@@ -4363,6 +4401,7 @@
 				18C0F3EF1FB43E9F0074605D /* ZSHDetailDemandViewController.m in Sources */,
 				182F57961FDB91390085BFC6 /* UIView+PBExtesion.m in Sources */,
 				1869C93E1FD94FBA002F2E37 /* ZSHWeiboViewController.m in Sources */,
+				FE2BC8A81FDEBF5600E98B2B /* QQLrcDataTool.m in Sources */,
 				FE2CD09C1F9857A800E9E519 /* ZSHIntegralViewController.m in Sources */,
 				185C6D8C1FC2D98A004EA461 /* LZGoodsModel.m in Sources */,
 				1843134E1FD550F90046B128 /* ZSHRegisterModel.m in Sources */,
@@ -4417,6 +4456,7 @@
 				182F57951FDB91390085BFC6 /* KNToast.m in Sources */,
 				FE7CA9DE1F9D97F100A2B15D /* ZSHBaseCollectionReusableView.m in Sources */,
 				FEBD7CA91FA72EBB00CE2BA6 /* ZSHGoodsDetailViewController.m in Sources */,
+				FE2BC8A51FDEAC0F00E98B2B /* QQLrcModel.m in Sources */,
 				181AD3141FCCF1EE0015D004 /* ZSHMineLogic.m in Sources */,
 				1891C1361FC6CCA3000AFEFB /* ZSHTogetherLogic.m in Sources */,
 				FEF2B63D1FACAF42000AEA6E /* ZSHEntertainmentDetailViewController.m in Sources */,

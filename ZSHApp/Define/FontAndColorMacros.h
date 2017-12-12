@@ -21,6 +21,7 @@
 #define KBlueColor                     [UIColor blueColor]
 #define KRedColor                      [UIColor redColor]
 #define KGreenColor                    [UIColor greenColor]
+#define KZSHColorA61CE7               [UIColor colorWithHexString:@"A61CE7"]
 #define KZSHColorCD933B               [UIColor colorWithHexString:@"CD933B"]
 #define KZSHColorFD5739               [UIColor colorWithHexString:@"FD5739"]
 #define KZSHColor979797               [UIColor colorWithHexString:@"979797"]

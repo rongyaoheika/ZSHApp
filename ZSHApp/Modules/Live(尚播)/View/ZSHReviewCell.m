@@ -41,8 +41,8 @@
     [self.detailLabel setLineBreakMode:NSLineBreakByWordWrapping];
     [self.contentView addSubview:self.detailLabel];
     
-    self.detailImageView = [[UIImageView alloc]init];
-    [self.contentView addSubview:self.detailImageView ];
+//    self.detailImageView = [[UIImageView alloc]init];
+//    [self.contentView addSubview:self.detailImageView ];
     
     [self.avatarImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self).offset(kRealValue(15));
@@ -72,12 +72,12 @@
         make.right.mas_equalTo(self).offset(-kRealValue(15));
     }];
     
-    [self.detailImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.detailLabel.mas_bottom);
-        make.left.mas_equalTo(self.avatarImageView);
-        make.height.mas_equalTo(kRealValue(100));
-        make.width.mas_equalTo(kRealValue(110));
-    }];
+//    [self.detailImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.mas_equalTo(self.detailLabel.mas_bottom);
+//        make.left.mas_equalTo(self.avatarImageView);
+//        make.height.mas_equalTo(kRealValue(100));
+//        make.width.mas_equalTo(kRealValue(110));
+//    }];
 }
 
 

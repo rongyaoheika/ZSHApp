@@ -66,6 +66,9 @@
         [sectionModel.cellModelArray addObject:cellModel];
         cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
             ZSHReviewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([ZSHReviewCell class]) forIndexPath:indexPath];
+            if (i == self.dataArr.count -1) {
+                cell.backgroundColor = [UIColor redColor];
+            }
             ZSHCommentListModel *model = weakself.dataArr[indexPath.row];
             
             weakcellModel.height = [cell getCellHeightWithModel:model];
@@ -75,6 +78,9 @@
 //            [cell setNeedsUpdateConstraints];
 //            [cell updateConstraintsIfNeeded];
             return cell;
+        };
+        cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
+            RLog(@"点击的cellrow==%ld",indexPath.row);
         };
     }
     

@@ -84,15 +84,15 @@ static NSString *ZSHMusicLibraryCellID = @"ZSHMusicLibraryCell";
             break;
         }
         case 2:{//最热
-            [_musicLogic loadRankListWithParamDic:@{@"type":@(2),@"offset":@(0)} Success:^(id responseObject1, id responseObject2) {
-                _dataArr = responseObject1;
+            [_musicLogic loadRankListWithParamDic:@{@"type":@(2),@"offset":@(0)} Success:^(id responseObject) {
+                _dataArr = responseObject;
                 [weakself.collectionView reloadData];
             } fail:nil];
         }
             
         case 3:{//最新
-            [_musicLogic loadRankListWithParamDic:@{@"type":@(1),@"offset":@(0)} Success:^(id responseObject1, id responseObject2) {
-                _dataArr = responseObject1;
+            [_musicLogic loadRankListWithParamDic:@{@"type":@(1),@"offset":@(0)} Success:^(id responseObject) {
+                _dataArr = responseObject;
                 [weakself.collectionView reloadData];
             } fail:nil];
             break;

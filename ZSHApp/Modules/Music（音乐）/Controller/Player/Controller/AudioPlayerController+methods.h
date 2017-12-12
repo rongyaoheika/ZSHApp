@@ -33,4 +33,9 @@
  */
 - (void)progressHUDWith:(NSString *)string;
 
+/** 添加歌词视图*/
+- (void)addLrcView;
+/** 设置歌词视图的 frame*/
+- (void)setUpLrcViewFrame;
+
 @end

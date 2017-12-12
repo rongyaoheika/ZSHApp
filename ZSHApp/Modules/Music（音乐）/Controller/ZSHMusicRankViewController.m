@@ -19,7 +19,7 @@
 @property (nonatomic, strong) NSMutableArray *songArray;
 @property (nonatomic, strong) NSArray        *rankModelArr;
 @property (nonatomic, copy) NSString         *musicImageUrl;
-
+@property (nonatomic, strong) NSArray        *typeArr;
 @property (nonatomic, strong) NSMutableArray *allMusicArr;
 @property (nonatomic, strong) NSMutableArray *leftImageArr;
 
@@ -45,26 +45,16 @@ static NSString *ZSHMusicRankCellID = @"ZSHMusicRankCell";
 }
 
 - (void)requestData{
+    kWeakSelf(self);
     _musicLogic = [[ZSHMusicLogic alloc]init];
     
     //(1-新歌榜,2-热歌榜,6-KTV热歌榜,8-Hito中文榜,11-摇滚榜,12-爵士,16-流行,21-欧美金 曲榜,22-经典老歌榜,23-情歌对唱榜,24-影视金曲榜,25-网络歌曲榜)
-    NSArray *typeValueArr = @[@(21),@(1),@(12),@(2),@(11),@(24),@(22)];
-    for (int i = 0; i<typeValueArr.count; i++) {
-        [_musicLogic loadRankListWithParamDic:@{@"type":typeValueArr[i],@"offset":@(1)} Success:^(id responseObject,NSString *imageUrl) {
-            RLog(@"音乐排行榜数据==%@",responseObject);
-            _rankModelArr = responseObject;
-            _musicImageUrl = imageUrl;
-            if (!imageUrl.length) {//新歌榜
-                _musicImageUrl = @"http://c.hiphotos.baidu.com/ting/pic/item/f7246b600c33874495c4d089530fd9f9d62aa0c6.jpg";
-            }
-           
-            [_leftImageArr addObject:_musicImageUrl];
-            [_allMusicArr addObject:_rankModelArr];
-            if (_leftImageArr.count == typeValueArr.count) {
-                [self initViewModel];
-            }
+        _typeArr = @[@(21),@(1),@(12),@(2),@(11),@(24),@(22)];
+        [_musicLogic loadTotalRankListWithParamDic:@{@"type":@"21,1,12,2,11,24,22",@"offset":@(0)} Success:^(id responseObject) {
+            _allMusicArr = responseObject;
+            [weakself initViewModel];
         } fail:nil];
-    }
+
 
 
 // 本地数据
@@ -114,14 +104,16 @@ static NSString *ZSHMusicRankCellID = @"ZSHMusicRankCell";
         cellModel.height = kRealValue(110);
         cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
             ZSHMusicRankCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHMusicRankCellID forIndexPath:indexPath];
-            [cell updateCellWithParamDic:@{@"rankModelArr":_allMusicArr[indexPath.row]}];
-            cell.imageUrl = _leftImageArr[indexPath.row];
+            NSDictionary *dic = _allMusicArr[indexPath.row];
+            NSArray *rankModelArr = [ZSHRankModel mj_objectArrayWithKeyValuesArray:dic[@"song_list"]];
+            [cell updateCellWithParamDic:@{@"rankModelArr":rankModelArr}];
+            cell.imageUrl = dic[@"billboard"][@"pic_s640"];
             return cell;
         };
         
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
-            NSDictionary *paramDic = @{@"dataArr":_allMusicArr[indexPath.row],KFromClassType:@(ZSHFromRankVCToPlayListVC),@"headImage":_leftImageArr[indexPath.row]};
-            
+            NSDictionary *dic = _allMusicArr[indexPath.row];
+            NSDictionary *paramDic = @{KFromClassType:@(ZSHFromRankVCToPlayListVC),@"headImage":dic[@"billboard"][@"pic_s640"],@"type":_typeArr[indexPath.row]};
             ZSHPlayListViewController  *playListVC = [[ZSHPlayListViewController alloc]initWithParamDic:paramDic];
             [weakself.navigationController pushViewController:playListVC animated:YES];
         };

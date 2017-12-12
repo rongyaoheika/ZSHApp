@@ -9,7 +9,7 @@
 #import "AudioPlayerController.h"
 #import "AudioPlayerController+methods.h"
 #import "NSString+time.h"
-
+#import "QQLrcDataTool.h"
 @interface AudioPlayerController (){
     AVPlayerItem *playerItem;
     id _playTimeObserver; // 播放进度观察者
@@ -31,6 +31,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *maxTime; // 总时间Label
 @property (weak, nonatomic) IBOutlet UIButton *modeButton; // 播放模式按钮
 @property (nonatomic, strong) AVPlayer *player;
+
 @end
 
 static AudioPlayerController *audioVC;
@@ -52,8 +53,18 @@ static AudioPlayerController *audioVC;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     [self.paceSlider setThumbImage:[UIImage imageNamed:@"age_icon"] forState:UIControlStateNormal];
     [self creatViews];
+    
+    [self addLrcView];
+    [self setUpLrcViewFrame];
+    
+    // 给进度条添加一个手势（拖动歌词）
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(sliderTap:)];
+    self.tap = tap;
+    [self.paceSlider addGestureRecognizer:tap];
+    
 }
 
 - (void)viewWillLayoutSubviews{
@@ -69,6 +80,7 @@ static AudioPlayerController *audioVC;
 }
 
 - (void)updateAudioPlayer{
+    
     if (isRemoveNot) {
         // 如果已经存在 移除通知、KVO，各控件设初始值
         [self removeObserverAndNotification];
@@ -96,8 +108,14 @@ static AudioPlayerController *audioVC;
     // 更新界面歌曲信息：歌名，歌手，图片
     [self updateUIDataWith:model];
     
-//修改为自己播放数据 model
-//    playerItem = [AVPlayerItem playerItemWithURL:[NSURL URLWithString:model.fileName]];
+    // 获取歌词数据
+    // 1.获取歌词数据源
+    NSArray<QQLrcModel *> *lrcArr = [QQLrcDataTool getLrcData:model.lrcContent];
+    // 2.将数据源交给控制器来展示
+    self.lrcTVC.datasource = lrcArr;
+
+    
+    //修改为自己播放数据 model
     playerItem = [AVPlayerItem playerItemWithURL:[NSURL URLWithString:model.file_link]];
     [self.player replaceCurrentItemWithPlayerItem:playerItem];
     [playerItem addObserver:self forKeyPath:@"status" options:NSKeyValueObservingOptionNew context:nil];// 监听status属性
@@ -115,11 +133,8 @@ static AudioPlayerController *audioVC;
 }
 
 - (void)updateUIDataWith:(MusicModel *)model{
-//    self.titleLabel.text = model.name;
-//    self.singerLabel.text = model.singer;
     self.titleLabel.text = model.title;
     self.singerLabel.text = model.author;
-    
     [self setImageWith:model];
 }
 
@@ -151,7 +166,8 @@ static AudioPlayerController *audioVC;
     //这里设置每秒执行30次
     _playTimeObserver = [self.player addPeriodicTimeObserverForInterval:CMTimeMake(1, 30) queue:dispatch_get_main_queue() usingBlock:^(CMTime time) {
         // 计算当前在第几秒
-        float currentPlayTime = (double)item.currentTime.value/item.currentTime.timescale;
+        double currentPlayTime = (double)item.currentTime.value/item.currentTime.timescale;
+        [weakself updateLrcWithCurrentTime:currentPlayTime];
         [weakself updateVideoSlider:currentPlayTime];
     }];
 }
@@ -160,6 +176,7 @@ static AudioPlayerController *audioVC;
     [self setLockViewWith:_playingModel currentTime:currentTime];
     self.paceSlider.value = currentTime;
     self.playingTime.text = [NSString convertTime:currentTime];
+    
 }
 
 - (IBAction)changeSlider:(id)sender{
@@ -299,21 +316,69 @@ static AudioPlayerController *audioVC;
 {
     NSMutableDictionary *musicInfo = [NSMutableDictionary dictionary];
     // 设置Singer
-//    [musicInfo setObject:model.singer forKey:MPMediaItemPropertyArtist];
     [musicInfo setObject:model.author forKey:MPMediaItemPropertyArtist];
     // 设置歌曲名
-//    [musicInfo setObject:model.name forKey:MPMediaItemPropertyTitle];
     [musicInfo setObject:model.title forKey:MPMediaItemPropertyArtist];
     
     // 设置封面
     MPMediaItemArtwork *artwork;
     artwork = [[MPMediaItemArtwork alloc] initWithImage:self.rotatingView.imageView.image];
     [musicInfo setObject:artwork forKey:MPMediaItemPropertyArtwork];
+    
     //音乐剩余时长
     [musicInfo setObject:[NSNumber numberWithDouble:_totalTime] forKey:MPMediaItemPropertyPlaybackDuration];
     //音乐当前播放时间
     [musicInfo setObject:[NSNumber numberWithDouble:currentTime] forKey:MPNowPlayingInfoPropertyElapsedPlaybackTime];
     [[MPNowPlayingInfoCenter defaultCenter] setNowPlayingInfo:musicInfo];
+}
+
+
+/** 进度条手势操作*/
+- (void)sliderTap:(UITapGestureRecognizer *)sender{
+    
+    // 1.获取手势在进度条上的位置
+    CGPoint point = [sender locationInView:self.paceSlider];
+    
+    // 2.当前的位置x, 与进度条的总长度构成的一个比例, 就可以当做当前进度条的值
+    CGFloat scale = 1.0 * point.x / self.paceSlider.width;
+    
+    // 3.设置进图条的值
+    self.paceSlider.value = scale;
+    
+ }
+
+/** 更新歌词*/
+- (void)updateLrcWithCurrentTime:(double)time{
+   
+    // 2.获取当前歌词所在的行
+    [QQLrcDataTool getRow:time andLrcs:self.lrcTVC.datasource completion:^(NSInteger row, QQLrcModel *lrc) {
+        
+        // 3.把数据传递给歌词控制器管理
+        self.lrcTVC.scrollRow = row;
+        
+        // 4.设置单行歌词
+        self.lrcLabel.text = lrc.lrcStr;
+        
+        // 5.跟新歌词进度
+        double progress = (time - lrc.beginTime) / (lrc.endTime - lrc.beginTime);
+        progress += 0.2;
+        self.lrcLabel.progress = progress;
+        
+        // 6.把歌词的播放进度传递给 歌词控制器
+        self.lrcTVC.progress = progress;
+        
+    }];
+}
+
+
+/** 歌词控制器*/
+- (ZSHMusicLryViewController *)lrcTVC{
+    
+    if (_lrcTVC == nil) {
+        
+        _lrcTVC = [[ZSHMusicLryViewController alloc] init];
+    }
+    return _lrcTVC;
 }
 
 - (void)didReceiveMemoryWarning {

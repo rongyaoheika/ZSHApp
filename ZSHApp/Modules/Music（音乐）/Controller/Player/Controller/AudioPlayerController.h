@@ -11,7 +11,8 @@
 #import <MediaPlayer/MediaPlayer.h>
 #import "MusicModel.h"
 #import "RotatingView.h"   // 旋转View
-
+#import "ZSHMusicLryViewController.h"
+#import "QQLrcLabel.h"
 /**
  *  注：为适配中间旋转图片大小
  *      topHeight: 上部分控件高度
@@ -87,5 +88,28 @@ typedef NS_ENUM(NSInteger, AudioPlayerMode) {
  *  下一曲
  */
 - (void)theNextSong;
+
+// *************************** 其他控件或数据 ********************************
+/** 单行歌词*/
+@property (nonatomic, strong) QQLrcLabel *lrcLabel;
+
+/** 歌词的背景视图*/
+//@property (weak, nonatomic) IBOutlet UIScrollView *lrcBackView;
+@property (nonatomic, strong) UIScrollView      *lrcBackView;
+
+/** 歌词视图*/
+@property (nonatomic, strong) UIView            *lrcView;
+
+/** 歌词控制器*/
+@property (nonatomic, strong) ZSHMusicLryViewController *lrcTVC;
+
+/** 定时器*/
+@property (nonatomic, weak) NSTimer *timer;
+
+/** 歌词定时器*/
+@property (nonatomic, weak) CADisplayLink *displayLink;
+
+/** 进度条手势*/
+@property (nonatomic, strong) UITapGestureRecognizer *tap;
 
 @end

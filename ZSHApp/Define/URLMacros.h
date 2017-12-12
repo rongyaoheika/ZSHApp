@@ -624,14 +624,15 @@
 //114:歌手列表
 //参数：参数：offset 偏移数(页码)
 //地址：/appmusicin/gethotartist?HOTARTIST
-
 #define kUrlSingerList [NSString stringWithFormat:@"/appmusicin/gethotartist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"HOTARTIST"]]
-//@"http://tingapi.ting.baidu.com/v1/restserver/ting?from=qianqian&version=2.1.0&method=baidu.ting.artist.get72HotArtist&format=json?=1&offset=0&limit=50"
 
 //115.通过歌手id获取其所有歌曲列表接口
 //参数：tinguid 歌手id  offset 偏移数(页码)
 //地址：/appmusicin/getsonglist?SONGLIST
 #define kUrlSingerSongList  [NSString stringWithFormat:@"/appmusicin/getsonglist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SONGLIST"]]
+
+//116.
+#define kUrlBillListall [NSString stringWithFormat:@"/appmusicin/getbilllistall?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"BILLLIST"]]
 
 
 //117.点赞

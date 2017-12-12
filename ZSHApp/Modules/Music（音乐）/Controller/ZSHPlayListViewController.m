@@ -27,7 +27,9 @@
 @property (nonatomic, strong) NSArray              *singerSongArr;
 @property (nonatomic, strong) ZSHRadioDetailModel  *radioDetailModel;
 @property (nonatomic, strong) NSArray              *librarySongArr;
-
+@property (nonatomic, assign) NSInteger            page;
+/** 数据*/
+@property (nonatomic, strong) NSArray              *musicMs;
 
 @end
 
@@ -43,12 +45,13 @@ static NSString *ZSHMusicPlayListCellID = @"ZSHMusicPlayListCell";
 }
 
 - (void)loadData{
+    _page = 0;
+    
     _musicLogic = [[ZSHMusicLogic alloc]init];
     _songArr = [[NSMutableArray alloc]initWithCapacity:10];
     switch (kFromClassTypeValue) {
         case ZSHFromRankVCToPlayListVC:{//排行榜
-            _rankModelArr = self.paramDic[@"dataArr"];
-            [self initViewModel];
+            [self requestRankDetailListData];
             break;
         }
         case ZSHFromRadioVCToPlayListVC:{//电台
@@ -71,6 +74,16 @@ static NSString *ZSHMusicPlayListCellID = @"ZSHMusicPlayListCell";
     [_headView updateViewWithParamDic:headDic];
 }
 
+- (void)requestRankDetailListData{
+    kWeakSelf(self);
+    
+    [_musicLogic loadRankListWithParamDic:@{@"type":@([self.paramDic[@"type"]integerValue]),@"offset":@(_page)} Success:^(id responseObject) {
+        _rankModelArr  = responseObject;
+        [weakself initViewModel];
+    } fail:nil];
+    
+}
+
 //添加曲库歌单
 - (void)requestLibraryRadioData{
     kWeakSelf(self);
@@ -90,15 +103,15 @@ static NSString *ZSHMusicPlayListCellID = @"ZSHMusicPlayListCell";
             break;
         }
         case 2:{//最热
-            [_musicLogic loadRankListWithParamDic:@{@"type":@(2),@"offset":@(0)} Success:^(id responseObject1, id responseObject2) {
-                _rankModelArr = responseObject1;
+            [_musicLogic loadRankListWithParamDic:@{@"type":@(2),@"offset":@(0)} Success:^(id responseObject) {
+                _rankModelArr = responseObject;
                 [weakself initViewModel];
             } fail:nil];
         }
             
         case 3:{//最新
-            [_musicLogic loadRankListWithParamDic:@{@"type":@(1),@"offset":@(0)} Success:^(id responseObject1, id responseObject2) {
-                _rankModelArr = responseObject1;
+            [_musicLogic loadRankListWithParamDic:@{@"type":@(1),@"offset":@(0)} Success:^(id responseObject) {
+                _rankModelArr = responseObject;
                 [weakself initViewModel];
             } fail:nil];
             break;
@@ -236,11 +249,14 @@ static NSString *ZSHMusicPlayListCellID = @"ZSHMusicPlayListCell";
                      [_songArr removeAllObjects];
                      [_songArr addObject:model];
                 }
-//                [self.songArr addObject:model];
+
                 AudioPlayerController *audio = [AudioPlayerController audioPlayerController];
                 [audio initWithArray:self.songArr index:0];
                 [weakself presentViewController:audio animated:YES completion:nil];
+                
             } fail:nil];
+            
+           
             
         };
     }
@@ -316,8 +332,7 @@ static NSString *ZSHMusicPlayListCellID = @"ZSHMusicPlayListCell";
 }
 
 - (void)footerRereshing{
-    
-    
+    _page++;
     
 }
 

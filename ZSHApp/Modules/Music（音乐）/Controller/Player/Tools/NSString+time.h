@@ -14,4 +14,13 @@
 // 播放器_时间转换
 + (NSString *)convertTime:(CGFloat)second;
 
+/**
+ *  获取格式化字符串所对应的秒数
+ *
+ *  @param formatTime 时间格式化字符串 00:00.89
+ *
+ *  @return 秒数
+ */
++ (NSTimeInterval)getTimeInterval:(NSString *)formatTime;
+
 @end

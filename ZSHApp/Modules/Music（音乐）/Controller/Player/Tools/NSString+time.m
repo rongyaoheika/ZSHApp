@@ -22,4 +22,22 @@
     return showtimeNew;
 }
 
++ (NSTimeInterval)getTimeInterval:(NSString *)formatTime {
+    
+    // 00:00.89  -> 多少秒
+    NSArray *minAndSec = [formatTime componentsSeparatedByString:@":"];
+    if (minAndSec.count == 2) {
+        
+        // 分钟
+        NSTimeInterval min = [minAndSec[0] doubleValue];
+        // 秒数
+        NSTimeInterval sec = [minAndSec[1] doubleValue];
+        
+        return min * 60 + sec;
+    }
+    
+    return 0;
+}
+
+
 @end

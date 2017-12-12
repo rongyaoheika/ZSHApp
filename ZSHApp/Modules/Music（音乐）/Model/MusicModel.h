@@ -30,5 +30,6 @@
 @property (nonatomic, copy) NSString   *song_id;               //歌曲id
 @property (nonatomic, copy) NSString   *pic_radio;             //图片
 @property (nonatomic, copy) NSString   *pic_huge;              //大图
+@property (nonatomic, copy) NSString   *lrcContent;            //歌词字符串
 
 @end
