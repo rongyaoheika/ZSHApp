@@ -11,6 +11,6 @@
 
 @interface ZSHReviewCell : ZSHBaseCell
 
-- (CGFloat)getCellHeightWithModel:(ZSHCommentListModel *)model;
-
+//- (CGFloat)getCellHeightWithModel:(ZSHCommentListModel *)model;
++ (CGFloat)getCellHeightWithModel:(ZSHCommentListModel *)model;
 @end

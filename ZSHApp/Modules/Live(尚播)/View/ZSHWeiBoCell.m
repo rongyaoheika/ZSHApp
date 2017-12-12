@@ -137,6 +137,9 @@
         NSMutableAttributedString *setString = [[NSMutableAttributedString alloc] initWithString: model.CONTENT];
         [setString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, [detailStr length])];
         [self.detailLabel setAttributedText:setString];
+        [self.detailLabel mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.height.mas_lessThanOrEqualTo(model.hight-67.5);
+        }];
     } else {
         self.detailLabel.text = @"";
     }
@@ -177,20 +180,17 @@
     self.paramDic  = dic;
 }
 
-- (CGFloat)getCellHeightWithModel:(ZSHWeiBoCellModel *)model{
++ (CGFloat)getCellHeightWithModel:(ZSHWeiBoCellModel *)model{
 //    ZSHWeiBoCell *cell = [[ZSHWeiBoCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:NSStringFromClass([ZSHWeiBoCell class])];
 //    [cell updateCellWithModel:model];
     
     CGFloat detailLabelHeight = 0;
-    NSLog(@"内容%@", model.CONTENT);
     if ([model.CONTENT isEqualToString:@""]) {
         detailLabelHeight = 12;
     } else {
-    CGSize detailLabelSize = [model.CONTENT boundingRectWithSize:CGSizeMake(kScreenWidth-kRealValue(30), MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:self.detailLabel.font,NSForegroundColorAttributeName:KZSHColor929292} context:nil].size;
+        CGSize detailLabelSize = [model.CONTENT boundingRectWithSize:CGSizeMake(kScreenWidth-kRealValue(30), MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12],NSForegroundColorAttributeName:KZSHColor929292} context:nil].size;
         detailLabelHeight = detailLabelSize.height;
-        [self.detailLabel mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.height.mas_lessThanOrEqualTo(detailLabelHeight);
-        }];
+       
     }
     
     model.hight =  67.5 + detailLabelHeight;

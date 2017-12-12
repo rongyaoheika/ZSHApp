@@ -61,9 +61,9 @@
 }
 
 
-// 获取我和我关注的好友的所有圈子并根据时间排序
-- (void)requestDotAgreeWithCircleID:(NSString *)circleID success:(void (^)(id response))success {
-    [PPNetworkHelper POST:kUrlDotAgree parameters:@{@"HONOURUSER_ID":@"d6a3779de8204dfd9359403f54f7d27c",@"CIRCLE_ID":circleID} success:^(id responseObject) {
+// 点赞 
+- (void)requestDotAgreeWithDic:(NSDictionary *)dic success:(void (^)(id response))success {
+    [PPNetworkHelper POST:kUrlDotAgree parameters:dic success:^(id responseObject) {
         success(nil);
     } failure:^(NSError *error) {
         RLog(@"%@", error);
@@ -81,7 +81,7 @@
     }];
 }
 
-// 通过圈子ID评论
+// 通过圈子ID评论 
 - (void)requestAddCommentWithDic:(NSDictionary *)dic success:(void (^)(id response))success {
     [PPNetworkHelper POST:kUrlAddComment parameters:dic success:^(id responseObject) {
         success(responseObject);

@@ -24,8 +24,8 @@
 - (void)requestAddCircle:(NSDictionary *)dic images:(NSArray *)images fileNames:(NSArray *)fileNmaes success:(void (^)(id response))success;
 // 获取我和我关注的好友的所有圈子并根据时间排序
 - (void)requestCircleList:(void (^)(id response))success;
-// 获取我和我关注的好友的所有圈子并根据时间排序
-- (void)requestDotAgreeWithCircleID:(NSString *)circleID success:(void (^)(id response))success;
+// 点赞
+- (void)requestDotAgreeWithDic:(NSDictionary *)dic success:(void (^)(id response))success;
 // 通过圈子ID获取所有评论
 - (void)requestCommentListWithCircleID:(NSString *)circleID success:(void (^)(id response))success;
 

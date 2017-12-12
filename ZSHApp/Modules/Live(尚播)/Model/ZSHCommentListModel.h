@@ -10,10 +10,17 @@
 
 @interface ZSHCommentListModel : ZSHBaseModel
 
-@property (nonatomic, strong) NSString *COMCONTENT;
-@property (nonatomic, strong) NSString *PORTRAIT;
-@property (nonatomic, strong) NSString *HONOURUSER_ID;
-@property (nonatomic, strong) NSString *COMMENTTIME;
+@property (nonatomic, copy) NSString *COMCONTENT;
+@property (nonatomic, copy) NSString *PORTRAIT;
+@property (nonatomic, copy) NSString *HONOURUSER_ID;
+@property (nonatomic, copy) NSString *COMMENTTIME;
+@property (nonatomic, copy) NSString *COMMENTNICKNAME;
+@property (nonatomic, copy) NSString *REPLYNICKNAME;
+@property (nonatomic, copy) NSString *CIRCLE_ID;
+@property (nonatomic, copy) NSString *REPLYHONOURUSER_ID;
+@property (nonatomic, copy) NSString *dotAgreeCount;
+@property (nonatomic, copy) NSString *lossAgreeCount;
+
 
 @property (nonatomic, assign) CGFloat  height;
 

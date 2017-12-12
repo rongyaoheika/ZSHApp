@@ -44,11 +44,13 @@
 
 - (void)btnAction:(UIButton*)btn{
     if (btn.tag == 1) {// 点赞
-        [_liveLogic requestDotAgreeWithCircleID:_weiboCellModel.CIRCLE_ID success:^(id response) {
-            
+        [_liveLogic requestDotAgreeWithDic:@{@"HONOURUSER_ID":@"d6a3779de8204dfd9359403f54f7d27c",@"CIRCLE_ID":_weiboCellModel.CIRCLE_ID} success:^(id response) {
+            UIButton *btn = [self viewWithTag:1];
+            NSInteger count = [btn.titleLabel.text integerValue]+1;
+            [btn setTitle:NSStringFormat(@"%zd", count) forState:UIControlStateNormal];
         }];
     } else if (btn.tag == 2) { // 评论
-        ZSHReviewViewController *reviewVC = [[ZSHReviewViewController alloc] initWithParamDic:@{@"CircleID":_weiboCellModel.CIRCLE_ID}];
+        ZSHReviewViewController *reviewVC = [[ZSHReviewViewController alloc] initWithParamDic:@{@"CircleID":_weiboCellModel.CIRCLE_ID,@"HONOURUSER_ID":_weiboCellModel.HONOURUSER_ID}];
         [[kAppDelegate getCurrentUIVC].navigationController pushViewController:reviewVC animated:true];
     } else if (btn.tag == 3) { // 礼物
         

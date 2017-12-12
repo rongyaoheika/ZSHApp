@@ -75,7 +75,7 @@ static NSString *Identify_MusicCell = @"musicCell";
                         @"ZSHTitleContentViewController",     //马术
                         @"ZSHTitleContentViewController",     //游艇
                         @"ZSHTitleContentViewController",     //豪车
-        
+                        
                         @"ZSHMoreSubscribeViewController"];   //更多
     
     self.paramArr = @[

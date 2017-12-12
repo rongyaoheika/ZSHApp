@@ -16,6 +16,7 @@
 @property (nonatomic, strong) NSArray        *dataArr;
 @property (nonatomic, strong) ZSHLiveLogic   *liveLogic;
 @property (nonatomic, strong) XXTextView     *textView;
+@property (nonatomic, strong) NSString       *HONOURUSER_ID;
 
 @end
 
@@ -24,7 +25,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
     
     [self loadData];
     [self createUI];
@@ -33,6 +38,8 @@
 - (void)loadData {
     self.title = @"评论";
     _liveLogic = [[ZSHLiveLogic alloc] init];
+    _HONOURUSER_ID = self.paramDic[@"HONOURUSER_ID"];
+    
     [self initViewModel];
     [self requestData];
 }
@@ -46,7 +53,6 @@
     self.tableView.delegate = self.tableViewModel;
     self.tableView.dataSource = self.tableViewModel;
     [self.tableView registerClass:[ZSHReviewCell class] forCellReuseIdentifier:NSStringFromClass([ZSHReviewCell class])];
-    
     [self createBottomBar];
 }
 
@@ -56,31 +62,32 @@
     [self.tableView reloadData];
 }
 
+
+
 //head
 - (ZSHBaseTableViewSectionModel*)storeListSection {
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
+//    sectionModel.footerHeight = 1;
     kWeakSelf(self);
     for (int i = 0; i<self.dataArr.count; i++) {
         ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
-        kWeakSelf(cellModel);
         [sectionModel.cellModelArray addObject:cellModel];
+        ZSHCommentListModel *model = weakself.dataArr[i];
+        cellModel.height = [ZSHReviewCell getCellHeightWithModel:model];
         cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
             ZSHReviewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([ZSHReviewCell class]) forIndexPath:indexPath];
             if (i == self.dataArr.count -1) {
                 cell.backgroundColor = [UIColor redColor];
             }
             ZSHCommentListModel *model = weakself.dataArr[indexPath.row];
-            
-            weakcellModel.height = [cell getCellHeightWithModel:model];
-//            NSDictionary *ndextParamDic = @{KFromClassType:@(ZSHWeiboVCToWeiBoCell)};
-//            [cell updateCellWithParamDic:ndextParamDic];
             [cell updateCellWithModel:model];
-//            [cell setNeedsUpdateConstraints];
-//            [cell updateConstraintsIfNeeded];
             return cell;
         };
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
-            RLog(@"点击的cellrow==%ld",indexPath.row);
+            [weakself.textView becomeFirstResponder];
+            ZSHCommentListModel *model = weakself.dataArr[indexPath.row];
+            weakself.textView.xx_placeholder = NSStringFormat(@"回复@%@", model.COMMENTNICKNAME);
+            weakself.HONOURUSER_ID = model.HONOURUSER_ID;
         };
     }
     
@@ -119,6 +126,23 @@
     return _textView;
 }
 
+
+
+- (void)headerRereshing{
+    [self.tableView.mj_header endRefreshing];
+}
+
+- (void)footerRereshing{
+    [self.tableView.mj_footer endRefreshing];
+}
+
+
+- (void)keyboardWillHide {
+    [_textView setXx_placeholder:@"有什么想要说的吗......"];
+    _textView.text = @"";
+    _HONOURUSER_ID = self.paramDic[@"HONOURUSER_ID"];
+}
+
 - (void)requestData {
     kWeakSelf(self);
     [_liveLogic requestCommentListWithCircleID:self.paramDic[@"CircleID"] success:^(id response) {
@@ -128,14 +152,19 @@
 }
 
 - (void)sendAction {
-    if (!_textView.text.length) {
-        kWeakSelf(self);
-        [_liveLogic requestAddCommentWithDic:@{@"HONOURUSER_ID":@"d6a3779de8204dfd9359403f54f7d27c",@"CIRCLE_ID":self.paramDic[@"CircleID"],@"COMCONTENT":_textView.text} success:^(id response) {
+    kWeakSelf(self);
+    if (_textView.text.length) {
+        [_liveLogic requestAddCommentWithDic:@{@"HONOURUSER_ID":@"d6a3779de8204dfd9359403f54f7d27c",@"CIRCLE_ID":self.paramDic[@"CircleID"],@"COMCONTENT":_textView.text,@"REPLYHONOURUSER_ID":_HONOURUSER_ID} success:^(id response) {
             UIAlertController *ac = [UIAlertController alertControllerWithTitle:@"提示" message:@"发布成功" preferredStyle:UIAlertControllerStyleAlert];
             UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                [weakself.textView  resignFirstResponder];
+                [weakself.textView setXx_placeholder:@"有什么想要说的吗......"];
+                weakself.textView.text = @"";
             }];
             [ac addAction:cancelAction];
             [weakself presentViewController:ac animated:YES completion:nil];
+            [weakself requestData];
+
         }];
     }
 }
@@ -145,5 +174,8 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:UIKeyboardWillHideNotification];
+}
 
 @end

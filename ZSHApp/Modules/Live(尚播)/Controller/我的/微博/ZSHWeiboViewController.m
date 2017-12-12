@@ -73,21 +73,21 @@
     for (int i = 0; i<self.dataArr.count; i++) {
         ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
         kWeakSelf(cellModel);
+        ZSHWeiBoCellModel *model = weakself.dataArr[i];
+        weakcellModel.height = [ZSHWeiBoCell getCellHeightWithModel:model];
         [sectionModel.cellModelArray addObject:cellModel];
         cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
             ZSHWeiBoCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([ZSHWeiBoCell class]) forIndexPath:indexPath];
             cell.backgroundColor = KClearColor;
             ZSHWeiBoCellModel *model = weakself.dataArr[indexPath.row];
-            weakcellModel.height = [cell getCellHeightWithModel:model];
-            NSLog(@"height:%zd&%f",indexPath.row,weakcellModel.height);
+//            weakcellModel.height = [cell getCellHeightWithModel:model];
             NSDictionary *ndextParamDic = @{KFromClassType:@(ZSHWeiboVCToWeiBoCell)};
             [cell updateCellWithParamDic:ndextParamDic];
             [cell updateCellWithModel:model];
-            
+            [cell updateFocusIfNeeded];
             return cell;
         };
     }
-
     return sectionModel;
 }
 
@@ -95,10 +95,7 @@
     kWeakSelf(self);
     [_liveLogic requestCircleList:^(id response) {
         weakself.dataArr = response;
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [weakself initViewModel];
-        });
-
+        [weakself initViewModel];
     }];
 }
 

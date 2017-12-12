@@ -640,7 +640,7 @@
 //请求地址：/appcirclein/dotAgree.do?DOTAGREE(混淆码)
 #define kUrlDotAgree [NSString stringWithFormat:@"/appcirclein/dotAgree.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"DOTAGREE"]]
 //118.添加评论到用户圈子
-//参数：HONOURUSER_ID 用户的Id    /CIRCLE_ID  所评论的圈子ID    /COMCONTENT   评论内容
+//参数：HONOURUSER_ID 用户的Id    /CIRCLE_ID  所评论的圈子ID    /COMCONTENT   评论内容 /REPLYHONOURUSER_ID 回复用户的Id
 //请求地址：/appcirclein/addcomment.do?COMMENTADD(混淆码)
 #define kUrlAddComment [NSString stringWithFormat:@"/appcirclein/addcomment.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"COMMENTADD"]]
 //119.通过圈子ID获取所有评论
