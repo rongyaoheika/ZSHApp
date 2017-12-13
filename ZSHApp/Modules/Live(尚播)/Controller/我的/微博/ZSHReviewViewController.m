@@ -38,8 +38,7 @@
 - (void)loadData {
     self.title = @"评论";
     _liveLogic = [[ZSHLiveLogic alloc] init];
-    _HONOURUSER_ID = self.paramDic[@"HONOURUSER_ID"];
-    
+    _HONOURUSER_ID = @"";
     [self initViewModel];
     [self requestData];
 }
@@ -76,18 +75,22 @@
         cellModel.height = [ZSHReviewCell getCellHeightWithModel:model];
         cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
             ZSHReviewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([ZSHReviewCell class]) forIndexPath:indexPath];
-            if (i == self.dataArr.count -1) {
-                cell.backgroundColor = [UIColor redColor];
-            }
             ZSHCommentListModel *model = weakself.dataArr[indexPath.row];
             [cell updateCellWithModel:model];
+            cell.replyBtn.tag = indexPath.row;
+            [cell.replyBtn addTapBlock:^(UIButton *btn) {
+                [weakself.textView becomeFirstResponder];
+                ZSHCommentListModel *model = weakself.dataArr[btn.tag];
+                weakself.textView.xx_placeholder = NSStringFormat(@"回复@%@", model.COMMENTNICKNAME);
+                weakself.HONOURUSER_ID = model.HONOURUSER_ID;
+            }];
+            
+
+            
             return cell;
         };
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
-            [weakself.textView becomeFirstResponder];
-            ZSHCommentListModel *model = weakself.dataArr[indexPath.row];
-            weakself.textView.xx_placeholder = NSStringFormat(@"回复@%@", model.COMMENTNICKNAME);
-            weakself.HONOURUSER_ID = model.HONOURUSER_ID;
+            
         };
     }
     
@@ -140,7 +143,7 @@
 - (void)keyboardWillHide {
     [_textView setXx_placeholder:@"有什么想要说的吗......"];
     _textView.text = @"";
-    _HONOURUSER_ID = self.paramDic[@"HONOURUSER_ID"];
+    _HONOURUSER_ID = @"";
 }
 
 - (void)requestData {
@@ -164,7 +167,6 @@
             [ac addAction:cancelAction];
             [weakself presentViewController:ac animated:YES completion:nil];
             [weakself requestData];
-
         }];
     }
 }

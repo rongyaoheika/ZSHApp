@@ -51,4 +51,6 @@
 - (void)requestGetUserInfo:(void (^)(id response))success;
 // 修改用户密码
 - (void)requestUserUpdPasswordWithDic:(NSDictionary *)dic success:(void (^)(id response))success;
+// 获取能量值
+- (void)requestEnergyList:(void (^)(id response))success;
 @end

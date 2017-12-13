@@ -677,5 +677,9 @@
 //参数： HONOURUSER_ID  用户ID/    PASSWORD  密码
 //请求地址：/appuserin/userupdpassword.do?UPDUSERPASSWORD  (混淆码)
 #define kUrlUserUpdPassword [NSString stringWithFormat:@"/appuserin/userupdpassword.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"UPDUSERPASSWORD"]]
+//130.获取所有能量组成
+//参数： 无
+//请求地址：/appengrgyin/energylist.do?ENERGYLIST  (混淆码)
+#define kUrlEnergyList [NSString stringWithFormat:@"/appengrgyin/energylist.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"ENERGYLIST"]]
 
 #endif /* URLMacros_h */

@@ -159,4 +159,16 @@
     }];
 }
 
+
+// 获取能量值
+- (void)requestEnergyList:(void (^)(id response))success {
+    [PPNetworkHelper POST:kUrlEnergyList parameters:@{} success:^(id responseObject) {
+        success(responseObject);
+    } failure:^(NSError *error) {
+        RLog(@"请求失败");
+    }];
+}
+
+
+
 @end

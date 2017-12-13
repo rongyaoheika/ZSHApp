@@ -111,7 +111,8 @@
         make.width.mas_equalTo(kRealValue(50));
         make.height.mas_equalTo(kRealValue(12));
     }];
-    
+    _userView.textField.text = @"10";
+    _pwdView.textField.text = @"1";
 }
 
 #pragma action
@@ -119,6 +120,7 @@
     if (_userView.textField.text.length && _pwdView.textField.text.length) {
         ZSHLoginLogic *loginLogic = [[ZSHLoginLogic alloc] init];
         RLog(@"username;%@:password%@", _userView.textField.text,_pwdView.textField.text);
+        
         [loginLogic loginWithCardNo:_userView.textField.text password:_pwdView.textField.text];
         kWeakSelf(self);
         loginLogic.loginSuccess = ^(id response) {

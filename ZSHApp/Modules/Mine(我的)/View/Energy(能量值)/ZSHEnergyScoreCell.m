@@ -7,6 +7,7 @@
 //
 
 #import "ZSHEnergyScoreCell.h"
+#import "ZSHEnergyModel.h"
 
 @interface ZSHEnergyScoreCell ()
 
@@ -87,6 +88,28 @@
     return _leftCircleView;
 }
 
+- (void)updateCellWithModel:(ZSHEnergyModel *)model {
+//    [self.rightValueView removeAllSubviews];
+//    self.leftCircleView.layer.borderColor = ((UIColor *)paramDic[@"leftColor"]).CGColor;
+    
+//    UILabel *topLabel = [self.inCircleBtn viewWithTag:1];
+//    topLabel.text = paramDic[@"inCircleTopTitle"];
+//    topLabel.textColor = paramDic[@"leftColor"];
+    
+//    UILabel *bottomLabel = [self.inCircleBtn viewWithTag:2];
+//    bottomLabel.text = paramDic[@"inCircleBottomTitle"];
+//    bottomLabel.textColor = paramDic[@"leftColor"];
+    
+    NSArray *rightArr = model.compList;
+    int i = 0;
+    for (ZSHEnergyCompListModel *listModel in rightArr) {
+        UIButton *btn = [_rightValueView viewWithTag:i];
+        UILabel *label = [btn viewWithTag:8];
+        label.text = NSStringFormat(@"%@ %@", listModel.NAME, listModel.SCORE);
+        i++;
+    }
+}
+
 - (void)updateCellWithParamDic:(NSDictionary *)paramDic{
     [self.rightValueView removeAllSubviews];
     self.leftCircleView.layer.borderColor = ((UIColor *)paramDic[@"leftColor"]).CGColor;
@@ -103,6 +126,7 @@
     int i = 0;
     for (NSDictionary *rightBtnParamDic in rightArr) {
         UIButton *rightValueBtn = [self createBtnWithParamDic:rightBtnParamDic];
+        rightValueBtn.tag = i;
         [_rightValueView addSubview:rightValueBtn];
         i++;
     }
@@ -122,6 +146,7 @@
     
     NSDictionary *titleLabelDic = @{@"text":paramDic[@"rightTitle"],@"font":kPingFangRegular(10),@"textColor":paramDic[@"rightColor"]};
     UILabel *titleLabel = [ZSHBaseUIControl createLabelWithParamDic:titleLabelDic];
+    titleLabel.tag = 8;
     [btn addSubview:titleLabel];
     [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(btnImageView.mas_right).offset(kRealValue(9));
@@ -131,5 +156,8 @@
     }];
     return btn;
 }
+
+
+
 
 @end

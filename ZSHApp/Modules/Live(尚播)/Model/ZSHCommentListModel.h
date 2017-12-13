@@ -20,7 +20,7 @@
 @property (nonatomic, copy) NSString *REPLYHONOURUSER_ID;
 @property (nonatomic, copy) NSString *dotAgreeCount;
 @property (nonatomic, copy) NSString *lossAgreeCount;
-
+@property (nonatomic, copy) NSString *COMMENT_ID;
 
 @property (nonatomic, assign) CGFloat  height;
 

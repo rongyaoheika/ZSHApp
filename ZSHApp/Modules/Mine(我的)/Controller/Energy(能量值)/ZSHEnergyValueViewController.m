@@ -10,6 +10,8 @@
 #import "ZSHEnergyHeadCell.h"
 #import "ZSHEnergyScoreCell.h"
 #import "ZSHEnergyExchangeViewController.h"
+#import "ZSHMineLogic.h"
+#import "ZSHEnergyModel.h"
 
 @interface ZSHEnergyValueViewController ()
 
@@ -20,6 +22,9 @@
 
 @property (nonatomic, strong) NSArray             *scoreRulesTitleArr;
 @property (nonatomic, strong) NSArray             *scoreDetailArr;
+@property (nonatomic, strong) ZSHMineLogic        *mineLogic;
+
+@property (nonatomic, strong) NSArray             *energyModelArr;
 
 @end
 
@@ -79,6 +84,8 @@ static NSString *ZSHEnergyRulesCellID = @"ZSHEnergyRulesCell";
     
     _scoreRulesTitleArr = @[@"A  1-5000分免费兑换年度优礼品--价值1万元礼品包",@"B  5001-30000获得季度杂志【专刊一版】价值6万专访",@"C  30001-100000免费生日特定大礼包--价值3000元礼品包",@"D  100001-500000免费获得年度【黑咖之夜】价值1万元礼品包",@"E  500001-1000000获得黑咖企业推广一次--价值20万元广告礼品包"];
     [self initViewModel];
+    _mineLogic = [[ZSHMineLogic alloc] init];
+    [self requestData];
 }
 
 - (void)createUI{
@@ -94,7 +101,7 @@ static NSString *ZSHEnergyRulesCellID = @"ZSHEnergyRulesCell";
     [self.tableView registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHEnergyDetailTopCellID];
     [self.tableView registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHEnergyDetailBottomCellID];
     [self.tableView registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHEnergyRulesCellID];
-    [self.tableView reloadData];
+    
 }
 
 - (void)initViewModel {
@@ -107,6 +114,7 @@ static NSString *ZSHEnergyRulesCellID = @"ZSHEnergyRulesCell";
     }
     
     [self.tableViewModel.sectionModelArray addObject:[self storeScoreRulesSection]];
+    [self.tableView reloadData];
 }
 
 - (ZSHBaseTableViewSectionModel*)storeHeadSection{
@@ -125,6 +133,8 @@ static NSString *ZSHEnergyRulesCellID = @"ZSHEnergyRulesCell";
     return sectionModel;
 }
 
+
+// 分值组成
 - (ZSHBaseTableViewSectionModel*)storeScoreSection{
     kWeakSelf(self);
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
@@ -141,6 +151,10 @@ static NSString *ZSHEnergyRulesCellID = @"ZSHEnergyRulesCell";
             ZSHEnergyScoreCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHEnergyScoreCellID forIndexPath:indexPath];
             NSDictionary *nextParamDic = weakself.scoreSectionArr[indexPath.row];
             [cell updateCellWithParamDic:nextParamDic];
+            if (weakself.energyModelArr.count) {
+                ZSHEnergyModel *model = weakself.energyModelArr[indexPath.row];
+                [cell updateCellWithModel:model];
+            }
             return cell;
         };
     }
@@ -149,6 +163,7 @@ static NSString *ZSHEnergyRulesCellID = @"ZSHEnergyRulesCell";
 
 - (ZSHBaseTableViewSectionModel*)storeScoreDetailSectionWithParamDic:(NSDictionary *)paramDic index:(NSInteger)index{
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
+    kWeakSelf(self);
     if (index == 0) {
         sectionModel.headerHeight = kRealValue(70);
         NSDictionary *headLabelDic = @{@"text":@"能量值详细介绍",@"font":kPingFangRegular(17),@"textAlignment":@(NSTextAlignmentCenter)};
@@ -168,6 +183,10 @@ static NSString *ZSHEnergyRulesCellID = @"ZSHEnergyRulesCell";
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         cell.imageView.image = [UIImage imageNamed:paramDic[@"headImageName"]];
         cell.textLabel.text = paramDic[@"headTitle"];
+        if (weakself.energyModelArr.count) {
+            ZSHEnergyModel *model = weakself.energyModelArr[index];
+            cell.textLabel.text = model.NAME;
+        }
         cell.textLabel.font = kPingFangRegular(14);
         return cell;
     };
@@ -188,8 +207,14 @@ static NSString *ZSHEnergyRulesCellID = @"ZSHEnergyRulesCell";
             //行间距
             NSMutableParagraphStyle  *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
             [paragraphStyle  setLineSpacing:5];
-            NSMutableAttributedString  *setString = [[NSMutableAttributedString alloc] initWithString:paramDic[@"detailTitle"]];
-            [setString  addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, [paramDic[@"detailTitle"] length])];
+            NSString *string = paramDic[@"detailTitle"];
+            if (weakself.energyModelArr.count) {
+                ZSHEnergyModel *model = weakself.energyModelArr[index];
+                string = model.INTRODUCE;
+            }
+            
+            NSMutableAttributedString  *setString = [[NSMutableAttributedString alloc] initWithString:string];
+            [setString  addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, [string length])];
             
             [detailLabel  setAttributedText:setString];
             [cell.contentView addSubview:detailLabel];
@@ -254,6 +279,15 @@ static NSString *ZSHEnergyRulesCellID = @"ZSHEnergyRulesCell";
 
 
 #pragma action
+- (void)requestData {
+    kWeakSelf(self);
+    [_mineLogic requestEnergyList:^(id response) {
+        weakself.energyModelArr = [ZSHEnergyModel mj_objectArrayWithKeyValuesArray:response[@"pd"]];
+        [weakself initViewModel];
+    }];
+}
+
+
 - (void)exchangeAction{
     ZSHEnergyExchangeViewController *eeVC = [[ZSHEnergyExchangeViewController alloc] init];
     [self.navigationController pushViewController:eeVC animated:true];

@@ -64,7 +64,7 @@
 // 点赞 
 - (void)requestDotAgreeWithDic:(NSDictionary *)dic success:(void (^)(id response))success {
     [PPNetworkHelper POST:kUrlDotAgree parameters:dic success:^(id responseObject) {
-        success(nil);
+        success(responseObject);
     } failure:^(NSError *error) {
         RLog(@"%@", error);
     }];

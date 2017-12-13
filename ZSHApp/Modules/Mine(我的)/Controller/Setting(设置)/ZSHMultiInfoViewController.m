@@ -205,12 +205,26 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 }
 
 - (void)nextBtnAction{
-    
+    kWeakSelf(self);
     if (kFromClassTypeValue == FromUserPasswordVCToMultiInfoVC) {
         if ([_reNewPwd isEqualToString:_rptPwd]) {
-            [_mineLogic requestUserUpdPasswordWithDic:@{@"HONOURUSER_ID":@"d6a3779de8204dfd9359403f54f7d27c", @"PASSWORD":_reNewPwd, @"OLDPASSWORD":_oldPwd} success:^(id response) {
-                
+            [_mineLogic requestUserUpdPasswordWithDic:@{@"HONOURUSER_ID":@"d6a3779de8204dfd9359403f54f7d27c", @"PASSWORD":[ZSHBaseFunction md5StringFromString:_reNewPwd], @"OLDPASSWORD":[ZSHBaseFunction md5StringFromString:_oldPwd]} success:^(id response) {
+                NSString *message = @"";
+                if ([response[@"result"] isEqualToString:@"01"]) {// 成功
+                    message = @"修改成功";
+                } else if ([response[@"result"] isEqualToString:@"06"]) { // 失败
+                    message = @"原密码错误";
+                }
+                UIAlertController *ac = [UIAlertController alertControllerWithTitle:@"提示" message:message preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleCancel handler:nil];
+                [ac addAction:cancelAction];
+                [weakself presentViewController:ac animated:YES completion:nil];
             }];
+        } else {
+            UIAlertController *ac = [UIAlertController alertControllerWithTitle:@"提示" message:@"两次输入密码不一致" preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleCancel handler:nil];
+            [ac addAction:cancelAction];
+            [weakself presentViewController:ac animated:YES completion:nil];
         }
     }
 }

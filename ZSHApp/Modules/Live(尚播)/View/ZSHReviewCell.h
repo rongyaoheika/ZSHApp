@@ -11,6 +11,9 @@
 
 @interface ZSHReviewCell : ZSHBaseCell
 
+@property (nonatomic, strong) UIButton            *replyBtn;
+
+
 //- (CGFloat)getCellHeightWithModel:(ZSHCommentListModel *)model;
 + (CGFloat)getCellHeightWithModel:(ZSHCommentListModel *)model;
 @end

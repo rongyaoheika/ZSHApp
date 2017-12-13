@@ -23,7 +23,6 @@
 		1811058E1FBC42600046D229 /* ZSHTrainPassengerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1811058D1FBC42600046D229 /* ZSHTrainPassengerCell.m */; };
 		1812E9FD1FDA60110056C170 /* ZSHReviewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1812E9FC1FDA60110056C170 /* ZSHReviewCell.m */; };
 		1812EA001FDA678C0056C170 /* ZSHCommentListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1812E9FF1FDA678C0056C170 /* ZSHCommentListModel.m */; };
-		1812EA041FDA7ABB0056C170 /* ZSHReviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1812EA031FDA7ABB0056C170 /* ZSHReviewViewController.m */; };
 		1813E2671FBD2A0800624405 /* ZSHTrainSearchResultController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1813E2661FBD2A0800624405 /* ZSHTrainSearchResultController.m */; };
 		1813E26A1FBD2B6E00624405 /* ZSHTrainTicketListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1813E2691FBD2B6E00624405 /* ZSHTrainTicketListCell.m */; };
 		1813E26D1FBD3F5000624405 /* ZSHTrainTicketDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1813E26C1FBD3F5000624405 /* ZSHTrainTicketDetailCell.m */; };
@@ -133,11 +132,13 @@
 		1869C92F1FD78A37002F2E37 /* NSDictionary+Safe.m in Sources */ = {isa = PBXBuildFile; fileRef = 1869C92E1FD78A37002F2E37 /* NSDictionary+Safe.m */; };
 		1869C9331FD8DF7C002F2E37 /* ZSHLiveLogic.m in Sources */ = {isa = PBXBuildFile; fileRef = 1869C9321FD8DF7C002F2E37 /* ZSHLiveLogic.m */; };
 		1869C9361FD8F3CD002F2E37 /* ZSHFriendListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1869C9351FD8F3CD002F2E37 /* ZSHFriendListModel.m */; };
-		1869C93A1FD91497002F2E37 /* ZSHWeiboWriteController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1869C9391FD91497002F2E37 /* ZSHWeiboWriteController.m */; };
 		1869C93E1FD94FBA002F2E37 /* ZSHWeiboViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1869C93D1FD94FBA002F2E37 /* ZSHWeiboViewController.m */; };
 		1869C9411FD952C2002F2E37 /* ZSHWeiboListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1869C9401FD952C2002F2E37 /* ZSHWeiboListModel.m */; };
 		186C8F1C1FD0FEC200B6CDB5 /* ZSHHotelOrderModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 186C8F1B1FD0FEC200B6CDB5 /* ZSHHotelOrderModel.m */; };
 		1874B9661FB99E9700059184 /* ZSHLivePersonInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1874B9651FB99E9700059184 /* ZSHLivePersonInfoView.m */; };
+		18762B261FE1088300E1857F /* ZSHReviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18762B251FE1088300E1857F /* ZSHReviewViewController.m */; };
+		18762B291FE108E100E1857F /* ZSHWeiboWriteController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18762B281FE108E100E1857F /* ZSHWeiboWriteController.m */; };
+		18762B2C1FE1149D00E1857F /* ZSHEnergyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 18762B2B1FE1149D00E1857F /* ZSHEnergyModel.m */; };
 		1891C1331FC6A67F000AFEFB /* ZSHBuyLogic.m in Sources */ = {isa = PBXBuildFile; fileRef = 1891C1321FC6A67F000AFEFB /* ZSHBuyLogic.m */; };
 		1891C1361FC6CCA3000AFEFB /* ZSHTogetherLogic.m in Sources */ = {isa = PBXBuildFile; fileRef = 1891C1351FC6CCA3000AFEFB /* ZSHTogetherLogic.m */; };
 		1891C1391FC6D115000AFEFB /* ZSHTogetherModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1891C1381FC6D115000AFEFB /* ZSHTogetherModel.m */; };
@@ -527,8 +528,6 @@
 		1812E9FC1FDA60110056C170 /* ZSHReviewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHReviewCell.m; sourceTree = "<group>"; };
 		1812E9FE1FDA678C0056C170 /* ZSHCommentListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHCommentListModel.h; sourceTree = "<group>"; };
 		1812E9FF1FDA678C0056C170 /* ZSHCommentListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHCommentListModel.m; sourceTree = "<group>"; };
-		1812EA021FDA7ABB0056C170 /* ZSHReviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHReviewViewController.h; sourceTree = "<group>"; };
-		1812EA031FDA7ABB0056C170 /* ZSHReviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHReviewViewController.m; sourceTree = "<group>"; };
 		1813E2651FBD2A0800624405 /* ZSHTrainSearchResultController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSHTrainSearchResultController.h; path = "ZSHApp/Modules/Home(尊尚汇)/View/ZSHTrainSearchResultController.h"; sourceTree = SOURCE_ROOT; };
 		1813E2661FBD2A0800624405 /* ZSHTrainSearchResultController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSHTrainSearchResultController.m; path = "ZSHApp/Modules/Home(尊尚汇)/View/ZSHTrainSearchResultController.m"; sourceTree = SOURCE_ROOT; };
 		1813E2681FBD2B6E00624405 /* ZSHTrainTicketListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHTrainTicketListCell.h; sourceTree = "<group>"; };
@@ -725,8 +724,6 @@
 		1869C9321FD8DF7C002F2E37 /* ZSHLiveLogic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHLiveLogic.m; sourceTree = "<group>"; };
 		1869C9341FD8F3CD002F2E37 /* ZSHFriendListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHFriendListModel.h; sourceTree = "<group>"; };
 		1869C9351FD8F3CD002F2E37 /* ZSHFriendListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHFriendListModel.m; sourceTree = "<group>"; };
-		1869C9381FD91497002F2E37 /* ZSHWeiboWriteController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHWeiboWriteController.h; sourceTree = "<group>"; };
-		1869C9391FD91497002F2E37 /* ZSHWeiboWriteController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHWeiboWriteController.m; sourceTree = "<group>"; };
 		1869C93C1FD94FBA002F2E37 /* ZSHWeiboViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHWeiboViewController.h; sourceTree = "<group>"; };
 		1869C93D1FD94FBA002F2E37 /* ZSHWeiboViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHWeiboViewController.m; sourceTree = "<group>"; };
 		1869C93F1FD952C2002F2E37 /* ZSHWeiboListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHWeiboListModel.h; sourceTree = "<group>"; };
@@ -735,6 +732,12 @@
 		186C8F1B1FD0FEC200B6CDB5 /* ZSHHotelOrderModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHHotelOrderModel.m; sourceTree = "<group>"; };
 		1874B9641FB99E9700059184 /* ZSHLivePersonInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHLivePersonInfoView.h; sourceTree = "<group>"; };
 		1874B9651FB99E9700059184 /* ZSHLivePersonInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHLivePersonInfoView.m; sourceTree = "<group>"; };
+		18762B241FE1088300E1857F /* ZSHReviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHReviewViewController.h; sourceTree = "<group>"; };
+		18762B251FE1088300E1857F /* ZSHReviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHReviewViewController.m; sourceTree = "<group>"; };
+		18762B271FE108E100E1857F /* ZSHWeiboWriteController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHWeiboWriteController.h; sourceTree = "<group>"; };
+		18762B281FE108E100E1857F /* ZSHWeiboWriteController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHWeiboWriteController.m; sourceTree = "<group>"; };
+		18762B2A1FE1149D00E1857F /* ZSHEnergyModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHEnergyModel.h; sourceTree = "<group>"; };
+		18762B2B1FE1149D00E1857F /* ZSHEnergyModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHEnergyModel.m; sourceTree = "<group>"; };
 		1891C1311FC6A67F000AFEFB /* ZSHBuyLogic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHBuyLogic.h; sourceTree = "<group>"; };
 		1891C1321FC6A67F000AFEFB /* ZSHBuyLogic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHBuyLogic.m; sourceTree = "<group>"; };
 		1891C1341FC6CCA3000AFEFB /* ZSHTogetherLogic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHTogetherLogic.h; sourceTree = "<group>"; };
@@ -1462,15 +1465,6 @@
 			name = "火车票";
 			sourceTree = "<group>";
 		};
-		1812EA011FDA7AA10056C170 /* 写评论 */ = {
-			isa = PBXGroup;
-			children = (
-				1812EA021FDA7ABB0056C170 /* ZSHReviewViewController.h */,
-				1812EA031FDA7ABB0056C170 /* ZSHReviewViewController.m */,
-			);
-			path = "写评论";
-			sourceTree = "<group>";
-		};
 		18155C011FB402E90060BD9D /* Comment(发表评价) */ = {
 			isa = PBXGroup;
 			children = (
@@ -1886,20 +1880,15 @@
 			path = Logic;
 			sourceTree = "<group>";
 		};
-		1869C9371FD9145F002F2E37 /* 写微博 */ = {
-			isa = PBXGroup;
-			children = (
-				1869C9381FD91497002F2E37 /* ZSHWeiboWriteController.h */,
-				1869C9391FD91497002F2E37 /* ZSHWeiboWriteController.m */,
-			);
-			path = "写微博";
-			sourceTree = "<group>";
-		};
 		1869C93B1FD94F97002F2E37 /* 微博 */ = {
 			isa = PBXGroup;
 			children = (
 				1869C93C1FD94FBA002F2E37 /* ZSHWeiboViewController.h */,
 				1869C93D1FD94FBA002F2E37 /* ZSHWeiboViewController.m */,
+				18762B241FE1088300E1857F /* ZSHReviewViewController.h */,
+				18762B251FE1088300E1857F /* ZSHReviewViewController.m */,
+				18762B271FE108E100E1857F /* ZSHWeiboWriteController.h */,
+				18762B281FE108E100E1857F /* ZSHWeiboWriteController.m */,
 			);
 			path = "微博";
 			sourceTree = "<group>";
@@ -2318,8 +2307,6 @@
 		FE291EB21F8CAEDC00D4BBE7 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				1812EA011FDA7AA10056C170 /* 写评论 */,
-				1869C9371FD9145F002F2E37 /* 写微博 */,
 				185DE2F81FBFD15B00720CAF /* 开启直播 */,
 				182287171FB4555700CA5B10 /* 我的 */,
 				FE1F76201F8F738700C45B83 /* ZSHLiveTabBarController.h */,
@@ -2446,6 +2433,8 @@
 				181AD3161FCCF3C30015D004 /* ZSHAddrModel.m */,
 				182F57A11FDBD2ED0085BFC6 /* ZSHUserInfoModel.h */,
 				182F57A21FDBD2ED0085BFC6 /* ZSHUserInfoModel.m */,
+				18762B2A1FE1149D00E1857F /* ZSHEnergyModel.h */,
+				18762B2B1FE1149D00E1857F /* ZSHEnergyModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -4302,7 +4291,6 @@
 				FE50245E1F8A2413005F0FF7 /* ZSHBaseLogic.m in Sources */,
 				186858F71FCBBD6500585CBC /* ZSHGoodDetailModel.m in Sources */,
 				FEADBD2D1FBEBBC00065B94B /* ZSHCardSubHeadView.m in Sources */,
-				1812EA041FDA7ABB0056C170 /* ZSHReviewViewController.m in Sources */,
 				FE8FD08E1FAE03E7005F1184 /* ZSHSimpleCellView.m in Sources */,
 				FE7502C41F9A252C002F2708 /* ZSHMineHeadView.m in Sources */,
 				FEBD7CAC1FA7300B00CE2BA6 /* ZSHGoodsDetailSubViewController.m in Sources */,
@@ -4353,7 +4341,6 @@
 				FE7AF2321FA307F400E1A648 /* ZSHTopLineView.m in Sources */,
 				1869C92F1FD78A37002F2E37 /* NSDictionary+Safe.m in Sources */,
 				FE55381B1F47049D00803128 /* RxWebViewController.m in Sources */,
-				1869C93A1FD91497002F2E37 /* ZSHWeiboWriteController.m in Sources */,
 				FE0ED7E21FC2CC46008299C5 /* ZSHCityView.m in Sources */,
 				FE1377931F977628003C8DFB /* ZSHManageAddressViewController.m in Sources */,
 				FE3005F71FC6779100A801C9 /* CWStarRateView.m in Sources */,
@@ -4384,7 +4371,9 @@
 				1891C1391FC6D115000AFEFB /* ZSHTogetherModel.m in Sources */,
 				FEA30A5F1F9F494E00AB0FFC /* ZSHNumberCount.m in Sources */,
 				FE3E005F1FDA269600A0F7CA /* ZSHMusicRankViewController.m in Sources */,
+				18762B291FE108E100E1857F /* ZSHWeiboWriteController.m in Sources */,
 				FE5538821F470BAF00803128 /* UserInfo.m in Sources */,
+				18762B261FE1088300E1857F /* ZSHReviewViewController.m in Sources */,
 				1813E2791FBD79FF00624405 /* ZSHAddpassengerCell.m in Sources */,
 				181105801FBC161A0046D229 /* ZSHDiscussCell.m in Sources */,
 				FE0ED7E51FC2D712008299C5 /* ZSHBaseFunction.m in Sources */,
@@ -4422,6 +4411,7 @@
 				1891C1331FC6A67F000AFEFB /* ZSHBuyLogic.m in Sources */,
 				1822871D1FB45CE800CA5B10 /* ZSHLiveMineHeadView.m in Sources */,
 				FE4E4B2B1FC005EC00E3B2F4 /* ZSHSearchLiveThirdCell.m in Sources */,
+				18762B2C1FE1149D00E1857F /* ZSHEnergyModel.m in Sources */,
 				FE291EE61F8CCC2700D4BBE7 /* ZSHTogetherViewController.m in Sources */,
 				185BB9B81FB559B3007A96FF /* ZSHLiveMonthListViewController.m in Sources */,
 				FE55380E1F47049D00803128 /* AppDelegate+AppService.m in Sources */,
