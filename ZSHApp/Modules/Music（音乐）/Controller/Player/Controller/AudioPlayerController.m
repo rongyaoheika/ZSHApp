@@ -18,7 +18,7 @@
     NSInteger _index;               // 播放标记
     BOOL isPlaying;                 // 播放状态
     BOOL isRemoveNot;               // 是否移除通知
-    AudioPlayerMode _playerMode;    // 播放模式
+   
     MusicModel *_playingModel;      // 正在播放的model
     CGFloat _totalTime;             // 总时间
 }
@@ -112,7 +112,6 @@ static AudioPlayerController *audioVC;
     NSArray<QQLrcModel *> *lrcArr = [QQLrcDataTool getLrcData:model.lrcContent];
     self.lrcTVC.datasource = lrcArr;
 
-    
     playerItem = [AVPlayerItem playerItemWithURL:[NSURL URLWithString:model.file_link]];
     [self.player replaceCurrentItemWithPlayerItem:playerItem];
     
@@ -147,6 +146,7 @@ static AudioPlayerController *audioVC;
             CMTime duration = item.duration;// 获取视频总长度
             [self setMaxDuratuin:CMTimeGetSeconds(duration)];
             [self play];
+            
         }else if([playerItem status] == AVPlayerStatusFailed) {
             NSLog(@"AVPlayerStatusFailed");
             [self stop];
@@ -208,6 +208,7 @@ static AudioPlayerController *audioVC;
 #pragma mark --按钮点击事件--
 - (IBAction)disMissSelfClick:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
+    
 }
 - (IBAction)playAndPauseClick:(id)sender {
     [self playerStatus];
@@ -216,7 +217,7 @@ static AudioPlayerController *audioVC;
 - (void)playerStatus{
     if (isPlaying) {
         [self stop];
-    }else{
+    } else {
         [self play];
     }
 }
@@ -261,7 +262,7 @@ static AudioPlayerController *audioVC;
     }
 }
 
-//更改播放状态
+//手动点击更改播放状态
 - (IBAction)clickPlayerMode:(id)sender {
     switch (_playerMode) {
         case AudioPlayerModeOrderPlay:{
@@ -294,6 +295,9 @@ static AudioPlayerController *audioVC;
     [self.playButton setImage:[UIImage imageNamed:@"music_stop_big"] forState:UIControlStateNormal];
     // 开始旋转
     [self.rotatingView resumeLayer];
+    if (self.playStatus) {
+        self.playStatus(_totalTime, isPlaying);
+    }
 }
 
 //暂停
@@ -303,6 +307,9 @@ static AudioPlayerController *audioVC;
     [self.playButton setImage:[UIImage imageNamed:@"music_play_big"] forState:UIControlStateNormal];
     // 停止旋转
     [self.rotatingView pauseLayer];
+    if (self.playStatus) {
+        self.playStatus(_totalTime, isPlaying);
+    }
 }
 
 - (IBAction)downloadAction:(id)sender {

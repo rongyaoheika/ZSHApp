@@ -70,7 +70,6 @@
         make.trailing.mas_equalTo(dislike).offset(kRealValue(-5-30));
         make.size.mas_equalTo(CGSizeMake(kRealValue(30), kRealValue(23)));
     }];
->>>>>>> 完成微博评论添加回复人的昵称
     
     [self.avatarImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self.contentView).offset(kRealValue(15));

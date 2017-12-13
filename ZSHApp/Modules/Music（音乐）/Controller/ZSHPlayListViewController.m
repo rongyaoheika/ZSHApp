@@ -34,7 +34,6 @@
 /** 数据*/
 @property (nonatomic, strong) NSArray               *musicMs;
 @property (nonatomic, assign) AudioPlayerController *audio;
-@property (nonatomic, assign) NSInteger             index;
 
 
 @end
@@ -205,8 +204,7 @@ static NSString *ZSHMusicPlayListCellID = @"ZSHMusicPlayListCell";
 //list
 - (ZSHBaseTableViewSectionModel*)storeListSection {
     kWeakSelf(self);
-   
-    
+
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     sectionModel.headerView = self.tabHeadView;
     sectionModel.headerHeight = kRealValue(40);
@@ -265,17 +263,15 @@ static NSString *ZSHMusicPlayListCellID = @"ZSHMusicPlayListCell";
             [weakself playMusicAction:YES index:indexPath.row];
         };
     }
-    
     return sectionModel;
 }
-
-
 
 - (UIView *)tabHeadView{
     if (!_tabHeadView) {
         _tabHeadView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kRealValue(40))];
         NSDictionary *btnDic = @{@"title":@"随机播放",@"withImage":@(YES),@"normalImage":@"music_play"};
         UIButton *playBtn = [ZSHBaseUIControl createBtnWithParamDic:btnDic];
+        [playBtn addTarget:self action:@selector(randomPlayAction:) forControlEvents:UIControlEventTouchUpInside];
         playBtn.tag = 1;
         playBtn.frame = CGRectMake(KLeftMargin, 0, kRealValue(100), kRealValue(40));
         [playBtn layoutButtonWithEdgeInsetsStyle:XYButtonEdgeInsetsStyleLeft imageTitleSpace:kRealValue(7.5)];
@@ -297,13 +293,18 @@ static NSString *ZSHMusicPlayListCellID = @"ZSHMusicPlayListCell";
         _audio = [AudioPlayerController audioPlayerController];
         [_audio initWithArray:self.songArr index:index];
         
-        UIButton *btn = [_footView viewWithTag:4];
-        btn.selected = YES;
-        btn.imageView.image = [UIImage imageNamed:@"music_start"];
+         UIButton *btn = [_footView viewWithTag:4];
+         UISlider *slider = [_footView viewWithTag:5];
         
-        UISlider *slider = [_footView viewWithTag:5];
-        slider.maximumValue = _audio.paceSlider.maximumValue;
-        RLog(@"slider.maximumValue=%f",slider.maximumValue);
+        _audio.playStatus = ^(float value, BOOL play) {
+             slider.maximumValue = _audio.paceSlider.maximumValue;
+            if (play) {
+                [btn setBackgroundImage:[UIImage imageNamed:@"music_stop"] forState:UIControlStateNormal];
+            } else {
+                [btn setBackgroundImage:[UIImage imageNamed:@"music_start"] forState:UIControlStateNormal];
+            }
+        };
+        
         _audio.paceValueChanged = ^(float value) {
             slider.value = value;
         };
@@ -312,10 +313,30 @@ static NSString *ZSHMusicPlayListCellID = @"ZSHMusicPlayListCell";
 
 - (void)playBtnAction:(UIButton *)btn{
     RLog(@"点击播放按钮的点击");
-    btn.selected = !btn.selected;
-    if (!btn.selected) {
+    if ([btn.currentBackgroundImage isEqual:[UIImage imageNamed:@"music_stop"]]) {
+         [btn setBackgroundImage:[UIImage imageNamed:@"music_start"] forState:UIControlStateNormal];
         [_audio stop];
+    } else {
+        [btn setBackgroundImage:[UIImage imageNamed:@"music_stop"] forState:UIControlStateNormal];
+        [_audio play];
     }
+}
+
+- (void)randomPlayAction:(UIButton *)btn{
+    NSInteger randomIndex = arc4random()%(self.songArr.count);
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:randomIndex inSection:0];
+    ZSHMusicPlayListCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+    UIImageView *authorIV = [_footView viewWithTag:2];
+    authorIV.image = cell.headImageView.image;
+    
+    UILabel *songLabel = [_footView viewWithTag:3];
+    songLabel.text = cell.titleLabel.text;
+    
+    AudioPlayerController *randomAudo = [AudioPlayerController audioPlayerController];
+    randomAudo.playerMode = AudioPlayerModeRandomPlay;
+    [randomAudo initWithArray:self.songArr index:randomIndex];
+    [self presentViewController:randomAudo animated:YES completion:nil];
+    
 }
 
 - (void)footerViewAction{

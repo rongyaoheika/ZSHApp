@@ -41,13 +41,19 @@ typedef NS_ENUM(NSInteger, AudioPlayerMode) {
 
 
 typedef void(^PaceValueChanged) (float value);
+typedef void(^PlayStatus) (float value,BOOL play);
 
 @interface AudioPlayerController : UIViewController
 
 +(AudioPlayerController *)audioPlayerController;
 
-@property (weak, nonatomic) IBOutlet UISlider *paceSlider; // 进度条
-@property (copy, nonatomic) PaceValueChanged paceValueChanged;
+// 播放模式
+@property (assign, nonatomic)AudioPlayerMode  playerMode;
+
+// 进度条
+@property (weak, nonatomic) IBOutlet UISlider *paceSlider;
+@property (copy, nonatomic) PaceValueChanged  paceValueChanged;
+@property (copy, nonatomic) PlayStatus        playStatus;
 
 /**
  *  旋转View
