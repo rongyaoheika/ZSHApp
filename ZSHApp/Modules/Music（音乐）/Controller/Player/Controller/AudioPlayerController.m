@@ -12,24 +12,23 @@
 #import "QQLrcDataTool.h"
 @interface AudioPlayerController (){
     AVPlayerItem *playerItem;
-    id _playTimeObserver; // 播放进度观察者
-    NSArray *_modelArray; // 歌曲数组
-    NSArray *_randomArray; //随机数组
-    NSInteger _index; // 播放标记
-    BOOL isPlaying; // 播放状态
-    BOOL isRemoveNot; // 是否移除通知
-    AudioPlayerMode _playerMode; // 播放模式
-
-    MusicModel *_playingModel; // 正在播放的model
-    CGFloat _totalTime; // 总时间
+    id _playTimeObserver;           // 播放进度观察者
+    NSArray *_modelArray;           // 歌曲数组
+    NSArray *_randomArray;          //随机数组
+    NSInteger _index;               // 播放标记
+    BOOL isPlaying;                 // 播放状态
+    BOOL isRemoveNot;               // 是否移除通知
+   
+    MusicModel *_playingModel;      // 正在播放的model
+    CGFloat _totalTime;             // 总时间
 }
-@property (weak, nonatomic) IBOutlet UISlider *paceSlider; // 进度条
-@property (weak, nonatomic) IBOutlet UIButton *playButton; // 播放按钮
-@property (weak, nonatomic) IBOutlet UILabel *titleLabel; // 歌名Label
-@property (weak, nonatomic) IBOutlet UILabel *singerLabel; // 歌手Label
-@property (weak, nonatomic) IBOutlet UILabel *playingTime; // 当前播放时间Label
-@property (weak, nonatomic) IBOutlet UILabel *maxTime; // 总时间Label
-@property (weak, nonatomic) IBOutlet UIButton *modeButton; // 播放模式按钮
+
+@property (weak, nonatomic) IBOutlet UIButton *playButton;      // 播放按钮
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;       // 歌名Label
+@property (weak, nonatomic) IBOutlet UILabel *singerLabel;      // 歌手Label
+@property (weak, nonatomic) IBOutlet UILabel *playingTime;      // 当前播放时间Label
+@property (weak, nonatomic) IBOutlet UILabel *maxTime;          // 总时间Label
+@property (weak, nonatomic) IBOutlet UIButton *modeButton;      // 播放模式按钮
 @property (nonatomic, strong) AVPlayer *player;
 
 @end
@@ -41,7 +40,7 @@ static AudioPlayerController *audioVC;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         audioVC = [[AudioPlayerController alloc] init];
-        audioVC.view.backgroundColor = [UIColor whiteColor];
+        audioVC.view.backgroundColor = KClearColor;
         audioVC.player = [[AVPlayer alloc]init];
         //后台播放
         AVAudioSession *session = [AVAudioSession sharedInstance];
@@ -56,9 +55,8 @@ static AudioPlayerController *audioVC;
     
     [self.paceSlider setThumbImage:[UIImage imageNamed:@"age_icon"] forState:UIControlStateNormal];
     [self creatViews];
-    
     [self addLrcView];
-    [self setUpLrcViewFrame];
+   
     
     // 给进度条添加一个手势（拖动歌词）
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(sliderTap:)];
@@ -70,6 +68,7 @@ static AudioPlayerController *audioVC;
 - (void)viewWillLayoutSubviews{
     [super viewWillLayoutSubviews];
     [self setRotatingViewFrame];
+    [self setUpLrcViewFrame];
 }
 
 - (void)initWithArray:(NSArray *)array index:(NSInteger)index{
@@ -105,21 +104,21 @@ static AudioPlayerController *audioVC;
         model = [_modelArray objectAtIndex:_index];
     }
     _playingModel = model;
+    
     // 更新界面歌曲信息：歌名，歌手，图片
     [self updateUIDataWith:model];
     
     // 获取歌词数据
-    // 1.获取歌词数据源
     NSArray<QQLrcModel *> *lrcArr = [QQLrcDataTool getLrcData:model.lrcContent];
-    // 2.将数据源交给控制器来展示
     self.lrcTVC.datasource = lrcArr;
 
-    
-    //修改为自己播放数据 model
     playerItem = [AVPlayerItem playerItemWithURL:[NSURL URLWithString:model.file_link]];
     [self.player replaceCurrentItemWithPlayerItem:playerItem];
-    [playerItem addObserver:self forKeyPath:@"status" options:NSKeyValueObservingOptionNew context:nil];// 监听status属性
-    [self monitoringPlayback:playerItem];// 监听播放状态
+    
+    // 监听status属性
+    [playerItem addObserver:self forKeyPath:@"status" options:NSKeyValueObservingOptionNew context:nil];
+    // 监听播放状态
+    [self monitoringPlayback:playerItem];
     [self addEndTimeNotification];
     isRemoveNot = YES;
 }
@@ -147,6 +146,7 @@ static AudioPlayerController *audioVC;
             CMTime duration = item.duration;// 获取视频总长度
             [self setMaxDuratuin:CMTimeGetSeconds(duration)];
             [self play];
+            
         }else if([playerItem status] == AVPlayerStatusFailed) {
             NSLog(@"AVPlayerStatusFailed");
             [self stop];
@@ -176,6 +176,9 @@ static AudioPlayerController *audioVC;
     [self setLockViewWith:_playingModel currentTime:currentTime];
     self.paceSlider.value = currentTime;
     self.playingTime.text = [NSString convertTime:currentTime];
+    if (self.paceValueChanged) {
+        self.paceValueChanged(currentTime);
+    }
     
 }
 
@@ -205,6 +208,7 @@ static AudioPlayerController *audioVC;
 #pragma mark --按钮点击事件--
 - (IBAction)disMissSelfClick:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
+    
 }
 - (IBAction)playAndPauseClick:(id)sender {
     [self playerStatus];
@@ -213,14 +217,16 @@ static AudioPlayerController *audioVC;
 - (void)playerStatus{
     if (isPlaying) {
         [self stop];
-    }else{
+    } else {
         [self play];
     }
 }
 
+//上一首
 - (IBAction)previousClick:(id)sender {
     [self inASong];
 }
+
 
 - (void)inASong{
     if (_playerMode != AudioPlayerModeSinglePlay) {
@@ -229,9 +235,18 @@ static AudioPlayerController *audioVC;
     [self updateAudioPlayer];
 }
 
+- (void)previousIndexSub{
+    _index--;
+    if (_index < 0) {
+        _index = _modelArray.count -1;
+    }
+}
+
+//下一首
 - (IBAction)nextClick:(id)sender {
     [self theNextSong];
 }
+
 
 - (void)theNextSong{
     if (_playerMode != AudioPlayerModeSinglePlay) {
@@ -247,13 +262,7 @@ static AudioPlayerController *audioVC;
     }
 }
 
-- (void)previousIndexSub{
-    _index--;
-    if (_index < 0) {
-        _index = _modelArray.count -1;
-    }
-}
-
+//手动点击更改播放状态
 - (IBAction)clickPlayerMode:(id)sender {
     switch (_playerMode) {
         case AudioPlayerModeOrderPlay:{
@@ -279,20 +288,28 @@ static AudioPlayerController *audioVC;
     }
 }
 
+//播放
 - (void)play{
     isPlaying = YES;
     [self.player play];
     [self.playButton setImage:[UIImage imageNamed:@"music_stop_big"] forState:UIControlStateNormal];
     // 开始旋转
     [self.rotatingView resumeLayer];
+    if (self.playStatus) {
+        self.playStatus(_totalTime, isPlaying);
+    }
 }
 
+//暂停
 - (void)stop{
     isPlaying = NO;
     [self.player pause];
     [self.playButton setImage:[UIImage imageNamed:@"music_play_big"] forState:UIControlStateNormal];
     // 停止旋转
     [self.rotatingView pauseLayer];
+    if (self.playStatus) {
+        self.playStatus(_totalTime, isPlaying);
+    }
 }
 
 - (IBAction)downloadAction:(id)sender {
@@ -373,9 +390,7 @@ static AudioPlayerController *audioVC;
 
 /** 歌词控制器*/
 - (ZSHMusicLryViewController *)lrcTVC{
-    
     if (_lrcTVC == nil) {
-        
         _lrcTVC = [[ZSHMusicLryViewController alloc] init];
     }
     return _lrcTVC;

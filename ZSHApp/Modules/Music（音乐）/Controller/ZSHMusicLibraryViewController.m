@@ -50,7 +50,6 @@ static NSString *ZSHMusicLibraryCellID = @"ZSHMusicLibraryCell";
         make.top.mas_equalTo(self.titleView.mas_bottom);
         make.left.and.right.and.bottom.mas_equalTo(self.view);
     }];
-    self.collectionView.scrollEnabled = NO;
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
     
@@ -71,13 +70,16 @@ static NSString *ZSHMusicLibraryCellID = @"ZSHMusicLibraryCell";
     switch (_index) {
         case 0:{//推荐
             [_musicLogic loadkSongListWithParamDic:nil Success:^(id responseObject) {
+                [weakself endRefresh];
                 _dataArr = responseObject;
                 [weakself.collectionView reloadData];
+                
             } fail:nil];
             break;
         }
         case 1:{//精选
             [_musicLogic loadkSongListWithParamDic:nil Success:^(id responseObject) {
+                [weakself endRefresh];
                 _dataArr = responseObject;
                 [weakself.collectionView reloadData];
             } fail:nil];
@@ -85,13 +87,16 @@ static NSString *ZSHMusicLibraryCellID = @"ZSHMusicLibraryCell";
         }
         case 2:{//最热
             [_musicLogic loadRankListWithParamDic:@{@"type":@(2),@"offset":@(0)} Success:^(id responseObject) {
+                [weakself endRefresh];
                 _dataArr = responseObject;
                 [weakself.collectionView reloadData];
             } fail:nil];
+            break;
         }
             
         case 3:{//最新
             [_musicLogic loadRankListWithParamDic:@{@"type":@(1),@"offset":@(0)} Success:^(id responseObject) {
+                [weakself endRefresh];
                 _dataArr = responseObject;
                 [weakself.collectionView reloadData];
             } fail:nil];

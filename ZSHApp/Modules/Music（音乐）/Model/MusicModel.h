@@ -10,16 +10,6 @@
 
 @interface MusicModel : NSObject
 
-//@property (nonatomic, strong) NSNumber *music_id; // 歌曲id
-//@property (nonatomic, strong) NSString *name; // 歌曲名
-//@property (nonatomic, strong) NSString *icon; // 图片
-//@property (nonatomic, strong) NSString *fileName; // 歌曲地址
-//@property (nonatomic, strong) NSString *lrcName;
-//@property (nonatomic, strong) NSString *singer; // 歌手
-//@property (nonatomic, strong) NSString *singerIcon;
-
-
-@property (nonatomic, copy) NSString   *show_link;
 @property (nonatomic, copy) NSString   *file_link;             //.mp3
 @property (nonatomic, copy) NSString   *title;                 //歌曲名字
 @property (nonatomic, copy) NSString   *author;                //歌手名字

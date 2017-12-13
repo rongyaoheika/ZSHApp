@@ -63,28 +63,25 @@
     kWeakSelf(self);
     [PPNetworkHelper POST:kUrlSongPlay parameters:paramDic success:^(id responseObject) {
         RLog(@"音乐详细数据%@",responseObject);
-        
-        MusicModel *detailModel = [[MusicModel alloc]init];
-//        QQMusicModel *detailModel = [[QQMusicModel alloc]init];
-        //歌曲 以xcoe截取
-        detailModel.file_link = responseObject[@"pd"][@"bitrate"][@"file_link"];
-        detailModel.show_link = responseObject[@"pd"][@"bitrate"][@"show_link" ];
-        
-        detailModel.lrclink = responseObject[@"pd"][@"bitrate"][@"lrclink"];    //歌词文件
-        detailModel.author = responseObject[@"pd"][@"songinfo"][@"author"];     //歌手
-        detailModel.title = responseObject[@"pd"][@"songinfo"][@"title"]; //歌曲名字
-        detailModel.album_title = responseObject[@"pd"][@"songinfo"][@"album_title"];//专辑名字
-        //中间小图片 以@符号截取
-        detailModel.pic_radio =  [responseObject[@"pd"][@"songinfo"][@"pic_radio"]componentsSeparatedByString:@"@"][0];
-        //背景图片 以@符号截取
-        detailModel.pic_huge =  [responseObject[@"pd"][@"songinfo"][@"pic_huge"] componentsSeparatedByString:@"@"][0];
-        
-        [weakself loadLryWithParamDic:paramDic Success:^(id responseObject) {
-            detailModel.lrcContent = responseObject;
-             success(detailModel);
-        } fail:nil];
-        
-//        success(detailModel);
+        NSArray *arr = responseObject[@"pd"][@"bitrate"];
+        if (arr.count && responseObject[@"pd"][@"songinfo"]) {//有MP3文件
+            MusicModel *detailModel = [[MusicModel alloc]init];
+            detailModel.file_link = responseObject[@"pd"][@"bitrate"][@"file_link"];
+            detailModel.lrclink = responseObject[@"pd"][@"bitrate"][@"lrclink"];    //歌词文件
+            detailModel.author = responseObject[@"pd"][@"songinfo"][@"author"];     //歌手
+            detailModel.title = responseObject[@"pd"][@"songinfo"][@"title"];       //歌曲名字
+            detailModel.album_title = responseObject[@"pd"][@"songinfo"][@"album_title"];//专辑名字
+            //中间小图片 以@符号截取
+            detailModel.pic_radio =  [responseObject[@"pd"][@"songinfo"][@"pic_radio"]componentsSeparatedByString:@"@"][0];
+            //背景图片 以@符号截取
+            detailModel.pic_huge =  [responseObject[@"pd"][@"songinfo"][@"pic_huge"] componentsSeparatedByString:@"@"][0];
+            
+            [weakself loadLryWithParamDic:paramDic Success:^(id responseObject) {
+                detailModel.lrcContent = responseObject;
+                success(detailModel);
+            } fail:nil];
+        }
+
     } failure:^(NSError *error) {
         RLog(@"音乐详细数据失败");
     }];

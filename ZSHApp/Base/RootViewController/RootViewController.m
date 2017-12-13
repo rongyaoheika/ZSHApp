@@ -202,11 +202,21 @@
 }
 
 - (void)headerRereshing{
-    [_tableView.mj_footer endRefreshing];
+    [self.tableView.mj_header endRefreshing];
 }
 
 - (void)footerRereshing{
     
+}
+
+- (void)endTabViewRefresh{
+    [self.tableView.mj_header endRefreshing];
+    [self.tableView.mj_footer endRefreshing];
+}
+
+- (void)endCollectionViewRefresh{
+    [self.collectionView.mj_header endRefreshing];
+    [self.collectionView.mj_footer endRefreshing];
 }
 
 - (void)collectionHeaderRereshing {

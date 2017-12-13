@@ -125,4 +125,7 @@ typedef void(^ZSHBottomBtnViewBtnBlock)(NSInteger);
 - (void) showProgress;
 - (void) hideProgress;
 
+- (void)endTabViewRefresh;
+- (void)endCollectionViewRefresh;
+
 @end

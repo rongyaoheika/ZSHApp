@@ -10,8 +10,6 @@
 
 @interface ZSHMusicPlayListCell()
 
-@property (nonatomic, strong) UIImageView *headImageView;
-@property (nonatomic, strong) UILabel     *titleLabel;
 @property (nonatomic, strong) UILabel     *detailLabel;
 
 @end

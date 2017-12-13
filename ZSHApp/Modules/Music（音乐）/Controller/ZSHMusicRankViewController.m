@@ -55,19 +55,6 @@ static NSString *ZSHMusicRankCellID = @"ZSHMusicRankCell";
             [weakself initViewModel];
         } fail:nil];
 
-
-
-// 本地数据
-//        NSString *str = [[NSBundle mainBundle]pathForResource:@"musicPaper" ofType:@"json"];
-//        NSData *data = [[NSData alloc]initWithContentsOfFile:str];
-//        NSMutableArray *dataArray = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-//        //    [self.songArray addObject:dic];
-//        for (NSDictionary *dic in dataArray) {
-//            MusicModel *model = [[MusicModel alloc] init];
-//            [model setValuesForKeysWithDictionary:dic];
-//            [self.songArray addObject:model];
-//        }
-
 }
 
 - (void)createUI{

@@ -487,6 +487,7 @@ static NSString *Identify_MusicCell = @"musicCell";
     
     ZSHCityViewController *cityVC = [[ZSHCityViewController alloc]init];
     [self.navigationController pushViewController:cityVC animated:YES];
+    
 }
 
 

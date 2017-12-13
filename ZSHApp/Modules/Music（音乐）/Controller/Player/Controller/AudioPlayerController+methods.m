@@ -11,7 +11,7 @@
 @interface AudioPlayerController (methods) <UIScrollViewDelegate>
 @end
 
-@implementation AudioPlayerController (methods)
+@implementation AudioPlayerController (methods)  
 
 - (void)creatViews{
     self.rotatingView = [[RotatingView alloc] init];
@@ -19,6 +19,7 @@
     [self.view addSubview:self.rotatingView];
     
     self.lrcLabel = [[QQLrcLabel alloc]initWithFrame:CGRectMake(0, KScreenHeight - kRealValue(160), KScreenWidth, kRealValue(40))];
+    self.lrcLabel.font = kPingFangRegular(17);
     self.lrcLabel.textColor = KWhiteColor;
     self.lrcLabel.numberOfLines = 1;
     self.lrcLabel.textAlignment = NSTextAlignmentCenter;
@@ -93,7 +94,6 @@
     self.lrcView.zsh_x = self.lrcBackView.width;
     self.lrcTVC.tableView.frame = self.lrcView.bounds;
     
-    
     // 歌词背景视图
     self.lrcBackView.contentSize = CGSizeMake(self.lrcBackView.width * 2, 0);
 }
@@ -110,6 +110,5 @@
     self.lrcLabel.alpha = alpha;
     [self.view bringSubviewToFront:self.lrcBackView];
 }
-
 
 @end
