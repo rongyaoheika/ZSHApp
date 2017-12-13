@@ -23,8 +23,8 @@
  */
 
 #define DevelopSever    0
-#define TestSever       1
-#define ProductSever    0
+#define TestSever       0
+#define ProductSever    1
 
 
 #if DevelopSever
@@ -619,7 +619,9 @@
 
 //113:每日推荐歌曲(固定10首)   appmusicin/getrecommandsonglist?SONGLIST
 //参数：songid 歌曲id()根据歌曲类型推荐10首歌曲
-#define kUrlSongList  [NSString stringWithFormat:@"appmusicin/getrecommandsonglist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SONGLIST"]]
+#define kUrlSongList [NSString stringWithFormat:@"appmusicin/getrecommandsonglist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SONGLIST"]]
+//@"http://tingapi.ting.baidu.com/v1/restserver/ting?format=json&calback=&from=webapp_music&method=baidu.ting.song.getRecommandSongList&song_id=877578&num=10"
+
 
 //114:歌手列表
 //参数：参数：offset 偏移数(页码)

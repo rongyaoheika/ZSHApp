@@ -13,23 +13,10 @@
 
 + (NSArray<QQLrcModel *> *)getLrcData:(NSString *)filename{
     
-    // 1.文件路径
-//    NSString *path = [[NSBundle mainBundle] pathForResource:filename ofType:nil];
-//    if (path == nil) {
-//        return @[];
-//    }
-    
     // 2.加载文件里面的内容
     NSString *lrcContent = @"";
     lrcContent = filename;
-//    NSError *error = nil;
-//
-//    lrcContent = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:&error];
-//    if (error) {
-//        NSLog(@"%@", error);
-//        return @[];
-//    }
-//
+
     // 3.解析歌词
     // 3.1 将歌词转成数组
     NSArray *lrcStrArray = [lrcContent componentsSeparatedByString:@"\n"];
@@ -85,16 +72,13 @@
     return lrcMs;
 }
 
-//+ (void)getRow:(NSTimeInterval)currentTime andLrcs:(NSArray<QQLrcModel *> *)lrcMs completion:(void (^)(NSInteger row, QQLrcModel *lrcModel))completion
 + (void)getRow:(double)currentTime andLrcs:(NSArray<QQLrcModel *> *)lrcMs completion:(void (^)(NSInteger row, QQLrcModel *lrcModel))completion;{
-    RLog(@"外部currentTime== %lf",currentTime);
     __block NSInteger row = 0;
     __block QQLrcModel *lrcModel = [[QQLrcModel alloc] init];
     
     [lrcMs enumerateObjectsUsingBlock:^(QQLrcModel *lrc, NSUInteger idx, BOOL * _Nonnull stop) {
         
         if (currentTime >= lrc.beginTime  && currentTime <= lrc.endTime) {
-            RLog(@"currentTime== %lf",currentTime);
             row = idx;
             lrcModel = lrc;
             *stop = YES;

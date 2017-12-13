@@ -13,7 +13,10 @@
 #import "ZSHRankModel.h"
 @interface ZSHMusicPlayListCell : ZSHBaseCell
 
-@property (nonatomic, copy) NSString    *imageUrl;
+
+@property (nonatomic, strong) UIImageView *headImageView;
+@property (nonatomic, strong) UILabel     *titleLabel;
+@property (nonatomic, copy) NSString      *imageUrl;
 
 - (void)updateCellWithRadioModel:(ZSHRadioSubModel *)radioModel;
 - (void)updateCellWithRadioDetailModel:(ZSHRadioDetailSubModel *)radioDetailSubModel;

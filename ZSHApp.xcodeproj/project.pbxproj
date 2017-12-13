@@ -311,6 +311,7 @@
 		FE5538831F470BAF00803128 /* UserManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FE55387B1F470BAF00803128 /* UserManager.m */; };
 		FE5CFA411FA1B32500A55644 /* ZSHHotelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE5CFA401FA1B32500A55644 /* ZSHHotelCell.m */; };
 		FE5ED9A81FA47968003FB2BA /* ZSHHotelCalendarCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE5ED9A71FA47968003FB2BA /* ZSHHotelCalendarCell.m */; };
+		FE6818A11FE0D3DF00AFB511 /* ZSHFootPlayMusicView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE6818A01FE0D3DF00AFB511 /* ZSHFootPlayMusicView.m */; };
 		FE7502AD1F99CA80002F2708 /* YouLikeGoods.plist in Resources */ = {isa = PBXBuildFile; fileRef = FE4DB1F31F99A23F008E12E9 /* YouLikeGoods.plist */; };
 		FE7502B11F99CD83002F2708 /* ZSHBaseUIControl.m in Sources */ = {isa = PBXBuildFile; fileRef = FE7502B01F99CD83002F2708 /* ZSHBaseUIControl.m */; };
 		FE7502B41F99D378002F2708 /* ZSHGoodsTitleContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE7502B31F99D378002F2708 /* ZSHGoodsTitleContentViewController.m */; };
@@ -1061,6 +1062,8 @@
 		FE5CFA401FA1B32500A55644 /* ZSHHotelCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHHotelCell.m; sourceTree = "<group>"; };
 		FE5ED9A61FA47968003FB2BA /* ZSHHotelCalendarCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHHotelCalendarCell.h; sourceTree = "<group>"; };
 		FE5ED9A71FA47968003FB2BA /* ZSHHotelCalendarCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHHotelCalendarCell.m; sourceTree = "<group>"; };
+		FE68189F1FE0D3DF00AFB511 /* ZSHFootPlayMusicView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHFootPlayMusicView.h; sourceTree = "<group>"; };
+		FE6818A01FE0D3DF00AFB511 /* ZSHFootPlayMusicView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHFootPlayMusicView.m; sourceTree = "<group>"; };
 		FE7502AF1F99CD83002F2708 /* ZSHBaseUIControl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHBaseUIControl.h; sourceTree = "<group>"; };
 		FE7502B01F99CD83002F2708 /* ZSHBaseUIControl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHBaseUIControl.m; sourceTree = "<group>"; };
 		FE7502B21F99D378002F2708 /* ZSHGoodsTitleContentViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ZSHGoodsTitleContentViewController.h; path = "../侧滑栏/ZSHGoodsTitleContentViewController.h"; sourceTree = "<group>"; };
@@ -2681,11 +2684,11 @@
 		FE3E007C1FDA743200A0F7CA /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				FE3E00801FDA743200A0F7CA /* AudioPlayerController+methods.h */,
 				FE3E007D1FDA743200A0F7CA /* AudioPlayerController+methods.m */,
+				FE3E00811FDA743200A0F7CA /* AudioPlayerController.h */,
 				FE3E007E1FDA743200A0F7CA /* AudioPlayerController.m */,
 				FE3E007F1FDA743200A0F7CA /* AudioPlayerController.xib */,
-				FE3E00801FDA743200A0F7CA /* AudioPlayerController+methods.h */,
-				FE3E00811FDA743200A0F7CA /* AudioPlayerController.h */,
 				FE2BC88F1FDEA7A800E98B2B /* ZSHMusicLryViewController.h */,
 				FE2BC8901FDEA7A800E98B2B /* ZSHMusicLryViewController.m */,
 			);
@@ -2703,6 +2706,8 @@
 				FE3E00861FDA743200A0F7CA /* RotatingView.m */,
 				FE3E009E1FDA8CD200A0F7CA /* musicPaper.json */,
 				FE3E00871FDA743200A0F7CA /* RotatingView.h */,
+				FE68189F1FE0D3DF00AFB511 /* ZSHFootPlayMusicView.h */,
+				FE6818A01FE0D3DF00AFB511 /* ZSHFootPlayMusicView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -4187,6 +4192,7 @@
 				FE4E4B3D1FC03C1D00E3B2F4 /* PYSearchViewController.m in Sources */,
 				FEAE111E1FB3FD5D008DCB3E /* ZSHQuotaViewController.m in Sources */,
 				FEA018C81FCBF35500989FB2 /* ZSHShopCommentViewController.m in Sources */,
+				FE6818A11FE0D3DF00AFB511 /* ZSHFootPlayMusicView.m in Sources */,
 				FE8FD0731FADA833005F1184 /* ZSHMemberCenterViewController.m in Sources */,
 				FE4E4B3C1FC03C1D00E3B2F4 /* PYSearchSuggestionViewController.m in Sources */,
 				FE7F00131F9203430006E9A3 /* ZSHBaseTableViewCellModel.m in Sources */,

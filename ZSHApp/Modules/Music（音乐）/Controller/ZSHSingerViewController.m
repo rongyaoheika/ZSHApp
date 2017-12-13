@@ -62,7 +62,7 @@ static NSString *ZSHMusicPlayListCellID = @"ZSHMusicPlayListCell";
     [self addNavigationItemWithImageName:@"live_search" isLeft:NO target:self action:@selector(searchAction) tag:1];
     
     NSArray *titleArr = @[@[@"全部",@"内地",@"港台",@"欧美",@"日本",@"韩国",@"其它"],
-  @[@"全部",@"男",@"女",@"组合"],@[@"全部",@"流行",@"嘻哈",@"嘻哈",@"摇滚",@"电子",@"民谣",@"民歌"]];
+  @[@"全部",@"男",@"女",@"组合"],@[@"全部",@"流行",@"嘻哈",@"摇滚",@"电子",@"民谣",@"民歌"]];
     for (int i = 0; i<titleArr.count; i++) {
         LXScollTitleView *titleView = [self createTitleView];
         titleView.frame = CGRectMake(0, KNavigationBarHeight+i*kRealValue(40), KScreenWidth, kRealValue(40));
