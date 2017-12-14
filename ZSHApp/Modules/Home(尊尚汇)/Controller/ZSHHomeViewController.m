@@ -27,6 +27,8 @@
 #import "PYSearchViewController.h"
 #import "ZSHGoodsTitleContentViewController.h"
 
+#import "GYZChooseCityController.h"
+
 static NSString *Identify_HeadCell = @"headCell";
 static NSString *Identify_NoticeCell = @"noticeCell";
 static NSString *Identify_ServiceCell = @"serviceCell";
@@ -34,7 +36,7 @@ static NSString *Identify_PlayCell = @"playCell";
 static NSString *Identify_MagazineCell = @"magazineCell";
 static NSString *Identify_MusicCell = @"musicCell";
 
-@interface ZSHHomeViewController ()<UISearchBarDelegate>
+@interface ZSHHomeViewController ()<UISearchBarDelegate,GYZChooseCityDelegate>
 
 
 @property (nonatomic, strong) NSArray                *pushVCsArr;
@@ -152,8 +154,7 @@ static NSString *Identify_MusicCell = @"musicCell";
 
 - (void)updateSectionDatWithSet:(NSIndexSet *)indexSet{
     [self.tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
-    [self.tableView.mj_header endRefreshing];
-    [self.tableView.mj_footer endRefreshing];
+    [self endTabViewRefresh];
 }
 
 - (void)createUI{
@@ -485,10 +486,17 @@ static NSString *Identify_MusicCell = @"musicCell";
 
 - (void)locateBtnAction{
     
-    ZSHCityViewController *cityVC = [[ZSHCityViewController alloc]init];
+//    ZSHCityViewController *cityVC = [[ZSHCityViewController alloc]init];
+//    [self.navigationController pushViewController:cityVC animated:YES];
+
+    
+    GYZChooseCityController *cityVC = [[GYZChooseCityController alloc]init];
+    [cityVC setDelegate:self];
     [self.navigationController pushViewController:cityVC animated:YES];
     
 }
+
+
 
 
 #pragma getter
@@ -509,6 +517,18 @@ static NSString *Identify_MusicCell = @"musicCell";
 #pragma mark ————— 上拉刷新 —————
 -(void)footerRereshing{
     [self.tableView.mj_footer endRefreshing];
+}
+
+#pragma mark - GYZCityPickerDelegate
+- (void) cityPickerController:(GYZChooseCityController *)chooseCityController didSelectCity:(GYZCity *)city
+{
+     [self addNavigationItemWithImageName:@"nav_home_more" title:city.cityName locate:XYButtonEdgeInsetsStyleRight isLeft:YES target:self action:@selector(locateBtnAction) tag:10];
+    [chooseCityController.navigationController popViewControllerAnimated:YES];
+}
+
+- (void) cityPickerControllerDidCancel:(GYZChooseCityController *)chooseCityController
+{
+     [chooseCityController.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

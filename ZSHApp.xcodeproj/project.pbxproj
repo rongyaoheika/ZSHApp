@@ -256,6 +256,13 @@
 		FE443FE21FB059A800B7F7A5 /* ZSHChangeInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE443FE11FB059A800B7F7A5 /* ZSHChangeInfoViewController.m */; };
 		FE443FE51FB0A31600B7F7A5 /* ZSHNotificationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE443FE41FB0A31600B7F7A5 /* ZSHNotificationViewController.m */; };
 		FE4B8D241FA9FEC500DE48A1 /* ZSHKTVListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE4B8D231FA9FEC500DE48A1 /* ZSHKTVListCell.m */; };
+		FE4BC2B01FE21A3100007C4C /* GYZChooseCityController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE4BC2A61FE21A3100007C4C /* GYZChooseCityController.m */; };
+		FE4BC2B11FE21A3100007C4C /* GYZCityGroupCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE4BC2A71FE21A3100007C4C /* GYZCityGroupCell.m */; };
+		FE4BC2B21FE21A3100007C4C /* CityData.plist in Resources */ = {isa = PBXBuildFile; fileRef = FE4BC2A81FE21A3100007C4C /* CityData.plist */; };
+		FE4BC2B31FE21A3100007C4C /* GYZCityHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE4BC2A91FE21A3100007C4C /* GYZCityHeaderView.m */; };
+		FE4BC2B41FE21A3100007C4C /* GYZCity.m in Sources */ = {isa = PBXBuildFile; fileRef = FE4BC2AA1FE21A3100007C4C /* GYZCity.m */; };
+		FE4BC2BA1FE21A6100007C4C /* HCLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FE4BC2B61FE21A6100007C4C /* HCLocationManager.m */; };
+		FE4BC2BB1FE21A6100007C4C /* HCCoordinateConvert.m in Sources */ = {isa = PBXBuildFile; fileRef = FE4BC2B91FE21A6100007C4C /* HCCoordinateConvert.m */; };
 		FE4DB1E11F99965D008E12E9 /* ZSHGoodsTypeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE4DB1E01F99965D008E12E9 /* ZSHGoodsTypeViewController.m */; };
 		FE4DB1E51F99970D008E12E9 /* ZSHGoodsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE4DB1E41F99970D008E12E9 /* ZSHGoodsCell.m */; };
 		FE4DB1E91F999747008E12E9 /* ZSHGoodModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FE4DB1E81F999747008E12E9 /* ZSHGoodModel.m */; };
@@ -956,6 +963,20 @@
 		FE443FE41FB0A31600B7F7A5 /* ZSHNotificationViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHNotificationViewController.m; sourceTree = "<group>"; };
 		FE4B8D221FA9FEC500DE48A1 /* ZSHKTVListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHKTVListCell.h; sourceTree = "<group>"; };
 		FE4B8D231FA9FEC500DE48A1 /* ZSHKTVListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHKTVListCell.m; sourceTree = "<group>"; };
+		FE4BC2A61FE21A3100007C4C /* GYZChooseCityController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GYZChooseCityController.m; sourceTree = "<group>"; };
+		FE4BC2A71FE21A3100007C4C /* GYZCityGroupCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GYZCityGroupCell.m; sourceTree = "<group>"; };
+		FE4BC2A81FE21A3100007C4C /* CityData.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = CityData.plist; sourceTree = "<group>"; };
+		FE4BC2A91FE21A3100007C4C /* GYZCityHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GYZCityHeaderView.m; sourceTree = "<group>"; };
+		FE4BC2AA1FE21A3100007C4C /* GYZCity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GYZCity.m; sourceTree = "<group>"; };
+		FE4BC2AB1FE21A3100007C4C /* GYZCityGroupCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GYZCityGroupCell.h; sourceTree = "<group>"; };
+		FE4BC2AC1FE21A3100007C4C /* GYZChooseCityDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GYZChooseCityDelegate.h; sourceTree = "<group>"; };
+		FE4BC2AD1FE21A3100007C4C /* GYZChooseCityController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GYZChooseCityController.h; sourceTree = "<group>"; };
+		FE4BC2AE1FE21A3100007C4C /* GYZCityHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GYZCityHeaderView.h; sourceTree = "<group>"; };
+		FE4BC2AF1FE21A3100007C4C /* GYZCity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GYZCity.h; sourceTree = "<group>"; };
+		FE4BC2B61FE21A6100007C4C /* HCLocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HCLocationManager.m; sourceTree = "<group>"; };
+		FE4BC2B71FE21A6100007C4C /* HCCoordinateConvert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HCCoordinateConvert.h; sourceTree = "<group>"; };
+		FE4BC2B81FE21A6100007C4C /* HCLocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HCLocationManager.h; sourceTree = "<group>"; };
+		FE4BC2B91FE21A6100007C4C /* HCCoordinateConvert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HCCoordinateConvert.m; sourceTree = "<group>"; };
 		FE4DB1DF1F99965D008E12E9 /* ZSHGoodsTypeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ZSHGoodsTypeViewController.h; path = "../侧滑栏/ZSHGoodsTypeViewController.h"; sourceTree = "<group>"; };
 		FE4DB1E01F99965D008E12E9 /* ZSHGoodsTypeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ZSHGoodsTypeViewController.m; path = "../侧滑栏/ZSHGoodsTypeViewController.m"; sourceTree = "<group>"; };
 		FE4DB1E31F99970D008E12E9 /* ZSHGoodsCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHGoodsCell.h; sourceTree = "<group>"; };
@@ -2062,6 +2083,8 @@
 		FE0ED7D81FC2CB34008299C5 /* 城市 */ = {
 			isa = PBXGroup;
 			children = (
+				FE4BC2B51FE21A6100007C4C /* HCLocationManager */,
+				FE4BC2A51FE21A3100007C4C /* GYZChooseCity */,
 				FE0ED7DD1FC2CB7D008299C5 /* ZSHCityViewController.h */,
 				FE0ED7DC1FC2CB7D008299C5 /* ZSHCityViewController.m */,
 			);
@@ -2723,6 +2746,34 @@
 				FE4B8D231FA9FEC500DE48A1 /* ZSHKTVListCell.m */,
 			);
 			path = KTV;
+			sourceTree = "<group>";
+		};
+		FE4BC2A51FE21A3100007C4C /* GYZChooseCity */ = {
+			isa = PBXGroup;
+			children = (
+				FE4BC2A81FE21A3100007C4C /* CityData.plist */,
+				FE4BC2AC1FE21A3100007C4C /* GYZChooseCityDelegate.h */,
+				FE4BC2AB1FE21A3100007C4C /* GYZCityGroupCell.h */,
+				FE4BC2A71FE21A3100007C4C /* GYZCityGroupCell.m */,
+				FE4BC2AE1FE21A3100007C4C /* GYZCityHeaderView.h */,
+				FE4BC2A91FE21A3100007C4C /* GYZCityHeaderView.m */,
+				FE4BC2AD1FE21A3100007C4C /* GYZChooseCityController.h */,
+				FE4BC2A61FE21A3100007C4C /* GYZChooseCityController.m */,
+				FE4BC2AF1FE21A3100007C4C /* GYZCity.h */,
+				FE4BC2AA1FE21A3100007C4C /* GYZCity.m */,
+			);
+			path = GYZChooseCity;
+			sourceTree = "<group>";
+		};
+		FE4BC2B51FE21A6100007C4C /* HCLocationManager */ = {
+			isa = PBXGroup;
+			children = (
+				FE4BC2B81FE21A6100007C4C /* HCLocationManager.h */,
+				FE4BC2B61FE21A6100007C4C /* HCLocationManager.m */,
+				FE4BC2B71FE21A6100007C4C /* HCCoordinateConvert.h */,
+				FE4BC2B91FE21A6100007C4C /* HCCoordinateConvert.m */,
+			);
+			path = HCLocationManager;
 			sourceTree = "<group>";
 		};
 		FE4DB1DD1F9993AD008E12E9 /* 积分 */ = {
@@ -3967,6 +4018,7 @@
 				FEA1059C1F9B5D06008652D6 /* ZSHSpeedy.m in Resources */,
 				FE3E00931FDA743200A0F7CA /* MusicPlayer_播放@2x.png in Resources */,
 				FEA1058C1F9B43B8008652D6 /* ClassiftyGoods02.plist in Resources */,
+				FE4BC2B21FE21A3100007C4C /* CityData.plist in Resources */,
 				FE3E00921FDA743200A0F7CA /* MusicPlayer_单曲循环@2x.png in Resources */,
 				FEA1058A1F9B438F008652D6 /* ClassiftyGoods03.plist in Resources */,
 				FEA105841F9B2B4B008652D6 /* ClassiftyGoods01.plist in Resources */,
@@ -4111,6 +4163,7 @@
 				1826CDB41FBAFD3D00A0ECE2 /* ZSHApplyServiceViewController.m in Sources */,
 				185BB9CA1FB5BDB9007A96FF /* ZSHMoreSubscribeViewController.m in Sources */,
 				FE7502B11F99CD83002F2708 /* ZSHBaseUIControl.m in Sources */,
+				FE4BC2B11FE21A3100007C4C /* GYZCityGroupCell.m in Sources */,
 				FEBD36E71FB53AB800959BD8 /* ZSHScoreDetailCell.m in Sources */,
 				FEDF29271FB6D1C100CD5756 /* ZSHCoinViewController.m in Sources */,
 				1843134B1FD4E9E20046B128 /* NSString+unicode.m in Sources */,
@@ -4123,6 +4176,7 @@
 				FEB099161FD127F300E8F03D /* ZSHMoreListCell.m in Sources */,
 				FEA018BF1FCBB5E800989FB2 /* ZSHFoodDetailViewController.m in Sources */,
 				18063C5B1FC9140B000F5A00 /* ZSHCollectModel.m in Sources */,
+				FE4BC2B01FE21A3100007C4C /* GYZChooseCityController.m in Sources */,
 				185DDCD31FBEDD79004D4688 /* ZSHShareView.m in Sources */,
 				FEC702B41FB3195000D5BAA1 /* ZSHEntertainmentDisViewController.m in Sources */,
 				182F57941FDB91390085BFC6 /* KNProgressHUD.m in Sources */,
@@ -4175,6 +4229,7 @@
 				1869C9361FD8F3CD002F2E37 /* ZSHFriendListModel.m in Sources */,
 				FE7F00121F9203430006E9A3 /* ZSHBaseTableViewCellModel.h in Sources */,
 				18063C541FC90379000F5A00 /* ZSHPersonalModel.m in Sources */,
+				FE4BC2B41FE21A3100007C4C /* GYZCity.m in Sources */,
 				181AD31E1FCD31C30015D004 /* ZSHOrderSubViewController.m in Sources */,
 				FE2CD0B61F98F61A00E9E519 /* ZSHIntegralExchangeCell.m in Sources */,
 				FE443FD01FAFF60200B7F7A5 /* ZSHTicketTypeCell.m in Sources */,
@@ -4204,6 +4259,7 @@
 				FEBD7CAF1FA730F600CE2BA6 /* ZSHGoodsDetailSubCell.m in Sources */,
 				FEF2B6331FAC4DF3000AEA6E /* ZSHEnterTainmentCell.m in Sources */,
 				185BB9BE1FB5762E007A96FF /* ZSHLiveDayListCell.m in Sources */,
+				FE4BC2B31FE21A3100007C4C /* GYZCityHeaderView.m in Sources */,
 				FE2CD0A51F98841400E9E519 /* ZSHLuckCardView.m in Sources */,
 				FE7F00171F9203430006E9A3 /* ZSHBaseTableViewSectionModel.m in Sources */,
 				182F57911FDB91390085BFC6 /* KNPhotoBrowerCell.m in Sources */,
@@ -4318,6 +4374,7 @@
 				FE7527961F7AA48C00858561 /* DSectionIndexItemView.m in Sources */,
 				182F57931FDB91390085BFC6 /* KNPhotoBrowerNumView.m in Sources */,
 				FE5538661F47049D00803128 /* YYFPSLabel.m in Sources */,
+				FE4BC2BA1FE21A6100007C4C /* HCLocationManager.m in Sources */,
 				FE55385B1F47049D00803128 /* AdPageView.m in Sources */,
 				FEBD7CBE1FA7608200CE2BA6 /* ZSHFoodModel.m in Sources */,
 				180C95CE1F57E10200CE570C /* UIImage+BlurGlass.m in Sources */,
@@ -4441,6 +4498,7 @@
 				FEC273A71F8E1FD700A0F91A /* ZSHNoticeViewCell.m in Sources */,
 				FE5CFA411FA1B32500A55644 /* ZSHHotelCell.m in Sources */,
 				FEA018C51FCBE59100989FB2 /* ZSHKTVViewController.m in Sources */,
+				FE4BC2BB1FE21A6100007C4C /* HCCoordinateConvert.m in Sources */,
 				FE1F76281F8F795C00C45B83 /* ZSHCustomWaterFlowLayout.m in Sources */,
 				FE7AF23B1FA383FA00E1A648 /* ZSHHotelDetailHeadCell.m in Sources */,
 				FE3E00961FDA743200A0F7CA /* AudioPlayerController+methods.m in Sources */,

@@ -47,6 +47,7 @@
     _searchTextField.layer.borderColor = KClearColor.CGColor;
     _searchTextField.layer.borderWidth = 0.0;
     [_searchTextField setBackgroundColor:KZSHColor1A1A1A];
+    _searchTextField.textColor = KZSHColor8E8E93;
     [_searchTextField setValue:KZSHColor8E8E93 forKeyPath:@"_placeholderLabel.textColor"];
     [_searchTextField setValue:kPingFangLight(14) forKeyPath:@"_placeholderLabel.font"];
     [self addSubview:_searchBar];

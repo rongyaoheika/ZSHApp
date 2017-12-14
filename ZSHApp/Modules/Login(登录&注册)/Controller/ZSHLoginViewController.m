@@ -111,8 +111,8 @@
         make.width.mas_equalTo(kRealValue(50));
         make.height.mas_equalTo(kRealValue(12));
     }];
-    _userView.textField.text = @"10";
-    _pwdView.textField.text = @"1";
+//    _userView.textField.text = @"10";
+//    _pwdView.textField.text = @"1";
 }
 
 #pragma action
