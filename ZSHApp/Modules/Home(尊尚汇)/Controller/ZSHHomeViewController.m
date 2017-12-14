@@ -492,6 +492,9 @@ static NSString *Identify_MusicCell = @"musicCell";
     
     GYZChooseCityController *cityVC = [[GYZChooseCityController alloc]init];
     [cityVC setDelegate:self];
+//    cityVC.locationCityID = @"1400010000";
+//    cityVC.commonCitys = [[NSMutableArray alloc] initWithArray: @[@"1400010000", @"100010000"]];        // 最近访问城市，如果不设置，将自动管理
+    cityVC.hotCitys = @[@"100010000", @"200010000", @"300210000", @"600010000", @"300110000"];
     [self.navigationController pushViewController:cityVC animated:YES];
     
 }
