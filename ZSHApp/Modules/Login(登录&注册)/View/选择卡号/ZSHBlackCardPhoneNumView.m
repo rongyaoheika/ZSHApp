@@ -9,12 +9,17 @@
 #import "ZSHBlackCardPhoneNumView.h"
 #import "ZSHPhoneNumListView.h"
 #import "LXScollTitleView.h"
+#import "ZSHLoginLogic.h"
+#import "ZSHCardNumModel.h"
 
 @interface ZSHBlackCardPhoneNumView ()<UIScrollViewDelegate>
 
 @property (nonatomic, strong) NSArray                   *titleArr;
 @property (nonatomic, strong) LXScollTitleView          *titleView;
 @property (nonatomic, strong) UIScrollView              *blackCardScrollView;
+
+@property (nonatomic, strong) ZSHLoginLogic             *loginLogic;
+@property (nonatomic, strong) NSArray                   *cardNumArr;
 
 @end
 
@@ -28,14 +33,10 @@
     
     [self addSubview:self.blackCardScrollView];
     for (int i = 0; i<_titleArr.count; i++) {
-        [self.blackCardScrollView addSubview:[self createPhoneNumListView]];
+        ZSHPhoneNumListView *listView =[self createPhoneNumListView:NSStringFormat(@"%d", i+1)];
+        [self.blackCardScrollView addSubview:listView];
     }
-    [self layoutIfNeeded];
-}
-
-- (void)layoutSubviews{
-    [super layoutSubviews];
-
+    
     [_titleView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self);
         make.width.mas_equalTo(kRealValue(298));
@@ -53,6 +54,12 @@
         i++;
     }
     
+     [self requestData];
+}
+
+
+- (void)updateConstraints {
+    [super updateConstraints];
     NSInteger count = _titleArr.count;
     CGFloat viewHeight = CGRectGetHeight(self.frame);
     _blackCardScrollView.contentSize = CGSizeMake(count*KScreenWidth, viewHeight- kRealValue(33));
@@ -65,7 +72,7 @@
     
     int j = 0;
     for (ZSHPhoneNumListView *numListView in self.blackCardScrollView.subviews) {
-        [numListView mas_makeConstraints:^(MASConstraintMaker *make) {
+        [numListView mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.left.mas_equalTo(_blackCardScrollView).offset(KScreenWidth*j);
             make.top.mas_equalTo(_blackCardScrollView);
             make.height.mas_equalTo(kRealValue(150));
@@ -73,7 +80,7 @@
         }];
         j++;
     }
-    
+
 }
 
 - (UIScrollView *)blackCardScrollView{
@@ -89,10 +96,10 @@
     return _blackCardScrollView;
 }
 
-- (ZSHPhoneNumListView *)createPhoneNumListView{
-    NSArray *titleArr = @[@"1035686866",@"1035686866",@"1035686866",@"1035686866",@"11035686866",@"1035686866",@"1035686866",@"1035686866",];
-    NSDictionary *nextParamDic = @{@"titleArr":titleArr,@"normalImage":@"phone_normal",@"selectedImage":@"phone_press"};
-    ZSHPhoneNumListView *listView = [[ZSHPhoneNumListView alloc]initWithFrame:CGRectZero paramDic:nextParamDic];
+- (ZSHPhoneNumListView *)createPhoneNumListView:(NSString *)cardType{
+    NSArray *titleArr = @[@"ab1035686866",@"1035686866",@"1035686866",@"1035686866",@"11035686866",@"1035686866",@"1035686866",@"1035686866",];
+    NSDictionary *nextParamDic = @{@"titleArr":titleArr,@"normalImage":@"phone_normal",@"selectedImage":@"phone_press", @"type":cardType};
+    ZSHPhoneNumListView *listView = [[ZSHPhoneNumListView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth,kRealValue(150)) paramDic:nextParamDic];
     return listView;
 }
 
@@ -118,9 +125,24 @@
     return _titleView;
 }
 
--(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
     NSInteger index = scrollView.contentOffset.x/kScreenWidth;
     self.titleView.selectedIndex = index;
 }
+
+
+- (void)updateViewWithData {
+    
+}
+
+- (void)requestData {
+    //（1 自选号码库 2 贵宾号码库 3 金钻号码库 4荣耀号码库 5 超级黑卡靓号号码库）
+    kWeakSelf(self);
+    [_loginLogic requestCardNumWithDic:@{@"CARDTYPE_ID":self.paramDic[@"type"]} success:^(id response) {
+        weakself.cardNumArr = [ZSHCardNumModel mj_objectArrayWithKeyValuesArray:response[@"pd"]];
+        [weakself updateViewWithData];
+    }];
+}
+
 
 @end

@@ -14,7 +14,7 @@
 // 尊购里模糊查询
 - (void)requestShipDimQueryWithKeywords:(NSString *)keyword success:(void (^)(id response))success {
     kWeakSelf(self);
-    [PPNetworkHelper POST:kUrlShipDimQuery parameters:@{@"KEYWORDS":keyword,@"HONOURUSER_ID":@"d6a3779de8204dfd9359403f54f7d27c"} success:^(id responseObject) {
+    [PPNetworkHelper POST:kUrlShipDimQuery parameters:@{@"KEYWORDS":keyword,@"HONOURUSER_ID":HONOURUSER_IDValue} success:^(id responseObject) {
         weakself.buySearchModelArr = [ZSHBuySearchModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"]];
         success(nil);
     } failure:^(NSError *error) {
@@ -125,7 +125,7 @@
 
 // 炫购添加
 - (void)requestShipCollectAddWithProductID:(NSString *)productID success:(void (^)(id response))success {
-    [PPNetworkHelper POST:kUrlShipCollectAdd parameters:@{@"HONOURUSER_ID":@"d6a3779de8204dfd9359403f54f7d27c",@"PRODUCT_ID":productID} success:^(id responseObject) {
+    [PPNetworkHelper POST:kUrlShipCollectAdd parameters:@{@"HONOURUSER_ID":HONOURUSER_IDValue,@"PRODUCT_ID":productID} success:^(id responseObject) {
         success(responseObject);
     } failure:^(NSError *error) {
         RLog(@"请求失败");
@@ -134,7 +134,7 @@
 
 // 炫购删除
 - (void)requestShipCollectDel:(NSString *)collectID success:(void (^)(id response))success {
-    [PPNetworkHelper POST:kUrlShipCollectDel parameters:@{@"HONOURUSER_ID":@"d6a3779de8204dfd9359403f54f7d27c",@"COLLECT_ID":collectID} success:^(id responseObject) {
+    [PPNetworkHelper POST:kUrlShipCollectDel parameters:@{@"HONOURUSER_ID":HONOURUSER_IDValue,@"COLLECT_ID":collectID} success:^(id responseObject) {
         success(responseObject);
     } failure:^(NSError *error) {
         RLog(@"请求失败");

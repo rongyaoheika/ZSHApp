@@ -47,7 +47,7 @@
 - (void)btnAction:(UIButton*)btn{
     if (btn.tag == 1) {// 点赞
         if (!btn.selected) {
-            [_liveLogic requestDotAgreeWithDic:@{@"HONOURUSER_ID":@"d6a3779de8204dfd9359403f54f7d27c",@"CIRCLE_ID":_weiboCellModel.CIRCLE_ID,@"STATUS":@"1"} success:^(id response) {
+            [_liveLogic requestDotAgreeWithDic:@{@"HONOURUSER_ID":HONOURUSER_IDValue,@"CIRCLE_ID":_weiboCellModel.CIRCLE_ID,@"STATUS":@"1"} success:^(id response) {
                 if ([response[@"result"] isEqualToString:@"01"]) {
                     NSInteger count = [btn.titleLabel.text integerValue]+1;
                     [btn setTitle:NSStringFormat(@"%zd", count) forState:UIControlStateSelected];
@@ -71,8 +71,8 @@
     [btn setTitle:model.dotAgreeCount forState:UIControlStateNormal];
     UIButton *btn1 = [self viewWithTag:2];
     [btn1 setTitle:model.commentCount forState:UIControlStateNormal];
-    UIButton *btn2 = [self viewWithTag:3];
-    [btn2 setTitle:model.commentCount forState:UIControlStateNormal];
+//    UIButton *btn2 = [self viewWithTag:3];
+//    [btn2 setTitle:model.commentCount forState:UIControlStateNormal];
     self.weiboCellModel = model;
 }
 

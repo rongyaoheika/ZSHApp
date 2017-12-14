@@ -36,6 +36,16 @@
     }];
 }
 
+// 账号密码
+- (void)loginUserNamePwdWithDic:(NSDictionary *)dic success:(void (^)(id response))success {
+    [PPNetworkHelper POST:kUrlUserLoginCard parameters:dic success:^(id responseObject) {
+        success(responseObject);
+    } failure:^(NSError *error) {
+        RLog(@"请求失败");
+    }];
+}
+
+//  注册
 - (void)userRegisterWithDic:(NSDictionary *)dic {
 
     [PPNetworkHelper POST:kUrlUserRegister parameters:dic success:^(id responseObject) {
@@ -48,7 +58,27 @@
     }];
 }
 
+//选择卡种类的图片
+- (void)requestCardImgsWithDic:(NSDictionary *)dic success:(void (^)(id response))success {
+    
+    [PPNetworkHelper POST:kUrlGetCardImgs parameters:dic success:^(id responseObject) {
+        RLog(@"请求成功：返回数据&%@",responseObject);
+        success(responseObject);
+    } failure:^(NSError *error) {
+        RLog(@"请求失败");
+    }];
+}
 
+
+// 分类随机显示6个卡号 
+- (void)requestCardNumWithDic:(NSDictionary *)dic success:(void (^)(id response))success {
+    [PPNetworkHelper POST:kUrlGetCardNum parameters:dic success:^(id responseObject) {
+        RLog(@"请求成功：返回数据&%@",responseObject);
+        success(responseObject);
+    } failure:^(NSError *error) {
+        RLog(@"请求失败");
+    }];
+}
 
 
 @end

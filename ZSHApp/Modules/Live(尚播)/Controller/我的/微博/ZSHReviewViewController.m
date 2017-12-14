@@ -157,7 +157,7 @@
 - (void)sendAction {
     kWeakSelf(self);
     if (_textView.text.length) {
-        [_liveLogic requestAddCommentWithDic:@{@"HONOURUSER_ID":@"d6a3779de8204dfd9359403f54f7d27c",@"CIRCLE_ID":self.paramDic[@"CircleID"],@"COMCONTENT":_textView.text,@"REPLYHONOURUSER_ID":_HONOURUSER_ID} success:^(id response) {
+        [_liveLogic requestAddCommentWithDic:@{@"HONOURUSER_ID":HONOURUSER_IDValue,@"CIRCLE_ID":self.paramDic[@"CircleID"],@"COMCONTENT":_textView.text,@"REPLYHONOURUSER_ID":_HONOURUSER_ID} success:^(id response) {
             UIAlertController *ac = [UIAlertController alertControllerWithTitle:@"提示" message:@"发布成功" preferredStyle:UIAlertControllerStyleAlert];
             UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
                 [weakself.textView  resignFirstResponder];

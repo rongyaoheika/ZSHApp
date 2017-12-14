@@ -59,7 +59,7 @@ SINGLETON_FOR_HEADER(UserManager)
  @param completion 回调
  */
 -(void)autoLoginToServer:(loginBlock)completion;
-
+- (void)autoLoginToServerWithDic:(NSDictionary *)dic completion:(loginBlock)completion;
 /**
  退出登录
 

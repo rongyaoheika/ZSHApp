@@ -6,14 +6,14 @@
 //  Copyright © 2017年 apple. All rights reserved.
 //
 
-#import "ZSHLoginLogic.h"
+#import "ZSHBaseLogic.h"
 #import "ZSHAddrModel.h"
 #import "ZSHGoodOrderModel.h"
 #import "ZSHBuyOrderModel.h"
 #import "ZSHHotelOrderModel.h"
 
 
-@interface ZSHMineLogic : ZSHLoginLogic
+@interface ZSHMineLogic : ZSHBaseLogic
 
 @property (nonatomic, strong) ZSHAddrModel                     *addNewAddr;
 @property (nonatomic, strong) ZSHBuyOrderModel                 *buyOrderModel;

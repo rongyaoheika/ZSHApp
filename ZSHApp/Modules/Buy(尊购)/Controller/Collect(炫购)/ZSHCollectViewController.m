@@ -83,7 +83,7 @@ static NSString *CollectCellIdentifier = @"CollectCellIdentifier";
     kWeakSelf(self);
     
     
-    [_buyLogic requestShipCollectWithUserID:@"d6a3779de8204dfd9359403f54f7d27c" success:^(id response) {
+    [_buyLogic requestShipCollectWithUserID:HONOURUSER_IDValue success:^(id response) {
         [weakself initViewModel];
     }];
 }

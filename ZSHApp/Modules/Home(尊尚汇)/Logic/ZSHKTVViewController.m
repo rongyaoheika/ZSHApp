@@ -50,7 +50,7 @@ static NSString *ZSHHotelCellID = @"ZSHHotelCell";
 - (void)requestKTVListData{
     kWeakSelf(self);
     _KTVLogic = [[ZSHKTVLogic alloc]init];
-    [_KTVLogic loadKTVListDataWithParamDic:@{@"HONOURUSER_ID":@"d6a3779de8204dfd9359403f54f7d27c"}];
+    [_KTVLogic loadKTVListDataWithParamDic:@{@"HONOURUSER_ID":HONOURUSER_IDValue}];
     _KTVLogic.requestDataCompleted = ^(NSDictionary *paramDic){
         weakself.KTVModelArr = paramDic[@"KTVModelArr"];
         weakself.KTVArr = paramDic[@"KTVArr"];

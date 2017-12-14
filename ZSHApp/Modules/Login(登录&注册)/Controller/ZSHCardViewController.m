@@ -18,6 +18,7 @@
 #import "ZSHCardCommitBottomView.h"
 #import "ZSHLoginLogic.h"
 #import "ZSHRegisterModel.h"
+#import "ZSHCardImgModel.h"
 
 @interface ZSHCardViewController ()
 
@@ -27,8 +28,9 @@
 @property (nonatomic, assign) CGFloat            *headHeight;
 @property (nonatomic, strong) NSMutableArray     *selectedArr;
 @property (nonatomic, strong) ZSHRegisterModel   *registerModel;
-
-
+@property (nonatomic, strong) ZSHLoginLogic      *loginLogic;
+@property (nonatomic, strong) ZSHCardImgModel    *cardImgModel;
+@property (nonatomic, assign) NSInteger          typeID;
 
 @end
 
@@ -44,10 +46,12 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
 }
 
 - (void)loadData{
+    _loginLogic = [[ZSHLoginLogic alloc] init];
     _registerModel = [[ZSHRegisterModel alloc] init];
     self.imageArr = @[@"glory_card_big",@"glory_card_big",@"glory_card_big"];
     _selectedArr = [NSMutableArray arrayWithObjects:@"0",@"0",@"0",@"0",@"0",@"0",@"0", nil];
     [self initViewModel];
+    [self requestData:0];
 }
 
 - (void)createUI{
@@ -86,10 +90,12 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
         sectionModel.headerView = [self createHeadViewWithParamDic:paramDic];
         [self.tableViewModel.sectionModelArray addObject:sectionModel];
     }
+    [self.tableView reloadData];
 }
 
 //第0组：
 - (ZSHBaseTableViewSectionModel*)storeHeadSection{
+    kWeakSelf(self);
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     sectionModel.footerHeight = kRealValue(10);
     sectionModel.footerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kRealValue(10))];
@@ -99,15 +105,23 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
     cellModel.height = kRealValue(240);
     cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHBaseCell *cell = [[ZSHBaseCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@""];
-        NSDictionary *nextParamDic = @{KFromClassType:@(FromCardVCToGuideView),@"dataArr":self.imageArr,@"pageViewHeight":@(kRealValue(195)),@"min_scale":@(0.8),@"withRatio":@(1.18),@"pageImage":@"page_press",@"currentPageImage":@"page_normal",@"infinite":@(true)};
-        ZSHGuideView *midView = [[ZSHGuideView alloc]initWithFrame:CGRectZero paramDic:nextParamDic];
-        [cell.contentView addSubview:midView];
-        [midView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.mas_equalTo(cell).offset(KLeftMargin);
-            make.centerX.mas_equalTo(cell);
-            make.width.mas_equalTo(cell);
-            make.bottom.mas_equalTo(cell);
-        }];
+        if (![cell viewWithTag:9]){
+            NSDictionary *nextParamDic = @{KFromClassType:@(FromCardVCToGuideView),@"dataArr":self.imageArr,@"pageViewHeight":@(kRealValue(195)),@"min_scale":@(0.8),@"withRatio":@(1.18),@"pageImage":@"page_press",@"currentPageImage":@"page_normal",@"infinite":@(true)};
+            ZSHGuideView *midView = [[ZSHGuideView alloc]initWithFrame:CGRectZero paramDic:nextParamDic];
+            midView.tag = 9;
+            [cell.contentView addSubview:midView];
+            [midView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.top.mas_equalTo(cell.contentView).offset(KLeftMargin);
+                make.centerX.mas_equalTo(cell.contentView);
+                make.width.mas_equalTo(cell.contentView);
+                make.bottom.mas_equalTo(cell.contentView);
+            }];
+        }
+        ZSHGuideView *midView = [cell viewWithTag:9];
+        if (weakself.cardImgModel.CARDIMGS.count) {
+            [midView updateViewWithModel:weakself.cardImgModel];
+        }
+        
         return cell;
     };
     return sectionModel;
@@ -143,7 +157,7 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
     return sectionModel;
 }
 
-//刷新btnList
+// 至尊会籍卡 刷新btnList
 - (ZSHCardBtnListView *)createBtnListViewWithParamDic:(NSDictionary *)paramDic{
     kWeakSelf(self);
     ZSHCardBtnListView *listView = [[ZSHCardBtnListView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kRealValue(90)) paramDic:paramDic];
@@ -152,6 +166,7 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
     listView.btnClickBlock = ^(UIButton *btn) {
         NSInteger realSection = 1;
         NSInteger btnTag = btn.tag - 1;
+        [weakself requestData:btnTag];
         if ([_selectedArr[realSection] isEqualToString:@"0"]) {
             
             [_selectedArr replaceObjectAtIndex:realSection withObject:@"1"];
@@ -167,6 +182,8 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
     };
     return listView;
 }
+
+
 
 //刷新其它组
 - (ZSHCardSubHeadView *)createHeadViewWithParamDic:(NSDictionary *)paramDic{
@@ -192,7 +209,8 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
 
 //刷新button列表
 - (void)updateBtnListSectionModelWithSectionTag:(NSInteger)tag btnTag:(NSInteger)btnTag{
-     ZSHBaseTableViewSectionModel *sectionModel = self.tableViewModel.sectionModelArray[tag];
+    kWeakSelf(self);
+    ZSHBaseTableViewSectionModel *sectionModel = self.tableViewModel.sectionModelArray[tag];
     if ([_selectedArr[tag] isEqualToString:@"1"])  {
         NSArray *titleArr = nil;
         NSDictionary *nextParamDic = nil;
@@ -212,8 +230,11 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
         cellModel.height = cellHeight;
         cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
             ZSHBaseCell *cell = [[ZSHBaseCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@""];
-                ZSHCardBtnListView *listView = [[ZSHCardBtnListView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth,cellHeight) paramDic:nextParamDic];
+            ZSHCardBtnListView *listView = [[ZSHCardBtnListView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth,cellHeight) paramDic:nextParamDic];
             [cell.contentView addSubview:listView];
+            listView.btnClickBlock = ^(UIButton *btn) {
+                [weakself requestDetailData:btn.tag-1];
+            };
             return cell;
         };
       
@@ -266,17 +287,17 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
         case 4:{
             ZSHBaseTableViewSectionModel *sectionModel = self.tableViewModel.sectionModelArray[tag];
             if ([_selectedArr[tag] isEqualToString:@"1"])  {
-                    ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
-                    [sectionModel.cellModelArray addObject:cellModel];
+                ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
+                [sectionModel.cellModelArray addObject:cellModel];
 //                     kWeakSelf(cellModel);
-                    cellModel.height = kRealValue(1200);
-                    cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
-                        ZSHSelectCardNumCell *cell = [[ZSHSelectCardNumCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@""];
-                        
+                cellModel.height = kRealValue(1200);
+                cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
+                    ZSHSelectCardNumCell *cell = [[ZSHSelectCardNumCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@""];
+                    
 //                        [cell selectedByIndex:1];
 //                        weakcellModel.height = [cell rowHeightWithCellModel:nil];
-                        return cell;
-                    };
+                    return cell;
+                };
             } else {
                 ZSHBaseTableViewSectionModel *sectionModel = self.tableViewModel.sectionModelArray[tag];
                 [sectionModel.cellModelArray removeAllObjects];
@@ -328,6 +349,43 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
     
 }
 
+
+- (void)requestData:(NSInteger)index {
+    NSArray *type = @[@"390181853778149376", @"390200265979646133", @"390201795059646464", @"390201950420860928"];
+    NSString *cardTypeID = nil;
+    if (index<4) {
+        cardTypeID = type[index];
+    } else {
+        _typeID = index;
+        return;
+    }
+    
+    kWeakSelf(self);
+    [_loginLogic requestCardImgsWithDic:@{@"CARDTYPE_ID":cardTypeID} success:^(id response) {
+        weakself.cardImgModel = [ZSHCardImgModel mj_objectWithKeyValues:response[@"pd"]];
+        [weakself.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+    }];
+}
+
+- (void)requestDetailData:(NSInteger)index {
+    NSArray *constellation = @[@"390202047296700416", @"390202895984754688", @"390202951949352960", @"390202999533731840",
+                               @"390203316828635136", @"390203446780755968", @"390203482788855808", @"390203541202927616",
+                               @"390203583108218880", @"390203751593410560", @"390203784837464064", @"390203822426816512"];
+    NSArray *fiveLine = @[@"390202180738482176", @"390202468161552384", @"390202526550458368", @"390202622746820608", @"390202686642847744"];
+    
+    NSString *cardTypeID = nil;
+    if (_typeID ==4) { // 星座
+        cardTypeID = constellation[index];
+    }  else {
+        cardTypeID = fiveLine[index];
+    }
+    kWeakSelf(self);
+    [_loginLogic requestCardImgsWithDic:@{@"CARDTYPE_ID":cardTypeID} success:^(id response) {
+        weakself.cardImgModel = [ZSHCardImgModel mj_objectWithKeyValues:response[@"pd"]];
+        [weakself.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+    }];
+}
+
 - (void)userRegister {
     NSString *cardNo = SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"CARDNO"]);
     NSString *phone = SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"PHONE"]);
@@ -345,8 +403,8 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
                 @"CUSTOM":SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"CUSTOM"]),
                 @"CUSTOMCONTENT":NSStringFormat(@"%@%@", SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"CardCustom112311"]),SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"CardCustom112312"]))});
     if (![cardNo isEqual:@""] && ![phone isEqual:@""] && ![realName isEqual:@""] && ![province isEqual:@""] && ![address isEqual:@""] && ![custom isEqual:@""] && ![customContent isEqual:@""]) {
-        ZSHLoginLogic *loginLogic = [[ZSHLoginLogic alloc] init];
-        [loginLogic userRegisterWithDic:@{@"CARDNO":SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"CARDNO"]),
+       
+        [_loginLogic userRegisterWithDic:@{@"CARDNO":SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"CARDNO"]),
                                           @"PHONE":SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"PHONE"]),
                                           @"REALNAME":SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"REALNAME"]),
                                           @"PROVINCE":SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"PROVINCE"]),
@@ -355,7 +413,7 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
                                           @"CUSTOMCONTENT":NSStringFormat(@"%@%@", SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"CardCustom112311"]),SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"CardCustom112312"]))
                                           }];
         
-        loginLogic.loginSuccess = ^(id response) {
+        _loginLogic.loginSuccess = ^(id response) {
             RLog(@"请求成功：返回数据&%@",response);
         };
     }

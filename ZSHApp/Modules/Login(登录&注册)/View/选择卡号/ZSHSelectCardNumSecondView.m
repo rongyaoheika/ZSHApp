@@ -86,7 +86,7 @@
     cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHBaseCell *cell = [[ZSHBaseCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@""];
         NSArray *titleArr = @[@"1035686866",@"1035686866",@"1035686866",@"1035686866",@"11035686866",@"1035686866",@"1035686866",@"1035686866",];
-        NSDictionary *nextParamDic = @{@"titleArr":titleArr,@"normalImage":@"phone_normal",@"selectedImage":@"phone_press"};
+        NSDictionary *nextParamDic = @{@"titleArr":titleArr,@"normalImage":@"phone_normal",@"selectedImage":@"phone_press",@"type":@(indexPath.row+1)};
         ZSHPhoneNumListView *listView = [[ZSHPhoneNumListView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth,kRealValue(150)) paramDic:nextParamDic];
         [cell.contentView addSubview:listView];
         
@@ -104,7 +104,7 @@
     cellModel.height = kRealValue(280);
     cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHBaseCell *cell = [[ZSHBaseCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@""];
-        ZSHBlackCardPhoneNumView *blackCardPhoneView = [[ZSHBlackCardPhoneNumView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, kRealValue(280))];
+        ZSHBlackCardPhoneNumView *blackCardPhoneView = [[ZSHBlackCardPhoneNumView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, kRealValue(280)) paramDic:@{@"type":@"5"}];
         [cell.contentView addSubview:blackCardPhoneView];
         return cell;
     };

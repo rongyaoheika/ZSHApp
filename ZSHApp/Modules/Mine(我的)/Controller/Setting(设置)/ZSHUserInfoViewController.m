@@ -222,7 +222,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 // 提交住址
 - (void)requestAddress {
     kWeakSelf(self);
-    [_mineLogic requestUserInfoWithDic:@{@"HONOURUSER_ID":@"d6a3779de8204dfd9359403f54f7d27c", @"ADDRESS":_changedData} success:^(id response) {
+    [_mineLogic requestUserInfoWithDic:@{@"HONOURUSER_ID":HONOURUSER_IDValue, @"ADDRESS":_changedData} success:^(id response) {
         [weakself.tableView reloadRow:6 inSection:0 withRowAnimation:UITableViewRowAnimationNone];
         UIAlertController *ac = [UIAlertController alertControllerWithTitle:@"提示" message:@"修改成功" preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {

@@ -6,12 +6,12 @@
 //  Copyright © 2017年 apple. All rights reserved.
 //
 
-#import "ZSHLoginLogic.h"
+#import "ZSHBaseLogic.h"
 #import "ZSHTogetherModel.h"
 #import "ZSHEntertainmentModel.h"
 #import "ZSHEnterDisModel.h"
 
-@interface ZSHTogetherLogic : ZSHLoginLogic
+@interface ZSHTogetherLogic : ZSHBaseLogic
 
 
 @property (nonatomic, strong) NSArray<ZSHTogetherModel*>          *togertherDataArr;

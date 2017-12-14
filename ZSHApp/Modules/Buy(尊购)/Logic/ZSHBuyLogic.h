@@ -6,7 +6,7 @@
 //  Copyright © 2017年 apple. All rights reserved.
 //
 
-#import "ZSHLoginLogic.h"
+#import "ZSHBaseLogic.h"
 #import "ZSHGoodModel.h"
 #import "ZSHPersonalModel.h"
 #import "ZSHPersonalDetailModel.h"
@@ -14,7 +14,7 @@
 #import "ZSHGoodDetailModel.h"
 #import "ZSHBuySearchModel.h"
 
-@interface ZSHBuyLogic : ZSHLoginLogic
+@interface ZSHBuyLogic : ZSHBaseLogic
 
 @property (nonatomic, strong) NSArray<ZSHPersonalModel *>                 *personModelArr;
 @property (nonatomic, strong) ZSHPersonalDetailModel                      *personalDetailModel;

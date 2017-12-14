@@ -8,6 +8,7 @@
 
 #import "UserManager.h"
 #import <UMSocialCore/UMSocialCore.h>
+#import "ZSHLoginLogic.h"
 
 @implementation UserManager
 
@@ -77,9 +78,13 @@ SINGLETON_FOR_CLASS(UserManager);
                 [self loginToServer:params completion:completion];
             }
         }];
-    }else{
+    } else {
         //账号登录 暂未提供
-    }
+        ZSHLoginLogic *loginLogic = [[ZSHLoginLogic alloc] init];
+        [loginLogic loginUserNamePwdWithDic:params success:^(id responseObject) {
+            [self LoginSuccess:responseObject completion:completion];
+        }];
+     }
 }
 
 #pragma mark ————— 手动登录到服务器 —————
@@ -98,54 +103,85 @@ SINGLETON_FOR_CLASS(UserManager);
 
 #pragma mark ————— 自动登录到服务器 —————
 -(void)autoLoginToServer:(loginBlock)completion{
-    [PPNetworkHelper POST:NSStringFormat(@"%@%@",kUrlRoot,kUrlUserAutoLogin) parameters:nil success:^(id responseObject) {
+    ZSHLoginLogic *loginLogic = [[ZSHLoginLogic alloc] init];
+    [loginLogic loginUserNamePwdWithDic:@{@"CARDNO":curUser.CARDNO,@"PASSWORD":curUser.PASSWORD} success:^(id responseObject) {
         [self LoginSuccess:responseObject completion:completion];
-        
-    } failure:^(NSError *error) {
-        if (completion) {
-            completion(NO,error.localizedDescription);
-        }
     }];
+    
+//    [PPNetworkHelper POST:NSStringFormat(@"%@%@",kUrlRoot,kUrlUserAutoLogin) parameters:nil success:^(id responseObject) {
+//        [self LoginSuccess:responseObject completion:completion];
+//        
+//    } failure:^(NSError *error) {
+//        if (completion) {
+//            completion(NO,error.localizedDescription);
+//        }
+//    }];
 }
 
 #pragma mark ————— 登录成功处理 —————
 -(void)LoginSuccess:(id )responseObject completion:(loginBlock)completion{
-    if (ValidDict(responseObject)) {
-        if (ValidDict(responseObject[@"data"])) {
-            NSDictionary *data = responseObject[@"data"];
-            if (ValidStr(data[@"imId"]) && ValidStr(data[@"imPass"])) {
-                //登录IM
-                [[IMManager sharedIMManager] IMLogin:data[@"imId"] IMPwd:data[@"imPass"] completion:^(BOOL success, NSString *des) {
-                    [MBProgressHUD hideHUD];
-                    if (success) {
-                        self.curUserInfo = [UserInfo modelWithDictionary:data];
-                        [self saveUserInfo];
-                        self.isLogined = YES;
-                        if (completion) {
-                            completion(YES,nil);
-                        }
-                        KPostNotification(KNotificationLoginStateChange, @YES);
-                    }else{
-                        if (completion) {
-                            completion(NO,@"IM登录失败");
-                        }
-                        KPostNotification(KNotificationLoginStateChange, @NO);
-                    }
-                }];
-            }else{
+
+        if (ValidDict(responseObject)) {
+            if ([responseObject[@"result"] isEqualToString:@"01"]) {// 成功
+                NSDictionary *userInfo = responseObject[@"pd"];
+                self.curUserInfo = [UserInfo modelWithDictionary:userInfo];
+                [self saveUserInfo];
+                self.isLogined = true;
                 if (completion) {
-                    completion(NO,@"登录返回数据异常");
+                    completion(true, nil);
                 }
+                KPostNotification(KNotificationLoginStateChange, @YES);
+            } else {
+                if (completion) {
+                    completion(false, @"登录失败");
+                }
+                RLog(@"result=%@", responseObject[@"result"]);
                 KPostNotification(KNotificationLoginStateChange, @NO);
             }
-            
+        } else {
+            if (completion) {
+                completion(NO,@"登录返回数据异常");
+            }
+            KPostNotification(KNotificationLoginStateChange, @NO);
         }
-    }else{
-        if (completion) {
-            completion(NO,@"登录返回数据异常");
-        }
-        KPostNotification(KNotificationLoginStateChange, @NO);
-    }
+    
+    
+//    if (ValidDict(responseObject)) {
+//        if (ValidDict(responseObject[@"data"])) {
+//            NSDictionary *data = responseObject[@"data"];
+//            if (ValidStr(data[@"imId"]) && ValidStr(data[@"imPass"])) {
+                //登录IM
+//                [[IMManager sharedIMManager] IMLogin:data[@"imId"] IMPwd:data[@"imPass"] completion:^(BOOL success, NSString *des) {
+//                    [MBProgressHUD hideHUD];
+//                    if (success) {
+//                        self.curUserInfo = [UserInfo modelWithDictionary:data];
+//                        [self saveUserInfo];
+//                        self.isLogined = YES;
+//                        if (completion) {
+//                            completion(YES,nil);
+//                        }
+//                        KPostNotification(KNotificationLoginStateChange, @YES);
+//                    }else{
+//                        if (completion) {
+//                            completion(NO,@"IM登录失败");
+//                        }
+//                        KPostNotification(KNotificationLoginStateChange, @NO);
+//                    }
+//                }];
+//            }else{
+//                if (completion) {
+//                    completion(NO,@"登录返回数据异常");
+//                }
+//                KPostNotification(KNotificationLoginStateChange, @NO);
+//            }
+//            
+//        }
+//    }else{
+//        if (completion) {
+//            completion(NO,@"登录返回数据异常");
+//        }
+//        KPostNotification(KNotificationLoginStateChange, @NO);
+//    }
     
 }
 #pragma mark ————— 储存用户信息 —————
@@ -159,6 +195,8 @@ SINGLETON_FOR_CLASS(UserManager);
 }
 #pragma mark ————— 加载缓存的用户信息 —————
 -(BOOL)loadUserInfo{
+#warning 自动登录暂时不实现
+    return false;
     YYCache *cache = [[YYCache alloc]initWithName:KUserCacheName];
     NSDictionary * userDic = (NSDictionary *)[cache objectForKey:KUserModelCache];
     if (userDic) {

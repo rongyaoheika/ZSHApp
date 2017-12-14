@@ -53,7 +53,7 @@
 // 获得用户名下尊购订单列表
 - (void)requestOrderAllList:(void (^)(id response))success {
     kWeakSelf(self);
-    [PPNetworkHelper POST:kUrlOrderAllList parameters:@{@"HONOURUSER_ID":@"d6a3779de8204dfd9359403f54f7d27c"} success:^(id responseObject) {
+    [PPNetworkHelper POST:kUrlOrderAllList parameters:@{@"HONOURUSER_ID":HONOURUSER_IDValue} success:^(id responseObject) {
         weakself.goodOrderModelArr = [ZSHGoodOrderModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"]];
         success(weakself.goodOrderModelArr);
     } failure:^(NSError *error) {
@@ -65,7 +65,7 @@
 // 获取用户名带条件查询的订单列表（待付款，待收货，待评价，已完成）
 - (void)requestOrderConListWithOrderStatus:(NSString *)orderStatus success:(void (^)(id response))success {
     kWeakSelf(self);
-    [PPNetworkHelper POST:kUrlOrderConList parameters:@{@"HONOURUSER_ID":@"d6a3779de8204dfd9359403f54f7d27c", @"ORDERSTATUS":orderStatus} success:^(id responseObject) {
+    [PPNetworkHelper POST:kUrlOrderConList parameters:@{@"HONOURUSER_ID":HONOURUSER_IDValue, @"ORDERSTATUS":orderStatus} success:^(id responseObject) {
         weakself.goodOrderModelArr = [ZSHGoodOrderModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"]];
         success(weakself.goodOrderModelArr);
     } failure:^(NSError *error) {
@@ -77,7 +77,7 @@
 // 获得用户名下所有酒店订单列表
 - (void)requestOrderWithURL:(NSString *)url orderStatus:(NSString *)orderStatus success:(void (^)(id response))success {
     kWeakSelf(self);
-    [PPNetworkHelper POST:url parameters:@{@"HONOURUSER_ID":@"d6a3779de8204dfd9359403f54f7d27c", @"ORDERSTATUS":orderStatus} success:^(id responseObject) {
+    [PPNetworkHelper POST:url parameters:@{@"HONOURUSER_ID":HONOURUSER_IDValue, @"ORDERSTATUS":orderStatus} success:^(id responseObject) {
         if([url isEqualToString:kUrlHotelOrderAllList]) {
             weakself.hotlOrderModelArr = [ZSHHotelOrderModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"]];
             success(weakself.hotlOrderModelArr);
@@ -100,7 +100,7 @@
 - (void)requestKtvOrderAllList:(void (^)(id response))success {
     
 //    kWeakSelf(self);
-    [PPNetworkHelper POST:kUrlKtvOrderAllList parameters:@{@"HONOURUSER_ID":@"d6a3779de8204dfd9359403f54f7d27c"} success:^(id responseObject) {
+    [PPNetworkHelper POST:kUrlKtvOrderAllList parameters:@{@"HONOURUSER_ID":HONOURUSER_IDValue} success:^(id responseObject) {
        
     } failure:^(NSError *error) {
         RLog(@"请求失败");
@@ -120,7 +120,7 @@
 
 // 上传头像
 - (void)uploadImage:(NSArray *)imageArr name:(NSArray *)nameArr success:(void (^)(id response))success {
-    [PPNetworkHelper uploadImagesWithURL:kUrlUp parameters:@{@"HONOURUSER_ID":@"d6a3779de8204dfd9359403f54f7d27c"} name:@"showfile" images:imageArr fileNames:@[@"headImage.jpg"] imageScale:1.0 imageType:@"image/jpeg" progress:^(NSProgress *progress) {
+    [PPNetworkHelper uploadImagesWithURL:kUrlUp parameters:@{@"HONOURUSER_ID":HONOURUSER_IDValue} name:@"showfile" images:imageArr fileNames:@[@"headImage.jpg"] imageScale:1.0 imageType:@"image/jpeg" progress:^(NSProgress *progress) {
         
     } success:^(id responseObject) {
         success(responseObject);
@@ -141,7 +141,7 @@
 
 // 获取个人信息
 - (void)requestGetUserInfo:(void (^)(id response))success {
-    [PPNetworkHelper POST:kUrlGetUserInfo parameters:@{@"HONOURUSER_ID":@"d6a3779de8204dfd9359403f54f7d27c"} success:^(id responseObject) {
+    [PPNetworkHelper POST:kUrlGetUserInfo parameters:@{@"HONOURUSER_ID":HONOURUSER_IDValue} success:^(id responseObject) {
         ZSHUserInfoModel *userInfoModel = [ZSHUserInfoModel mj_objectWithKeyValues:responseObject[@"user"]];
         success(userInfoModel);
     } failure:^(NSError *error) {

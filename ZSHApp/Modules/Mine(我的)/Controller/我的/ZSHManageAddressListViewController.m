@@ -112,7 +112,7 @@ static NSString *cellIdentifier = @"listCell";
 
 - (void)requestData {
     kWeakSelf(self);
-    [_mineLogic requestShipAdr:@"d6a3779de8204dfd9359403f54f7d27c" success:^(id response) {
+    [_mineLogic requestShipAdr:HONOURUSER_IDValue success:^(id response) {
         [weakself initViewModel];
     }];
 }

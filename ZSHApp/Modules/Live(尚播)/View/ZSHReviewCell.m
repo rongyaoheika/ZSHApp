@@ -172,7 +172,7 @@
 - (void)dislikeAction {
     kWeakSelf(self);
     if (!weakself.dislikeBtn.selected) {
-        [_liveLogic requestDotAgreeWithDic:@{@"HONOURUSER_ID":@"d6a3779de8204dfd9359403f54f7d27c",@"COMMENT_ID":_commentListModel.COMMENT_ID, @"STATUS":@"0"} success:^(id response) {
+        [_liveLogic requestDotAgreeWithDic:@{@"HONOURUSER_ID":HONOURUSER_IDValue,@"COMMENT_ID":_commentListModel.COMMENT_ID, @"STATUS":@"0"} success:^(id response) {
                 NSInteger count = [weakself.dislikeBtn.titleLabel.text integerValue];
                 [weakself.dislikeBtn setTitle:NSStringFormat(@"%zd", count+1) forState:UIControlStateSelected];
                 weakself.dislikeBtn.selected = YES;
@@ -183,7 +183,7 @@
 - (void)likeAction {
     kWeakSelf(self);
     if (!weakself.likeBtn.selected) {
-        [_liveLogic requestDotAgreeWithDic:@{@"HONOURUSER_ID":@"d6a3779de8204dfd9359403f54f7d27c",@"COMMENT_ID":_commentListModel.COMMENT_ID, @"STATUS":@"1"} success:^(id response) {
+        [_liveLogic requestDotAgreeWithDic:@{@"HONOURUSER_ID":HONOURUSER_IDValue,@"COMMENT_ID":_commentListModel.COMMENT_ID, @"STATUS":@"1"} success:^(id response) {
                 NSInteger count = [weakself.likeBtn.titleLabel.text integerValue];
                 [weakself.likeBtn setTitle:NSStringFormat(@"%zd", count+1) forState:UIControlStateSelected];
                 weakself.likeBtn.selected = YES;

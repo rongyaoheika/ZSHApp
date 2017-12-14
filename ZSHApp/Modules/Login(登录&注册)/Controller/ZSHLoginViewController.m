@@ -11,6 +11,7 @@
 #import "ZSHTextFieldCellView.h"
 #import "ZSHLoginLogic.h"
 #import "ZSHCardViewController.h"
+#import "UserInfo.h"
 
 @interface ZSHLoginViewController ()
 
@@ -118,14 +119,14 @@
 #pragma action
 - (void)login {
     if (_userView.textField.text.length && _pwdView.textField.text.length) {
-        ZSHLoginLogic *loginLogic = [[ZSHLoginLogic alloc] init];
         RLog(@"username;%@:password%@", _userView.textField.text,_pwdView.textField.text);
-        
-        [loginLogic loginWithCardNo:_userView.textField.text password:_pwdView.textField.text];
-        kWeakSelf(self);
-        loginLogic.loginSuccess = ^(id response) {
-            [weakself skipAction];
-        };
+        [userManager login:kUserLoginTypePwd params:@{@"CARDNO":_userView.textField.text,@"PASSWORD":_pwdView.textField.text} completion:^(BOOL success, NSString *des) {
+            if (success) {
+                [self skipAction];
+            } else {
+                [MBProgressHUD showInfoMessage:@"登录失败"];
+            }
+        }];
     } else {
          [self skipAction];
     }

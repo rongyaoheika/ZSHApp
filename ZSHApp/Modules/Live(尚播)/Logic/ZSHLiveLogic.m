@@ -15,7 +15,7 @@
 // 关注
 - (void)requestFriendList:(void (^)(id response))success {
     kWeakSelf(self);
-    [PPNetworkHelper POST:kUrlFriendList parameters:@{@"HONOURUSER_ID":@"d6a3779de8204dfd9359403f54f7d27c"} success:^(id responseObject) {
+    [PPNetworkHelper POST:kUrlFriendList parameters:@{@"HONOURUSER_ID":HONOURUSER_IDValue} success:^(id responseObject) {
         weakself.friendListModelArr = [ZSHFriendListModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"]];
         RLog(@"%@",responseObject);
         success(nil);
@@ -27,7 +27,7 @@
 // 粉丝
 - (void)requestReFriendList:(void (^)(id response))success {
     kWeakSelf(self);
-    [PPNetworkHelper POST:kUrlRefriendList parameters:@{@"HONOURUSER_ID":@"d6a3779de8204dfd9359403f54f7d27c"} success:^(id responseObject) {
+    [PPNetworkHelper POST:kUrlRefriendList parameters:@{@"HONOURUSER_ID":HONOURUSER_IDValue} success:^(id responseObject) {
         weakself.friendListModelArr = [ZSHFriendListModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"]];
         RLog(@"%@",responseObject);
         success(nil);
@@ -52,7 +52,7 @@
 // 获取我和我关注的好友的所有圈子并根据时间排序
 - (void)requestCircleList:(void (^)(id response))success {
     kWeakSelf(self);
-    [PPNetworkHelper POST:kUrlCircleList parameters:@{@"HONOURUSER_ID":@"d6a3779de8204dfd9359403f54f7d27c"} success:^(id responseObject) {
+    [PPNetworkHelper POST:kUrlCircleList parameters:@{@"HONOURUSER_ID":HONOURUSER_IDValue} success:^(id responseObject) {
         weakself.weiboCellModelArr = [ZSHWeiBoCellModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"]];
         success(weakself.weiboCellModelArr);
     } failure:^(NSError *error) {

@@ -8,6 +8,7 @@
 
 #import "ZSHGuideView.h"
 #import "TYCyclePagerViewCell.h"
+#import "ZSHCardImgModel.h"
 
 @interface ZSHGuideView ()<TYCyclePagerViewDataSource, TYCyclePagerViewDelegate>
 
@@ -143,6 +144,16 @@
     _pageControl.numberOfPages = _imageArr.count;
     [_pagerView reloadData];
     [_pagerView setNeedUpdateLayout];
+}
+
+- (void)updateViewWithModel:(ZSHBaseModel *)model {
+    if(kFromClassTypeValue == FromCardVCToGuideView) {
+        ZSHCardImgModel *cardImageModel = (ZSHCardImgModel *)model;
+        _imageArr = cardImageModel.CARDIMGS;
+        _pageControl.numberOfPages = _imageArr.count;
+        [_pagerView reloadData];
+        [_pagerView setNeedUpdateLayout];
+    }
 }
 
 @end

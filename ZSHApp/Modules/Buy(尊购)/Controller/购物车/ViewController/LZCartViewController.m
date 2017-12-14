@@ -90,7 +90,7 @@ static NSInteger lz_CartRowHeight = 120;
     
     _buyLogic = [[ZSHBuyLogic alloc] init];
     kWeakSelf(self);
-    [_buyLogic requestShoppingCartWithHonouruserID:@"d6a3779de8204dfd9359403f54f7d27c" success:^(id response) {
+    [_buyLogic requestShoppingCartWithHonouruserID:HONOURUSER_IDValue success:^(id response) {
         LZShopModel *model = [[LZShopModel alloc]init];
         model.shopID = @"1";
         model.shopName = @"2";
@@ -484,7 +484,7 @@ static NSInteger lz_CartRowHeight = 120;
             LZShopModel *shop = [self.dataArray objectAtIndex:indexPath.section];
             LZGoodsModel *model = [shop.goodsArray objectAtIndex:indexPath.row];
             // 删除
-            [_buyLogic requestShoppingCartDelWithDic:@{@"HONOURUSER_ID":@"d6a3779de8204dfd9359403f54f7d27c",@"PRODUCT_ID":model.PRODUCT_ID} success:^(id response) {
+            [_buyLogic requestShoppingCartDelWithDic:@{@"HONOURUSER_ID":HONOURUSER_IDValue,@"PRODUCT_ID":model.PRODUCT_ID} success:^(id response) {
                 
             }];
             [shop.goodsArray removeObjectAtIndex:indexPath.row];

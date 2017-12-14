@@ -205,7 +205,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 #pragma  action
 - (void)requestAddr {
     kWeakSelf(self);
-    [_mineLogic requestShipAdr:@"d6a3779de8204dfd9359403f54f7d27c" success:^(id response) {
+    [_mineLogic requestShipAdr:HONOURUSER_IDValue success:^(id response) {
         if (weakself.mineLogic.addrModelArr.count) {
             [weakself initViewModel];
         } else {
@@ -238,7 +238,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     _mineLogic.buyOrderModel.ORDERADDRESS = _mineLogic.addrModelArr[_currentAddrIndex].ADDRESS_ID;
     _mineLogic.buyOrderModel.ORDERMONEY = NSStringFormat(@"%f", [_goodsModel.PROPRICE doubleValue] *[_goodsModel.count floatValue]);
     _mineLogic.buyOrderModel.ORDERDELIVERY = @"顺丰";
-    _mineLogic.buyOrderModel.HONOURUSER_ID = @"d6a3779de8204dfd9359403f54f7d27c";
+    _mineLogic.buyOrderModel.HONOURUSER_ID = HONOURUSER_IDValue;
     _mineLogic.buyOrderModel.PRODUCT_ID = _goodsModel.PRODUCT_ID;
     _mineLogic.buyOrderModel.PRODUCTCOUNT = _goodsModel.count;
     [_mineLogic requestShipOrderWithModel:_mineLogic.buyOrderModel success:^(id response) {

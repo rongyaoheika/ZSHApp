@@ -23,8 +23,8 @@
  */
 
 #define DevelopSever    0
-#define TestSever       0
-#define ProductSever    1
+#define TestSever       1
+#define ProductSever    0
 
 
 #if DevelopSever
@@ -637,15 +637,15 @@
 #define kUrlBillListall [NSString stringWithFormat:@"/appmusicin/getbilllistall?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"BILLLIST"]]
 
 
-//117.点赞
+//117.点赞(完成)
 //参数：HONOURUSER_ID 用户的Id    /CIRCLE_ID  所评论的圈子ID
 //请求地址：/appcirclein/dotAgree.do?DOTAGREE(混淆码)
 #define kUrlDotAgree [NSString stringWithFormat:@"/appcirclein/dotAgree.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"DOTAGREE"]]
-//118.添加评论到用户圈子
+//118.添加评论到用户圈子（完成）
 //参数：HONOURUSER_ID 用户的Id    /CIRCLE_ID  所评论的圈子ID    /COMCONTENT   评论内容 /REPLYHONOURUSER_ID 回复用户的Id
 //请求地址：/appcirclein/addcomment.do?COMMENTADD(混淆码)
 #define kUrlAddComment [NSString stringWithFormat:@"/appcirclein/addcomment.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"COMMENTADD"]]
-//119.通过圈子ID获取所有评论
+//119.通过圈子ID获取所有评论（完成）
 //参数：/CIRCLE_ID  所评论的圈子ID
 //请求地址：/appcirclein/commentlist.do?COMMENTLIST(混淆码)
 #define kUrlCommentList [NSString stringWithFormat:@"/appcirclein/commentlist.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"COMMENTLIST"]]
@@ -665,23 +665,35 @@
 //参数：query  查询字段
 //请求地址：/appmusicin/getsearchsong?SEARCHSONG  (混淆码)
 #define kUrlGetSearchSong [NSString stringWithFormat:@"/appmusicin/getsearchsong?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SONGPLAY"]]
-//124.修改用户个人资料
+//124.修改用户个人资料 （完成）
 //参数：HONOURUSER_ID 用户的Id  /
 //以下参数可选： ADDRESS  详细地址/ NICKNAME 用户昵称/  SEX  用户性别/
 //BIRTHDAY  用户生日/ PORTRAIT  用户头像/ PAYPASSWORD  支付密码 / SIGNNAME  个性签名
 //请求地址：/appuserin/userpersonalinfo.do?UPDPERSONALINFO  (混淆码)
 #define kUrlUserPersonalInfo [NSString stringWithFormat:@"/appuserin/userpersonalinfo.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"UPDPERSONALINFO"]]
-//126.获取用户的个人信息
+//126.获取用户的个人信息（完成）
 //参数： HONOURUSER_ID  用户ID/
 //请求地址：/appuserin/getuserinfo.do?GETUSERINFO  (混淆码)
 #define kUrlGetUserInfo [NSString stringWithFormat:@"/appuserin/getuserinfo.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"GETUSERINFO"]]
-//127.修改用户密码
+//127.修改用户密码（完成）
 //参数： HONOURUSER_ID  用户ID/    PASSWORD  密码
 //请求地址：/appuserin/userupdpassword.do?UPDUSERPASSWORD  (混淆码)
 #define kUrlUserUpdPassword [NSString stringWithFormat:@"/appuserin/userupdpassword.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"UPDUSERPASSWORD"]]
-//130.获取所有能量组成
+//128.选择卡种类的图片（完成）
+//
+//参数： CARDTYPE_ID（390181853778149376 至尊会籍卡，390200265979646133 荣耀会籍卡，390201795059646464 名人联名卡，390201950420860928 经典会籍卡，390202180738482176 金，390202468161552384 木，390202526550458368 水，390202622746820608 火，390202686642847744 土，390202047296700416 白羊座，390202895984754688 金牛座，390202951949352960 双子座，390202999533731840 巨蟹座，390203316828635136 狮子座，390203446780755968 处女座，390203482788855808 天平座，390203541202927616 天蝎座，390203583108218880 射手座，390203751593410560 摩羯座，390203784837464064 水瓶座，390203822426816512双鱼座）
+//请求地址： /appbootpagein/getcardimgs?CARDIMGS  (混淆码)
+#define kUrlGetCardImgs [NSString stringWithFormat:@"/appbootpagein/getcardimgs?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"CARDIMGS"]]
+//129.分类随机显示6个卡号（完成）
+//参数： CARDTYPE_ID（1 自选号码库 2 贵宾号码库 3 金钻号码库 4荣耀号码库 5 超级黑卡靓号号码库）
+//请求地址：/appbootpagein/getcardnum?CARDNUM  (混淆码)
+#define kUrlGetCardNum [NSString stringWithFormat:@"/appbootpagein/getcardnum?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"CARDNUM"]]
+//130.获取所有能量组成（完成）
 //参数： 无
 //请求地址：/appengrgyin/energylist.do?ENERGYLIST  (混淆码)
 #define kUrlEnergyList [NSString stringWithFormat:@"/appengrgyin/energylist.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"ENERGYLIST"]]
+
+
+
 
 #endif /* URLMacros_h */

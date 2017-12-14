@@ -183,7 +183,7 @@
     
     
     kWeakSelf(self);
-    _mineLogic.addNewAddr.HONOURUSER_ID = @"d6a3779de8204dfd9359403f54f7d27c";
+    _mineLogic.addNewAddr.HONOURUSER_ID = HONOURUSER_IDValue;
     
     if (self.paramDic[@"AddrModel"]) {
         [_mineLogic requestUserEdiShipAdrWithModel:_mineLogic.addNewAddr success:^(id response) {

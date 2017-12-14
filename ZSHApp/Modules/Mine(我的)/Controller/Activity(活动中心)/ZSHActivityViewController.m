@@ -92,7 +92,7 @@ static NSString *ZSHEnterTainmentCellID = @"ZSHEnterTainmentCell";
 
 - (void)requestData {
     kWeakSelf(self);
-    [_togetherLogic requestPartyListWithDic:@{@"CONVERGE_ID":@"", @"HONOURUSER_ID":@"d6a3779de8204dfd9359403f54f7d27c", @"STATUS":self.paramDic[@"STATUS"]} success:^(id response) {
+    [_togetherLogic requestPartyListWithDic:@{@"CONVERGE_ID":@"", @"HONOURUSER_ID":HONOURUSER_IDValue, @"STATUS":self.paramDic[@"STATUS"]} success:^(id response) {
         [weakself initViewModel];
         [weakself.tableView.mj_header endRefreshing];
         [weakself.tableView.mj_footer endRefreshing];

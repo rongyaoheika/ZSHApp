@@ -127,6 +127,6 @@ shared##className = [[self alloc] init]; \
 return shared##className; \
 }
 
-#define HONOURUSER_IDValue         @"d6a3779de8204dfd9359403f54f7d27c"
+#define HONOURUSER_IDValue         curUser.HONOURUSER_ID
 
 #endif /* define_h */

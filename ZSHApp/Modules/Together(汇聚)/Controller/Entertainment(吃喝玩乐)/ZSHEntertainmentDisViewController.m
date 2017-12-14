@@ -49,7 +49,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
                           @"AGEMAX":@"30",
                           @"CONVERGEDET":@"",
                           @"CONVERGETITLE":@"",
-                          @"HONOURUSER_ID":@"d6a3779de8204dfd9359403f54f7d27c"};
+                          @"HONOURUSER_ID":HONOURUSER_IDValue};
     
     _togetherLogic.enterDisModel = [ZSHEnterDisModel mj_objectWithKeyValues:dic];
     
@@ -192,7 +192,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 #pragma action
 - (void)distributeAction{
     kWeakSelf(self);
-    _togetherLogic.enterDisModel.HONOURUSER_ID = @"d6a3779de8204dfd9359403f54f7d27c";
+    _togetherLogic.enterDisModel.HONOURUSER_ID = HONOURUSER_IDValue;
     [_togetherLogic requestAddDetailParty:_togetherLogic.enterDisModel.mj_keyValues success:^(id response) {
         UIAlertController *ac = [UIAlertController alertControllerWithTitle:@"提示" message:@"发布成功" preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {

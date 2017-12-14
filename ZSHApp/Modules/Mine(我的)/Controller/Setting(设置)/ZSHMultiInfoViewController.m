@@ -178,7 +178,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 - (void)rightNaviBtnAction:(UIButton *)btn{
     kWeakSelf(self);
     if (kFromClassTypeValue == FromUserInfoNickNameVCToMultiInfoVC){
-        [_mineLogic requestUserInfoWithDic:@{@"HONOURUSER_ID":@"d6a3779de8204dfd9359403f54f7d27c", @"NICKNAME":_changedData} success:^(id response) {
+        [_mineLogic requestUserInfoWithDic:@{@"HONOURUSER_ID":HONOURUSER_IDValue, @"NICKNAME":_changedData} success:^(id response) {
             if (weakself.saveBlock) {
                 weakself.saveBlock(weakself.changedData, weakself.index);
             }
@@ -190,7 +190,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
             [weakself presentViewController:ac animated:YES completion:nil];
         }];
     }else if (kFromClassTypeValue == FromUserInfoResumeVCToMultiInfoVC){
-        [_mineLogic requestUserInfoWithDic:@{@"HONOURUSER_ID":@"d6a3779de8204dfd9359403f54f7d27c", @"SIGNNAME":_changedData} success:^(id response) {
+        [_mineLogic requestUserInfoWithDic:@{@"HONOURUSER_ID":HONOURUSER_IDValue, @"SIGNNAME":_changedData} success:^(id response) {
             if (weakself.saveBlock) {
                 weakself.saveBlock(weakself.changedData, weakself.index);
             }
@@ -208,7 +208,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     kWeakSelf(self);
     if (kFromClassTypeValue == FromUserPasswordVCToMultiInfoVC) {
         if ([_reNewPwd isEqualToString:_rptPwd]) {
-            [_mineLogic requestUserUpdPasswordWithDic:@{@"HONOURUSER_ID":@"d6a3779de8204dfd9359403f54f7d27c", @"PASSWORD":[ZSHBaseFunction md5StringFromString:_reNewPwd], @"OLDPASSWORD":[ZSHBaseFunction md5StringFromString:_oldPwd]} success:^(id response) {
+            [_mineLogic requestUserUpdPasswordWithDic:@{@"HONOURUSER_ID":HONOURUSER_IDValue, @"PASSWORD":[ZSHBaseFunction md5StringFromString:_reNewPwd], @"OLDPASSWORD":[ZSHBaseFunction md5StringFromString:_oldPwd]} success:^(id response) {
                 NSString *message = @"";
                 if ([response[@"result"] isEqualToString:@"01"]) {// 成功
                     message = @"修改成功";

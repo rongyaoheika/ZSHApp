@@ -97,7 +97,7 @@
 //            [fileNames addObject:@"fileList"];
         }
         
-        [_liveLogic requestAddCircle:@{@"HONOURUSER_ID":@"d6a3779de8204dfd9359403f54f7d27c", @"CONTENT":_contentTextView.text} images:_selectedPhotos fileNames:fileNames success:^(id response) {
+        [_liveLogic requestAddCircle:@{@"HONOURUSER_ID":HONOURUSER_IDValue, @"CONTENT":_contentTextView.text} images:_selectedPhotos fileNames:fileNames success:^(id response) {
             
         }];
     }
