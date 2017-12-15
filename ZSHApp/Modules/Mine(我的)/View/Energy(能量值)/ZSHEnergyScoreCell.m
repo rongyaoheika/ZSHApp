@@ -60,7 +60,7 @@
         [btn mas_makeConstraints:^(MASConstraintMaker *make) {
             make.width.mas_equalTo(kRealValue(100));
             make.height.mas_equalTo(kRealValue(10));
-            make.left.mas_equalTo(kRealValue(100)*colum);
+            make.left.mas_equalTo(kRealValue(90)*colum);
             if (totalRow == 1) {
                 make.centerY.mas_equalTo(self.rightValueView);
             } else {

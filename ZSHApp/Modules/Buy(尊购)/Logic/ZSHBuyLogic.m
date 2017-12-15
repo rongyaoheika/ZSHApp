@@ -177,4 +177,24 @@
     }];
 }
 
+
+// 获取发现中所有的菜单项
+- (void)requestCaidan:(void (^)(id response))success {
+    [PPNetworkHelper POST:kUrlCaidan parameters:@{} success:^(id responseObject) {
+        success(responseObject);
+    } failure:^(NSError *error) {
+        RLog(@"请求失败");
+    }];
+}
+
+
+// 获取发现中所有的菜单项
+- (void)requestCaidanWithID:(NSString *)caidanID success:(void (^)(id response))success {
+    [PPNetworkHelper POST:kUrlDiscoverList parameters:@{@"CAIDAN_ID":caidanID} success:^(id responseObject) {
+        success(responseObject);
+    } failure:^(NSError *error) {
+        RLog(@"请求失败");
+    }];
+}
+
 @end

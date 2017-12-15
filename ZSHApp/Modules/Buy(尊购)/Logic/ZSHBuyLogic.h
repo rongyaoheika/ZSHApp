@@ -25,7 +25,6 @@
 
 // 尊购首页轮播图
 - (void)requestScarouselfigure:(void (^)(id response))success;
-
 // 尊购里模糊查询
 - (void)requestShipDimQueryWithKeywords:(NSString *)keyword success:(void (^)(id response))success;
 // 商品分类
@@ -35,7 +34,7 @@
 - (void)requestShipListAllsuccess:(void (^)(id response))success;
 // 尊购专区点击之后跳转页面
 - (void)requestShipPrefectureWithBrandID:(NSString *)brandID success:(void (^)(id response))success;
-//商品详情
+// 商品详情
 - (void)requestShipDetailWithProductID:(NSString *)productID success:(void (^)(id response))success;
 // 私人定制
 - (void)requestPersonLists:(void (^)(id response))success;
@@ -53,4 +52,10 @@
 - (void)requestShoppingCartWithHonouruserID:(NSString *)honouruerID success:(void (^)(id response))success;
 // 购物车删除
 - (void)requestShoppingCartDelWithDic:(NSDictionary *)dic success:(void (^)(id response))success;
+// 获取发现中所有的菜单项
+- (void)requestCaidan:(void (^)(id response))success;
+// 获取发现中所有的菜单项
+- (void)requestCaidanWithID:(NSString *)caidanID success:(void (^)(id response))success;
+
+
 @end

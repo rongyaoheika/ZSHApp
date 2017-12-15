@@ -53,4 +53,6 @@
 - (void)requestUserUpdPasswordWithDic:(NSDictionary *)dic success:(void (^)(id response))success;
 // 获取能量值
 - (void)requestEnergyList:(void (^)(id response))success;
+// 按月份统计用户能量值
+- (void)requestEnergyValueMonth:(void (^)(id response))success;
 @end

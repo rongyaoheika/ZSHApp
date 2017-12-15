@@ -8,23 +8,91 @@
 
 #import "ZSHEnergyHeadCell.h"
 #import "ZSHNotCycleScrollView.h"
+#import "BEMSimpleLineGraphView.h"
+#import "ZSHMineLogic.h"
+#import "ZSHEnergyValueModel.h"
 
-@interface ZSHEnergyHeadCell()
+
+@interface ZSHEnergyHeadCell()<BEMSimpleLineGraphDataSource, BEMSimpleLineGraphDelegate>
+{
+    int previousStepperValue;
+    int totalNumber;
+}
+
+
+@property (strong, nonatomic) BEMSimpleLineGraphView    *myGraph;
+@property (strong, nonatomic) NSMutableArray            *arrayOfValues;
+@property (strong, nonatomic) NSMutableArray            *arrayOfDates;
 
 @property (nonatomic, strong) ZSHNotCycleScrollView     *itemScrollView;
-@property (nonatomic, strong) UIImageView               *bgImageView;
+//@property (nonatomic, strong) UIImageView             *bgImageView;
 @property (nonatomic ,strong) NSMutableArray            *btnArr;
+@property (nonatomic, strong) ZSHMineLogic              *mineLogic;
+
+
 
 @end
 
 @implementation ZSHEnergyHeadCell
 
 - (void)setup{
-    UIImage *bgImage = [UIImage imageNamed:@"mine_energy_bg"];
-    _bgImageView = [[UIImageView alloc]initWithFrame:CGRectZero];
-    _bgImageView.image = bgImage;
-    [self.contentView addSubview:_bgImageView];
+    //
+//    UIImage *bgImage = [UIImage imageNamed:@"mine_energy_bg"];
+//    _bgImageView = [[UIImageView alloc]initWithFrame:CGRectZero];
+//    _bgImageView.image = bgImage;
+//    [self.contentView addSubview:_bgImageView];
     
+    self.myGraph = [[BEMSimpleLineGraphView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, 230)];
+    self.myGraph.delegate = self;
+    self.myGraph.dataSource = self;
+    [self addSubview:self.myGraph];
+    
+    // Create a gradient to apply to the bottom portion of the graph
+    CGColorSpaceRef colorspace = CGColorSpaceCreateDeviceRGB();
+    size_t num_locations = 2;
+    CGFloat locations[2] = { 0.0, 1.0 };
+    CGFloat components[8] = {
+        1.0, 1.0, 1.0, 1.0,
+        1.0, 1.0, 1.0, 0.0
+    };
+
+    // Apply the gradient to the bottom portion of the graph
+    self.myGraph.gradientBottom = CGGradientCreateWithColorComponents(colorspace, components, locations, num_locations);
+    
+    // Enable and disable various graph properties and axis displays
+    self.myGraph.enableTouchReport = YES;
+    self.myGraph.enablePopUpReport = YES;
+    self.myGraph.enableYAxisLabel = YES;
+    self.myGraph.autoScaleYAxis = YES;
+    self.myGraph.alwaysDisplayDots = NO;
+    self.myGraph.enableReferenceXAxisLines = YES;
+    self.myGraph.enableReferenceYAxisLines = YES;
+    self.myGraph.enableReferenceAxisFrame = YES;
+    self.myGraph.enableBezierCurve = YES;
+    self.myGraph.animationGraphStyle = BEMLineAnimationFade;
+    
+    // Draw an average line
+//    self.myGraph.averageLine.enableAverageLine = true;
+//    self.myGraph.averageLine.alpha = 0.6;
+//    self.myGraph.averageLine.color = [UIColor darkGrayColor];
+//    self.myGraph.averageLine.width = 2.5;
+//    self.myGraph.averageLine.dashPattern = @[@(2),@(2)];
+    
+
+    
+    // Dash the y reference lines
+    self.myGraph.lineDashPatternForReferenceYAxisLines = @[@(2),@(2)];
+    
+    // Show the y axis values with this format string
+    self.myGraph.formatStringForValues = @"%.1f";
+    
+    
+    // The labels to report the values of the graph when the user touches it
+//    self.labelValues.text = [NSString stringWithFormat:@"%i", [[self.myGraph calculatePointValueSum] intValue]];
+//    self.labelDates.text = @"between now and later";
+    
+    
+    //
     kWeakSelf(self);
     [self.contentView addSubview:self.itemScrollView];
     self.itemScrollView.selectedBlock = ^(NSInteger index){
@@ -46,19 +114,30 @@
     }
     
     [self.itemScrollView reloadViewWithDataArr:_btnArr];
+    
+    _mineLogic = [[ZSHMineLogic alloc] init];
+    [self requestEneryValueMonth];
 }
 
 - (void)layoutSubviews{
     [super layoutSubviews];
 
-     UIImage *bgImage = [UIImage imageNamed:@"mine_energy_bg"];
-    _bgImageView.frame = CGRectMake(0, 0, bgImage.size.width,bgImage.size.height);
+//     UIImage *bgImage = [UIImage imageNamed:@"mine_energy_bg"];
+//    _bgImageView.frame = CGRectMake(0, 0, bgImage.size.width,bgImage.size.height);
     
     [_itemScrollView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(_bgImageView.mas_bottom).offset(kRealValue(20));
+//        make.top.mas_equalTo(_bgImageView.mas_bottom).offset(kRealValue(20));
+        make.top.mas_equalTo(self.contentView).offset(kRealValue(250));
         make.left.mas_equalTo(self);
         make.width.mas_equalTo(KScreenWidth);
         make.bottom.mas_equalTo(self);
+    }];
+}
+- (void)requestEneryValueMonth {
+    kWeakSelf(self);
+    [_mineLogic requestEnergyValueMonth:^(id response) {
+        NSArray *arr =  [ZSHEnergyValueModel mj_objectArrayWithKeyValuesArray:response[@"pd"]];
+        [weakself hydrateDatasets:arr];
     }];
 }
 
@@ -72,5 +151,122 @@
     }
     return _itemScrollView;
 }
+
+
+- (void)hydrateDatasets:(NSArray *)arr {
+    // Reset the arrays of values (Y-Axis points) and dates (X-Axis points / labels)
+    if (!self.arrayOfValues) self.arrayOfValues = [[NSMutableArray alloc] init];
+    if (!self.arrayOfDates) self.arrayOfDates = [[NSMutableArray alloc] init];
+    [self.arrayOfValues removeAllObjects];
+    [self.arrayOfDates removeAllObjects];
+    
+    previousStepperValue = 12;//self.graphObjectIncrement.value;
+    totalNumber = 0;
+    NSDate *baseDate = [NSDate date];
+    BOOL showNullValue = false;
+    
+    // Add objects to the array based on the stepper value
+    for (int i = 0; i < 12; i++) {
+        [self.arrayOfValues addObject:@(100)]; // Random values for the graph [self getRandomFloat]
+        if (i == 0) {
+            [self.arrayOfDates addObject:baseDate]; // Dates for the X-Axis of the graph
+        } else if (showNullValue && i == 4) {
+            [self.arrayOfDates addObject:[self dateForGraphAfterDate:self.arrayOfDates[i-1]]]; // Dates for the X-Axis of the graph
+            self.arrayOfValues[i] = @(BEMNullGraphValue);
+        } else {
+            [self.arrayOfDates addObject:[self dateForGraphAfterDate:self.arrayOfDates[i-1]]]; // Dates for the X-Axis of the graph
+        }
+        
+        totalNumber = totalNumber + [[self.arrayOfValues objectAtIndex:i] intValue]; // All of the values added together
+    }
+    [self.arrayOfValues removeAllObjects];
+    [self.arrayOfDates removeAllObjects];
+    for (ZSHEnergyValueModel *model in arr) {
+        [self.arrayOfValues addObject:@([model.ENERGYVALUE integerValue])];
+        [self.arrayOfDates addObject:[NSDate dateWithString:model.months format:@"YY"]];
+    }
+    totalNumber = [self.arrayOfValues count];
+    [self.myGraph reloadGraph];
+}
+
+- (float)getRandomFloat {
+    float i1 = (float)(arc4random() % 1000000) / 100 ;
+    return i1;
+}
+
+- (NSDate *)dateForGraphAfterDate:(NSDate *)date {
+    NSTimeInterval secondsInTwentyFourHours = 24 * 60 * 60;
+    NSDate *newDate = [date dateByAddingTimeInterval:secondsInTwentyFourHours];
+    return newDate;
+}
+
+- (NSString *)labelForDateAtIndex:(NSInteger)index {
+    NSDate *date = self.arrayOfDates[index];
+    NSDateFormatter *df = [[NSDateFormatter alloc] init];
+    df.dateFormat = @"MM/dd";
+    NSString *label = [df stringFromDate:date];
+    return label;
+}
+
+#pragma mark - SimpleLineGraph Data Source
+
+- (NSInteger)numberOfPointsInLineGraph:(BEMSimpleLineGraphView *)graph {
+    return (int)[self.arrayOfValues count];
+}
+
+- (CGFloat)lineGraph:(BEMSimpleLineGraphView *)graph valueForPointAtIndex:(NSInteger)index {
+    return [[self.arrayOfValues objectAtIndex:index] doubleValue];
+}
+
+#pragma mark - SimpleLineGraph Delegate
+
+- (NSInteger)numberOfGapsBetweenLabelsOnLineGraph:(BEMSimpleLineGraphView *)graph {
+    return 2;
+}
+
+- (NSString *)lineGraph:(BEMSimpleLineGraphView *)graph labelOnXAxisForIndex:(NSInteger)index {
+    
+    NSString *label = [self labelForDateAtIndex:index];
+    return [label stringByReplacingOccurrencesOfString:@" " withString:@"\n"];
+}
+
+- (void)lineGraph:(BEMSimpleLineGraphView *)graph didTouchGraphWithClosestIndex:(NSInteger)index {
+//    self.labelValues.text = [NSString stringWithFormat:@"%@", [self.arrayOfValues objectAtIndex:index]];
+//    self.labelDates.text = [NSString stringWithFormat:@"in %@", [self labelForDateAtIndex:index]];
+}
+
+- (void)lineGraph:(BEMSimpleLineGraphView *)graph didReleaseTouchFromGraphWithClosestIndex:(CGFloat)index {
+    [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+//        self.labelValues.alpha = 0.0;
+//        self.labelDates.alpha = 0.0;
+    } completion:^(BOOL finished) {
+//        self.labelValues.text = [NSString stringWithFormat:@"%i", [[self.myGraph calculatePointValueSum] intValue]];
+//        self.labelDates.text = [NSString stringWithFormat:@"between %@ and %@", [self labelForDateAtIndex:0], [self labelForDateAtIndex:self.arrayOfDates.count - 1]];
+        
+        [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+//            self.labelValues.alpha = 1.0;
+//            self.labelDates.alpha = 1.0;
+        } completion:nil];
+    }];
+}
+
+- (void)lineGraphDidFinishLoading:(BEMSimpleLineGraphView *)graph {
+//    self.labelValues.text = [NSString stringWithFormat:@"%i", [[self.myGraph calculatePointValueSum] intValue]];
+//    self.labelDates.text = [NSString stringWithFormat:@"between %@ and %@", [self labelForDateAtIndex:0], [self labelForDateAtIndex:self.arrayOfDates.count - 1]];
+}
+
+/* - (void)lineGraphDidFinishDrawing:(BEMSimpleLineGraphView *)graph {
+ // Use this method for tasks after the graph has finished drawing
+ } */
+
+- (NSString *)popUpSuffixForlineGraph:(BEMSimpleLineGraphView *)graph {
+    return @"";
+}
+
+//- (NSString *)popUpPrefixForlineGraph:(BEMSimpleLineGraphView *)graph {
+//    return @"$ ";
+//}
+
+
 
 @end

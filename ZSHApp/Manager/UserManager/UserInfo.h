@@ -18,8 +18,8 @@ typedef NS_ENUM(NSInteger,UserGender){
 @interface UserInfo : NSObject
 
 
-@property (nonatomic,copy) NSString *HONOURUSER_ID;//用户ID
-@property (nonatomic,copy) NSString *PORTRAIT;
+@property (nonatomic,copy) NSString *HONOURUSER_ID;         // 用户ID
+@property (nonatomic,copy) NSString *PORTRAIT;              // 头像
 @property (nonatomic,copy) NSString *SEX;
 @property (nonatomic,copy) NSString *PASSWORD;
 @property (nonatomic,copy) NSString *CUSTOM;

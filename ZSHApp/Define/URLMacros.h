@@ -564,11 +564,11 @@
 //参数：HONOURUSER_ID 当前登录用户Id/    REHONOURUSER_ID  被取消用户Id
 //请求地址：/appfriendin/delfriend?FRIENDDEL(混淆码)
 #define kUrlDelFriend [NSString stringWithFormat:@"/appfriendin/delfriend?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"FRIENDDEL"]]
-//112.获取发现中所有的菜单项
+//112.获取发现中所有的菜单项(完成)
 //参数：无
 //请求地址：/appdiscoverin/caidan.do?CAIDAN(混淆码)
 #define kUrlCaidan [NSString stringWithFormat:@"/appdiscoverin/caidan.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"CAIDAN"]]
-//113.根据发现菜单ID获取视频和图片
+//113.根据发现菜单ID获取视频和图片（完成）
 //参数：CAIDAN_ID 所属的菜单Id
 //请求地址：/appdiscoverin/discoverlist.do?DISCOVERLIST(混淆码)
 #define kUrlDiscoverList [NSString stringWithFormat:@"/appdiscoverin/discoverlist.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"DISCOVERLIST"]]
@@ -588,24 +588,20 @@
 //107. 电台列表(完成)
 //请求地址：/ZSHINTER/appmusicin/getcategorylist?CATELIST(混淆码)
 #define kUrlRadioStation [NSString stringWithFormat:@"/appmusicin/getcategorylist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"CATELIST"]]
-
 //107. 获取某个电台下的歌曲列表接口（完成）
 //请求地址： /appmusicin/getchannelsong?CANNELSONG
 //参数:ch_name 电台名称
 #define kUrlChannelSong [NSString stringWithFormat:@"/appmusicin/getchannelsong?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"CANNELSONG"]]
-
 //108. 获取歌曲详细接口（完成）
 //请求地址： /appmusicin/getsongplay?SONGPLAY
 //参数:songid 歌曲id
 #define kUrlSongPlay [NSString stringWithFormat:@"/appmusicin/getsongplay?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SONGPLAY"]]
 //@"http://tingapi.ting.baidu.com/v1/restserver/ting?from=qianqian&version=2.1.0&method=baidu.ting.song.getInfos&format=json&songid=8059247&ts=1408284347323&e=JoN56kTXnnbEpd9MVczkYJCSx%2FE1mkLx%2BPMIkTcOEu4%3D&nw=2&ucf=1&res=1"
 //[NSString stringWithFormat:@"/appmusicin/getsongplay?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SONGPLAY"]]
-
 //110:获得所有模糊查询的歌曲列表接口
 //请求地址： /appmusicin/getsearchsong?SEARCHSONG
 //参数:query  查询字段
 #define kUrlSearchSong [NSString stringWithFormat:@"/appmusicin/getchannelsong?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SEARCHSONG"]]
-
 //111:获得音乐排行榜列表接口（完成）
 //请求地址： /appmusicin/getbilllist?BILLLIST
 // 参数:type  类型(1-新歌榜,2-热歌榜,6-KTV热歌榜,8-Hito中文榜,11-摇滚榜,12-爵士,16-流行,21-欧美金 曲榜,22-经典老歌榜,23-情歌对唱榜,24-影视金曲榜,25-网络歌曲榜) offset偏移数(页码)
@@ -617,27 +613,22 @@
 //请求地址： appmusicin/getlry?LRY&songid=877578
 // 参数:songid 歌曲id
 #define kUrlLry [NSString stringWithFormat:@"/appmusicin/getlry?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"LRY"]]
-
 //113:每日推荐歌曲(固定10首)   appmusicin/getrecommandsonglist?SONGLIST
 //参数：songid 歌曲id()根据歌曲类型推荐10首歌曲
 #define kUrlSongList [NSString stringWithFormat:@"appmusicin/getrecommandsonglist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SONGLIST"]]
 //@"http://tingapi.ting.baidu.com/v1/restserver/ting?format=json&calback=&from=webapp_music&method=baidu.ting.song.getRecommandSongList&song_id=877578&num=10"
-
-
 //114:歌手列表
 //参数：参数：offset 偏移数(页码)
 //地址：/appmusicin/gethotartist?HOTARTIST
 #define kUrlSingerList [NSString stringWithFormat:@"/appmusicin/gethotartist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"HOTARTIST"]]
-
 //115.通过歌手id获取其所有歌曲列表接口
 //参数：tinguid 歌手id  offset 偏移数(页码)
 //地址：/appmusicin/getsonglist?SONGLIST
 #define kUrlSingerSongList  [NSString stringWithFormat:@"/appmusicin/getsonglist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SONGLIST"]]
-
-//116.
+//116
+//参数：
+//
 #define kUrlBillListall [NSString stringWithFormat:@"/appmusicin/getbilllistall?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"BILLLIST"]]
-
-
 //117.点赞(完成)
 //参数：HONOURUSER_ID 用户的Id    /CIRCLE_ID  所评论的圈子ID
 //请求地址：/appcirclein/dotAgree.do?DOTAGREE(混淆码)
@@ -689,12 +680,14 @@
 //参数： CARDTYPE_ID（1 自选号码库 2 贵宾号码库 3 金钻号码库 4荣耀号码库 5 超级黑卡靓号号码库）
 //请求地址：/appbootpagein/getcardnum?CARDNUM  (混淆码)
 #define kUrlGetCardNum [NSString stringWithFormat:@"/appbootpagein/getcardnum?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"CARDNUM"]]
-//130.获取所有能量组成（完成）
-//参数： 无
+//130.获取所有能量组成 （完成）
+//参数： HONOURUSER_ID  用户ID/
 //请求地址：/appengrgyin/energylist.do?ENERGYLIST  (混淆码)
 #define kUrlEnergyList [NSString stringWithFormat:@"/appengrgyin/energylist.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"ENERGYLIST"]]
-
-
+//131.按月份统计用户能量值(完成)
+//参数：  HONOURUSER_ID  用户ID/
+//请求地址：/appengrgyin/energyvaluemonth.do?ENERGYVALUEMONTH  (混淆码)
+#define kUrlEnergyValueMonth [NSString stringWithFormat:@"/appengrgyin/energyvaluemonth.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"ENERGYVALUEMONTH"]]
 
 
 #endif /* URLMacros_h */

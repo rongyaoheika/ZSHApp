@@ -7,6 +7,7 @@
 //
 
 #import "ZSHFindArticleCell.h"
+#import "ZSHFindModel.h"
 
 @interface ZSHFindArticleCell()
 
@@ -51,8 +52,11 @@
 - (void)updateCellWithParamDic:(NSDictionary *)dic {
     _titleLabel.text = dic[@"title"];
     _picView.image = [UIImage imageNamed:dic[@"image"]];
-    [self layoutIfNeeded];
 }
 
+- (void)updateCellWithModel:(ZSHFindModel *)model {
+    _titleLabel.text = model.TITLE;
+    [_picView sd_setImageWithURL:[NSURL URLWithString:model.VIDEOBACKIMAGE]];
+}
 
 @end

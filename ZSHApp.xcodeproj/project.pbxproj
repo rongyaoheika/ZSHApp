@@ -88,6 +88,13 @@
 		1843134A1FD4E9E20046B128 /* NSDictionary+Log.m in Sources */ = {isa = PBXBuildFile; fileRef = 184313461FD4E9E20046B128 /* NSDictionary+Log.m */; };
 		1843134B1FD4E9E20046B128 /* NSString+unicode.m in Sources */ = {isa = PBXBuildFile; fileRef = 184313481FD4E9E20046B128 /* NSString+unicode.m */; };
 		1843134E1FD550F90046B128 /* ZSHRegisterModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1843134D1FD550F90046B128 /* ZSHRegisterModel.m */; };
+		1846BB371FE37D9A001B264B /* ZSHFindModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1846BB361FE37D9A001B264B /* ZSHFindModel.m */; };
+		1846BB451FE3B282001B264B /* BEMAverageLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 1846BB3C1FE3B282001B264B /* BEMAverageLine.m */; };
+		1846BB461FE3B282001B264B /* BEMCircle.m in Sources */ = {isa = PBXBuildFile; fileRef = 1846BB3E1FE3B282001B264B /* BEMCircle.m */; };
+		1846BB471FE3B282001B264B /* BEMLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 1846BB401FE3B282001B264B /* BEMLine.m */; };
+		1846BB481FE3B282001B264B /* BEMPermanentPopupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1846BB421FE3B282001B264B /* BEMPermanentPopupView.m */; };
+		1846BB491FE3B282001B264B /* BEMSimpleLineGraphView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1846BB441FE3B282001B264B /* BEMSimpleLineGraphView.m */; };
+		1846BB4C1FE3D191001B264B /* ZSHEnergyValueModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1846BB4B1FE3D191001B264B /* ZSHEnergyValueModel.m */; };
 		1858710F1FBA8903003ECFE3 /* ZSHPersonalCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1858710E1FBA8903003ECFE3 /* ZSHPersonalCenterViewController.m */; };
 		185B75D81FC51B16008CBD2B /* TYCyclePagerTransformLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 185B75D31FC51B16008CBD2B /* TYCyclePagerTransformLayout.m */; };
 		185B75D91FC51B16008CBD2B /* TYCyclePagerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 185B75D51FC51B16008CBD2B /* TYCyclePagerView.m */; };
@@ -655,6 +662,20 @@
 		184313481FD4E9E20046B128 /* NSString+unicode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+unicode.m"; sourceTree = "<group>"; };
 		1843134C1FD550F90046B128 /* ZSHRegisterModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSHRegisterModel.h; path = ZSHApp/Utils/Category/ZSHRegisterModel.h; sourceTree = SOURCE_ROOT; };
 		1843134D1FD550F90046B128 /* ZSHRegisterModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSHRegisterModel.m; path = ZSHApp/Utils/Category/ZSHRegisterModel.m; sourceTree = SOURCE_ROOT; };
+		1846BB351FE37D9A001B264B /* ZSHFindModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHFindModel.h; sourceTree = "<group>"; };
+		1846BB361FE37D9A001B264B /* ZSHFindModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHFindModel.m; sourceTree = "<group>"; };
+		1846BB3B1FE3B282001B264B /* BEMAverageLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BEMAverageLine.h; sourceTree = "<group>"; };
+		1846BB3C1FE3B282001B264B /* BEMAverageLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BEMAverageLine.m; sourceTree = "<group>"; };
+		1846BB3D1FE3B282001B264B /* BEMCircle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BEMCircle.h; sourceTree = "<group>"; };
+		1846BB3E1FE3B282001B264B /* BEMCircle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BEMCircle.m; sourceTree = "<group>"; };
+		1846BB3F1FE3B282001B264B /* BEMLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BEMLine.h; sourceTree = "<group>"; };
+		1846BB401FE3B282001B264B /* BEMLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BEMLine.m; sourceTree = "<group>"; };
+		1846BB411FE3B282001B264B /* BEMPermanentPopupView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BEMPermanentPopupView.h; sourceTree = "<group>"; };
+		1846BB421FE3B282001B264B /* BEMPermanentPopupView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BEMPermanentPopupView.m; sourceTree = "<group>"; };
+		1846BB431FE3B282001B264B /* BEMSimpleLineGraphView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BEMSimpleLineGraphView.h; sourceTree = "<group>"; };
+		1846BB441FE3B282001B264B /* BEMSimpleLineGraphView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BEMSimpleLineGraphView.m; sourceTree = "<group>"; };
+		1846BB4A1FE3D191001B264B /* ZSHEnergyValueModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHEnergyValueModel.h; sourceTree = "<group>"; };
+		1846BB4B1FE3D191001B264B /* ZSHEnergyValueModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHEnergyValueModel.m; sourceTree = "<group>"; };
 		1858710D1FBA8903003ECFE3 /* ZSHPersonalCenterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHPersonalCenterViewController.h; sourceTree = "<group>"; };
 		1858710E1FBA8903003ECFE3 /* ZSHPersonalCenterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHPersonalCenterViewController.m; sourceTree = "<group>"; };
 		185B75D21FC51B16008CBD2B /* TYCyclePagerTransformLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TYCyclePagerTransformLayout.h; sourceTree = "<group>"; };
@@ -1753,6 +1774,32 @@
 			name = "头条";
 			sourceTree = "<group>";
 		};
+		1846BB341FE37D86001B264B /* 发现 */ = {
+			isa = PBXGroup;
+			children = (
+				1846BB351FE37D9A001B264B /* ZSHFindModel.h */,
+				1846BB361FE37D9A001B264B /* ZSHFindModel.m */,
+			);
+			path = "发现";
+			sourceTree = "<group>";
+		};
+		1846BB3A1FE3B26B001B264B /* SimpleLineChart */ = {
+			isa = PBXGroup;
+			children = (
+				1846BB3B1FE3B282001B264B /* BEMAverageLine.h */,
+				1846BB3C1FE3B282001B264B /* BEMAverageLine.m */,
+				1846BB3D1FE3B282001B264B /* BEMCircle.h */,
+				1846BB3E1FE3B282001B264B /* BEMCircle.m */,
+				1846BB3F1FE3B282001B264B /* BEMLine.h */,
+				1846BB401FE3B282001B264B /* BEMLine.m */,
+				1846BB411FE3B282001B264B /* BEMPermanentPopupView.h */,
+				1846BB421FE3B282001B264B /* BEMPermanentPopupView.m */,
+				1846BB431FE3B282001B264B /* BEMSimpleLineGraphView.h */,
+				1846BB441FE3B282001B264B /* BEMSimpleLineGraphView.m */,
+			);
+			path = SimpleLineChart;
+			sourceTree = "<group>";
+		};
 		1858710C1FBA8889003ECFE3 /* 个人 */ = {
 			isa = PBXGroup;
 			children = (
@@ -2467,6 +2514,8 @@
 				182F57A21FDBD2ED0085BFC6 /* ZSHUserInfoModel.m */,
 				18762B2A1FE1149D00E1857F /* ZSHEnergyModel.h */,
 				18762B2B1FE1149D00E1857F /* ZSHEnergyModel.m */,
+				1846BB4A1FE3D191001B264B /* ZSHEnergyValueModel.h */,
+				1846BB4B1FE3D191001B264B /* ZSHEnergyValueModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2524,6 +2573,7 @@
 		FE291EBE1F8CAEDC00D4BBE7 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				1846BB341FE37D86001B264B /* 发现 */,
 				18063C581FC913E8000F5A00 /* 炫购 */,
 				18063C511FC9035F000F5A00 /* 私人定制 */,
 				FE4DB1E61F99972F008E12E9 /* 商品 */,
@@ -3073,6 +3123,7 @@
 		FE5537AA1F47049D00803128 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				1846BB3A1FE3B26B001B264B /* SimpleLineChart */,
 				182F57971FDB949A0085BFC6 /* FLAnimatedImage */,
 				182F57771FDB91390085BFC6 /* KNPhotoBrower */,
 				18063C5C1FC955CA000F5A00 /* LxGridViewFlowLayout */,
@@ -4158,6 +4209,7 @@
 				185BB9AB1FB53BC6007A96FF /* ZSHLiveUserLevelViewController.m in Sources */,
 				FEA018D41FCBFB1700989FB2 /* ZSHShopCommentCell.m in Sources */,
 				182287161FB44FE600CA5B10 /* XXTextView.m in Sources */,
+				1846BB491FE3B282001B264B /* BEMSimpleLineGraphView.m in Sources */,
 				FEBD7C9D1FA70F6500CE2BA6 /* ZSHGoodsChartCell.m in Sources */,
 				FEDF28F91FB68C1C00CD5756 /* ZSHAgeView.m in Sources */,
 				185C6D8D1FC2D98A004EA461 /* LZShopModel.m in Sources */,
@@ -4181,6 +4233,7 @@
 				181AD3221FCD33C30015D004 /* ZSHGoodOrderModel.m in Sources */,
 				FE9CC3D51FA05D2200285475 /* ZSHOrderDetailViewController.m in Sources */,
 				182F578E1FDB91390085BFC6 /* KNActionSheetView.m in Sources */,
+				1846BB461FE3B282001B264B /* BEMCircle.m in Sources */,
 				FEBD7CBA1FA75FBC00CE2BA6 /* ZSHFoodCell.m in Sources */,
 				FEA105811F9B292B008652D6 /* ZSHBrandsSortHeadView.m in Sources */,
 				FEB099161FD127F300E8F03D /* ZSHMoreListCell.m in Sources */,
@@ -4404,6 +4457,7 @@
 				FE5538811F470BAF00803128 /* GameInfo.m in Sources */,
 				1869C9411FD952C2002F2E37 /* ZSHWeiboListModel.m in Sources */,
 				FEEF46EF1FBA84100086A3C4 /* ZSHLivePopView.m in Sources */,
+				1846BB481FE3B282001B264B /* BEMPermanentPopupView.m in Sources */,
 				FE3E00651FDA329900A0F7CA /* ZSHMusicRankCell.m in Sources */,
 				FE5229851F9050DF00DC2899 /* ZSHLiveCellView.m in Sources */,
 				FEAEE3EE1FA86CBA00F73EEA /* NSCalendar+ST.m in Sources */,
@@ -4437,6 +4491,7 @@
 				FE55385F1F47049D00803128 /* UICollectionView+IndexPath.m in Sources */,
 				FE24DA611FD9377300965DC8 /* ZSHMusicLogic.m in Sources */,
 				FEADBD271FBEBBC00065B94B /* ZSHCardCustomizedCell.m in Sources */,
+				1846BB371FE37D9A001B264B /* ZSHFindModel.m in Sources */,
 				FEB305851F95DFC700E4A061 /* ZSHGoodsGridCell.m in Sources */,
 				FE8FD0871FADF4FD005F1184 /* ZSHSettingViewController.m in Sources */,
 				FEA105731F9B2480008652D6 /* ZSHGoodsSortCell.m in Sources */,
@@ -4458,6 +4513,7 @@
 				FE2B2A811FB9FD26001F8A61 /* TLMenuButtonView.m in Sources */,
 				FEA1057A1F9B2738008652D6 /* UIView+ZSHExtension.m in Sources */,
 				18F902451FB68D740044967F /* ZSHSubscribeViewController.m in Sources */,
+				1846BB4C1FE3D191001B264B /* ZSHEnergyValueModel.m in Sources */,
 				1813E2731FBD400D00624405 /* ZSHTrainTicketDetailHeadView.m in Sources */,
 				FE2CD0B91F98F9C200E9E519 /* ZSHCouponViewController.m in Sources */,
 				FE55385E1F47049D00803128 /* UIButton+XYButton.m in Sources */,
@@ -4506,6 +4562,7 @@
 				FE04EF091FC831520012C5AC /* ZSHKTVLogic.m in Sources */,
 				FE2CD0B31F98F4B400E9E519 /* ZSHExchangeViewController.m in Sources */,
 				FEFDB4191F7A36D90069F867 /* ChineseString.m in Sources */,
+				1846BB471FE3B282001B264B /* BEMLine.m in Sources */,
 				FEB0990F1FD1257800E8F03D /* ZSHMoreListViewController.m in Sources */,
 				FEC273A71F8E1FD700A0F91A /* ZSHNoticeViewCell.m in Sources */,
 				FE5CFA411FA1B32500A55644 /* ZSHHotelCell.m in Sources */,
@@ -4545,6 +4602,7 @@
 				FEF415F31FAAEDBA00137F0A /* ZSHAirPlaneViewController.m in Sources */,
 				FE5538161F47049D00803128 /* TabBarBadge.m in Sources */,
 				FE5538191F47049D00803128 /* NJKWebViewProgressView.m in Sources */,
+				1846BB451FE3B282001B264B /* BEMAverageLine.m in Sources */,
 				FE5538121F47049D00803128 /* RootNavigationController.m in Sources */,
 				FE291EE91F8CCC5900D4BBE7 /* ZSHMineViewController.m in Sources */,
 				FE7502D01F9A4360002F2708 /* ZSHEntertainmentViewController.m in Sources */,

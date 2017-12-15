@@ -85,7 +85,8 @@ static NSString *ZSHEnergyRulesCellID = @"ZSHEnergyRulesCell";
     _scoreRulesTitleArr = @[@"A  1-5000分免费兑换年度优礼品--价值1万元礼品包",@"B  5001-30000获得季度杂志【专刊一版】价值6万专访",@"C  30001-100000免费生日特定大礼包--价值3000元礼品包",@"D  100001-500000免费获得年度【黑咖之夜】价值1万元礼品包",@"E  500001-1000000获得黑咖企业推广一次--价值20万元广告礼品包"];
     [self initViewModel];
     _mineLogic = [[ZSHMineLogic alloc] init];
-    [self requestData];
+    [self requestEnergyList];
+
 }
 
 - (void)createUI{
@@ -203,7 +204,7 @@ static NSString *ZSHEnergyRulesCellID = @"ZSHEnergyRulesCell";
             detailLabel.tag = 1;
             detailLabel.numberOfLines = 0;
             [detailLabel setLineBreakMode:NSLineBreakByWordWrapping];
-            
+
             //行间距
             NSMutableParagraphStyle  *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
             [paragraphStyle  setLineSpacing:5];
@@ -279,13 +280,15 @@ static NSString *ZSHEnergyRulesCellID = @"ZSHEnergyRulesCell";
 
 
 #pragma action
-- (void)requestData {
+- (void)requestEnergyList {
     kWeakSelf(self);
     [_mineLogic requestEnergyList:^(id response) {
         weakself.energyModelArr = [ZSHEnergyModel mj_objectArrayWithKeyValuesArray:response[@"pd"]];
         [weakself initViewModel];
     }];
 }
+
+
 
 
 - (void)exchangeAction{

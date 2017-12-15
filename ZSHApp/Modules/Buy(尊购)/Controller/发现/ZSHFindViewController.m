@@ -10,6 +10,8 @@
 #import "ZSHFindCell.h"
 #import "ZSHFindArticleCell.h"
 #import "ADPlayer.h"
+#import "ZSHBuyLogic.h"
+#import "ZSHFindModel.h"
 
 static NSString *Identify_headCell = @"Identify_headCell";
 static NSString *Identify_ArticleCell = @"Identify_ArticleCell";
@@ -17,12 +19,13 @@ static NSString *Identify_ArticleCell = @"Identify_ArticleCell";
 
 @interface ZSHFindViewController ()<ADPlayerDelegate>
 
-
-@property (nonatomic, strong) NSMutableArray *viedoLists;
 @property (nonatomic, strong) ADPlayer       *player;
 @property (nonatomic, strong) NSIndexPath    *currentIndexPath; // 当前播放的cell
-@property (nonatomic, assign) BOOL            isSmallScreen; // 是否放置在window上
-@property (nonatomic, strong) ZSHFindCell    *currentCell; // 当前cell
+@property (nonatomic, assign) BOOL           isSmallScreen;     // 是否放置在window上
+@property (nonatomic, strong) ZSHFindCell    *currentCell;      // 当前cell
+
+@property (nonatomic, strong) ZSHBuyLogic    *buyLogic;
+@property (nonatomic, strong) NSArray        *findModelArr;
 
 @end
 
@@ -46,6 +49,8 @@ static NSString *Identify_ArticleCell = @"Identify_ArticleCell";
     self.isSmallScreen = NO;
     
     [self initViewModel];
+    _buyLogic = [[ZSHBuyLogic alloc] init];
+    [self requestData];
     
 }
 
@@ -58,45 +63,43 @@ static NSString *Identify_ArticleCell = @"Identify_ArticleCell";
     self.tableView.dataSource = self.tableViewModel;
     [self.tableView registerClass:[ZSHFindCell class] forCellReuseIdentifier:Identify_headCell];
     [self.tableView registerClass:[ZSHFindArticleCell class] forCellReuseIdentifier:Identify_ArticleCell];
-    [self.tableView reloadData];
+    
     
 }
 
 - (void)initViewModel {
     [self.tableViewModel.sectionModelArray removeAllObjects];
     [self.tableViewModel.sectionModelArray addObject:[self storeHeadSection]];
+    [self.tableView reloadData];
 }
 
 //head
 - (ZSHBaseTableViewSectionModel*)storeHeadSection {
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
-    
-    NSArray *title1Arr = @[@"这才是只能手表，其他都是电子表！", @"女生最讨厌男生戴什么手表？看看你中招没？", @"三种旅途必备神器，有他们旅途更安逸", @"这才是只能手表，其他都是电子表！", @"三种旅途必备神器，有他们旅途更安逸", @"三种旅途必备神器，有他们旅途更安逸",];
-    NSArray *imageArr = @[@"play_find_2", @"play_find_3", @"play_find_4", @"play_find_2", @"play_find_3", @"play_find_4"];
-    NSArray *heightArr = @[@"195", @"105", @"105", @"195", @"105", @"105"];
-    self.viedoLists = @[@"http://flv3.bn.netease.com/videolib3/1711/06/qQtzb8738/HD/qQtzb8738-mobile.mp4", @"", @"", @"http://flv3.bn.netease.com/videolib3/1711/06/qQtzb8738/HD/qQtzb8738-mobile.mp4", @"", @""].mutableCopy;
-    
-    for (int i = 0; i<title1Arr.count; i++) {
+
+    for (int i = 0; i<_findModelArr.count; i++) {
         ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
         [sectionModel.cellModelArray addObject:cellModel];
-        kWeakSelf(cellModel);
         kWeakSelf(self);
-        cellModel.height = kRealValue(195);
-        
+        ZSHFindModel *model = _findModelArr[i];
+        if ([model.SHOWVIDEO isEqualToString:@""]) {
+            cellModel.height = 105;
+        } else {
+            cellModel.height = 195;
+        }
         cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
-            if (indexPath.row%3 == 0) {
+            ZSHFindModel *model = _findModelArr[indexPath.row];
+            if (![model.SHOWVIDEO isEqualToString:@""]) {
                 ZSHFindCell *cell = [tableView dequeueReusableCellWithIdentifier:Identify_headCell];
-                [cell updateCellWithParamDic:@{@"title":title1Arr[indexPath.row], @"image":imageArr[indexPath.row]}];
+                [cell updateCellWithModel:model];
                 cell.playBtn.tag = indexPath.row;
                 [cell.playBtn addTapBlock:^(UIButton *btn) {
-                    [self startPlayVideo:btn];
+                    [weakself startPlayVideo:btn];
                 }];
-                weakcellModel.height = [heightArr[indexPath.row] floatValue];
                 return cell;
             } else {
                 ZSHFindArticleCell *cell = [tableView dequeueReusableCellWithIdentifier:Identify_ArticleCell];
-                [cell updateCellWithParamDic:@{@"title":title1Arr[indexPath.row], @"image":imageArr[indexPath.row]}];
-                weakcellModel.height = [heightArr[indexPath.row] floatValue];
+                [cell updateCellWithModel:model];
                 return cell;
             }
         };
@@ -284,7 +287,9 @@ static NSString *Identify_ArticleCell = @"Identify_ArticleCell";
     }else{
         self.currentCell = (ZSHFindCell *)sender.superview.subviews;
     }
-    NSString *url = [self.viedoLists objectAtIndex:sender.tag];
+    
+    ZSHFindModel *model = _findModelArr[sender.tag];
+    NSString *url = model.SHOWVIDEO;
     
     // 当有上一个在播放的时候 点击 就先release
     if (self.player){
@@ -293,7 +298,7 @@ static NSString *Identify_ArticleCell = @"Identify_ArticleCell";
     self.player = [[ADPlayer alloc] initWithFrame:self.currentCell.picView.bounds];
     self.player.delegate = self;
     self.player.VideoURL = url;
-    self.player.titleLB.text = @"title";
+    self.player.titleLB.text = model.TITLE;
     
     //block
     __weak typeof(self) weakSelf = self;
@@ -314,7 +319,14 @@ static NSString *Identify_ArticleCell = @"Identify_ArticleCell";
     [self.tableView reloadData];
 }
 
-
+- (void)requestData {
+    kWeakSelf(self);
+    
+    [_buyLogic requestCaidanWithID:self.paramDic[@"CAIDAN_ID"] success:^(id response) {
+        weakself.findModelArr = [ZSHFindModel mj_objectArrayWithKeyValuesArray:response[@"pd"]];
+        [weakself initViewModel];
+    }];
+}
 
 
 @end

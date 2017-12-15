@@ -162,7 +162,16 @@
 
 // 获取能量值
 - (void)requestEnergyList:(void (^)(id response))success {
-    [PPNetworkHelper POST:kUrlEnergyList parameters:@{} success:^(id responseObject) {
+    [PPNetworkHelper POST:kUrlEnergyList parameters:@{@"HONOURUSER_ID":HONOURUSER_IDValue} success:^(id responseObject) {
+        success(responseObject);
+    } failure:^(NSError *error) {
+        RLog(@"请求失败");
+    }];
+}
+
+// 按月份统计用户能量值
+- (void)requestEnergyValueMonth:(void (^)(id response))success {
+    [PPNetworkHelper POST:kUrlEnergyValueMonth parameters:@{@"HONOURUSER_ID":HONOURUSER_IDValue} success:^(id responseObject) {
         success(responseObject);
     } failure:^(NSError *error) {
         RLog(@"请求失败");

@@ -33,7 +33,7 @@
     
     [self addSubview:self.blackCardScrollView];
     for (int i = 0; i<_titleArr.count; i++) {
-        ZSHPhoneNumListView *listView =[self createPhoneNumListView:NSStringFormat(@"%d", i+1)];
+        ZSHPhoneNumListView *listView =[self createPhoneNumListView:NSStringFormat(@"5")];
         [self.blackCardScrollView addSubview:listView];
     }
     
@@ -54,7 +54,7 @@
         i++;
     }
     
-     [self requestData];
+//     [self requestData];
 }
 
 

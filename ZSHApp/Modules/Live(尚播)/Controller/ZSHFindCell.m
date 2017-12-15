@@ -7,11 +7,9 @@
 //
 
 #import "ZSHFindCell.h"
+#import "ZSHFindModel.h"
 
 @interface ZSHFindCell ()
-
-
-
 
 @end
 
@@ -57,8 +55,13 @@
 - (void)updateCellWithParamDic:(NSDictionary *)dic {
     _titleLabel.text = dic[@"title"];
     _picView.image = [UIImage imageNamed:dic[@"image"]];
+}
+
+- (void)updateCellWithModel:(ZSHFindModel *)model {
+    _titleLabel.text = model.TITLE;
+    [_picView sd_setImageWithURL:[NSURL URLWithString:model.VIDEOBACKIMAGE]];
+    _pageviewLabel.text = NSStringFormat(@"%@人浏览", model.PAGEVIEWS);
     
-    [self layoutIfNeeded];
 }
 
 @end

@@ -112,8 +112,10 @@
         make.width.mas_equalTo(kRealValue(50));
         make.height.mas_equalTo(kRealValue(12));
     }];
-//    _userView.textField.text = @"10";
-//    _pwdView.textField.text = @"1";
+#ifdef DEBUG
+    _userView.textField.text = @"10";
+    _pwdView.textField.text = @"1";
+#endif
 }
 
 #pragma action
@@ -124,11 +126,21 @@
             if (success) {
                 [self skipAction];
             } else {
-                [MBProgressHUD showInfoMessage:@"登录失败"];
+                UIAlertController *ac = [UIAlertController alertControllerWithTitle:@"提示" message:@"账号密码错误" preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleCancel handler:nil];
+                [ac addAction:cancelAction];
+                [self presentViewController:ac animated:YES completion:nil];
             }
         }];
     } else {
-         [self skipAction];
+#ifdef DEBUG
+        [self skipAction];
+#else
+        UIAlertController *ac = [UIAlertController alertControllerWithTitle:@"提示" message:@"请输入账号密码" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleCancel handler:nil];
+        [ac addAction:cancelAction];
+        [self presentViewController:ac animated:YES completion:nil];
+#endif
     }
 }
 

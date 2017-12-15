@@ -33,9 +33,10 @@
                       @{},
                       @{KFromClassType:@(FromShipVCToFollowVC),@"title":@"粉丝", @"follow":@"1"}];
     
-    UIImageView *headImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"weibo_head_image"]];
+    UIImageView *headImageView = [[UIImageView alloc] init];
     headImageView.layer.cornerRadius = kRealValue(50)/2;
     headImageView.clipsToBounds = YES;
+    [headImageView sd_setImageWithURL:[NSURL URLWithString:curUser.PORTRAIT]];
     [self addSubview:headImageView];
     [headImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self).offset(kRealValue(5));
@@ -44,8 +45,9 @@
     }];
     self.headImageView = headImageView;
     
-    NSDictionary *nameLabelDic = @{@"text":@"刘志坚",@"font":kPingFangRegular(15),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentCenter)};
+    NSDictionary *nameLabelDic = @{@"text":@"",@"font":kPingFangRegular(15),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentCenter)};
     UILabel *nameLabel = [ZSHBaseUIControl createLabelWithParamDic:nameLabelDic];
+    nameLabel.text = curUser.NICKNAME;
     [self addSubview:nameLabel];
     [nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(headImageView.mas_bottom).offset(kRealValue(10));
