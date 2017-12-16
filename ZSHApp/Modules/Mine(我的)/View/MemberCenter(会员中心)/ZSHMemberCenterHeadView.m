@@ -20,6 +20,8 @@
 - (void)setup{
     
     _headImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"weibo_head_image"]];
+    _headImageView.layer.cornerRadius = 20;
+    _headImageView.layer.masksToBounds = true;
     [self addSubview:_headImageView];
 
      NSDictionary *nameLabelDic = @{@"text":@"普通会员",@"font":kPingFangMedium(17),@"textAlignment":@(NSTextAlignmentCenter)};
@@ -51,6 +53,12 @@
         make.top.mas_equalTo(_headImageView).offset(kRealValue(20));
         make.size.mas_equalTo(CGSizeMake(kRealValue(310), kRealValue(140)));
     }];
+}
+
+
+- (void)updateViewWithParamDic:(NSDictionary *)paramDic {
+    _nameLabel.text = paramDic[@"NAME"];
+    [_headImageView sd_setImageWithURL:[NSURL URLWithString:paramDic[@"PORTRAIT"]]];
 }
 
 @end

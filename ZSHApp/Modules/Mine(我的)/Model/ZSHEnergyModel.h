@@ -16,6 +16,7 @@
 @property (nonatomic, copy) NSString *NAME;
 @property (nonatomic, copy) NSString *INTRODUCE;
 @property (nonatomic, copy) NSString *ENERGY_ID;
+@property (nonatomic, copy) NSString *SCORE;
 
 // compList
 @property (nonatomic, copy) NSArray<ZSHEnergyCompListModel*>  *compList;

@@ -23,8 +23,8 @@
  */
 
 
-#define DevelopSever    1
-#define TestSever       0
+#define DevelopSever    0
+#define TestSever       1
 #define ProductSever    0
 
 
@@ -688,6 +688,9 @@
 //参数：  HONOURUSER_ID  用户ID/
 //请求地址：/appengrgyin/energyvaluemonth.do?ENERGYVALUEMONTH  (混淆码)
 #define kUrlEnergyValueMonth [NSString stringWithFormat:@"/appengrgyin/energyvaluemonth.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"ENERGYVALUEMONTH"]]
-
+//132.获取用户会员中心信息(完成)
+//参数：  HONOURUSER_ID  用户ID/
+//请求地址：/appuserin/getmemberinfo.do?MEMBERINFO  (混淆码)
+#define kUrlGetMemberInfo [NSString stringWithFormat:@"/appuserin/getmemberinfo.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"MEMBERINFO"]]
 
 #endif /* URLMacros_h */

@@ -119,12 +119,16 @@ static NSString *ZSHEnergyRulesCellID = @"ZSHEnergyRulesCell";
 }
 
 - (ZSHBaseTableViewSectionModel*)storeHeadSection{
+    kWeakSelf(self);
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
     [sectionModel.cellModelArray addObject:cellModel];
     cellModel.height = kRealValue(320);
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHEnergyHeadCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHEnergyHeadCellID forIndexPath:indexPath];
+        if (weakself.energyModelArr.count) {
+            [cell updateCellWithDataArr:weakself.energyModelArr];
+        }
         return cell;
     };
     

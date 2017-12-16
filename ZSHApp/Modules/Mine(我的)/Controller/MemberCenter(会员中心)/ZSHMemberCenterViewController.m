@@ -9,10 +9,16 @@
 #import "ZSHMemberCenterViewController.h"
 #import "ZSHNoticeViewCell.h"
 #import "ZSHMemberCenterHeadView.h"
+#import "ZSHMineLogic.h"
 
 @interface ZSHMemberCenterViewController ()
 
 @property (nonatomic, strong) ZSHMemberCenterHeadView   *headView;
+@property (nonatomic, strong) ZSHMineLogic              *mineLogic;
+
+@property (nonatomic, strong) NSDictionary              *headDic;
+@property (nonatomic, strong) NSArray                   *memberInfoArr;
+
 
 @end
 
@@ -32,6 +38,8 @@ static NSString *ZSHNoticeViewCellID = @"ZSHNoticeViewCell";
 - (void)loadData{
     
     [self initViewModel];
+    _mineLogic = [[ZSHMineLogic alloc] init];
+    [self requestData];
 }
 
 - (void)createUI{
@@ -43,17 +51,19 @@ static NSString *ZSHNoticeViewCellID = @"ZSHNoticeViewCell";
     self.tableView.dataSource = self.tableViewModel;
     [self.tableView registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHHeadViewID];
     [self.tableView registerClass:[ZSHNoticeViewCell class] forCellReuseIdentifier:ZSHNoticeViewCellID];
-    [self.tableView reloadData];
+    
 }
 
 - (void)initViewModel {
     [self.tableViewModel.sectionModelArray removeAllObjects];
     [self.tableViewModel.sectionModelArray addObject:[self storeHeadSection]];
     [self.tableViewModel.sectionModelArray addObject:[self storeListSection]];
+    [self.tableView reloadData];
 }
 
 //head
 - (ZSHBaseTableViewSectionModel*)storeHeadSection {
+    kWeakSelf(self);
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
     [sectionModel.cellModelArray addObject:cellModel];
@@ -63,6 +73,7 @@ static NSString *ZSHNoticeViewCellID = @"ZSHNoticeViewCell";
         if (![cell.contentView viewWithTag:2]) {
              [cell.contentView addSubview:self.headView];
         }
+        [weakself.headView updateViewWithParamDic:weakself.headDic];
         return cell;
     };
     
@@ -73,6 +84,7 @@ static NSString *ZSHNoticeViewCellID = @"ZSHNoticeViewCell";
 
 //list
 - (ZSHBaseTableViewSectionModel*)storeListSection {
+    kWeakSelf(self);
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     sectionModel.headerHeight = kRealValue(55);
     sectionModel.headerView = [self createHeaderiewWithTitle:@"会员尊享"];
@@ -83,6 +95,9 @@ static NSString *ZSHNoticeViewCellID = @"ZSHNoticeViewCell";
         ZSHNoticeViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHNoticeViewCellID forIndexPath:indexPath];
         NSDictionary *nextParamDic = @{KFromClassType:@(FromMemberCenterVCToNoticeView)};
         [cell updateCellWithParamDic:nextParamDic];
+        if (weakself.memberInfoArr.count) {
+            [cell updateCellWithDataArr:weakself.memberInfoArr];
+        }
         return cell;
     };
     
@@ -121,5 +136,15 @@ static NSString *ZSHNoticeViewCellID = @"ZSHNoticeViewCell";
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+- (void)requestData {
+    kWeakSelf(self);
+    [_mineLogic requestGetMemberInfo:^(id response) {
+        weakself.headDic = response[@"memberInfo"];
+        weakself.memberInfoArr = response[@"list"];
+        [weakself initViewModel];
+    }];
+}
+
 
 @end

@@ -797,9 +797,9 @@ typedef NS_ENUM(NSInteger, BEMInternalTags)
         }
     }];
     
-    for (UILabel *l in overlapLabels) {
-        [l removeFromSuperview];
-    }
+//    for (UILabel *l in overlapLabels) {
+//        [l removeFromSuperview];
+//    }
 }
 
 - (NSString *)xAxisTextForIndex:(NSInteger)index {

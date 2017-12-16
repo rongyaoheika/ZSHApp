@@ -55,4 +55,6 @@
 - (void)requestEnergyList:(void (^)(id response))success;
 // 按月份统计用户能量值
 - (void)requestEnergyValueMonth:(void (^)(id response))success;
+// 获取用户会员中心信息
+- (void)requestGetMemberInfo:(void (^)(id response))success;
 @end

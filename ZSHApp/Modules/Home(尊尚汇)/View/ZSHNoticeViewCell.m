@@ -119,6 +119,20 @@
    
 }
 
+- (void)updateCellWithDataArr:(NSArray *)dataArr {
+    if (kFromClassTypeValue == FromMemberCenterVCToNoticeView) {
+        for (int i = 0; i<_btnArr.count; i++) {
+            UIButton *btn  = _btnArr[i];
+            UILabel *title = [btn viewWithTag:80];
+            UILabel *detail = [btn viewWithTag:90];
+            
+            title.text = dataArr[i][@"WELFARENAME"];
+            detail.text = NSStringFormat(@"能量值%@以上\n有机会获得福利", dataArr[i][@"ENERGYVALUE"]);
+        }
+    }
+}
+
+
 //会员中心卡片
 - (UIButton *)createGiftTypeBtnWithParamDic:(NSDictionary *)paramDic{
     
@@ -127,6 +141,7 @@
     
     NSDictionary *topTitleLabelDic = @{@"text":paramDic[@"title"],@"font":kPingFangRegular(12),@"textAlignment":@(NSTextAlignmentCenter)};
     UILabel *topTitleLabel = [ZSHBaseUIControl createLabelWithParamDic:topTitleLabelDic];
+    topTitleLabel.tag = 80;
     [btn addSubview:topTitleLabel];
     [topTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.mas_equalTo(btn);
@@ -138,6 +153,7 @@
     NSDictionary *detailTitleLabelDic = @{@"text":paramDic[@"detail"],@"font":kPingFangRegular(10),@"textAlignment":@(NSTextAlignmentLeft)};
     UILabel *detailTitleLabel = [ZSHBaseUIControl createLabelWithParamDic:detailTitleLabelDic];
     detailTitleLabel.numberOfLines = 2;
+    detailTitleLabel.tag = 90;
     [detailTitleLabel setLineBreakMode:NSLineBreakByWordWrapping];
     [btn addSubview:detailTitleLabel];
     [detailTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {

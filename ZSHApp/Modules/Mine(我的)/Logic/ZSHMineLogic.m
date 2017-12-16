@@ -178,6 +178,13 @@
     }];
 }
 
-
+// 获取用户会员中心信息
+- (void)requestGetMemberInfo:(void (^)(id response))success {
+    [PPNetworkHelper POST:kUrlGetMemberInfo parameters:@{@"HONOURUSER_ID":HONOURUSER_IDValue} success:^(id responseObject) {
+        success(responseObject);
+    } failure:^(NSError *error) {
+        RLog(@"请求失败");
+    }];
+}
 
 @end
