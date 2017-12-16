@@ -7,15 +7,14 @@
 //
 
 #import "ZSHMusicLogic.h"
-#import "MusicModel.h"
 
 @implementation ZSHMusicLogic
 
-- (void)loadRadioListSuccess:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail{
-    [PPNetworkHelper POST:kUrlRadioStation parameters:nil success:^(id responseObject) {
+- (void)loadRadioListWithParamDic:(NSDictionary *)paramDic Success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail{
+    [PPNetworkHelper POST:kUrlRadioStation parameters:paramDic success:^(id responseObject) {
         RLog(@"音乐电台列表数据%@",responseObject);
 
-        NSArray *modelArr = [ZSHRadioModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"][@"result"]];
+        NSArray *modelArr = [ZSHRadioModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"][@"result"][@"channellist"]];
         RLog(@"音乐电台model列表数据%@",modelArr);
         success(modelArr);
         
@@ -27,9 +26,8 @@
 - (void)loadRadioDetailWithParamDic:(NSDictionary *)paramDic Success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail{
     [PPNetworkHelper POST:kUrlChannelSong parameters:paramDic success:^(id responseObject) {
         RLog(@"电台详细歌单列表数据%@",responseObject);
-        ZSHRadioDetailModel *radioDetailModel = [ZSHRadioDetailModel mj_objectWithKeyValues:responseObject[@"pd"][@"result"]];
-        RLog(@"电台详细歌单列表数据%@",radioDetailModel);
-        success(radioDetailModel);
+         NSArray *radioDetailModelArr = [ZSHRankModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"][@"result"][@"songlist"]];
+        success(radioDetailModelArr);
         
     } failure:^(NSError *error) {
         RLog(@"电台详细歌单列表数据");
@@ -60,43 +58,31 @@
 }
 
 - (void)loadSongDetailtWithParamDic:(NSDictionary *)paramDic Success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail{
-    kWeakSelf(self);
-    [PPNetworkHelper POST:kUrlSongPlay parameters:paramDic success:^(id responseObject) {
+    ZSHRankModel *detailModel = paramDic[@"model"];
+    NSDictionary *newParamDic = @{@"songid":detailModel.song_id? detailModel.song_id:detailModel.songid};
+    [PPNetworkHelper POST:kUrlSongPlay parameters:newParamDic success:^(id responseObject) {
         RLog(@"音乐详细数据%@",responseObject);
+        if (![responseObject[@"result"]isEqualToString:@"01"]) {
+            return;
+        }
+        
         NSArray *arr = responseObject[@"pd"][@"bitrate"];
         if (arr.count && responseObject[@"pd"][@"songinfo"]) {//有MP3文件
-            MusicModel *detailModel = [[MusicModel alloc]init];
-            detailModel.file_link = responseObject[@"pd"][@"bitrate"][@"file_link"];
-            detailModel.lrclink = responseObject[@"pd"][@"bitrate"][@"lrclink"];    //歌词文件
-            detailModel.author = responseObject[@"pd"][@"songinfo"][@"author"];     //歌手
-            detailModel.title = responseObject[@"pd"][@"songinfo"][@"title"];       //歌曲名字
-            detailModel.album_title = responseObject[@"pd"][@"songinfo"][@"album_title"];//专辑名字
+            detailModel.file_link = responseObject[@"pd"][@"bitrate"][@"file_link"];//MP3
+           
             //中间小图片 以@符号截取
             detailModel.pic_radio =  [responseObject[@"pd"][@"songinfo"][@"pic_radio"]componentsSeparatedByString:@"@"][0];
             //背景图片 以@符号截取
             detailModel.pic_huge =  [responseObject[@"pd"][@"songinfo"][@"pic_huge"] componentsSeparatedByString:@"@"][0];
-            
-            [weakself loadLryWithParamDic:paramDic Success:^(id responseObject) {
-                detailModel.lrcContent = responseObject;
-                success(detailModel);
-            } fail:nil];
+            //歌词
+            detailModel.lrcContent =  responseObject[@"pd"][@"songinfo"][@"lrclink"][@"lrcContent"];
+            success(detailModel);
         }
 
     } failure:^(NSError *error) {
         RLog(@"音乐详细数据失败");
     }];
 }
-
-- (void)loadLryWithParamDic:(NSDictionary *)paramDic Success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail{
-    [PPNetworkHelper POST:kUrlLry parameters:paramDic success:^(id responseObject) {
-        RLog(@"音乐歌词列表数据%@",responseObject);
-        success(responseObject[@"pd"][@"lrcContent"]);
-        
-    } failure:^(NSError *error) {
-        RLog(@"音乐歌词列表获取失败");
-    }];
-}
-
 
 - (void)loadkSongListWithParamDic:(NSDictionary *)paramDic Success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail{
     [PPNetworkHelper POST:kUrlSongList parameters:paramDic success:^(id responseObject) {

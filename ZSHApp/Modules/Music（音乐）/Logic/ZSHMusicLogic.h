@@ -9,12 +9,11 @@
 #import "ZSHBaseLogic.h"
 #import "ZSHRadioModel.h"
 #import "ZSHRankModel.h"
-#import "ZSHRadioDetailModel.h"
 #import "ZSHSingerModel.h"
 @interface ZSHMusicLogic : ZSHBaseLogic
 
 //音乐电台列表
-- (void)loadRadioListSuccess:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail;
+- (void)loadRadioListWithParamDic:(NSDictionary *)paramDic Success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail;
 
 //某个音乐电台音乐列表
 - (void)loadRadioDetailWithParamDic:(NSDictionary *)paramDic Success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail;
@@ -27,9 +26,6 @@
 
 //音乐详细数据
 - (void)loadSongDetailtWithParamDic:(NSDictionary *)paramDic Success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail;
-
-//获得歌曲歌词
-- (void)loadLryWithParamDic:(NSDictionary *)paramDic Success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail;
 
 //每日推荐歌曲
 - (void)loadkSongListWithParamDic:(NSDictionary *)paramDic Success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail;

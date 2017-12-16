@@ -12,9 +12,7 @@
 #import "ZSHMusicPlayListCell.h"
 #import "AudioPlayerController.h"
 #import "ZSHSingerModel.h"
-#import "MusicModel.h"
 #import "ZSHRadioModel.h"
-#import "ZSHRadioDetailModel.h"
 #import "ZSHFootPlayMusicView.h"
 
 @interface ZSHPlayListViewController ()
@@ -25,11 +23,9 @@
 @property (nonatomic, strong) ZSHFootPlayMusicView *footView;
 @property (nonatomic, strong) ZSHMusicLogic        *musicLogic;
 @property (nonatomic, strong) NSMutableArray       *songArr;
-@property (nonatomic, strong) NSArray              *rankModelArr;
-@property (nonatomic, strong) NSMutableArray       *singerSongArr;
-@property (nonatomic, strong) ZSHRadioDetailModel  *radioDetailModel;
+@property (nonatomic, strong) NSMutableArray       *normalDataArr;
 @property (nonatomic, assign) NSInteger            page;
-@property (nonatomic, strong) NSArray              *normalDataArr;
+
 
 /** 数据*/
 @property (nonatomic, strong) NSArray               *musicMs;
@@ -46,121 +42,151 @@ static NSString *ZSHMusicPlayListCellID = @"ZSHMusicPlayListCell";
     // Do any additional setup after loading the view.
     
     [self createUI];
-    
+    [self loadData];
+}
+
+//本地数据初始化
+- (void)loadData{
     _page = 0;
     _musicLogic = [[ZSHMusicLogic alloc]init];
     _songArr = [[NSMutableArray alloc]init];
-    _singerSongArr = [[NSMutableArray alloc]init];
-    [self loadData];
+    _normalDataArr = [[NSMutableArray alloc]init];
     
+    NSDictionary *headDic = @{@"headImage":self.paramDic[@"headImage"]};
+    [_headView updateViewWithParamDic:headDic];
+    
+    [self requestData];
 }
 
-- (void)loadData{
-   
+//加载网络数据
+- (void)requestData{
+    [_normalDataArr removeAllObjects];
     switch (kFromClassTypeValue) {
+        case ZSHFromSingerVCToPlayListVC:{//歌手歌单
+            [self requestSingerData];
+            break;
+        }
         case ZSHFromRankVCToPlayListVC:{//排行榜
             [self requestRankDetailListData];
-            break;
-        }
-        case ZSHFromRadioVCToPlayListVC:{//电台
-            [self requestRadioData];
-            break;
-        }
-        case ZSHFromSingerVCToPlayListVC:{//歌手歌单
-             [self requestSingerData];
             break;
         }
         case ZSHFromLibraryVCToPlayListVC:{//曲库
             [self requestLibraryRadioData];
             break;
         }
+        case ZSHFromRadioVCToPlayListVC:{//电台
+            [self requestRadioData];
+            break;
+        }
+            
         default:
             break;
     }
-   
-    NSDictionary *headDic = @{@"headImage":self.paramDic[@"headImage"]};
-    [_headView updateViewWithParamDic:headDic];
+}
+
+//歌手歌单列表
+- (void)requestSingerData{
+    kWeakSelf(self);
+    NSDictionary *paramDic = @{@"tinguid":self.paramDic[@"tinguid"],@"offset":@(_page)};
+    [_musicLogic loadSingerSongListWithParamDic:paramDic Success:^(id responseObject) {
+        [weakself endTabViewRefresh];
+        [_normalDataArr addObjectsFromArray:responseObject];
+        [weakself requestLryData];
+    } fail:nil];
 }
 
 //排行榜歌单列表
 - (void)requestRankDetailListData{
     kWeakSelf(self);
-    
     [_musicLogic loadRankListWithParamDic:@{@"type":@([self.paramDic[@"type"]integerValue]),@"offset":@(_page)} Success:^(id responseObject) {
-        _rankModelArr  = responseObject;
-        _normalDataArr = _rankModelArr;
-        [weakself initViewModel];
+        [_normalDataArr addObjectsFromArray:responseObject];
+        [weakself requestLryData];
+        
+//        [weakself initViewModel];
     } fail:nil];
     
 }
 
-//添加曲库歌单列表
+//曲库歌单列表
 - (void)requestLibraryRadioData{
     kWeakSelf(self);
     switch ([self.paramDic[@"index"]integerValue]) {
         case 0:{//推荐
+            [_songArr removeAllObjects];
             [_musicLogic loadkSongListWithParamDic:nil Success:^(id responseObject) {
-                _rankModelArr = responseObject;
-                _normalDataArr = _rankModelArr;
-               [weakself initViewModel];
+                _normalDataArr = [responseObject mutableCopy];
+                 [weakself requestLryData];
+//               [weakself initViewModel];
             } fail:nil];
             break;
         }
         case 1:{//精选
+            [_songArr removeAllObjects];
             [_musicLogic loadkSongListWithParamDic:nil Success:^(id responseObject) {
-                _rankModelArr = responseObject;
-                _normalDataArr = _rankModelArr;
-                [weakself initViewModel];
+                _normalDataArr = [responseObject mutableCopy];
+                 [weakself requestLryData];
+//                [weakself initViewModel];
             } fail:nil];
             break;
         }
         case 2:{//最热
             [_musicLogic loadRankListWithParamDic:@{@"type":@(2),@"offset":@(_page)} Success:^(id responseObject) {
-                _rankModelArr = responseObject;
-                _normalDataArr = _rankModelArr;
-                [weakself initViewModel];
+                [_normalDataArr addObjectsFromArray:responseObject];
+                 [weakself requestLryData];
+//                [weakself initViewModel];
             } fail:nil];
         }
             
         case 3:{//最新
             [_musicLogic loadRankListWithParamDic:@{@"type":@(1),@"offset":@(_page)} Success:^(id responseObject) {
-                _rankModelArr = responseObject;
-                _normalDataArr = _rankModelArr;
-                [weakself initViewModel];
+                [_normalDataArr addObjectsFromArray:responseObject];
+                 [weakself requestLryData];
+//                [weakself initViewModel];
             } fail:nil];
             break;
         }
             
-            
         default:
             break;
     }
-    
 }
 
 //电台歌单列表
 - (void)requestRadioData{
     kWeakSelf(self);
+    [_songArr removeAllObjects];
     NSDictionary *paramDic = @{@"ch_name":self.paramDic[@"ch_name"]};
     [_musicLogic loadRadioDetailWithParamDic:paramDic Success:^(id responseObject) {
         [weakself endTabViewRefresh];
-        _radioDetailModel = responseObject;
-        _normalDataArr =  _radioDetailModel.songlist;
-        [weakself initViewModel];
+        [_normalDataArr addObjectsFromArray:responseObject];
+        [weakself requestLryData];
     } fail:nil];
 }
 
-//单个歌手歌单列表
-- (void)requestSingerData{
-    kWeakSelf(self);
+//加载歌曲MP3,歌词
+- (void)requestLryData{
+    NSLog(@"开始请求数据");
+    __block dispatch_group_t group = dispatch_group_create();
+    for (int i = 0; i<_normalDataArr.count; i++) {
+        dispatch_group_enter(group);
+        [_musicLogic loadSongDetailtWithParamDic:@{@"model":_normalDataArr[i]} Success:^(id responseObject) {
+            NSLog(@"请求歌词数据%ld",i);
+            ZSHRankModel *model = responseObject;
+            [_songArr addObject:model];
+            
+            dispatch_group_leave(group);
+        } fail:^(NSError *error) {
+            dispatch_group_leave(group);
+            RLog(@"歌词获取失败");
+        }];
+    }
     
-    NSDictionary *paramDic = @{@"tinguid":self.paramDic[@"tinguid"],@"offset":@(_page)};
-    [_musicLogic loadSingerSongListWithParamDic:paramDic Success:^(id responseObject) {
-        [weakself endTabViewRefresh];
-        [_singerSongArr addObjectsFromArray:responseObject];
-        _normalDataArr = _singerSongArr;
+    dispatch_notify(group, dispatch_get_main_queue(), ^{
+        kWeakSelf(self);
+        NSLog(@"刷新界面");
+        
         [weakself initViewModel];
-    } fail:nil];
+    });
 }
 
 - (void)createUI{
@@ -195,7 +221,6 @@ static NSString *ZSHMusicPlayListCellID = @"ZSHMusicPlayListCell";
 }
 
 - (void)initViewModel {
-    [_songArr removeAllObjects];
     [self.tableViewModel.sectionModelArray removeAllObjects];
     [self.tableViewModel.sectionModelArray addObject:[self storeListSection]];
     [self.tableView reloadData];
@@ -204,63 +229,37 @@ static NSString *ZSHMusicPlayListCellID = @"ZSHMusicPlayListCell";
 //list
 - (ZSHBaseTableViewSectionModel*)storeListSection {
     kWeakSelf(self);
-
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     sectionModel.headerView = self.tabHeadView;
     sectionModel.headerHeight = kRealValue(40);
     
-    for (int i = 0; i < _normalDataArr.count; i++) {
+    for (int i = 0; i < _songArr.count; i++) {
         ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
         [sectionModel.cellModelArray addObject:cellModel];
         cellModel.height = kRealValue(60);
         cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
-            
             ZSHMusicPlayListCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHMusicPlayListCellID forIndexPath:indexPath];
-             NSString *songId = @"";
-            if (kFromClassTypeValue == ZSHFromRankVCToPlayListVC) {
-                ZSHRankModel *rankModel = _rankModelArr[indexPath.row];
-                songId = rankModel.song_id;
-                [cell updateCellWithModel:rankModel];
-               
-            } else if (kFromClassTypeValue == ZSHFromRadioVCToPlayListVC){
-                ZSHRadioDetailSubModel *radioDetailSubModel = _radioDetailModel.songlist[indexPath.row];
-                songId = radioDetailSubModel.songid;
-                [cell updateCellWithRadioDetailModel:radioDetailSubModel];
-                
-            } else if (kFromClassTypeValue == ZSHFromSingerVCToPlayListVC){
-                ZSHRankModel *rankModel = _singerSongArr[indexPath.row];
-                songId = rankModel.song_id;
-                [cell updateCellWithModel:rankModel];
-            } else if (kFromClassTypeValue == ZSHFromLibraryVCToPlayListVC){
-                ZSHRankModel *rankModel = _rankModelArr[indexPath.row];
-                 songId = rankModel.song_id;
+            NSLog(@"数组的个数%ld",_songArr.count);
+            if (_songArr.count) {
+                ZSHRankModel *rankModel = _songArr[indexPath.row];
                 [cell updateCellWithModel:rankModel];
             }
-            
-            [_musicLogic loadSongDetailtWithParamDic:@{@"songid":songId} Success:^(id responseObject) {
-                MusicModel *model = responseObject;
-                if (model) {
-                     [_songArr addObject:model];
-                }
-               
-                _songCountLabel.text = [NSString stringWithFormat:@"共%d首",_songArr.count];
-                
-            } fail:nil];
-            
-            
-            
+           
             return cell;
         };
-        
+
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
             ZSHMusicPlayListCell *cell = [tableView cellForRowAtIndexPath:indexPath];
             UIImageView *authorIV = [_footView viewWithTag:2];
             authorIV.image = cell.headImageView.image;
-            
+
             UILabel *songLabel = [_footView viewWithTag:3];
             songLabel.text = cell.titleLabel.text;
-            
-            [weakself playMusicAction:YES index:indexPath.row];
+
+            if (_songArr.count) {
+                 [weakself playMusicAction:YES index:indexPath.row];
+            }
+           
         };
     }
     return sectionModel;
@@ -336,7 +335,6 @@ static NSString *ZSHMusicPlayListCellID = @"ZSHMusicPlayListCell";
     randomAudo.playerMode = AudioPlayerModeRandomPlay;
     [randomAudo initWithArray:self.songArr index:randomIndex];
     [self presentViewController:randomAudo animated:YES completion:nil];
-    
 }
 
 - (void)footerViewAction{
@@ -345,7 +343,7 @@ static NSString *ZSHMusicPlayListCellID = @"ZSHMusicPlayListCell";
 
 - (void)footerRereshing{
     _page+=10;
-    [self loadData];
+    [self requestData];
     
 }
 

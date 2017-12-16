@@ -49,7 +49,7 @@
     for (int i = 0; i<rankModelArr.count; i++) {
         UILabel *label = _labelArr[i];
         ZSHRankModel *rankModel = rankModelArr[i];
-        label.text = [NSString stringWithFormat:@"%d. %@ - %@",i+1, rankModel.title, rankModel.artist_name];
+        label.text = [NSString stringWithFormat:@"%d. %@ - %@",i+1, rankModel.title, rankModel.author];
     }
 }
 

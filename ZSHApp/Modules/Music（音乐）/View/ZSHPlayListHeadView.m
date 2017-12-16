@@ -8,7 +8,6 @@
 
 #import "ZSHPlayListHeadView.h"
 #import "ZSHRankModel.h"
-#import "ZSHRadioDetailModel.h"
 @interface ZSHPlayListHeadView ()
 
 @property (nonatomic, strong) UIImageView   *bgImageView;

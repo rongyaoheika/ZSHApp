@@ -184,7 +184,6 @@
 		FE1377931F977628003C8DFB /* ZSHManageAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE1377921F977628003C8DFB /* ZSHManageAddressViewController.m */; };
 		FE1377961F977AC3003C8DFB /* ZSHPickView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE1377951F977AC3003C8DFB /* ZSHPickView.m */; };
 		FE1377C11F97AE29003C8DFB /* ZSHManageAddressListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE1377C01F97AE29003C8DFB /* ZSHManageAddressListViewController.m */; };
-		FE1783B51FDB8A880074A08A /* ZSHRadioDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FE1783B41FDB8A880074A08A /* ZSHRadioDetailModel.m */; };
 		FE1783B81FDBD2660074A08A /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = FE1783B61FDBD2650074A08A /* UIImage+ImageEffects.m */; };
 		FE1F761C1F8F191300C45B83 /* ZSHGoodsListView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE1F761B1F8F191300C45B83 /* ZSHGoodsListView.m */; };
 		FE1F761F1F8F3D4100C45B83 /* ZSHTogetherView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE1F761E1F8F3D4100C45B83 /* ZSHTogetherView.m */; };
@@ -239,22 +238,15 @@
 		FE3E00651FDA329900A0F7CA /* ZSHMusicRankCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE3E00641FDA329900A0F7CA /* ZSHMusicRankCell.m */; };
 		FE3E00681FDA6A7300A0F7CA /* ZSHSingerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE3E00671FDA6A7300A0F7CA /* ZSHSingerViewController.m */; };
 		FE3E00891FDA743200A0F7CA /* NSString+time.m in Sources */ = {isa = PBXBuildFile; fileRef = FE3E006E1FDA743200A0F7CA /* NSString+time.m */; };
-		FE3E008A1FDA743200A0F7CA /* MusicPlayer_上一个@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE3E00701FDA743200A0F7CA /* MusicPlayer_上一个@2x.png */; };
-		FE3E008B1FDA743200A0F7CA /* MusicPlayer_下一个@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE3E00711FDA743200A0F7CA /* MusicPlayer_下一个@2x.png */; };
 		FE3E008C1FDA743200A0F7CA /* MusicPlayer_顺序播放@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE3E00721FDA743200A0F7CA /* MusicPlayer_顺序播放@2x.png */; };
 		FE3E008D1FDA743200A0F7CA /* MusicPlayer_下载@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE3E00731FDA743200A0F7CA /* MusicPlayer_下载@2x.png */; };
 		FE3E008E1FDA743200A0F7CA /* MusicPlayer_随机播放@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE3E00741FDA743200A0F7CA /* MusicPlayer_随机播放@2x.png */; };
 		FE3E008F1FDA743200A0F7CA /* MusicPlayer_后退@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE3E00751FDA743200A0F7CA /* MusicPlayer_后退@2x.png */; };
-		FE3E00901FDA743200A0F7CA /* 音乐_播放器_默认模糊背景@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE3E00761FDA743200A0F7CA /* 音乐_播放器_默认模糊背景@2x.png */; };
-		FE3E00911FDA743200A0F7CA /* MusicPlayer_暂停@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE3E00771FDA743200A0F7CA /* MusicPlayer_暂停@2x.png */; };
 		FE3E00921FDA743200A0F7CA /* MusicPlayer_单曲循环@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE3E00781FDA743200A0F7CA /* MusicPlayer_单曲循环@2x.png */; };
-		FE3E00931FDA743200A0F7CA /* MusicPlayer_播放@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE3E00791FDA743200A0F7CA /* MusicPlayer_播放@2x.png */; };
-		FE3E00941FDA743200A0F7CA /* Slider_控制点@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE3E007A1FDA743200A0F7CA /* Slider_控制点@2x.png */; };
 		FE3E00951FDA743200A0F7CA /* 音乐_播放器_默认唱片头像@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE3E007B1FDA743200A0F7CA /* 音乐_播放器_默认唱片头像@2x.png */; };
 		FE3E00961FDA743200A0F7CA /* AudioPlayerController+methods.m in Sources */ = {isa = PBXBuildFile; fileRef = FE3E007D1FDA743200A0F7CA /* AudioPlayerController+methods.m */; };
 		FE3E00971FDA743200A0F7CA /* AudioPlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE3E007E1FDA743200A0F7CA /* AudioPlayerController.m */; };
 		FE3E00981FDA743200A0F7CA /* AudioPlayerController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE3E007F1FDA743200A0F7CA /* AudioPlayerController.xib */; };
-		FE3E00991FDA743200A0F7CA /* MusicModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FE3E00841FDA743200A0F7CA /* MusicModel.m */; };
 		FE3E009A1FDA743200A0F7CA /* RotatingView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE3E00861FDA743200A0F7CA /* RotatingView.m */; };
 		FE3E009D1FDA7C5800A0F7CA /* ZSHRankModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FE3E009C1FDA7C5800A0F7CA /* ZSHRankModel.m */; };
 		FE3E009F1FDA8CD300A0F7CA /* musicPaper.json in Resources */ = {isa = PBXBuildFile; fileRef = FE3E009E1FDA8CD200A0F7CA /* musicPaper.json */; };
@@ -849,8 +841,6 @@
 		FE1377951F977AC3003C8DFB /* ZSHPickView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHPickView.m; sourceTree = "<group>"; };
 		FE1377BF1F97AE29003C8DFB /* ZSHManageAddressListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHManageAddressListViewController.h; sourceTree = "<group>"; };
 		FE1377C01F97AE29003C8DFB /* ZSHManageAddressListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHManageAddressListViewController.m; sourceTree = "<group>"; };
-		FE1783B31FDB8A880074A08A /* ZSHRadioDetailModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHRadioDetailModel.h; sourceTree = "<group>"; };
-		FE1783B41FDB8A880074A08A /* ZSHRadioDetailModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHRadioDetailModel.m; sourceTree = "<group>"; };
 		FE1783B61FDBD2650074A08A /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
 		FE1783B71FDBD2660074A08A /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
 		FE1F761A1F8F191300C45B83 /* ZSHGoodsListView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHGoodsListView.h; sourceTree = "<group>"; };
@@ -952,25 +942,17 @@
 		FE3E00671FDA6A7300A0F7CA /* ZSHSingerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHSingerViewController.m; sourceTree = "<group>"; };
 		FE3E006C1FDA743200A0F7CA /* NSString+time.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+time.h"; sourceTree = "<group>"; };
 		FE3E006E1FDA743200A0F7CA /* NSString+time.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+time.m"; sourceTree = "<group>"; };
-		FE3E00701FDA743200A0F7CA /* MusicPlayer_上一个@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MusicPlayer_上一个@2x.png"; sourceTree = "<group>"; };
-		FE3E00711FDA743200A0F7CA /* MusicPlayer_下一个@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MusicPlayer_下一个@2x.png"; sourceTree = "<group>"; };
 		FE3E00721FDA743200A0F7CA /* MusicPlayer_顺序播放@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MusicPlayer_顺序播放@2x.png"; sourceTree = "<group>"; };
 		FE3E00731FDA743200A0F7CA /* MusicPlayer_下载@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MusicPlayer_下载@2x.png"; sourceTree = "<group>"; };
 		FE3E00741FDA743200A0F7CA /* MusicPlayer_随机播放@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MusicPlayer_随机播放@2x.png"; sourceTree = "<group>"; };
 		FE3E00751FDA743200A0F7CA /* MusicPlayer_后退@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MusicPlayer_后退@2x.png"; sourceTree = "<group>"; };
-		FE3E00761FDA743200A0F7CA /* 音乐_播放器_默认模糊背景@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "音乐_播放器_默认模糊背景@2x.png"; sourceTree = "<group>"; };
-		FE3E00771FDA743200A0F7CA /* MusicPlayer_暂停@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MusicPlayer_暂停@2x.png"; sourceTree = "<group>"; };
 		FE3E00781FDA743200A0F7CA /* MusicPlayer_单曲循环@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MusicPlayer_单曲循环@2x.png"; sourceTree = "<group>"; };
-		FE3E00791FDA743200A0F7CA /* MusicPlayer_播放@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MusicPlayer_播放@2x.png"; sourceTree = "<group>"; };
-		FE3E007A1FDA743200A0F7CA /* Slider_控制点@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Slider_控制点@2x.png"; sourceTree = "<group>"; };
 		FE3E007B1FDA743200A0F7CA /* 音乐_播放器_默认唱片头像@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "音乐_播放器_默认唱片头像@2x.png"; sourceTree = "<group>"; };
 		FE3E007D1FDA743200A0F7CA /* AudioPlayerController+methods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AudioPlayerController+methods.m"; sourceTree = "<group>"; };
 		FE3E007E1FDA743200A0F7CA /* AudioPlayerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioPlayerController.m; sourceTree = "<group>"; };
 		FE3E007F1FDA743200A0F7CA /* AudioPlayerController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AudioPlayerController.xib; sourceTree = "<group>"; };
 		FE3E00801FDA743200A0F7CA /* AudioPlayerController+methods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AudioPlayerController+methods.h"; sourceTree = "<group>"; };
 		FE3E00811FDA743200A0F7CA /* AudioPlayerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioPlayerController.h; sourceTree = "<group>"; };
-		FE3E00831FDA743200A0F7CA /* MusicModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicModel.h; sourceTree = "<group>"; };
-		FE3E00841FDA743200A0F7CA /* MusicModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MusicModel.m; sourceTree = "<group>"; };
 		FE3E00861FDA743200A0F7CA /* RotatingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RotatingView.m; sourceTree = "<group>"; };
 		FE3E00871FDA743200A0F7CA /* RotatingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RotatingView.h; sourceTree = "<group>"; };
 		FE3E009B1FDA7C5800A0F7CA /* ZSHRankModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHRankModel.h; sourceTree = "<group>"; };
@@ -2267,12 +2249,8 @@
 		FE24DA5A1FD9317900965DC8 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				FE3E00831FDA743200A0F7CA /* MusicModel.h */,
 				FE2BC8A41FDEAC0E00E98B2B /* QQLrcModel.h */,
 				FE2BC8A31FDEAC0E00E98B2B /* QQLrcModel.m */,
-				FE3E00841FDA743200A0F7CA /* MusicModel.m */,
-				FE1783B31FDB8A880074A08A /* ZSHRadioDetailModel.h */,
-				FE1783B41FDB8A880074A08A /* ZSHRadioDetailModel.m */,
 				FE24DA621FD942EC00965DC8 /* ZSHRadioModel.h */,
 				FE24DA631FD942EC00965DC8 /* ZSHRadioModel.m */,
 				FE3E009B1FDA7C5800A0F7CA /* ZSHRankModel.h */,
@@ -2733,17 +2711,11 @@
 		FE3E006F1FDA743200A0F7CA /* Image */ = {
 			isa = PBXGroup;
 			children = (
-				FE3E00701FDA743200A0F7CA /* MusicPlayer_上一个@2x.png */,
-				FE3E00711FDA743200A0F7CA /* MusicPlayer_下一个@2x.png */,
 				FE3E00721FDA743200A0F7CA /* MusicPlayer_顺序播放@2x.png */,
 				FE3E00731FDA743200A0F7CA /* MusicPlayer_下载@2x.png */,
 				FE3E00741FDA743200A0F7CA /* MusicPlayer_随机播放@2x.png */,
 				FE3E00751FDA743200A0F7CA /* MusicPlayer_后退@2x.png */,
-				FE3E00761FDA743200A0F7CA /* 音乐_播放器_默认模糊背景@2x.png */,
-				FE3E00771FDA743200A0F7CA /* MusicPlayer_暂停@2x.png */,
 				FE3E00781FDA743200A0F7CA /* MusicPlayer_单曲循环@2x.png */,
-				FE3E00791FDA743200A0F7CA /* MusicPlayer_播放@2x.png */,
-				FE3E007A1FDA743200A0F7CA /* Slider_控制点@2x.png */,
 				FE3E007B1FDA743200A0F7CA /* 音乐_播放器_默认唱片头像@2x.png */,
 			);
 			path = Image;
@@ -4031,7 +4003,7 @@
 					296F9EB71ECC64CE0063A255 = {
 						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = 26ZQGX9T79;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 					};
 					296F9ED01ECC64CE0063A255 = {
 						CreatedOnToolsVersion = 8.3.2;
@@ -4072,19 +4044,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FE3E008A1FDA743200A0F7CA /* MusicPlayer_上一个@2x.png in Resources */,
 				FE2BC8A01FDEAB7A00E98B2B /* QQLrcCell.xib in Resources */,
 				185C6D751FC2C168004EA461 /* cart_default_bg.png in Resources */,
 				FEA1059B1F9B5D06008652D6 /* ZSHSpeedy.h in Resources */,
 				FEA1059C1F9B5D06008652D6 /* ZSHSpeedy.m in Resources */,
-				FE3E00931FDA743200A0F7CA /* MusicPlayer_播放@2x.png in Resources */,
 				FEA1058C1F9B43B8008652D6 /* ClassiftyGoods02.plist in Resources */,
 				FE4BC2B21FE21A3100007C4C /* CityData.plist in Resources */,
 				FE3E00921FDA743200A0F7CA /* MusicPlayer_单曲循环@2x.png in Resources */,
 				FEA1058A1F9B438F008652D6 /* ClassiftyGoods03.plist in Resources */,
 				FEA105841F9B2B4B008652D6 /* ClassiftyGoods01.plist in Resources */,
 				FEA105851F9B2B4B008652D6 /* ClassifyTitles.plist in Resources */,
-				FE3E00941FDA743200A0F7CA /* Slider_控制点@2x.png in Resources */,
 				185C6D7E1FC2C2D2004EA461 /* ShopCarNew.plist in Resources */,
 				185C6D711FC2C168004EA461 /* cart_addBtn_highlight@2x.png in Resources */,
 				FE3E00981FDA743200A0F7CA /* AudioPlayerController.xib in Resources */,
@@ -4093,12 +4062,10 @@
 				FE7502AD1F99CA80002F2708 /* YouLikeGoods.plist in Resources */,
 				FE0F9DC01F94ACD8004F8D2A /* cellData.plist in Resources */,
 				FE5538341F47049D00803128 /* MBHUD_Warn@3x.png in Resources */,
-				FE3E00901FDA743200A0F7CA /* 音乐_播放器_默认模糊背景@2x.png in Resources */,
 				1816F5241F566F320060C4BE /* UMSocialSDKPromptResources.bundle in Resources */,
 				FE5538321F47049D00803128 /* MBHUD_Success@3x.png in Resources */,
 				FE55382D1F47049D00803128 /* MBHUD_Error@2x.png in Resources */,
 				FE55382F1F47049D00803128 /* MBHUD_Info@2x.png in Resources */,
-				FE3E00911FDA743200A0F7CA /* MusicPlayer_暂停@2x.png in Resources */,
 				FE55386B1F4704B800803128 /* Info.plist in Resources */,
 				FE5538301F47049D00803128 /* MBHUD_Info@3x.png in Resources */,
 				185C6D721FC2C168004EA461 /* cart_addBtn_nomal@2x.png in Resources */,
@@ -4111,7 +4078,6 @@
 				FE3E008F1FDA743200A0F7CA /* MusicPlayer_后退@2x.png in Resources */,
 				FE3E008E1FDA743200A0F7CA /* MusicPlayer_随机播放@2x.png in Resources */,
 				FE3E008D1FDA743200A0F7CA /* MusicPlayer_下载@2x.png in Resources */,
-				FE3E008B1FDA743200A0F7CA /* MusicPlayer_下一个@2x.png in Resources */,
 				185C6D771FC2C168004EA461 /* cart_unSelect_btn@2x.png in Resources */,
 				185C6D761FC2C168004EA461 /* cart_selected_btn@2x.png in Resources */,
 				FE3E00951FDA743200A0F7CA /* 音乐_播放器_默认唱片头像@2x.png in Resources */,
@@ -4204,7 +4170,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				18063C5F1FC955D1000F5A00 /* LxGridViewFlowLayout.m in Sources */,
-				FE3E00991FDA743200A0F7CA /* MusicModel.m in Sources */,
 				FE3005F31FC65B0400A801C9 /* ZSHFoodLogic.m in Sources */,
 				185BB9AB1FB53BC6007A96FF /* ZSHLiveUserLevelViewController.m in Sources */,
 				FEA018D41FCBFB1700989FB2 /* ZSHShopCommentCell.m in Sources */,
@@ -4449,7 +4414,6 @@
 				FE1F76221F8F738700C45B83 /* ZSHLiveTabBarController.m in Sources */,
 				FEBD7CA31FA716AC00CE2BA6 /* ZSHGoodsCommentCell.m in Sources */,
 				FE291EF31F8CCD2200D4BBE7 /* ZSHLoginViewController.m in Sources */,
-				FE1783B51FDB8A880074A08A /* ZSHRadioDetailModel.m in Sources */,
 				FEF2B63A1FAC5D39000AEA6E /* ZSHEntertainmentModel.m in Sources */,
 				FED308981FA414D900CD442B /* ZSHHotelDetailDeviceCell.m in Sources */,
 				181AD3171FCCF3C30015D004 /* ZSHAddrModel.m in Sources */,
@@ -4767,8 +4731,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer: dawei hu (LDTZY7Z3JV)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = 26ZQGX9T79;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4855,8 +4819,8 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zoe.TC168;
 				PRODUCT_NAME = "荣耀黑卡";
-				PROVISIONING_PROFILE = "5567da58-60e6-409a-9db6-c9383b94969f";
-				PROVISIONING_PROFILE_SPECIFIER = "dev_profile(1209)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = NO;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/ZSHApp/Define";
@@ -4870,9 +4834,9 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: dawei hu (26ZQGX9T79)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = 26ZQGX9T79;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4959,8 +4923,8 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zoe.TC168;
 				PRODUCT_NAME = "荣耀黑卡";
-				PROVISIONING_PROFILE = "dc0d8a48-736b-4e87-b8f7-01309083e28c";
-				PROVISIONING_PROFILE_SPECIFIER = "dis_profile(1209)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = NO;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/ZSHApp/Define";
@@ -5072,9 +5036,9 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: dawei hu (26ZQGX9T79)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = 26ZQGX9T79;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -5161,8 +5125,8 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zoe.TC168;
 				PRODUCT_NAME = "荣耀黑卡";
-				PROVISIONING_PROFILE = "dc0d8a48-736b-4e87-b8f7-01309083e28c";
-				PROVISIONING_PROFILE_SPECIFIER = "dis_profile(1209)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = NO;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/ZSHApp/Define";

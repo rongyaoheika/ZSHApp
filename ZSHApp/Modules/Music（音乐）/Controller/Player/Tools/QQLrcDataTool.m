@@ -75,7 +75,6 @@
 + (void)getRow:(double)currentTime andLrcs:(NSArray<QQLrcModel *> *)lrcMs completion:(void (^)(NSInteger row, QQLrcModel *lrcModel))completion;{
     __block NSInteger row = 0;
     __block QQLrcModel *lrcModel = [[QQLrcModel alloc] init];
-    
     [lrcMs enumerateObjectsUsingBlock:^(QQLrcModel *lrc, NSUInteger idx, BOOL * _Nonnull stop) {
         
         if (currentTime >= lrc.beginTime  && currentTime <= lrc.endTime) {

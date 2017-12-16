@@ -8,8 +8,7 @@
 
 #import "AudioPlayerController+methods.h"
 #import "QQLrcDataTool.h"
-@interface AudioPlayerController (methods) <UIScrollViewDelegate>
-@end
+
 
 @implementation AudioPlayerController (methods)  
 
@@ -24,7 +23,6 @@
     self.lrcLabel.numberOfLines = 1;
     self.lrcLabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:self.lrcLabel];
-    
     
     self.HUD = [[MBProgressHUD alloc] initWithView:self.view];
     self.HUD.mode = MBProgressHUDModeText;
@@ -51,13 +49,12 @@
 
 
 
-- (void)setImageWith:(MusicModel *)model{
+- (void)setImageWith:(ZSHRankModel *)model{
     /**
      *  添加旋转动画
      */
     [self.rotatingView addAnimation];
-    
-    self.underImageView.image = [UIImage imageNamed:@"音乐_播放器_默认模糊背景"];
+    self.underImageView.image = [UIImage imageNamed:@"music_image"];
     [self.rotatingView.imageView sd_setImageWithURL:[NSURL URLWithString:model.pic_radio] placeholderImage:[UIImage imageNamed:@"音乐_播放器_默认唱片头像"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         if (image) {
             self.underImageView.image = [image applyDarkEffect];
@@ -77,7 +74,7 @@
     [self.lrcView addSubview:self.lrcTVC.tableView];
     self.lrcTVC.tableView.backgroundColor = [UIColor clearColor];
     [self.lrcBackView addSubview:lrcView];
-    self.lrcBackView.delegate = self;
+   
     
     // 歌词的背景视图
     self.lrcBackView.showsHorizontalScrollIndicator = NO;

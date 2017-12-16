@@ -49,23 +49,25 @@
 }
 
 - (void)updateCellWithModel:(ZSHRankModel *)model{
-     NSArray *array = [model.pic_small componentsSeparatedByString:@"@"];
-     [_headImageView sd_setImageWithURL:[NSURL URLWithString:array[0]]];
+    if (model.thumb) {//电台
+         [_headImageView sd_setImageWithURL:[NSURL URLWithString:model.thumb]];
+         _detailLabel.text = model.author;
+    } else {
+        NSArray *array = [model.pic_small componentsSeparatedByString:@"@"];
+        [_headImageView sd_setImageWithURL:[NSURL URLWithString:array[0]]];
+        _detailLabel.text = [NSString stringWithFormat:@"%@  %@",model.author,model.album_title];
+    }
+    
     _titleLabel.text = model.title;
-    _detailLabel.text = [NSString stringWithFormat:@"%@  %@",model.author,model.album_title];
+    
 }
 
-- (void)updateCellWithRadioModel:(ZSHRadioSubModel *)radioSubModel{
-    [_headImageView sd_setImageWithURL:[NSURL URLWithString:radioSubModel.thumb]];
-    _titleLabel.text = radioSubModel.name;
-    _detailLabel.text = [NSString stringWithFormat:@"当前热度为%@万",radioSubModel.value];
+- (void)updateCellWithRadioModel:(ZSHRadioModel *)radioModel{
+    [_headImageView sd_setImageWithURL:[NSURL URLWithString:radioModel.thumb]];
+    _titleLabel.text = radioModel.name;
+    _detailLabel.text = [NSString stringWithFormat:@"当前热度为%@万",radioModel.value];
 }
 
-- (void)updateCellWithRadioDetailModel:(ZSHRadioDetailSubModel *)radioDetailSubModel{
-    [_headImageView sd_setImageWithURL:[NSURL URLWithString:radioDetailSubModel.thumb]];
-    _titleLabel.text = radioDetailSubModel.title;
-    _detailLabel.text = radioDetailSubModel.artist;
-}
 
 - (void)updateCellWithSingerModel:(ZSHSingerModel *)singerModel{
     [_headImageView sd_setImageWithURL:[NSURL URLWithString:singerModel.avatar_small]];

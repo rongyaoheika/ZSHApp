@@ -10,4 +10,9 @@
 
 @implementation ZSHRankModel
 
++ (NSDictionary *)mj_replacedKeyFromPropertyName {
+    RLog(@"执行songid转换");
+    return @{@"artist": @"author"};
+}
+
 @end

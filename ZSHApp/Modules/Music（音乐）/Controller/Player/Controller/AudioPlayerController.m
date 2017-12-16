@@ -10,16 +10,17 @@
 #import "AudioPlayerController+methods.h"
 #import "NSString+time.h"
 #import "QQLrcDataTool.h"
-@interface AudioPlayerController (){
+@interface AudioPlayerController ()<UIScrollViewDelegate>
+{
     AVPlayerItem *playerItem;
     id _playTimeObserver;           // 播放进度观察者
     NSArray *_modelArray;           // 歌曲数组
-    NSArray *_randomArray;          //随机数组
+    NSArray *_randomArray;          // 随机数组
     NSInteger _index;               // 播放标记
     BOOL isPlaying;                 // 播放状态
     BOOL isRemoveNot;               // 是否移除通知
    
-    MusicModel *_playingModel;      // 正在播放的model
+    ZSHRankModel *_playingModel;    // 正在播放的model
     CGFloat _totalTime;             // 总时间
 }
 
@@ -56,6 +57,7 @@ static AudioPlayerController *audioVC;
     [self.paceSlider setThumbImage:[UIImage imageNamed:@"age_icon"] forState:UIControlStateNormal];
     [self creatViews];
     [self addLrcView];
+    self.lrcBackView.delegate = self;
    
     
     // 给进度条添加一个手势（拖动歌词）
@@ -79,14 +81,13 @@ static AudioPlayerController *audioVC;
 }
 
 - (void)updateAudioPlayer{
-    
     if (isRemoveNot) {
         // 如果已经存在 移除通知、KVO，各控件设初始值
         [self removeObserverAndNotification];
         [self initialControls];
         isRemoveNot = NO;
     }
-    MusicModel *model;
+    ZSHRankModel *model;
     // 判断是不是随机播放
     if (_playerMode == AudioPlayerModeRandomPlay) {
         // 如果是随机播放，判断随机数组是否有值
@@ -109,8 +110,12 @@ static AudioPlayerController *audioVC;
     [self updateUIDataWith:model];
     
     // 获取歌词数据
+    model.lrcContent = model.lrcContent?model.lrcContent:@"暂无歌词";
     NSArray<QQLrcModel *> *lrcArr = [QQLrcDataTool getLrcData:model.lrcContent];
     self.lrcTVC.datasource = lrcArr;
+    
+    
+    
 
     playerItem = [AVPlayerItem playerItemWithURL:[NSURL URLWithString:model.file_link]];
     [self.player replaceCurrentItemWithPlayerItem:playerItem];
@@ -131,7 +136,7 @@ static AudioPlayerController *audioVC;
     [self.rotatingView removeAnimation];
 }
 
-- (void)updateUIDataWith:(MusicModel *)model{
+- (void)updateUIDataWith:(ZSHRankModel *)model{
     self.titleLabel.text = model.title;
     self.singerLabel.text = model.author;
     [self setImageWith:model];
@@ -167,6 +172,7 @@ static AudioPlayerController *audioVC;
     _playTimeObserver = [self.player addPeriodicTimeObserverForInterval:CMTimeMake(1, 30) queue:dispatch_get_main_queue() usingBlock:^(CMTime time) {
         // 计算当前在第几秒
         double currentPlayTime = (double)item.currentTime.value/item.currentTime.timescale;
+       
         [weakself updateLrcWithCurrentTime:currentPlayTime];
         [weakself updateVideoSlider:currentPlayTime];
     }];
@@ -272,7 +278,8 @@ static AudioPlayerController *audioVC;
                 _randomArray = [_modelArray sortedArrayUsingComparator:(NSComparator)^(id obj1, id obj2) {
                     return arc4random() % _modelArray.count;
                 }];
-            }break;
+            }
+            break;
         case AudioPlayerModeRandomPlay:
             _playerMode = AudioPlayerModeSinglePlay;
             [_modeButton setImage:[UIImage imageNamed:@"MusicPlayer_单曲循环"] forState:UIControlStateNormal];
@@ -329,7 +336,7 @@ static AudioPlayerController *audioVC;
 }
 
 #pragma mark - 后台UI设置
-- (void)setLockViewWith:(MusicModel*)model currentTime:(CGFloat)currentTime
+- (void)setLockViewWith:(ZSHRankModel*)model currentTime:(CGFloat)currentTime
 {
     NSMutableDictionary *musicInfo = [NSMutableDictionary dictionary];
     // 设置Singer
@@ -395,6 +402,12 @@ static AudioPlayerController *audioVC;
     }
     return _lrcTVC;
 }
+
+- (void)dealloc {
+    isRemoveNot = YES;
+    [self removeObserverAndNotification];
+}
+    
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

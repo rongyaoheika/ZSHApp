@@ -18,5 +18,18 @@ typedef NS_ENUM(NSInteger, ZSHToPlayListVC) {
 
 @interface ZSHPlayListViewController : RootViewController
 
+//歌手歌单列表
+-(void)requestSingerData;
+
+//排行榜歌单列表
+-(void)requestRankDetailListData;
+
+//曲库歌单列表
+-(void)requestLibraryRadioData;
+
+//电台歌单列表
+-(void)requestRadioData;
+
+
 
 @end

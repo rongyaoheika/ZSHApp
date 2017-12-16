@@ -18,7 +18,7 @@
 @property (nonatomic, strong) NSDictionary          *requestDic;
 @property (nonatomic, assign) NSInteger             genderIndex;
 @property (nonatomic, assign) NSInteger             areaIndex;
-
+@property (nonatomic, strong) NSArray               *typeArr;
 @end
 
 static NSString *ZSHMusicPlayListCellID = @"ZSHMusicPlayListCell";
@@ -34,8 +34,8 @@ static NSString *ZSHMusicPlayListCellID = @"ZSHMusicPlayListCell";
 
 - (void)loadData{
 
-//    _genderIndex = -1;
-//    _areaIndex = -1;
+    _genderIndex = -1;
+    _areaIndex = -1;
     _musicLogic = [[ZSHMusicLogic alloc]init];
     _requestDic = @{@"offset":@(0)};
     [self requestData];
@@ -63,9 +63,12 @@ static NSString *ZSHMusicPlayListCellID = @"ZSHMusicPlayListCell";
 - (void)createUI{
     self.title = @"歌手";
     [self addNavigationItemWithImageName:@"live_search" isLeft:NO target:self action:@selector(searchAction) tag:1];
-    
-    NSArray *titleArr = @[@[@"全部",@"内地",@"港台",@"欧美",@"日本",@"韩国",@"其它"],
-  @[@"全部",@"男",@"女",@"组合"],@[@"全部",@"流行",@"嘻哈",@"摇滚",@"电子",@"民谣",@"民歌"]];
+    //@[@"全部",@"流行",@"嘻哈",@"摇滚",@"电子",@"民谣",@"民歌"]
+    NSArray *titleArr = @[@[@"全部",@"内地",@"港台",@"欧美",@"日本",@"韩国"],
+  @[@"全部",@"男",@"女",@"组合"]];
+    _typeArr = @[@[@(-1),@(0),@(1),@(2),@(5),@(6)],
+                 @[@(-1),@(0),@(1),@(2)]
+                ];
     for (NSUInteger i = 0; i<titleArr.count; i++) {
         LXScollTitleView *titleView = [self createTitleViewWithTag:i];
         titleView.frame = CGRectMake(0, KNavigationBarHeight+i*kRealValue(40), KScreenWidth, kRealValue(40));
@@ -80,7 +83,7 @@ static NSString *ZSHMusicPlayListCellID = @"ZSHMusicPlayListCell";
     self.tableView.separatorColor = KZSHColor1D1D1D;
     self.tableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(KNavigationBarHeight + 3*kRealValue(40));
+        make.top.mas_equalTo(KNavigationBarHeight + (titleArr.count)*kRealValue(40));
         make.left.and.right.and.bottom.mas_equalTo(self.view);
     }];
     
@@ -137,23 +140,25 @@ static NSString *ZSHMusicPlayListCellID = @"ZSHMusicPlayListCell";
     titleView.indicatorHeight = 0;
     titleView.selectedBlock = ^(NSInteger index){
         if (tag == 0) {//地区分类
-            _areaIndex = index - 1;
+            _areaIndex = [_typeArr[tag][index]integerValue];
         } else if (tag == 1){//性别
-            _genderIndex = index - 1;
+            _genderIndex = [_typeArr[tag][index]integerValue];
         }
         
-        if (_areaIndex>=0 && _genderIndex>=0) {
+//        _requestDic = @{@"offset":@(0),@"area":@(_areaIndex),@"gender":@(_genderIndex)};
+        
+        if (_areaIndex!=-1 && _genderIndex!=-1) {
             _requestDic = @{@"offset":@(0),@"area":@(_areaIndex),@"gender":@(_genderIndex)};
         }
-        
-        if (_areaIndex>=0 &&_genderIndex == -1 ) {
+
+        if (_areaIndex!=-1 &&_genderIndex == -1 ) {
             _requestDic = @{@"offset":@(0),@"area":@(_areaIndex)};
         }
-        
-        if (_areaIndex==-1 &&_genderIndex >= 0 ) {
+
+        if (_areaIndex==-1 &&_genderIndex != -1 ) {
             _requestDic = @{@"offset":@(0),@"gender":@(_genderIndex)};
         }
-        
+
         if (_areaIndex == -1 && _genderIndex== -1) {
             _requestDic = @{@"offset":@(0)};
         }
@@ -166,7 +171,7 @@ static NSString *ZSHMusicPlayListCellID = @"ZSHMusicPlayListCell";
 
 //上拉刷新
 -(void)footerRereshing{
-    [self endTabViewRefresh];
+    [self requestData];
 }
 
 

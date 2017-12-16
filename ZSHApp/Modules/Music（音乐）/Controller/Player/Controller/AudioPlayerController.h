@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
 #import <MediaPlayer/MediaPlayer.h>
-#import "MusicModel.h"
+#import "ZSHRankModel.h"
 #import "RotatingView.h"   // 旋转View
 #import "ZSHMusicLryViewController.h"
 #import "QQLrcLabel.h"

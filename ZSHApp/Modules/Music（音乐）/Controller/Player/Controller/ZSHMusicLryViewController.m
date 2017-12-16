@@ -53,12 +53,11 @@
 
 /** 实时滚动到指定的行*/
 - (void)setScrollRow:(NSInteger)scrollRow{
-    
     _scrollRow = scrollRow;
     
     if (scrollRow != self.oldScrollRow) {
         
-        //NSLog(@"当前歌词所在的行: ===== %zd", scrollRow);
+        NSLog(@"当前歌词所在的行: ===== %zd", scrollRow);
         
         // tableView 滚动到指定的行
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:scrollRow inSection:0];

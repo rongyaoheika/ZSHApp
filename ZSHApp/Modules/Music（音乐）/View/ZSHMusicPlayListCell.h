@@ -8,18 +8,17 @@
 
 #import "ZSHBaseCell.h"
 #import "ZSHRadioModel.h"
-#import "ZSHRadioDetailModel.h"
 #import "ZSHSingerModel.h"
 #import "ZSHRankModel.h"
-@interface ZSHMusicPlayListCell : ZSHBaseCell
 
+@interface ZSHMusicPlayListCell : ZSHBaseCell
 
 @property (nonatomic, strong) UIImageView *headImageView;
 @property (nonatomic, strong) UILabel     *titleLabel;
 @property (nonatomic, copy) NSString      *imageUrl;
 
-- (void)updateCellWithRadioModel:(ZSHRadioSubModel *)radioModel;
-- (void)updateCellWithRadioDetailModel:(ZSHRadioDetailSubModel *)radioDetailSubModel;
+- (void)updateCellWithRadioModel:(ZSHRadioModel *)radioModel;
 - (void)updateCellWithSingerModel:(ZSHSingerModel *)singerModel;
 - (void)updateCellWithLibraryRankModel:(ZSHRankModel *)rankModel;
+
 @end

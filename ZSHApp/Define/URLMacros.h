@@ -32,14 +32,12 @@
 
 /**开发服务器*/
 
-//#define kUrlRoot                    @"http://192.168.1.134:8081/ZSHINTER/"
-#define kUrlRoot                  @"http://192.168.1.108:8080/ZSHINTER/"
+#define kUrlRoot                  @"http://192.168.1.108:8080/ZSHINTER/"   //洪磊
 
 
 #elif TestSever
 
 /**测试服务器*/
-//#define kUrlRoot                   @"http://192.168.1.108:8080/ZSHINTER/"
 #define kUrlRoot                    @"http://192.168.1.134:8081/ZSHINTER/" //振华
 
 #elif ProductSever
@@ -609,12 +607,7 @@
 //@"http://tingapi.ting.baidu.com/v1/restserver/ting?format=json&calback=&from=webapp_music&method=baidu.ting.billboard.billList&type=1&size=10&offset=0"
 //[NSString stringWithFormat:@"/appmusicin/getbilllist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"BILLLIST"]]
 
-//112:获得歌曲歌词
-//请求地址： appmusicin/getlry?LRY&songid=877578
-// 参数:songid 歌曲id
-#define kUrlLry [NSString stringWithFormat:@"/appmusicin/getlry?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"LRY"]]
 //113:每日推荐歌曲(固定10首)   appmusicin/getrecommandsonglist?SONGLIST
-//参数：songid 歌曲id()根据歌曲类型推荐10首歌曲
 #define kUrlSongList [NSString stringWithFormat:@"appmusicin/getrecommandsonglist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SONGLIST"]]
 //@"http://tingapi.ting.baidu.com/v1/restserver/ting?format=json&calback=&from=webapp_music&method=baidu.ting.song.getRecommandSongList&song_id=877578&num=10"
 //114:歌手列表

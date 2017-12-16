@@ -7,18 +7,8 @@
 //
 
 #import "ZSHBaseModel.h"
-@class ZSHRadioSubModel;
 
 @interface ZSHRadioModel : ZSHBaseModel
-
-@property (nonatomic, copy)   NSString                      *title; //公共频道
-@property (nonatomic, copy)   NSString                      *cid;   //1
-@property (nonatomic, strong) NSArray<ZSHRadioSubModel*>    *channellist;//具体歌曲信息
-
-@end
-
-
-@interface ZSHRadioSubModel : ZSHBaseModel
 
 @property (nonatomic, copy)   NSString    *name;             // "漫步春天"
 @property (nonatomic, copy)   NSString    *channelid;        //"62"
@@ -29,3 +19,5 @@
 @property (nonatomic, copy)   NSString    *cate_sname;       //"推荐频道"
 
 @end
+
+

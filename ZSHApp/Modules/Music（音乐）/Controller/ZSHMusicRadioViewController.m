@@ -17,8 +17,10 @@
 
 @property (nonatomic, strong) LXScollTitleView      *titleView;
 @property (nonatomic, strong) NSArray               *titleArr;
+@property (nonatomic, strong) NSArray               *typeArr;
 @property (nonatomic, strong) ZSHMusicLogic         *musicLogic;
 @property (nonatomic, strong) NSArray               *radioModelArr;
+@property (nonatomic, strong) NSDictionary          *requestDic;
 
 @end
 
@@ -34,7 +36,9 @@ static NSString *ZSHMusicPlayListCellID = @"ZSHMusicPlayListCell";
 }
 
 - (void)loadData{
-    self.titleArr = @[@"全部",@"傍晚",@"最近",@"情感",@"主题",@"场景",@"曲库"];
+    self.titleArr = @[@"全部",@"语种频道",@"风格频道",@"时光频道",@"推荐频道",@"心情频道"];
+    _typeArr = @[@"-1",@"语种频道",@"风格频道",@"时光频道",@"推荐频道",@"心情频道"];
+    _requestDic = @{@"cate_sname":_typeArr[0]};
     [self reloadListData];
     _musicLogic = [[ZSHMusicLogic alloc]init];
     [self requestData];
@@ -48,6 +52,15 @@ static NSString *ZSHMusicPlayListCellID = @"ZSHMusicPlayListCell";
     }
 }
 
+- (void)requestData{
+    kWeakSelf(self);
+    [_musicLogic loadRadioListWithParamDic:_requestDic Success:^(id responseObject) {
+        _radioModelArr = responseObject;
+        [weakself endTabViewRefresh];
+        [weakself initViewModel];
+    } fail:nil];
+    
+}
 
 - (void)createUI{
     self.title = @"电台";
@@ -77,25 +90,21 @@ static NSString *ZSHMusicPlayListCellID = @"ZSHMusicPlayListCell";
 //list
 - (ZSHBaseTableViewSectionModel*)storeListSection {
     kWeakSelf(self);
-    //只显示"公共频道",不显示“歌手频道”
-    ZSHRadioModel *publicModel = _radioModelArr[0];
-    NSArray *radioDataArr = publicModel.channellist;
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
-    for (int i = 0; i <radioDataArr.count; i++) {
+    for (int i = 0; i <_radioModelArr.count; i++) {
         ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
         [sectionModel.cellModelArray addObject:cellModel];
         cellModel.height = kRealValue(60);
         cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
             ZSHMusicPlayListCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHMusicPlayListCellID forIndexPath:indexPath];
-            ZSHRadioSubModel *radioSubModel = radioDataArr[indexPath.row];
-            [cell updateCellWithRadioModel:radioSubModel];
-
+            ZSHRadioModel *radioModel = _radioModelArr[indexPath.row];
+            [cell updateCellWithRadioModel:radioModel];
             return cell;
         };
         
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
-            ZSHRadioSubModel *radioSubModel = radioDataArr[indexPath.row];
-            NSDictionary *paramDic = @{@"ch_name":radioSubModel.ch_name,KFromClassType:@(ZSHFromRadioVCToPlayListVC),@"headImage":radioSubModel.thumb};
+            ZSHRadioModel *radioModel = _radioModelArr[indexPath.row];
+            NSDictionary *paramDic = @{@"ch_name":radioModel.ch_name,KFromClassType:@(ZSHFromRadioVCToPlayListVC),@"headImage":radioModel.thumb};
             ZSHPlayListViewController *playListVC = [[ZSHPlayListViewController alloc]initWithParamDic:paramDic];
             [weakself.navigationController pushViewController:playListVC animated:YES];
         };
@@ -104,17 +113,9 @@ static NSString *ZSHMusicPlayListCellID = @"ZSHMusicPlayListCell";
     return sectionModel;
 }
 
-- (void)requestData{
-    kWeakSelf(self);
-    [_musicLogic loadRadioListSuccess:^(id responseObject) {
-        _radioModelArr = responseObject;
-        [weakself initViewModel];
-    } fail:nil];
-    
-}
-
 //getter
 - (LXScollTitleView *)titleView{
+    kWeakSelf(self);
     if (!_titleView) {
         _titleView = [[LXScollTitleView alloc] initWithFrame:CGRectMake(0, KNavigationBarHeight, KScreenWidth, kRealValue(40))];
         _titleView.normalTitleFont = kPingFangRegular(15);
@@ -123,7 +124,8 @@ static NSString *ZSHMusicPlayListCellID = @"ZSHMusicPlayListCell";
         _titleView.normalColor = KZSHColor929292;
         _titleView.indicatorHeight = 0;
         _titleView.selectedBlock = ^(NSInteger index){
-           
+            _requestDic = @{@"cate_sname":self.typeArr[index]};
+            [weakself requestData];
         };
         
     }
@@ -131,7 +133,7 @@ static NSString *ZSHMusicPlayListCellID = @"ZSHMusicPlayListCell";
 }
 
 - (void)reloadListData{
-    _titleView.titleWidth = KScreenWidth /self.titleArr.count;
+    _titleView.titleWidth = KScreenWidth /4.5;
     [self.titleView reloadViewWithTitles:self.titleArr];
 }
 

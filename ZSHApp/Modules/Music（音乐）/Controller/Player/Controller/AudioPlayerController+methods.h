@@ -24,7 +24,7 @@
  *
  *  @param model 当前的音乐model
  */
-- (void)setImageWith:(MusicModel *)model;
+- (void)setImageWith:(ZSHRankModel *)model;
 
 /**
  *  提示框
