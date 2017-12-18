@@ -84,8 +84,12 @@
 - (void)requestShipDetailWithProductID:(NSString *)productID success:(void (^)(id response))success {
     kWeakSelf(self);
     [PPNetworkHelper POST:kUrlShipDetails parameters:@{@"PRODUCT_ID":productID} success:^(id responseObject) {
-        weakself.goodDetailModel = [ZSHGoodDetailModel mj_objectWithKeyValues:responseObject[@"pd"]];
-        success(nil);
+        if ([responseObject[@"result"] isEqualToString:@"01"]) {
+            weakself.goodDetailModel = [ZSHGoodDetailModel mj_objectWithKeyValues:responseObject[@"pd"]];
+            weakself.goodCommentModelArr = [ZSHGoodCommentModel mj_objectArrayWithKeyValuesArray:responseObject[@"evaList"]];
+            success(nil);
+        }
+        
     } failure:^(NSError *error) {
         RLog(@"请求失败");
     }];
@@ -196,5 +200,25 @@
         RLog(@"请求失败");
     }];
 }
+
+
+// 给商品添加用户评价
+- (void)requestSProductAddEva:(NSDictionary *)dic success:(void (^)(id response))success {
+    [PPNetworkHelper POST:kUrlSProductAddEva parameters:dic success:^(id responseObject) {
+        success(responseObject);
+    } failure:^(NSError *error) {
+        RLog(@"请求失败");
+    }];
+}
+
+// 给商品添加用户评价
+- (void)requestProductEvaList:(NSDictionary *)dic success:(void (^)(id response))success {
+    [PPNetworkHelper POST:kUrlProductEvaList parameters:dic success:^(id responseObject) {
+        success(responseObject);
+    } failure:^(NSError *error) {
+        RLog(@"请求失败");
+    }];
+}
+
 
 @end

@@ -8,11 +8,18 @@
 
 #import "ZSHGoodsSubViewController.h"
 #import "ZSHGoodsChartCell.h"
+#import "ZSHGoodDetailModel.h"
+
+static NSString *ZSHGoodsChartCellID = @"ZSHGoodsChartCell";
+
+
+
 @interface ZSHGoodsSubViewController ()
 
 @end
 
-static NSString *ZSHGoodsChartCellID = @"ZSHGoodsChartCell";
+
+
 @implementation ZSHGoodsSubViewController
 
 - (void)viewDidLoad {
@@ -41,25 +48,36 @@ static NSString *ZSHGoodsChartCellID = @"ZSHGoodsChartCell";
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     [self.tableView setSeparatorColor:KZSHColor1D1D1D];
     [self.tableView setSeparatorInset:UIEdgeInsetsMake(0, 0, 0, 0)];
-    
-    [self.tableView reloadData];
-    
 }
 
 - (void)initViewModel {
     [self.tableViewModel.sectionModelArray removeAllObjects];
     [self.tableViewModel.sectionModelArray addObject:[self storeListSection]];
+    [self.tableView reloadData];
 }
 
 - (ZSHBaseTableViewSectionModel*)storeListSection {
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     NSArray *paramArr = @[
-  @{@"leftTitle":@"材质",@"rightTitle":@"牛皮"},
-  @{@"leftTitle":@"箱包硬度",@"rightTitle":@"软"},
-  @{@"leftTitle":@"颜色",@"rightTitle":@"黑"},
-  @{@"leftTitle":@"图案",@"rightTitle":@"纯色"},
-  @{@"leftTitle":@"大小",@"rightTitle":@"中"}
-  ];
+                          @{@"leftTitle":@"材质",@"rightTitle":@"牛皮"},
+                          @{@"leftTitle":@"箱包硬度",@"rightTitle":@"软"},
+                          @{@"leftTitle":@"颜色",@"rightTitle":@"黑"},
+                          @{@"leftTitle":@"图案",@"rightTitle":@"纯色"},
+                          @{@"leftTitle":@"大小",@"rightTitle":@"中"}
+                          ];
+    
+    NSMutableArray *array = [NSMutableArray array];
+    if(self.paramDic[@"GoodDetailModel"]) {
+        ZSHGoodDetailModel *model  = self.paramDic[@"GoodDetailModel"];
+        NSArray *properties = [model.PROPROPERTY componentsSeparatedByString:@","];
+        for (int i = 0; i < properties.count; i++) {
+            NSArray *keyVaule = [properties[i] componentsSeparatedByString:@":"];
+            [array addObject:[NSDictionary dictionaryWithObjectsAndKeys:keyVaule[0],@"leftTitle", keyVaule[1], @"rightTitle", nil]];
+        }
+        
+    }
+    
+    
     for (int i = 0; i<5; i++) {
         ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
         [sectionModel.cellModelArray addObject:cellModel];
@@ -67,7 +85,9 @@ static NSString *ZSHGoodsChartCellID = @"ZSHGoodsChartCell";
         cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
             ZSHGoodsChartCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHGoodsChartCellID forIndexPath:indexPath];
             [cell updateCellWithParamDic:paramArr[i]];
-            
+            if(array.count) {
+                [cell updateCellWithParamDic:array[i]];
+            }
             return cell;
         };
     }

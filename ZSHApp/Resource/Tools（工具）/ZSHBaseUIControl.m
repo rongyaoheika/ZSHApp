@@ -63,7 +63,7 @@
     labelBtn.backgroundColor = KClearColor;
     
     UILabel *topLabel = [ZSHBaseUIControl createLabelWithParamDic:topDic];
-    topLabel.tag = 1;
+    topLabel.tag = 11;
     [labelBtn addSubview:topLabel];
     [topLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.mas_equalTo(labelBtn);
@@ -73,7 +73,7 @@
     }];
     
     UILabel *bottomLabel = [ZSHBaseUIControl createLabelWithParamDic:bottomDic];
-    bottomLabel.tag = 2;
+    bottomLabel.tag = 21;
     [labelBtn addSubview:bottomLabel];
     [bottomLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.mas_equalTo(topLabel);

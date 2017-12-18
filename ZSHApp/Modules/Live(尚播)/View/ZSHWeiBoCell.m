@@ -130,7 +130,7 @@
     self.avatarImageView.image = [UIImage imageNamed:@"list_user_1"];
     self.dateLabel.text = model.PUBLISHTIME;
     
-    if (![model.CONTENT isEqualToString:@""]) {
+    if (![model.CONTENT isEqualToString:@""] && model.CONTENT != nil) {
         NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
         [paragraphStyle setLineSpacing:5];
         NSString *detailStr = model.CONTENT;

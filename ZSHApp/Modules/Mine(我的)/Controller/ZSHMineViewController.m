@@ -13,16 +13,19 @@
 #import "ZSHMemberCenterViewController.h"
 #import "ZSHTitleContentViewController.h"
 #import "ZSHServiceCenterViewController.h"
+#import "ZSHMineLogic.h"
 
 static NSString *headCellIdentifier     = @"headCell";
 static NSString *bottomCellIdentifier   = @"listCell";
 
 @interface ZSHMineViewController ()
 
-@property (nonatomic, strong) NSArray   *titleArr;
-@property (nonatomic, strong) NSArray   *imageArr;
-@property (nonatomic, strong) NSArray   *pushVCS;
-@property (nonatomic, strong) NSArray   *paramArr;
+@property (nonatomic, strong) NSArray       *titleArr;
+@property (nonatomic, strong) NSArray       *imageArr;
+@property (nonatomic, strong) NSArray       *pushVCS;
+@property (nonatomic, strong) NSArray       *paramArr;
+@property (nonatomic, strong) ZSHMineLogic  *mineLogic;
+@property (nonatomic, strong) NSDictionary  *dataDic;
 
 @end
 
@@ -53,6 +56,8 @@ static NSString *bottomCellIdentifier   = @"listCell";
   @{},@{},@{},@{}];
     
     [self initViewModel];
+    _mineLogic = [[ZSHMineLogic alloc] init];
+    [self requestData];
 }
 
 - (void)createUI{
@@ -68,17 +73,19 @@ static NSString *bottomCellIdentifier   = @"listCell";
     [self.tableView registerClass:[ZSHBaseCell class] forCellReuseIdentifier:headCellIdentifier];
     [self.tableView registerClass:[ZSHBaseCell class] forCellReuseIdentifier:bottomCellIdentifier];
     
-    [self.tableView reloadData];
+
 }
 
 - (void)initViewModel {
     [self.tableViewModel.sectionModelArray removeAllObjects];
     [self.tableViewModel.sectionModelArray addObject:[self storeHeadSection]];
     [self.tableViewModel.sectionModelArray addObject:[self storeListSection]];
+    [self.tableView reloadData];
 }
 
 //head
 - (ZSHBaseTableViewSectionModel*)storeHeadSection {
+    kWeakSelf(self);
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
     [sectionModel.cellModelArray addObject:cellModel];
@@ -92,6 +99,10 @@ static NSString *bottomCellIdentifier   = @"listCell";
             cellView.tag = 2;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             [cell.contentView addSubview:cellView];
+        }
+        if (weakself.dataDic) {
+            ZSHMineHeadView *cellView = [cell.contentView viewWithTag:2];
+            [cellView updateViewWithParamDic:weakself.dataDic];
         }
         
         return cell;
@@ -134,6 +145,14 @@ static NSString *bottomCellIdentifier   = @"listCell";
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)requestData {
+    kWeakSelf(self);
+    [_mineLogic requestCouBlackEnergy:^(id response) {
+        weakself.dataDic = response[@"my"];
+        [weakself initViewModel];
+    }];
 }
 
 

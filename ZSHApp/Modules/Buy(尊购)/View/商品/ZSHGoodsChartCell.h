@@ -10,4 +10,6 @@
 
 @interface ZSHGoodsChartCell : ZSHBaseCell
 
+- (void)updateCellWithKey:(NSString *)key value:(NSString *)value;
+
 @end

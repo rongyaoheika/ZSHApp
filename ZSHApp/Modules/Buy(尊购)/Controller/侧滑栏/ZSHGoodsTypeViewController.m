@@ -108,7 +108,6 @@ static NSString * ZSHBottomListCellID = @"ZSHBottomListCell";
         }
         [cell.contentView addSubview:cellView];
     }
-   
     return cell;
 }
 

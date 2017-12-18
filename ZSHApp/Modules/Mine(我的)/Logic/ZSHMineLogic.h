@@ -57,4 +57,6 @@
 - (void)requestEnergyValueMonth:(void (^)(id response))success;
 // 获取用户会员中心信息
 - (void)requestGetMemberInfo:(void (^)(id response))success;
+// 获取我的优惠券，黑咖币，能量值
+- (void)requestCouBlackEnergy:(void (^)(id response))success;
 @end

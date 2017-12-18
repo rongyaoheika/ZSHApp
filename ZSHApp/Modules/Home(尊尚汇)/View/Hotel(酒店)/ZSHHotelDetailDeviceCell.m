@@ -119,7 +119,7 @@
 #pragma action
 - (void)updateCellWithParamDic:(NSDictionary *)dic{
     //好评
-    UILabel *topLabel = [_commentBtn viewWithTag:1];
+    UILabel *topLabel = [_commentBtn viewWithTag:11];
     NSString *commentStr = @"4.9";
     
     

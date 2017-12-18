@@ -186,5 +186,14 @@
         RLog(@"请求失败");
     }];
 }
+// 获取我的优惠券，黑咖币，能量值
+- (void)requestCouBlackEnergy:(void (^)(id response))success {
+    [PPNetworkHelper POST:kUrlGetMyCouBlackEnergy parameters:@{@"HONOURUSER_ID":HONOURUSER_IDValue} success:^(id responseObject) {
+        success(responseObject);
+    } failure:^(NSError *error) {
+        RLog(@"请求失败");
+    }];
+}
+
 
 @end

@@ -51,10 +51,10 @@
     // Create a gradient to apply to the bottom portion of the graph
     CGColorSpaceRef colorspace = CGColorSpaceCreateDeviceRGB();
     size_t num_locations = 2;
-    CGFloat locations[2] = { 0.0, 1.0 };
+    CGFloat locations[2] = { 1.0, 0.0};
     CGFloat components[8] = {
-        0.35, 0.666, 0.745, 1.0,
-        0.337, 0.698, 0.729, 0.0
+        0.35, 0.67, 0.75, 0.0,
+        0.34, 0.7,  0.73, 1.0,
     };
 
     // Apply the gradient to the bottom portion of the graph
@@ -163,8 +163,8 @@
 
 - (void)updateCellWithDataArr:(NSArray *)dataArr {
     for (int i = 0; i < dataArr.count; i++) {
-        UILabel *score  =  [_btnArr[i] viewWithTag:1];
-        UILabel *name = [_btnArr[i] viewWithTag:2];
+        UILabel *score  =  [_btnArr[i] viewWithTag:11];
+        UILabel *name = [_btnArr[i] viewWithTag:21];
         ZSHEnergyModel *model = dataArr[i];
         score.text = model.SCORE;
         name.text = model.NAME;

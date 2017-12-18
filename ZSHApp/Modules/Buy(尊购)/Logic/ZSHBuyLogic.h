@@ -13,6 +13,7 @@
 #import "ZSHCollectModel.h"
 #import "ZSHGoodDetailModel.h"
 #import "ZSHBuySearchModel.h"
+#import "ZSHGoodCommentModel.h"
 
 @interface ZSHBuyLogic : ZSHBaseLogic
 
@@ -22,6 +23,7 @@
 @property (nonatomic, strong) NSArray<ZSHCollectModel *>                  *collectModelArr;
 @property (nonatomic, strong) ZSHGoodDetailModel                          *goodDetailModel;
 @property (nonatomic, strong) NSArray<ZSHBuySearchModel *>                *buySearchModelArr;
+@property (nonatomic, strong) NSArray<ZSHGoodCommentModel*>               *goodCommentModelArr;
 
 // 尊购首页轮播图
 - (void)requestScarouselfigure:(void (^)(id response))success;
@@ -56,6 +58,9 @@
 - (void)requestCaidan:(void (^)(id response))success;
 // 获取发现中所有的菜单项
 - (void)requestCaidanWithID:(NSString *)caidanID success:(void (^)(id response))success;
+// 给商品添加用户评价
+- (void)requestSProductAddEva:(NSDictionary *)dic success:(void (^)(id response))success;
+- (void)requestProductEvaList:(NSDictionary *)dic success:(void (^)(id response))success;
 
 
 @end

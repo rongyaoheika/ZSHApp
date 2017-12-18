@@ -19,6 +19,7 @@
 #import "ZSHGoodsDetailSubViewController.h"
 #import "ZSHGoodsCommentSubViewController.h"
 #import "ZSHBuyLogic.h"
+#import "ZSHGoodDetailModel.h"
 
 
 
@@ -34,6 +35,7 @@
 @property (nonatomic, strong) UIView                         *lineTitleView;
 @property (nonatomic, strong) ZSHBuyLogic                    *buyLogic;
 @property (nonatomic, assign) NSInteger                      count;
+@property (nonatomic, strong) NSArray                        *paraArr;
 
 @end
 
@@ -60,6 +62,7 @@ static NSString *ZSHGoodsDetailCountCellID = @"ZSHGoodsDetailCountCell";
     self.titleArr = @[@"商品",@"详情",@"评价"];
     self.titleWidth = kScreenWidth/[self.titleArr count];
     self.contentVCS = @[@"ZSHGoodsSubViewController",@"ZSHGoodsDetailSubViewController",@"ZSHGoodsCommentSubViewController"];
+    self.paraArr = @[@{}, @{}, @{}];
     
     UIImage *image = [UIImage imageNamed:@"buy_bag"];
     self.shufflingArray = @[image,image,image];
@@ -91,8 +94,8 @@ static NSString *ZSHGoodsDetailCountCellID = @"ZSHGoodsDetailCountCell";
     
     //注册Cell
     [self.collectionView registerClass:[ZSHDetailGoodReferralCell class] forCellWithReuseIdentifier:ZSHDetailGoodReferralCellID];
-     [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:ZSHDetailGoodBottomCellID];
-     [self.collectionView registerClass:[ZSHGoodsDetailColorCell class] forCellWithReuseIdentifier:ZSHGoodsDetailColorCellID];
+    [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:ZSHDetailGoodBottomCellID];
+    [self.collectionView registerClass:[ZSHGoodsDetailColorCell class] forCellWithReuseIdentifier:ZSHGoodsDetailColorCellID];
     [self.collectionView registerClass:[ZSHGoodsDetailCountCell class] forCellWithReuseIdentifier:ZSHGoodsDetailCountCellID];
     
     kWeakSelf(self);
@@ -111,9 +114,7 @@ static NSString *ZSHGoodsDetailCountCellID = @"ZSHGoodsDetailCountCell";
             confirmOrderVC.goodsModel = _goodModel;
             [self.navigationController pushViewController:confirmOrderVC animated:YES];
         }
-        
     }]];
-    
 }
 
 //下半部分
@@ -260,7 +261,7 @@ static NSString *ZSHGoodsDetailCountCellID = @"ZSHGoodsDetailCountCell";
     self.vcs = [[NSMutableArray alloc]init];
     for (int i = 0; i<self.titleArr.count; i++) {
         Class className = NSClassFromString(self.contentVCS[i]);
-        RootViewController *vc =  [[className alloc]init];
+        RootViewController *vc =  [[className alloc]initWithParamDic:self.paraArr[i]];
         [self.vcs addObject:vc];
     }
     
@@ -304,9 +305,11 @@ static NSString *ZSHGoodsDetailCountCellID = @"ZSHGoodsDetailCountCell";
 
 - (void)requestData {
     kWeakSelf(self);
-    [_buyLogic requestShipDetailWithProductID:_goodModel.PRODUCT_ID success:^(id response) {        
+    [_buyLogic requestShipDetailWithProductID:_goodModel.PRODUCT_ID success:^(id response) {
         [weakself.collectionView reloadData];
         weakself.goodModel.count = NSStringFormat(@"%zd", _count);
+        weakself.paraArr = @[@{@"GoodDetailModel":weakself.buyLogic.goodDetailModel}, @{}, @{@"GoodCommentModelArr":weakself.buyLogic.goodCommentModelArr}];
+        [weakself reloadListData];
     }];
 }
 

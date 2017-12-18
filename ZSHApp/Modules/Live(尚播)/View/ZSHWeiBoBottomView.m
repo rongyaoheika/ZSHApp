@@ -9,6 +9,7 @@
 #import "ZSHWeiBoBottomView.h"
 #import "ZSHLiveLogic.h"
 #import "ZSHReviewViewController.h"
+#import "ZSHWeiBoCell.h"
 
 @interface ZSHWeiBoBottomView ()
 
@@ -59,8 +60,13 @@
             }];
         }
     } else if (btn.tag == 2) { // 评论
-        ZSHReviewViewController *reviewVC = [[ZSHReviewViewController alloc] initWithParamDic:@{@"CircleID":_weiboCellModel.CIRCLE_ID,@"HONOURUSER_ID":_weiboCellModel.HONOURUSER_ID}];
-        [[kAppDelegate getCurrentUIVC].navigationController pushViewController:reviewVC animated:true];
+        if (kFromClassTypeValue == ZSHGoodsCommentSubVCToWeiBoCell) {
+            
+        } else if (kFromClassTypeValue == ZSHWeiboVCToWeiBoCell) {
+            ZSHReviewViewController *reviewVC = [[ZSHReviewViewController alloc] initWithParamDic:@{@"CircleID":_weiboCellModel.CIRCLE_ID,@"HONOURUSER_ID":_weiboCellModel.HONOURUSER_ID}];
+            [[kAppDelegate getCurrentUIVC].navigationController pushViewController:reviewVC animated:true];
+        }
+        
     } else if (btn.tag == 3) { // 礼物
         
     }

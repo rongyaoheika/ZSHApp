@@ -89,9 +89,9 @@
 }
 
 - (void)updateCellWithModel:(ZSHEnergyModel *)model {
-    UILabel *score  =  [_inCircleBtn viewWithTag:1];
+    UILabel *score  =  [_inCircleBtn viewWithTag:11];
     score.text = model.SCORE;
-    UILabel *name = [_inCircleBtn viewWithTag:2];
+    UILabel *name = [_inCircleBtn viewWithTag:21];
     name.text = model.NAME;
     
     
@@ -109,11 +109,11 @@
     [self.rightValueView removeAllSubviews];
     self.leftCircleView.layer.borderColor = ((UIColor *)paramDic[@"leftColor"]).CGColor;
     
-    UILabel *topLabel = [self.inCircleBtn viewWithTag:1];
+    UILabel *topLabel = [self.inCircleBtn viewWithTag:11];
     topLabel.text = paramDic[@"inCircleTopTitle"];
     topLabel.textColor = paramDic[@"leftColor"];
     
-    UILabel *bottomLabel = [self.inCircleBtn viewWithTag:2];
+    UILabel *bottomLabel = [self.inCircleBtn viewWithTag:21];
     bottomLabel.text = paramDic[@"inCircleBottomTitle"];
     bottomLabel.textColor = paramDic[@"leftColor"];
     

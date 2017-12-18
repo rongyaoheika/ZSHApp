@@ -7,6 +7,7 @@
 //
 
 #import "ZSHGoodsChartCell.h"
+#import "ZSHGoodModel.h"
 
 @interface ZSHGoodsChartCell ()
 
@@ -60,6 +61,15 @@
     
     _leftTypeLabel.text = dic[@"leftTitle"];
     _rightDescLabel.text = dic[@"rightTitle"];
+}
+
+- (void)updateCellWithKey:(NSString *)key value:(NSString *)value {
+    _leftTypeLabel.text = key;
+    _rightDescLabel.text = value;
+}
+
+- (void)updateCellWithModel:(ZSHGoodModel *)model {
+//    _rightDescLabel.text
 }
 
 @end

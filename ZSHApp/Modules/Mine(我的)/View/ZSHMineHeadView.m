@@ -112,4 +112,14 @@
         [[kAppDelegate getCurrentUIVC].navigationController pushViewController:vc animated:YES];
 }
 
+
+- (void)updateViewWithParamDic:(NSDictionary *)paramDic {
+    UILabel *friendBottom = [_friendBtn viewWithTag:21];
+    friendBottom.text =NSStringFormat(@"%@",paramDic[@"COUPON"]);
+    UILabel *coinBottom = [_coinBtn viewWithTag:21];
+    coinBottom.text = NSStringFormat(@"%@",paramDic[@"BLACKCOIN"]);
+    UILabel *energyBottom = [_energyBtn viewWithTag:21];
+    energyBottom.text = NSStringFormat(@"%@",paramDic[@"ENERGY"]);
+}
+
 @end
