@@ -11,6 +11,7 @@
 
 @interface ZSHGoodsChartCell ()
 
+@property (nonatomic, strong) UIView  *topLine;
 @property (nonatomic, strong) UILabel *leftTypeLabel;
 @property (nonatomic, strong) UILabel *rightDescLabel;
 @property (nonatomic, strong) UIView  *verticalLineView;
@@ -19,6 +20,15 @@
 @implementation ZSHGoodsChartCell
 
 - (void)setup{
+    _topLine = [[UIView alloc] init];
+    _topLine.backgroundColor = KZSHColor1D1D1D;
+    _topLine.hidden = YES;
+    [self.contentView addSubview:_topLine];
+    [_topLine mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(self);
+        make.left.mas_equalTo(self);
+        make.size.mas_equalTo(CGSizeMake(KScreenWidth, kRealValue(0.5)));
+    }];
     
    NSDictionary *leftTypeLabelDic = @{@"text":@"材质",@"font":kPingFangMedium(12)};
    _leftTypeLabel = [ZSHBaseUIControl createLabelWithParamDic:leftTypeLabelDic];
@@ -31,6 +41,15 @@
     NSDictionary *rightDescLabelDic = @{@"text":@"牛皮",@"font":kPingFangRegular(12)};
     _rightDescLabel = [ZSHBaseUIControl createLabelWithParamDic:rightDescLabelDic];
     [self.contentView addSubview:_rightDescLabel];
+    
+    UIView *bottomLine = [[UIView alloc] init];
+    bottomLine.backgroundColor = KZSHColor1D1D1D;
+    [self.contentView addSubview:bottomLine];
+    [bottomLine mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.mas_equalTo(self);
+        make.left.mas_equalTo(self);
+        make.size.mas_equalTo(CGSizeMake(KScreenWidth, kRealValue(0.5)));
+    }];
     
 }
 
@@ -54,7 +73,12 @@
         make.left.mas_equalTo(_verticalLineView.mas_right).offset(kRealValue(25));
         make.top.and.height.and.right.mas_equalTo(self);
     }];
-    
+}
+
+- (void)setRow:(NSInteger)row{
+    if (_row == 0) {
+        _topLine.hidden = NO;
+    }
 }
 
 - (void)updateCellWithParamDic:(NSDictionary *)dic{

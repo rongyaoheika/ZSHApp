@@ -456,6 +456,7 @@
 		FEC273A71F8E1FD700A0F91A /* ZSHNoticeViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC273A61F8E1FD700A0F91A /* ZSHNoticeViewCell.m */; };
 		FEC702B41FB3195000D5BAA1 /* ZSHEntertainmentDisViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC702B31FB3195000D5BAA1 /* ZSHEntertainmentDisViewController.m */; };
 		FED308981FA414D900CD442B /* ZSHHotelDetailDeviceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FED308971FA414D900CD442B /* ZSHHotelDetailDeviceCell.m */; };
+		FED3C85C1FE7D02900E5F458 /* ZSHGoodsDetailCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FED3C85B1FE7D02900E5F458 /* ZSHGoodsDetailCommentCell.m */; };
 		FEDC1D9B1FC5109200AB0D92 /* ZSHButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEDC1D9A1FC5109200AB0D92 /* ZSHButtonView.m */; };
 		FEDF28F91FB68C1C00CD5756 /* ZSHAgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEDF28F81FB68C1C00CD5756 /* ZSHAgeView.m */; };
 		FEDF290C1FB69C2800CD5756 /* ZSHGuideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEDF290B1FB69C2800CD5756 /* ZSHGuideViewController.m */; };
@@ -1332,6 +1333,8 @@
 		FEC702B31FB3195000D5BAA1 /* ZSHEntertainmentDisViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHEntertainmentDisViewController.m; sourceTree = "<group>"; };
 		FED308961FA414D900CD442B /* ZSHHotelDetailDeviceCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHHotelDetailDeviceCell.h; sourceTree = "<group>"; };
 		FED308971FA414D900CD442B /* ZSHHotelDetailDeviceCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHHotelDetailDeviceCell.m; sourceTree = "<group>"; };
+		FED3C85A1FE7D02900E5F458 /* ZSHGoodsDetailCommentCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHGoodsDetailCommentCell.h; sourceTree = "<group>"; };
+		FED3C85B1FE7D02900E5F458 /* ZSHGoodsDetailCommentCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHGoodsDetailCommentCell.m; sourceTree = "<group>"; };
 		FEDC1D991FC5109200AB0D92 /* ZSHButtonView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHButtonView.h; sourceTree = "<group>"; };
 		FEDC1D9A1FC5109200AB0D92 /* ZSHButtonView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHButtonView.m; sourceTree = "<group>"; };
 		FEDF28F71FB68C1C00CD5756 /* ZSHAgeView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHAgeView.h; sourceTree = "<group>"; };
@@ -2868,6 +2871,8 @@
 				FEBD7CA21FA716AC00CE2BA6 /* ZSHGoodsCommentCell.m */,
 				FEBD7CAD1FA730F600CE2BA6 /* ZSHGoodsDetailSubCell.h */,
 				FEBD7CAE1FA730F600CE2BA6 /* ZSHGoodsDetailSubCell.m */,
+				FED3C85A1FE7D02900E5F458 /* ZSHGoodsDetailCommentCell.h */,
+				FED3C85B1FE7D02900E5F458 /* ZSHGoodsDetailCommentCell.m */,
 			);
 			path = "商品";
 			sourceTree = "<group>";
@@ -4008,7 +4013,7 @@
 					296F9EB71ECC64CE0063A255 = {
 						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = 26ZQGX9T79;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 					296F9ED01ECC64CE0063A255 = {
 						CreatedOnToolsVersion = 8.3.2;
@@ -4540,6 +4545,7 @@
 				FE4BC2BB1FE21A6100007C4C /* HCCoordinateConvert.m in Sources */,
 				FE1F76281F8F795C00C45B83 /* ZSHCustomWaterFlowLayout.m in Sources */,
 				FE7AF23B1FA383FA00E1A648 /* ZSHHotelDetailHeadCell.m in Sources */,
+				FED3C85C1FE7D02900E5F458 /* ZSHGoodsDetailCommentCell.m in Sources */,
 				FE3E00961FDA743200A0F7CA /* AudioPlayerController+methods.m in Sources */,
 				FEDC1D9B1FC5109200AB0D92 /* ZSHButtonView.m in Sources */,
 				FEDF29241FB6CFD300CD5756 /* ZSHQuotaHeadView.m in Sources */,
@@ -4737,8 +4743,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer: dawei hu (LDTZY7Z3JV)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = 26ZQGX9T79;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4825,8 +4831,8 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zoe.TC168;
 				PRODUCT_NAME = "荣耀黑卡";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "5567da58-60e6-409a-9db6-c9383b94969f";
+				PROVISIONING_PROFILE_SPECIFIER = "dev_profile(1209)";
 				SKIP_INSTALL = NO;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/ZSHApp/Define";
@@ -4840,9 +4846,9 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: dawei hu (26ZQGX9T79)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = 26ZQGX9T79;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4929,8 +4935,8 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zoe.TC168;
 				PRODUCT_NAME = "荣耀黑卡";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "dc0d8a48-736b-4e87-b8f7-01309083e28c";
+				PROVISIONING_PROFILE_SPECIFIER = "dis_profile(1209)";
 				SKIP_INSTALL = NO;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/ZSHApp/Define";
@@ -5042,9 +5048,9 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: dawei hu (26ZQGX9T79)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = 26ZQGX9T79;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -5131,8 +5137,8 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zoe.TC168;
 				PRODUCT_NAME = "荣耀黑卡";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "dc0d8a48-736b-4e87-b8f7-01309083e28c";
+				PROVISIONING_PROFILE_SPECIFIER = "dis_profile(1209)";
 				SKIP_INSTALL = NO;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/ZSHApp/Define";

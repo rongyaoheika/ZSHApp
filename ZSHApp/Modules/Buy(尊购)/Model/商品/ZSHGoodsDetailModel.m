@@ -16,7 +16,9 @@
 {
     //只在初始化的时候调用一次就Ok
     if(!_cellHeight){
-        ZSHGoodsDetailSubCell *cell = [[ZSHGoodsDetailSubCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"ZSHGoodsDetailSubCell"];
+//        ZSHGoodsDetailSubCell *cell = [[ZSHGoodsDetailSubCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"ZSHGoodsDetailSubCell"];
+        
+         ZSHGoodsDetailSubCell *cell = [[ZSHGoodsDetailSubCell alloc]init];
         // 调用cell的方法计算出高度
         _cellHeight = [cell rowHeightWithCellModel:self];
     }

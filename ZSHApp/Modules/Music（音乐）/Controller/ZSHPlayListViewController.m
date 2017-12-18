@@ -165,12 +165,12 @@ static NSString *ZSHMusicPlayListCellID = @"ZSHMusicPlayListCell";
 
 //加载歌曲MP3,歌词
 - (void)requestLryData{
-    NSLog(@"开始请求数据");
+    RLog(@"开始请求数据");
     __block dispatch_group_t group = dispatch_group_create();
     for (int i = 0; i<_normalDataArr.count; i++) {
         dispatch_group_enter(group);
         [_musicLogic loadSongDetailtWithParamDic:@{@"model":_normalDataArr[i]} Success:^(id responseObject) {
-            NSLog(@"请求歌词数据%ld",i);
+            RLog(@"请求歌词数据%ld",i);
             ZSHRankModel *model = responseObject;
             [_songArr addObject:model];
             
@@ -183,8 +183,7 @@ static NSString *ZSHMusicPlayListCellID = @"ZSHMusicPlayListCell";
     
     dispatch_notify(group, dispatch_get_main_queue(), ^{
         kWeakSelf(self);
-        NSLog(@"刷新界面");
-        
+        RLog(@"刷新界面");
         [weakself initViewModel];
     });
 }

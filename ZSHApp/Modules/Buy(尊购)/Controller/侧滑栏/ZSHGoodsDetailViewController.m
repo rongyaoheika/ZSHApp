@@ -21,13 +21,15 @@
 #import "ZSHBuyLogic.h"
 #import "ZSHGoodDetailModel.h"
 
-
+#import "ZSHGoodsChartCell.h"
+#import "ZSHGoodsDetailSubCell.h"
+#import "ZSHGoodsDetailModel.h"
+#import "ZSHGoodsDetailCommentCell.h"
 
 @interface ZSHGoodsDetailViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic, strong) NSArray                        *titleArr;
 @property (nonatomic, strong) LXScollTitleView               *titleView;
-@property (nonatomic, strong) LXScrollContentView            *contentView;
 @property (nonatomic, strong) NSArray                        *contentVCS;
 @property (nonatomic, assign) CGFloat                        titleWidth;
 @property (nonatomic, strong) NSMutableArray                 *vcs;
@@ -37,17 +39,24 @@
 @property (nonatomic, assign) NSInteger                      count;
 @property (nonatomic, strong) NSArray                        *paraArr;
 
+
+@property (nonatomic, strong)NSArray                  *chartDataArr;
+@property (nonatomic, strong)NSMutableArray           *dataArr;
+
 @end
 
 //header
 static NSString *ZSHDetailShufflingHeadViewID = @"ZSHDetailShufflingHeadView";
-static NSString *ZSHDetailTitleHeadViewID = @"ZSHDetailTitleHeadView";
 
 //cell
 static NSString *ZSHDetailGoodReferralCellID = @"ZSHDetailGoodReferralCell";
 static NSString *ZSHDetailGoodBottomCellID = @"ZSHDetailGoodBottomCellID";
 static NSString *ZSHGoodsDetailColorCellID = @"ZSHGoodsDetailColorCell";
 static NSString *ZSHGoodsDetailCountCellID = @"ZSHGoodsDetailCountCell";
+
+static NSString *ZSHGoodsChartCellID = @"ZSHGoodsChartCell";
+static NSString *ZSHGoodsDetailSubCellID = @"ZSHGoodsDetailSubCell";
+static NSString *ZSHGoodsDetailCommentCellID = @"ZSHGoodsDetailCommentCell";
 
 @implementation ZSHGoodsDetailViewController
 
@@ -61,12 +70,27 @@ static NSString *ZSHGoodsDetailCountCellID = @"ZSHGoodsDetailCountCell";
 - (void)loadData{
     self.titleArr = @[@"商品",@"详情",@"评价"];
     self.titleWidth = kScreenWidth/[self.titleArr count];
-    self.contentVCS = @[@"ZSHGoodsSubViewController",@"ZSHGoodsDetailSubViewController",@"ZSHGoodsCommentSubViewController"];
     self.paraArr = @[@{}, @{}, @{}];
+//    self.contentVCS = @[@"ZSHGoodsSubViewController",@"ZSHGoodsDetailSubViewController",@"ZSHGoodsCommentSubViewController"];
     
     UIImage *image = [UIImage imageNamed:@"buy_bag"];
     self.shufflingArray = @[image,image,image];
     _buyLogic = [[ZSHBuyLogic alloc] init];
+    
+    _chartDataArr = @[
+                    @{@"leftTitle":@"材质",@"rightTitle":@"牛皮"},
+                    @{@"leftTitle":@"箱包硬度",@"rightTitle":@"软"},
+                    @{@"leftTitle":@"颜色",@"rightTitle":@"黑"},
+                    @{@"leftTitle":@"图案",@"rightTitle":@"纯色"},
+                    @{@"leftTitle":@"大小",@"rightTitle":@"中"}
+                    ];
+    NSArray *baseDataArr = @[
+                             @{@"detailPicture":@"good_detail_1",@"detailText":@"古驰-1921年创立于意大利佛罗伦萨，是全球卓越的奢华精品品牌之一。以其卓越的品质和精湛的意大利工艺闻名于世，旗下精品包括皮件、鞋履、香氛、珠宝和腕表"},
+                             @{@"detailPicture":@"good_detail_2",@"detailText":@""},
+                             @{@"detailPicture":@"good_detail_3",@"detailText":@""}
+                             ];
+    self.dataArr = [ZSHGoodsDetailModel mj_objectArrayWithKeyValuesArray:baseDataArr];
+    
     [self requestData];
 }
 
@@ -90,13 +114,24 @@ static NSString *ZSHGoodsDetailCountCellID = @"ZSHGoodsDetailCountCell";
     
     //注册Header
     [self.collectionView registerClass:[ZSHGoodsDetailShufflingHeadView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:ZSHDetailShufflingHeadViewID];
-     [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:ZSHDetailTitleHeadViewID];
-    
+
     //注册Cell
     [self.collectionView registerClass:[ZSHDetailGoodReferralCell class] forCellWithReuseIdentifier:ZSHDetailGoodReferralCellID];
     [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:ZSHDetailGoodBottomCellID];
-    [self.collectionView registerClass:[ZSHGoodsDetailColorCell class] forCellWithReuseIdentifier:ZSHGoodsDetailColorCellID];
+
+     [self.collectionView registerClass:[ZSHGoodsDetailColorCell class] forCellWithReuseIdentifier:ZSHGoodsDetailColorCellID];
     [self.collectionView registerClass:[ZSHGoodsDetailCountCell class] forCellWithReuseIdentifier:ZSHGoodsDetailCountCellID];
+    
+    //商品,详情，评价
+    [self.collectionView registerClass:[ZSHGoodsChartCell class] forCellWithReuseIdentifier:ZSHGoodsChartCellID];
+     [self.collectionView registerClass:[ZSHGoodsDetailSubCell class] forCellWithReuseIdentifier:ZSHGoodsDetailSubCellID];
+     [self.collectionView registerClass:[ZSHGoodsDetailCommentCell class] forCellWithReuseIdentifier:ZSHGoodsDetailCommentCellID];
+    
+    [self.view addSubview:self.titleView];
+    self.titleView.frame = CGRectMake(0, KNavigationBarHeight, kScreenWidth, kRealValue(40));
+    self.titleView.alpha = 0;
+    [self reloadListData];
+    
     
     kWeakSelf(self);
     [self.view addSubview:[ZSHBaseUIControl createBottomButton:^(NSInteger index) {
@@ -123,15 +158,14 @@ static NSString *ZSHGoodsDetailCountCellID = @"ZSHGoodsDetailCountCell";
 - (LXScollTitleView *)titleView{
     if (!_titleView) {
         _titleView = [[LXScollTitleView alloc] initWithFrame:CGRectMake(0, 5, KScreenWidth, kRealValue(40))];
+        _titleView.selectedIndex = 0;
         _titleView.normalTitleFont = kPingFangMedium(12);
         _titleView.selectedTitleFont = kPingFangMedium(12);
-        _titleView.selectedColor = KZSHColor929292;
+        _titleView.selectedColor = KZSHColorF29E19;
         _titleView.normalColor = KZSHColor929292;
         _titleView.indicatorHeight = 0;
-        __weak typeof(self) weakSelf = self;
         _titleView.selectedBlock = ^(NSInteger index){
-            __weak typeof(self) strongSelf = weakSelf;
-            strongSelf.contentView.currentIndex = index;
+
         };
         _titleView.backgroundColor = [UIColor clearColor];
         _titleView.titleWidth = self.titleWidth;
@@ -139,31 +173,20 @@ static NSString *ZSHGoodsDetailCountCellID = @"ZSHGoodsDetailCountCell";
     return _titleView;
 }
 
-- (LXScrollContentView *)contentView{
-    if (!_contentView) {
-        _contentView = [[LXScrollContentView alloc] initWithFrame:CGRectZero];
-        _contentView.backgroundColor = KClearColor;
-        kWeakSelf(self);
-        _contentView.scrollBlock = ^(NSInteger index){
-            __weak typeof(self) strongSelf = weakself;
-            strongSelf.titleView.selectedIndex = index;
-        };
-    }
-    return _contentView;
-}
-
-
 //上半部分
-
 #pragma mark - <UICollectionViewDataSource>
 - (NSInteger) numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    return 2;
+    return 4;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     if (section == 0){
         return 3;
-    } else if (section == 1){
+    } else if (section == 1){//商品
+        return _chartDataArr.count;
+    } else if (section == 2){//详情
+        return _dataArr.count;
+    } else if (section == 3){//评价
         return 1;
     }
     return 0;
@@ -174,19 +197,19 @@ static NSString *ZSHGoodsDetailCountCellID = @"ZSHGoodsDetailCountCell";
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     UICollectionViewCell *gridcell = nil;
     if (indexPath.section == 0) {
-        if (indexPath.row == 0) {
+        if (indexPath.row == 0) { // 商品轮播图
             ZSHDetailGoodReferralCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:ZSHDetailGoodReferralCellID forIndexPath:indexPath];
-            cell.goodTitleLabel.text = _goodModel.goods_title;  // _goodTitle;
-            cell.goodPriceLabel.text = _goodModel.price;        //[NSString stringWithFormat:@"¥ %@",_goodPrice];
-            cell.goodSubtitleLabel.text = _goodModel.main_title; //_goodSubtitle;
+            cell.goodTitleLabel.text = _goodModel.goods_title;
+            cell.goodPriceLabel.text = _goodModel.price;
+            cell.goodSubtitleLabel.text = _goodModel.main_title;
             gridcell = cell;
-        } else if(indexPath.row == 1){
+        } else if(indexPath.row == 1){ //商品颜色
             ZSHGoodsDetailColorCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:ZSHGoodsDetailColorCellID forIndexPath:indexPath];
             if (_buyLogic.goodDetailModel) {
                 [cell updateCellWithModel:_buyLogic.goodDetailModel];
             }
             gridcell = cell;
-        } else if(indexPath.row == 2){
+        } else if(indexPath.row == 2){ //商品数量
             ZSHGoodsDetailCountCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:ZSHGoodsDetailCountCellID forIndexPath:indexPath];
             cell.NumberChangeBlock = ^(NSInteger count) {
                 _count = count;
@@ -194,23 +217,28 @@ static NSString *ZSHGoodsDetailCountCellID = @"ZSHGoodsDetailCountCell";
             };
             gridcell = cell;
         }
-    } else if(indexPath.section == 1){
-        ZSHGoodsDetailColorCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:ZSHDetailGoodBottomCellID forIndexPath:indexPath];
-        if (![cell.contentView viewWithTag:2]) {
-            [cell.contentView addSubview:self.contentView];
-            self.contentView.tag = 2;
-            [self.contentView mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.edges.mas_equalTo(cell.contentView);
-            }];
-        }
-        gridcell = cell;
-    }
         
+    } else if (indexPath.section == 1){ //商品，详情，评价
+        ZSHGoodsChartCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:ZSHGoodsChartCellID forIndexPath:indexPath];
+        cell.row = indexPath.row;
+        [cell updateCellWithParamDic:_chartDataArr[indexPath.row]];
+        gridcell = cell;
+    } else if (indexPath.section == 2){ //详情
+        ZSHGoodsDetailSubCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:ZSHGoodsDetailSubCellID forIndexPath:indexPath];
+        ZSHGoodsDetailModel *model = _dataArr[indexPath.row];
+        [cell updateCellWithModel:model];
+        gridcell = cell;
+        
+    } else if (indexPath.section == 3){//评价
+        ZSHGoodsDetailCommentCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:ZSHGoodsDetailCommentCellID forIndexPath:indexPath];
+         gridcell = cell;
+
+    }
+   
     return gridcell;
 }
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
-    
     UICollectionReusableView *reusableview = nil;
     if (kind == UICollectionElementKindSectionHeader){
         if (indexPath.section == 0) {
@@ -220,10 +248,6 @@ static NSString *ZSHGoodsDetailCountCellID = @"ZSHGoodsDetailCountCell";
                 [headerView updateCellWithModel:_buyLogic.goodDetailModel];
             }
             reusableview = headerView;
-        } else if (indexPath.section == 1) {
-            reusableview = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:ZSHDetailTitleHeadViewID forIndexPath:indexPath];
-            [reusableview addSubview:self.lineTitleView];
-            [self reloadListData];
         }
     }
     return reusableview;
@@ -231,10 +255,30 @@ static NSString *ZSHGoodsDetailCountCellID = @"ZSHGoodsDetailCountCell";
 
 #pragma mark - item宽高
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 0) { //商品详情
-        return (indexPath.row == 0) ? CGSizeMake(kScreenWidth, [ZSHSpeedy zsh_calculateTextSizeWithText:_goodTitle WithTextFont:kPingFangMedium(12) WithMaxW:kScreenWidth*0.7].height + [ZSHSpeedy zsh_calculateTextSizeWithText:_goodSubtitle WithTextFont:kPingFangRegular(12) WithMaxW:kScreenWidth*0.7].height + kRealValue(50)) : CGSizeMake(kScreenWidth, 50);
-    } else {
-        return CGSizeMake(kScreenWidth, kScreenHeight*0.3 - kRealValue(40));
+    switch (indexPath.section) {
+        case 0:{
+            return (indexPath.row == 0) ? CGSizeMake(kScreenWidth, [ZSHSpeedy zsh_calculateTextSizeWithText:_goodTitle WithTextFont:kPingFangMedium(12) WithMaxW:kScreenWidth*0.7].height + [ZSHSpeedy zsh_calculateTextSizeWithText:_goodSubtitle WithTextFont:kPingFangRegular(12) WithMaxW:kScreenWidth*0.7].height + kRealValue(50)) : CGSizeMake(kScreenWidth, 50);
+            break;
+        }
+        case 1:{
+            return CGSizeMake(kScreenWidth, kRealValue(40));
+            break;
+        }
+        case 2:{
+            ZSHGoodsDetailModel *model = _dataArr[indexPath.row];
+            return CGSizeMake(kScreenWidth, model.cellHeight);
+            break;
+        }
+        case 3:{
+            return CGSizeMake(kScreenWidth,kRealValue(100));
+            break;
+        }
+            
+        default:{
+            return CGSizeMake(0, 0);
+             break;
+        }
+         
     }
 }
 
@@ -242,9 +286,8 @@ static NSString *ZSHGoodsDetailCountCellID = @"ZSHGoodsDetailCountCell";
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
     if (section == 0) {
          return CGSizeMake(kScreenWidth, kScreenHeight*0.3);
-    } else {
-       return CGSizeMake(kScreenWidth,KBottomNavH);
     }
+    return CGSizeMake(0, 0);
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -258,14 +301,6 @@ static NSString *ZSHGoodsDetailCountCellID = @"ZSHGoodsDetailCountCell";
 
 - (void)reloadListData{
     [self.titleView reloadViewWithTitles:self.titleArr];
-    self.vcs = [[NSMutableArray alloc]init];
-    for (int i = 0; i<self.titleArr.count; i++) {
-        Class className = NSClassFromString(self.contentVCS[i]);
-        RootViewController *vc =  [[className alloc]initWithParamDic:self.paraArr[i]];
-        [self.vcs addObject:vc];
-    }
-    
-    [self.contentView reloadViewWithChildVcs:self.vcs parentVC:self];
 }
 
 - (void)bottomButtonClick:(UIButton *)button{
@@ -284,23 +319,6 @@ static NSString *ZSHGoodsDetailCountCellID = @"ZSHGoodsDetailCountCell";
 //            [[NSNotificationCenter defaultCenter]postNotificationName:@"ClikAddOrBuy" object:nil userInfo:dict];
 //        });
     }
-}
-
-- (UIView *)lineTitleView {
-    if (!_lineTitleView) {
-        _lineTitleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, KBottomNavH)];
-        
-        UIView *topLineView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, 0.5)];
-        topLineView.backgroundColor = KZSHColor1D1D1D;
-        [_lineTitleView addSubview:topLineView];
-        
-        [_lineTitleView addSubview:self.titleView];
-        
-        UIView *bottomLineView = [[UIView alloc]initWithFrame:CGRectMake(0, KBottomNavH-0.5, KScreenWidth, 0.5)];
-        bottomLineView.backgroundColor = KZSHColor1D1D1D;
-        [_lineTitleView addSubview:bottomLineView];
-    }
-    return _lineTitleView;
 }
 
 - (void)requestData {
@@ -333,6 +351,30 @@ static NSString *ZSHGoodsDetailCountCellID = @"ZSHGoodsDetailCountCell";
         [ac addAction:cancelAction];
         [weakself presentViewController:ac animated:YES completion:nil];
     }];
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    CGFloat offsetToShow = 200.0;
+    CGFloat alpha = 1 - (offsetToShow - scrollView.contentOffset.y) / offsetToShow;
+    self.titleView.alpha = alpha;
+    
+    RLog(@"alpha== %f",alpha);
+    
+    if (scrollView.contentOffset.y >= 200 && scrollView.contentOffset.y <= 400) {
+        if ( self.titleView.selectedIndex != 0) {
+             self.titleView.selectedIndex = 0;
+        }
+       
+    } else  if (scrollView.contentOffset.y > 400 && scrollView.contentOffset.y <= 800) {
+        if ( self.titleView.selectedIndex != 1) {
+            self.titleView.selectedIndex = 1;
+        }
+    } else if (scrollView.contentOffset.y > 800) {
+        if ( self.titleView.selectedIndex != 2) {
+            self.titleView.selectedIndex = 2;
+        }
+    }
+    
 }
 
 @end

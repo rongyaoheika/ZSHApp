@@ -15,4 +15,6 @@
 //更新cell内容
 - (void)updateCellWithParamDic:(NSDictionary *)dic;
 - (void)updateCellWithModel:(ZSHBaseModel *)model;
+
+-(CGFloat)rowHeightWithCellModel:(ZSHBaseModel *)model;
 @end
