@@ -212,7 +212,8 @@
         _resultLabel.text = @"待评价";
     } else if ([model.ORDERSTATUS isEqualToString:@"0040004"]) {
         _resultLabel.text = @"已完成";
-    }
+    }  else
+        _resultLabel.text = model.ORDERSTATUS;
 }
 
 - (void)setOrderStatus:(NSString *)orderStatus {
@@ -224,7 +225,8 @@
         _resultLabel.text = @"待评价";
     } else if ([orderStatus isEqualToString:@"0040004"]) {
         _resultLabel.text = @"已完成";
-    }
+    } else
+        _resultLabel.text = orderStatus;
 }
 
 

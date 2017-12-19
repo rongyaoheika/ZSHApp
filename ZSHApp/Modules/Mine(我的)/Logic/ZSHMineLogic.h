@@ -59,4 +59,6 @@
 - (void)requestGetMemberInfo:(void (^)(id response))success;
 // 获取我的优惠券，黑咖币，能量值
 - (void)requestCouBlackEnergy:(void (^)(id response))success;
+// 给商品添加用户评价
+- (void)requestSProductAddEva:(NSDictionary *)dic success:(void (^)(id response))success;
 @end

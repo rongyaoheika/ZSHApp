@@ -109,7 +109,7 @@
 - (void)requestPersonDetailWithPersonalID:(NSString *)personalID success:(void (^)(id response))success {
     kWeakSelf(self);
     [PPNetworkHelper POST:kUrlPersonalDet parameters:@{@"PERSONAL_ID":personalID} success:^(id responseObject) {
-        weakself.personalDetailModel = [ZSHPersonalDetailModel mj_objectWithKeyValues:responseObject[@"pd"]];
+        weakself.personalDetailModelArr = [ZSHPersonalDetailModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"]];
         success(nil);
     } failure:^(NSError *error) {
         RLog(@"请求失败");

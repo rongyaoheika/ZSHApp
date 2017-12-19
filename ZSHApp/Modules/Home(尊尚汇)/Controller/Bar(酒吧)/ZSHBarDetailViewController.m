@@ -15,7 +15,6 @@
 #import "ZSHBottomBlurPopView.h"
 #import "ZSHNoticeViewCell.h"
 #import "ZSHHotelPayViewController.h"
-#import "ZSHGoodsCommentSubViewController.h"
 #import "ZSHHotelLogic.h"
 #import "ZSHShopCommentViewController.h"
 #import "ZSHHotelCell.h"

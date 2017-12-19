@@ -11,6 +11,7 @@
 #import "ZSHOrderModel.h"
 #import "ZSHOrderDetailViewController.h"
 #import "ZSHMineLogic.h"
+#import "ZSHCommentViewController.h"
 
 static NSString *cellIdentifier = @"listCell";
 
@@ -116,8 +117,19 @@ static NSString *cellIdentifier = @"listCell";
         };
         
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
-            ZSHOrderDetailViewController *orderDetailVC = [[ZSHOrderDetailViewController alloc]init];
-            [weakself.navigationController pushViewController:orderDetailVC animated:YES];
+            UIViewController *vc = nil;
+            if ([self.paramDic[@"tag"] integerValue] == 0) {// 尊购
+                ZSHGoodOrderModel *orderModel = weakself.dataArr[indexPath.row];
+                if ([orderModel.ORDERSTATUS isEqualToString:@"待评价"]) {
+                    vc = [[ZSHCommentViewController alloc] initWithParamDic:@{KFromClassType:@(ZSHFromGoodsMineVCToCommentVC), @"PRODUCT_ID":orderModel.PRODUCT_ID}];
+                    
+                } else {
+                    vc = [[ZSHOrderDetailViewController alloc]init];
+                }
+            } else {
+                vc = [[ZSHOrderDetailViewController alloc]init];
+            }
+            [weakself.navigationController pushViewController:vc animated:YES];
         };
     }
     

@@ -18,7 +18,7 @@
 @interface ZSHBuyLogic : ZSHBaseLogic
 
 @property (nonatomic, strong) NSArray<ZSHPersonalModel *>                 *personModelArr;
-@property (nonatomic, strong) ZSHPersonalDetailModel                      *personalDetailModel;
+@property (nonatomic, strong) NSArray<ZSHPersonalDetailModel*>            *personalDetailModelArr;
 @property (nonatomic, strong) NSArray<ZSHGoodModel *>                     *goodsListModelArr;
 @property (nonatomic, strong) NSArray<ZSHCollectModel *>                  *collectModelArr;
 @property (nonatomic, strong) ZSHGoodDetailModel                          *goodDetailModel;

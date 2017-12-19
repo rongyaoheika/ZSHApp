@@ -11,6 +11,5 @@
 
 @interface ZSHTailorDetailView : ZSHBaseCell
 
-- (void)updateCellWithModel:(ZSHPersonalDetailModel *)model index:(NSInteger)index;
-
++ (CGFloat)updateCellHeightWithModel:(ZSHPersonalDetailModel *)model;
 @end

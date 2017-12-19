@@ -10,11 +10,11 @@
 
 @interface ZSHFindModel : ZSHBaseModel
 
-@property (nonatomic, strong) NSString *VIDEOBACKIMAGE;
-@property (nonatomic, strong) NSString *SHOWVIDEO;
-@property (nonatomic, strong) NSString *PAGEVIEWS;
-@property (nonatomic, strong) NSString *DISCOVERVIDEO_ID;
-@property (nonatomic, strong) NSString *TITLE;
+@property (nonatomic, copy) NSString *VIDEOBACKIMAGE;
+@property (nonatomic, copy) NSString *SHOWVIDEO;
+@property (nonatomic, copy) NSString *PAGEVIEWS;
+@property (nonatomic, copy) NSString *DISCOVERVIDEO_ID;
+@property (nonatomic, copy) NSString *TITLE;
 
 
 @end

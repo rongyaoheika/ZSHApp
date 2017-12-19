@@ -15,12 +15,8 @@
 #import "ZSHGoodsDetailCountCell.h"
 #import "ZSHConfirmOrderViewController.h"
 #import "ZSHGoodModel.h"
-#import "ZSHGoodsSubViewController.h"
-#import "ZSHGoodsDetailSubViewController.h"
-#import "ZSHGoodsCommentSubViewController.h"
 #import "ZSHBuyLogic.h"
 #import "ZSHGoodDetailModel.h"
-
 #import "ZSHGoodsChartCell.h"
 #import "ZSHGoodsDetailSubCell.h"
 #import "ZSHGoodsDetailModel.h"
@@ -81,12 +77,12 @@ static NSString *ZSHGoodsDetailCommentCellID = @"ZSHGoodsDetailCommentCell";
 //                    @{@"leftTitle":@"图案",@"rightTitle":@"纯色"},
 //                    @{@"leftTitle":@"大小",@"rightTitle":@"中"}
 //                    ];
-    NSArray *baseDataArr = @[
-                             @{@"detailPicture":@"good_detail_1",@"detailText":@"古驰-1921年创立于意大利佛罗伦萨，是全球卓越的奢华精品品牌之一。以其卓越的品质和精湛的意大利工艺闻名于世，旗下精品包括皮件、鞋履、香氛、珠宝和腕表"},
-                             @{@"detailPicture":@"good_detail_2",@"detailText":@""},
-                             @{@"detailPicture":@"good_detail_3",@"detailText":@""}
-                             ];
-    self.dataArr = [ZSHGoodsDetailModel mj_objectArrayWithKeyValuesArray:baseDataArr];
+//    NSArray *baseDataArr = @[
+//                             @{@"detailPicture":@"good_detail_1",@"detailText":@"古驰-1921年创立于意大利佛罗伦萨，是全球卓越的奢华精品品牌之一。以其卓越的品质和精湛的意大利工艺闻名于世，旗下精品包括皮件、鞋履、香氛、珠宝和腕表"},
+//                             @{@"detailPicture":@"good_detail_2",@"detailText":@""},
+//                             @{@"detailPicture":@"good_detail_3",@"detailText":@""}
+//                             ];
+//    self.dataArr = [ZSHGoodsDetailModel mj_objectArrayWithKeyValuesArray:baseDataArr];
     
     [self requestData];
 }
@@ -223,7 +219,6 @@ static NSString *ZSHGoodsDetailCommentCellID = @"ZSHGoodsDetailCommentCell";
     } else if (indexPath.section == 2){ //详情
         ZSHGoodsDetailSubCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:ZSHGoodsDetailSubCellID forIndexPath:indexPath];
         ZSHGoodsDetailModel *model = _dataArr[indexPath.row];
- 
         [cell updateCellWithModel:model];
         gridcell = cell;
         
@@ -327,14 +322,8 @@ static NSString *ZSHGoodsDetailCommentCellID = @"ZSHGoodsDetailCommentCell";
     for (int i = 0; i < allKeys.count; i++) {
         [array addObject:[NSDictionary dictionaryWithObjectsAndKeys:allKeys[i],@"leftTitle", dic[allKeys[i]], @"rightTitle", nil]];
     }
-    return [ZSHGoodsDetailModel mj_objectArrayWithKeyValuesArray:array];
+    return array;
 }
-
-//NSArray *baseDataArr = @[
-//                         @{@"detailPicture":@"good_detail_1",@"detailText":@"古驰-1921年创立于意大利佛罗伦萨，是全球卓越的奢华精品品牌之一。以其卓越的品质和精湛的意大利工艺闻名于世，旗下精品包括皮件、鞋履、香氛、珠宝和腕表"},
-//                         @{@"detailPicture":@"good_detail_2",@"detailText":@""},
-//                         @{@"detailPicture":@"good_detail_3",@"detailText":@""}
-//                         ];
 
 - (NSArray *)splitGoodDetail {
     NSMutableArray *arr = [NSMutableArray array];
@@ -347,7 +336,7 @@ static NSString *ZSHGoodsDetailCommentCellID = @"ZSHGoodsDetailCommentCell";
         }
         [arr addObject:[NSDictionary dictionaryWithObjectsAndKeys:_buyLogic.goodDetailModel.PRODETAILSIMG[i], @"detailPicture",string, @"detailText",nil]];
     }
-    return arr;
+    return [ZSHGoodsDetailModel mj_objectArrayWithKeyValuesArray:arr];
 }
 
 

@@ -11,13 +11,11 @@
 @interface ZSHPersonalDetailModel : ZSHBaseModel
 
 
-@property (nonatomic, strong) NSString *DOWNINTROTITLE;
-@property (nonatomic, strong) NSString *UPINTROTITLE;
-@property (nonatomic, strong) NSString *UPINTROCONTENT;
-@property (nonatomic, strong) NSString *PERSONALDET_ID;
-@property (nonatomic, strong) NSString *DOWNINTROCONTENT;
-@property (nonatomic, strong) NSArray  *PERSONALDETIMGS;
-@property (nonatomic, strong) NSString *PERSONAL_ID;
-@property (nonatomic, strong) NSString *PERSONALDETINTRO;
+@property (nonatomic, copy) NSString *SHOWIMG;
+@property (nonatomic, copy) NSString *PERSONAL_ID;
+@property (nonatomic, copy) NSString *TYPE;
+@property (nonatomic, copy) NSString *CONTENT;
+@property (nonatomic, copy) NSString *PERSONALDET_ID;
+@property (nonatomic, copy) NSString *TITLE;
 
 @end

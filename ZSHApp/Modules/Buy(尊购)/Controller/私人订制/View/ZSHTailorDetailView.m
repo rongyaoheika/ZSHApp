@@ -36,11 +36,6 @@
     [self addSubview:activityImage];
     self.activityImage = activityImage;
     
-}
-
-- (void)layoutSubviews{
-    [super layoutSubviews];
-    
     [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self).offset(kRealValue(25));
         make.left.mas_equalTo(self);
@@ -61,7 +56,49 @@
         make.right.mas_equalTo(self);
         make.bottom.mas_equalTo(self);
     }];
+    
 }
+
+- (void)updateCellWithModel:(ZSHPersonalDetailModel *)model {
+    if (model.SHOWIMG) {
+        [_activityImage sd_setImageWithURL:[NSURL URLWithString:model.SHOWIMG]];
+    }
+    
+    if (model.TITLE) {
+        NSArray *titlesArr = [model.TITLE componentsSeparatedByString:@","];
+        if (titlesArr.count == 1) {
+            _titleLabel.text  = titlesArr[0];
+        }
+    }
+    if (model.CONTENT) {
+        _contentLabel.text = model.CONTENT;
+    }
+    
+}
+
+
+
+
++ (CGFloat)updateCellHeightWithModel:(ZSHPersonalDetailModel *)model {
+    
+    CGFloat height = 0;
+    if (model.SHOWIMG) {
+        height += 225;
+    }
+
+    if (model.TITLE) {
+        NSArray *titlesArr = [model.TITLE componentsSeparatedByString:@","];
+        height+= ((25+15)*titlesArr.count);
+    }
+    
+    if (model.CONTENT) {
+        CGSize detailLabelSize = [model.CONTENT boundingRectWithSize:CGSizeMake(kScreenWidth-kRealValue(30), MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12],NSForegroundColorAttributeName:KZSHColor929292} context:nil].size;
+        height += detailLabelSize.height;
+    }
+    
+    return height;
+}
+
 
 //- (void)updateCellWithParamDic:(NSDictionary *)dic{
 //    self.activityImage.image = [UIImage imageNamed:dic[@"bgImageName"]];
@@ -72,16 +109,16 @@
 //    
 //}
 
-- (void)updateCellWithModel:(ZSHPersonalDetailModel *)model index:(NSInteger)index {
-    [self.activityImage sd_setImageWithURL:[NSURL URLWithString:model.PERSONALDETIMGS[index]]];
-    if (index == 1) {
-        self.titleLabel.text = model.UPINTROTITLE;
-        self.contentLabel.text = model.UPINTROCONTENT;
-    } else if (index == 2) {
-        self.titleLabel.text = model.DOWNINTROTITLE;
-        self.contentLabel.text = model.DOWNINTROCONTENT;
-    }
-    [self layoutIfNeeded];
-}
+//- (void)updateCellWithModel:(ZSHPersonalDetailModel *)model index:(NSInteger)index {
+//    [self.activityImage sd_setImageWithURL:[NSURL URLWithString:model.PERSONALDETIMGS[index]]];
+//    if (index == 1) {
+//        self.titleLabel.text = model.UPINTROTITLE;
+//        self.contentLabel.text = model.UPINTROCONTENT;
+//    } else if (index == 2) {
+//        self.titleLabel.text = model.DOWNINTROTITLE;
+//        self.contentLabel.text = model.DOWNINTROCONTENT;
+//    }
+//    [self layoutIfNeeded];
+//}
 
 @end

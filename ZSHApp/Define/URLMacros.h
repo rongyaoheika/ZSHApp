@@ -685,7 +685,7 @@
 //参数：  HONOURUSER_ID  用户ID/
 //请求地址：/appuserin/getmemberinfo.do?MEMBERINFO  (混淆码)
 #define kUrlGetMemberInfo [NSString stringWithFormat:@"/appuserin/getmemberinfo.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"MEMBERINFO"]]
-//133.给商品添加用户评价
+//133.给商品添加用户评价（完成）
 //参数：PRODUCT_ID 商品id/HONOURUSER_ID 评价用户id/EVALUATECONTENT 评价内容/EVALUATECOINT 评价分数
 //ISSHOW 是否为匿名评价（0为不匿名，1为匿名）
 //请求地址：/appshipin/sproductaddeva.do?SPRODUCTADDEVA（混淆码）
@@ -694,7 +694,7 @@
 //参数：  PRODUCT_ID  商品ID/
 //请求地址：/appshipin/productevalist.do?PRODUCTEVALIST  (混淆码)
 #define kUrlProductEvaList [NSString stringWithFormat:@"/appshipin/sproductaddeva.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"PRODUCTEVALIST"]]
-//135.获取我的优惠券，黑咖币，能量值()
+//135.获取我的优惠券，黑咖币，能量值(完成)
 //参数：  HONOURUSER_ID  用户ID/
 //请求地址：/getmycoublackenergy.do?MYCOUBLACKENERGY  (混淆码)
 #define kUrlGetMyCouBlackEnergy [NSString stringWithFormat:@"/appuserin/getmycoublackenergy.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"MYCOUBLACKENERGY"]]

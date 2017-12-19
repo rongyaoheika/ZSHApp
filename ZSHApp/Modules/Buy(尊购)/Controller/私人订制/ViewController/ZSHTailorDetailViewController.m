@@ -73,26 +73,26 @@ static NSString *cellIdentifier = @"TailorDetailCell";
     [self.tableViewModel.sectionModelArray removeAllObjects];
     [self.tableViewModel.sectionModelArray addObject:[self storeListSection]];
     [self.tableView reloadData];
-    [self.headImage sd_setImageWithURL:[NSURL URLWithString:_buyLogic.personalDetailModel.PERSONALDETIMGS[0]]];
+//    [self.headImage sd_setImageWithURL:[NSURL URLWithString:_buyLogic.personalDetailModel.PERSONALDETIMGS[0]]];
 }
 
 - (ZSHBaseTableViewSectionModel*)storeListSection {
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
-    if (_buyLogic.personalDetailModel.PERSONALDETIMGS.count) {
-        for (int i = 0; i<_buyLogic.personalDetailModel.PERSONALDETIMGS.count-1; i++) {
-            ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
-            [sectionModel.cellModelArray addObject:cellModel];
-            cellModel.height = kRealValue(331);
-            cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
-                //需要注册，无需判空
-                ZSHTailorDetailView *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
-                [cell updateCellWithModel:_buyLogic.personalDetailModel index:indexPath.row+1];
-                return cell;
-            };
-            cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
-            };
-            
-        }
+    
+    for (int i = 0; i<_buyLogic.personalDetailModelArr.count; i++) {
+        ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
+        [sectionModel.cellModelArray addObject:cellModel];
+        ZSHPersonalDetailModel *model = _buyLogic.personalDetailModelArr[i];
+        cellModel.height = [ZSHTailorDetailView updateCellHeightWithModel:model];
+        cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
+            //需要注册，无需判空
+            ZSHTailorDetailView *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
+            [cell updateCellWithModel:_buyLogic.personalDetailModelArr[indexPath.row]];
+            return cell;
+        };
+        
+        cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
+        };
     }
     return sectionModel;
 }

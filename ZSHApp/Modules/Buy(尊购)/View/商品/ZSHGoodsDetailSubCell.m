@@ -49,7 +49,7 @@
 }
 
 - (void)updateCellWithModel:(ZSHGoodsDetailModel *)model{
-    [self.detailImageView setImage:[UIImage imageNamed:model.detailPicture]];
+    [self.detailImageView sd_setImageWithURL:[NSURL URLWithString:model.detailPicture]];
     self.detailLabel.text = model.detailText;
 }
 
