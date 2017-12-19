@@ -66,16 +66,6 @@ static NSString *ZSHGoodsChartCellID = @"ZSHGoodsChartCell";
                           @{@"leftTitle":@"大小",@"rightTitle":@"中"}
                           ];
     
-    NSMutableArray *array = [NSMutableArray array];
-    if(self.paramDic[@"GoodDetailModel"]) {
-        ZSHGoodDetailModel *model  = self.paramDic[@"GoodDetailModel"];
-        NSArray *properties = [model.PROPROPERTY componentsSeparatedByString:@","];
-        for (int i = 0; i < properties.count; i++) {
-            NSArray *keyVaule = [properties[i] componentsSeparatedByString:@":"];
-            [array addObject:[NSDictionary dictionaryWithObjectsAndKeys:keyVaule[0],@"leftTitle", keyVaule[1], @"rightTitle", nil]];
-        }
-        
-    }
     
     
     for (int i = 0; i<5; i++) {
@@ -85,9 +75,6 @@ static NSString *ZSHGoodsChartCellID = @"ZSHGoodsChartCell";
         cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
             ZSHGoodsChartCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHGoodsChartCellID forIndexPath:indexPath];
             [cell updateCellWithParamDic:paramArr[i]];
-            if(array.count) {
-                [cell updateCellWithParamDic:array[i]];
-            }
             return cell;
         };
     }

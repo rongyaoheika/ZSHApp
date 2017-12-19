@@ -37,11 +37,9 @@
 @property (nonatomic, strong) UIView                         *lineTitleView;
 @property (nonatomic, strong) ZSHBuyLogic                    *buyLogic;
 @property (nonatomic, assign) NSInteger                      count;
-@property (nonatomic, strong) NSArray                        *paraArr;
-
-
-@property (nonatomic, strong)NSArray                  *chartDataArr;
-@property (nonatomic, strong)NSMutableArray           *dataArr;
+@property (nonatomic, strong) NSArray                  *chartDataArr;
+@property (nonatomic, strong) NSArray                  *dataArr;
+@property (nonatomic, strong) NSArray                  *commentArr;
 
 @end
 
@@ -70,20 +68,19 @@ static NSString *ZSHGoodsDetailCommentCellID = @"ZSHGoodsDetailCommentCell";
 - (void)loadData{
     self.titleArr = @[@"商品",@"详情",@"评价"];
     self.titleWidth = kScreenWidth/[self.titleArr count];
-    self.paraArr = @[@{}, @{}, @{}];
 //    self.contentVCS = @[@"ZSHGoodsSubViewController",@"ZSHGoodsDetailSubViewController",@"ZSHGoodsCommentSubViewController"];
     
     UIImage *image = [UIImage imageNamed:@"buy_bag"];
     self.shufflingArray = @[image,image,image];
     _buyLogic = [[ZSHBuyLogic alloc] init];
     
-    _chartDataArr = @[
-                    @{@"leftTitle":@"材质",@"rightTitle":@"牛皮"},
-                    @{@"leftTitle":@"箱包硬度",@"rightTitle":@"软"},
-                    @{@"leftTitle":@"颜色",@"rightTitle":@"黑"},
-                    @{@"leftTitle":@"图案",@"rightTitle":@"纯色"},
-                    @{@"leftTitle":@"大小",@"rightTitle":@"中"}
-                    ];
+//    _chartDataArr = @[
+//                    @{@"leftTitle":@"材质",@"rightTitle":@"牛皮"},
+//                    @{@"leftTitle":@"箱包硬度",@"rightTitle":@"软"},
+//                    @{@"leftTitle":@"颜色",@"rightTitle":@"黑"},
+//                    @{@"leftTitle":@"图案",@"rightTitle":@"纯色"},
+//                    @{@"leftTitle":@"大小",@"rightTitle":@"中"}
+//                    ];
     NSArray *baseDataArr = @[
                              @{@"detailPicture":@"good_detail_1",@"detailText":@"古驰-1921年创立于意大利佛罗伦萨，是全球卓越的奢华精品品牌之一。以其卓越的品质和精湛的意大利工艺闻名于世，旗下精品包括皮件、鞋履、香氛、珠宝和腕表"},
                              @{@"detailPicture":@"good_detail_2",@"detailText":@""},
@@ -119,13 +116,13 @@ static NSString *ZSHGoodsDetailCommentCellID = @"ZSHGoodsDetailCommentCell";
     [self.collectionView registerClass:[ZSHDetailGoodReferralCell class] forCellWithReuseIdentifier:ZSHDetailGoodReferralCellID];
     [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:ZSHDetailGoodBottomCellID];
 
-     [self.collectionView registerClass:[ZSHGoodsDetailColorCell class] forCellWithReuseIdentifier:ZSHGoodsDetailColorCellID];
+    [self.collectionView registerClass:[ZSHGoodsDetailColorCell class] forCellWithReuseIdentifier:ZSHGoodsDetailColorCellID];
     [self.collectionView registerClass:[ZSHGoodsDetailCountCell class] forCellWithReuseIdentifier:ZSHGoodsDetailCountCellID];
     
     //商品,详情，评价
     [self.collectionView registerClass:[ZSHGoodsChartCell class] forCellWithReuseIdentifier:ZSHGoodsChartCellID];
-     [self.collectionView registerClass:[ZSHGoodsDetailSubCell class] forCellWithReuseIdentifier:ZSHGoodsDetailSubCellID];
-     [self.collectionView registerClass:[ZSHGoodsDetailCommentCell class] forCellWithReuseIdentifier:ZSHGoodsDetailCommentCellID];
+    [self.collectionView registerClass:[ZSHGoodsDetailSubCell class] forCellWithReuseIdentifier:ZSHGoodsDetailSubCellID];
+    [self.collectionView registerClass:[ZSHGoodsDetailCommentCell class] forCellWithReuseIdentifier:ZSHGoodsDetailCommentCellID];
     
     [self.view addSubview:self.titleView];
     self.titleView.frame = CGRectMake(0, KNavigationBarHeight, kScreenWidth, kRealValue(40));
@@ -187,7 +184,7 @@ static NSString *ZSHGoodsDetailCommentCellID = @"ZSHGoodsDetailCommentCell";
     } else if (section == 2){//详情
         return _dataArr.count;
     } else if (section == 3){//评价
-        return 1;
+        return _commentArr.count;
     }
     return 0;
 }
@@ -226,12 +223,15 @@ static NSString *ZSHGoodsDetailCommentCellID = @"ZSHGoodsDetailCommentCell";
     } else if (indexPath.section == 2){ //详情
         ZSHGoodsDetailSubCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:ZSHGoodsDetailSubCellID forIndexPath:indexPath];
         ZSHGoodsDetailModel *model = _dataArr[indexPath.row];
+ 
         [cell updateCellWithModel:model];
         gridcell = cell;
         
     } else if (indexPath.section == 3){//评价
         ZSHGoodsDetailCommentCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:ZSHGoodsDetailCommentCellID forIndexPath:indexPath];
-         gridcell = cell;
+        ZSHGoodCommentModel *model = _commentArr[indexPath.row];
+        [cell updateCellWithModel:model];
+        gridcell = cell;
 
     }
    
@@ -321,13 +321,45 @@ static NSString *ZSHGoodsDetailCommentCellID = @"ZSHGoodsDetailCommentCell";
     }
 }
 
+- (NSArray *)splitGoodProperty:(NSDictionary *)dic {
+    NSMutableArray *array = [NSMutableArray array];
+    NSArray *allKeys = [dic allKeys];
+    for (int i = 0; i < allKeys.count; i++) {
+        [array addObject:[NSDictionary dictionaryWithObjectsAndKeys:allKeys[i],@"leftTitle", dic[allKeys[i]], @"rightTitle", nil]];
+    }
+    return [ZSHGoodsDetailModel mj_objectArrayWithKeyValuesArray:array];
+}
+
+//NSArray *baseDataArr = @[
+//                         @{@"detailPicture":@"good_detail_1",@"detailText":@"古驰-1921年创立于意大利佛罗伦萨，是全球卓越的奢华精品品牌之一。以其卓越的品质和精湛的意大利工艺闻名于世，旗下精品包括皮件、鞋履、香氛、珠宝和腕表"},
+//                         @{@"detailPicture":@"good_detail_2",@"detailText":@""},
+//                         @{@"detailPicture":@"good_detail_3",@"detailText":@""}
+//                         ];
+
+- (NSArray *)splitGoodDetail {
+    NSMutableArray *arr = [NSMutableArray array];
+    for (int i = 0; i<_buyLogic.goodDetailModel.PRODETAILSIMG.count; i++) {
+        NSString *string;
+        if (i == 0) {
+            string = _buyLogic.goodDetailModel.PRODETAILSINT;
+        } else {
+            string = @"";
+        }
+        [arr addObject:[NSDictionary dictionaryWithObjectsAndKeys:_buyLogic.goodDetailModel.PRODETAILSIMG[i], @"detailPicture",string, @"detailText",nil]];
+    }
+    return arr;
+}
+
+
 - (void)requestData {
     kWeakSelf(self);
     [_buyLogic requestShipDetailWithProductID:_goodModel.PRODUCT_ID success:^(id response) {
         [weakself.collectionView reloadData];
         weakself.goodModel.count = NSStringFormat(@"%zd", _count);
-        weakself.paraArr = @[@{@"GoodDetailModel":weakself.buyLogic.goodDetailModel}, @{}, @{@"GoodCommentModelArr":weakself.buyLogic.goodCommentModelArr}];
-        [weakself reloadListData];
+        weakself.chartDataArr = [weakself splitGoodProperty:weakself.buyLogic.goodDetailModel.PROPROPERTY];
+        weakself.dataArr = [weakself splitGoodDetail];
+        weakself.commentArr = weakself.buyLogic.goodCommentModelArr;
+        [weakself.collectionView reloadData];
     }];
 }
 

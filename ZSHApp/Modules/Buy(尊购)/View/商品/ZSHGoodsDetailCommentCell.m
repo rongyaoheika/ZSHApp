@@ -7,6 +7,7 @@
 //
 
 #import "ZSHGoodsDetailCommentCell.h"
+#import "ZSHGoodCommentModel.h"
 
 @interface ZSHGoodsDetailCommentCell()
 
@@ -40,11 +41,6 @@
     [self.detailLabel setLineBreakMode:NSLineBreakByWordWrapping];
     [self.contentView addSubview:self.detailLabel];
     
-}
-
-- (void)layoutSubviews{
-    [super layoutSubviews];
-    
     [self.avatarImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self).offset(kRealValue(15));
         make.top.mas_equalTo(self).offset(kRealValue(10));
@@ -72,6 +68,10 @@
     }];
 }
 
+- (void)layoutSubviews{
+    [super layoutSubviews];
+}
+
 - (CGFloat)rowHeightWithCellModel:(ZSHBaseCell *)model{
 //    [self updateCellWithModel:model];
 //    kWeakSelf(self);
@@ -85,8 +85,11 @@
     return kRealValue(100);
 }
 
-- (void)updateCellWithModel:(ZSHBaseCell *)model{
-   
+- (void)updateCellWithModel:(ZSHGoodCommentModel *)model{
+    [_avatarImageView sd_setImageWithURL:[NSURL URLWithString:model.PORTRAIT]];
+    _nameLabel.text = model.NICKNAME;
+    _detailLabel.text = model.EVALUATECONTENT;
+    _dateLabel.text = model.EVALUATEDATE;
 }
 
 /*

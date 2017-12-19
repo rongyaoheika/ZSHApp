@@ -15,15 +15,15 @@
 /** 商品ID */
 @property (nonatomic, copy) NSString *BRAND_ID;
 /** 图片URL */
-@property (nonatomic, copy) NSString *PRODUCTIMG;
+@property (nonatomic, strong) NSArray  *PRODUCTIMG;
 /** 颜色 */
 @property (nonatomic, copy) NSString *PROCOLOR;
 /** ProduceID */
 @property (nonatomic, copy) NSString *PRODUCT_ID;
-
-@property (nonatomic, copy) NSString *PRODETAILSIMG;
+// 属性详情
+@property (nonatomic, strong) NSArray *PRODETAILSIMG;
 /** 属性 */
-@property (nonatomic, copy) NSString *PROPROPERTY;
+@property (nonatomic, strong) NSDictionary *PROPROPERTY;
 /** 标题 */
 @property (nonatomic, copy) NSString *PROTITLE;
 

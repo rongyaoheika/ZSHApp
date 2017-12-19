@@ -47,8 +47,7 @@
 #pragma mark - Setter Getter Methods
 - (void)updateCellWithModel:(ZSHBaseModel *)model{
     ZSHGoodDetailModel *goodDetailModel = (ZSHGoodDetailModel *)model;
-    NSArray *imageArr = [goodDetailModel.PRODUCTIMG componentsSeparatedByString:@","];
-    [_headView updateViewWithParamDic:@{@"dataArr":imageArr}];
+    [_headView updateViewWithParamDic:@{@"dataArr":goodDetailModel.PRODUCTIMG}];
 }
 
 //- (void)setShufflingArray:(NSArray *)shufflingArray
