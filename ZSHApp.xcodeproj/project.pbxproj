@@ -148,10 +148,8 @@
 		18762B261FE1088300E1857F /* ZSHReviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18762B251FE1088300E1857F /* ZSHReviewViewController.m */; };
 		18762B291FE108E100E1857F /* ZSHWeiboWriteController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18762B281FE108E100E1857F /* ZSHWeiboWriteController.m */; };
 		18762B2C1FE1149D00E1857F /* ZSHEnergyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 18762B2B1FE1149D00E1857F /* ZSHEnergyModel.m */; };
-		1886623E1FE9F17700EA7FA1 /* ZegoLiveRoom.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1886623D1FE9F17700EA7FA1 /* ZegoLiveRoom.framework */; };
 		188662401FE9F1F100EA7FA1 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1886623F1FE9F1F100EA7FA1 /* VideoToolbox.framework */; };
 		188662421FE9F20A00EA7FA1 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 188662411FE9F20A00EA7FA1 /* libiconv.tbd */; };
-		188662441FE9F43500EA7FA1 /* ZegoLiveRoom.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1886623D1FE9F17700EA7FA1 /* ZegoLiveRoom.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		188662971FEA115400EA7FA1 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 188662961FEA115400EA7FA1 /* AVFoundation.framework */; };
 		188662991FEA117600EA7FA1 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 188662981FEA117600EA7FA1 /* libresolv.tbd */; };
 		1891C1331FC6A67F000AFEFB /* ZSHBuyLogic.m in Sources */ = {isa = PBXBuildFile; fileRef = 1891C1321FC6A67F000AFEFB /* ZSHBuyLogic.m */; };
@@ -515,7 +513,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				188662441FE9F43500EA7FA1 /* ZegoLiveRoom.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -783,7 +780,6 @@
 		18762B281FE108E100E1857F /* ZSHWeiboWriteController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHWeiboWriteController.m; sourceTree = "<group>"; };
 		18762B2A1FE1149D00E1857F /* ZSHEnergyModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHEnergyModel.h; sourceTree = "<group>"; };
 		18762B2B1FE1149D00E1857F /* ZSHEnergyModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHEnergyModel.m; sourceTree = "<group>"; };
-		1886623D1FE9F17700EA7FA1 /* ZegoLiveRoom.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ZegoLiveRoom.framework; sourceTree = "<group>"; };
 		1886623F1FE9F1F100EA7FA1 /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
 		188662411FE9F20A00EA7FA1 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
 		188662961FEA115400EA7FA1 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -1430,7 +1426,6 @@
 				299610131ED84A8D00BCED2A /* CoreGraphics.framework in Frameworks */,
 				1816F5221F566F320060C4BE /* UMSocialCore.framework in Frameworks */,
 				1816F5231F566F320060C4BE /* UMSocialNetwork.framework in Frameworks */,
-				1886623E1FE9F17700EA7FA1 /* ZegoLiveRoom.framework in Frameworks */,
 				1816F51E1F566F320060C4BE /* libSocialQQ.a in Frameworks */,
 				1816F5201F566F320060C4BE /* libSocialUniqueId.a in Frameworks */,
 				1816F5251F566F320060C4BE /* libUMSocialLog.a in Frameworks */,
@@ -1978,14 +1973,6 @@
 			path = "微博";
 			sourceTree = "<group>";
 		};
-		1886623C1FE9F17700EA7FA1 /* iphoneos_simulator */ = {
-			isa = PBXGroup;
-			children = (
-				1886623D1FE9F17700EA7FA1 /* ZegoLiveRoom.framework */,
-			);
-			path = iphoneos_simulator;
-			sourceTree = "<group>";
-		};
 		1891C12C1FC6A597000AFEFB /* 商品分类 */ = {
 			isa = PBXGroup;
 			children = (
@@ -2113,7 +2100,6 @@
 		296F9EAF1ECC64CE0063A255 = {
 			isa = PBXGroup;
 			children = (
-				1886623C1FE9F17700EA7FA1 /* iphoneos_simulator */,
 				FE5537181F47049D00803128 /* ZSHApp */,
 				FE5538681F4704B800803128 /* ZSHAppTests */,
 				296F9EB91ECC64CE0063A255 /* Products */,
