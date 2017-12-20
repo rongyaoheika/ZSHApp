@@ -61,4 +61,7 @@
 - (void)requestCouBlackEnergy:(void (^)(id response))success;
 // 给商品添加用户评价
 - (void)requestSProductAddEva:(NSDictionary *)dic success:(void (^)(id response))success;
+// 找回登录密码 (忘记密码)
+- (void)requestForgetUser:(NSDictionary *)dic success:(void (^)(id response))success;
+
 @end

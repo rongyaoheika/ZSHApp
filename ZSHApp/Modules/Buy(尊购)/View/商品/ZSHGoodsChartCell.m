@@ -58,7 +58,8 @@
     
     [_leftTypeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self).offset(kRealValue(25));
-        make.top.and.height.mas_equalTo(self);
+        make.top.mas_equalTo(self.contentView);
+        make.height.mas_equalTo(self.contentView);
         make.width.mas_equalTo(KScreenWidth*0.3);
     }];
     
@@ -71,7 +72,10 @@
     
     [_rightDescLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(_verticalLineView.mas_right).offset(kRealValue(25));
-        make.top.and.height.and.right.mas_equalTo(self);
+//        make.top.and.height.and.right.mas_equalTo(self);
+        make.top.mas_equalTo(self.contentView);
+        make.height.mas_equalTo(self.contentView);
+        make.right.mas_equalTo(self.contentView);
     }];
 }
 

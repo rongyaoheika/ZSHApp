@@ -105,7 +105,8 @@ typedef NS_ENUM(NSInteger,ZSHToMultiInfoVC){
     FromUserInfoPhoneVCToMultiInfoVC,               //个人资料 - 手机号
     FromUserInfoQQVCToMultiInfoVC,                  //个人资料 - 绑定QQ帐号
     FromUserInfoResumeVCToMultiInfoVC,              //个人资料 - 个人简介
-    FromUserPasswordVCToMultiInfoVC,                // 账号与安全 - 登录密码
+    FromUserPasswordVCToMultiInfoVC,                //账号与安全 - 登录密码
+    FromSetPasswordTOMultiInfoVC,                   //重置密码
     FromNoneToMultiInfoVC
 };
 

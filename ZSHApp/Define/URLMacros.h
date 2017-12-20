@@ -698,5 +698,9 @@
 //参数：  HONOURUSER_ID  用户ID/
 //请求地址：/getmycoublackenergy.do?MYCOUBLACKENERGY  (混淆码)
 #define kUrlGetMyCouBlackEnergy [NSString stringWithFormat:@"/appuserin/getmycoublackenergy.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"MYCOUBLACKENERGY"]]
+//136.找回登录密码 (忘记密码)(完成)
+//参数：  CARDNO=390913360687792128   当前账号/   PHONE=13366847890   手机号/   USERIDCARD=654321  身份证号/
+//请求地址：/appuserin/getuserbyforget.do?USERBYFORGET  (混淆码)
+#define kUrlGetUserByForget [NSString stringWithFormat:@"/appuserin/getuserbyforget.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"USERBYFORGET"]]
 
 #endif /* URLMacros_h */

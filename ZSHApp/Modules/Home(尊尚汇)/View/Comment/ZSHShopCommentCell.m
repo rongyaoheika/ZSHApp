@@ -49,6 +49,7 @@
         make.left.mas_equalTo(self).offset(kRealValue(15));
         make.top.mas_equalTo(self).offset(kRealValue(10));
         make.width.and.height.mas_equalTo(kRealValue(40));
+    
     }];
     
     [self.nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {

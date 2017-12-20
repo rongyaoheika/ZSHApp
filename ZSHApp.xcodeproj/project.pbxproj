@@ -148,6 +148,12 @@
 		18762B261FE1088300E1857F /* ZSHReviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18762B251FE1088300E1857F /* ZSHReviewViewController.m */; };
 		18762B291FE108E100E1857F /* ZSHWeiboWriteController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18762B281FE108E100E1857F /* ZSHWeiboWriteController.m */; };
 		18762B2C1FE1149D00E1857F /* ZSHEnergyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 18762B2B1FE1149D00E1857F /* ZSHEnergyModel.m */; };
+		1886623E1FE9F17700EA7FA1 /* ZegoLiveRoom.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1886623D1FE9F17700EA7FA1 /* ZegoLiveRoom.framework */; };
+		188662401FE9F1F100EA7FA1 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1886623F1FE9F1F100EA7FA1 /* VideoToolbox.framework */; };
+		188662421FE9F20A00EA7FA1 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 188662411FE9F20A00EA7FA1 /* libiconv.tbd */; };
+		188662441FE9F43500EA7FA1 /* ZegoLiveRoom.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1886623D1FE9F17700EA7FA1 /* ZegoLiveRoom.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		188662971FEA115400EA7FA1 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 188662961FEA115400EA7FA1 /* AVFoundation.framework */; };
+		188662991FEA117600EA7FA1 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 188662981FEA117600EA7FA1 /* libresolv.tbd */; };
 		1891C1331FC6A67F000AFEFB /* ZSHBuyLogic.m in Sources */ = {isa = PBXBuildFile; fileRef = 1891C1321FC6A67F000AFEFB /* ZSHBuyLogic.m */; };
 		1891C1361FC6CCA3000AFEFB /* ZSHTogetherLogic.m in Sources */ = {isa = PBXBuildFile; fileRef = 1891C1351FC6CCA3000AFEFB /* ZSHTogetherLogic.m */; };
 		1891C1391FC6D115000AFEFB /* ZSHTogetherModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1891C1381FC6D115000AFEFB /* ZSHTogetherModel.m */; };
@@ -502,6 +508,19 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		188662431FE9F42D00EA7FA1 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				188662441FE9F43500EA7FA1 /* ZegoLiveRoom.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		14ED69325E9FD4BDB1CA95F8 /* Pods-ZSHApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZSHApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-ZSHApp/Pods-ZSHApp.release.xcconfig"; sourceTree = "<group>"; };
 		18063C521FC90379000F5A00 /* ZSHPersonalModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHPersonalModel.h; sourceTree = "<group>"; };
@@ -764,6 +783,11 @@
 		18762B281FE108E100E1857F /* ZSHWeiboWriteController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHWeiboWriteController.m; sourceTree = "<group>"; };
 		18762B2A1FE1149D00E1857F /* ZSHEnergyModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHEnergyModel.h; sourceTree = "<group>"; };
 		18762B2B1FE1149D00E1857F /* ZSHEnergyModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHEnergyModel.m; sourceTree = "<group>"; };
+		1886623D1FE9F17700EA7FA1 /* ZegoLiveRoom.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ZegoLiveRoom.framework; sourceTree = "<group>"; };
+		1886623F1FE9F1F100EA7FA1 /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
+		188662411FE9F20A00EA7FA1 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
+		188662961FEA115400EA7FA1 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		188662981FEA117600EA7FA1 /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
 		1891C1311FC6A67F000AFEFB /* ZSHBuyLogic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHBuyLogic.h; sourceTree = "<group>"; };
 		1891C1321FC6A67F000AFEFB /* ZSHBuyLogic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHBuyLogic.m; sourceTree = "<group>"; };
 		1891C1341FC6CCA3000AFEFB /* ZSHTogetherLogic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHTogetherLogic.h; sourceTree = "<group>"; };
@@ -1391,22 +1415,27 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				188662971FEA115400EA7FA1 /* AVFoundation.framework in Frameworks */,
+				188662401FE9F1F100EA7FA1 /* VideoToolbox.framework in Frameworks */,
 				1816F5061F5666BB0060C4BE /* MessageUI.framework in Frameworks */,
 				1816F5041F5666A00060C4BE /* ImageIO.framework in Frameworks */,
-				1816F51E1F566F320060C4BE /* libSocialQQ.a in Frameworks */,
+				188662991FEA117600EA7FA1 /* libresolv.tbd in Frameworks */,
+				299610111ED84A7100BCED2A /* libsqlite3.tbd in Frameworks */,
 				1816F5021F5666840060C4BE /* libz.tbd in Frameworks */,
 				1816F5001F56667A0060C4BE /* libc++.tbd in Frameworks */,
-				1816F5251F566F320060C4BE /* libUMSocialLog.a in Frameworks */,
+				188662421FE9F20A00EA7FA1 /* libiconv.tbd in Frameworks */,
 				1816F4FE1F5666590060C4BE /* SystemConfiguration.framework in Frameworks */,
-				1816F5201F566F320060C4BE /* libSocialUniqueId.a in Frameworks */,
 				1816F5271F566F320060C4BE /* UShareUI.framework in Frameworks */,
 				1816F4FC1F5666340060C4BE /* CoreTelephony.framework in Frameworks */,
-				296ED8B41EF3B6A300E33961 /* libPods-ZSHApp.a in Frameworks */,
 				299610131ED84A8D00BCED2A /* CoreGraphics.framework in Frameworks */,
 				1816F5221F566F320060C4BE /* UMSocialCore.framework in Frameworks */,
-				1816F5211F566F320060C4BE /* libSocialWeChat.a in Frameworks */,
 				1816F5231F566F320060C4BE /* UMSocialNetwork.framework in Frameworks */,
-				299610111ED84A7100BCED2A /* libsqlite3.tbd in Frameworks */,
+				1886623E1FE9F17700EA7FA1 /* ZegoLiveRoom.framework in Frameworks */,
+				1816F51E1F566F320060C4BE /* libSocialQQ.a in Frameworks */,
+				1816F5201F566F320060C4BE /* libSocialUniqueId.a in Frameworks */,
+				1816F5251F566F320060C4BE /* libUMSocialLog.a in Frameworks */,
+				296ED8B41EF3B6A300E33961 /* libPods-ZSHApp.a in Frameworks */,
+				1816F5211F566F320060C4BE /* libSocialWeChat.a in Frameworks */,
 				5BC8C50C0BEF57AA0780D5DC /* libPods-ZSHApp.a in Frameworks */,
 				1816F51F1F566F320060C4BE /* libSocialSina.a in Frameworks */,
 			);
@@ -1949,6 +1978,14 @@
 			path = "微博";
 			sourceTree = "<group>";
 		};
+		1886623C1FE9F17700EA7FA1 /* iphoneos_simulator */ = {
+			isa = PBXGroup;
+			children = (
+				1886623D1FE9F17700EA7FA1 /* ZegoLiveRoom.framework */,
+			);
+			path = iphoneos_simulator;
+			sourceTree = "<group>";
+		};
 		1891C12C1FC6A597000AFEFB /* 商品分类 */ = {
 			isa = PBXGroup;
 			children = (
@@ -2076,6 +2113,7 @@
 		296F9EAF1ECC64CE0063A255 = {
 			isa = PBXGroup;
 			children = (
+				1886623C1FE9F17700EA7FA1 /* iphoneos_simulator */,
 				FE5537181F47049D00803128 /* ZSHApp */,
 				FE5538681F4704B800803128 /* ZSHAppTests */,
 				296F9EB91ECC64CE0063A255 /* Products */,
@@ -2097,6 +2135,10 @@
 		6C3D66AC810B3ABDE56945D5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				188662981FEA117600EA7FA1 /* libresolv.tbd */,
+				188662961FEA115400EA7FA1 /* AVFoundation.framework */,
+				188662411FE9F20A00EA7FA1 /* libiconv.tbd */,
+				1886623F1FE9F1F100EA7FA1 /* VideoToolbox.framework */,
 				1816F5051F5666BB0060C4BE /* MessageUI.framework */,
 				1816F5031F5666A00060C4BE /* ImageIO.framework */,
 				1816F5011F5666840060C4BE /* libz.tbd */,
@@ -3939,6 +3981,7 @@
 				296F9EB61ECC64CE0063A255 /* Resources */,
 				FCE002867A10AABD9CA626C2 /* [CP] Embed Pods Frameworks */,
 				BAD1716792B72D02CEED4423 /* [CP] Copy Pods Resources */,
+				188662431FE9F42D00EA7FA1 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -4744,7 +4787,10 @@
 					"$(PROJECT_DIR)/ZSHApp/ThridParty/UMSocial/UMSocialDemo/UMSocial/SocialLibraries/Twitter",
 					"$(PROJECT_DIR)/ZSHApp/ThridParty/UMSocial/UMSocialDemo/UMSocial/UMSocialSDK",
 					"$(PROJECT_DIR)/ZSHApp/ThridParty/UMSocial/UMSocialDemo/UMSocial/UMSocialUI",
+					"$(PROJECT_DIR)/iphoneos_simulator/**",
+					"$(PROJECT_DIR)/iphoneos_simulator",
 				);
+				GCC_INPUT_FILETYPE = automatic;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/ZSHApp/Define/PrefixHeader.pch";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4848,7 +4894,10 @@
 					"$(PROJECT_DIR)/ZSHApp/ThridParty/UMSocial/UMSocialDemo/UMSocial/SocialLibraries/Twitter",
 					"$(PROJECT_DIR)/ZSHApp/ThridParty/UMSocial/UMSocialDemo/UMSocial/UMSocialSDK",
 					"$(PROJECT_DIR)/ZSHApp/ThridParty/UMSocial/UMSocialDemo/UMSocial/UMSocialUI",
+					"$(PROJECT_DIR)/iphoneos_simulator/**",
+					"$(PROJECT_DIR)/iphoneos_simulator",
 				);
+				GCC_INPUT_FILETYPE = automatic;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/ZSHApp/Define/PrefixHeader.pch";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -5050,7 +5099,10 @@
 					"$(PROJECT_DIR)/ZSHApp/ThridParty/UMSocial/UMSocialDemo/UMSocial/SocialLibraries/Twitter",
 					"$(PROJECT_DIR)/ZSHApp/ThridParty/UMSocial/UMSocialDemo/UMSocial/UMSocialSDK",
 					"$(PROJECT_DIR)/ZSHApp/ThridParty/UMSocial/UMSocialDemo/UMSocial/UMSocialUI",
+					"$(PROJECT_DIR)/iphoneos_simulator/**",
+					"$(PROJECT_DIR)/iphoneos_simulator",
 				);
+				GCC_INPUT_FILETYPE = automatic;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/ZSHApp/Define/PrefixHeader.pch";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",

@@ -24,9 +24,15 @@
 @property (nonatomic, strong) ZSHMineLogic       *mineLogic;
 @property (nonatomic, copy)   NSString           *changedData;
 
+// 修改密码
 @property (nonatomic, copy)   NSString           *oldPwd;
 @property (nonatomic, copy)   NSString           *reNewPwd;
 @property (nonatomic, copy)   NSString           *rptPwd;
+// 找回登录密码
+@property (nonatomic, copy)   NSString           *USERIDCARD;   // 当前账号
+@property (nonatomic, copy)   NSString           *CARDNO;       // 身份证号
+@property (nonatomic, copy)   NSString           *PHONE;        // 手机号
+@property (nonatomic, copy)   NSString           *vefCode;      // 验证码
 
 @end
 
@@ -89,6 +95,12 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
         self.textFieldTypeArr = @[@(ZSHTextFieldViewPwd), @(ZSHTextFieldViewPwd), @(ZSHTextFieldViewPwd)];
         self.placeHolderArr = @[@"", @"", @""];
         self.toViewType = FromUserPasswordVCToMultiInfoVC;
+    }else if (kFromClassTypeValue ==  FromSetPasswordTOMultiInfoVC) {
+        //重置密码
+        self.titleArr = @[@"新密码", @"确认密码"];
+        self.textFieldTypeArr = @[@(ZSHTextFieldViewPwd), @(ZSHTextFieldViewPwd), @(ZSHTextFieldViewPwd)];
+        self.placeHolderArr = @[@"请输入新密码", @"再次输入新密码"];
+        self.toViewType = FromSetPasswordTOMultiInfoVC;
     }
     [self initViewModel];
 }
@@ -108,7 +120,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
         [self.bottomBtn setTitle:self.paramDic[@"bottomBtnTitle"] forState:UIControlStateNormal];
         [self.bottomBtn addTarget:self action:@selector(nextBtnAction) forControlEvents:UIControlEventTouchUpInside];
         
-    } else if (kFromClassTypeValue == FromUserPasswordVCToMultiInfoVC) {
+    } else if (kFromClassTypeValue == FromUserPasswordVCToMultiInfoVC || kFromClassTypeValue == FromAccountVCToMultiInfoVC || kFromClassTypeValue == FromSetPasswordTOMultiInfoVC) {
         
         [self.view addSubview:self.bottomBtn];
         [self.bottomBtn setTitle:self.paramDic[@"bottomBtnTitle"] forState:UIControlStateNormal];
@@ -157,6 +169,16 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
                             weakself.reNewPwd = str;
                         } else if (index == 4) {
                             weakself.rptPwd = str;
+                        }
+                    } else if (kFromClassTypeValue == FromAccountVCToMultiInfoVC) {
+                        if (index == 0) {
+                            weakself.USERIDCARD = str;
+                        } else if (index == 1) {
+                            weakself.CARDNO = str;
+                        } else if (index == 2) {
+                            weakself.PHONE = str;
+                        } else if (index == 3) {
+                            weakself.vefCode = str;
                         }
                     }
                 };
@@ -226,6 +248,11 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
             [ac addAction:cancelAction];
             [weakself presentViewController:ac animated:YES completion:nil];
         }
+    } else if(kFromClassTypeValue == FromAccountVCToMultiInfoVC) {
+        [_mineLogic requestForgetUser:@{@"CARDNO":@"390913360687792128",@"PHONE":@"13366847890",@"USERIDCARD":@"654321"} success:^(id response) {
+            ZSHMultiInfoViewController *multiInfoVC = [[ZSHMultiInfoViewController alloc] initWithParamDic:@{KFromClassType:@(FromAccountVCToMultiInfoVC),@"title":@"重置密码", @"bottomBtnTitle":@"完成",@"HONOURUSER_ID":response[@"pd"][@"HONOURUSER_ID"]}];
+            [weakself.navigationController pushViewController:multiInfoVC animated:YES];
+        }];
     }
 }
 

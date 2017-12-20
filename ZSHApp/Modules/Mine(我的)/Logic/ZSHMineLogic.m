@@ -204,4 +204,13 @@
     }];
 }
 
+
+// 找回登录密码 (忘记密码)
+- (void)requestForgetUser:(NSDictionary *)dic success:(void (^)(id response))success {
+    [PPNetworkHelper POST:kUrlGetUserByForget parameters:dic success:^(id responseObject) {
+        success(responseObject);
+    } failure:^(NSError *error) {
+        RLog(@"请求失败");
+    }];
+}
 @end

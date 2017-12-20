@@ -12,6 +12,7 @@
 #import "ZSHLoginLogic.h"
 #import "ZSHCardViewController.h"
 #import "UserInfo.h"
+#import "ZSHMultiInfoViewController.h"
 
 @interface ZSHLoginViewController ()
 
@@ -103,7 +104,8 @@
     NSDictionary *forgotPwdBtnDic = @{@"title":@"忘记密码",@"font":kPingFangRegular(12)};
     _forgotPwdBtn = [ZSHBaseUIControl createBtnWithParamDic:forgotPwdBtnDic];
     [_forgotPwdBtn addTapBlock:^(UIButton *btn) {
-        RLog(@"点击忘记密码");
+        ZSHMultiInfoViewController *multiInfoVC = [[ZSHMultiInfoViewController alloc] initWithParamDic:@{KFromClassType:@(FromAccountVCToMultiInfoVC),@"title":@"找回登录密码", @"bottomBtnTitle":@"下一步"}];
+        [weakself.navigationController pushViewController:multiInfoVC animated:YES];
     }];
     [self.view addSubview:_forgotPwdBtn];
     [_forgotPwdBtn mas_makeConstraints:^(MASConstraintMaker *make) {

@@ -31,7 +31,6 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 - (void)loadData{
     self.titleArr = @[@"登录密码",@"支付密码",@"指纹支付"];
     self.pushVCsArr = @[@"ZSHMultiInfoViewController",@"",@""];
-    // @{KFromClassType:@(FromAccountVCToMultiInfoVC),@"title":@"找回登录密码"},
     self.paramArr = @[@{KFromClassType:@(FromUserPasswordVCToMultiInfoVC),@"title":@"更改登录密码",@"bottomBtnTitle":@"提交"},@{KFromClassType:@""},@{}];
     [self initViewModel];
 }

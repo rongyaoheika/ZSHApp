@@ -4,6 +4,7 @@
 //
 //  Created by Apple on 2017/8/18.
 //  Copyright © 2017年 Apple. All rights reserved.
+#ifdef __OBJC__
 
 #ifndef PrefixHeader_pch
 #define PrefixHeader_pch
@@ -49,3 +50,4 @@
 #import "IQKeyboardManager.h"
 
 #endif /* PrefixHeader_pch */
+#endif // OC的头文件

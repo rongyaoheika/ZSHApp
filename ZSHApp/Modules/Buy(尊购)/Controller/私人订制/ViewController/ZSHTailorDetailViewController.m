@@ -42,7 +42,7 @@ static NSString *cellIdentifier = @"TailorDetailCell";
     self.tableView.dataSource = self.tableViewModel;
     [self.tableView registerClass:[ZSHTailorDetailView class] forCellReuseIdentifier:cellIdentifier];
 
-    [self.tableView setTableHeaderView:[self createTableviewHeaderView]];
+//    [self.tableView setTableHeaderView:[self createTableviewHeaderView]];
     [self.view addSubview:[ZSHBaseUIControl createBottomButton:^(NSInteger index) {
         
     }]];
@@ -88,6 +88,7 @@ static NSString *cellIdentifier = @"TailorDetailCell";
             //需要注册，无需判空
             ZSHTailorDetailView *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
             [cell updateCellWithModel:_buyLogic.personalDetailModelArr[indexPath.row]];
+            [cell updateConstraintsIfNeeded];
             return cell;
         };
         
