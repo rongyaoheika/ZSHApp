@@ -14,6 +14,7 @@
 #import "ZSHGoodDetailModel.h"
 #import "ZSHBuySearchModel.h"
 #import "ZSHGoodCommentModel.h"
+#import "ZSHGoodsDetailModel.h"
 
 @interface ZSHBuyLogic : ZSHBaseLogic
 
@@ -24,6 +25,7 @@
 @property (nonatomic, strong) ZSHGoodDetailModel                          *goodDetailModel;
 @property (nonatomic, strong) NSArray<ZSHBuySearchModel *>                *buySearchModelArr;
 @property (nonatomic, strong) NSArray<ZSHGoodCommentModel*>               *goodCommentModelArr;
+@property (nonatomic, strong) NSArray<ZSHGoodsDetailModel *>              *goodsDetailModelArr;
 
 // 尊购首页轮播图
 - (void)requestScarouselfigure:(void (^)(id response))success;

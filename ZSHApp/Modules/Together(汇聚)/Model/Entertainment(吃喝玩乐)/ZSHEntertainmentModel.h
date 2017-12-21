@@ -14,7 +14,7 @@
 @property (nonatomic,copy)   NSString            *avatarPicture;    //头像
 @property (nonatomic,copy)   NSString            *name;             //名字
 @property (nonatomic,assign) BOOL                gender;            //性别
-@property (nonatomic,assign) CGFloat             distance;          //距离
+@property (nonatomic,copy)   NSString            *distance;         //距离
 @property (nonatomic,assign) NSUInteger          age;               //年龄
 @property (nonatomic,copy)   NSString            *constellation;    //星座
 

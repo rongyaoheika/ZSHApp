@@ -2688,10 +2688,10 @@
 		FE291EEB1F8CCCF300D4BBE7 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				FE291EF11F8CCD2200D4BBE7 /* ZSHLoginViewController.h */,
-				FE291EF21F8CCD2200D4BBE7 /* ZSHLoginViewController.m */,
 				FEDF290A1FB69C2800CD5756 /* ZSHGuideViewController.h */,
 				FEDF290B1FB69C2800CD5756 /* ZSHGuideViewController.m */,
+				FE291EF11F8CCD2200D4BBE7 /* ZSHLoginViewController.h */,
+				FE291EF21F8CCD2200D4BBE7 /* ZSHLoginViewController.m */,
 				FE3683BE1FBC02B300220477 /* ZSHCardViewController.h */,
 				FE3683BF1FBC02B300220477 /* ZSHCardViewController.m */,
 			);

@@ -402,8 +402,36 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
                 @"ADDRESS":SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"ADDRESS"]),
                 @"CUSTOM":SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"CUSTOM"]),
                 @"CUSTOMCONTENT":NSStringFormat(@"%@%@", SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"CardCustom112311"]),SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"CardCustom112312"]))});
-    if (![cardNo isEqual:@""] && ![phone isEqual:@""] && ![realName isEqual:@""] && ![province isEqual:@""] && ![address isEqual:@""] && ![custom isEqual:@""] && ![customContent isEqual:@""]) {
-       
+    
+    
+    NSString *message = nil;
+    if ([cardNo isEqualToString:@""]) {
+        message = @"请选择号码";
+    } else if ([phone isEqualToString:@""]) {
+        message = @"请填写手机号码";
+    } else if ([realName isEqualToString:@""]) {
+        message = @"请填写姓名";
+    } else if ([province isEqualToString:@""]) {
+        message = @"请填写省份";
+    } else if ([address isEqualToString:@""]) {
+        message = @"请填写地址";
+    } else if ([custom isEqualToString:@""]) {
+        message = @"请选择功能定制";
+    } else if ([customContent isEqualToString:@""]) {
+        message = @"请填写定制内容";
+    }
+
+    if(message) {
+        UIAlertController *ac = [UIAlertController alertControllerWithTitle:@"提示" message:message preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        }];
+        [ac addAction:cancelAction];
+        [self presentViewController:ac animated:YES completion:nil];
+        return;
+    }
+    
+//    if (![cardNo isEqual:@""] && ![phone isEqual:@""] && ![realName isEqual:@""] && ![province isEqual:@""] && ![address isEqual:@""] && ![custom isEqual:@""] && ![customContent isEqual:@""]) {
+    
         [_loginLogic userRegisterWithDic:@{@"CARDNO":SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"CARDNO"]),
                                           @"PHONE":SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"PHONE"]),
                                           @"REALNAME":SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"REALNAME"]),
@@ -416,8 +444,7 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
         _loginLogic.loginSuccess = ^(id response) {
             RLog(@"请求成功：返回数据&%@",response);
         };
-    }
-    
+//    } 
 
 }
 

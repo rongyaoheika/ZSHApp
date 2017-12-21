@@ -101,11 +101,8 @@
     _avatarImageView.image = [UIImage imageNamed:model.avatarPicture];
     _nameLabel.text = model.name;
     _genderImageView.image = (model.gender?[UIImage imageNamed:@"gender_male"]:[UIImage imageNamed:@"gender_female"]);
-    if (model.gender) {
-        
-    }
     _HONOURUSER_ID = model.HONOURUSER_ID;
-    _detailLabel.text = [NSString stringWithFormat:@"%.1fkm %ld岁%@",model.distance,model.age,model.constellation];
+    _detailLabel.text = [NSString stringWithFormat:@"%@km %ld岁%@",model.distance,model.age,model.constellation];
 }
 
 - (void)addFriendAction {

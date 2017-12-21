@@ -87,6 +87,7 @@
         if ([responseObject[@"result"] isEqualToString:@"01"]) {
             weakself.goodDetailModel = [ZSHGoodDetailModel mj_objectWithKeyValues:responseObject[@"pd"]];
             weakself.goodCommentModelArr = [ZSHGoodCommentModel mj_objectArrayWithKeyValuesArray:responseObject[@"evaList"]];
+            weakself.goodsDetailModelArr = [ZSHGoodsDetailModel mj_objectArrayWithKeyValuesArray:responseObject[@"detail"]];
             success(nil);
         }
         

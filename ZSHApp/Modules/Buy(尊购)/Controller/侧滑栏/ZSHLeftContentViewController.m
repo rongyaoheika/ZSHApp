@@ -133,6 +133,7 @@ static NSString *ZSHBaseBottomListCellID = @"ZSHBaseBottomListCell";
     headImageView.layer.cornerRadius = kRealValue(50)/2;
     headImageView.layer.masksToBounds = YES;
     headImageView.backgroundColor = [UIColor colorWithHexString:@"D8D8D8"];
+    [headImageView sd_setImageWithURL:[NSURL URLWithString:curUser.PORTRAIT]];
     [headCellView addSubview:headImageView];
     
     NSDictionary *loginBtnDic = @{@"title":@"请点击登录",@"titleColor":KZSHColor929292,@"font":kPingFangMedium(17),@"backgroundColor":KClearColor};

@@ -80,11 +80,6 @@
     [_bottomView addSubview:_bottomPromptLabel];
     
     [self layoutIfNeeded];
-}
-
-- (void)layoutSubviews{
-    [super layoutSubviews];
-   
     //姓名
     [_labelView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self).offset(kRealValue(20));
@@ -148,6 +143,12 @@
         make.height.mas_equalTo(kRealValue(17));
         make.centerX.mas_equalTo(_bottomView);
     }];
+}
+
+- (void)layoutSubviews{
+    [super layoutSubviews];
+   
+    
 }
 
 @end

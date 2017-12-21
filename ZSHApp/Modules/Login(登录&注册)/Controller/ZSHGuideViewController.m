@@ -83,7 +83,8 @@
         RLog(@"登录");
         ZSHLoginViewController *loginVC = [[ZSHLoginViewController alloc]init];
         RootNavigationController *loginNavi = [[RootNavigationController alloc]initWithRootViewController:loginVC];
-        [weakself presentViewController:loginNavi animated:YES completion:nil];
+//        [weakself presentViewController:loginNavi animated:YES completion:nil];
+        [weakself.navigationController pushViewController:loginVC animated:YES];
     }];
     [self.view addSubview:_vipLoginBtn];
     [_vipLoginBtn mas_makeConstraints:^(MASConstraintMaker *make) {

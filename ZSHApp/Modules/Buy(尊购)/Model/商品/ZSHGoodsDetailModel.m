@@ -11,6 +11,11 @@
 
 @implementation ZSHGoodsDetailModel
 
++ (NSDictionary *)mj_replacedKeyFromPropertyName {
+    return @{@"detailPicture":@"SHOWIMG",
+             @"detailText":@"CONTENT"};
+}
+
 //惰性初始化是这样写的
 -(CGFloat)cellHeight
 {

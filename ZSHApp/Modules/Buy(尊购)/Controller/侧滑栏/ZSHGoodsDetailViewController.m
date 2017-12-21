@@ -33,9 +33,9 @@
 @property (nonatomic, strong) UIView                         *lineTitleView;
 @property (nonatomic, strong) ZSHBuyLogic                    *buyLogic;
 @property (nonatomic, assign) NSInteger                      count;
-@property (nonatomic, strong) NSArray                  *chartDataArr;
-@property (nonatomic, strong) NSArray                  *dataArr;
-@property (nonatomic, strong) NSArray                  *commentArr;
+@property (nonatomic, strong) NSArray                        *chartDataArr;
+@property (nonatomic, strong) NSArray                        *dataArr;
+@property (nonatomic, strong) NSArray                        *commentArr;
 
 @end
 
@@ -64,25 +64,11 @@ static NSString *ZSHGoodsDetailCommentCellID = @"ZSHGoodsDetailCommentCell";
 - (void)loadData{
     self.titleArr = @[@"商品",@"详情",@"评价"];
     self.titleWidth = kScreenWidth/[self.titleArr count];
-//    self.contentVCS = @[@"ZSHGoodsSubViewController",@"ZSHGoodsDetailSubViewController",@"ZSHGoodsCommentSubViewController"];
     
     UIImage *image = [UIImage imageNamed:@"buy_bag"];
     self.shufflingArray = @[image,image,image];
     _buyLogic = [[ZSHBuyLogic alloc] init];
     
-//    _chartDataArr = @[
-//                    @{@"leftTitle":@"材质",@"rightTitle":@"牛皮"},
-//                    @{@"leftTitle":@"箱包硬度",@"rightTitle":@"软"},
-//                    @{@"leftTitle":@"颜色",@"rightTitle":@"黑"},
-//                    @{@"leftTitle":@"图案",@"rightTitle":@"纯色"},
-//                    @{@"leftTitle":@"大小",@"rightTitle":@"中"}
-//                    ];
-//    NSArray *baseDataArr = @[
-//                             @{@"detailPicture":@"good_detail_1",@"detailText":@"古驰-1921年创立于意大利佛罗伦萨，是全球卓越的奢华精品品牌之一。以其卓越的品质和精湛的意大利工艺闻名于世，旗下精品包括皮件、鞋履、香氛、珠宝和腕表"},
-//                             @{@"detailPicture":@"good_detail_2",@"detailText":@""},
-//                             @{@"detailPicture":@"good_detail_3",@"detailText":@""}
-//                             ];
-//    self.dataArr = [ZSHGoodsDetailModel mj_objectArrayWithKeyValuesArray:baseDataArr];
     
     [self requestData];
 }
@@ -150,6 +136,7 @@ static NSString *ZSHGoodsDetailCommentCellID = @"ZSHGoodsDetailCommentCell";
 #pragma getter
 - (LXScollTitleView *)titleView{
     if (!_titleView) {
+        kWeakSelf(self);
         _titleView = [[LXScollTitleView alloc] initWithFrame:CGRectMake(0, 5, KScreenWidth, kRealValue(40))];
         _titleView.selectedIndex = 0;
         _titleView.normalTitleFont = kPingFangMedium(12);
@@ -158,7 +145,7 @@ static NSString *ZSHGoodsDetailCommentCellID = @"ZSHGoodsDetailCommentCell";
         _titleView.normalColor = KZSHColor929292;
         _titleView.indicatorHeight = 0;
         _titleView.selectedBlock = ^(NSInteger index){
-
+             [weakself.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:index+1] atScrollPosition:UICollectionViewScrollPositionTop animated:YES];
         };
         _titleView.backgroundColor = [UIColor clearColor];
         _titleView.titleWidth = self.titleWidth;
@@ -290,6 +277,14 @@ static NSString *ZSHGoodsDetailCommentCellID = @"ZSHGoodsDetailCommentCell";
 }
 
 #pragma action
+- (void)collectionHeaderRereshing {
+    [self.collectionView.mj_header endRefreshing];
+}
+
+- (void)collectionFooterRereshing {
+    [self.collectionView.mj_footer endRefreshing];
+}
+
 - (void)collectAction{
     
 }
@@ -346,7 +341,7 @@ static NSString *ZSHGoodsDetailCommentCellID = @"ZSHGoodsDetailCommentCell";
         [weakself.collectionView reloadData];
         weakself.goodModel.count = NSStringFormat(@"%zd", _count);
         weakself.chartDataArr = [weakself splitGoodProperty:weakself.buyLogic.goodDetailModel.PROPROPERTY];
-        weakself.dataArr = [weakself splitGoodDetail];
+        weakself.dataArr = weakself.buyLogic.goodsDetailModelArr;
         weakself.commentArr = weakself.buyLogic.goodCommentModelArr;
         [weakself.collectionView reloadData];
     }];

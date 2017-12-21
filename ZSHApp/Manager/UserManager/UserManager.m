@@ -136,13 +136,13 @@ SINGLETON_FOR_CLASS(UserManager);
                     completion(false, @"登录失败");
                 }
                 RLog(@"result=%@", responseObject[@"result"]);
-                KPostNotification(KNotificationLoginStateChange, @NO);
+//                KPostNotification(KNotificationLoginStateChange, @NO);
             }
         } else {
             if (completion) {
                 completion(NO,@"登录返回数据异常");
             }
-            KPostNotification(KNotificationLoginStateChange, @NO);
+//            KPostNotification(KNotificationLoginStateChange, @NO);
         }
     
     
