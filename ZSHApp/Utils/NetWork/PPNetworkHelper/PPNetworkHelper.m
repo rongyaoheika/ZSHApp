@@ -108,7 +108,7 @@ static AFHTTPSessionManager *_sessionManager;
     if ([URL containsString:@"http://tingapi.ting.baidu.com"]) {
         requestUrl = URL;
     }
-    RLog(@"请求的完整url == %@",requestUrl);
+    NSLog(@"请求的完整url == %@",requestUrl);
     return [self POST:requestUrl parameters:parameters responseCache:nil success:success failure:failure];
 }
 

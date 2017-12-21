@@ -362,6 +362,8 @@
 		FE8FD08A1FADFF17005F1184 /* ZSHUserInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE8FD0891FADFF17005F1184 /* ZSHUserInfoViewController.m */; };
 		FE8FD08E1FAE03E7005F1184 /* ZSHSimpleCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE8FD08C1FAE03E7005F1184 /* ZSHSimpleCellView.m */; };
 		FE8FD0921FAE0997005F1184 /* ZSHServiceCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE8FD0911FAE0997005F1184 /* ZSHServiceCenterViewController.m */; };
+		FE940AF51FEB5CFF002D03EB /* ZegoLiveRoom.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = FE940AF21FEB5CE0002D03EB /* ZegoLiveRoom.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FE940AF61FEB5D15002D03EB /* ZegoLiveRoom.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE940AF21FEB5CE0002D03EB /* ZegoLiveRoom.framework */; };
 		FE9CC3D11FA031F600285475 /* FXBlurView.h in Sources */ = {isa = PBXBuildFile; fileRef = FE9CC3CF1FA0314300285475 /* FXBlurView.h */; };
 		FE9CC3D21FA031F600285475 /* FXBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9CC3D01FA0314300285475 /* FXBlurView.m */; };
 		FE9CC3D51FA05D2200285475 /* ZSHOrderDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9CC3D41FA05D2200285475 /* ZSHOrderDetailViewController.m */; };
@@ -513,6 +515,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				FE940AF51FEB5CFF002D03EB /* ZegoLiveRoom.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1174,6 +1177,7 @@
 		FE8FD08D1FAE03E7005F1184 /* ZSHSimpleCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHSimpleCellView.h; sourceTree = "<group>"; };
 		FE8FD0901FAE0997005F1184 /* ZSHServiceCenterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHServiceCenterViewController.h; sourceTree = "<group>"; };
 		FE8FD0911FAE0997005F1184 /* ZSHServiceCenterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHServiceCenterViewController.m; sourceTree = "<group>"; };
+		FE940AF21FEB5CE0002D03EB /* ZegoLiveRoom.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ZegoLiveRoom.framework; sourceTree = "<group>"; };
 		FE9CC3CF1FA0314300285475 /* FXBlurView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FXBlurView.h; sourceTree = "<group>"; };
 		FE9CC3D01FA0314300285475 /* FXBlurView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FXBlurView.m; sourceTree = "<group>"; };
 		FE9CC3D31FA05D2200285475 /* ZSHOrderDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHOrderDetailViewController.h; sourceTree = "<group>"; };
@@ -1411,6 +1415,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FE940AF61FEB5D15002D03EB /* ZegoLiveRoom.framework in Frameworks */,
 				188662971FEA115400EA7FA1 /* AVFoundation.framework in Frameworks */,
 				188662401FE9F1F100EA7FA1 /* VideoToolbox.framework in Frameworks */,
 				1816F5061F5666BB0060C4BE /* MessageUI.framework in Frameworks */,
@@ -3175,6 +3180,7 @@
 		FE5537D71F47049D00803128 /* ThridParty */ = {
 			isa = PBXGroup;
 			children = (
+				FE940AF01FEB5CC7002D03EB /* Zego */,
 				1816F5071F566F320060C4BE /* UMSocial */,
 			);
 			path = ThridParty;
@@ -3504,6 +3510,22 @@
 			children = (
 			);
 			path = "炫购收藏";
+			sourceTree = "<group>";
+		};
+		FE940AF01FEB5CC7002D03EB /* Zego */ = {
+			isa = PBXGroup;
+			children = (
+				FE940AF11FEB5CE0002D03EB /* iphoneos_simulator */,
+			);
+			path = Zego;
+			sourceTree = "<group>";
+		};
+		FE940AF11FEB5CE0002D03EB /* iphoneos_simulator */ = {
+			isa = PBXGroup;
+			children = (
+				FE940AF21FEB5CE0002D03EB /* ZegoLiveRoom.framework */,
+			);
+			path = iphoneos_simulator;
 			sourceTree = "<group>";
 		};
 		FE9CC3CE1FA0314300285475 /* FXBlurView */ = {
@@ -4027,7 +4049,7 @@
 					296F9EB71ECC64CE0063A255 = {
 						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = 26ZQGX9T79;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 					};
 					296F9ED01ECC64CE0063A255 = {
 						CreatedOnToolsVersion = 8.3.2;
@@ -4754,8 +4776,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer: dawei hu (LDTZY7Z3JV)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = 26ZQGX9T79;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4775,6 +4797,7 @@
 					"$(PROJECT_DIR)/ZSHApp/ThridParty/UMSocial/UMSocialDemo/UMSocial/UMSocialUI",
 					"$(PROJECT_DIR)/iphoneos_simulator/**",
 					"$(PROJECT_DIR)/iphoneos_simulator",
+					"$(PROJECT_DIR)/ZSHApp/ThridParty/Zego/iphoneos_simulator",
 				);
 				GCC_INPUT_FILETYPE = automatic;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/ZSHApp/Define/PrefixHeader.pch";
@@ -4845,8 +4868,8 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zoe.TC168;
 				PRODUCT_NAME = "荣耀黑卡";
-				PROVISIONING_PROFILE = "5567da58-60e6-409a-9db6-c9383b94969f";
-				PROVISIONING_PROFILE_SPECIFIER = "dev_profile(1209)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = NO;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/ZSHApp/Define";
@@ -4860,9 +4883,9 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: dawei hu (26ZQGX9T79)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = 26ZQGX9T79;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4882,6 +4905,7 @@
 					"$(PROJECT_DIR)/ZSHApp/ThridParty/UMSocial/UMSocialDemo/UMSocial/UMSocialUI",
 					"$(PROJECT_DIR)/iphoneos_simulator/**",
 					"$(PROJECT_DIR)/iphoneos_simulator",
+					"$(PROJECT_DIR)/ZSHApp/ThridParty/Zego/iphoneos_simulator",
 				);
 				GCC_INPUT_FILETYPE = automatic;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/ZSHApp/Define/PrefixHeader.pch";
@@ -4952,8 +4976,8 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zoe.TC168;
 				PRODUCT_NAME = "荣耀黑卡";
-				PROVISIONING_PROFILE = "dc0d8a48-736b-4e87-b8f7-01309083e28c";
-				PROVISIONING_PROFILE_SPECIFIER = "dis_profile(1209)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = NO;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/ZSHApp/Define";
@@ -5065,9 +5089,9 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: dawei hu (26ZQGX9T79)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = 26ZQGX9T79;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -5087,6 +5111,7 @@
 					"$(PROJECT_DIR)/ZSHApp/ThridParty/UMSocial/UMSocialDemo/UMSocial/UMSocialUI",
 					"$(PROJECT_DIR)/iphoneos_simulator/**",
 					"$(PROJECT_DIR)/iphoneos_simulator",
+					"$(PROJECT_DIR)/ZSHApp/ThridParty/Zego/iphoneos_simulator",
 				);
 				GCC_INPUT_FILETYPE = automatic;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/ZSHApp/Define/PrefixHeader.pch";
@@ -5157,8 +5182,8 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zoe.TC168;
 				PRODUCT_NAME = "荣耀黑卡";
-				PROVISIONING_PROFILE = "dc0d8a48-736b-4e87-b8f7-01309083e28c";
-				PROVISIONING_PROFILE_SPECIFIER = "dis_profile(1209)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = NO;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/ZSHApp/Define";

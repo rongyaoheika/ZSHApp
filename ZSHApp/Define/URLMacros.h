@@ -22,10 +22,17 @@
  这样做切换方便,不用来回每个网络请求修改请求域名,降低出错事件
  */
 
+#ifdef DEBUG
 
 #define DevelopSever    0
 #define TestSever       1
 #define ProductSever    0
+
+#else
+
+#define ProductSever    1
+
+#endif
 
 
 #if DevelopSever
