@@ -48,6 +48,7 @@
     
     //输入姓名textField
     _textFieldView = [[UIView alloc]initWithFrame:CGRectZero];
+    _textFieldView.userInteractionEnabled = YES;
     [_textFieldView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"seg_two_bg"]]];
     [self addSubview:_textFieldView];
     
@@ -56,6 +57,7 @@
     for (int i = 0; i<placeHolderArr.count; i++) {
         NSDictionary *textFieldDic = @{@"placeholder":placeHolderArr[i],@"textFieldType":textFieldTypeArr[i]};
          ZSHTextFieldCellView *textField = [[ZSHTextFieldCellView alloc]initWithFrame:CGRectZero paramDic:textFieldDic];
+        textField.userInteractionEnabled = YES;
         NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];
         style.alignment = NSTextAlignmentCenter;
         NSAttributedString *attri = [[NSAttributedString alloc] initWithString:placeHolderArr[i] attributes:@{NSForegroundColorAttributeName:KZSHColor929292,NSFontAttributeName:kPingFangLight(15), NSParagraphStyleAttributeName:style}];

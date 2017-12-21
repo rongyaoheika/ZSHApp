@@ -7,8 +7,11 @@
 //
 
 #import "ZSHBeginShowViewController.h"
+#import "ZegoAVKitManager.h"
 
-@interface ZSHBeginShowViewController ()
+@interface ZSHBeginShowViewController ()<ZegoDeviceEventDelegate>
+
+@property (nonatomic, strong)  UIView         *preView;
 
 @end
 
@@ -37,11 +40,11 @@
     }];
     
     
-    UIButton *refreshBtn = [[UIButton alloc]init];
-    [refreshBtn setBackgroundImage:[UIImage imageNamed:@"record_image_1"] forState:UIControlStateNormal];
-    [refreshBtn addTarget:self action:@selector(refresAction) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:refreshBtn];
-    [refreshBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+    UIButton *cameraBtn = [[UIButton alloc]init];
+    [cameraBtn setBackgroundImage:[UIImage imageNamed:@"record_image_1"] forState:UIControlStateNormal];
+    [cameraBtn addTarget:self action:@selector(refresAction) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:cameraBtn];
+    [cameraBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(closeBtn);
         make.right.mas_equalTo(self.view).offset(-kRealValue(18));
         make.width.and.height.mas_equalTo(kRealValue(18.7));
@@ -110,14 +113,35 @@
         make.centerX.mas_equalTo(self.view);
         make.size.mas_equalTo(CGSizeMake(kRealValue(200), kRealValue(12)));
     }];
+    
+    [self addPreview];
+    [[ZegoAVKitManager api] setDeviceEventDelegate:self];
 }
 
+- (void)addPreview
+{
+    _preView = [[UIView alloc] init];
+    self.preView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:self.preView];
+    [self.view sendSubviewToBack:self.preView];
+    [self.preView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.mas_equalTo(self.view);
+    }];
+    
+    
+    [UIView animateWithDuration:0.1 animations:^{
+        [self.view layoutIfNeeded];
+    }];
+}
 
 #pragma mark - Event
 - (void)locationAction {
     
 }
+
 - (void)closeBeginShow {
+    
+    [self.navigationController popViewControllerAnimated:YES];
     
 }
 

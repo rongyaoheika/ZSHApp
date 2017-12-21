@@ -364,6 +364,8 @@
 		FE8FD0921FAE0997005F1184 /* ZSHServiceCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE8FD0911FAE0997005F1184 /* ZSHServiceCenterViewController.m */; };
 		FE940AF51FEB5CFF002D03EB /* ZegoLiveRoom.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = FE940AF21FEB5CE0002D03EB /* ZegoLiveRoom.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FE940AF61FEB5D15002D03EB /* ZegoLiveRoom.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE940AF21FEB5CE0002D03EB /* ZegoLiveRoom.framework */; };
+		FE940AFD1FEB97DE002D03EB /* ZegoAVKitManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FE940AFC1FEB97DE002D03EB /* ZegoAVKitManager.m */; };
+		FE940B001FEB9C6D002D03EB /* ZegoSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = FE940AFF1FEB9C6D002D03EB /* ZegoSettings.m */; };
 		FE9CC3D11FA031F600285475 /* FXBlurView.h in Sources */ = {isa = PBXBuildFile; fileRef = FE9CC3CF1FA0314300285475 /* FXBlurView.h */; };
 		FE9CC3D21FA031F600285475 /* FXBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9CC3D01FA0314300285475 /* FXBlurView.m */; };
 		FE9CC3D51FA05D2200285475 /* ZSHOrderDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9CC3D41FA05D2200285475 /* ZSHOrderDetailViewController.m */; };
@@ -1178,6 +1180,10 @@
 		FE8FD0901FAE0997005F1184 /* ZSHServiceCenterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHServiceCenterViewController.h; sourceTree = "<group>"; };
 		FE8FD0911FAE0997005F1184 /* ZSHServiceCenterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHServiceCenterViewController.m; sourceTree = "<group>"; };
 		FE940AF21FEB5CE0002D03EB /* ZegoLiveRoom.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ZegoLiveRoom.framework; sourceTree = "<group>"; };
+		FE940AFB1FEB97DE002D03EB /* ZegoAVKitManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZegoAVKitManager.h; sourceTree = "<group>"; };
+		FE940AFC1FEB97DE002D03EB /* ZegoAVKitManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZegoAVKitManager.m; sourceTree = "<group>"; };
+		FE940AFE1FEB9C6D002D03EB /* ZegoSettings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZegoSettings.h; sourceTree = "<group>"; };
+		FE940AFF1FEB9C6D002D03EB /* ZegoSettings.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZegoSettings.m; sourceTree = "<group>"; };
 		FE9CC3CF1FA0314300285475 /* FXBlurView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FXBlurView.h; sourceTree = "<group>"; };
 		FE9CC3D01FA0314300285475 /* FXBlurView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FXBlurView.m; sourceTree = "<group>"; };
 		FE9CC3D31FA05D2200285475 /* ZSHOrderDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHOrderDetailViewController.h; sourceTree = "<group>"; };
@@ -3515,6 +3521,7 @@
 		FE940AF01FEB5CC7002D03EB /* Zego */ = {
 			isa = PBXGroup;
 			children = (
+				FE940AFA1FEB97CF002D03EB /* other */,
 				FE940AF11FEB5CE0002D03EB /* iphoneos_simulator */,
 			);
 			path = Zego;
@@ -3526,6 +3533,17 @@
 				FE940AF21FEB5CE0002D03EB /* ZegoLiveRoom.framework */,
 			);
 			path = iphoneos_simulator;
+			sourceTree = "<group>";
+		};
+		FE940AFA1FEB97CF002D03EB /* other */ = {
+			isa = PBXGroup;
+			children = (
+				FE940AFB1FEB97DE002D03EB /* ZegoAVKitManager.h */,
+				FE940AFC1FEB97DE002D03EB /* ZegoAVKitManager.m */,
+				FE940AFE1FEB9C6D002D03EB /* ZegoSettings.h */,
+				FE940AFF1FEB9C6D002D03EB /* ZegoSettings.m */,
+			);
+			path = other;
 			sourceTree = "<group>";
 		};
 		FE9CC3CE1FA0314300285475 /* FXBlurView */ = {
@@ -4230,6 +4248,7 @@
 				FEE6AA331FCDC2E8001B5528 /* ZSHGuideLogic.m in Sources */,
 				FEA1057B1F9B274E008652D6 /* UIView+ZSHExtension.h in Sources */,
 				185BB9C61FB58DD6007A96FF /* ZSHLiveTaskCenterCell.m in Sources */,
+				FE940B001FEB9C6D002D03EB /* ZegoSettings.m in Sources */,
 				185BB9C21FB5860E007A96FF /* ZSHLiveTaskCenterViewController.m in Sources */,
 				FE3E009A1FDA743200A0F7CA /* RotatingView.m in Sources */,
 				FE7502C11F9A11DE002F2708 /* ZSHSearchBarView.m in Sources */,
@@ -4505,6 +4524,7 @@
 				FE8FD0871FADF4FD005F1184 /* ZSHSettingViewController.m in Sources */,
 				FEA105731F9B2480008652D6 /* ZSHGoodsSortCell.m in Sources */,
 				FE55381C1F47049D00803128 /* RxWebViewNavigationViewController.m in Sources */,
+				FE940AFD1FEB97DE002D03EB /* ZegoAVKitManager.m in Sources */,
 				FEAEE3F01FA86CBA00F73EEA /* STCalendarItem.m in Sources */,
 				FEA30A561F9F2A8700AB0FFC /* ZSHOrderUserInfoCell.m in Sources */,
 				1891C1391FC6D115000AFEFB /* ZSHTogetherModel.m in Sources */,
@@ -4873,6 +4893,7 @@
 				SKIP_INSTALL = NO;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/ZSHApp/Define";
+				"VALID_ARCHS[sdk=iphonesimulator*]" = x86_64;
 			};
 			name = Debug;
 		};

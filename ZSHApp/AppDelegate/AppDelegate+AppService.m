@@ -14,7 +14,7 @@
 #import "RXLSideSlipViewController.h"
 #import "ZSHLiveTabBarController.h"
 #import "ZSHGuideViewController.h"
-
+#import "ZegoAVKitManager.h"
 @implementation AppDelegate (AppService)
 
 
@@ -305,6 +305,10 @@
             return ((UINavigationController*)superVC).viewControllers.lastObject;
         }
     return superVC;
+}
+
+- (void)initZego{
+    [ZegoAVKitManager api];
 }
 
 @end

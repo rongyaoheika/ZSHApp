@@ -42,6 +42,9 @@
     //打印网络json
     [PPNetworkHelper openLog];
     
+    //初始化即构科技
+    [self initZego];
+    
     return YES;
     
 }

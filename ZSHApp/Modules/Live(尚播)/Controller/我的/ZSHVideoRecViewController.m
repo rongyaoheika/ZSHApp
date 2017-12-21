@@ -82,6 +82,8 @@
 
 - (void)closeVideoRec {
     
+    [self.navigationController popViewControllerAnimated:YES];
+    
 }
 
 - (void)refresAction {

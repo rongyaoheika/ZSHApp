@@ -33,6 +33,9 @@
 //键盘监听
 - (void)initKeyboard;
 
+//即构科技初始化
+- (void)initZego;
+
 //单例
 + (AppDelegate *)shareAppDelegate;
 
