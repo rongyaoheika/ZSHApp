@@ -8,7 +8,7 @@
 
 #import "RootViewController.h"
 
-typedef void(^SaveBlock)(id );
+typedef void(^SaveBlock)(id, id, id);
 
 @interface ZSHDetailDemandViewController : RootViewController
 

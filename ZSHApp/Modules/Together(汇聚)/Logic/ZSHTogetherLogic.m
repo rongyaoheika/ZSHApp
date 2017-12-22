@@ -53,12 +53,20 @@
 }
 
 // 发布聚会
-- (void)requestAddDetailParty:(NSDictionary *)dic success:(void(^)(id response))success {
-    [PPNetworkHelper POST:kUrlAddDetailParty parameters:dic success:^(id responseObject) {
+- (void)requestAddDetailParty:(NSDictionary *)dic images:(NSArray *)images fileNames:(NSArray *)fileNmaes  success:(void(^)(id response))success {
+    [PPNetworkHelper uploadImagesWithURL:kUrlAddDetailParty parameters:dic name:@"fileList" images:images fileNames:fileNmaes imageScale:1.0 imageType:nil progress:^(NSProgress *progress) {
+        
+    } success:^(id responseObject) {
         success(responseObject);
     } failure:^(NSError *error) {
-        RLog(@"请求失败");
+        
     }];
+
+//    [PPNetworkHelper POST:kUrlAddDetailParty parameters:dic success:^(id responseObject) {
+//        success(responseObject);
+//    } failure:^(NSError *error) {
+//        RLog(@"请求失败");
+//    }];
 }
 // 加入聚会
 - (void)requestAddOtherPartyWithConvergeDetailID:(NSString *)convergeDetailID success:(void(^)(id response))success {

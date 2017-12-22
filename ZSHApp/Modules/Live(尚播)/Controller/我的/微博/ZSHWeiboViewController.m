@@ -37,8 +37,6 @@
 
 - (void)createUI{
     self.title = @"黑微博";
-
-//    self.tableView.frame = CGRectMake(0, KNavigationBarHeight, KScreenWidth, KScreenHeight-KNavigationBarHeight);
     
     [self.view addSubview:self.tableView];
     if (kFromClassTypeValue == FromPersonalVCToWeiboVC) {
@@ -46,6 +44,11 @@
                 make.edges.mas_equalTo(self.view);
         }];
     } else if (kFromClassTypeValue == FromTabbarToWeiboVC ||kFromClassTypeValue == FromSelectToWeiboVC) {
+        [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.edges.mas_equalTo(self.view).insets(UIEdgeInsetsMake(KNavigationBarHeight, 0, 0, 0));
+        }];
+    } else if (kFromClassTypeValue == FromMineVCToWeiboVC) {
+        self.title = @"圈子中心";
         [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.mas_equalTo(self.view).insets(UIEdgeInsetsMake(KNavigationBarHeight, 0, 0, 0));
         }];

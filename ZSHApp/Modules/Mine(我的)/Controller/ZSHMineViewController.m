@@ -14,6 +14,7 @@
 #import "ZSHTitleContentViewController.h"
 #import "ZSHServiceCenterViewController.h"
 #import "ZSHMineLogic.h"
+#import "ZSHWeiboViewController.h"
 
 static NSString *headCellIdentifier     = @"headCell";
 static NSString *bottomCellIdentifier   = @"listCell";
@@ -45,10 +46,10 @@ static NSString *bottomCellIdentifier   = @"listCell";
                       @"钱包中心",@"游戏中心",@"订单中心",@"设置"];
     self.imageArr = @[@"mine_icon_1",@"mine_icon_2",@"mine_icon_3",@"mine_icon_4",@"mine_icon_5",@"mine_icon_6",@"mine_icon_7",@"mine_icon_8",@"mine_icon_10",@"mine_icon_9"];
     self.pushVCS = @[
-  @"ZSHMemberCenterViewController",@"",@"",
+  @"ZSHMemberCenterViewController",@"",@"ZSHWeiboViewController",
   @"ZSHTitleContentViewController",@"",@"ZSHServiceCenterViewController",
   @"ZSHWalletCenterViewController",@"ZSHGameCenterViewController", @"ZSHGoodsMineViewController",@"ZSHSettingViewController"];
-    self.paramArr = @[@{},@{},@{},
+    self.paramArr = @[@{},@{},@{KFromClassType:@(FromMineVCToWeiboVC)},
   @{KFromClassType:@(FromActivityCenterVCToTitleContentVC),@"title":@"活动中心"},@{},
   @{KFromClassType:@(ZSHFromMineServiceVCToServiceCenterVC),@"title":@"客服中心",
    @"titleArr":@[@"客服1",@"客服2",@"客服3",@"客服4"],

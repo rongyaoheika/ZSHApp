@@ -73,7 +73,7 @@
         make.top.mas_equalTo(self).offset(kRealValue(14));
         make.left.mas_equalTo(self.avatarImageView.mas_right).offset(kRealValue(10));
         make.height.mas_equalTo(kRealValue(14));
-        make.width.mas_equalTo(kRealValue(90));
+
     }];
     
     [self.genderImageView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -98,11 +98,16 @@
 }
 
 - (void)setModel:(ZSHEntertainmentModel *)model{
-    _avatarImageView.image = [UIImage imageNamed:model.avatarPicture];
-    _nameLabel.text = model.name;
-    _genderImageView.image = (model.gender?[UIImage imageNamed:@"gender_male"]:[UIImage imageNamed:@"gender_female"]);
+    [_avatarImageView sd_setImageWithURL:[NSURL URLWithString:model.PORTRAIT]];
+    _nameLabel.text = model.NICKNAME;
+    if ([model.SEX isEqualToString:@"男"]) {
+        _genderImageView.image = [UIImage imageNamed:@"gender_male"];
+    } else {
+        _genderImageView.image = [UIImage imageNamed:@"gender_female"];
+    }
+    
     _HONOURUSER_ID = model.HONOURUSER_ID;
-    _detailLabel.text = [NSString stringWithFormat:@"%@km %ld岁%@",model.distance,model.age,model.constellation];
+    _detailLabel.text = [NSString stringWithFormat:@"%@km %@岁",model.distance, model.age];
 }
 
 - (void)addFriendAction {

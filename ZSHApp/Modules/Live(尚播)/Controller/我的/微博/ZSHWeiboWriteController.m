@@ -94,7 +94,6 @@
         NSMutableArray *fileNames = [NSMutableArray arrayWithCapacity:_selectedAssets.count];
         for (PHAsset *asset in _selectedAssets) {
             [fileNames addObject:[asset valueForKey:@"filename"]];
-//            [fileNames addObject:@"fileList"];
         }
         
         [_liveLogic requestAddCircle:@{@"HONOURUSER_ID":HONOURUSER_IDValue, @"CONTENT":_contentTextView.text} images:_selectedPhotos fileNames:fileNames success:^(id response) {

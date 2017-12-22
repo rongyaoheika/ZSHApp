@@ -52,6 +52,11 @@
     _selectedPhotos = [NSMutableArray array];
     _selectedAssets = [NSMutableArray array];
     
+    if (self.paramDic[@"SelectedPhotos"]) {
+        _selectedPhotos = self.paramDic[@"SelectedPhotos"];
+        _selectedAssets = self.paramDic[@"SelectedAssets"];
+    }
+    
     [self initViewModel];
 }
 
@@ -642,10 +647,12 @@
         model.CONVERGETITLE = _titleTextView.text;
         model.CONVERGEDET = _contentTextView.text;
         if (_saveBlock) {
-            _saveBlock(model);
+            _saveBlock(model, _selectedPhotos, _selectedAssets);
         }
         [self.navigationController popViewControllerAnimated:true];
     }
 }
+
+
 
 @end

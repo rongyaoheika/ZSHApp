@@ -11,11 +11,11 @@
 @interface ZSHEntertainmentModel : ZSHBaseModel
 
 //头部
-@property (nonatomic,copy)   NSString            *avatarPicture;    //头像
-@property (nonatomic,copy)   NSString            *name;             //名字
-@property (nonatomic,assign) BOOL                gender;            //性别
+@property (nonatomic,copy)   NSString            *PORTRAIT;         //头像
+@property (nonatomic,copy)   NSString            *NICKNAME;         //名字
+@property (nonatomic,copy)   NSString            *SEX;              //性别
 @property (nonatomic,copy)   NSString            *distance;         //距离
-@property (nonatomic,assign) NSUInteger          age;               //年龄
+@property (nonatomic,copy)   NSString            *age;              //年龄
 @property (nonatomic,copy)   NSString            *constellation;    //星座
 
 //底部

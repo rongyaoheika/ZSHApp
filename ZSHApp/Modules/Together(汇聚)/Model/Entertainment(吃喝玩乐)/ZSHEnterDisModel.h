@@ -23,7 +23,7 @@
 @property (nonatomic, copy) NSString *CONVERGETITLE;
 @property (nonatomic, copy) NSString *HONOURUSER_ID;
 @property (nonatomic, copy) NSString *CONVERGEDETAIL_ID;
-
+@property (nonatomic, copy) NSString *CONVERGE_ID;
 
 
 @end

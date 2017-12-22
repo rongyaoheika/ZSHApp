@@ -33,5 +33,7 @@
 - (void)requestAddFriendWithReHonouruserID:(NSString *)reHonouruserID success:(void (^)(id response))success;
 // 删除好友
 - (void)requestDelFriendWithReHonouruserID:(NSString *)reHonouruserID success:(void (^)(id response))success;
+// 发布聚会
+- (void)requestAddDetailParty:(NSDictionary *)dic images:(NSArray *)images fileNames:(NSArray *)fileNmaes  success:(void(^)(id response))success;
 
 @end

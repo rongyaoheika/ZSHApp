@@ -62,10 +62,22 @@ static NSString *ZSHEnterTainmentCellID = @"ZSHEnterTainmentCell";
     for (int i = 0; i<_togetherLogic.entertainModelArr.count; i++) {
         ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
         [sectionModel.cellModelArray addObject:cellModel];
-        cellModel.height = kRealValue(250);
+        
+    
+        ZSHEntertainmentModel *model = _togetherLogic.entertainModelArr[i];
+
+        if (model.CONVERGEIMGS.count) {
+            cellModel.height = kRealValue(250);
+        } else {
+            cellModel.height = kRealValue(155);
+        }
+       
         cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
             ZSHEnterTainmentCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHEnterTainmentCellID];
-            ZSHEntertainmentModel *model = _togetherLogic.entertainModelArr[indexPath.row];
+            ZSHEntertainmentModel *model = weakself.togetherLogic.entertainModelArr[indexPath.row];
+            if (indexPath.row == _togetherLogic.entertainModelArr.count-1) {
+                
+            }
             [cell updateCellWithModel:model];
             return cell;
         };
@@ -95,7 +107,7 @@ static NSString *ZSHEnterTainmentCellID = @"ZSHEnterTainmentCell";
 
 #pragma action
 - (void)distributeAction{
-    ZSHEntertainmentDisViewController *disVC = [[ZSHEntertainmentDisViewController alloc]init];
+    ZSHEntertainmentDisViewController *disVC = [[ZSHEntertainmentDisViewController alloc]initWithParamDic:@{@"CONVERGE_ID":self.paramDic[@"CONVERGE_ID"]}];
     [self.navigationController pushViewController:disVC animated:YES];
 }
 

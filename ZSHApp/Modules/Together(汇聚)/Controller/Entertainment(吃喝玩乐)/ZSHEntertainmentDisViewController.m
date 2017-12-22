@@ -11,6 +11,7 @@
 #import "ZSHBottomBlurPopView.h"
 #import "ZSHPickView.h"
 #import "ZSHTogetherLogic.h"
+#import <Photos/Photos.h>
 
 @interface ZSHEntertainmentDisViewController ()
 
@@ -21,6 +22,8 @@
 @property (nonatomic, strong) ZSHBottomBlurPopView      *bottomBlurPopView;
 @property (nonatomic, strong) ZSHPickView               *pickView;
 @property (nonatomic, strong) ZSHTogetherLogic          *togetherLogic;
+@property (nonatomic, strong) NSArray                   *images;
+@property (nonatomic, strong) NSArray                   *assets;
 
 @end
 static NSString *ZSHBaseCellID = @"ZSHBaseCell";
@@ -52,7 +55,8 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
                           @"HONOURUSER_ID":HONOURUSER_IDValue};
     
     _togetherLogic.enterDisModel = [ZSHEnterDisModel mj_objectWithKeyValues:dic];
-    
+    _images = [NSArray array];
+    _assets = [NSArray array];
     [self initViewModel];
 }
 
@@ -177,10 +181,13 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
                     _togetherLogic.enterDisModel.AGEMAX = arr[1];
                 };
             } else if (indexPath.row == 7) {//详细要求
-                ZSHDetailDemandViewController *demandDetailVC = [[ZSHDetailDemandViewController alloc] initWithParamDic:@{@"EnterDisModel":_togetherLogic.enterDisModel}];
                 
-                demandDetailVC.saveBlock = ^(ZSHEnterDisModel *model) {
+                ZSHDetailDemandViewController *demandDetailVC = [[ZSHDetailDemandViewController alloc] initWithParamDic:@{@"EnterDisModel":_togetherLogic.enterDisModel, @"SelectedAssets":_assets, @"SelectedPhotos":_images}];
+                
+                demandDetailVC.saveBlock = ^(ZSHEnterDisModel *model, NSArray *images, NSArray *assets) {
                     weakself.togetherLogic.enterDisModel = model;
+                    weakself.images = images;
+                    weakself.assets = assets;
                 };
                 [weakself.navigationController pushViewController:demandDetailVC animated:YES];
             }
@@ -193,7 +200,14 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 - (void)distributeAction{
     kWeakSelf(self);
     _togetherLogic.enterDisModel.HONOURUSER_ID = HONOURUSER_IDValue;
-    [_togetherLogic requestAddDetailParty:_togetherLogic.enterDisModel.mj_keyValues success:^(id response) {
+    _togetherLogic.enterDisModel.CONVERGE_ID = self.paramDic[@"CONVERGE_ID"];
+    NSMutableArray *fileNames = [NSMutableArray arrayWithCapacity:_assets.count];
+    for (PHAsset *asset in _assets) {
+        [fileNames addObject:[asset valueForKey:@"filename"]];
+    }
+
+    
+    [_togetherLogic requestAddDetailParty:_togetherLogic.enterDisModel.mj_keyValues images:_images fileNames:fileNames success:^(id response) {
         UIAlertController *ac = [UIAlertController alertControllerWithTitle:@"提示" message:@"发布成功" preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
             [weakself.navigationController popViewControllerAnimated:true];
@@ -219,26 +233,6 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     ZSHPickView *pickView = [[ZSHPickView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight) paramDic:paramDic];
     pickView.controller = self;
     return pickView;
-}
-
-- (void)requestData {
-    
-    NSDictionary *dic = @{@"STARTTIME":@"",
-                          @"ENDTIME":@"",
-                          @"PRICEMIN":@"",
-                          @"PRICEMAX":@"",
-                          @"CONVERGETYPE":@"",
-                          @"CONVERGEPER":@"",
-                          @"CONVERGESEX":@"",
-                          @"AGEMIN":@"",
-                          @"AGEMAX":@"",
-                          @"CONVERGEDET":@"",
-                          @"CONVERGETITLE":@"",
-                          @"HONOURUSER_ID":@""};
-
-    [_togetherLogic requestAddDetailParty:dic success:^(id response) {
-        
-    }];
 }
 
 

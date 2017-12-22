@@ -45,11 +45,6 @@
         [_labelArr addObject:bottomLabel];
     }
     
-}
-
-- (void)layoutSubviews{
-    [super layoutSubviews];
-    
     [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self).offset(KLeftMargin);
         make.height.mas_equalTo(kRealValue(14));
@@ -73,7 +68,7 @@
         }];
         j++;
     }
-
+    
     int i = 0;
     for (UILabel *label in _labelArr) {
         [label mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -88,6 +83,12 @@
         }];
         i++;
     }
+
+}
+
+- (void)layoutSubviews{
+    [super layoutSubviews];
+    
 }
 
 - (void)updateCellWithModel:(ZSHEntertainmentModel *)model{
@@ -95,9 +96,22 @@
         [_detailView removeAllSubviews];
     }
     for (int i = 0; i<model.CONVERGEIMGS.count; i++) {
-        UIImageView *detailImageView = [[UIImageView alloc]init];
+        UIImageView *detailImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, kRealValue(82.5), kRealValue(82.5))];
         [detailImageView sd_setImageWithURL:[NSURL URLWithString:model.CONVERGEIMGS[i]]];
         [_detailView addSubview:detailImageView];
+    }
+    
+    if (model.CONVERGEIMGS.count) {
+        [_detailView mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.height.mas_equalTo(kRealValue(82.5));
+        }];
+    } else {
+        if (_detailView.subviews.count) {
+            [_detailView removeAllSubviews];
+        }
+        [_detailView mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.height.mas_equalTo(kRealValue(1));
+        }];
     }
     
     NSString *beginTime = [NSString stringWithFormat:@"开始时间：%@",model.STARTTIME];
@@ -116,7 +130,9 @@
     self.titleLabel.text = model.CONVERGETITLE;
     
     [self layoutIfNeeded];
+    [self updateConstraintsIfNeeded];
 }
+
 
 - (void)setFromClassType:(ZSHFromVCToEnterTainmentCell)fromClassType{
     _fromClassType = fromClassType;
