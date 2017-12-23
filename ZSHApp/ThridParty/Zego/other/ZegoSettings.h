@@ -11,10 +11,21 @@
 
 @interface ZegoSettings : NSObject
 
-@property (nonatomic, copy) NSString *userID;
-@property (nonatomic, copy) NSString *userName;
+@property (nonatomic, strong)   ZegoAVConfig       *currentConfig;
+@property (nonatomic, readonly) NSArray            *appTypeList;
+@property (readonly)            NSInteger          presetIndex;
+@property (readonly)            NSArray            *presetVideoQualityList;
+@property (nonatomic, assign)   int                beautifyFeature;
+@property (readonly)            CGSize             currentResolution;
+@property (nonatomic, copy)     NSString           *userID;
+@property (nonatomic, copy)     NSString           *userName;
 
 + (instancetype)sharedInstance;
+- (BOOL)selectPresetQuality:(NSInteger)presetIndex;
 - (ZegoUser *)getZegoUser;
+- (UIImage *)getBackgroundImage:(CGSize)viewSize withText:(NSString *)text;
+- (NSUserDefaults *)myUserDefaults;
+
+//- (UIViewController *)getViewControllerFromRoomInfo:(ZegoRoomInfo *)roomInfo;
 
 @end

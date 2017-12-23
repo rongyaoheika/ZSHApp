@@ -51,7 +51,7 @@ static NSString *ZSHEntertainmentDetailCellID = @"ZSHEntertainmentDetailCell";
     [self.tableView registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHeadCellID];
     [self.tableView registerClass:[ZSHEntertainmentDetailCell class] forCellReuseIdentifier:ZSHEntertainmentDetailCellID];
     [self.view addSubview:self.bottomBtn];
-    [self.bottomBtn setTitle:@"约TA" forState:UIControlStateNormal];
+    [self.bottomBtn setTitle:@"加入" forState:UIControlStateNormal];
     [self.bottomBtn addTarget:self action:@selector(contactAction) forControlEvents:UIControlEventTouchUpInside];
     [self.tableView reloadData];
 }

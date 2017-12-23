@@ -29,23 +29,23 @@
     self.isHidenNaviBar = true;
     
     UIButton *closeBtn = [[UIButton alloc]init];
-    [closeBtn setBackgroundImage:[UIImage imageNamed:@"live_close"] forState:UIControlStateNormal];
+    [closeBtn setImage:[UIImage imageNamed:@"live_close"] forState:UIControlStateNormal];
     [closeBtn addTarget:self action:@selector(closeVideoRec) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:closeBtn];
     [closeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.view).offset(kRealValue(22));
         make.left.mas_equalTo(self.view).offset(kRealValue(18));
-        make.width.and.height.mas_equalTo(kRealValue(14));
+        make.width.and.height.mas_equalTo(kRealValue(44));
     }];
     
     UIButton *refreshBtn = [[UIButton alloc]init];
-    [refreshBtn setBackgroundImage:[UIImage imageNamed:@"record_image_1"] forState:UIControlStateNormal];
+    [refreshBtn setImage:[UIImage imageNamed:@"record_image_1"] forState:UIControlStateNormal];
     [refreshBtn addTarget:self action:@selector(refresAction) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:refreshBtn];
     [refreshBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(closeBtn);
         make.right.mas_equalTo(self.view).offset(-kRealValue(18));
-        make.width.and.height.mas_equalTo(kRealValue(18.7));
+        make.width.and.height.mas_equalTo(kRealValue(44));
     }];
     
     

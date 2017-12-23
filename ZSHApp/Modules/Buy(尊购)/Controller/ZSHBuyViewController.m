@@ -64,7 +64,7 @@ static NSString *ZSHGoodsListViewID = @"ZSHGoodsListView";
     
     [self addNavigationItemWithImageName:@"nav_buy_scan" isLeft:NO target:self action:@selector(scanBtntAction:) tag:11];
     
-    self.tableView.frame = CGRectMake(0, KNavigationBarHeight, KScreenWidth, KScreenHeight-KNavigationBarHeight-KBottomNavH);
+    self.tableView.frame = CGRectMake(0, KNavigationBarHeight, KScreenWidth, KScreenHeight-KNavigationBarHeight-KBottomNavH-KBottomHeight);
     
     [self.view addSubview:self.tableView];
     self.tableView.delegate = self.tableViewModel;

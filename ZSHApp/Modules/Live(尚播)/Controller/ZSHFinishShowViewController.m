@@ -126,12 +126,12 @@
     
     
     UIButton *closeBtn = [[UIButton alloc]init];
-    [closeBtn setBackgroundImage:[UIImage imageNamed:@"live_close"] forState:UIControlStateNormal];
+    [closeBtn setImage:[UIImage imageNamed:@"live_close"] forState:UIControlStateNormal];
     [closeBtn addTarget:self action:@selector(closeLiveRoom) forControlEvents:UIControlEventTouchUpInside];
     [anchorView addSubview:closeBtn];
     [closeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.mas_equalTo(anchorView).offset(-kRealValue(18));
-        make.width.and.height.mas_equalTo(kRealValue(13.7));
+        make.width.and.height.mas_equalTo(kRealValue(44));
         make.centerY.mas_equalTo(anchorView);
     }];
     
@@ -180,6 +180,10 @@
         }];
     }
     return footerView;
+}
+
+- (void)closeLiveRoom{
+    
 }
 
 @end

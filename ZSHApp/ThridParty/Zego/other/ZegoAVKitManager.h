@@ -12,5 +12,7 @@
 @interface ZegoAVKitManager : NSObject
 
 + (ZegoLiveRoomApi *)api;
-
++ (bool)usingExternalCapture;
++ (bool)recordTime;
++ (void)releaseApi;
 @end

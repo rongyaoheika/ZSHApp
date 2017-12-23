@@ -12,7 +12,7 @@
 @interface ZSHCardCustomizedFirst ()
 
 @property (nonatomic, strong) UIView                    *labelView;
-@property (nonatomic, strong) UIView                    *textFieldView;
+@property (nonatomic, strong) UIImageView               *textFieldView;
 
 @property (nonatomic, strong) UILabel          *promptLabel;
 @property (nonatomic, strong) UITextField      *signTextField;
@@ -47,9 +47,9 @@
     [self addSubview:_promptLabel];
     
     //输入姓名textField
-    _textFieldView = [[UIView alloc]initWithFrame:CGRectZero];
+    _textFieldView = [[UIImageView alloc]initWithFrame:CGRectZero];
     _textFieldView.userInteractionEnabled = YES;
-    [_textFieldView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"seg_two_bg"]]];
+    [_textFieldView setImage:[UIImage imageNamed:@"seg_two_bg"]];
     [self addSubview:_textFieldView];
     
     NSArray *placeHolderArr = @[@"CHENG",@"LONG"];
@@ -117,6 +117,7 @@
     
     int j = 0;
     for (ZSHTextFieldCellView * textField in _textFieldView.subviews) {
+        textField.userInteractionEnabled = YES;
         [textField mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.mas_equalTo(_textFieldView).offset(kRealValue(99.5)*j);
             make.top.mas_equalTo(_textFieldView);
@@ -124,7 +125,6 @@
         }];
         j++;
     }
-    
     
     [_bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(_textFieldView.mas_bottom).offset(kRealValue(20));
