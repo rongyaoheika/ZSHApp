@@ -14,6 +14,7 @@
 #import "ZSHSearchBarView.h"
 
 typedef void(^RemoveCompletedBlock)();
+typedef void(^ZSHBottomBtnViewBtnBlock)(NSInteger);
 /**
  VC 基类
  */
@@ -25,9 +26,11 @@ typedef void(^RemoveCompletedBlock)();
 @property (nonatomic, assign) UIStatusBarStyle          StatusBarStyle;
 @property (nonatomic, strong) UITableView               *tableView;
 @property (nonatomic, strong) UIButton                  *bottomBtn;
+@property (nonatomic, strong) UIView                    *bottomBtnView;
+@property (nonatomic, copy)   ZSHBottomBtnViewBtnBlock  bottomBtnViewBtnBlock;
 @property (nonatomic, strong) ZSHBaseTableViewModel     *tableViewModel;
 @property (nonatomic, strong) UICollectionView          *collectionView;
-@property (nonatomic, strong) ZSHSearchBarView          *searchBar;
+@property (nonatomic, strong) ZSHSearchBarView          *searchView;
 @property (nonatomic, strong) NSDictionary              *paramDic;
 
 /**
@@ -113,13 +116,16 @@ typedef void(^RemoveCompletedBlock)();
 //取消网络请求
 - (void)cancelRequest;
 
-//加载子view时动画
-- (void) setAnimationWithHidden:(BOOL)hidden view:(UIView *)view completedBlock:(RemoveCompletedBlock)completedBlock;
-
 //跳转是传递参数
 - (instancetype)initWithParamDic:(NSDictionary *)paramDic;
 
 - (void)createUI;
 - (void)loadData;
+
+- (void) showProgress;
+- (void) hideProgress;
+
+- (void)endTabViewRefresh;
+- (void)endCollectionViewRefresh;
 
 @end

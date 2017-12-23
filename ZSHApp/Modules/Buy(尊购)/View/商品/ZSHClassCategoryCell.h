@@ -13,4 +13,9 @@
 /* 标题数据 */
 @property (nonatomic, strong)ZSHClassGoodsModel *titleItem;
 
+/* 标题 */
+@property (strong , nonatomic)UILabel *titleLabel;
+/* 指示View */
+@property (strong , nonatomic)UIView *indicatorView;
+
 @end

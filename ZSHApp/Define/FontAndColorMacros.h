@@ -13,19 +13,6 @@
 
 #pragma mark -  常用颜色区
 
-//默认页面背景色
-#define CViewBgColor [UIColor colorWithHexString:@"f2f2f2"]
-
-//分割线颜色
-#define CLineColor [UIColor colorWithHexString:@"ededed"]
-
-//次级字色
-#define CFontColor1 [UIColor colorWithHexString:@"1f1f1f"]
-
-//再次级字色
-#define CFontColor2 [UIColor colorWithHexString:@"5c5c5c"]
-
-#define kRealValue(with)((with)*(KScreenWidth/375.0f))
 #define KClearColor                    [UIColor clearColor]
 #define KWhiteColor                    [UIColor whiteColor]
 #define KBlackColor                    [UIColor blackColor]
@@ -34,9 +21,10 @@
 #define KBlueColor                     [UIColor blueColor]
 #define KRedColor                      [UIColor redColor]
 #define KGreenColor                    [UIColor greenColor]
+#define KZSHColorA61CE7               [UIColor colorWithHexString:@"A61CE7"]
+#define KZSHColorCD933B               [UIColor colorWithHexString:@"CD933B"]
 #define KZSHColorFD5739               [UIColor colorWithHexString:@"FD5739"]
 #define KZSHColor979797               [UIColor colorWithHexString:@"979797"]
-#define KZSHColor8E8E93               [UIColor colorWithHexString:@"8E8E93"]
 #define KZSHColorFF2366               [UIColor colorWithHexString:@"FF2366"]
 #define KZSHColor262626               [UIColor colorWithHexString:@"262626"]
 #define KZSHColor3B3B3B               [UIColor colorWithHexString:@"3B3B3B"]
@@ -51,6 +39,16 @@
 #define KZSHColorF29E19               [UIColor colorWithHexString:@"F29E19"]     //主题色：导航字体颜色
 #define KZSHColor                     [UIColor colorWithHexString:@"9BA4AE"]
 #define KZSHColorDFDFDF               [UIColor colorWithHexString:@"DFDFDF"]
+#define KZSHColor181818               [UIColor colorWithHexString:@"181818"]
+#define KZSHColor454545               [UIColor colorWithHexString:@"454545"]
+#define KZSHColorF29E19               [UIColor colorWithHexString:@"F29E19"]    // 进度条填充颜色
+#define KZSHColorFF2068               [UIColor colorWithHexString:@"FF2068"]
+#define KZSHColor141414               [UIColor colorWithHexString:@"141414"]
+#define KZSHColorD8D8D8               [UIColor colorWithHexString:@"D8D8D8"]
+#define KZSHColor1A1A1A               [UIColor colorWithHexString:@"1A1A1A"]
+#define KZSHColor2A2A2A               [UIColor colorWithHexString:@"2A2A2A"]
+#define KZSHColor3D3D3D               [UIColor colorWithHexString:@"3D3D3D"]
+#define KZSHColor58AABE               [UIColor colorWithHexString:@"58AABE"]
 #define kRandomColor                   KRGBColor(arc4random_uniform(256)/255.0,arc4random_uniform(256)/255.0,arc4random_uniform(256)/255.0)        //随机色生成
 #define KShadowColor                   [UIColor colorWithRed:0 green:0 blue:0 alpha:0.85]
 #define KLightWhiteColor               [UIColor colorWithRed:255/255.0 green:255/255.0f blue:255/255.0f alpha:0.7]
@@ -72,6 +70,8 @@
 #define kDINCondBold(fontSize)          [UIFont fontWithName:@"DINCond-Bold" size:(fontSize)*(KScreenWidth/375.0f)]
 #define kPingFangLight(fontSize)        [UIFont fontWithName:@".PingFangSC-Light" size:(fontSize)*(KScreenWidth/375.0f)]
 #define kPingFangRegular(fontSize)      [UIFont fontWithName:@".PingFangSC-Regular" size:(fontSize)*(KScreenWidth/375.0f)]
+#define kGeorgia(fontSize)              [UIFont fontWithName:@"Georgia" size:(fontSize)*(KScreenWidth/375.0f)]
+
 #define kPingFangMedium(fontSize)       [UIFont fontWithName:@".PingFangSC-Medium" size:(fontSize)*(KScreenWidth/375.0f)]
 #define kPingFangSemibold(fontSize)     [UIFont fontWithName:@".PingFangSC-Semibold" size:(fontSize)*(KScreenWidth/375.0f)]
 #define kNettoOT(fontSize)              [UIFont fontWithName:@"NettoOT" size:(fontSize)*(KScreenWidth/375.0f)]
@@ -84,6 +84,6 @@
 #define SYSTEMFONT(FONTSIZE)            [UIFont systemFontOfSize:FONTSIZE]
 #define FONT(NAME, FONTSIZE)            [UIFont fontWithName:(NAME) size:((FONTSIZE)*(KScreenWidth/375.0f))]
 
-
+             
 
 #endif /* FontAndColorMacros_h */

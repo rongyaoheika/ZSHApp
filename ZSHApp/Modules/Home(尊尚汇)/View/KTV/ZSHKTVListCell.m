@@ -75,4 +75,9 @@
     }];
 }
 
+- (void)updateCellWithParamDic:(NSDictionary *)dic{
+    _promptLabel.text = dic[@"KTVDETTITLE"];
+    _priceLabel.text = [NSString stringWithFormat:@"¥%.0f",[dic[@"KTVDETTITLE"]floatValue]];
+}
+
 @end

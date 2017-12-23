@@ -10,30 +10,38 @@
 #import "ZSHGoodModel.h"
 #import "ZSHOrderUserInfoCell.h"
 #import "ZSHGoodsDetailCell.h"
-#import "ZSHOrderPayCell.h"
+#import "ZSHPayView.h"
 #import "JSNummberCount.h"
+#import "ZSHMineLogic.h"
+#import "ZSHManageAddressListViewController.h"
 
 @interface ZSHConfirmOrderViewController ()
+
+@property (nonatomic, strong) ZSHPayView         *payView;
+@property (nonatomic, strong) ZSHMineLogic       *mineLogic;
+@property (nonatomic, assign) NSInteger          currentAddrIndex;
 
 @end
 
 static NSString *ZSHOrderUserInfoCellID = @"ZSHOrderUserInfoCell";
 static NSString *ZSHGoodsDetailCellID = @"ZSHGoodsDetailCell";
 static NSString *ZSHGoodsCouponCellID = @"ZSHGoodsCouponCell";
-static NSString *ZSHOrderPayCellID = @"ZSHOrderPayCell";
+static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 @implementation ZSHConfirmOrderViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
     [self loadData];
     [self createUI];
 }
 
 - (void)loadData{
-    
-    
     [self initViewModel];
+    _mineLogic = [[ZSHMineLogic alloc] init];
+    _mineLogic.buyOrderModel = [[ZSHBuyOrderModel alloc] init];
+    _currentAddrIndex = 0;
+    [self requestAddr];
 }
 
 - (void)createUI{
@@ -50,7 +58,7 @@ static NSString *ZSHOrderPayCellID = @"ZSHOrderPayCell";
     
     [self.tableView registerClass:[ZSHOrderUserInfoCell class] forCellReuseIdentifier:ZSHOrderUserInfoCellID];
     [self.tableView registerClass:[ZSHGoodsDetailCell class] forCellReuseIdentifier:ZSHGoodsDetailCellID];
-    [self.tableView registerClass:[ZSHOrderPayCell class] forCellReuseIdentifier:ZSHOrderPayCellID];
+     [self.tableView registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHGoodsCouponCellID];
     
     [self.tableView reloadData];
     
@@ -65,8 +73,16 @@ static NSString *ZSHOrderPayCellID = @"ZSHOrderPayCell";
     [self.tableViewModel.sectionModelArray addObject:[self storeGoodsDetailSection]];
     [self.tableViewModel.sectionModelArray addObject:[self storeCountSection]];
     [self.tableViewModel.sectionModelArray addObject:[self storeCouponSection]];
-     [self.tableViewModel.sectionModelArray addObject:[self storePriceSection]];
-    [self.tableViewModel.sectionModelArray addObject:[self storePaySection]];
+    [self.tableViewModel.sectionModelArray addObject:[self storePriceSection]];
+    
+    kWeakSelf(self);
+    NSDictionary *nextParamDic = @{@"title":@"支付方式"};
+     _payView = [[ZSHPayView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, kRealValue(40)) paramDic:nextParamDic];
+    [self.tableViewModel.sectionModelArray addObject:[_payView storePaySection]];
+    _payView.rightBtnBlcok = ^(UIButton *btn) {
+        [weakself rightBtnAction:btn];
+    };
+    [self.tableView reloadData];
 }
 
 //第一组：个人信息
@@ -75,16 +91,18 @@ static NSString *ZSHOrderPayCellID = @"ZSHOrderPayCell";
     ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
     [sectionModel.cellModelArray addObject:cellModel];
     cellModel.height = kRealValue(75);
+    kWeakSelf(self);
     cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHOrderUserInfoCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHOrderUserInfoCellID forIndexPath:indexPath];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        NSDictionary *paramDic = @{@"userName":@"蒋小宝",@"phoneNum":@"13719103456",@"userAddress":@"北京市朝阳区西大望路甲23号SOHO现代城A座1720"};
-        [cell updateCellWithParamDic:paramDic];
+        if (_mineLogic.addrModelArr.count) {
+            [cell updateCellWithModel:_mineLogic.addrModelArr[weakself.currentAddrIndex]];
+        }
         return cell;
     };
     
     cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
-        
+        [weakself pushAddAddr];
     };
     return sectionModel;
 }
@@ -114,16 +132,27 @@ static NSString *ZSHOrderPayCellID = @"ZSHOrderPayCell";
     ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
     [sectionModel.cellModelArray addObject:cellModel];
     cellModel.height = kRealValue(40);
+    kWeakSelf(self);
     cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
-        ZSHBaseCell *cell = [[ZSHBaseCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ZSHGoodsCouponCellID];
+        ZSHBaseCell *cell = [[ZSHBaseCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@""];
         cell.textLabel.text = @"购买数量";
-        JSNummberCount *countBtn = [[JSNummberCount alloc]initWithFrame:CGRectZero];
-        [cell.contentView addSubview:countBtn];
-        [countBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.right.mas_equalTo(cell).offset(-KLeftMargin);
-            make.size.mas_equalTo(CGSizeMake(kRealValue(50), kRealValue(15)));
-            make.centerY.mas_equalTo(cell);
-        }];
+        if (![cell.contentView viewWithTag:2]) {
+            JSNummberCount *countBtn = [[JSNummberCount alloc]initWithFrame:CGRectZero];
+            countBtn.tag = 2;
+            countBtn.currentCountNumber = [weakself.goodsModel.count integerValue];
+            countBtn.numberTT.text = weakself.goodsModel.count;
+            countBtn.NumberChangeBlock = ^(NSInteger count) {
+                weakself.goodsModel.count = NSStringFormat(@"%zd", count);
+                [weakself initViewModel];
+            };
+            [cell.contentView addSubview:countBtn];
+            [countBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.right.mas_equalTo(cell).offset(-KLeftMargin);
+                make.size.mas_equalTo(CGSizeMake(kRealValue(50), kRealValue(15)));
+                make.centerY.mas_equalTo(cell);
+            }];
+        }
+        
         return cell;
     };
     
@@ -160,9 +189,9 @@ static NSString *ZSHOrderPayCellID = @"ZSHOrderPayCell";
     [sectionModel.cellModelArray addObject:cellModel];
     cellModel.height = kRealValue(40);
     cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
-        ZSHBaseCell *cell = [[ZSHBaseCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:ZSHGoodsCouponCellID];
+        ZSHBaseCell *cell = [[ZSHBaseCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@""];
         cell.textLabel.text = @"总金额";
-        cell.detailTextLabel.text =  [NSString stringWithFormat:@"¥ %.1f",[_goodsModel.price floatValue]];
+        cell.detailTextLabel.text =  [NSString stringWithFormat:@"¥ %.1f",[_goodsModel.PROPRICE floatValue]*[_goodsModel.count floatValue]];
         cell.detailTextLabel.font = kPingFangMedium(17);
         return cell;
     };
@@ -173,46 +202,65 @@ static NSString *ZSHOrderPayCellID = @"ZSHOrderPayCell";
     return sectionModel;
 }
 
-//支付方式
-- (ZSHBaseTableViewSectionModel*)storePaySection {
-    
-    ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
-    ZSHBaseTableViewCellModel *titleCellModel = [[ZSHBaseTableViewCellModel alloc] init];
-    [sectionModel.cellModelArray addObject:titleCellModel];
-    titleCellModel.height = kRealValue(40);
-    titleCellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
-        ZSHBaseCell *cell = [[ZSHBaseCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:ZSHGoodsCouponCellID];
-        cell.textLabel.text = @"支付方式";
-         [cell setSeparatorInset:UIEdgeInsetsMake(0, 0, 0, MAXFLOAT)];
-        return cell;
-    };
-    
-    
-    NSArray *paramArr = @[
-      @{@"payImage":@"pay_wechat",@"title":@"微信支付",@"btnTag":@(1),@"btnNormalImage":@"pay_btn_normal",@"btnPressImage":@"pay_btn_press"},
-     @{@"payImage":@"pay_alipay",@"title":@"支付宝支付",@"btnTag":@(2),@"btnNormalImage":@"pay_btn_normal",@"btnPressImage":@"pay_btn_press"}];
-    for (int i = 0; i<2; i++) {
-        ZSHBaseTableViewCellModel *payCellModel = [[ZSHBaseTableViewCellModel alloc] init];
-        [sectionModel.cellModelArray addObject:payCellModel];
-        payCellModel.height = kRealValue(40);
-        payCellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
-            ZSHOrderPayCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHOrderPayCellID forIndexPath:indexPath];
-            [cell updateCellWithParamDic:paramArr[i]];
-            [cell setSeparatorInset:UIEdgeInsetsMake(0, 0, 0, MAXFLOAT)];
-            return cell;
-        };
-    }
-    
-    return sectionModel;
+#pragma  action
+- (void)requestAddr {
+    kWeakSelf(self);
+    [_mineLogic requestShipAdr:HONOURUSER_IDValue success:^(id response) {
+        if (weakself.mineLogic.addrModelArr.count) {
+            [weakself initViewModel];
+        } else {
+            [weakself pushAddAddr];
+        }
+    }];
 }
+
+- (void)pushAddAddr {
+    kWeakSelf(self);
+    ZSHManageAddressListViewController *addAddr = [[ZSHManageAddressListViewController alloc] init];
+    addAddr.getIndex = ^(NSInteger index) {
+        weakself.currentAddrIndex = index;
+        [weakself requestAddr];
+    };
+    [self.navigationController pushViewController:addAddr animated:true];
+}
+
 
 - (void)placeOrderBtnAction{
+    if ([SafeStr(_mineLogic.buyOrderModel.ORDERADDRESS) isEqualToString:@""] ||
+        [SafeStr(_mineLogic.buyOrderModel.ORDERMONEY) isEqualToString:@""] ||
+        [SafeStr(_mineLogic.buyOrderModel.ORDERDELIVERY) isEqualToString:@""] ||
+        [SafeStr(_mineLogic.buyOrderModel.HONOURUSER_ID)  isEqualToString:@""] ||
+        [SafeStr(_mineLogic.buyOrderModel.PRODUCT_ID)  isEqualToString:@""] ||
+        [SafeStr(_mineLogic.buyOrderModel.PRODUCTCOUNT)  isEqualToString:@""]) {
+//        return;
+    }
+    kWeakSelf(self);
+    _mineLogic.buyOrderModel.ORDERADDRESS = _mineLogic.addrModelArr[_currentAddrIndex].ADDRESS_ID;
+    _mineLogic.buyOrderModel.ORDERMONEY = NSStringFormat(@"%f", [_goodsModel.PROPRICE doubleValue] *[_goodsModel.count floatValue]);
+    _mineLogic.buyOrderModel.ORDERDELIVERY = @"顺丰";
+    _mineLogic.buyOrderModel.HONOURUSER_ID = HONOURUSER_IDValue;
+    _mineLogic.buyOrderModel.PRODUCT_ID = _goodsModel.PRODUCT_ID;
+    _mineLogic.buyOrderModel.PRODUCTCOUNT = _goodsModel.count;
+    [_mineLogic requestShipOrderWithModel:_mineLogic.buyOrderModel success:^(id response) {
+        UIAlertController *ac = [UIAlertController alertControllerWithTitle:@"提示" message:@"添加成功" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+            [weakself.navigationController popViewControllerAnimated:true];
+        }];
+        [ac addAction:cancelAction];
+        [weakself presentViewController:ac animated:YES completion:nil];
+    }];
     
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)rightBtnAction:(UIButton *)rightBtn{
+    ZSHBaseCell *cell = (ZSHBaseCell *)[[rightBtn superview] superview];
+    NSIndexPath *path = [self.tableView indexPathForCell:cell];
+    
+    // 记录下当前的IndexPath.row
+    _payView.selectedCellRow = path.row;
+    NSIndexSet *indexSet = [[NSIndexSet alloc] initWithIndex:path.section];
+    [self.tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationNone];
 }
+
 
 @end

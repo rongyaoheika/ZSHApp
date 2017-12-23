@@ -8,6 +8,11 @@
 
 #import "ZSHBaseCollectionViewCell.h"
 
+
+typedef void(^JSNumberChangeBlock)(NSInteger count);
+
 @interface ZSHGoodsDetailCountCell : ZSHBaseCollectionViewCell
+
+@property (nonatomic, copy) JSNumberChangeBlock NumberChangeBlock;
 
 @end

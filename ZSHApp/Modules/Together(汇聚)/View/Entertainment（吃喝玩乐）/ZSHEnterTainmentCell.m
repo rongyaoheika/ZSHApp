@@ -45,11 +45,6 @@
         [_labelArr addObject:bottomLabel];
     }
     
-}
-
-- (void)layoutSubviews{
-    [super layoutSubviews];
-    
     [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self).offset(KLeftMargin);
         make.height.mas_equalTo(kRealValue(14));
@@ -73,7 +68,7 @@
         }];
         j++;
     }
-
+    
     int i = 0;
     for (UILabel *label in _labelArr) {
         [label mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -88,22 +83,41 @@
         }];
         i++;
     }
+
+}
+
+- (void)layoutSubviews{
+    [super layoutSubviews];
+    
 }
 
 - (void)updateCellWithModel:(ZSHEntertainmentModel *)model{
     if (_detailView.subviews.count) {
         [_detailView removeAllSubviews];
     }
-    NSArray *imageArr = @[@"entertainment_image_1",@"entertainment_image_2",@"entertainment_image_3",@"entertainment_image_4"];
-    for (int i = 0; i<imageArr.count; i++) {
-        UIImageView *detailImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:imageArr[i]]];
+    for (int i = 0; i<model.CONVERGEIMGS.count; i++) {
+        UIImageView *detailImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, kRealValue(82.5), kRealValue(82.5))];
+        [detailImageView sd_setImageWithURL:[NSURL URLWithString:model.CONVERGEIMGS[i]]];
         [_detailView addSubview:detailImageView];
     }
     
-    NSString *beginTime = [NSString stringWithFormat:@"开始时间：%@",model.beginTime];
-    NSString *endTime = [NSString stringWithFormat:@"结束时间：%@",model.endTime];
-    NSString *personCount = [NSString stringWithFormat:@"人数：%@",model.personCount];
-    NSString *mode = [NSString stringWithFormat:@"方式：%@",model.mode];
+    if (model.CONVERGEIMGS.count) {
+        [_detailView mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.height.mas_equalTo(kRealValue(82.5));
+        }];
+    } else {
+        if (_detailView.subviews.count) {
+            [_detailView removeAllSubviews];
+        }
+        [_detailView mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.height.mas_equalTo(kRealValue(1));
+        }];
+    }
+    
+    NSString *beginTime = [NSString stringWithFormat:@"开始时间：%@",model.STARTTIME];
+    NSString *endTime = [NSString stringWithFormat:@"结束时间：%@",model.ENDTIME];
+    NSString *personCount = [NSString stringWithFormat:@"人数：%@",model.CONVERGEPER];
+    NSString *mode = [NSString stringWithFormat:@"方式：%@",model.CONVERGETYPE];
     
     _titleArr = @[beginTime,endTime,personCount,mode];
     int i = 0;
@@ -111,17 +125,21 @@
         label.text = _titleArr[i];
         i++;
     }
-    
     self.headView.model = model;
+    
+    self.titleLabel.text = model.CONVERGETITLE;
+    
     [self layoutIfNeeded];
+    [self updateConstraintsIfNeeded];
 }
+
 
 - (void)setFromClassType:(ZSHFromVCToEnterTainmentCell)fromClassType{
     _fromClassType = fromClassType;
-    if (fromClassType == ZSHFromActivityVCToEnterTainmentCell) {
-        self.headView.hidden = YES;
-        self.headView.frame = CGRectZero;
-    }
+//    if (fromClassType == ZSHFromActivityVCToEnterTainmentCell) {
+//        self.headView.hidden = YES;
+//        self.headView.frame = CGRectZero;
+//    }
 }
 
 #pragma getter

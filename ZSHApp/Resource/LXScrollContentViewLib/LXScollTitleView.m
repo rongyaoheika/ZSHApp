@@ -12,8 +12,7 @@
 
 @property (nonatomic, strong) NSArray             *titles;
 @property (nonatomic, copy)   NSString            *imageName;
-@property (nonatomic, strong) UIScrollView        *scrollView;
-@property (nonatomic, strong) NSMutableArray      *titleButtons;
+
 @property (nonatomic, strong) UIView              *selectionIndicator;
 
 
@@ -31,6 +30,10 @@
     if (self = [super initWithFrame:frame]) {
         [self initData];
         [self setupUI];
+        
+//        [self.scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.edges.mas_equalTo(self);
+//        }];
     }
     return self;
 }
@@ -57,7 +60,7 @@
     [self.scrollView addSubview:self.selectionIndicator];
 }
 
-- (void)reloadViewWithTitles:(NSArray *)titles image:(NSString *)imageName{
+- (void)reloadViewWithTitles:(NSArray *)titles {
     for (UIButton *btn in self.titleButtons) {
         [btn removeFromSuperview];
     }
@@ -70,15 +73,18 @@
         [btn setTitle:title forState:UIControlStateNormal];
         [btn setTitleColor:self.normalColor forState:UIControlStateNormal];
         [btn setTitleColor:self.selectedColor forState:UIControlStateSelected];
+        
+        [btn setBackgroundImage:self.normalBgImage?self.normalBgImage:self.normalBgImageArr[i] forState:UIControlStateNormal];
+        [btn setBackgroundImage:self.selectedBgImage?self.selectedBgImage:self.selectedBgImageArr[i] forState:UIControlStateSelected];
+        
+        //小图片可以
+        [btn setImage:self.normalImage?self.normalImage:self.normalImageArr[i] forState:UIControlStateNormal];
+        [btn setImage:self.selectedImage?self.selectedImage:self.selectedImageArr[i] forState:UIControlStateSelected];
+        
         btn.selected = (i == self.selectedIndex);
         btn.titleLabel.font = btn.selected?self.selectedTitleFont:self.normalTitleFont;
         btn.tag = 100 + i++;
         [btn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
-        if (imageName) {
-            _imageName = imageName;
-            [btn setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
-        }
-        
         CGSize titleSize = [title sizeWithAttributes:[NSDictionary dictionaryWithObjectsAndKeys:btn.titleLabel.font,NSFontAttributeName,nil]];
         self.indicatorWidth = titleSize.width;
         
@@ -88,25 +94,7 @@
     [self layoutSubviews];
 }
 
-
 - (void)btnClick:(UIButton *)titleBtn{
-    [self.titleButtons enumerateObjectsUsingBlock:^(UIButton *btn , NSUInteger idx, BOOL * _Nonnull stop) {
-        if (btn == titleBtn) {
-            btn.selected = !btn.selected;
-            btn.titleLabel.font = self.selectedTitleFont;
-//            if (_imageName) {
-//                 [self changeButtonObject:btn TransformAngle:M_PI];
-//            }
-           
-        } else {
-            btn.selected = NO;
-            btn.titleLabel.font = self.normalTitleFont;
-//            if (_imageName) {
-//                [self changeButtonObject:btn TransformAngle:0];
-//            }
-        }
-    }];
-
     NSInteger btnIndex = titleBtn.tag - 100;
     self.selectedIndex = btnIndex;
     if (self.selectedBlock) {
@@ -114,16 +102,20 @@
     }
 }
 
+-(void)updateConstraints{
+    
+    [super updateConstraints];
+}
+
 - (void)layoutSubviews{
     [super layoutSubviews];
+    
     self.scrollView.frame = self.bounds;
     self.scrollView.contentSize = CGSizeMake(self.titleButtons.count * self.titleWidth, self.frame.size.height);
     NSInteger i = 0;
     for (UIButton *btn in self.titleButtons) {
         btn.frame = CGRectMake(self.titleWidth * i++, 0, self.titleWidth, self.frame.size.height);
-        if (_imageName) {
-            [btn layoutButtonWithEdgeInsetsStyle:XYButtonEdgeInsetsStyleRight imageTitleSpace:kRealValue(6)];
-        }
+        [btn layoutButtonWithEdgeInsetsStyle:self.imageStyle imageTitleSpace:self.imageTitleSpace];
     }
     [self setSelectedIndicator:NO];
     [self.scrollView bringSubviewToFront:self.selectionIndicator];
@@ -147,19 +139,19 @@
     [self.scrollView scrollRectToVisible:centeredRect animated:animated];
 }
 
-//按钮左侧图片旋转
--(void)changeButtonObject:(UIButton *)button TransformAngle:(CGFloat)angle
-{
-    [UIView animateWithDuration:0.5 animations:^{
-        button.imageView.transform =CGAffineTransformMakeRotation(angle);
-    } completion:^(BOOL finished) {
-    }];
-    
-}
-
 #pragma mark - setter
 
 - (void)setSelectedIndex:(NSInteger)selectedIndex{
+    [self.titleButtons enumerateObjectsUsingBlock:^(UIButton *btn , NSUInteger idx, BOOL * _Nonnull stop) {
+        if (btn.tag-100 == selectedIndex) {
+            btn.selected = !btn.selected;
+            btn.titleLabel.font = self.selectedTitleFont;
+        } else {
+            btn.selected = NO;
+            btn.titleLabel.font = self.normalTitleFont;
+        }
+    }];
+    
     if (_selectedIndex == selectedIndex) {
         return;
     }

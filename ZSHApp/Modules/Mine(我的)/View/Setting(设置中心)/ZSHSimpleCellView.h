@@ -10,5 +10,11 @@
 
 @interface ZSHSimpleCellView : ZSHBaseView
 
+// 第一组
+- (void)updateViewWithModel:(ZSHBaseModel *)model index:(NSInteger)index;
+// 第二组
+- (void)updateView2WithModel:(ZSHBaseModel *)model index:(NSInteger)index;
 
+- (void)updateHeadImage:(UIImage *)image;
+- (void)updateRightText:(NSString *)text;
 @end

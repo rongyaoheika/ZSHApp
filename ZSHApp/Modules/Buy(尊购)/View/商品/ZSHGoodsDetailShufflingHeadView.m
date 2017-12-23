@@ -7,12 +7,15 @@
 //
 
 #import "ZSHGoodsDetailShufflingHeadView.h"
-#import "ZSHCycleScrollView.h"
+#import "ZSHGuideView.h"
+#import "ZSHGoodDetailModel.h"
+
 
 @interface ZSHGoodsDetailShufflingHeadView ()
 
+
 /* 轮播图 */
-@property (nonatomic, strong)ZSHCycleScrollView *cycleScrollView;
+@property (nonatomic, strong) ZSHGuideView       *headView;
 
 @end
 
@@ -28,21 +31,30 @@
     return self;
 }
 
-- (void)setup
-{
-    self.backgroundColor = KClearColor;
-    _cycleScrollView = [[ZSHCycleScrollView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, kScreenHeight * 0.3)];
-    _cycleScrollView.autoScroll = NO;
-    _cycleScrollView.scrollDirection =  ZSHCycleScrollViewHorizontal;
-    [self addSubview:_cycleScrollView];
+- (void)setup {
+    NSDictionary *nextParamDic = @{KFromClassType:@(FromGoodsDetailVCToGuideView), @"pageViewHeight":@(kRealValue(225)), @"min_scale":@(1.0),@"withRatio":@(1.0),@"pageImage":@"page_press",@"currentPageImage":@"page_normal",@"infinite":@(false)};
+    _headView = [[ZSHGuideView alloc]initWithFrame:CGRectZero paramDic:nextParamDic];
+    [self addSubview:_headView];
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    [_headView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.mas_equalTo(self);
+    }];
 }
 
 #pragma mark - Setter Getter Methods
-- (void)setShufflingArray:(NSArray *)shufflingArray
-{
-    _shufflingArray = shufflingArray;
-    _cycleScrollView.dataArr = [shufflingArray mutableCopy];
+- (void)updateCellWithModel:(ZSHBaseModel *)model{
+    ZSHGoodDetailModel *goodDetailModel = (ZSHGoodDetailModel *)model;
+    [_headView updateViewWithParamDic:@{@"dataArr":goodDetailModel.PRODUCTIMG}];
 }
+
+//- (void)setShufflingArray:(NSArray *)shufflingArray
+//{
+//    _shufflingArray = shufflingArray;
+//    _cycleScrollView.dataArr = [shufflingArray mutableCopy];
+//}
 
 
 @end

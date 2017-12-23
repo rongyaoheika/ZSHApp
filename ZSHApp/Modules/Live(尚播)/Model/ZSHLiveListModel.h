@@ -14,4 +14,5 @@
 @property (nonatomic,copy)  NSString *imageName;
 @property (nonatomic,copy)  NSString *loveCount;
 
+
 @end

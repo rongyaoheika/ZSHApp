@@ -29,10 +29,13 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 }
 
 - (void)loadData{
-  if (kFromVCType == FromSettingNotifacationVCToNotificationVC){
+  if (kFromClassTypeValue == FromSettingVCToNotificationVC){
         self.titleArr = @[@"接收新消息通知",@"声音",@"震动"];
         self.detailTitleArr = @[@"UISwitch",@"UISwitch",@"UISwitch"];
-    }
+  }else if (kFromClassTypeValue == FromLiveMineVCToNotificationVC){
+      self.titleArr = @[@"礼物特效",@"开播提醒",@"非wifi环境下观看直播提醒"];
+      self.detailTitleArr = @[@"UISwitch",@"UISwitch",@"UISwitch"];
+  }
     
     [self initViewModel];
 }
@@ -66,13 +69,16 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
         cellModel.height = (i==0? kRealValue(55):kRealValue(43));
         cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
             ZSHBaseCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHBaseCellID forIndexPath:indexPath];
+            if (![cell.contentView viewWithTag:2]) {
+                NSDictionary *nextParamDic = @{@"leftTitle":weakself.titleArr[indexPath.row],@"rightTitle":weakself.detailTitleArr[indexPath.row],@"row":@(indexPath.row)};
+                ZSHSimpleCellView *cellView = [[ZSHSimpleCellView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kRealValue(43)) paramDic:nextParamDic];
+                cellView.tag = 2;
+                [cell.contentView addSubview:cellView];
+                [cellView mas_updateConstraints:^(MASConstraintMaker *make) {
+                    make.edges.mas_equalTo(cell);
+                }];
+            }
             
-            NSDictionary *nextParamDic = @{@"leftTitle":weakself.titleArr[indexPath.row],@"rightTitle":weakself.detailTitleArr[indexPath.row],@"row":@(indexPath.row)};
-            ZSHSimpleCellView *cellView = [[ZSHSimpleCellView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kRealValue(43)) paramDic:nextParamDic];
-            [cell.contentView addSubview:cellView];
-            [cellView mas_updateConstraints:^(MASConstraintMaker *make) {
-                make.edges.mas_equalTo(cell);
-            }];
             return cell;
         };
         

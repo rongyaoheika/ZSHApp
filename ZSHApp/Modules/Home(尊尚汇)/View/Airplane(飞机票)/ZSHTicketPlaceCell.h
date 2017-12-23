@@ -8,6 +8,11 @@
 
 #import "ZSHBaseView.h"
 
-@interface ZSHTicketPlaceCell :ZSHBaseView //ZSHBaseCell
+typedef void(^SaveBlock)(NSString *from,NSString *to);
+
+@interface ZSHTicketPlaceCell :ZSHBaseView 
+
+
+@property (nonatomic, copy) SaveBlock saveBlock;
 
 @end

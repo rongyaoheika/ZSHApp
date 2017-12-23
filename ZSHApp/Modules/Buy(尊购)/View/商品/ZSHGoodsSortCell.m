@@ -14,9 +14,9 @@
 @interface ZSHGoodsSortCell ()
 
 /* imageView */
-@property (strong , nonatomic)UIImageView *goodsImageView;
+@property (strong , nonatomic) UIImageView *goodsImageView;
 /* label */
-@property (strong , nonatomic)UILabel *goodsTitleLabel;
+@property (strong , nonatomic) UILabel *goodsTitleLabel;
 
 @end
 
@@ -56,12 +56,12 @@
 - (void)setSubItem:(ZSHClassSubModel *)subItem
 {
     _subItem = subItem;
-    if ([subItem.image_url containsString:@"http"]) {
-        [_goodsImageView sd_setImageWithURL:[NSURL URLWithString:subItem.image_url]];
+    if ([subItem.ICONIMGS containsString:@"http"]) {
+        [_goodsImageView sd_setImageWithURL:[NSURL URLWithString:subItem.ICONIMGS]];
     } else {
-        _goodsImageView.image = [UIImage imageNamed:subItem.image_url];
+        _goodsImageView.image = [UIImage imageNamed:subItem.ICONIMGS];
     }
-    _goodsTitleLabel.text = subItem.goods_title;
+    _goodsTitleLabel.text = subItem.BRANDNAME;
 }
 
 @end

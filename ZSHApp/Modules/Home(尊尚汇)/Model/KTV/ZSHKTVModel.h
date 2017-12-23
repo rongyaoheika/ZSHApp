@@ -20,6 +20,52 @@
 @property (nonatomic, copy) NSString *KTVName;          //麦乐迪（航天桥店）
 @property (nonatomic, copy) NSString *roomType;         //小包（2-4人）
 @property (nonatomic, copy) NSString *time;             //10:00-13:00，共3小时
-@property (nonatomic, assign) CGFloat    cellHeight;
+
+
+
+//KTV列表
+@property (nonatomic, copy) NSString    *SORTKTV_ID;           //KTVID
+@property (nonatomic, copy) NSString    *SHOWIMAGES;           //KTV图片
+@property (nonatomic, copy) NSString    *KTVNAMES;             //KTV名字
+@property (nonatomic, copy) NSString    *KTVADDRESS;           //KTV地址
+@property (nonatomic, assign) NSInteger KTVEVACOUNT;           //评论数
+@property (nonatomic, assign) CGFloat   KTVEVALUATE;           //KTV星评
+@property (nonatomic, assign) CGFloat   KTVPRICE;              //KTV价格
+@property (nonatomic, assign) CGFloat   cellHeight;
+
+
+@end
+
+
+
+@interface ZSHKTVDetailModel:ZSHBaseModel
+
+//KTV详情
+@property (nonatomic, copy) NSString    *KTVPHONE;             //KTV电话
+@property (nonatomic, copy) NSString    *KTVNAMES;             //KTV名字
+@property (nonatomic, copy) NSString    *KTVADDRESS;           //KTV地址
+@property (nonatomic, assign) NSInteger KTVEVACOUNT;           //评论数
+@property (nonatomic, assign) CGFloat   KTVEVALUATE;           //评分
+@property (nonatomic, strong) NSArray   *KTVDETAILSIMGS;       //KTV轮播图
+
+@property (nonatomic, assign) BOOL      SHOPSERVWIFI;            //WIFI
+@property (nonatomic, assign) BOOL      SHOPSERVFOOD;            //餐饮
+@property (nonatomic, assign) BOOL      SHOPSERVPAY;             //在线支付
+@property (nonatomic, assign) BOOL      SHOPSERVFITNESS;         //健身
+@property (nonatomic, assign) BOOL      SHOPSERVSWIM;            //游泳
+@property (nonatomic, assign) BOOL      SHOPSERVPARK;            //停车
+
+@end
+
+@interface ZSHKTVDetailListModel:ZSHBaseModel
+
+@property (nonatomic, assign) NSInteger   KTVDETNUM;
+@property (nonatomic, assign) CGFloat     KTVDETPRICE;        //KTV价格
+@property (nonatomic, copy)   NSString    *KTVDETEND;         //KTV结束时间
+@property (nonatomic, copy)   NSString    *KTVDETAIL_ID;      //KTV id
+@property (nonatomic, copy)   NSString    *SORTKTV_ID;        //分类id
+@property (nonatomic, copy)   NSString    *KTVDETTYPE;        //KTV轮播图
+@property (nonatomic, copy)   NSString    *KTVDETTITLE;       //09:00-18:00内任选3小时
+@property (nonatomic, copy)   NSString    *KTVDETBEGIN;       //KTV开始时间
 
 @end

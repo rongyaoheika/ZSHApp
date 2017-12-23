@@ -8,10 +8,14 @@
 
 #import "ZSHMineHeadView.h"
 #import "ZSHServiceCenterViewController.h"
+#import "ZSHEnergyValueViewController.h"
+
 @interface ZSHMineHeadView()
 
-@property (nonatomic,strong)UIImageView     *headImageView;
-@property (nonatomic,strong)UILabel         *nameLabel;
+@property (nonatomic, strong) NSArray           *pushVCsArr;
+@property (nonatomic, strong) NSArray           *paramArr;
+@property (nonatomic, strong) UIImageView       *headImageView;
+@property (nonatomic, strong) UILabel           *nameLabel;
 @property (nonatomic, strong) UIButton          *friendBtn;
 @property (nonatomic, strong) UIButton          *coinBtn;
 @property (nonatomic, strong) UIButton          *energyBtn;
@@ -21,9 +25,19 @@
 @implementation ZSHMineHeadView
 
 - (void)setup{
-    UIImageView *headImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"weibo_head_image"]];
+    self.pushVCsArr = @[@"ZSHServiceCenterViewController",@"ZSHCoinViewController",@"ZSHEnergyValueViewController"];
+    self.paramArr = @[@{KFromClassType:@(ZSHFromMineFriendVCToServiceCenterVC),
+                        @"title":@"好友",
+                        @"titleArr":@[@"爱跳舞的小丑",@"爱跳舞的小丑",@"爱跳舞的小丑",@"爱跳舞的小丑"],
+                    @"imageArr":@[@"weibo_head_image",@"weibo_head_image",@"weibo_head_image",@"weibo_head_image"]},
+                       @{},
+                       @{}];
+
+    
+    UIImageView *headImageView = [[UIImageView alloc] init];
     headImageView.layer.cornerRadius = kRealValue(50)/2;
     headImageView.clipsToBounds = YES;
+    [headImageView sd_setImageWithURL:[NSURL URLWithString:curUser.PORTRAIT]];
     [self addSubview:headImageView];
     [headImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self).offset(kRealValue(5));
@@ -32,8 +46,9 @@
     }];
     self.headImageView = headImageView;
     
-    NSDictionary *nameLabelDic = @{@"text":@"刘志坚",@"font":kPingFangRegular(15),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentCenter)};
+    NSDictionary *nameLabelDic = @{@"text":@"",@"font":kPingFangRegular(15),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentCenter)};
     UILabel *nameLabel = [ZSHBaseUIControl createLabelWithParamDic:nameLabelDic];
+    nameLabel.text = curUser.NICKNAME;
     [self addSubview:nameLabel];
     [nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(headImageView.mas_bottom).offset(kRealValue(10));
@@ -56,10 +71,9 @@
         make.width.mas_equalTo(KScreenWidth/3);
         make.height.mas_equalTo(kRealValue(kRealValue(40)));
     }];
-
     
     //好友
-    NSDictionary *friendBtnTopDic = @{@"text":@"好友",@"font":kPingFangRegular(14),@"textAlignment":@(NSTextAlignmentCenter),@"height":@(14)};
+    NSDictionary *friendBtnTopDic = @{@"text":@"优惠券",@"font":kPingFangRegular(14),@"textAlignment":@(NSTextAlignmentCenter),@"height":@(14)};
     NSDictionary *friendBtnBottomDic = @{@"text":@"99",@"font":kPingFangMedium(18),@"textAlignment":@(NSTextAlignmentCenter),@"height":@(14)};
     _friendBtn = [ZSHBaseUIControl createLabelBtnWithTopDic:friendBtnTopDic bottomDic:friendBtnBottomDic];
     _friendBtn.tag = 1;
@@ -73,7 +87,7 @@
     }];
     
     //能量值
-    NSDictionary *energyBtnTopDic = @{@"text":@"好友",@"font":kPingFangRegular(14),@"textAlignment":@(NSTextAlignmentCenter),@"height":@(14)};
+    NSDictionary *energyBtnTopDic = @{@"text":@"能量值",@"font":kPingFangRegular(14),@"textAlignment":@(NSTextAlignmentCenter),@"height":@(14)};
     NSDictionary *energyBtnBottomDic = @{@"text":@"99",@"font":kPingFangMedium(18),@"textAlignment":@(NSTextAlignmentCenter),@"height":@(14)};
     _energyBtn = [ZSHBaseUIControl createLabelBtnWithTopDic:energyBtnTopDic bottomDic:energyBtnBottomDic];
     _energyBtn.tag = 3;
@@ -93,11 +107,19 @@
 }
 
 - (void)btnAction:(UIButton *)btn{
-    if (btn.tag == 1) {
-        NSDictionary *nextParamDic = @{@"fromClassType":@(ZSHFromMineFriendVCToServiceCenterVC)};
-        ZSHServiceCenterViewController *serviceVC = [[ZSHServiceCenterViewController alloc]initWithParamDic:nextParamDic];
-        [[kAppDelegate getCurrentUIVC].navigationController pushViewController:serviceVC animated:YES];
-    }
+        Class className = NSClassFromString(self.pushVCsArr[btn.tag - 1]);
+        RootViewController *vc = [[className alloc]initWithParamDic:self.paramArr[btn.tag - 1]];
+        [[kAppDelegate getCurrentUIVC].navigationController pushViewController:vc animated:YES];
+}
+
+
+- (void)updateViewWithParamDic:(NSDictionary *)paramDic {
+    UILabel *friendBottom = [_friendBtn viewWithTag:21];
+    friendBottom.text =NSStringFormat(@"%@",paramDic[@"COUPON"]);
+    UILabel *coinBottom = [_coinBtn viewWithTag:21];
+    coinBottom.text = NSStringFormat(@"%@",paramDic[@"BLACKCOIN"]);
+    UILabel *energyBottom = [_energyBtn viewWithTag:21];
+    energyBottom.text = NSStringFormat(@"%@",paramDic[@"ENERGY"]);
 }
 
 @end

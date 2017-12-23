@@ -85,7 +85,7 @@ static NSString *ZSHAirTicketDetailCellID = @"ZSHAirTicketDetailCell";
 
 #pragma getter
 - (ZSHBottomBlurPopView *)createBottomBlurPopViewWith:(ZSHFromVCToBottomBlurPopView)fromClassType{
-    NSDictionary *nextParamDic = @{@"fromClassType":@(fromClassType)};
+    NSDictionary *nextParamDic = @{KFromClassType:@(fromClassType)};
     ZSHBottomBlurPopView *bottomBlurPopView = [[ZSHBottomBlurPopView alloc]initWithFrame:kAppDelegate.window.bounds paramDic:nextParamDic];
     bottomBlurPopView.blurRadius = 20;
     bottomBlurPopView.dynamic = NO;

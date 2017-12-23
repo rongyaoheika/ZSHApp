@@ -35,6 +35,15 @@
     
     //广告页
 //    [AppManager appStart];
+   
+    //键盘监听
+    [self initKeyboard];
+    
+    //打印网络json
+    [PPNetworkHelper openLog];
+    
+    //初始化即构科技
+    [self initZego];
     
     return YES;
     

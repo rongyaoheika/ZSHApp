@@ -6,8 +6,13 @@
 //  Copyright © 2017年 apple. All rights reserved.
 //
 
-#import "ZSHBaseCell.h"
 
-@interface ZSHGoodsChartCell : ZSHBaseCell
+#import "ZSHBaseCollectionViewCell.h"
+
+@interface ZSHGoodsChartCell : ZSHBaseCollectionViewCell
+
+@property (nonatomic, assign) NSInteger row;
+
+- (void)updateCellWithKey:(NSString *)key value:(NSString *)value;
 
 @end

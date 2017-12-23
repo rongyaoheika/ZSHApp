@@ -9,5 +9,11 @@
 #import "ZSHKTVModel.h"
 
 @implementation ZSHKTVModel
-
 @end
+
+@implementation ZSHKTVDetailModel
+@end
+
+@implementation ZSHKTVDetailListModel
+@end
+

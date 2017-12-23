@@ -11,13 +11,18 @@
 #import "ZSHBaseCell.h"
 #import "ZSHEntertainmentViewController.h"
 #import "ZSHEntertainmentDetailViewController.h"
+#import "ZSHTogetherLogic.h"
+#import "ZSHCityViewController.h"
+#import "PYSearchViewController.h"
+#import "ZSHGoodsTitleContentViewController.h"
+
 
 static NSString *cellIdentifier = @"listCell";
 
 @interface ZSHTogetherViewController ()<UISearchBarDelegate>
 
 @property (nonatomic, strong) NSArray            *pushVCsArr;
-@property (nonatomic, strong) NSArray            *paramArr;
+@property (nonatomic, strong) ZSHTogetherLogic   *togetherLogic;
 
 @end
 
@@ -25,22 +30,32 @@ static NSString *cellIdentifier = @"listCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     
     [self loadData];
     [self createUI];
 }
 
 - (void)loadData{
-    self.pushVCsArr = @[@"ZSHEntertainmentDetailViewController",@"ZSHEntertainmentViewController",@"",@"ZSHEntertainmentViewController"];
-    self.paramArr = @[@{},@{}];
+    self.pushVCsArr = @[@"ZSHEntertainmentViewController",@"ZSHEntertainmentViewController",@"ZSHEntertainmentViewController",@"ZSHEntertainmentViewController",@"ZSHEntertainmentViewController",@"ZSHEntertainmentViewController"];
+
     [self initViewModel];
+    [self requestData];
 }
 
 - (void)createUI{
 
-    [self.navigationItem setTitleView:self.searchBar];
-    self.searchBar.delegate = self;
+    UIButton *searchBtn = [ZSHBaseUIControl createBtnWithParamDic:@{@"title":@"搜索",@"font":kPingFangRegular(14),@"withImage":@(YES),@"normalImage":@"nav_home_search"}];
+    searchBtn.frame = CGRectMake(0, 0, kRealValue(270), 30);
+    searchBtn.backgroundColor = KZSHColor1A1A1A;
+    searchBtn.layer.cornerRadius = 5.0;
+    searchBtn.layer.masksToBounds = YES;
+    kWeakSelf(self);
+    [searchBtn addTapBlock:^(UIButton *btn) {
+        [weakself searchAction];
+    }];
+    [self.navigationItem setTitleView:searchBtn];
+//    [self.navigationItem setTitleView:self.searchView];
+//    self.searchView.searchBar.delegate = self;
     
     [self.view addSubview:self.tableView];
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -58,30 +73,29 @@ static NSString *cellIdentifier = @"listCell";
 - (void)initViewModel {
     [self.tableViewModel.sectionModelArray removeAllObjects];
     [self.tableViewModel.sectionModelArray addObject:[self storeListSection]];
+    [self.tableView reloadData];
 }
 
 - (ZSHBaseTableViewSectionModel*)storeListSection {
     kWeakSelf(self);
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
-    
-    NSArray *imageArr = @[@"together_image_1",@"together_image_2",@"together_image_3",@"together_image_4",@"together_image_5",@"together_image_6"];
-    NSArray *chineseTitleArr = @[@"吃喝玩乐区",@"高端品鉴",@"荣耀活动",@"金钻活动",@"贵宾活动",@"核力轰趴"];
-    NSArray *englishTitleArr = @[@"Entertainment",@"High-end Tasting",@"Glory activities",@"Diamond activities",@"VIP activities",@"Home party"];
-    for (int i = 0; i<imageArr.count; i++) {
+    for (int i = 0; i<_togetherLogic.togertherDataArr.count; i++) {
         
         ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
         [sectionModel.cellModelArray addObject:cellModel];
         cellModel.height = kRealValue(140);
         cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
             ZSHTogetherView *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
-            NSDictionary *nextParamDic = @{@"bgImageName":imageArr[i],@"chineseText":chineseTitleArr[i],@"englishText":englishTitleArr[i],@"fromClassType":@(ZSHFromTogetherVCToTogetherView)};
-            [cell updateCellWithParamDic:nextParamDic];
+            [cell setParamDic:@{KFromClassType:@(ZSHFromTogetherVCToTogetherView)}];
+            [cell updateCellWithModel:_togetherLogic.togertherDataArr[i]];
             return cell;
         };
         
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
-            ZSHEntertainmentDetailViewController *entertaimmentVC= [[ZSHEntertainmentDetailViewController alloc]init];
-            [weakself.navigationController pushViewController:entertaimmentVC animated:YES];
+            ZSHTogetherModel *model = _togetherLogic.togertherDataArr[i];
+            Class className = NSClassFromString(weakself.pushVCsArr[indexPath.row]);
+            RootViewController *vc = [[className alloc]initWithParamDic:@{@"CONVERGE_ID":model.CONVERGE_ID,@"Title":model.IMGCNCHAR}];
+            [weakself.navigationController pushViewController:vc animated:YES];
         };
     }
     
@@ -89,13 +103,41 @@ static NSString *cellIdentifier = @"listCell";
     return sectionModel;
 }
 
-- (void)locateBtnAction{
+- (void)searchAction{
+    // 1. Create an Array of popular search
+    NSArray *hotSeaches = @[@"阿哲", @"散打哥", @"天佑", @"赵小磊", @"赵雷", @"陈山", @"PHP", @"C#", @"Perl", @"Go", @"JavaScript", @"R", @"Ruby", @"MATLAB"];
+    // 2. Create a search view controller
+    kWeakSelf(self);
+    PYSearchViewController *searchViewController = [PYSearchViewController searchViewControllerWithHotSearches:hotSeaches searchBarPlaceholder:NSLocalizedString(@"PYExampleSearchPlaceholderText", @"搜索编程语言") didSearchBlock:^(PYSearchViewController *searchViewController, UISearchBar *searchBar, NSString *searchText) {
+        // Called when search begain.
+        // eg：Push to a temp view conroller
+        ZSHGoodsTitleContentViewController *goodContentVC = [[ZSHGoodsTitleContentViewController alloc]initWithParamDic:@{@"searchText":searchText,KFromClassType:@(FromSearchResultVCTOGoodsTitleVC)}];
+        [weakself.navigationController pushViewController:goodContentVC animated:YES];
+    }];
+    // 3. Set style for popular search and search history
+    searchViewController.hotSearchStyle = PYHotSearchStyleARCBorderTag;
+    searchViewController.searchHistoryStyle = PYSearchHistoryStyleARCBorderTag;
+    searchViewController.searchBarBackgroundColor = KZSHColor1A1A1A;
     
+    // 4. Set delegate
+    searchViewController.delegate = self;
+    // 5. Present a navigation controller
+    //    RootNavigationController *nav = [[RootNavigationController alloc] initWithRootViewController:searchViewController];
+    //    [self presentViewController:nav animated:YES completion:nil];
+    [self.navigationController pushViewController:searchViewController animated:YES];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)locateBtnAction{
+    ZSHCityViewController *cityVC = [[ZSHCityViewController alloc]init];
+    [self.navigationController pushViewController:cityVC animated:YES];
+}
+
+- (void)requestData {
+    kWeakSelf(self);
+    _togetherLogic = [[ZSHTogetherLogic alloc] init];
+    [_togetherLogic requestConvergeList:^(id response) {
+        [weakself initViewModel];
+    }];
 }
 
 @end

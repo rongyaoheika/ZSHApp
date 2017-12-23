@@ -7,128 +7,94 @@
 //
 
 #import "ZSHLuckCardView.h"
-#import "iCarousel.h"
+#import "TYCyclePagerView.h"
+#import "ZSHLuckCardCell.h"
 
+@interface ZSHLuckCardView()<TYCyclePagerViewDataSource, TYCyclePagerViewDelegate>
 
-@interface ZSHLuckCardView()<iCarouselDelegate,iCarouselDataSource>
-
-@property (nonatomic, strong) iCarousel        *carousel;
+@property (nonatomic, strong) TYCyclePagerView *pagerView;
 @property (nonatomic, strong) NSArray          *imageArr;
 @property (nonatomic, strong) UIPageControl    *pageControl;
-@property (nonatomic, strong) UIImageView      *bgImageView;
 
 @end
 
 @implementation ZSHLuckCardView
 
 - (void)setup{
-    [self addSubview:self.carousel];
-    [self.carousel scrollToItemAtIndex:1 animated:NO];
-    [self.carousel mas_makeConstraints:^(MASConstraintMaker *make) {
+    
+    [self addSubview:self.pagerView];
+    [self.pagerView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.mas_equalTo(self);
         make.top.mas_equalTo(self);
         make.height.mas_equalTo(self);
         make.left.mas_equalTo(self);
     }];
+    
+    [self addSubview:self.pageControl];
+    [_pageControl mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.mas_equalTo(self);
+        make.width.mas_equalTo(self);
+        make.height.mas_equalTo(kRealValue(8));
+        make.centerX.mas_equalTo(self);
+    }];
 }
 
 #pragma mark - getter
-- (iCarousel *)carousel {
-    if (!_carousel) {
-        _carousel = [[iCarousel alloc]init];
-        _carousel.dataSource = self;
-        _carousel.delegate = self;
-        _carousel.backgroundColor = [UIColor clearColor];
-        _carousel.type = iCarouselTypeCustom;
-        _carousel.pagingEnabled = YES;
-        _carousel.bounces = NO;
-        _carousel.perspective = -10.0/500.0;
+- (TYCyclePagerView *)pagerView {
+    if (!_pagerView) {
+        _pagerView = [[TYCyclePagerView alloc]init];
+        _pagerView.layer.borderWidth = 1;
+        _pagerView.isInfiniteLoop = [self.paramDic[@"infinite"] boolValue];
+        //        _pagerView.autoScrollInterval = 3.0;
+        _pagerView.dataSource = self;
+        _pagerView.delegate = self;
+        [_pagerView registerClass:[ZSHLuckCardCell class] forCellWithReuseIdentifier:@"cellId"];
     }
-    return _carousel;
+    return _pagerView;
 }
 
-#pragma mark - delegate
-
-- (void)carouselDidEndScrollingAnimation:(iCarousel *)carousel{
-    RLog(@"点击的index == %ld",carousel.currentItemIndex);
-}
-
--(CATransform3D)carousel:(iCarousel *)carousel itemTransformForOffset:(CGFloat)offset baseTransform:(CATransform3D)transform{
-    
-    CGFloat max_sacle = 1.0f;
-    CGFloat min_scale = 0.8f;
-    if (offset <= 1 && offset >= -1) {
-        float tempScale = offset < 0 ? 1 + offset : 1 - offset;
-        float slope = (max_sacle - min_scale) / 1;
+- (UIPageControl *)pageControl{
+    if (!_pageControl) {
+        _pageControl = [[UIPageControl alloc]init];
+        _pageControl.numberOfPages = self.imageArr.count;
+        _pageControl.currentPageIndicatorTintColor = KWhiteColor;
+        _pageControl.pageIndicatorTintColor = [UIColor colorWithWhite:1 alpha:0.5];
+        if (self.paramDic[@"pageImage"]) {
+            [_pageControl setValue:[UIImage imageNamed:self.paramDic[@"pageImage"]] forKeyPath:@"_pageImage"];
+            [_pageControl setValue:[UIImage imageNamed:self.paramDic[@"currentPageImage"]] forKeyPath:@"_currentPageImage"];
+        }
         
-        CGFloat scale = min_scale + slope * tempScale;
-        transform = CATransform3DScale(transform, scale, scale, 1);
-    }else{
-        transform = CATransform3DScale(transform, min_scale, min_scale, 1);
     }
-    
-    return CATransform3DTranslate(transform, offset * self.carousel.itemWidth * 1.5, 0.0, 0.0);
+    return _pageControl;
 }
 
-#pragma mark - datasource
-- (NSInteger)numberOfItemsInCarousel:(iCarousel *)carousel{
+#pragma mark - TYCyclePagerViewDataSource
+
+- (NSInteger)numberOfItemsInPagerView:(TYCyclePagerView *)pageView {
     return 3;
 }
 
-- (UIView *)carousel:(iCarousel *)carousel viewForItemAtIndex:(NSInteger)index reusingView:(nullable UIView *)view{
-    if(!view){
-        view = [self createbgImageView];
-    }
-    return view;
+- (UICollectionViewCell *)pagerView:(TYCyclePagerView *)pagerView cellForItemAtIndex:(NSInteger)index {
+    ZSHLuckCardCell *cell = [pagerView dequeueReusableCellWithReuseIdentifier:@"cellId" forIndex:index];
+//    cell.imageView.image = [UIImage imageNamed:self.imageArr[index]];
+    return cell;
 }
 
--(void)carousel:(iCarousel *)carousel didSelectItemAtIndex:(NSInteger)index{
-    RLog(@"被点击的 是 第%ld 卡片中的 第 %ld",(long)_carousel+1,(long)index+1);
+- (TYCyclePagerViewLayout *)layoutForPagerView:(TYCyclePagerView *)pageView {
+    TYCyclePagerViewLayout *layout = [[TYCyclePagerViewLayout alloc]init];
+    layout.itemSize = CGSizeMake(CGRectGetWidth(pageView.frame)*0.5, CGRectGetHeight(pageView.frame));
+    layout.itemSpacing = 15;
+    //layout.minimumAlpha = 0.3;
+    layout.itemHorizontalCenter = YES;
+    layout.layoutType = TYCyclePagerTransformLayoutLinear;
+    return layout;
 }
 
-- (UIView *)createbgImageView{
-    
-    UIImageView *bgImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"luck_card"]];
-    bgImageView.userInteractionEnabled = YES;
-    bgImageView.frame = CGRectMake(0, 0, kRealValue(160), kRealValue(215));
-    self.bgImageView = bgImageView;
-
-    NSDictionary *descLabelDic = @{@"text":@"每次翻牌需消耗100积分",@"font":kPingFangRegular(10),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentCenter)};
-    UILabel *descLabel = [ZSHBaseUIControl createLabelWithParamDic:descLabelDic];
-    [bgImageView addSubview:descLabel];
-    [descLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.mas_equalTo(bgImageView);
-        make.width.mas_equalTo(kRealValue(110));
-        make.height.mas_equalTo(kRealValue(10));
-        make.bottom.mas_equalTo(bgImageView).offset(-kRealValue(10));
-    }];
-
-    NSDictionary *transferBtnDic = @{@"title":@"点击翻牌",@"titleColor":KZSHColor929292,@"font":kPingFangMedium(15),@"backgroundColor":[UIColor colorWithHexString:@"272727"]};
-    UIButton *transferBtn = [ZSHBaseUIControl createBtnWithParamDic:transferBtnDic];
-    transferBtn.layer.cornerRadius = kRealValue(15);
-    [transferBtn addTarget:self action:@selector(transformAction:) forControlEvents:UIControlEventTouchUpInside];
-    [bgImageView addSubview:transferBtn];
-    [transferBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.mas_equalTo(bgImageView);
-        make.bottom.mas_equalTo(descLabel.mas_bottom).offset(-kRealValue(12.5));
-        make.height.mas_equalTo(kRealValue(27));
-        make.width.mas_equalTo(kRealValue(95));
-    }];
-
-    [self layoutIfNeeded];
-    return bgImageView;
+- (void)pagerView:(TYCyclePagerView *)pageView didScrollFromIndex:(NSInteger)fromIndex toIndex:(NSInteger)toIndex {
+    _pageControl.currentPage = toIndex;
+    //[_pageControl setCurrentPage:newIndex animate:YES];
+    //    NSLog(@"%zd ->  %zd",fromIndex,toIndex);
 }
 
-
-- (void)transformAction:(UIButton *)btn{
-    CABasicAnimation* rotationAnimation;
-    rotationAnimation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.y"];
-    rotationAnimation.toValue = [NSNumber numberWithFloat: M_PI];
-    rotationAnimation.duration = 0.5;
-    rotationAnimation.cumulative = YES;
-    rotationAnimation.repeatCount = 1;
-    UIImageView *bgImageView = (UIImageView *)btn.superview;
-    [bgImageView.layer addAnimation:rotationAnimation forKey:@"rotationAnimation"];
-}
 
 @end

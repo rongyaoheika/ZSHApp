@@ -71,6 +71,12 @@ static UIEdgeInsets const DefaultEdgeInsets = {10,10,10,10};
     
      //清除之前所有的布局属性
     [self.attributesArr removeAllObjects];
+    
+    //头部视图
+    UICollectionViewLayoutAttributes *layoutHeader = [UICollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:UICollectionElementKindSectionHeader withIndexPath:[NSIndexPath indexPathWithIndex:0]];
+    layoutHeader.frame =CGRectMake(0,0, self.headerReferenceSize.width, self.headerReferenceSize.height);
+    [self.attributesArr addObject:layoutHeader];
+    
      /**开始创建每一个cell对应的布局属性*/
     NSInteger itemCount = [self.collectionView numberOfItemsInSection:0];
     for (int i = 0; i < itemCount; i++) {
@@ -102,15 +108,13 @@ static UIEdgeInsets const DefaultEdgeInsets = {10,10,10,10};
     
     //cell高度
     CGFloat height = [self.delegate heightForItem:self heightForItemAtIndex:indexPath.item itemWith:width];
-//    CGFloat height = 100 + arc4random()%150;
-    
+
     
      /***设置cell的位置***/
     NSInteger __block columNum = 0;
     CGFloat __block minHeight = [self.maxyArr[columNum]floatValue];
     [self.maxyArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         CGFloat itemHeight = [(NSNumber *)obj floatValue];
-        
         if (minHeight > itemHeight) {
             minHeight = itemHeight;
             columNum = idx;
@@ -124,7 +128,7 @@ static UIEdgeInsets const DefaultEdgeInsets = {10,10,10,10};
     }
     
     /**给cell的布局属性的frame赋值*/
-    [attributes setFrame:CGRectMake(x,y,width,height)];
+    [attributes setFrame:CGRectMake(x,self.headerReferenceSize.height + y,width,height)];
 //    RLog(@"columNum==%ld,minHeight = %f,要取的y是==%f",columNum,minHeight,CGRectGetMaxY(attributes.frame));
     
     //更新最短那列的高度
@@ -142,8 +146,8 @@ static UIEdgeInsets const DefaultEdgeInsets = {10,10,10,10};
         }
     }];
     
-    //返回collectionView的contentSize，高度为最高的高度加上一个行间距
-    return CGSizeMake(0, maxHeight+self.edgeInsets.bottom);
+    //返回collectionView的contentSize，高度为最高的高度加上一个行间距（//包括段头headerView的高度）
+    return CGSizeMake(0, maxHeight+self.edgeInsets.bottom + self.headerReferenceSize.height);
 }
 
 

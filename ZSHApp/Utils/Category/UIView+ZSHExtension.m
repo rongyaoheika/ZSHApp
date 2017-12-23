@@ -14,7 +14,7 @@
 {
     return self.frame.origin.x;
 }
-- (void)setzsh_x:(CGFloat)zsh_x
+- (void)setZsh_x:(CGFloat)zsh_x
 {
     CGRect zshFrame = self.frame;
     zshFrame.origin.x = zsh_x;
@@ -25,7 +25,7 @@
 {
     return self.frame.origin.y;
 }
--(void)setzsh_y:(CGFloat)zsh_y
+-(void)setZsh_y:(CGFloat)zsh_y
 {
     CGRect zshFrame = self.frame;
     zshFrame.origin.y = zsh_y;
@@ -36,7 +36,7 @@
 {
     return self.frame.origin;
 }
--(void)setzsh_origin:(CGPoint)zsh_origin
+-(void)setZsh_origin:(CGPoint)zsh_origin
 {
     CGRect zshFrame = self.frame;
     zshFrame.origin = zsh_origin;
@@ -47,7 +47,7 @@
 {
     return self.frame.size.width;
 }
--(void)setzsh_width:(CGFloat)zsh_width
+-(void)setZsh_width:(CGFloat)zsh_width
 {
     CGRect zshFrame = self.frame;
     zshFrame.size.width = zsh_width;
@@ -58,7 +58,7 @@
 {
     return self.frame.size.height;
 }
--(void)setzsh_height:(CGFloat)zsh_height
+-(void)setZsh_height:(CGFloat)zsh_height
 {
     CGRect zshFrame = self.frame;
     zshFrame.size.height = zsh_height;
@@ -69,7 +69,7 @@
 {
     return self.frame.size;
 }
-- (void)setzsh_size:(CGSize)zsh_size
+- (void)setZsh_size:(CGSize)zsh_size
 {
     CGRect zshFrame = self.frame;
     zshFrame.size = zsh_size;
@@ -81,7 +81,7 @@
     return self.center.x;
 }
 
--(void)setzsh_centerX:(CGFloat)zsh_centerX{
+-(void)setZsh_centerX:(CGFloat)zsh_centerX{
     
     CGPoint zshFrmae = self.center;
     zshFrmae.x = zsh_centerX;
@@ -93,7 +93,7 @@
     return self.center.y;
 }
 
--(void)setzsh_centerY:(CGFloat)zsh_centerY{
+-(void)setZsh_centerY:(CGFloat)zsh_centerY{
     
     CGPoint zshFrame = self.center;
     zshFrame.y = zsh_centerY;
@@ -110,12 +110,12 @@
     return CGRectGetMaxY(self.frame);
 }
 
-- (void)setzsh_right:(CGFloat)zsh_right{
+- (void)setZsh_right:(CGFloat)zsh_right{
     
     self.zsh_x = zsh_right - self.zsh_width;
 }
 
-- (void)setzsh_bottom:(CGFloat)zsh_bottom{
+- (void)setZsh_bottom:(CGFloat)zsh_bottom{
     
     self.zsh_y = zsh_bottom - self.zsh_height;
 }

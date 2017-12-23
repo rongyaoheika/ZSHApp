@@ -10,33 +10,40 @@
 #import "ZSHGoodModel.h"
 #import "ZSHGoodsCell.h"
 #import "ZSHGoodsDetailViewController.h"
+#import "ZSHBuyLogic.h"
 
-static NSString * cellIdentifier = @"ZSHGoodsCell";
 
 @interface ZSHGoodsTypeViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 
 /* 推荐商品属性 */
-@property (strong , nonatomic)NSMutableArray <ZSHGoodModel *> *goodModelArr;
+@property (strong, nonatomic) NSMutableArray <ZSHGoodModel *> *goodModelArr;
+@property (nonatomic, strong) ZSHBuyLogic                     *buyLogic;
 
 @end
+
+static NSString * cellIdentifier = @"ZSHGoodsCell";
+static NSString * ZSHBottomListCellID = @"ZSHBottomListCell";
 
 @implementation ZSHGoodsTypeViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     
     [self loadData];
     [self createUI];
 }
 
 - (void)loadData{
-   _cellType = [self.paramDic[@"cellType"]integerValue];
-   _goodModelArr = [ZSHGoodModel mj_objectArrayWithFilename:@"YouLikeGoods.plist"];
+    
+    _cellType = [self.paramDic[@"cellType"] integerValue];
+    _buyLogic = [[ZSHBuyLogic alloc] init];
+    
+    
     if (self.cellType == ZSHTableViewCellType) {
-//        self.tableViewModel = [[ZSHBaseTableViewModel alloc] init];
         [self initViewModel];
     }
+    
+    [self requestData];
 }
 
 - (void)createUI{
@@ -79,16 +86,28 @@ static NSString * cellIdentifier = @"ZSHGoodsCell";
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    return _goodModelArr.count;
+    if (kFromClassTypeValue == FromSearchResultVCTOGoodsTitleVC) {
+        return _buyLogic.buySearchModelArr.count;
+    } else {
+        return _goodModelArr.count;
+    }
+    
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
-    ZSHGoodsCell *cellView = [[ZSHGoodsCell alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kRealValue(270)) paramDic:nil];
-    cellView.goodModel = _goodModelArr[indexPath.row];
-    cellView.cellType = ZSHCollectionViewCellType;
-    [cell.contentView addSubview:cellView];
+    if (![cell.contentView viewWithTag:2]) {
+        ZSHGoodsCell *cellView = [[ZSHGoodsCell alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kRealValue(270)) paramDic:nil];
+        cellView.tag = 2;
+        cellView.cellType = ZSHCollectionViewCellType;
+        if (kFromClassTypeValue == FromSearchResultVCTOGoodsTitleVC) {
+            [cellView updateViewWithModel:_buyLogic.buySearchModelArr[indexPath.row]];
+        } else {
+            cellView.goodModel = _goodModelArr[indexPath.row];
+        }
+        [cell.contentView addSubview:cellView];
+    }
     return cell;
 }
 
@@ -102,35 +121,46 @@ static NSString * cellIdentifier = @"ZSHGoodsCell";
 - (void)initViewModel {
     [self.tableViewModel.sectionModelArray removeAllObjects];
     [self.tableViewModel.sectionModelArray addObject:[self storeListSection]];
+    [self.tableView registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHBottomListCellID];
 }
 
 - (ZSHBaseTableViewSectionModel*)storeListSection {
+    
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
-    for (int i = 0; i < _goodModelArr.count; i++) {
+    
+    NSInteger count = 0;
+    
+    if (kFromClassTypeValue == FromSearchResultVCTOGoodsTitleVC) {
+        count = _buyLogic.buySearchModelArr.count;
+    } else {
+        count = _goodModelArr.count;
+    }
+    for (int i = 0; i < count; i++) {
         ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
         [sectionModel.cellModelArray addObject:cellModel];
         cellModel.height = kRealValue(100);
         cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
-            static NSString *identifier = @"cellId";
-            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-            if (!cell) {
-                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                              reuseIdentifier:identifier];
-            } else {
-                while (cell.contentView.subviews.lastObject!=nil) {
-                    [(UIView *)cell.contentView.subviews.lastObject removeFromSuperview];
+            ZSHBaseCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHBottomListCellID forIndexPath:indexPath];
+            if (![cell.contentView viewWithTag:3]) {
+                ZSHGoodsCell *cellView = [[ZSHGoodsCell alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kRealValue(100)) paramDic:nil];
+                cellView.tag = 3;
+                if (kFromClassTypeValue == FromSearchResultVCTOGoodsTitleVC) {
+                    [cellView updateViewWithModel:_buyLogic.buySearchModelArr[indexPath.row]];
+                } else {
+                    cellView.goodModel = _goodModelArr[indexPath.row];
                 }
+                cellView.cellType = ZSHTableViewCellType;
+                [cell.contentView addSubview:cellView];
             }
-            cell.backgroundColor = KClearColor;
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            ZSHGoodsCell *cellView = [[ZSHGoodsCell alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kRealValue(100)) paramDic:nil];
-            cellView.goodModel = _goodModelArr[indexPath.row];
-            cellView.cellType = ZSHTableViewCellType;
-            [cell.contentView addSubview:cellView];
+            
             return cell;
         };
+        cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
+            ZSHGoodsDetailViewController *goodsDetailVC = [[ZSHGoodsDetailViewController alloc]init];
+            goodsDetailVC.goodModel = _goodModelArr[indexPath.row];
+            [self.navigationController pushViewController:goodsDetailVC animated:YES];
+        };
     }
-    
     return sectionModel;
 }
 
@@ -142,9 +172,26 @@ static NSString * cellIdentifier = @"ZSHGoodsCell";
     [self createUI];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)requestData {
+    kWeakSelf(self);
+    
+    if (kFromClassTypeValue == FromSearchResultVCTOGoodsTitleVC) {
+        [_buyLogic requestShipDimQueryWithKeywords:self.paramDic[@"searchText"] success:^(id response) {
+            [weakself initViewModel];
+        }];
+    } else {
+        [_buyLogic requestShipPrefectureWithBrandID:self.paramDic[@"PreBrandID"] success:^(id response) {
+            _goodModelArr = [ZSHGoodModel mj_objectArrayWithKeyValuesArray:response[@"pd"]];
+            if (weakself.cellType == ZSHTableViewCellType) {
+                [weakself initViewModel];
+            } else {
+                [weakself.collectionView reloadData];
+            }
+            
+        }];
+    }
+    
+
 }
 
 @end

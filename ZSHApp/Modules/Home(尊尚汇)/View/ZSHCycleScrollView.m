@@ -167,7 +167,7 @@
 
 -(void)itemDidClicked:(UIButton *)btn{
     if (self.itemClickBlock) {
-        self.itemClickBlock(btn.tag);
+        self.itemClickBlock(btn.tag-1);
     }
 }
 

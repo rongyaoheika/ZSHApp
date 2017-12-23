@@ -7,16 +7,16 @@
 //
 
 #import "ZSHFoodCell.h"
-#import "TggStarEvaluationView.h"
+#import "CWStarRateView.h"
 #import "ZSHFoodModel.h"
 @interface ZSHFoodCell()
 
-@property (nonatomic, strong) UIImageView               *hotelmageView;
+@property (nonatomic, strong) UIImageView               *foodImageView;
 @property (nonatomic, strong) UILabel                   *hotelDescLabel;
-@property (nonatomic, strong) UILabel                   *hotelAddressLabel;
+@property (nonatomic, strong) UILabel                   *foodNameLabel;
 @property (nonatomic, strong) UILabel                   *distanceLabel;
 @property (nonatomic, strong) UILabel                   *commentLabel;
-@property (nonatomic, strong) TggStarEvaluationView     *starView;
+@property (nonatomic, strong) CWStarRateView            *starView;
 @property (nonatomic, strong) UILabel                   *priceLabel;
 
 @end
@@ -26,8 +26,8 @@
 - (void)setup{
     //餐厅图片
     UIImage *image = [UIImage imageNamed:@"hotel_image"];
-    _hotelmageView = [[UIImageView alloc]initWithImage:image];
-    [self.contentView addSubview:_hotelmageView];
+    _foodImageView = [[UIImageView alloc]initWithImage:image];
+    [self.contentView addSubview:_foodImageView];
     
     //餐厅价格
     NSDictionary *priceLabelDic = @{@"text":@"¥399／位",@"font": kPingFangMedium(17)};
@@ -35,12 +35,16 @@
     [self.contentView addSubview:_priceLabel];
     
     //餐厅地址
-    NSDictionary *hotelAddressLabelDic = @{@"text":@"三亚市天涯区黄山路94号",@"font": kPingFangMedium(12)};
-    _hotelAddressLabel = [ZSHBaseUIControl createLabelWithParamDic:hotelAddressLabelDic];
-    [self.contentView addSubview:_hotelAddressLabel];
+    NSDictionary *foodNameLabelDic = @{@"text":@"菲罗牛排主题餐厅",@"font": kPingFangMedium(12)};
+    _foodNameLabel = [ZSHBaseUIControl createLabelWithParamDic:foodNameLabelDic];
+    [self.contentView addSubview:_foodNameLabel];
     
     //星星评价
-    _starView = [TggStarEvaluationView evaluationViewWithChooseStarBlock:nil];
+    _starView = [[CWStarRateView alloc] initWithFrame:CGRectMake(0,0, kRealValue(80), kRealValue(12)) numberOfStars:5];
+    _starView.scorePercent = 0.45;
+    _starView.allowIncompleteStar = YES;
+    _starView.hasAnimation = YES;
+    _starView.allowUserTap = NO;
     [self.contentView addSubview:_starView];
     
     //餐厅评价
@@ -53,7 +57,7 @@
 - (void)layoutSubviews{
     [super layoutSubviews];
     
-    [_hotelmageView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_foodImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self).offset(KLeftMargin);
         make.right.mas_equalTo(self).offset(-KLeftMargin);
         make.top.mas_equalTo(self);
@@ -61,49 +65,47 @@
     }];
     
     [_priceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(_hotelmageView.mas_bottom).offset(kRealValue(15));
-        make.left.mas_equalTo(_hotelmageView);
+        make.top.mas_equalTo(_foodImageView.mas_bottom).offset(kRealValue(15));
+        make.left.mas_equalTo(_foodImageView);
         make.height.mas_equalTo(kRealValue(17));
-        make.right.mas_equalTo(_hotelmageView);
+        make.right.mas_equalTo(_foodImageView);
     }];
     
-    [_hotelAddressLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_foodNameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(_priceLabel.mas_bottom).offset(kRealValue(10));
-        make.left.mas_equalTo(_hotelmageView);
+        make.left.mas_equalTo(_foodImageView);
         make.height.mas_equalTo(kRealValue(12));
-        make.width.mas_equalTo(KScreenWidth*0.5);
+        make.width.mas_equalTo(KScreenWidth*0.53);
     }];
     
     [_starView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(_hotelAddressLabel);
-        make.left.mas_equalTo(_hotelAddressLabel.mas_right);
+        make.top.mas_equalTo(_foodNameLabel);
+        make.left.mas_equalTo(_foodNameLabel.mas_right);
         make.height.mas_equalTo(kRealValue(12));
         make.width.mas_equalTo(kRealValue(80));
     }];
-    _starView.starCount = 4;
-    _starView.spacing = 0.25;
-    
+   
     [_commentLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.mas_equalTo(_starView);
         make.left.mas_equalTo(_starView.mas_right);
         make.right.mas_equalTo(self).offset(-KLeftMargin);
         make.height.mas_equalTo(_starView);
     }];
+    
 }
 
-- (void)updateCellWithModel:(ZSHFoodModel *)model{
-    
-    _hotelmageView.image = [UIImage imageNamed:model.imageName];
-    _priceLabel.text = [NSString stringWithFormat:@"¥%@／位",model.price];
-    _hotelAddressLabel.text = model.address;
-    _commentLabel.text = [NSString stringWithFormat:@"（%@条评价）",model.comment];
-
+- (void)updateCellWithParamDic:(NSDictionary *)dic{
+    [_foodImageView sd_setImageWithURL:[NSURL URLWithString:dic[@"SHOWIMAGES"]]];
+    _priceLabel.text = [NSString stringWithFormat:@"¥%.0f／位",[dic[@"SHOPPRICE"]floatValue] ];
+    _foodNameLabel.text = dic[@"SHOPNAMES"];
+    _commentLabel.text = [NSString stringWithFormat:@"（%ld条评价）",(long)[dic[@"SHOPEVACOUNT"]integerValue] ];
+    _starView.scorePercent = [dic[@"SHOPEVALUATE"]floatValue] /5.0;
 }
 
 - (CGFloat)rowHeightWithCellModel:(ZSHFoodModel *)model{
     [self updateCellWithModel:model];
     [self layoutIfNeeded];
-    CGFloat detailLabelY = CGRectGetMaxY(self.hotelAddressLabel.frame);
+    CGFloat detailLabelY = CGRectGetMaxY(self.foodNameLabel.frame);
     return detailLabelY + kRealValue(20);
 }
 

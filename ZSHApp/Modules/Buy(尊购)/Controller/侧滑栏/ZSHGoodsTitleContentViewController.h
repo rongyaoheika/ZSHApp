@@ -7,6 +7,8 @@
 //
 
 #import "RootViewController.h"
+#import "ZSHGoodsTypeViewController.h"
+
 
 @interface ZSHGoodsTitleContentViewController : RootViewController
 

@@ -10,13 +10,6 @@
 
 @interface ZSHAddressListCell()
 
-@property (nonatomic, strong) UILabel   *nameLabel;
-@property (nonatomic, strong) UILabel   *addressLabel;
-@property (nonatomic, strong) UILabel   *telLabel;
-@property (nonatomic, strong) UIButton  *defaultBtn;
-@property (nonatomic, strong) UIButton  *deleteBtn;
-@property (nonatomic, strong) UIButton  *editBtn;
-
 @end
 
 @implementation ZSHAddressListCell
@@ -36,17 +29,23 @@
     _telLabel = [ZSHBaseUIControl createLabelWithParamDic:telLabelDic];
     [self.contentView addSubview:_telLabel];
     
-    NSDictionary *defaultBtnDic = @{@"title":@"设为默认",@"titleColor":KZSHColor929292,@"font":kPingFangLight(11),@"backgroundColor":KClearColor,@"withImage":@(YES),@"normalImage":@"address_normal",@"selectedImage":@"address_press",@"layoutType":@(XYButtonEdgeInsetsStyleLeft),@"space":@(4)};
+    NSDictionary *defaultBtnDic = @{@"title":@"设为默认",@"font":kPingFangLight(11)};
     _defaultBtn = [ZSHBaseUIControl createBtnWithParamDic:defaultBtnDic];
-    [_defaultBtn addTarget:self action:@selector(defaultBtnAction:) forControlEvents:UIControlEventTouchUpInside];
+    [_defaultBtn setImage:[UIImage imageNamed:@"address_normal"] forState:UIControlStateNormal];
+    [_defaultBtn setImage:[UIImage imageNamed:@"address_press"] forState:UIControlStateSelected];
+//    [_defaultBtn addTarget:self action:@selector(defaultBtnAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView addSubview:_defaultBtn];
     
-    NSDictionary *deleteBtnDic = @{@"title":@"删除",@"titleColor":KZSHColor929292,@"font":kPingFangLight(11),@"backgroundColor":KClearColor,@"withImage":@(YES),@"normalImage":@"address_delete",@"selectedImage":@"address_delete",@"layoutType":@(XYButtonEdgeInsetsStyleLeft),@"space":@(4)};
+    NSDictionary *deleteBtnDic = @{@"title":@"删除",@"font":kPingFangLight(11),};
     _deleteBtn = [ZSHBaseUIControl createBtnWithParamDic:deleteBtnDic];
+    [_deleteBtn setImage:[UIImage imageNamed:@"address_delete"] forState:UIControlStateNormal];
+    [_deleteBtn setImage:[UIImage imageNamed:@"address_delete"] forState:UIControlStateSelected];
     [self.contentView addSubview:_deleteBtn];
     
-    NSDictionary *editBtnDic = @{@"title":@"编辑",@"titleColor":KZSHColor929292,@"font":kPingFangLight(11),@"backgroundColor":KClearColor,@"withImage":@(YES),@"normalImage":@"address_edit",@"selectedImage":@"address_edit",@"layoutType":@(XYButtonEdgeInsetsStyleLeft),@"space":@(4)};
+    NSDictionary *editBtnDic = @{@"title":@"编辑",@"font":kPingFangLight(11)};
     _editBtn = [ZSHBaseUIControl createBtnWithParamDic:editBtnDic];
+    [_editBtn setImage:[UIImage imageNamed:@"address_edit"] forState:UIControlStateNormal];
+    [_editBtn setImage:[UIImage imageNamed:@"address_edit"] forState:UIControlStateSelected];
     [self.contentView addSubview:_editBtn];
 }
 
@@ -80,6 +79,7 @@
         make.width.mas_equalTo(kRealValue(60));
         make.height.mas_equalTo(kRealValue(14));
     }];
+    [_defaultBtn layoutButtonWithEdgeInsetsStyle:XYButtonEdgeInsetsStyleLeft imageTitleSpace:kRealValue(4)];
     
     [_deleteBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.mas_equalTo(self).offset(-15);
@@ -87,6 +87,7 @@
         make.width.mas_equalTo(kRealValue(40));
         make.height.mas_equalTo(_defaultBtn);
     }];
+    [_deleteBtn layoutButtonWithEdgeInsetsStyle:XYButtonEdgeInsetsStyleLeft imageTitleSpace:kRealValue(4)];
     
     [_editBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.mas_equalTo(_deleteBtn.mas_left).offset(-kRealValue(20));
@@ -94,18 +95,16 @@
         make.width.mas_equalTo(_deleteBtn);
         make.height.mas_equalTo(_deleteBtn);
     }];
+    [_editBtn layoutButtonWithEdgeInsetsStyle:XYButtonEdgeInsetsStyleLeft imageTitleSpace:kRealValue(4)];
 
 }
 
-- (void)updateCellWithModel:(ZSHAddressModel *)model{
-    self.nameLabel.text = model.name;
-    self.telLabel.text = model.telephone;
-    self.addressLabel.text = model.address;
+- (void)updateCellWithModel:(ZSHAddrModel *)model{
+    self.nameLabel.text = model.CONSIGNEE;
+    self.telLabel.text = [model.ADRPHONE stringByReplacingCharactersInRange:NSMakeRange(3, 4) withString:@"****"];
+    self.addressLabel.text = NSStringFormat(@"%@%@", model.PROVINCE, model.ADDRESS);
 }
 
-#pragma action
-- (void)defaultBtnAction:(UIButton *)defaultBtn{
-    defaultBtn.selected = !defaultBtn.selected;
-}
+
 
 @end

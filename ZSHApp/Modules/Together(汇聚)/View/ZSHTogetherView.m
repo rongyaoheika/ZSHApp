@@ -7,6 +7,8 @@
 //
 
 #import "ZSHTogetherView.h"
+#import "ZSHTogetherModel.h"
+#import "ZSHPersonalModel.h"
 
 @interface ZSHTogetherView()
 
@@ -14,7 +16,7 @@
 @property (nonatomic, strong)UILabel        *chineseNameLabel;
 @property (nonatomic, strong)UILabel        *englishNameLabel;
 @property (nonatomic, strong)UIButton       *moreBtn;
-@property (nonatomic, strong)NSDictionary   *paramDic;
+//@property (nonatomic, strong)NSDictionary   *paramDic; //父类中已经定义CGH
 
 @end
 
@@ -47,7 +49,7 @@
 
 - (void)layoutSubviews{
     [super layoutSubviews];
-    if ([self.paramDic[@"fromClassType"]integerValue] == ZSHFromTogetherVCToTogetherView) {
+    if ([self.paramDic[KFromClassType]integerValue] == ZSHFromTogetherVCToTogetherView) {
         self.moreBtn.hidden = YES;
         [self.activityImage mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.mas_equalTo(self);
@@ -69,7 +71,7 @@
             make.height.mas_equalTo(kRealValue(15));
             make.width.mas_equalTo(self);
         }];
-    } else if ([self.paramDic[@"fromClassType"]integerValue] == ZSHFromPersonalTailorVCToTogetherView){
+    } else if ([self.paramDic[KFromClassType]integerValue] == ZSHFromPersonalTailorVCToTogetherView){
         
         [self.activityImage mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.mas_equalTo(self);
@@ -103,13 +105,22 @@
     
 }
 
-- (void)updateCellWithParamDic:(NSDictionary *)dic{
-     self.activityImage.image = [UIImage imageNamed:dic[@"bgImageName"]];
-     self.chineseNameLabel.text = dic[@"chineseText"];
-     self.englishNameLabel.text = dic[@"englishText"];
-     self.paramDic = dic;
-    [self layoutIfNeeded];
+- (void)updateCellWithModel:(ZSHBaseModel *)model {
     
+    if ([model isKindOfClass:[ZSHTogetherModel class]]) {
+        ZSHTogetherModel *togetherModel = (ZSHTogetherModel *)model;
+        [self.activityImage sd_setImageWithURL:[NSURL URLWithString:togetherModel.CONVERGEIMG]];
+        self.chineseNameLabel.text = togetherModel.IMGCNCHAR;
+        self.englishNameLabel.text = togetherModel.IMGENCHAR;
+    } else if ([model isKindOfClass:[ZSHPersonalModel class]]) {
+        ZSHPersonalModel *personalModel = (ZSHPersonalModel *)model;
+        [self.activityImage sd_setImageWithURL:[NSURL URLWithString:personalModel.PERSONALIMGS]];
+        self.chineseNameLabel.text = personalModel.IMGSCNCHAR;
+        self.englishNameLabel.text = personalModel.IMGENCHAR;
+    }
+    
+    [self layoutIfNeeded];
 }
+
 
 @end

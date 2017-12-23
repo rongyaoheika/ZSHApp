@@ -33,7 +33,6 @@
     attr[NSForegroundColorAttributeName] = KZSHColor929292;
     attr[NSFontAttributeName] = kPingFangMedium(17);
     [navBar setTitleTextAttributes:attr];
-    
 }
 
 - (void)viewDidLoad {
@@ -272,7 +271,5 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-
 
 @end

@@ -34,7 +34,7 @@
 }
 
 - (void)setup{
-    
+
 }
 
 - (void)layoutSubviews{
@@ -45,5 +45,12 @@
     
 }
 
+- (void)updateViewWithParamDic:(NSDictionary *)paramDic{
+    
+}
+
+- (void)updateViewWithModel:(ZSHBaseModel *)model{
+    
+}
 
 @end

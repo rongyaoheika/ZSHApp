@@ -7,20 +7,17 @@
 //
 
 #import "ZSHNotCycleScrollView.h"
-#define  leftSpacing 15
-#define  midSpacing 7.5
 #import "ZSHHotelDetailViewController.h"
 @interface ZSHNotCycleScrollView()
 
 @property (nonatomic, strong) UIScrollView   *scrollView;
-@property (nonatomic, strong) NSMutableArray *titleButtons;
 @property (nonatomic, strong) UIView         *selectionIndicator;
-
 //宽度不一致时，记录前个button的maxX
 @property (nonatomic, strong) UIButton        *temBtn;
 
 @end
 
+#define  midSpacing 7.5
 @implementation ZSHNotCycleScrollView
 
 - (void)awakeFromNib{
@@ -72,15 +69,15 @@
         [btn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
         if (i == self.selectedIndex) {
             btn.selected = YES;
-            
             if (self.fromClassType == FromKTVCalendarVCToNoticeView) {
                 for (UILabel *subLabel in btn.subviews) {
-                        subLabel.textColor = KZSHColorF29E19;
+                    subLabel.textColor = KZSHColorF29E19;
                 }
             }
             
             if (self.fromClassType == FromKTVRoomTypeVCToNoticeView && btn.layer.borderWidth) {
                 btn.layer.borderColor = KZSHColorF29E19.CGColor;
+                [btn setTitleColor:KZSHColorF29E19 forState:UIControlStateSelected];
             }
         }
         
@@ -103,6 +100,7 @@
 
             if (self.fromClassType == FromKTVRoomTypeVCToNoticeView && btn.layer.borderWidth) {
                 btn.layer.borderColor = KZSHColorF29E19.CGColor;
+                [btn setTitleColor:KZSHColorF29E19 forState:UIControlStateSelected];
             }
         } else {
             btn.selected = NO;
@@ -130,13 +128,14 @@
     self.temBtn = nil;
     
     self.scrollView.frame = self.bounds;
-    self.scrollView.contentSize = CGSizeMake(self.titleButtons.count * self.itemWidth+2*leftSpacing + (self.titleButtons.count-1)*midSpacing, self.frame.size.height);
+    self.scrollView.contentSize = CGSizeMake(self.titleButtons.count * self.itemWidth+2*KLeftMargin + (self.titleButtons.count-1)*midSpacing, self.frame.size.height);
     NSInteger i = 0;
 
     for (UIButton *btn in self.titleButtons) {
-        if (self.fromClassType == FromKTVCalendarVCToNoticeView) { //KTV日历
+        if (self.fromClassType == FromKTVCalendarVCToNoticeView||self.fromClassType == FromEnergyValueVCToNoticeView) { //KTV日历
             
              btn.frame = CGRectMake(_itemWidth*i++, 0, _itemWidth, self.frame.size.height);
+            
         } else if (self.fromClassType == FromKTVRoomTypeVCToNoticeView) {//KTV房间型号
             
             CGSize titleSize = [btn.titleLabel.text sizeWithAttributes:[NSDictionary dictionaryWithObjectsAndKeys:btn.titleLabel.font,NSFontAttributeName,nil]];
@@ -151,12 +150,7 @@
             btn.frame = CGRectMake(leftX, (CGRectGetHeight(self.frame)-kRealValue(25))/2, _itemWidth, kRealValue(25));
             i++;
         } else {
-            
-            btn.frame = CGRectMake(leftSpacing + (midSpacing + _itemWidth)*i++, 0, _itemWidth, CGRectGetHeight(self.frame));
-        }
-    
-        if (btn.titleLabel.text&&btn.imageView.image) {
-            [btn layoutButtonWithEdgeInsetsStyle:XYButtonEdgeInsetsStyleTop imageTitleSpace:kRealValue(10)];
+            btn.frame = CGRectMake(KLeftMargin + (midSpacing + _itemWidth)*i++, 0, _itemWidth, CGRectGetHeight(self.frame));
         }
     }
    

@@ -9,12 +9,20 @@
 #import "ZSHClassMainModel.h"
 
 @implementation ZSHClassMainModel
+//+ (NSDictionary *)replacedKeyFromPropertyName{
+//    return @{
+//             @"BRANDBANE" : @"BRANDBANE",
+//             @"BRAND_ID" : @"BRAND_ID",
+//             @"BRANDORDER" : @"BRANDORDER"
+//             };
+//}
 
-+(NSDictionary *)mj_objectClassInArray
-{
-    return @{
-             @"goods" : @"ZSHClassSubModel"
-             };
-}
+
+//+(NSDictionary *)mj_objectClassInArray
+//{
+//    return @{
+//             @"goods" : @"ZSHClassSubModel"
+//             };
+//}
 
 @end

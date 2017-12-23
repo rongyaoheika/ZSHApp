@@ -34,4 +34,7 @@
 //网络状态变化
 #define KNotificationNetWorkStateChange    @"KNotificationNetWorkStateChange"
 
+// 美食（酒店，KTV,酒吧等）排序通知
+#define KUpdateDataWithSort                 @"KUpdateDataWithSort"
+
 #endif /* CommonMacros_h */

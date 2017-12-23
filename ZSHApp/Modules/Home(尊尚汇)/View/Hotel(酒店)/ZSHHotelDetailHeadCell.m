@@ -8,34 +8,35 @@
 
 #import "ZSHHotelDetailHeadCell.h"
 #import "ZSHFoodModel.h"
-#import "ZSHHotelDetailModel.h"
+#import "ZSHHotelModel.h"
 #import "ZSHKTVModel.h"
+#import "ZSHGuideView.h"
 
 @interface ZSHHotelDetailHeadCell ()
 
 @property (nonatomic, strong)  UIImageView           *hotelImageView;
+@property (nonatomic, strong)  ZSHGuideView          *headView;
 @property (nonatomic, strong)  UILabel               *detailLabel;
 @property (nonatomic, strong)  UIView                *lineView;
 @end
 @implementation ZSHHotelDetailHeadCell
 
 - (void)setup{
+    NSDictionary *nextParamDic = @{KFromClassType:@(FromHotelDetailVCToGuideView), @"pageViewHeight":@(kRealValue(225)), @"min_scale":@(1.0),@"withRatio":@(1.0),@"pageImage":@"page_press",@"currentPageImage":@"page_normal",@"infinite":@(false)};
+    _headView = [[ZSHGuideView alloc]initWithFrame:CGRectZero paramDic:nextParamDic];
+    [self.contentView addSubview:_headView];
     
-    _hotelImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"hotel_detail_big"]];
-    [self.contentView insertSubview:_hotelImageView atIndex:0];
-    
-     NSDictionary *detailLabelDic = @{@"text":@"三亚大中华希尔顿酒店",@"font":kPingFangMedium(18),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentLeft)};
+     NSDictionary *detailLabelDic = @{@"text":@"三亚大中华希尔顿酒店",@"font":kPingFangMedium(18)};
     _detailLabel = [ZSHBaseUIControl createLabelWithParamDic:detailLabelDic];
     [self.contentView addSubview:_detailLabel];
     
-    _lineView = [[UIView alloc]init];
-    [self.contentView addSubview:_lineView];
+   
 }
 
 - (void)layoutSubviews{
     [super layoutSubviews];
     
-    [_hotelImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_headView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.mas_equalTo(self);
     }];
 
@@ -45,24 +46,34 @@
         make.bottom.mas_equalTo(self).offset(-kRealValue(13.5));
         make.height.mas_equalTo(kRealValue(18));
     }];
-    
-    _lineView.frame = CGRectMake(KScreenWidth - kRealValue(7) - kRealValue(71), CGRectGetHeight(self.frame) - kRealValue(14), kRealValue(71), 1);
-     [ZSHBaseUIControl drawLineOfDashByCAShapeLayer:_lineView lineLength:kRealValue(10.5) lineSpacing:kRealValue(9.5) lineColor:KZSHColor979797 lineDirection:YES];
+
 }
 
-- (void)updateCellWithModel:(ZSHBaseModel *)model{
-    if (self.fromClassType == ZSHFromHotelVCToHotelDetailVC) {
-        ZSHHotelDetailModel *hotelModel = (ZSHHotelDetailModel *)model;
-        _hotelImageView.image = [UIImage imageNamed:hotelModel.detailImageName];
-        _detailLabel.text = hotelModel.hotelName;
-    } else if (self.fromClassType == ZSHFromFoodVCToHotelDetailVC) {
-        ZSHFoodModel *foodModel = (ZSHFoodModel *)model;
-        _hotelImageView.image = [UIImage imageNamed:foodModel.detailImageName];
-        _detailLabel.text = foodModel.foodName;
-    } else if (self.fromClassType == ZSHFromHomeKTVVCToHotelDetailVC) {
-        ZSHKTVModel *KTVModel = (ZSHKTVModel *)model;
-        _hotelImageView.image = [UIImage imageNamed:KTVModel.detailImageName];
-        _detailLabel.text = KTVModel.KTVName;
+- (void)updateCellWithParamDic:(NSDictionary *)dic{
+    switch (_shopType) {
+        case ZSHFoodShopType:{//美食
+            [_headView updateViewWithParamDic:@{@"dataArr":dic[@"SHOPDETAILSIMGS"]}];
+            _detailLabel.text = dic[@"SHOPNAMES"];
+            break;
+        }
+        case ZSHHotelShopType:{//酒店
+            [_headView updateViewWithParamDic:@{@"dataArr":dic[@"HOTELDETAILSIMGS"]}];
+            _detailLabel.text = dic[@"HOTELNAMES"];
+            break;
+        }
+        case ZSHKTVShopType:{//KTV
+            [_headView updateViewWithParamDic:@{@"dataArr":dic[@"KTVDETAILSIMGS"]}];
+            _detailLabel.text = dic[@"KTVNAMES"];
+            break;
+        }
+        case ZSHBarShopType:{//酒吧
+            [_headView updateViewWithParamDic:@{@"dataArr":dic[@"BARDETAILSIMGS"]}];
+            _detailLabel.text = dic[@"BARNAMES"];
+            break;
+        }
+            
+        default:
+            break;
     }
     
 }

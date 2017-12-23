@@ -27,4 +27,14 @@
 @property (copy , nonatomic , readonly)NSArray *images;
 
 
+@property (nonatomic, copy) NSString *count;
+/** 商品标题 */
+@property (nonatomic, copy) NSString *PROTITLE;
+/** 商品价格 */
+@property (nonatomic, copy) NSString *PROPRICE;
+/** 图片URL */
+@property (nonatomic, copy) NSString *PROSHOWIMG;
+@property (nonatomic, copy) NSString *PRODUCT_ID;
+
+
 @end

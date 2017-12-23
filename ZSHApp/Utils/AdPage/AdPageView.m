@@ -174,11 +174,7 @@ static int const showtime = 5;
         [self removeFromSuperview];
         
     }];
-    
 }
-
-
-
 
 /**
  *  判断文件是否存在
@@ -213,7 +209,7 @@ static int const showtime = 5;
     
     // TODO 请求广告接口
     
-//    [PPNetworkHelper POST:NSStringFormat(@"%@%@",URL_main,URL_Test) parameters:@{@"versionId":@100} success:^(id responseObject) {
+//    [PPNetworkHelper POST:NSStringFormat(@"%@%@",kUrlRoot,kUrlTest) parameters:@{@"versionId":@100} success:^(id responseObject) {
 //        if (ValidDict(responseObject)) {
 //            if (ValidDict(responseObject[@"data"])) {
 //                NSDictionary *data = responseObject[@"data"];

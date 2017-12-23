@@ -10,4 +10,6 @@
 
 @interface ZSHEntertainmentDetailCell : ZSHBaseCell
 
+@property (nonatomic, strong) UILabel *detailLabel;
+
 @end

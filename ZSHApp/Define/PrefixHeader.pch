@@ -4,6 +4,7 @@
 //
 //  Created by Apple on 2017/8/18.
 //  Copyright © 2017年 Apple. All rights reserved.
+#ifdef __OBJC__
 
 #ifndef PrefixHeader_pch
 #define PrefixHeader_pch
@@ -34,6 +35,11 @@
 #import "UIView+ZSHExtension.h"
 #import "ZSHSpeedy.h"
 #import "ZSHBaseCell.h"
+#import "ZSHBaseFunction.h"
+#import "NSArray+Log.h"
+#import "NSDictionary+Log.h"
+#import "NSDictionary+Safe.h"
+#import "UIImage+ImageEffects.h" 
 
 //第三方
 #import <YYKit.h>
@@ -41,6 +47,7 @@
 #import <Masonry.h>
 #import <NSObject+YYModel.h>
 #import <MJExtension.h>
-#import <ReactiveObjC/ReactiveObjC.h>
+#import "IQKeyboardManager.h"
 
 #endif /* PrefixHeader_pch */
+#endif // OC的头文件

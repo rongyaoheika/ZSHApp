@@ -7,6 +7,7 @@
 //
 
 #import "ZSHSimpleCellView.h"
+#import "ZSHUserInfoModel.h"
 
 @interface ZSHSimpleCellView()
 
@@ -82,6 +83,7 @@
         _rightImageView = [[UIImageView alloc]initWithFrame:CGRectZero];
         _rightImageView.image = [UIImage imageNamed:self.paramDic[@"rightTitle"]];
         _rightImageView.layer.cornerRadius = imageWH/2;
+        _rightImageView.layer.masksToBounds = YES;
     }
     return _rightImageView;
 }
@@ -93,6 +95,42 @@
         [_rightSwitchBtn setOn:YES];
     }
     return _rightSwitchBtn;
+}
+
+- (void)updateViewWithModel:(ZSHUserInfoModel *)model index:(NSInteger)index {
+    if (index == 0) {
+        [_rightImageView sd_setImageWithURL:[NSURL URLWithString:model.PORTRAIT]];
+    } else if (index == 1) {
+        _rightLabel.text = model.NICKNAME;
+    } else if (index == 2) {
+        _rightLabel.text = model.REALNAME;
+    } else if (index == 3) {
+        _rightLabel.text = model.SEX;
+    } else if (index == 4) {
+        _rightLabel.text = model.BIRTHDAY;
+    } else if (index == 5) {
+        _rightLabel.text = model.CARDNO;
+    } else if (index == 6) {
+        _rightLabel.text = model.ADDRESS;
+    } else if (index == 7) {
+        _rightLabel.text = model.SIGNNAME;
+    }
+}
+
+- (void)updateView2WithModel:(ZSHUserInfoModel *)model index:(NSInteger)index {
+    if (index == 0) {
+        _rightLabel.text  = model.USERIDCARD;
+    } else if (index == 1) {
+        _rightLabel.text  = model.PHONE;
+    }
+}
+
+- (void)updateHeadImage:(UIImage *)image {
+    _rightImageView.image = image;
+}
+
+- (void)updateRightText:(NSString *)text {
+    _rightLabel.text = text;
 }
 
 @end

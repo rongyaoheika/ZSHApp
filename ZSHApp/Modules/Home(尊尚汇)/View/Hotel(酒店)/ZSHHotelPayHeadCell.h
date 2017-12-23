@@ -10,6 +10,7 @@
 
 @interface ZSHHotelPayHeadCell : ZSHBaseCell
 
-@property (nonatomic, assign)ZSHFromVCToHotelPayVC   fromClassType;
+@property (nonatomic, assign)ShowCellType        showCellType;
+@property (nonatomic, assign)ZSHShopType         shopType;
 
 @end

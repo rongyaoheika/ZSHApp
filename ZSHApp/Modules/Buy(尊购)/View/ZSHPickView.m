@@ -9,7 +9,7 @@
 #import "ZSHPickView.h"
 #import "ZSHTopLineView.h"
 
-NSUInteger yearSatrt = 1900;
+NSInteger yearSatrt = 1900;
 
 @interface ZSHPickView() <UIPickerViewDataSource,UIPickerViewDelegate>
 
@@ -22,28 +22,40 @@ NSUInteger yearSatrt = 1900;
 
 @property (nonatomic, copy)   NSMutableArray       *birthdayValues;
 @property (nonatomic, copy)   NSMutableArray       *timeValues;
-
 @property (nonatomic, strong) NSArray              *birthdayWidthArr;
 @property (nonatomic, strong) NSArray              *regionWidthArr;
-@property (nonatomic, strong) NSArray              *regionArr;
-@property (nonatomic, strong) NSArray              *couponArr;
-@property (nonatomic, strong) NSArray              *KTVHourArr;
-@property (nonatomic, strong) NSArray              *seatArr;
-@property (nonatomic, strong) NSArray              *togetherArr;
+@property (nonatomic, copy)   NSMutableArray       *priceWidthArr;
 
 @property (nonatomic, assign) long long            birthday;
 @property (nonatomic, assign) NSInteger            currentYear;
 @property (nonatomic, assign) NSInteger            currentMonth;
 @property (nonatomic, assign) NSInteger            currentDay;
+@property (nonatomic, assign) NSInteger            selectedRow;
 
+@property (nonatomic, strong) NSMutableArray       *dataArr;
+@property (nonatomic, copy)   NSString             *midTitle;
 @end
 
 @implementation ZSHPickView
 
-- (id)initWithFrame:(CGRect)frame type:(ShowPickViewWindowType)type{
+- (instancetype)initWithFrame:(CGRect)frame paramDic:(NSDictionary *)paramDic{
+    self = [super initWithFrame:frame];
+    if (self) {
+        _showType = [paramDic[@"type"]integerValue];
+        _dataArr = [paramDic[@"dataArr"] mutableCopy];
+        _midTitle = paramDic[@"midTitle"];
+        
+        [self createData];
+        [self createUI];
+    }
+    return self;
+}
+
+- (instancetype)initWithFrame:(CGRect)frame type:(ShowPickViewWindowType)type {
     self = [super initWithFrame:frame];
     if (self) {
         _showType = type;
+        
         [self createData];
         [self createUI];
     }
@@ -51,15 +63,10 @@ NSUInteger yearSatrt = 1900;
 }
 
 - (void)createData{
-    self.titleArr = @[@"生日",@"性别",@"城市区域选择",@"年份",@"优惠券选择",@"时间选择",@"席别选择",@"方式选择"];
+    self.selectedRow = -1;
+//    self.titleArr = @[@"生日",@"性别",@"城市区域选择",@"年份",@"优惠券选择",@"时间选择",@"方式选择"
+//                      @"物流公司选择"];
     self.regionWidthArr = @[@(KScreenWidth * 0.25),@(KScreenWidth * 0.5),@(KScreenWidth * 0.25)];
-    self.regionArr = @[@[@"北京",@"天津市",@"河北省",@"山东省"],
-                       @[@"北京市",@"天津市",@"石家庄",@"聊城市"],
-                       @[@"朝阳区",@"天津市",@"北辰区",@"聊城市"]
-                       ];
-    self.couponArr = @[@"使用优惠券",@"20元代金券",@"50元代金券"];
-    self.seatArr = @[@"不限",@"经济仓",@"头等／商务舱"];
-    self.togetherArr = @[@"不限",@"给力邀约",@"AA互动趴"];
    
     // 年月日
     self.birthdayWidthArr = @[@(75),@(45),@(60)];
@@ -87,6 +94,7 @@ NSUInteger yearSatrt = 1900;
     NSMutableArray *arrayDay = [NSMutableArray array];
     _birthdayValues = [NSMutableArray arrayWithArray:@[arrayYear,arrayMonth,arrayDay]];
     _timeValues =  [NSMutableArray arrayWithArray:@[arrayYear,arrayMonth]];
+    
 }
 
 - (void)createUI{
@@ -95,13 +103,8 @@ NSUInteger yearSatrt = 1900;
     self.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
     [self addSubview:self.mainView];
     [self.mainView addSubview:self.topLineView];
-    
      self.topLineView.btnActionBlock = ^(NSInteger tag) {
-        if (!tag) {
-            [weakself dismiss];
-        } else {
-            [weakself saveChange];
-        }
+         tag == 0 ? [weakself dismiss]:[weakself saveChange];
     };
     
      //底部添加pickview
@@ -120,14 +123,13 @@ NSUInteger yearSatrt = 1900;
         case WindowBirthDay:
             return _birthdayValues.count;
         case WindowRegion:
-            return _regionArr.count;
+            return _dataArr.count;
         case WindowTime:
             return _timeValues.count;
-        case WindowCoupon:
-        case WindowTogether:
-            return 1;
+        case WindowPrice:
+            return _dataArr.count;
         default:
-            return 0;
+            return 1;
     }
 }
 
@@ -138,19 +140,15 @@ NSUInteger yearSatrt = 1900;
             return [_birthdayValues[component]count];
         }
         case WindowRegion:{
-            return [_regionArr[component]count];
+            return [_dataArr[component]count];
         }
         case WindowTime:{
             return [_timeValues[component]count];
         }
-        case WindowCoupon:{
-            return [_couponArr count];
-        }
-        case WindowTogether:{
-            return [_togetherArr count];
-        }
+        case WindowPrice:
+            return [_dataArr[component] count];
         default:
-            return 0;
+            return [_dataArr count];
     }
 }
 
@@ -172,55 +170,58 @@ NSUInteger yearSatrt = 1900;
         case WindowTime:{
             return kRealValue(100);
         }
-        case WindowCoupon:
-        case WindowTogether:{
-            return kRealValue(80);
-        }
-            default:
-            return 0;
+        case WindowPrice:
+            return [@[@(KScreenWidth * 0.25),@(KScreenWidth * 0.25)][component] floatValue];
+        default:
+            return KScreenWidth;
     }
     return 0;
 }
 
 - (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view{
+    CGFloat labelWith = [self pickerView:pickerView widthForComponent:component];
+    CGFloat labelHeight = [self pickerView:pickerView rowHeightForComponent:component];
+    NSDictionary *textLabelDic = @{@"text":@"",@"font":kPingFangRegular(14),@"textAlignment":@(NSTextAlignmentCenter)};
+    UILabel *pickViewLabel = (UILabel *)view;
+    if (!pickViewLabel){
+        pickViewLabel = [ZSHBaseUIControl createLabelWithParamDic:textLabelDic];
+        pickViewLabel.frame = CGRectMake(0, 0, labelWith, labelHeight);
+    }
+    if (row == self.selectedRow) {
+        pickViewLabel.font = kPingFangMedium(14);
+    } else {
+        pickViewLabel.font = kPingFangRegular(14);
+    }
+
     switch (_showType) {
         case WindowBirthDay:{
-            NSDictionary *textLabelDic = @{@"text":_birthdayValues[component][row],@"font":kPingFangRegular(20),@"textColor":KZSHColor333333,@"textAlignment":@(NSTextAlignmentCenter)};
-            UILabel *textLabel = [ZSHBaseUIControl createLabelWithParamDic:textLabelDic];
-            textLabel.frame = CGRectMake(0, 0, [self.birthdayWidthArr[component]floatValue], kRealValue(20));
-            return textLabel;
+            pickViewLabel.text = _birthdayValues[component][row];
+            break;
         }
         case WindowRegion:{
-            NSDictionary *regionLabelDic = @{@"text":_regionArr[component][row],@"font":kPingFangMedium(14),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentCenter)};
-            UILabel *regionLabel = [ZSHBaseUIControl createLabelWithParamDic:regionLabelDic];
-            regionLabel.frame = CGRectMake(0, 0, [self.regionWidthArr[component]floatValue], kRealValue(42));
-            return regionLabel;
+            pickViewLabel.text = _dataArr[component][row];
+             break;
         }
         case WindowTime:{
-            NSDictionary *timeLabelDic = @{@"text":_timeValues[component][row] ,@"font":kPingFangRegular(20),@"textColor":KZSHColor333333,@"textAlignment":@(NSTextAlignmentCenter)};
-            UILabel *timeLabel = [ZSHBaseUIControl createLabelWithParamDic:timeLabelDic];
-            timeLabel.frame = CGRectMake(0, 0, kRealValue(100), kRealValue(20));
-            return timeLabel;
+            pickViewLabel.text = _timeValues[component][row];
+             break;
         }
-        case WindowCoupon:{
-            NSDictionary *couponLabelDic = @{@"text":self.couponArr[row],@"font":kPingFangMedium(14),@"textAlignment":@(NSTextAlignmentCenter)};
-//            UILabel *couponLabel = [ZSHBaseUIControl createLabelWithParamDic:couponLabelDic];
-//            couponLabel.frame = CGRectMake(0, 0, kRealValue(100), kRealValue(40));
-            
-            return [self createCustomLabelWithParamDic:couponLabelDic];
-        }
-        case WindowTogether:{
-            NSDictionary *couponLabelDic = @{@"text":self.togetherArr[row],@"font":kPingFangMedium(14),@"textAlignment":@(NSTextAlignmentCenter)};
-            return [self createCustomLabelWithParamDic:couponLabelDic];
-        }
-            
+        case WindowPrice:
+            pickViewLabel.text = _dataArr[component][row];
+            break;
         default:
-            return nil;
+            pickViewLabel.text = _dataArr[row];
+             break;
     }
+    return pickViewLabel;
+
 }
 
 //选择器选择的方法  row：被选中的行
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
+    self.selectedRow = row;
+    [self.pickerView selectRow:self.selectedRow inComponent:component animated:YES];
+    [self.pickerView reloadComponent:component];
     switch (_showType) {
         case WindowBirthDay:{
             if (component == 0 || component == 1) { // 年和月变化的时候都应该去刷新日期
@@ -228,22 +229,25 @@ NSUInteger yearSatrt = 1900;
             }
             break;
         }
-        case WindowRegion:{
-            RLog(@"选择位置%d",row);
-            break;
-        }
         case WindowTime:{
-            RLog(@"选择年份%ld",row);
+            RLog(@"选择年份%li",row);
             [self refreshMonth];
             break;
         }
-        case WindowCoupon:
-        case WindowTogether:{
-            RLog(@"选择券%ld",row);
+        case WindowPrice:
+            [self refreshPrice];
+            break;
+        case WindowRegion:{
+            if (component == 0) {
+                [self refreshCityAndDistrict];
+            } else if (component== 1) {
+                [self refreshDistrict];
+            }
             break;
         }
-            
-        default:
+        default:{
+             RLog(@"选择行数%li",row);
+        }
             break;
     }
 }
@@ -287,12 +291,8 @@ NSUInteger yearSatrt = 1900;
             }
             break;
         }
-        case WindowGender:{
-            break;
-        }
-            
         case WindowRegion:{
-            [_pickerView selectRow:0 inComponent:0 animated:NO];
+             [_pickerView selectRow:0 inComponent:0 animated:NO];
              [_pickerView selectRow:0 inComponent:1 animated:NO];
              [_pickerView selectRow:0 inComponent:2 animated:NO];
             break;
@@ -300,22 +300,22 @@ NSUInteger yearSatrt = 1900;
         case WindowTime:{
              [_pickerView selectRow:2017-yearSatrt inComponent:0 animated:NO];
              [_pickerView selectRow:8 inComponent:1 animated:NO];
-            [self refreshMonth];
+             [self refreshMonth];
             break;
         }
-        case WindowCoupon:
-        case WindowTogether:{
-           [_pickerView selectRow:1 inComponent:0 animated:NO];
-            break;
-        }
-            
-        default:{
+        case WindowPrice: {
              [_pickerView selectRow:0 inComponent:0 animated:NO];
+             [_pickerView selectRow:10 inComponent:1 animated:NO];
             break;
         }
-
+        default:{
+             [_pickerView selectRow:1 inComponent:0 animated:NO];
+            break;
+        }
     }
     
+//    self.selectedRow = [_pickerView selectedRowInComponent:0];
+
     [self makeKeyAndVisible];
     [UIView animateWithDuration:0.5 animations:^{
         CGRect mainFrame = _mainView.frame;
@@ -339,32 +339,145 @@ NSUInteger yearSatrt = 1900;
     switch (_showType) {
         case WindowBirthDay:{
             RLog(@"保存生日数据");
+            NSInteger year = [_pickerView selectedRowInComponent:0];
+            NSInteger month = [_pickerView selectedRowInComponent:1];
+            NSInteger day = [_pickerView selectedRowInComponent:2];
+            NSString *dateStr = [NSString stringWithFormat:@"%zd-%zd-%zd ",yearSatrt + year,month+1,day+1];
+            if (self.saveChangeBlock) {
+                self.saveChangeBlock(dateStr,self.tag);
+            }
             break;
         }
+        case WindowPrice:{
+            RLog(@"保存价格数据");
+            NSInteger priceMin = [_pickerView selectedRowInComponent:0];
+            NSInteger priceMax = [_pickerView selectedRowInComponent:1];
+            NSString *priceStr = [NSString stringWithFormat:@"%zd-%zd", priceMin*100,priceMax*100];
+            if (self.saveChangeBlock) {
+                self.saveChangeBlock(priceStr,self.tag);
+            }
+        }
+            break;
         case WindowGender:{
             RLog(@"保存性别数据");
             break;
         }
         case WindowRegion:{
-            NSInteger region = [_pickerView selectedRowInComponent:0];
-            RLog(@"保存区域数据%ld",region);
-            break;
-        }
-            
-        case WindowTime:{
-            NSInteger year = [_pickerView selectedRowInComponent:0];
-            NSInteger month = [_pickerView selectedRowInComponent:1];
-            NSString *dateStr = [NSString stringWithFormat:@"%02ld/%ld",month,yearSatrt + year];
-            RLog(@"保存区域数据%ld%ld",year,month);
+            NSInteger province = [_pickerView selectedRowInComponent:0];
+            NSInteger city = [_pickerView selectedRowInComponent:1];
+            NSInteger district = [_pickerView selectedRowInComponent:2];
+
+            NSString *addrStr = nil;
+            if ([_dataArr[2] count]) {
+                addrStr = [NSString stringWithFormat:@"%@%@%@", _dataArr[0][province],_dataArr[1][city],_dataArr[2][district]];
+            }else {
+                addrStr = [NSString stringWithFormat:@"%@%@", _dataArr[0][province],_dataArr[1][city]];
+            }
             if (self.saveChangeBlock) {
-                self.saveChangeBlock(dateStr);
+                self.saveChangeBlock(addrStr, self.tag);
             }
             break;
         }
-        default:
+        case WindowTime:{
+            NSInteger year = [_pickerView selectedRowInComponent:0];
+            NSInteger month = [_pickerView selectedRowInComponent:1];
+            NSString *dateStr = [NSString stringWithFormat:@"%02ld/%ld",(long)month,(long)(yearSatrt + year)];
+            RLog(@"保存区域数据%ld%ld",(long)year,(long)month);
+            if (self.saveChangeBlock) {
+                self.saveChangeBlock(dateStr,self.tag);
+            }
+            break;
+        }
+        case WindowTogether: {
+            NSInteger index = [_pickerView selectedRowInComponent:0];
+            NSString *dateStr = [NSString stringWithFormat:@"%@",_dataArr[index]];
+            if (self.saveChangeBlock) {
+                self.saveChangeBlock(dateStr,index);
+            }
+            break;
+        }
+        default:{//其他排序
+            NSInteger index = [_pickerView selectedRowInComponent:0];
+            NSString *dateStr = [NSString stringWithFormat:@"%@",_dataArr[index]];
+            if (self.saveChangeBlock) {
+                self.saveChangeBlock(dateStr,index);
+            }
+            
+            
+        }
             break;
     }
     [self dismiss];
+}
+
+
+- (void)refreshCityAndDistrict {
+    
+    NSInteger index = [_pickerView selectedRowInComponent:0];
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"area.plist" ofType:@""];
+    
+    NSArray *areaArr = [NSArray arrayWithContentsOfFile:path];
+    NSMutableArray *provinces = _dataArr[0];
+//    for (NSDictionary *dic in areaArr) {
+//        [provinces addObject:dic[@"state"]];
+//    }
+    
+    NSMutableArray *citys = [NSMutableArray array];
+    for (NSDictionary *dic in areaArr) {
+        if ([dic[@"state"] isEqualToString:provinces[index]]) {
+            for (NSDictionary *city in dic[@"cities"]) {
+                [citys addObject:city[@"city"]];
+                if ([city[@"city"] isEqualToString:citys[0]]) {
+                    if ([city[@"areas"] count]) {
+                        _dataArr[2] = city[@"areas"];
+                        [_pickerView reloadComponent:2];
+                    } else {
+                        _dataArr[2] = @[@""];
+                        [_pickerView reloadComponent:2];
+                    }
+                }
+            }
+            _dataArr[1] = [citys copy];
+            [_pickerView reloadComponent:1];
+            break;
+        }
+        
+    }
+    
+}
+
+
+- (void)refreshDistrict {
+    
+    NSInteger index = [_pickerView selectedRowInComponent:0];
+    NSInteger index1 = [_pickerView selectedRowInComponent:1];
+    
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"area.plist" ofType:@""];
+    
+    NSArray *areaArr = [NSArray arrayWithContentsOfFile:path];
+    NSMutableArray *provinces = _dataArr[0];
+//    for (NSDictionary *dic in areaArr) {
+//        [provinces addObject:dic[@"state"]];
+//    }
+//    
+    for (NSDictionary *dic in areaArr) {
+        if ([dic[@"state"] isEqualToString:provinces[index]]) {
+            for (NSDictionary *city in dic[@"cities"]) {
+                if ([city[@"city"] isEqualToString:_dataArr[1][index1]]) {
+                    _dataArr[2] = city[@"areas"];
+                    [_pickerView reloadComponent:2];
+                    break;
+                }
+            }
+            break;
+        }
+        
+    }
+}
+
+
+- (void)refreshPrice {
+    
 }
 
 - (void)refreshMonth{
@@ -471,7 +584,6 @@ NSUInteger yearSatrt = 1900;
     [_pickerView reloadComponent:2];
 }
 
-
 #pragma getter
 - (UIView *)mainView{
     if (!_mainView) {
@@ -483,7 +595,8 @@ NSUInteger yearSatrt = 1900;
 
 - (ZSHTopLineView *)topLineView{
     if (!_topLineView) {
-        NSDictionary *paramDic = @{@"typeText":_titleArr[_showType]};
+        NSString *typeText = _midTitle?_midTitle:_titleArr[_showType];
+        NSDictionary *paramDic = @{@"typeText":typeText};
         _topLineView = [[ZSHTopLineView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, kRealValue(50)) paramDic:paramDic];
     }
     return _topLineView;
@@ -497,12 +610,6 @@ NSUInteger yearSatrt = 1900;
         _pickerView.showsSelectionIndicator = NO;
     }
     return _pickerView;
-}
-
-- (UILabel *)createCustomLabelWithParamDic:(NSDictionary *)paramDic{
-   UILabel *customLabel = [ZSHBaseUIControl createLabelWithParamDic:paramDic];
-    customLabel.frame = CGRectMake(0, 0, kRealValue(100), kRealValue(40));
-   return customLabel;
 }
 
 @end

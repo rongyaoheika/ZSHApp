@@ -9,7 +9,7 @@
 #import "ZSHGoodsTitleContentViewController.h"
 #import "LXScrollContentView.h"
 #import "ZSHGoodsSegmentView.h"
-#import "ZSHGoodsTypeViewController.h"
+
 
 @interface ZSHGoodsTitleContentViewController ()
 
@@ -25,7 +25,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     
     [self loadData];
     [self createUI];
@@ -33,6 +32,7 @@
 
 - (void)loadData{
     self.cellType = ZSHCollectionViewCellType;
+
 }
 
 - (void)createUI{
@@ -82,16 +82,13 @@
 - (void)reloadListData{
     self.vcs = [[NSMutableArray alloc]init];
     for (int i = 0; i<4; i++) {
-        ZSHGoodsTypeViewController *vc =  [[ZSHGoodsTypeViewController alloc]initWithParamDic:@{@"cellType":@(self.cellType)}];
+        ZSHGoodsTypeViewController *vc =  [[ZSHGoodsTypeViewController alloc]initWithParamDic:self.paramDic];
         [self.vcs addObject:vc];
     }
     
     [self.contentView reloadViewWithChildVcs:self.vcs parentVC:self];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
+
 
 @end

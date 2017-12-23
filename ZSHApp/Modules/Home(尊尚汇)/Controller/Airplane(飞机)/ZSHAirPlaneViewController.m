@@ -10,9 +10,16 @@
 #import "ZSHTicketPlaceCell.h"
 #import "ZSHBottomBlurPopView.h"
 #import "ZSHTitleContentViewController.h"
+#import "ZSHPickView.h"
+#import "ZSHTrainSearchResultController.h"
+#import "ZSHTrainModel.h"
+
+
 @interface ZSHAirPlaneViewController ()
 
 @property (nonatomic, strong) ZSHBottomBlurPopView      *bottomBlurPopView;
+@property (nonatomic, strong) ZSHPickView               *pickView;
+@property (nonatomic, strong) ZSHTrainModel             *trainModel;
 
 @end
 
@@ -29,30 +36,37 @@ static NSString *ZSHBaseTicketDateCellID = @"ZSHBaseTicketDateCell";
 }
 
 - (void)loadData{
-    
+    _trainModel = [[ZSHTrainModel alloc] init];
+    _trainModel.from = @"北京";
+    _trainModel.to = @"上海";
+    _trainModel.date = @"2017-9-25";
+    _trainModel.tt = @"D";
     [self initViewModel];
 }
 
 - (void)createUI{
     self.title = self.paramDic[@"title"];
     [self.view addSubview:self.tableView];
-    self.tableView.frame = CGRectMake(kRealValue(37.5), KNavigationBarHeight+kRealValue(10), kScreenWidth - 2*kRealValue(37.5), kRealValue(240));
+    self.tableView.scrollEnabled = NO;
+    self.tableView.frame = CGRectMake(kRealValue(37.5), KNavigationBarHeight+kRealValue(32), kScreenWidth - 2*kRealValue(37.5), kRealValue(240));
     self.tableView.delegate = self.tableViewModel;
     self.tableView.dataSource = self.tableViewModel;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     [self.tableView setSeparatorColor:KZSHColor1D1D1D];
     [self.tableView setSeparatorInset:UIEdgeInsetsMake(0, 0, 0, 0)];
     [self.tableView registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHTicketPlaceCellID];
+//    [self.tableView registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHBaseTicketDateCellID];
     
     [self.view addSubview:self.bottomBtn];
     [self.bottomBtn setTitle:@"开始搜索" forState:UIControlStateNormal];
     [self.bottomBtn addTarget:self action:@selector(searchTicketAction) forControlEvents:UIControlEventTouchUpInside];
-    [self.tableView reloadData];
+ 
 }
 
 - (void)initViewModel {
     [self.tableViewModel.sectionModelArray removeAllObjects];
     [self.tableViewModel.sectionModelArray addObject:[self storeListSection]];
+    [self.tableView reloadData];
 }
 
 - (ZSHBaseTableViewSectionModel*)storeListSection {
@@ -65,10 +79,16 @@ static NSString *ZSHBaseTicketDateCellID = @"ZSHBaseTicketDateCell";
         //起始位置
         ZSHBaseCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHTicketPlaceCellID];
         ZSHTicketPlaceCell *ticketView = [[ZSHTicketPlaceCell alloc]initWithFrame:CGRectZero paramDic:nil];
+        ticketView.saveBlock = ^(NSString *from, NSString *to) {
+            weakself.trainModel.from = from;
+            weakself.trainModel.to = to;
+        };
+        ticketView.tag = 2;
         [cell.contentView addSubview:ticketView];
         [ticketView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.mas_equalTo(cell);
         }];
+        
         return cell;
     };
     
@@ -76,23 +96,97 @@ static NSString *ZSHBaseTicketDateCellID = @"ZSHBaseTicketDateCell";
         
     };
     
-    //出发日期,席别
-    NSArray *titleArr = @[@"出发日期",@"席别"];
-    NSArray *valueArr = @[@"2017-9-25",@"经济舱"];
-    for (int i = 0; i<2; i++) {
+    if (kFromClassTypeValue == ZSHHomeAirPlaneVCToAirPlaneVC) {
+        //出发日期,席别
+        NSArray *titleArr = @[@"出发日期",@"席别"];
+        NSArray *valueArr = @[@"2017-9-25",@"经济舱"];
+        for (int i = 0; i<2; i++) {
+            cellModel = [[ZSHBaseTableViewCellModel alloc] init];
+            cellModel.height = kRealValue(60);
+            [sectionModel.cellModelArray addObject:cellModel];
+            cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
+                ZSHBaseCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AirHead"];
+                if (!cell) {
+                    cell = [[ZSHBaseCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                              reuseIdentifier:@"AirHead"];
+//                    NSDictionary *dateLabelDic = @{@"text":valueArr[i]};
+                    UILabel *dateLabel = [ZSHBaseUIControl createLabelWithParamDic:@{}];
+                    dateLabel.tag = 3;
+                    [cell.contentView addSubview:dateLabel];
+                    [dateLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+                        make.left.mas_equalTo(cell).offset(kRealValue(100));
+                        make.height.mas_equalTo(cell);
+                        make.top.mas_equalTo(cell);
+                        make.right.mas_equalTo(cell).offset(-kRealValue(50));
+                    }];
+                }
+                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                cell.textLabel.text = titleArr[i];
+                UILabel *label = [cell.contentView viewWithTag:3];
+                label.text = valueArr[i];
+                
+                return cell;
+            };
+            
+            cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
+                if (indexPath.row == 1) {//出发日期
+                    self.bottomBlurPopView = [weakself createBottomBlurPopViewWith:ZSHFromTrainCalendarVCToBottomBlurPopView];
+                    weakself.bottomBlurPopView.confirmOrderBlock = ^(NSDictionary *dic) {
+                        weakself.trainModel.date = dic[@"trainDate"];
+                        [weakself initViewModel];
+                    };
+                    [kAppDelegate.window addSubview:self.bottomBlurPopView];
+//                    self.bottomBlurPopView = [weakself createBottomBlurPopViewWith:ZSHFromAirplaneCalendarVCToBottomBlurPopView];
+//                    [kAppDelegate.window addSubview:self.bottomBlurPopView];
+                }  else if (indexPath.row == 2) {//席别
+                    NSArray *seatArr = @[@"不限",@"经济仓",@"头等／商务舱"];
+                    NSDictionary *nextParamDic = @{@"type":@(WindowTogether),@"midTitle":@"席别选择",@"dataArr":seatArr};
+                    weakself.pickView = [weakself createPickViewWithParamDic:nextParamDic];
+                    [weakself.pickView show:WindowTogether];
+                }
+            };
+        }
+        
         cellModel = [[ZSHBaseTableViewCellModel alloc] init];
         cellModel.height = kRealValue(60);
         [sectionModel.cellModelArray addObject:cellModel];
         cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
-            ZSHBaseCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHBaseTicketDateCellID];
+            ZSHBaseCell *cell = [tableView dequeueReusableCellWithIdentifier:@"child"];
+            if (!cell) {
+                cell = [[ZSHBaseCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"child"];
+                NSDictionary *childBtnDic = @{@"title":@"携带儿童",@"font":kPingFangRegular(12),@"withImage":@(YES),@"normalImage":@"airplane_press"};
+                UIButton *childBtn = [ZSHBaseUIControl createBtnWithParamDic:childBtnDic];
+                [cell.contentView addSubview:childBtn];
+                [childBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.left.mas_equalTo(cell).offset(KLeftMargin);
+                    make.height.mas_equalTo(cell).offset(KLeftMargin);
+                    make.width.mas_equalTo(kRealValue(65));
+                    make.top.mas_equalTo(cell);
+                }];
+                [childBtn layoutButtonWithEdgeInsetsStyle:XYButtonEdgeInsetsStyleRight imageTitleSpace:kRealValue(5)];
+                childBtn.tag = 1824;
+            }
+            
+            return cell;
+        };
+        cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
+            
+        };
+        
+    } else if (kFromClassTypeValue == ZSHFromHomeTrainVCToAirPlaneVC) {
+        // 出发日期
+        cellModel = [[ZSHBaseTableViewCellModel alloc] init];
+        cellModel.height = kRealValue(60);
+        [sectionModel.cellModelArray addObject:cellModel];
+        cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
+            ZSHBaseCell *cell = [tableView dequeueReusableCellWithIdentifier:@"trainDate"];
             if (!cell) {
                 cell = [[ZSHBaseCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                          reuseIdentifier:ZSHBaseTicketDateCellID];
+                                          reuseIdentifier:@"trainDate"];
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-                cell.textLabel.text = titleArr[i];
-                
-                NSDictionary *dateLabelDic = @{@"text":valueArr[i]};
-                UILabel *dateLabel = [ZSHBaseUIControl createLabelWithParamDic:dateLabelDic];
+//                NSDictionary *dateLabelDic = @{@"text":dateString};
+                UILabel *dateLabel = [ZSHBaseUIControl createLabelWithParamDic:@{}];
+                dateLabel.tag = 8;
                 [cell.contentView addSubview:dateLabel];
                 [dateLabel mas_makeConstraints:^(MASConstraintMaker *make) {
                     make.left.mas_equalTo(cell).offset(kRealValue(100));
@@ -101,62 +195,96 @@ static NSString *ZSHBaseTicketDateCellID = @"ZSHBaseTicketDateCell";
                     make.right.mas_equalTo(cell).offset(-kRealValue(50));
                 }];
             }
+
+            cell.textLabel.text = @"出发日期";
+            NSString *dateString = @"";
+            if (weakself.trainModel.date.length) {
+                dateString = weakself.trainModel.date;
+            } else {
+                dateString = @"2017-9-25";
+            }
+            UILabel *label = [cell.contentView viewWithTag:8];
+            label.text = dateString;
             return cell;
         };
         
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
             if (indexPath.row == 1) {//出发日期
-                self.bottomBlurPopView = [weakself createBottomBlurPopViewWith:ZSHFromAirplaneCalendarVCToBottomBlurPopView];
-                [kAppDelegate.window addSubview:self.bottomBlurPopView];
-            }  else if (indexPath.row == 2) {//席别
-                self.bottomBlurPopView = [weakself createBottomBlurPopViewWith:ZSHFromAirplaneSeatTypeVCToBottomBlurPopView];
+                self.bottomBlurPopView = [weakself createBottomBlurPopViewWith:ZSHFromTrainCalendarVCToBottomBlurPopView];
+                weakself.bottomBlurPopView.confirmOrderBlock = ^(NSDictionary *dic) {
+                    weakself.trainModel.date = dic[@"trainDate"];
+                    [weakself initViewModel];
+                };
                 [kAppDelegate.window addSubview:self.bottomBlurPopView];
             }
         };
-    }
-    
-    cellModel = [[ZSHBaseTableViewCellModel alloc] init];
-    cellModel.height = kRealValue(60);
-    [sectionModel.cellModelArray addObject:cellModel];
-    cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
-        ZSHBaseCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHBaseTicketDateCellID];
-        if (!cell) {
-            cell = [[ZSHBaseCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                      reuseIdentifier:ZSHBaseTicketDateCellID];
-            NSDictionary *childBtnDic = @{@"title":@"携带儿童",@"font":kPingFangRegular(12),@"withImage":@(YES),@"normalImage":@"airplane_press"};
-            UIButton *childBtn = [ZSHBaseUIControl createBtnWithParamDic:childBtnDic];
-            [cell.contentView addSubview:childBtn];
-            [childBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.left.mas_equalTo(cell).offset(KLeftMargin);
-                make.height.mas_equalTo(cell).offset(KLeftMargin);
-                make.width.mas_equalTo(kRealValue(65));
-                make.top.mas_equalTo(cell);
-            }];
-            
-            [childBtn layoutButtonWithEdgeInsetsStyle:XYButtonEdgeInsetsStyleRight imageTitleSpace:kRealValue(5)];
-        }
-        return cell;
-    };
-    
-    cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
         
-    };
-    
+        cellModel = [[ZSHBaseTableViewCellModel alloc] init];
+        cellModel.height = kRealValue(60);
+        [sectionModel.cellModelArray addObject:cellModel];
+        cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
+            ZSHBaseCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ZSHStudent"];
+            if (!cell) {
+                cell = [[ZSHBaseCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"ZSHStudent"];
+                NSDictionary *childBtnDic = @{@"title":@"学生票",@"font":kPingFangRegular(12),@"withImage":@(YES),@"normalImage":@"airplane_press"};
+                UIButton *childBtn = [ZSHBaseUIControl createBtnWithParamDic:childBtnDic];
+                [cell.contentView addSubview:childBtn];
+                [childBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.left.mas_equalTo(cell).offset(KLeftMargin);
+                    make.height.mas_equalTo(cell);
+                    make.width.mas_equalTo(kRealValue(65));
+                    make.top.mas_equalTo(cell);
+                }];
+                
+                [childBtn layoutButtonWithEdgeInsetsStyle:XYButtonEdgeInsetsStyleRight imageTitleSpace:kRealValue(5)];
+                
+                NSDictionary *conBtnDic = @{@"title":@"只看高铁／动车",@"font":kPingFangRegular(12),@"withImage":@(YES),@"normalImage":@"airplane_press"};
+                UIButton *conBtn = [ZSHBaseUIControl createBtnWithParamDic:conBtnDic];
+                [cell.contentView addSubview:conBtn];
+                [conBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.left.mas_equalTo(cell).offset(kRealValue(160));
+                    make.top.mas_equalTo(cell);
+                    make.height.mas_equalTo(cell);
+                    make.width.mas_equalTo(kRealValue(110));
+                }];
+                [conBtn layoutButtonWithEdgeInsetsStyle:XYButtonEdgeInsetsStyleRight imageTitleSpace:kRealValue(5)];
+            }
+            
+            return cell;
+        };
+        cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
+            
+        };
+    }
     return sectionModel;
 }
 
 //搜索机票
 - (void)searchTicketAction{
     
-    NSDictionary *nextParamDic = @{@"fromClassType":@(FromPlaneTicketVCToTitleContentVC)};
-    ZSHTitleContentViewController *titleContentVC = [[ZSHTitleContentViewController alloc]initWithParamDic:nextParamDic];
-    [self.navigationController pushViewController:titleContentVC animated:YES];
+    switch ([self.paramDic[KFromClassType]integerValue]) {
+        case ZSHHomeAirPlaneVCToAirPlaneVC:{
+            NSDictionary *nextParamDic = @{KFromClassType:@(FromPlaneTicketVCToTitleContentVC)};
+            ZSHTitleContentViewController *titleContentVC = [[ZSHTitleContentViewController alloc]initWithParamDic:nextParamDic];
+            [self.navigationController pushViewController:titleContentVC animated:YES];
+        }
+            break;
+        case ZSHFromHomeTrainVCToAirPlaneVC:{
+            ZSHTrainSearchResultController *searchResultVC = [[ZSHTrainSearchResultController alloc]initWithParamDic:@{@"trainModel":_trainModel}];
+            [self.navigationController pushViewController:searchResultVC animated:YES];
+        }
+            break;
+        default:
+            break;
+    }
+    
+
     
 }
 
 #pragma getter
 - (ZSHBottomBlurPopView *)createBottomBlurPopViewWith:(ZSHFromVCToBottomBlurPopView)fromClassType{
-    NSDictionary *nextParamDic = @{@"fromClassType":@(fromClassType)};
+    NSDictionary *nextParamDic = @{KFromClassType:@(fromClassType)};
     ZSHBottomBlurPopView *bottomBlurPopView = [[ZSHBottomBlurPopView alloc]initWithFrame:kAppDelegate.window.bounds paramDic:nextParamDic];
     bottomBlurPopView.blurRadius = 20;
     bottomBlurPopView.dynamic = NO;
@@ -166,10 +294,11 @@ static NSString *ZSHBaseTicketDateCellID = @"ZSHBaseTicketDateCell";
     return bottomBlurPopView;
 }
 
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+-(ZSHPickView *)createPickViewWithParamDic:(NSDictionary *)paramDic{
+    ZSHPickView *pickView = [[ZSHPickView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight) paramDic:paramDic];
+    pickView.controller = self;
+    return pickView;
 }
+
 
 @end

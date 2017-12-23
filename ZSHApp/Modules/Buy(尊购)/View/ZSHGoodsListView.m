@@ -10,7 +10,7 @@
 
 @interface ZSHGoodsListView()
 
-@property (nonatomic, strong)  NSDictionary     *paramDic;
+//@property (nonatomic, strong)  NSDictionary     *paramDic;
 @property (nonatomic, strong)  UIView           *containImageView;
 @property (nonatomic, strong)  UIImageView      *goodsImageView;
 @property (nonatomic, strong)  UIView           *detailView;

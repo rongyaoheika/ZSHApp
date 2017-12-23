@@ -10,11 +10,12 @@
 #import "ZSHLoginViewController.h"
 #import <UShareUI/UShareUI.h>
 #import "UIImage+BlurGlass.h"
-
+#import "PYSearchViewController.h"
+#import "ZSHBaseTableView.h"
 @interface RootViewController ()
 
 @property (nonatomic,strong) UIImageView        *noDataView;
-
+@property (nonatomic, weak)  UITextField        *searchTextField;
 @end
 
 @implementation RootViewController
@@ -41,8 +42,6 @@
     image.frame = self.view.bounds;
     [self.view insertSubview:image atIndex:0];
     
-//    [self loadData];
-//    [self createUI];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -83,11 +82,6 @@
 - (void)createUI{
     
 }
-
-
-
-
-
 
 #pragma mark ————— 跳转登录界面 —————
 - (void)goLogin
@@ -148,20 +142,18 @@
         _tableView.backgroundColor = KClearColor;
         _tableView.showsVerticalScrollIndicator = NO;
         _tableView.showsHorizontalScrollIndicator = NO;
+        _tableView.scrollsToTop = YES;
         //头部刷新
-        //        MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
-        //        header.automaticallyChangeAlpha = YES;
-        //        header.lastUpdatedTimeLabel.hidden = NO;
-        //        _tableView.mj_header = header;
+        MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+        header.automaticallyChangeAlpha = YES;
+        header.lastUpdatedTimeLabel.hidden = NO;
+        _tableView.mj_header = header;
         
         //底部刷新
-        //        _tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRereshing)];
-        //        _tableView.contentInset = UIEdgeInsetsMake(0, 0, 30, 0);
-        //        _tableView.mj_footer.ignoredScrollViewContentInsetBottom = 30;
-        
-        _tableView.backgroundColor = KClearColor;
-        _tableView.scrollsToTop = YES;
+        _tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRereshing)];
         _tableView.tableFooterView = [[UIView alloc] init];
+
+        
     }
     return _tableView;
 }
@@ -177,63 +169,61 @@
         UICollectionViewFlowLayout *flow = [[UICollectionViewFlowLayout alloc] init];
         
         _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth , KScreenHeight) collectionViewLayout:flow];
-        
-        //头部刷新
-//        MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
-//        header.automaticallyChangeAlpha = YES;
-//        header.lastUpdatedTimeLabel.hidden = NO;
-//        _collectionView.mj_header = header;
-        
-        //底部刷新
-        //        _collectionView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRereshing)];
-    
         _collectionView.backgroundColor = KClearColor;
         _collectionView.scrollsToTop = YES;
+        
+        //头部刷新
+        MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(collectionHeaderRereshing)];
+        header.automaticallyChangeAlpha = YES;
+        header.lastUpdatedTimeLabel.hidden = NO;
+        _collectionView.mj_header = header;
+        
+        //底部刷新
+        _collectionView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(collectionFooterRereshing)];
+        
     }
     return _collectionView;
 }
 
-- (ZSHSearchBarView *)searchBar{
-    if (!_searchBar) {
-        _searchBar = [[ZSHSearchBarView alloc]initWithFrame:CGRectMake(kRealValue(64), 25, kRealValue(270), kRealValue(40))];
-        _searchBar.intrinsicContentSize = CGSizeMake(kRealValue(270), kRealValue(40));
-        _searchBar.backgroundColor = KClearColor;
-        _searchBar.placeholder = @"搜索";
-        
-       //光标颜色
-        _searchBar.cursorColor = KZSHColor929292;
-        //TextField
-        _searchBar.searchBarTextField.layer.cornerRadius = 5.0;
-        _searchBar.searchBarTextField.layer.masksToBounds = YES;
-        _searchBar.searchBarTextField.layer.borderColor = KClearColor.CGColor;
-        _searchBar.searchBarTextField.layer.borderWidth = 0.0;
-        [_searchBar.searchBarTextField setBackgroundColor:[UIColor colorWithHexString:@"1A1A1A"]];
-        [_searchBar.searchBarTextField  setValue:KZSHColor8E8E93 forKeyPath:@"_placeholderLabel.textColor"];
-        [_searchBar.searchBarTextField setValue:kPingFangLight(14) forKeyPath:@"_placeholderLabel.font"];
-        //清除按钮图标
-//        _searchBar.clearButtonImage = [UIImage imageNamed:@"demand_delete"];
-        
-        //去掉取消按钮灰色背景
-//        _searchBar.hideSearchBarBackgroundImage = YES;
-
+- (ZSHSearchBarView *)searchView{
+    if (!_searchView) {
+        _searchView = [[ZSHSearchBarView alloc]initWithFrame:CGRectMake(kRealValue(5), kRealValue(7), kRealValue(270), kRealValue(28))];
     }
-    return _searchBar;
+    return _searchView;
 }
 
 - (UIButton *)bottomBtn{
     if (!_bottomBtn) {
         NSDictionary *bottomBtnDic = @{@"title":@"申请售后",@"titleColor":KZSHColor929292,@"font":kPingFangMedium(17),@"backgroundColor":KZSHColor0B0B0B};
        _bottomBtn = [ZSHBaseUIControl createBtnWithParamDic:bottomBtnDic];
-        _bottomBtn.frame = CGRectMake(0, KScreenHeight - KBottomNavH, KScreenWidth, KBottomNavH);
+       _bottomBtn.frame = CGRectMake(0, KScreenHeight - KBottomNavH - KBottomHeight, KScreenWidth, KBottomNavH);
     }
     return _bottomBtn;
 }
 
--(void)headerRereshing{
+- (void)headerRereshing{
+    [self.tableView.mj_header endRefreshing];
+}
+
+- (void)footerRereshing{
     
 }
 
--(void)footerRereshing{
+- (void)endTabViewRefresh{
+    [self.tableView.mj_header endRefreshing];
+    [self.tableView.mj_footer endRefreshing];
+}
+
+- (void)endCollectionViewRefresh{
+    [self.collectionView.mj_header endRefreshing];
+    [self.collectionView.mj_footer endRefreshing];
+}
+
+- (void)collectionHeaderRereshing {
+    
+}
+
+- (void)collectionFooterRereshing {
     
 }
 
@@ -248,7 +238,7 @@
     if (isShowLiftBack && ( VCCount > 1 || self.navigationController.presentingViewController != nil)) {
         //        [self addNavigationItemWithTitles:@[@"返回"] isLeft:YES target:self action:@selector(backBtnClicked) tags:nil];
         
-        [self addNavigationItemWithImageName:@"nav_back" isLeft:YES target:self  action:@selector(backBtnClicked) tag:nil];
+        [self addNavigationItemWithImageName:@"nav_back" isLeft:YES target:self  action:@selector(backBtnClicked) tag:0];
         
     } else {
         self.navigationItem.hidesBackButton = YES;
@@ -286,6 +276,7 @@
         spaceButtonItem.width = -15;
         self.navigationItem.rightBarButtonItems = @[spaceButtonItem, item];
     }
+
 }
 
 - (void)addNavigationItemWithImageName:(NSString *)imageName isLeft:(BOOL)isLeft target:(id)target action:(SEL)action tag:(NSInteger)tag {
@@ -296,7 +287,7 @@
     [btn addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
     btn.tag = tag;
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:btn];
-    RLog(@"item 的frame == %@",NSStringFromCGRect(btn.frame));
+#ifdef __IPHONE_11_0
     if (@available(ios 11.0,*)) {
         if (isLeft) {
             btn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
@@ -306,11 +297,15 @@
             [btn setImageEdgeInsets:UIEdgeInsetsMake(0, kRealValue(5),0,0)];
         }
     }
+#endif
+   
     if (isLeft) {
         self.navigationItem.leftBarButtonItems = @[item];
     } else {
         self.navigationItem.rightBarButtonItems = @[item];
     }
+    
+    
 }
 
 - (void)addNavigationItemWithTitles:(NSArray *)titles isLeft:(BOOL)isLeft target:(id)target action:(SEL)action tags:(NSArray *)tags
@@ -332,6 +327,7 @@
         btn.titleLabel.font = kPingFangLight(12);
         [btn setTitleColor:KZSHColor929292 forState:UIControlStateNormal];
         btn.tag = [tags[i++] integerValue];
+#ifdef __IPHONE_11_0
         if (@available(ios 11.0,*)) {
             if (isLeft) {
                 btn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
@@ -341,6 +337,8 @@
                 [btn setImageEdgeInsets:UIEdgeInsetsMake(0, kRealValue(5),0,0)];
             }
         }
+#endif
+        
         UIBarButtonItem * item = [[UIBarButtonItem alloc] initWithCustomView:btn];
         [items addObject:item];
     }
@@ -399,37 +397,19 @@
     }
 }
 
-- (void) setAnimationWithHidden:(BOOL)hidden view:(UIView *)view completedBlock:(RemoveCompletedBlock)completedBlock {
-    NSString *functionName = kCAMediaTimingFunctionEaseIn;
-    NSString *animationKey = @"ZSHAlertViewShow";
-    if (hidden) {
-        functionName = kCAMediaTimingFunctionEaseOut;
-        animationKey = @"ZSHAlertViewHide";
-    }
-    CATransition *animation = [CATransition animation];
-    [animation setDuration:0.5f];
-    animation.removedOnCompletion = NO;
-    [animation setType:kCATransitionFade];
-    [animation setFillMode:kCAFillModeForwards];
-    [animation setTimingFunction:[CAMediaTimingFunction functionWithName:functionName]];
-    [[UIApplication sharedApplication].keyWindow.layer addAnimation:animation forKey:animationKey];
-    if (hidden) {
-        [view removeFromSuperview];
-        view = nil;
-        if (completedBlock) {
-            completedBlock();
-        }
-        return;
-        
-    } else {
-        [[UIApplication sharedApplication].keyWindow addSubview:view];
+
+- (void)bottomButtonClick:(UIButton *)btn{
+    if (self.bottomBtnViewBtnBlock) {
+        self.bottomBtnViewBtnBlock(btn.tag);
     }
 }
 
+- (void) showProgress {
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+}
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void) hideProgress {
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
 }
 
 @end

@@ -94,6 +94,10 @@
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>相机访问权限</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>请求定位Always</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>请求定位InUse</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>相册访问权限</string>
 	<key>UILaunchStoryboardName</key>

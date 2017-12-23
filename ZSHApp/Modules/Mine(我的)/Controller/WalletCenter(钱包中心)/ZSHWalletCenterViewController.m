@@ -10,9 +10,11 @@
 
 @interface ZSHWalletCenterViewController ()
 
-@property (nonatomic,strong)UIView              *headerView;
-@property (nonatomic,strong)NSArray             *titleArr;
-@property (nonatomic,strong)NSArray             *imageArr;
+@property (nonatomic, strong) NSArray             *pushVCsArr;
+@property (nonatomic, strong) NSArray             *paramArr;
+@property (nonatomic, strong) UIView              *headerView;
+@property (nonatomic, strong) NSArray             *titleArr;
+@property (nonatomic, strong) NSArray             *imageArr;
 
 @end
 
@@ -27,6 +29,12 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 }
 
 - (void)loadData{
+    
+    self.pushVCsArr = @[@"ZSHWithdrawViewController",@"ZSHQuotaViewController"];
+    self.paramArr = @[
+                      @{},
+                      @{}
+                      ];
     [self initViewModel];
 }
 
@@ -63,6 +71,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 }
 
 - (ZSHBaseTableViewSectionModel*)storeListSection{
+    kWeakSelf(self);
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     NSArray *imageArr = @[@"wallet_withdraw",@"wallet_limit"];
     NSArray *titleArr = @[@"提现",@"黑卡剩余额度"];
@@ -76,6 +85,12 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
             cell.imageView.image = [UIImage imageNamed:imageArr[indexPath.row]];
             cell.textLabel.text = titleArr[indexPath.row];
             return cell;
+        };
+        
+        cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
+            Class className = NSClassFromString(weakself.pushVCsArr[indexPath.row]);
+            RootViewController *vc = [[className alloc]initWithParamDic:weakself.paramArr[indexPath.row]];
+            [weakself.navigationController pushViewController:vc animated:YES];
         };
     }
     return sectionModel;

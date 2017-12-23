@@ -19,9 +19,11 @@ typedef NS_ENUM(NSInteger,ZSHTextFieldViewType){
     ZSHTextFieldViewNone
 };
 
-typedef void (^TextFieldChanged)(NSString *);
+typedef void (^TextFieldChanged)(NSString *,NSInteger );
 
 @interface ZSHTextFieldCellView : ZSHBaseView
 
-@property (nonatomic,copy)TextFieldChanged textFieldChanged;
+@property (nonatomic, strong) UITextField       *textField;
+@property (nonatomic, copy)   TextFieldChanged  textFieldChanged;
+
 @end

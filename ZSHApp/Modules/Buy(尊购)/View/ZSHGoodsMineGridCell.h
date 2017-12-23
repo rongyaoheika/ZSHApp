@@ -8,11 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void(^BtnClickBlock)(UIButton *);
+typedef void(^CellBtnClickBlock)(UIButton *);
 
 @interface ZSHGoodsMineGridCell : UICollectionViewCell
 
-@property (nonatomic,copy)BtnClickBlock     btnClickBlock;
-@property (nonatomic,strong)NSDictionary    *modelDic;
+@property (nonatomic, copy)CellBtnClickBlock     btnClickBlock;
+@property (nonatomic, strong)NSDictionary        *modelDic;
 
 @end

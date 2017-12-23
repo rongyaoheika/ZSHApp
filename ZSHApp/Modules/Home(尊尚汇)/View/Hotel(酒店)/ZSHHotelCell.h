@@ -10,4 +10,6 @@
 
 @interface ZSHHotelCell : ZSHBaseCell
 
+@property (nonatomic, assign) ZSHShopType  shopType;
+
 @end

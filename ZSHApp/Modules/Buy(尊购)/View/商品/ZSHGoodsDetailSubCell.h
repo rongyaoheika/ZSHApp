@@ -6,9 +6,9 @@
 //  Copyright © 2017年 apple. All rights reserved.
 //
 
-#import "ZSHBaseCell.h"
+#import "ZSHBaseCollectionViewCell.h"
 @class ZSHGoodsDetailModel;
-@interface ZSHGoodsDetailSubCell : ZSHBaseCell
+@interface ZSHGoodsDetailSubCell : ZSHBaseCollectionViewCell
 
 @property (nonatomic, strong) ZSHGoodsDetailModel   *goodsDetailModel;
 

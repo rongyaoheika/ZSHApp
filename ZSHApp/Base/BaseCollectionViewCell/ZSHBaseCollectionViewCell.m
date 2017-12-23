@@ -33,4 +33,8 @@
     
 }
 
+-(CGFloat)rowHeightWithCellModel:(ZSHBaseModel *)model{
+    return 30;
+}
+
 @end

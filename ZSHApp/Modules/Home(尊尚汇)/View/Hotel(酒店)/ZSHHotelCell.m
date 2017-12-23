@@ -7,8 +7,9 @@
 //
 
 #import "ZSHHotelCell.h"
-#import "TggStarEvaluationView.h"
-#import "ZSHHotelDetailModel.h"
+#import "ZSHHotelModel.h"
+#import "CWStarRateView.h"
+
 @interface ZSHHotelCell()
 
 @property (nonatomic, strong) UIImageView               *hotelmageView;
@@ -16,7 +17,7 @@
 @property (nonatomic, strong) UILabel                   *hotelAddressLabel;
 @property (nonatomic, strong) UILabel                   *distanceLabel;
 @property (nonatomic, strong) UILabel                   *commentLabel;
-@property (nonatomic, strong) TggStarEvaluationView     *starView;
+@property (nonatomic, strong) CWStarRateView            *starView;
 @property (nonatomic, strong) UILabel                   *priceLabel;
 
 @end
@@ -39,6 +40,9 @@
     //酒店地址
     NSDictionary *hotelAddressLabelDic = @{@"text":@"昌平区回龙观镇科星西路47号",@"font": kPingFangRegular(11)};
     _hotelAddressLabel = [ZSHBaseUIControl createLabelWithParamDic:hotelAddressLabelDic];
+    _hotelAddressLabel.numberOfLines = 0;
+    
+   
     [self.contentView addSubview:_hotelAddressLabel];
     
     //酒店距离
@@ -46,8 +50,15 @@
     _distanceLabel = [ZSHBaseUIControl createLabelWithParamDic:distanceLabelDic];
     [self.contentView addSubview:_distanceLabel];
     
-    _starView = [TggStarEvaluationView evaluationViewWithChooseStarBlock:nil];
+    
+    //星星评价
+    _starView = [[CWStarRateView alloc] initWithFrame:CGRectMake(0,0,kRealValue(80), kRealValue(12)) numberOfStars:5];
+    _starView.scorePercent = 0.45;
+    _starView.allowIncompleteStar = YES;
+    _starView.hasAnimation = YES;
+    _starView.allowUserTap = NO;
     [self.contentView addSubview:_starView];
+
     
     //酒店评价
     NSDictionary *commentLabelDic = @{@"text":@"（120条评价）",@"font": kPingFangRegular(11)};
@@ -74,15 +85,15 @@
         make.top.mas_equalTo(_hotelmageView);
         make.left.mas_equalTo(_hotelmageView.mas_right).offset(kRealValue(10));
         make.right.mas_equalTo(self).offset(-KLeftMargin);
-        make.height.mas_equalTo(kRealValue(15));
+        make.height.mas_equalTo(kRealValue(14));
     }];
     
     [_hotelAddressLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(_hotelDescLabel.mas_bottom).offset(kRealValue(15));
         make.left.mas_equalTo(_hotelDescLabel);
-        make.height.mas_equalTo(kRealValue(12));
         make.right.mas_equalTo(self).offset(-kRealValue(80));
     }];
+    
     
     [_distanceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(_hotelAddressLabel);
@@ -92,17 +103,15 @@
     }];
     
     [_starView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(_hotelAddressLabel.mas_bottom).offset(kRealValue(30));
+        make.bottom.mas_equalTo(_hotelmageView);
         make.left.mas_equalTo(_hotelDescLabel);
         make.height.mas_equalTo(kRealValue(12));
         make.width.mas_equalTo(kRealValue(80));
     }];
-    _starView.starCount = 4.5;
-    _starView.spacing = 0.25;
-   
+
     
     [_commentLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(_starView);
+        make.bottom.mas_equalTo(_starView);
         make.left.mas_equalTo(_starView.mas_right).offset(kRealValue(10));
         make.right.mas_equalTo(self).offset(-kRealValue(80));
         make.height.mas_equalTo(_starView);
@@ -116,17 +125,47 @@
     }];
 }
 
-- (void)updateCellWithModel:(ZSHHotelDetailModel *)model{
+- (void)updateCellWithParamDic:(NSDictionary *)dic{
+    [_hotelmageView sd_setImageWithURL:[NSURL URLWithString:dic[@"SHOWIMAGES"]]];
+    _distanceLabel.text = [NSString stringWithFormat:@"%.1f公里",[dic[@"distance"]floatValue] ];
     
-    _hotelmageView.image = [UIImage imageNamed:model.imageName];
-    _hotelDescLabel.text = model.title;
-    _hotelAddressLabel.text = model.address;
-    _distanceLabel.text = [NSString stringWithFormat:@"%@公里",model.distance];
-    _priceLabel.text = [NSString stringWithFormat:@"¥%@",model.price];
-    _commentLabel.text = [NSString stringWithFormat:@"（%@条评价）",model.comment];
+    if (_shopType == ZSHHotelShopType) {//酒店详情
+        _hotelDescLabel.text = dic[@"HOTELNAMES"];
+        _hotelAddressLabel.text = dic[@"HOTELADDRESS"];
+        _priceLabel.text = [NSString stringWithFormat:@"¥%.0f",[dic[@"HOTELPRICE"]floatValue] ];
+        _commentLabel.text = [NSString stringWithFormat:@"（%ld条评价）",(long)[dic[@"HOTELEVACOUNT"]intValue]];
+        _starView.scorePercent = [dic[@"HOTELEVALUATE"]floatValue]/5.0;
+        
+    } else if (_shopType == ZSHKTVShopType) {//KTV详情(更多商家)
+        _hotelDescLabel.text = dic[@"KTVNAMES"];
+        _hotelAddressLabel.text = dic[@"KTVADDRESS"];
+        _priceLabel.text  = [NSString stringWithFormat:@"¥%.0f",[dic[@"KTVPRICE"]floatValue] ];
+        _commentLabel.text = [NSString stringWithFormat:@"（%ld条评价）",(long)[dic[@"KTVEVACOUNT"]intValue]];
+        _starView.scorePercent = [dic[@"KTVEVALUATE"]floatValue]/5.0;
+    } else if (_shopType == ZSHFoodShopType) {//美食更多商家
+        _hotelDescLabel.text = dic[@"SHOPNAMES"];
+        _hotelAddressLabel.text = dic[@"SHOPADDRESS"];
+        _priceLabel.text  = [NSString stringWithFormat:@"¥%.0f",[dic[@"SHOPPRICE"]floatValue] ];
+        _commentLabel.text = [NSString stringWithFormat:@"（%ld条评价）",(long)[dic[@"SHOPEVACOUNT"]intValue]];
+        _starView.scorePercent = [dic[@"SHOPEVALUATE"]floatValue]/5.0;
+    } else if (_shopType == ZSHBarShopType) {//酒吧
+        _hotelDescLabel.text = dic[@"BARNAMES"];
+        _hotelAddressLabel.text = dic[@"BARADDRESS"];
+        _priceLabel.text  = [NSString stringWithFormat:@"¥%.0f",[dic[@"BARPRICE"]floatValue] ];
+        _commentLabel.text = [NSString stringWithFormat:@"（%ld条评价）",(long)[dic[@"SHOPEVACOUNT"]intValue]];
+        _starView.scorePercent = [dic[@"SHOPEVALUATE"]floatValue]/5.0;
+    }
+    
+    
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    [paragraphStyle setLineSpacing:5];
+    NSString *detailStr = _hotelAddressLabel.text;
+    NSMutableAttributedString *setString = [[NSMutableAttributedString alloc] initWithString:detailStr];
+    [setString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, [detailStr length])];
+    [_hotelAddressLabel setAttributedText:setString];
 }
 
-- (CGFloat)rowHeightWithCellModel:(ZSHHotelDetailModel *)model{
+- (CGFloat)rowHeightWithCellModel:(ZSHHotelModel *)model{
     [self updateCellWithModel:model];
     [self layoutIfNeeded];
     CGFloat detailLabelY = CGRectGetMaxY(self.starView.frame);

@@ -7,6 +7,7 @@
 //
 
 #import "ZSHGoodsDetailColorCell.h"
+#import "ZSHGoodDetailModel.h"
 
 @interface ZSHGoodsDetailColorCell()
 
@@ -82,6 +83,23 @@
         }
     }];
     
+}
+
+- (void)updateCellWithModel:(ZSHBaseModel *)model {
+    ZSHGoodDetailModel *goodDetailModel = (ZSHGoodDetailModel *)model;
+    
+    NSArray *colorArr = [goodDetailModel.PROCOLOR componentsSeparatedByString:@","];
+    for (int i = 0; i < _btnArr.count; i++) {
+        UIButton *btn = _btnArr[i];
+        if (i < colorArr.count) {
+            btn.backgroundColor = [UIColor colorWithHexString:colorArr[i]];
+        } else {
+            btn.backgroundColor = [UIColor blackColor];
+        }
+    }
+//    [_btnArr enumerateObjectsUsingBlock:^(UIButton *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+//       obj.backgroundColor = [UIColor colorWithHexString:goodDetailModel.PROCOLOR];
+//    }];
 }
 
 

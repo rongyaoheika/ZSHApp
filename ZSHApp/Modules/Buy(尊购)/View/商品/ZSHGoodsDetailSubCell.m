@@ -28,10 +28,6 @@
     self.detailLabel.numberOfLines = 0;
     [self.detailLabel setLineBreakMode:NSLineBreakByWordWrapping];
     [self.contentView addSubview:self.detailLabel];
-}
-
-- (void)layoutSubviews{
-    [super layoutSubviews];
     
     [self.detailImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self);
@@ -47,8 +43,14 @@
     }];
 }
 
+- (void)layoutSubviews{
+    [super layoutSubviews];
+
+}
+
 - (void)updateCellWithModel:(ZSHGoodsDetailModel *)model{
-    [self.detailImageView setImage:[UIImage imageNamed:model.detailPicture]];
+    
+    [self.detailImageView sd_setImageWithURL:[NSURL URLWithString:model.detailPicture]];
     self.detailLabel.text = model.detailText;
 }
 

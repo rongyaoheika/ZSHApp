@@ -315,7 +315,7 @@
     return [FXBlurLayer class];
 }
 
-- (void)setUp
+- (void)setup
 {
     if (!_iterationsSet) _iterations = 3;
     if (!_blurRadiusSet) [self blurLayer].blurRadius = 40;
@@ -344,7 +344,7 @@
 {
     if ((self = [super initWithFrame:frame]))
     {
-        [self setUp];
+        [self setup];
         self.clipsToBounds = YES;
     }
     return self;
@@ -354,7 +354,7 @@
 {
     if ((self = [super initWithCoder:aDecoder]))
     {
-        [self setUp];
+        [self setup];
     }
     return self;
 }
