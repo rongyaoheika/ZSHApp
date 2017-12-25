@@ -114,6 +114,11 @@ static NSString *Identify_MusicCell = @"musicCell";
     kWeakSelf(self);
     _homeLogic = [[ZSHHomeLogic alloc]init];
     
+    if (KScreenWidth == 812.0 && kiOS11Later) {
+         [self prefersHomeIndicatorAutoHidden];
+    }
+   
+    
     [_homeLogic loadNewsCellDataSuccess:^(id responseObject) {
         NSIndexSet *indexSet = [[NSIndexSet alloc]initWithIndex:1];
          [weakself updateSectionDatWithSet:indexSet];
@@ -530,6 +535,11 @@ static NSString *Identify_MusicCell = @"musicCell";
 - (void) cityPickerControllerDidCancel:(GYZChooseCityController *)chooseCityController
 {
      [chooseCityController.navigationController popViewControllerAnimated:YES];
+}
+
+- (BOOL)prefersHomeIndicatorAutoHidden
+{
+    return YES;
 }
 
 - (void)didReceiveMemoryWarning {

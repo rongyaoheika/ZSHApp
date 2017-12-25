@@ -28,6 +28,7 @@ typedef NS_ENUM (NSInteger,ZSHToTabBarType) {
 @interface TabBar : UIView
 
 @property (nonatomic, assign) ZSHToTabBarType  toTabBarType;
+
 /**
  *  TabBar item title color
  */

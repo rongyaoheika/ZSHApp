@@ -50,6 +50,7 @@
 #pragma mark ————— 初始化TabBar —————
 -(void)setUpTabBar{
     [self.tabBar addSubview:({
+        self.tabBar.barTintColor = KZSHColor0B0B0B;
         TabBar *tabBar = [[TabBar alloc] init];
         tabBar.toTabBarType = FromLiveTabVCToTabBar;
         tabBar.backgroundColor = KZSHColor0B0B0B;
