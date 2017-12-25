@@ -65,7 +65,7 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
     [self.tableView registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHAddressViewID];
     [self.tableView reloadData];
     
-    ZSHCardCommitBottomView *bottomView = [[ZSHCardCommitBottomView alloc]initWithFrame:CGRectMake(0, KScreenHeight - KBottomNavH - KBottomHeight, KScreenWidth, KBottomNavH)];
+    ZSHCardCommitBottomView *bottomView = [[ZSHCardCommitBottomView alloc]initWithFrame:CGRectMake(0, KScreenHeight - KBottomTabH, KScreenWidth, KBottomTabH)];
     kWeakSelf(self);
     [bottomView.rightBtn addTapBlock:^(UIButton *btn) {
         [weakself userRegister];

@@ -33,8 +33,10 @@
 #define KScreenWidth ([[UIScreen mainScreen] bounds].size.width)
 #define KScreenHeight [[UIScreen mainScreen] bounds].size.height
 #define kScreen_Bounds [UIScreen mainScreen].bounds
-#define KBottomNavH  49
 #define KBottomHeight (KScreenHeight == 812.0 ?34 : 0)
+#define KBottomNavH    49
+#define KBottomTabH   (KScreenHeight == 812.0 ? 83 : 49)
+
 #define KNavigationBarHeight (KScreenHeight == 812.0 ? 88 : 64)
 #define KLeftMargin 15
 

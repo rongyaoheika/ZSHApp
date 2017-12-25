@@ -64,7 +64,7 @@ static NSString *bottomCellIdentifier   = @"listCell";
 - (void)createUI{
     self.title = @"我的";
     
-    self.tableView.frame = CGRectMake(0, KNavigationBarHeight, KScreenWidth, KScreenHeight-KNavigationBarHeight-KBottomNavH);
+    self.tableView.frame = CGRectMake(0, KNavigationBarHeight, KScreenWidth, KScreenHeight-KNavigationBarHeight-KBottomTabH);
     [self.view addSubview:self.tableView];
     self.tableView.delegate = self.tableViewModel;
     self.tableView.dataSource = self.tableViewModel;

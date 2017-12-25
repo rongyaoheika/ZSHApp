@@ -77,7 +77,7 @@
     _bottomImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"glory_card_little"]];
     [_bottomView addSubview:_bottomImageView];
     
-    NSDictionary *bottomPromptLabelDic = @{@"text":@"85%的用户选择为自己定制一张专属的环球黑卡",@"font":kPingFangLight(11),@"textAlignment":@(NSTextAlignmentCenter)};
+    NSDictionary *bottomPromptLabelDic = @{@"text":@"85%的用户选择为自己定制一张专属的荣耀黑卡",@"font":kPingFangLight(11),@"textAlignment":@(NSTextAlignmentCenter)};
     _bottomPromptLabel = [ZSHBaseUIControl createLabelWithParamDic:bottomPromptLabelDic];
     [_bottomView addSubview:_bottomPromptLabel];
     

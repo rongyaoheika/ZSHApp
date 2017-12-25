@@ -175,7 +175,7 @@ static NSString *Identify_MusicCell = @"musicCell";
 //    self.navigationItem.titleView = self.searchView;
 //    self.searchView.searchBar.delegate = self;
 
-    self.tableView.frame = CGRectMake(0, KNavigationBarHeight + kRealValue(25), KScreenWidth, KScreenHeight-KNavigationBarHeight- kRealValue(25) - KBottomNavH);
+    self.tableView.frame = CGRectMake(0, KNavigationBarHeight + kRealValue(25), KScreenWidth, KScreenHeight-KNavigationBarHeight- kRealValue(25) - KBottomTabH);
     [self.view addSubview:self.tableView];
     self.tableView.delegate = self.tableViewModel;
     self.tableView.dataSource = self.tableViewModel;

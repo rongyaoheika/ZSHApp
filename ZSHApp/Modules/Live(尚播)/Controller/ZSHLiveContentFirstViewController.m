@@ -63,7 +63,7 @@ static NSString * const ZSHNearHeadViewID = @"ZSHNearHeadView";
     
     [self.view addSubview:self.collectionView];
     [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.mas_equalTo(self.view).insets(UIEdgeInsetsMake(0, 0, KBottomNavH , 0));
+        make.edges.mas_equalTo(self.view).insets(UIEdgeInsetsMake(0, 0, KBottomTabH , 0));
     }];
 }
 

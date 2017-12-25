@@ -200,7 +200,7 @@ static NSString *ZSHMusicPlayListCellID = @"ZSHMusicPlayListCell";
     self.tableView.separatorColor = KZSHColor1D1D1D;
     self.tableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.mas_equalTo(self.view).insets(UIEdgeInsetsMake(kRealValue(225), 0, KBottomNavH+KBottomHeight, 0 ));
+        make.edges.mas_equalTo(self.view).insets(UIEdgeInsetsMake(kRealValue(225), 0, KBottomTabH, 0 ));
     }];
     
     self.tableView.delegate = self.tableViewModel;
@@ -208,7 +208,7 @@ static NSString *ZSHMusicPlayListCellID = @"ZSHMusicPlayListCell";
     [self.tableView registerClass:[ZSHMusicPlayListCell class] forCellReuseIdentifier:ZSHMusicPlayListCellID];
     
     kWeakSelf(self);
-    _footView = [[ZSHFootPlayMusicView alloc]initWithFrame:CGRectMake(0, KScreenHeight - KBottomNavH - KBottomHeight, KScreenWidth, KBottomNavH + KBottomHeight)];
+    _footView = [[ZSHFootPlayMusicView alloc]initWithFrame:CGRectMake(0, KScreenHeight - KBottomTabH, KScreenWidth, KBottomTabH)];
     [self.view addSubview:_footView];
     _footView.footerViewAction = ^{
         [weakself footerViewAction];
