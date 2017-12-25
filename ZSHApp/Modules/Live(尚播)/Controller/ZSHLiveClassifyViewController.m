@@ -55,7 +55,7 @@
     [self.contentView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.titleView.mas_bottom);
         make.width.mas_equalTo(self.view);
-        make.bottom.mas_equalTo(self.view).offset(-KBottomNavH);
+        make.bottom.mas_equalTo(self.view);
         make.left.mas_equalTo(self.view);
     }];
     [self reloadListData];

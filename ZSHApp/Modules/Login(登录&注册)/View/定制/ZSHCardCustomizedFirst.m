@@ -30,7 +30,10 @@
     
     //姓名
     _labelView = [[UIView alloc]initWithFrame:CGRectZero];
-    [_labelView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"seg_two_bg"]]];
+    
+    UIImageView *bgIV = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"seg_two_bg"]];
+    [_labelView addSubview:bgIV];
+    
     [self addSubview:_labelView];
     
     NSArray *labelTitleArr = @[@"姓",@"名"];
@@ -82,6 +85,7 @@
     [_bottomView addSubview:_bottomPromptLabel];
     
     [self layoutIfNeeded];
+    
     //姓名
     [_labelView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self).offset(kRealValue(20));
@@ -89,6 +93,9 @@
         make.size.mas_equalTo(CGSizeMake(kRealValue(199.5), kRealValue(30)));
     }];
     
+    [bgIV mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.mas_equalTo(_labelView);
+    }];
     
     int i = 0;
     for (UILabel * label in _labelView.subviews) {

@@ -13,6 +13,8 @@
 @interface ZSHCardCustomizedCell ()<UIScrollViewDelegate>
 
 @property (nonatomic, strong) NSArray                   *titleArr;
+
+@property (nonatomic, strong) UIImageView               *bgIV;
 @property (nonatomic, strong) LXScollTitleView          *titleView;
 @property (nonatomic, strong) UIScrollView              *bottomScrollView;
 @property (nonatomic, strong) ZSHCardCustomizedFirst    *customizedFirstView;
@@ -25,6 +27,10 @@
 - (void)setup{
    _titleArr = @[@"定制（200元）",@"定制（800元）",@"放弃定制"];
     [self.contentView addSubview:self.titleView];
+    
+    _bgIV = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"seg_three_bg"]];
+    [self.titleView addSubview:_bgIV];
+    
     [self.titleView reloadViewWithTitles:self.titleArr];
     [self.contentView addSubview:self.bottomScrollView];
     
@@ -46,6 +52,10 @@
         make.left.mas_equalTo(self).offset(kRealValue(40));
         make.width.mas_equalTo(kRealValue(300));
         make.height.mas_equalTo(kRealValue(30));
+    }];
+    
+    [_bgIV mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.mas_equalTo(_titleView);
     }];
     
     int i = 0;
@@ -126,7 +136,7 @@
             [[NSUserDefaults standardUserDefaults] setObject:custom forKey:@"CUSTOM"];
             [strongSelf.bottomScrollView setContentOffset:CGPointMake(index * KScreenWidth, 0) animated:YES];
         };
-        _titleView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"seg_three_bg"] ];
+//        _titleView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"seg_three_bg"] ];
         _titleView.titleWidth = kRealValue(100);
     }
     return _titleView;

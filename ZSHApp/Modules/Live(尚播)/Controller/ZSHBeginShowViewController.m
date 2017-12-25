@@ -33,79 +33,6 @@
     [self createUI];
 }
 
-- (void)onApplicationActive:(NSNotification *)notification
-{
-    if (self.preView != nil)
-    {
-        [self stopPreview];
-        [self startPreview];
-    }
-}
-
-
-- (void)onTapView:(UIGestureRecognizer *)recognizer
-{
-    [self.textView resignFirstResponder];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    
-    NSInteger row = 0;
-    switch ([ZegoSettings sharedInstance].beautifyFeature) {
-        case ZEGO_BEAUTIFY_POLISH:
-            row = 1;
-            break;
-        case ZEGO_BEAUTIFY_WHITEN:
-            row = 2;
-            break;
-        case ZEGO_BEAUTIFY_POLISH | ZEGO_BEAUTIFY_WHITEN:
-            row = 3;
-            break;
-        case ZEGO_BEAUTIFY_POLISH | ZEGO_BEAUTIFY_SKINWHITEN:
-            row = 4;
-            break;
-        default:
-            break;
-    }
-//    [self.beautifyPicker selectRow:row inComponent:0 animated:NO];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onApplicationActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onApplicationDeactive:) name:UIApplicationWillResignActiveNotification object:nil];
-    
-    if (self.preView == nil)
-        [self addPreview];
-    
-    BOOL videoAuthorization = [self checkVideoAuthorization];
-    BOOL audioAuthorization = [self checkAudioAuthorization];
-    
-    if (videoAuthorization == YES)
-    {
-        [self startPreview];
-        [[ZegoAVKitManager api] setAppOrientation:[UIApplication sharedApplication].statusBarOrientation];
-        
-        if (audioAuthorization == NO)
-        {
-            [self showAuthorizationAlert:NSLocalizedString(@"直播视频,访问麦克风", nil) title:NSLocalizedString(@"需要访问麦克风", nil)];
-        }
-    }
-    else
-    {
-        [self showAuthorizationAlert:NSLocalizedString(@"直播视频,访问相机", nil) title:NSLocalizedString(@"需要访问相机", nil)];
-    }
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    if (self.preView)
-        [self stopPreview];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [super viewWillDisappear:animated];
-}
-
-
 - (void)loadData {
     _headCamera = YES;
 }
@@ -187,6 +114,7 @@
     
     _beginShowBtn = [ZSHBaseUIControl createBtnWithParamDic:@{@"title":@"开启直播",@"titleColor":KWhiteColor,@"font":kPingFangLight(17),@"backgroundColor":KZSHColorFF2068}];
     _beginShowBtn.layer.cornerRadius = 20;
+    [_beginShowBtn addTarget:self action:@selector(beginShowAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_beginShowBtn];
     [_beginShowBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.mas_equalTo(self.view).offset(kRealValue(-83.5));
@@ -253,6 +181,11 @@
     
 }
 
+- (void)beginShowAction {
+    RLog(@"开始直播");
+}
+
+//
 - (void)refresAction {//切换摄像头方向
     _headCamera = !_headCamera;
     
@@ -284,16 +217,16 @@
     int ret = [[ZegoAVKitManager api] setAVConfig:config];
     assert(ret);
     
-    bool b = [[ZegoAVKitManager api] setFrontCam:_headCamera];
+    bool b = [[ZegoAVKitManager api] setFrontCam:YES];
     assert(b);
     
     b = [[ZegoAVKitManager api] enableMic:YES];
     assert(b);
     
-//    b = [[ZegoAVKitManager api] enableTorch:self.switchTorch.on];
+    b = [[ZegoAVKitManager api] enableTorch:NO];
     assert(b);
     
-//    b = [[ZegoAVKitManager api] enableBeautifying:(int)[self.beautifyPicker selectedRowInComponent:0]];
+    b = [[ZegoAVKitManager api] enableBeautifying:2];
     assert(b);
     
     
@@ -302,7 +235,7 @@
     [[ZegoAVKitManager api] setWhitenFactor:0.6];
     
     
-//    b = [[ZegoAVKitManager api] setFilter:[self.filterPicker selectedRowInComponent:0]];
+    b = [[ZegoAVKitManager api] setFilter:1];
     assert(b);
     
     [[ZegoAVKitManager api] setPreviewViewMode:ZegoVideoViewModeScaleAspectFill];
@@ -428,8 +361,9 @@
 - (BOOL)checkVideoAuthorization
 {
     AVAuthorizationStatus videoAuthStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
-    if (videoAuthStatus == AVAuthorizationStatusDenied || videoAuthStatus == AVAuthorizationStatusRestricted)
+    if (videoAuthStatus == AVAuthorizationStatusDenied || videoAuthStatus == AVAuthorizationStatusRestricted){
         return NO;
+    }
     if (videoAuthStatus == AVAuthorizationStatusNotDetermined)
     {
         [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted) {
@@ -443,8 +377,9 @@
 - (BOOL)checkAudioAuthorization
 {
     AVAuthorizationStatus audioAuthStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeAudio];
-    if (audioAuthStatus == AVAuthorizationStatusDenied || audioAuthStatus == AVAuthorizationStatusRestricted)
+    if (audioAuthStatus == AVAuthorizationStatusDenied || audioAuthStatus == AVAuthorizationStatusRestricted){
         return NO;
+    }
     if (audioAuthStatus == AVAuthorizationStatusNotDetermined)
     {
         [AVCaptureDevice requestAccessForMediaType:AVMediaTypeAudio completionHandler:^(BOOL granted) {
@@ -467,5 +402,66 @@
     RLog(@"点击第三方");
     btn.selected = !btn.selected;
 }
+
+- (void)onTapView:(UIGestureRecognizer *)recognizer
+{
+    [self.textView resignFirstResponder];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onApplicationActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onApplicationDeactive:) name:UIApplicationWillResignActiveNotification object:nil];
+    
+    if (self.preView == nil){
+        [self addPreview];
+    }
+    
+    BOOL videoAuthorization = [self checkVideoAuthorization];
+    BOOL audioAuthorization = [self checkAudioAuthorization];
+    [self startPreview];
+    
+//    if (videoAuthorization == YES)
+//    {
+//        [self startPreview];
+//        [[ZegoAVKitManager api] setAppOrientation:[UIApplication sharedApplication].statusBarOrientation];
+//
+//        if (audioAuthorization == NO)
+//        {
+//            [self showAuthorizationAlert:NSLocalizedString(@"直播视频,访问麦克风", nil) title:NSLocalizedString(@"需要访问麦克风", nil)];
+//        }
+//    }
+//    else
+//    {
+//        [self showAuthorizationAlert:NSLocalizedString(@"直播视频,访问相机", nil) title:NSLocalizedString(@"需要访问相机", nil)];
+//    }
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    if (self.preView){
+        [self stopPreview];
+    }
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [super viewWillDisappear:animated];
+}
+
+- (void)onApplicationActive:(NSNotification *)notification
+{
+    if (self.preView != nil)
+    {
+        [self stopPreview];
+        [self startPreview];
+    }
+}
+
+
+- (void)onApplicationDeactive:(NSNotification *)notification
+{
+        [self stopPreview];
+}
+
 
 @end

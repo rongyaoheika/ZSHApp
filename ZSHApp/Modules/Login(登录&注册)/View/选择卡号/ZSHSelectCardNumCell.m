@@ -13,6 +13,7 @@
 
 @interface ZSHSelectCardNumCell ()<UIScrollViewDelegate>
 
+@property (nonatomic, strong) UIImageView                   *bgIV;
 @property (nonatomic, strong) LXScollTitleView              *titleView;
 @property (nonatomic, strong) UIScrollView                  *bottomScrollView;
 @property (nonatomic, strong) ZSHSelectCardNumFirstView     *firstView;
@@ -26,6 +27,10 @@
 - (void)setup{
     NSArray *btnTitleArr = @[@"随机",@"选号"];
     [self.contentView addSubview:self.titleView];
+    
+    _bgIV = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"seg_two_bg"]];
+    [self.titleView addSubview:_bgIV];
+    
     [self.titleView reloadViewWithTitles:btnTitleArr];
     
     [self.contentView addSubview:self.bottomScrollView];
@@ -44,9 +49,13 @@
     
     [_titleView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self).offset(kRealValue(20));
-        make.left.mas_equalTo(self).offset((kScreenWidth-kRealValue(200))/2);
+        make.centerX.mas_equalTo(self);
         make.width.mas_equalTo(kRealValue(200));
         make.height.mas_equalTo(kRealValue(30));
+    }];
+    
+    [_bgIV mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.mas_equalTo(_titleView);
     }];
     
     int i = 0;
@@ -103,7 +112,7 @@
 
 - (LXScollTitleView *)titleView{
     if (!_titleView) {
-        _titleView = [[LXScollTitleView alloc] initWithFrame:CGRectMake(0, (kScreenWidth-kRealValue(200))/2, kRealValue(200), kRealValue(30))];
+        _titleView = [[LXScollTitleView alloc] initWithFrame:CGRectMake(0, (kScreenWidth-kRealValue(200))/2, kRealValue(200),kRealValue(30))];
         _titleView.selectedBgImage = [UIImage imageNamed:@"seg_press"];
         _titleView.normalTitleFont = kPingFangLight(15);
         _titleView.selectedTitleFont = kPingFangLight(15);
@@ -115,7 +124,6 @@
             __weak typeof(self) strongSelf = weakSelf;
             [strongSelf.bottomScrollView setContentOffset:CGPointMake(index * KScreenWidth, 0) animated:YES];
         };
-        _titleView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"seg_two_bg"] ];
         _titleView.titleWidth = kRealValue(100);
     }
     return _titleView;

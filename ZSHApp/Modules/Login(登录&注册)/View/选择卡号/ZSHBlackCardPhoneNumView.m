@@ -15,6 +15,7 @@
 @interface ZSHBlackCardPhoneNumView ()<UIScrollViewDelegate>
 
 @property (nonatomic, strong) NSArray                   *titleArr;
+@property (nonatomic, strong) UIImageView               *bgIV;
 @property (nonatomic, strong) LXScollTitleView          *titleView;
 @property (nonatomic, strong) UIScrollView              *blackCardScrollView;
 
@@ -29,6 +30,10 @@
 - (void)setup{
     _titleArr = @[@"300元",@"600元",@"1000元",@"5000元",@"10000元"];
     [self addSubview:self.titleView];
+    
+    _bgIV = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"seg_five_bg_normal"]];
+    [_titleView addSubview:_bgIV];
+    
     [self.titleView reloadViewWithTitles:_titleArr];
     
     [self addSubview:self.blackCardScrollView];
@@ -42,6 +47,9 @@
         make.width.mas_equalTo(kRealValue(298));
         make.left.mas_equalTo((KScreenWidth- kRealValue(298))/2);
         make.height.mas_equalTo(kRealValue(30));
+    }];
+    [_bgIV mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.mas_equalTo(_titleView);
     }];
     
     int i = 0;
@@ -119,7 +127,6 @@
             [strongSelf.blackCardScrollView setContentOffset:CGPointMake(index * KScreenWidth, 0) animated:YES];
             
         };
-        _titleView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"seg_five_bg_normal"] ];
         _titleView.titleWidth = kRealValue(60);
     }
     return _titleView;

@@ -10,6 +10,7 @@
 #import "LXScollTitleView.h"
 @interface ZSHCardPayCell ()
 
+@property (nonatomic, strong) UIImageView           *bgIV;
 @property (nonatomic, strong) LXScollTitleView      *titleView;
 @property (nonatomic, strong) UILabel               *promptLabel;
 
@@ -21,6 +22,10 @@
 - (void)setup{
     NSArray *btnTitleArr = @[@"微信",@"支付宝"];
     [self.contentView addSubview:self.titleView];
+    
+    _bgIV = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"seg_two_bg"]];
+    [self.titleView addSubview:_bgIV];
+    
     [self.titleView reloadViewWithTitles:btnTitleArr];
 }
 
@@ -32,6 +37,10 @@
         make.left.mas_equalTo(self).offset((kScreenWidth-kRealValue(200))/2);
         make.width.mas_equalTo(kRealValue(200));
         make.height.mas_equalTo(kRealValue(30));
+    }];
+    
+    [_bgIV mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.mas_equalTo(_titleView);
     }];
     
     int i = 0;
@@ -58,7 +67,6 @@
 //            __weak typeof(self) strongSelf = weakSelf;
 
         };
-        _titleView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"seg_two_bg"] ];
         _titleView.titleWidth = kRealValue(100);
     }
     return _titleView;
