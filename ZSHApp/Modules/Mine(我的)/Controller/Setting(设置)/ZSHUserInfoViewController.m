@@ -33,7 +33,8 @@
 @property (nonatomic, strong) ZSHMineLogic            *mineLogic;
 @property (nonatomic, strong) UIImage                 *headImage;
 @property (nonatomic, copy)   NSString                *changedData;
-@property (nonatomic, assign) NSInteger               changedDataIndex;
+@property (nonatomic, assign) NSInteger               changedDataIndex; // 第一组
+@property (nonatomic, assign) NSInteger               changedSecIndex;
 @property (nonatomic, strong) ZSHPickView             *pickView;
 @property (nonatomic, strong) ZSHUserInfoModel        *model;
 
@@ -51,6 +52,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 }
 
 - (void)loadData{
+    _changedSecIndex = -1;
     self.titleArr = @[@[@"头像",@"昵称",@"姓名",@"性别",@"生日",@"卡号",@"地区",@"个性签名"],
                       @[@"身份证号",@"手机号",@"QQ号码",@"微信",@"新浪微博",@"支付宝"]
                       ];
@@ -133,6 +135,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
             } else {
                 if (indexPath.row  == weakself.changedDataIndex) {
                     [cellView updateRightText:weakself.changedData];
+                    weakself.changedSecIndex = 0;
                 }
             }
             return cell;
@@ -184,7 +187,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
         cellModel.height = kRealValue(43);
         cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
             ZSHBaseCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHBaseCellID forIndexPath:indexPath];
-            if (indexPath.row > 1) {
+            if (indexPath.row > 0) {
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             }
             if (![cell.contentView viewWithTag:2]) {
@@ -198,13 +201,26 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
             }
             ZSHSimpleCellView *cellView = [cell.contentView viewWithTag:2];
             [cellView updateView2WithModel:weakself.model index:indexPath.row];
+            
+            if (indexPath.row  == weakself.changedSecIndex) {
+                [cellView updateRightText:weakself.changedData];
+                weakself.changedSecIndex = -1;
+            }
             return cell;
         };
         
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
-          
             Class className = NSClassFromString(self.pushVCsArr[1][indexPath.row]);
             RootViewController *vc = [[className alloc]initWithParamDic:weakself.paramArr[1][indexPath.row]];
+            if (indexPath.row==1) {
+                ZSHMultiInfoViewController *multiInfoVC = (ZSHMultiInfoViewController *)vc;
+                multiInfoVC.index = indexPath.row;
+                multiInfoVC.saveBlock = ^(id str, NSInteger index) {
+                    weakself.changedData = str;
+                    weakself.changedSecIndex = index;
+                    [weakself.tableView reloadRow:index inSection:1 withRowAnimation:UITableViewRowAnimationNone];
+                };
+            }
             [weakself.navigationController pushViewController:vc animated:YES];
         };
     }

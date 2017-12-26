@@ -36,3 +36,17 @@
 
 
 @end
+
+
+@interface ZSHADVERTISEMENTModel : ZSHBaseModel
+
+@property (nonatomic,copy)   NSString            *ADVERTISEMENT_ID;
+@property (nonatomic,copy)   NSString            *AD_POSITION;
+@property (nonatomic,copy)   NSString            *CLICK_COUNT;
+@property (nonatomic,copy)   NSString            *CONVERGE_ID;
+@property (nonatomic,copy)   NSString            *LINK_URL;
+@property (nonatomic,copy)   NSString            *NAME;
+@property (nonatomic,copy)   NSString            *SHOWIMG;
+@property (nonatomic,copy)   NSString            *SORT_ORDER;
+
+@end

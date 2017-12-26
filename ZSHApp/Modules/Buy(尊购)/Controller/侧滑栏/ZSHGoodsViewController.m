@@ -16,6 +16,7 @@
 #import "ZSHBrandsSortHeadView.h"
 #import "ZSHGoodsTitleContentViewController.h"
 #import "ZSHBuyLogic.h"
+#import "LXScollTitleView.h"
 
 #define tableViewW  kRealValue(100)
 
@@ -28,6 +29,10 @@
 
 @property (nonatomic, strong) ZSHBuyLogic                         *buyLogic;
 @property (nonatomic, assign) NSInteger                           currentSelectIndex;
+@property (nonatomic, strong) LXScollTitleView                    *titleView;
+@property (nonatomic, assign) NSInteger                           index;
+
+
 
 @end
 
@@ -47,8 +52,8 @@ static NSString *const ZSHBrandSortCellID = @"ZSHBrandSortCell";
 
 - (void)loadData{
     _currentSelectIndex = 0;
-    if ([self.paramDic[@"currentSelectIndex"]integerValue] ) {
-        _currentSelectIndex = [self.paramDic[@"currentSelectIndex"]integerValue];
+    if ([self.paramDic[@"currentSelectIndex"] integerValue]) {
+        _currentSelectIndex = [self.paramDic[@"currentSelectIndex"] integerValue];
     }
     
     [self requestData];
@@ -71,7 +76,13 @@ static NSString *const ZSHBrandSortCellID = @"ZSHBrandSortCell";
     layout.minimumLineSpacing = 5;          //Y
     layout.minimumInteritemSpacing = 3;     //X
     
-    self.collectionView.frame = CGRectMake(tableViewW, KNavigationBarHeight,kScreenWidth-tableViewW, kScreenHeight - KNavigationBarHeight);
+    
+    [self.view addSubview:self.titleView];
+    NSArray *_titleArr = @[@"综合排序", @"销量优先", @"筛选"];
+    _titleView.titleWidth = (KScreenWidth-tableViewW) /_titleArr.count;
+    [self.titleView reloadViewWithTitles:_titleArr];
+    
+    self.collectionView.frame = CGRectMake(tableViewW, KNavigationBarHeight+kRealValue(40),kScreenWidth-tableViewW, kScreenHeight - KNavigationBarHeight-kRealValue(40));
     [self.view addSubview:self.collectionView];
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
@@ -91,6 +102,26 @@ static NSString *const ZSHBrandSortCellID = @"ZSHBrandSortCell";
     [self.tableViewModel.sectionModelArray removeAllObjects];
     [self.tableViewModel.sectionModelArray addObject:[self storeListSection]];
     [self.tableView reloadData];
+}
+
+//getter
+- (LXScollTitleView *)titleView{
+    kWeakSelf(self)
+    if (!_titleView) {
+        _titleView = [[LXScollTitleView alloc] initWithFrame:CGRectMake(tableViewW, KNavigationBarHeight, KScreenWidth-tableViewW, kRealValue(40))];
+        _titleView.normalTitleFont = kPingFangRegular(15);
+        _titleView.selectedTitleFont = kPingFangRegular(15);
+        _titleView.selectedColor = KZSHColor929292;
+        _titleView.normalColor = KZSHColor929292;
+        _titleView.indicatorHeight = 0;
+        _index = _titleView.selectedIndex;
+        _titleView.selectedBlock = ^(NSInteger index){
+            _index = index;
+            [weakself requestConData];
+        };
+        
+    }
+    return _titleView;
 }
 
 #pragma mark - <UITableViewDelegate>
@@ -235,5 +266,8 @@ static NSString *const ZSHBrandSortCellID = @"ZSHBrandSortCell";
     }];
 }
 
+- (void)requestConData {
+    
+}
 
 @end

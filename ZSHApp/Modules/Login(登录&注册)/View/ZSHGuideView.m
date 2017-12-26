@@ -9,16 +9,19 @@
 #import "ZSHGuideView.h"
 #import "TYCyclePagerViewCell.h"
 #import "ZSHCardImgModel.h"
+#import "ZSHTogetherLogic.h"
+#import "ZSHEntertainmentModel.h"
 
 @interface ZSHGuideView ()<TYCyclePagerViewDataSource, TYCyclePagerViewDelegate>
 
-@property (nonatomic, strong) TYCyclePagerView *pagerView;
-@property (nonatomic, strong) UIPageControl    *pageControl;
-//@property (nonatomic, assign) CGSize           midImageSize;
-@property (nonatomic, strong) NSMutableArray   *imageArr;
-@property (nonatomic, assign) CGFloat          min_scale;
-@property (nonatomic, assign) CGFloat          withRatio;
-@property (nonatomic, assign) CGFloat          contentLeft;
+@property (nonatomic, strong) TYCyclePagerView                      *pagerView;
+@property (nonatomic, strong) UIPageControl                         *pageControl;
+@property (nonatomic, strong) NSMutableArray                        *imageArr;
+@property (nonatomic, assign) CGFloat                               min_scale;
+@property (nonatomic, assign) CGFloat                               withRatio;
+@property (nonatomic, assign) CGFloat                               contentLeft;
+@property (nonatomic, strong) ZSHTogetherLogic                      *togetherLogic;
+@property (nonatomic, strong) NSArray<ZSHADVERTISEMENTModel*>       *dataArr;
 
 @end
 
@@ -29,6 +32,7 @@
     self.imageArr = self.paramDic[@"dataArr"];
     _min_scale = [self.paramDic[@"min_scale"]floatValue];
     _withRatio = [self.paramDic[@"withRatio"]floatValue];
+    _togetherLogic = [[ZSHTogetherLogic alloc] init];
     
     [self addSubview:self.pagerView];
     [self addSubview:self.pageControl];
@@ -82,7 +86,6 @@
             [_pageControl setValue:[UIImage imageNamed:self.paramDic[@"pageImage"]] forKeyPath:@"_pageImage"];
             [_pageControl setValue:[UIImage imageNamed:self.paramDic[@"currentPageImage"]] forKeyPath:@"_currentPageImage"];
         }
-        
     }
     return _pageControl;
 }
@@ -116,8 +119,7 @@
         layout.itemSpacing = 0;
         layout.layoutType = TYCyclePagerTransformLayoutNormal;
         layout.itemHorizontalCenter = NO;
-//
-    } else if (kFromClassTypeValue == FromBuyVCToGuideView){
+    } else if (kFromClassTypeValue == FromBuyVCToGuideView || kFromClassTypeValue == FromTogetherToGuideView){
         layout.itemSize = CGSizeMake(CGRectGetWidth(pageView.frame), CGRectGetHeight(pageView.frame));
         layout.itemSpacing = 15;
         layout.layoutType = TYCyclePagerTransformLayoutNormal;
@@ -140,7 +142,18 @@
 }
 
 - (void)updateViewWithParamDic:(NSDictionary *)paramDic{
-    _imageArr = paramDic[@"dataArr"];
+    
+    if(kFromClassTypeValue == FromTogetherToGuideView) {
+        _dataArr =paramDic[@"dataArr"];
+        NSMutableArray *muArr = [NSMutableArray array];
+        for (ZSHADVERTISEMENTModel *mode in _dataArr) {
+            [muArr addObject:mode.SHOWIMG];
+        }
+        _imageArr = muArr;
+    } else {
+        _imageArr = paramDic[@"dataArr"];
+    }
+    
     _pageControl.numberOfPages = _imageArr.count;
     [_pagerView reloadData];
     [_pagerView setNeedUpdateLayout];
@@ -153,6 +166,15 @@
         _pageControl.numberOfPages = _imageArr.count;
         [_pagerView reloadData];
         [_pagerView setNeedUpdateLayout];
+    }
+}
+
+
+- (void)pagerView:(TYCyclePagerView *)pageView didSelectedItemCell:(__kindof UICollectionViewCell *)cell atIndex:(NSInteger)index {
+    if(kFromClassTypeValue == FromTogetherToGuideView) {
+        [_togetherLogic requestEditClickCountWithADVERTISEMENT_ID:_dataArr[index].ADVERTISEMENT_ID success:^(id response) {
+            
+        }];
     }
 }
 

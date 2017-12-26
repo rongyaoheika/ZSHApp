@@ -119,6 +119,7 @@
             RXL.scaleMenuView = NO;
             RXL.scaleContentView = NO;
             RXL.scaleBackgroundImageView = NO;
+            RXL.panGestureEnabled = false;
         
             CATransition *anima = [CATransition animation];
             anima.type = @"cube";//设置动画的类型
@@ -131,7 +132,6 @@
         }
         
     } else {//登陆失败加载登陆页面控制器
-        
         self.mainTabBarVC = nil;
         self.slipVC = nil;
         RootNavigationController *loginNavi = [[RootNavigationController alloc] initWithRootViewController:[ZSHGuideViewController new]];

@@ -24,15 +24,13 @@
 @property (nonatomic, strong) ZSHMineLogic       *mineLogic;
 @property (nonatomic, copy)   NSString           *changedData;
 
-// 修改密码
-@property (nonatomic, copy)   NSString           *oldPwd;
-@property (nonatomic, copy)   NSString           *reNewPwd;
-@property (nonatomic, copy)   NSString           *rptPwd;
-// 找回登录密码
-@property (nonatomic, copy)   NSString           *USERIDCARD;   // 当前账号
-@property (nonatomic, copy)   NSString           *CARDNO;       // 身份证号
-@property (nonatomic, copy)   NSString           *PHONE;        // 手机号
-@property (nonatomic, copy)   NSString           *vefCode;      // 验证码
+@property (nonatomic, copy) NSString *text1;    // 第一行的内容
+@property (nonatomic, copy) NSString *text2;    // 第二行的内容
+@property (nonatomic, copy) NSString *text3;
+@property (nonatomic, copy) NSString *text4;
+@property (nonatomic, copy) NSString *text5;
+@property (nonatomic, copy) NSString *text6;
+
 
 @end
 
@@ -67,7 +65,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
         //手机-修改手机号
         self.titleArr = @[@"当前手机号",@"新手机号",@"验证码"];
         self.textFieldTypeArr = @[@(ZSHTextFieldViewPhone),@(ZSHTextFieldViewPhone),@(ZSHTextFieldViewCaptcha)];
-        self.placeHolderArr = @[@"18688888888",@"请输入新手机号",@"15677853333",@"请输入验证码"];
+        self.placeHolderArr = @[@"请输入当前手机号",@"请输入新手机号",@"请输入验证码"];
          self.toViewType = FromMultiPhoneVCToTextFieldCellView;
     } else if (kFromClassTypeValue == FromUserInfoNickNameVCToMultiInfoVC){
         
@@ -95,12 +93,12 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
         self.textFieldTypeArr = @[@(ZSHTextFieldViewPwd), @(ZSHTextFieldViewPwd), @(ZSHTextFieldViewPwd)];
         self.placeHolderArr = @[@"", @"", @""];
         self.toViewType = FromUserPasswordVCToMultiInfoVC;
-    }else if (kFromClassTypeValue ==  FromSetPasswordTOMultiInfoVC) {
+    }else if (kFromClassTypeValue ==  FromSetPasswordToMultiInfoVC) {
         //重置密码
         self.titleArr = @[@"新密码", @"确认密码"];
         self.textFieldTypeArr = @[@(ZSHTextFieldViewPwd), @(ZSHTextFieldViewPwd), @(ZSHTextFieldViewPwd)];
         self.placeHolderArr = @[@"请输入新密码", @"再次输入新密码"];
-        self.toViewType = FromSetPasswordTOMultiInfoVC;
+        self.toViewType = FromSetPasswordToMultiInfoVC;
     }
     [self initViewModel];
 }
@@ -120,7 +118,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
         [self.bottomBtn setTitle:self.paramDic[@"bottomBtnTitle"] forState:UIControlStateNormal];
         [self.bottomBtn addTarget:self action:@selector(nextBtnAction) forControlEvents:UIControlEventTouchUpInside];
         
-    } else if (kFromClassTypeValue == FromUserPasswordVCToMultiInfoVC || kFromClassTypeValue == FromAccountVCToMultiInfoVC || kFromClassTypeValue == FromSetPasswordTOMultiInfoVC) {
+    } else if (kFromClassTypeValue == FromUserPasswordVCToMultiInfoVC || kFromClassTypeValue == FromAccountVCToMultiInfoVC || kFromClassTypeValue == FromSetPasswordToMultiInfoVC) {
         
         [self.view addSubview:self.bottomBtn];
         [self.bottomBtn setTitle:self.paramDic[@"bottomBtnTitle"] forState:UIControlStateNormal];
@@ -162,35 +160,24 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
                 textFieldView.textFieldChanged = ^(NSString *str, NSInteger index) {
                     if (kFromClassTypeValue == FromUserInfoNickNameVCToMultiInfoVC || kFromClassTypeValue == FromUserInfoResumeVCToMultiInfoVC){
                         weakself.changedData = str;
-                    } else if (kFromClassTypeValue == FromUserPasswordVCToMultiInfoVC) {
+                    } else {
                         if (index == 2) {
-                            weakself.oldPwd = str;
+                            weakself.text1 = str;
                         } else if (index == 3) {
-                            weakself.reNewPwd = str;
+                            weakself.text2 = str;
                         } else if (index == 4) {
-                            weakself.rptPwd = str;
-                        }
-                    } else if (kFromClassTypeValue == FromAccountVCToMultiInfoVC) {
-                        if (index == 2) {
-                            weakself.USERIDCARD = str;
-                        } else if (index == 3) {
-                            weakself.CARDNO = str;
-                        } else if (index == 4) {
-                            weakself.PHONE = str;
+                            weakself.text3 = str;
                         } else if (index == 5) {
-                            weakself.vefCode = str;
-                        }
-                    } else if (kFromClassTypeValue == FromSetPasswordTOMultiInfoVC) {
-                        if (index == 2) {
-                            weakself.reNewPwd = str;
-                        } else if (index == 3) {
-                            weakself.rptPwd = str;
+                            weakself.text4 = str;
+                        } else if (index == 6) {
+                            weakself.text5 = str;
+                        } else if (index == 7) {
+                            weakself.text6 = str;
                         }
                     }
                 };
                 [cell.contentView addSubview:textFieldView];
 //            }
-        
             return cell;
         };
         
@@ -235,8 +222,8 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 - (void)nextBtnAction{
     kWeakSelf(self);
     if (kFromClassTypeValue == FromUserPasswordVCToMultiInfoVC) {
-        if ([_reNewPwd isEqualToString:_rptPwd]) {
-            [_mineLogic requestUserUpdPasswordWithDic:@{@"HONOURUSER_ID":HONOURUSER_IDValue, @"PASSWORD":_reNewPwd, @"OLDPASSWORD":_oldPwd} success:^(id response) {
+        if ([_text2 isEqualToString:_text3]) {
+            [_mineLogic requestUserUpdPasswordWithDic:@{@"HONOURUSER_ID":HONOURUSER_IDValue, @"PASSWORD":_text2, @"OLDPASSWORD":_text1} success:^(id response) {
                 NSString *message = @"";
                 if ([response[@"result"] isEqualToString:@"01"]) {// 成功
                     message = @"修改成功";
@@ -258,19 +245,18 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
         NSDictionary *dic = nil;
         
 #ifdef DEBUG
-        dic = @{@"CARDNO":@"10",@"PHONE":@"17601680524",@"USERIDCARD":@"123456"};
+        dic = @{@"CARDNO":@"10",@"PHONE":@"13512345678",@"USERIDCARD":@"123456"};
 #else
-        //        _vefCode
-        dic = @{@"CARDNO":_CARDNO,@"PHONE":_PHONE,@"USERIDCARD":_USERIDCARD};
+        dic = @{@"CARDNO":_text1,@"PHONE":_text3,@"USERIDCARD":_text2};
 #endif
         
         [_mineLogic requestForgetUser:dic success:^(id response) {
-            ZSHMultiInfoViewController *multiInfoVC = [[ZSHMultiInfoViewController alloc] initWithParamDic:@{KFromClassType:@(FromSetPasswordTOMultiInfoVC),@"title":@"重置密码", @"bottomBtnTitle":@"完成",@"HONOURUSER_ID":response[@"pd"][@"HONOURUSER_ID"]}];
+            ZSHMultiInfoViewController *multiInfoVC = [[ZSHMultiInfoViewController alloc] initWithParamDic:@{KFromClassType:@(FromSetPasswordToMultiInfoVC),@"title":@"重置密码", @"bottomBtnTitle":@"完成",@"HONOURUSER_ID":response[@"pd"][@"HONOURUSER_ID"]}];
             [weakself.navigationController pushViewController:multiInfoVC animated:YES];
         }];
-    } else if (kFromClassTypeValue == FromSetPasswordTOMultiInfoVC) {
-        if ([_reNewPwd isEqualToString:_rptPwd]) {
-            [_mineLogic requestUserUpdPasswordWithDic:@{@"HONOURUSER_ID":self.paramDic[@"HONOURUSER_ID"], @"PASSWORD":_reNewPwd, @"OLDPASSWORD":@""} success:^(id response) {
+    } else if (kFromClassTypeValue == FromSetPasswordToMultiInfoVC) {
+        if ([_text1 isEqualToString:_text2]) {
+            [_mineLogic requestUserUpdPasswordWithDic:@{@"HONOURUSER_ID":self.paramDic[@"HONOURUSER_ID"], @"PASSWORD":_text2, @"OLDPASSWORD":@""} success:^(id response) {
                 NSString *message = @"";
                 if ([response[@"result"] isEqualToString:@"01"]) {// 成功
                     message = @"修改成功";
@@ -290,8 +276,27 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
             [ac addAction:cancelAction];
             [weakself presentViewController:ac animated:YES completion:nil];
         }
+    } else if (kFromClassTypeValue == FromUserInfoPhoneVCToMultiInfoVC) {
+        [_mineLogic requestUserPhone:@{@"HONOURUSER_ID":HONOURUSER_IDValue, @"PHONE":_text2} success:^(id response) {
+            NSString *message = @"";
+            if ([response[@"result"] isEqualToString:@"01"]) {// 成功
+                if (weakself.saveBlock) {
+                    weakself.saveBlock(weakself.text2, weakself.index);
+                }
+                message = @"修改成功";
+            } else {
+                message = @"修改失败";
+            }
+            UIAlertController *ac = [UIAlertController alertControllerWithTitle:@"提示" message:message preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                [weakself.navigationController popViewControllerAnimated:true];
+            }];
+            [ac addAction:cancelAction];
+            [weakself presentViewController:ac animated:YES completion:nil];
+        }];
     }
 }
+
 
 
 - (void)didReceiveMemoryWarning {

@@ -25,8 +25,8 @@
 #ifdef DEBUG
 
 #define DevelopSever    0
-#define TestSever       0
-#define ProductSever    1
+#define TestSever       1
+#define ProductSever    0
 
 #else
 
@@ -45,7 +45,7 @@
 #elif TestSever
 
 /**测试服务器*/
-#define kUrlRoot                    @"http://192.168.1.134:8081/ZSHINTER/" //振华
+#define kUrlRoot                    @"http://192.168.1.125:8081/ZSHINTER/" //振华
 
 #elif ProductSever
 
@@ -709,5 +709,16 @@
 //参数：  CARDNO=390913360687792128   当前账号/   PHONE=13366847890   手机号/   USERIDCARD=654321  身份证号/
 //请求地址：/appuserin/getuserbyforget.do?USERBYFORGET  (混淆码)
 #define kUrlGetUserByForget [NSString stringWithFormat:@"/appuserin/getuserbyforget.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"USERBYFORGET"]]
-
+//137.修改用户手机号码
+//参数：  HONOURUSER_ID  用户ID/     PHONE   手机号/
+//请求地址：/appuserin/upduserphone.do?UPDUSERPHONE  (混淆码)
+#define kUrlUpdUserphone [NSString stringWithFormat:@"/appuserin/upduserphone.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"UPDUSERPHONE"]]
+//138.根据广告栏位置查询广告
+//参数：  AD_POSITION  广告栏位置
+//请求地址：/appadvertismentin/advertiselist.do?ADVERTISEMENTLIST  (混淆码)
+#define kUrlAdvertiseList [NSString stringWithFormat:@"/appadvertismentin/advertiselist.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"ADVERTISEMENTLIST"]]
+//139.修改点击广告的次数
+//参数：  CLICK_COUNT  点击次数   /      ADVERTISEMENT_ID    广告栏的id
+//请求地址：/appadvertismentin/editClickCount.do?EDITCLICKCOUNT  (混淆码)
+#define kUrlEditClickCount [NSString stringWithFormat:@"/appadvertismentin/editClickCount.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"EDITCLICKCOUNT"]]
 #endif /* URLMacros_h */

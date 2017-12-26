@@ -34,7 +34,8 @@
     kWeakSelf(self);
     [PPNetworkHelper POST:kUrlGetPartyList parameters:dic success:^(id responseObject) {
         weakself.entertainModelArr = [ZSHEntertainmentModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"]];
-        success(nil);
+        NSArray *arr = [ZSHADVERTISEMENTModel mj_objectArrayWithKeyValuesArray:responseObject[@"ad"]];
+        success(arr);
     } failure:^(NSError *error) {
         RLog(@"请求失败");
     }];
@@ -102,5 +103,25 @@
         RLog(@"%@", error);
     }];
 }
+
+// 根据广告栏位置查询广告
+- (void)requestAdvertiseListWithAdPosition:(NSString *)AD_POSITION success:(void (^)(id response))success {
+    [PPNetworkHelper POST:kUrlAdvertiseList parameters:@{@"AD_POSITION":AD_POSITION} success:^(id responseObject) {
+        success(responseObject);
+    } failure:^(NSError *error) {
+        RLog(@"%@", error);
+    }];
+}
+
+
+// 修改点击广告的次数
+- (void)requestEditClickCountWithADVERTISEMENT_ID:(NSString *)ADVERTISEMENT_ID success:(void (^)(id response))success {
+    [PPNetworkHelper POST:kUrlEditClickCount parameters:@{@"CLICK_COUNT":@"1", @"ADVERTISEMENT_ID":ADVERTISEMENT_ID} success:^(id responseObject) {
+        success(responseObject);
+    } failure:^(NSError *error) {
+        RLog(@"%@", error);
+    }];
+}
+
 
 @end

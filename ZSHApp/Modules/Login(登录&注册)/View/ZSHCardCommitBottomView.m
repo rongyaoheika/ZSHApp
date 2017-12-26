@@ -57,7 +57,7 @@
     }];
     
     [self setNeedsLayout];
-    
+
 }
 
 - (void)commitInfoAction{//提交注册信息

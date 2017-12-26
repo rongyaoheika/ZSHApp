@@ -106,7 +106,7 @@ typedef NS_ENUM(NSInteger,ZSHToMultiInfoVC){
     FromUserInfoQQVCToMultiInfoVC,                  //个人资料 - 绑定QQ帐号
     FromUserInfoResumeVCToMultiInfoVC,              //个人资料 - 个人简介
     FromUserPasswordVCToMultiInfoVC,                //账号与安全 - 登录密码
-    FromSetPasswordTOMultiInfoVC,                   //重置密码
+    FromSetPasswordToMultiInfoVC,                   //重置密码
     FromNoneToMultiInfoVC
 };
 
@@ -122,6 +122,7 @@ typedef NS_ENUM (NSInteger,ZSHToGuideView) {
     FromHotelDetailVCToGuideView,     //酒店（美食，ktv详情页） - 轮播view
     FromGoodsDetailVCToGuideView,     // 商品详情
     FromBuyVCToGuideView,             // 尊购首页轮播
+    FromTogetherToGuideView,          // 吃喝玩乐轮播
     FromNoneVCToGuideView
 };
 

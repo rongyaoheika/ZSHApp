@@ -7,7 +7,12 @@
 //
 
 #import "ZSHBaseView.h"
+typedef void(^TapBlock)(NSString *section, NSInteger index);
 
 @interface ZSHPhoneNumListView : ZSHBaseView
+
+@property (nonatomic , copy) TapBlock tapBlock;
+
+- (void)selectedByIndex:(NSUInteger)index;
 
 @end

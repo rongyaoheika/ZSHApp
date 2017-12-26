@@ -12,9 +12,11 @@
 #import "ZSHEntertainmentDetailViewController.h"
 #import "ZSHEntertainmentDisViewController.h"
 #import "ZSHTogetherLogic.h"
+#import "ZSHGuideView.h"
 
 @interface ZSHEntertainmentViewController ()
 
+@property (nonatomic, strong) ZSHGuideView         *guideView;
 @property (nonatomic, strong) NSMutableArray       *dataArr;
 @property (nonatomic, strong) ZSHTogetherLogic     *togetherLogic;
 
@@ -40,13 +42,22 @@ static NSString *ZSHEnterTainmentCellID = @"ZSHEnterTainmentCell";
     self.title = self.paramDic[@"Title"];
     
     [self addNavigationItemWithTitles:@[@"去发布"] isLeft:NO target:self action:@selector(distributeAction) tags:@[@(1)]];
-    
+
     self.tableView.frame = CGRectMake(0, KNavigationBarHeight, KScreenWidth, KScreenHeight-KNavigationBarHeight);
     [self.view addSubview:self.tableView];
     self.tableView.delegate = self.tableViewModel;
     self.tableView.dataSource = self.tableViewModel;
     [self.tableView registerClass:[ZSHEnterTainmentCell class] forCellReuseIdentifier:ZSHEnterTainmentCellID];
-    [self.tableView reloadData];
+    self.tableView.tableHeaderView = self.guideView;
+
+}
+
+- (ZSHGuideView *)guideView {
+    if(!_guideView) {
+        NSDictionary *nextParamDic = @{KFromClassType:@(FromTogetherToGuideView),@"pageViewHeight":@(kRealValue(175)),@"min_scale":@(0.6),@"withRatio":@(1.8),@"infinite":@(false)};
+        _guideView = [[ZSHGuideView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, kRealValue(175)) paramDic:nextParamDic];
+    }
+    return _guideView;
 }
 
 - (void)initViewModel {
@@ -116,6 +127,7 @@ static NSString *ZSHEnterTainmentCellID = @"ZSHEnterTainmentCell";
     _togetherLogic = [[ZSHTogetherLogic alloc] init];
     [_togetherLogic requestPartyListWithDic:@{@"CONVERGE_ID":self.paramDic[@"CONVERGE_ID"], @"HONOURUSER_ID":@"", @"STATUS":@""} success:^(id response) {
         [weakself initViewModel];
+        [weakself.guideView updateViewWithParamDic:@{@"dataArr":response}];
     }];
 }
 

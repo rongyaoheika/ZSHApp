@@ -143,7 +143,6 @@
 }
 
 - (void)requestData {
-    //（1 自选号码库 2 贵宾号码库 3 金钻号码库 4荣耀号码库 5 超级黑卡靓号号码库）
     kWeakSelf(self);
     [_loginLogic requestCardNumWithDic:@{@"CARDTYPE_ID":self.paramDic[@"type"]} success:^(id response) {
         weakself.cardNumArr = [ZSHCardNumModel mj_objectArrayWithKeyValuesArray:response[@"pd"]];

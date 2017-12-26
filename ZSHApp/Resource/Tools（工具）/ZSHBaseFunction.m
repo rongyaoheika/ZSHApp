@@ -36,4 +36,12 @@
     return [ZSHBaseFunction md5StringFromString:[NSString stringWithFormat:@"%@%@,fh,",cmd,string]];
 }
 
++ (NSString *)base64StringFromString:(NSString *)string {
+    
+    NSData *data = [string dataUsingEncoding:NSUTF8StringEncoding];
+    NSString *base64String= [data base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+    
+    return base64String;
+}
+
 @end

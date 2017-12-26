@@ -14,7 +14,6 @@
 
 @interface ZSHMusicLibraryViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 
-
 @property (nonatomic, strong) LXScollTitleView      *titleView;
 @property (nonatomic, strong) NSArray               *titleArr;
 @property (nonatomic, strong) ZSHMusicLogic         *musicLogic;

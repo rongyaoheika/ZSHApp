@@ -16,6 +16,8 @@
 @property (nonatomic, strong) UITableView               *subTab;
 @property (nonatomic, strong) ZSHPhoneNumListView       *phoneNumListView;
 @property (nonatomic, strong) NSArray                   *titleArr;
+@property (nonatomic, strong) NSString                  *selectSection;
+@property (nonatomic, assign) NSInteger                 selectRow;
 
 @end
 
@@ -29,6 +31,7 @@
 - (void)loadData{
     self.tableViewModel = [[ZSHBaseTableViewModel alloc] init];
     [self initViewModel];
+    _selectSection = @"1";
 }
 
 - (void)createUI{
@@ -41,7 +44,7 @@
     
     self.subTab.delegate = self.tableViewModel;
     self.subTab.dataSource = self.tableViewModel;
-    [self.subTab reloadData];
+   
     
 }
 
@@ -62,10 +65,11 @@
         if ([paramDic[@"tag"]integerValue] == 14) {
             [self addBlackCardCellModelToSection:[paramDic[@"tag"]integerValue] ];
         } else {
-           [self addCellModelToSection:[paramDic[@"tag"]integerValue] ];
+            [self addCellModelToSection:[paramDic[@"tag"]integerValue] ];
         }
         
     }
+     [self.subTab reloadData];
 }
 
 //创建头视图
@@ -77,6 +81,7 @@
 
 //创建cell
 - (void)addCellModelToSection:(NSInteger)section{
+    kWeakSelf(self);
     NSInteger realSection = section - 10;
     ZSHBaseTableViewSectionModel *sectionModel = self.tableViewModel.sectionModelArray[realSection];
     
@@ -86,13 +91,20 @@
     cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHBaseCell *cell = [[ZSHBaseCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@""];
         NSArray *titleArr = @[@"1035686866",@"1035686866",@"1035686866",@"1035686866",@"11035686866",@"1035686866",@"1035686866",@"1035686866",];
-        NSDictionary *nextParamDic = @{@"titleArr":titleArr,@"normalImage":@"phone_normal",@"selectedImage":@"phone_press",@"type":@(indexPath.row+1)};
+        NSDictionary *nextParamDic = @{@"titleArr":titleArr,@"normalImage":@"phone_normal",@"selectedImage":@"phone_press",@"type":@(indexPath.section+1)};
         ZSHPhoneNumListView *listView = [[ZSHPhoneNumListView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth,kRealValue(150)) paramDic:nextParamDic];
+        listView.tapBlock = ^(NSString *section, NSInteger index) {
+            weakself.selectSection = section;
+            weakself.selectRow = index;
+        };
         [cell.contentView addSubview:listView];
         
         return cell;
     };
 }
+
+
+
 
 //超级黑卡靓号
 - (void)addBlackCardCellModelToSection:(NSInteger)section{

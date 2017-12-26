@@ -33,7 +33,7 @@
     
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.view.backgroundColor = KClearColor;
-    
+
     //是否显示返回按钮
     self.isShowLiftBack = YES;
     self.StatusBarStyle = UIStatusBarStyleLightContent;

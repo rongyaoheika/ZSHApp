@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		043587591FF2564F00969DD7 /* ZSHGoodsCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 043587581FF2564F00969DD7 /* ZSHGoodsCollectionViewCell.m */; };
 		18063C541FC90379000F5A00 /* ZSHPersonalModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 18063C531FC90379000F5A00 /* ZSHPersonalModel.m */; };
 		18063C571FC90951000F5A00 /* ZSHPersonalDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 18063C561FC90951000F5A00 /* ZSHPersonalDetailModel.m */; };
 		18063C5B1FC9140B000F5A00 /* ZSHCollectModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 18063C5A1FC9140B000F5A00 /* ZSHCollectModel.m */; };
@@ -524,6 +525,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		043587571FF2564F00969DD7 /* ZSHGoodsCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHGoodsCollectionViewCell.h; sourceTree = "<group>"; };
+		043587581FF2564F00969DD7 /* ZSHGoodsCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHGoodsCollectionViewCell.m; sourceTree = "<group>"; };
 		14ED69325E9FD4BDB1CA95F8 /* Pods-ZSHApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZSHApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-ZSHApp/Pods-ZSHApp.release.xcconfig"; sourceTree = "<group>"; };
 		18063C521FC90379000F5A00 /* ZSHPersonalModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHPersonalModel.h; sourceTree = "<group>"; };
 		18063C531FC90379000F5A00 /* ZSHPersonalModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHPersonalModel.m; sourceTree = "<group>"; };
@@ -2877,6 +2880,8 @@
 				FEBD7C9C1FA70F6500CE2BA6 /* ZSHGoodsChartCell.m */,
 				FEA105711F9B2480008652D6 /* ZSHGoodsSortCell.h */,
 				FEA105721F9B2480008652D6 /* ZSHGoodsSortCell.m */,
+				043587571FF2564F00969DD7 /* ZSHGoodsCollectionViewCell.h */,
+				043587581FF2564F00969DD7 /* ZSHGoodsCollectionViewCell.m */,
 				FE4DB1E31F99970D008E12E9 /* ZSHGoodsCell.h */,
 				FE4DB1E41F99970D008E12E9 /* ZSHGoodsCell.m */,
 				FE7502B51F99D76A002F2708 /* ZSHGoodsSegmentView.h */,
@@ -4602,6 +4607,7 @@
 				FE3E00961FDA743200A0F7CA /* AudioPlayerController+methods.m in Sources */,
 				FEDC1D9B1FC5109200AB0D92 /* ZSHButtonView.m in Sources */,
 				FEDF29241FB6CFD300CD5756 /* ZSHQuotaHeadView.m in Sources */,
+				043587591FF2564F00969DD7 /* ZSHGoodsCollectionViewCell.m in Sources */,
 				1813E2671FBD2A0800624405 /* ZSHTrainSearchResultController.m in Sources */,
 				FE5538801F470BAF00803128 /* ShareManager.m in Sources */,
 				FEBD7C931FA6CC1900CE2BA6 /* ZSHHotelPayViewController.m in Sources */,

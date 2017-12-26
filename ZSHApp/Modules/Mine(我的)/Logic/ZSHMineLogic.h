@@ -63,5 +63,6 @@
 - (void)requestSProductAddEva:(NSDictionary *)dic success:(void (^)(id response))success;
 // 找回登录密码 (忘记密码)
 - (void)requestForgetUser:(NSDictionary *)dic success:(void (^)(id response))success;
-
+// 修改用户手机号码
+- (void)requestUserPhone:(NSDictionary *)dic success:(void (^)(id response))success;
 @end

@@ -374,8 +374,6 @@ static NSString *ZSHGoodsDetailCommentCellID = @"ZSHGoodsDetailCommentCell";
     CGFloat alpha = 1 - (offsetToShow - scrollView.contentOffset.y) / offsetToShow;
     self.titleView.alpha = alpha;
     
-    RLog(@"alpha== %f",alpha);
-    
     if (scrollView.contentOffset.y >= 200 && scrollView.contentOffset.y <= 400) {
         if ( self.titleView.selectedIndex != 0) {
              self.titleView.selectedIndex = 0;

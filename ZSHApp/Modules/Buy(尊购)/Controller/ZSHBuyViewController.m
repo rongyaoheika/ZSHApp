@@ -30,6 +30,19 @@ static NSString *ZSHGoodsListViewID = @"ZSHGoodsListView";
 @end
 
 @implementation ZSHBuyViewController
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    RLog(@"%@", kRootViewController);
+    RXLSideSlipViewController *rxl = (RXLSideSlipViewController *)kRootViewController;
+    rxl.panGestureEnabled = true;
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    RXLSideSlipViewController *rxl = (RXLSideSlipViewController *)kRootViewController;
+    rxl.panGestureEnabled = false;
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -199,7 +212,6 @@ static NSString *ZSHGoodsListViewID = @"ZSHGoodsListView";
    [_buyLogic requestScarouselfigure:^(id response) {
        NSArray *imageArr = response[@"pd"][@"SHOWIMAGES"];
        if (imageArr.count) {
-           
            [weakself.guideView updateViewWithParamDic:@{@"dataArr":imageArr}];
        }
    }];

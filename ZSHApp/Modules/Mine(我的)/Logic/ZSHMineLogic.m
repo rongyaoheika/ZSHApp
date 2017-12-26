@@ -213,4 +213,14 @@
         RLog(@"请求失败");
     }];
 }
+
+
+// 修改用户手机号码
+- (void)requestUserPhone:(NSDictionary *)dic success:(void (^)(id response))success {
+    [PPNetworkHelper POST:kUrlUpdUserphone parameters:dic success:^(id responseObject) {
+        success(responseObject);
+    } failure:^(NSError *error) {
+        RLog(@"请求失败");
+    }];
+}
 @end

@@ -21,8 +21,9 @@ static NSString *cellIdentifier = @"listCell";
 
 @interface ZSHTogetherViewController ()<UISearchBarDelegate>
 
-@property (nonatomic, strong) NSArray            *pushVCsArr;
-@property (nonatomic, strong) ZSHTogetherLogic   *togetherLogic;
+
+@property (nonatomic, strong) NSArray               *pushVCsArr;
+@property (nonatomic, strong) ZSHTogetherLogic      *togetherLogic;
 
 @end
 
@@ -37,13 +38,14 @@ static NSString *cellIdentifier = @"listCell";
 
 - (void)loadData{
     self.pushVCsArr = @[@"ZSHEntertainmentViewController",@"ZSHEntertainmentViewController",@"ZSHEntertainmentViewController",@"ZSHEntertainmentViewController",@"ZSHEntertainmentViewController",@"ZSHEntertainmentViewController"];
-
+    _togetherLogic = [[ZSHTogetherLogic alloc] init];
     [self initViewModel];
     [self requestData];
+    [self requestCarouselFigure];
 }
 
 - (void)createUI{
-
+    
     UIButton *searchBtn = [ZSHBaseUIControl createBtnWithParamDic:@{@"title":@"搜索",@"font":kPingFangRegular(14),@"withImage":@(YES),@"normalImage":@"nav_home_search"}];
     searchBtn.frame = CGRectMake(0, 0, kRealValue(270), 30);
     searchBtn.backgroundColor = KZSHColor1A1A1A;
@@ -134,9 +136,17 @@ static NSString *cellIdentifier = @"listCell";
 
 - (void)requestData {
     kWeakSelf(self);
-    _togetherLogic = [[ZSHTogetherLogic alloc] init];
+    
     [_togetherLogic requestConvergeList:^(id response) {
         [weakself initViewModel];
+    }];
+}
+
+
+- (void)requestCarouselFigure {
+
+    [_togetherLogic requestAdvertiseListWithAdPosition:@"0" success:^(id response) {
+        
     }];
 }
 

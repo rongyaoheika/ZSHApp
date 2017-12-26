@@ -162,7 +162,7 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
     kWeakSelf(self);
     ZSHCardBtnListView *listView = [[ZSHCardBtnListView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kRealValue(90)) paramDic:paramDic];
     listView.tag = 2;
-    [listView selectedByIndex:5];
+    [listView selectedByIndex:1];
     listView.btnClickBlock = ^(UIButton *btn) {
         NSInteger realSection = 1;
         NSInteger btnTag = btn.tag - 1;
@@ -198,8 +198,8 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
             [weakself.tableView reloadSections:[NSIndexSet indexSetWithIndex:realSection] withRowAnimation:UITableViewRowAnimationFade];
         } else { //展开 - 合并
             [_selectedArr replaceObjectAtIndex:realSection withObject:@"0"];
-            [weakself updateOtherSectionModelWithTag:realSection];
-            [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:realSection] withRowAnimation:UITableViewRowAnimationFade];
+            [weakself updateAddressSectionModelWithTag:realSection];
+            [weakself.tableView reloadSections:[NSIndexSet indexSetWithIndex:realSection] withRowAnimation:UITableViewRowAnimationFade];
         }
     };
     
@@ -396,15 +396,6 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
     NSString *address = SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"ADDRESS"]);
     NSString *custom = SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"CUSTOM"]);
     NSString *customContent = NSStringFormat(@"%@%@", SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"CardCustom112311"]),SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"CardCustom112312"]));
-    
-    RLog(@"987%@", @{@"CARDNO":SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"CARDNO"]),
-                @"PHONE":SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"PHONE"]),
-                @"REALNAME":SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"REALNAME"]),
-                @"PROVINCE":SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"PROVINCE"]),
-                @"ADDRESS":SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"ADDRESS"]),
-                @"CUSTOM":SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"CUSTOM"]),
-                @"CUSTOMCONTENT":NSStringFormat(@"%@%@", SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"CardCustom112311"]),SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"CardCustom112312"]))});
-    
     
     NSString *message = nil;
     if ([cardNo isEqualToString:@""]) {

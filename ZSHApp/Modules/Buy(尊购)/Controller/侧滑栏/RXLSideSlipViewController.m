@@ -247,17 +247,21 @@
     [self addMenuViewControllerMotionEffects];
     
     //4.加入pan滑动手势：
-    if (self.panGestureEnabled) {
+//    if (self.panGestureEnabled) {
         self.view.multipleTouchEnabled = NO;
         UIPanGestureRecognizer *panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGestureRecognized:)];
         panGestureRecognizer.delegate = self;
         [self.view addGestureRecognizer:panGestureRecognizer];
-    }
+//    }
     
     //5.设置shadow
     [self updateContentViewShadow];
 }
 
+- (void)setPanGestureEnabled:(BOOL)panGestureEnabled {
+
+    _panGestureEnabled = panGestureEnabled;
+}
 #pragma mark -
 #pragma mark Private methods
 
@@ -596,6 +600,9 @@
             delta = self.originalPoint.x != 0 ? (point.x + self.originalPoint.x) / self.originalPoint.x : 0;
         } else {
             delta = point.x / self.view.frame.size.width;
+        }
+        if (delta < 0) {
+            return;
         }
         delta = MIN(fabs(delta), 1.6);
         
