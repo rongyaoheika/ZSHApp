@@ -15,7 +15,6 @@
 
 @property (nonatomic, strong) UIImageView                   *bgIV;
 @property (nonatomic, strong) LXScollTitleView              *titleView;
-@property (nonatomic, strong) UIScrollView                  *bottomScrollView;
 @property (nonatomic, strong) ZSHSelectCardNumFirstView     *firstView;
 @property (nonatomic, strong) ZSHSelectCardNumSecondView    *secondView;
 @property (nonatomic, assign) NSInteger                     selectIndex;
@@ -69,31 +68,27 @@
     }
     
     self.bottomScrollView.contentSize = CGSizeMake(2*kScreenWidth, 0);
+    CGFloat scrollViewH = (_selectIndex == 0?_firstView.viewHeight:_secondView.viewHeight);
+    RLog(@"scrollViewH == %f,viewheight== %f, %f", scrollViewH, _firstView.viewHeight,_secondView.viewHeight);
     [self.bottomScrollView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self).offset(kRealValue(50));
-        make.left.mas_equalTo(self);
-        make.width.mas_equalTo(kScreenWidth);
-        make.height.mas_equalTo(kRealValue(2150));
-//        if (_selectIndex == 1) {
-//            make.height.mas_equalTo(kRealValue(63));
-//        } else if(_selectIndex == 2) {
-//            make.height.mas_equalTo(kRealValue(2380));
-//        }
+        make.edges.mas_equalTo(self).insets(UIEdgeInsetsMake(kRealValue(50), 0, 0, 0));
+        make.height.mas_equalTo(scrollViewH);
     }];
     
     [_firstView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.mas_equalTo(_bottomScrollView);
         make.left.mas_equalTo(_bottomScrollView);
-        make.width.mas_equalTo(kScreenWidth);
-        make.height.mas_equalTo(_bottomScrollView);
-        make.top.mas_equalTo(_bottomScrollView);
+        make.width.mas_equalTo(KScreenWidth);
+        make.height.mas_equalTo(_firstView.viewHeight);
     }];
     
     [_secondView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(_bottomScrollView).offset(KScreenWidth);
-        make.width.mas_equalTo(kScreenWidth);
-        make.height.mas_equalTo(_bottomScrollView);
+        make.left.mas_equalTo(_firstView.mas_right);
         make.top.mas_equalTo(_bottomScrollView);
+        make.width.mas_equalTo(KScreenWidth);
+        make.height.mas_equalTo(_secondView.viewHeight);
     }];
+    
 }
 
 #pragma getter
@@ -122,6 +117,7 @@
         __weak typeof(self) weakSelf = self;
         _titleView.selectedBlock = ^(NSInteger index){
             __weak typeof(self) strongSelf = weakSelf;
+            weakSelf.selectIndex = index;
             [strongSelf.bottomScrollView setContentOffset:CGPointMake(index * KScreenWidth, 0) animated:YES];
         };
         _titleView.titleWidth = kRealValue(100);
@@ -129,16 +125,29 @@
     return _titleView;
 }
 
+- (void)setSelectIndex:(NSInteger)selectIndex{
+    _selectIndex = selectIndex;
+    [self layoutSubviews];
+    
+    CGFloat cellHeight = 0;
+    if (_selectIndex == 0) {
+        cellHeight = kRealValue(100) + _firstView.viewHeight;
+    } else {
+        cellHeight = kRealValue(100) + _secondView.viewHeight;
+    }
+    
+    if (self.cellHeightBlock) {
+        self.cellHeightBlock(cellHeight);
+    }
+}
 
 #pragma action
 
 -(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
     NSInteger index = scrollView.contentOffset.x/kScreenWidth;
+    self.selectIndex = index;
     self.titleView.selectedIndex = index;
 }
 
-- (CGFloat)rowHeightWithCellModel:(ZSHBaseModel *)model{
-    return CGRectGetMaxY(_bottomScrollView.frame);
-}
 
 @end

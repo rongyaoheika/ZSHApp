@@ -27,8 +27,12 @@
         make.left.mas_equalTo(self).offset(kRealValue(43));
         make.right.mas_equalTo(self).offset(-kRealValue(43));
         make.top.mas_equalTo(self).offset(kRealValue(15));
-        make.height.mas_equalTo(kRealValue(33));
+        make.height.mas_equalTo(kRealValue(35));
     }];
+}
+
+- (CGFloat)viewHeight{
+    return (kRealValue(35)+kRealValue(15));
 }
 
 @end

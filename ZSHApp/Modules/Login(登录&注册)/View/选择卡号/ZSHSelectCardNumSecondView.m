@@ -114,5 +114,8 @@
     
 }
 
+- (CGFloat)viewHeight{
+    return 5*(kRealValue(65)+ kRealValue(150)) + (kRealValue(65)+kRealValue(280));
+}
 
 @end

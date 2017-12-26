@@ -58,7 +58,7 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
     self.title = @"尊尚汇黑卡在线办理";
     [self.view addSubview:self.tableView];
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.mas_equalTo(self.view).insets(UIEdgeInsetsMake(KNavigationBarHeight, 0, KBottomNavH, 0));
+        make.edges.mas_equalTo(self.view).insets(UIEdgeInsetsMake(KNavigationBarHeight, 0, KBottomTabH, 0));
     }];
     self.tableView.delegate = self.tableViewModel;
     self.tableView.dataSource = self.tableViewModel;
@@ -84,7 +84,7 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
           @{KFromClassType:@(FromCustomizedCellToCardSubHeadView),@"title":@"选择卡号",@"btnTitle":@"* 随机",@"tag":@(14)},
           @{KFromClassType:@(FromCustomizedCellToCardSubHeadView),@"title":@"功能定制",@"btnTitle":@"* 定制",@"tag":@(15)},
           @{KFromClassType:@(FromCustomizedCellToCardSubHeadView),@"title":@"支付方式",@"btnTitle":@"* 微信",@"tag":@(16)}];
-    for (NSDictionary *paramDic in sectionParmaDicArr) {
+    for (NSDictionary *paramDic in sectionParmaDicArr) {//创建每组header
         ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
         sectionModel.headerHeight = kRealValue(35);
         sectionModel.headerView = [self createHeadViewWithParamDic:paramDic];
@@ -93,7 +93,7 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
     [self.tableView reloadData];
 }
 
-//第0组：
+//第0组：头部banner
 - (ZSHBaseTableViewSectionModel*)storeHeadSection{
     kWeakSelf(self);
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
@@ -183,9 +183,7 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
     return listView;
 }
 
-
-
-//刷新其它组
+//创建3，4，5，6组header
 - (ZSHCardSubHeadView *)createHeadViewWithParamDic:(NSDictionary *)paramDic{
     kWeakSelf(self);
     ZSHCardSubHeadView *cardSubView = [[ZSHCardSubHeadView alloc]initWithFrame:CGRectMake(kRealValue(15), 0, kScreenWidth-2*kRealValue(15), kRealValue(35)) paramDic:paramDic];
@@ -193,21 +191,23 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
      
     cardSubView.rightBtnActionBlock = ^(NSInteger tag) {
         NSInteger realSection = tag - 10;
-        if ([_selectedArr[realSection] isEqualToString:@"0"]) {
+        if ([_selectedArr[realSection] isEqualToString:@"0"]) {//合并 - 展开
             
             [_selectedArr replaceObjectAtIndex:realSection withObject:@"1"];
-            [weakself updateAddressSectionModelWithTag:realSection];
+            [weakself updateOtherSectionModelWithTag:realSection];
             [weakself.tableView reloadSections:[NSIndexSet indexSetWithIndex:realSection] withRowAnimation:UITableViewRowAnimationFade];
-        } else {
+        } else { //展开 - 合并
             [_selectedArr replaceObjectAtIndex:realSection withObject:@"0"];
-            [weakself updateAddressSectionModelWithTag:realSection];
+            [weakself updateOtherSectionModelWithTag:realSection];
             [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:realSection] withRowAnimation:UITableViewRowAnimationFade];
         }
     };
+    
+    [self.tableView reloadData];
     return cardSubView;
 }
 
-//刷新button列表
+//刷新卡类型：button列表
 - (void)updateBtnListSectionModelWithSectionTag:(NSInteger)tag btnTag:(NSInteger)btnTag{
     kWeakSelf(self);
     ZSHBaseTableViewSectionModel *sectionModel = self.tableViewModel.sectionModelArray[tag];
@@ -245,9 +245,10 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
     }
 }
 
-- (void)updateAddressSectionModelWithTag:(NSInteger)tag{
+//刷新3，4，5，6组
+- (void)updateOtherSectionModelWithTag:(NSInteger)tag{
     switch (tag) {
-        case 3:{
+        case 3:{//收获地址
             NSArray *addressArr = @[@"姓名",@"手机号码",@"重复手机号码",@"省市区",@"详细地址"];
             NSArray *parameterArr = @[@"REALNAME", @"PHONE", @"Repeat", @"PROVINCE",@"ADDRESS"];
             NSArray *textTypeArr =  @[@(ZSHTextFieldViewUser),@(ZSHTextFieldViewPhone),@(ZSHTextFieldViewPhone),@(ZSHTextFieldViewUser),@(ZSHTextFieldViewUser)];
@@ -284,7 +285,8 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
             break;
         }
             
-        case 4:{
+        case 4:{ //选取卡号
+            kWeakSelf(self);
             ZSHBaseTableViewSectionModel *sectionModel = self.tableViewModel.sectionModelArray[tag];
             if ([_selectedArr[tag] isEqualToString:@"1"])  {
                 ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
@@ -305,7 +307,7 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
             
             break;
         }
-        case 5:{
+        case 5:{ //功能定制
             ZSHBaseTableViewSectionModel *sectionModel = self.tableViewModel.sectionModelArray[tag];
             if ([_selectedArr[tag] isEqualToString:@"1"])  {
                 ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
@@ -322,7 +324,7 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
             
             break;
         }
-        case 6:{
+        case 6:{ //支付方式
             ZSHBaseTableViewSectionModel *sectionModel = self.tableViewModel.sectionModelArray[tag];
             if ([_selectedArr[tag] isEqualToString:@"1"])  {
                 ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];

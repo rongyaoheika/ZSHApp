@@ -11,7 +11,7 @@
 #import "ZSHTextFieldCellView.h"
 @interface ZSHCardCustomizedFirst ()
 
-@property (nonatomic, strong) UIView                    *labelView;
+@property (nonatomic, strong) UIImageView               *labelBgIV;
 @property (nonatomic, strong) UIImageView               *textFieldView;
 
 @property (nonatomic, strong) UILabel          *promptLabel;
@@ -29,18 +29,14 @@
 - (void)setup{
     
     //姓名
-    _labelView = [[UIView alloc]initWithFrame:CGRectZero];
-    
-    UIImageView *bgIV = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"seg_two_bg"]];
-    [_labelView addSubview:bgIV];
-    
-    [self addSubview:_labelView];
+    _labelBgIV = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"seg_two_bg"]];
+    [self addSubview:_labelBgIV];
     
     NSArray *labelTitleArr = @[@"姓",@"名"];
     for (int i = 0; i<labelTitleArr.count; i++) {
         NSDictionary *titleLabelDic = @{@"text":labelTitleArr[i],@"font":kPingFangLight(15),@"textAlignment":@(NSTextAlignmentCenter)};
         UILabel *label = [ZSHBaseUIControl createLabelWithParamDic:titleLabelDic];
-        [_labelView addSubview:label];
+        [_labelBgIV addSubview:label];
     }
     
     //提示文字
@@ -87,31 +83,27 @@
     [self layoutIfNeeded];
     
     //姓名
-    [_labelView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_labelBgIV mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self).offset(kRealValue(20));
         make.centerX.mas_equalTo(self);
         make.size.mas_equalTo(CGSizeMake(kRealValue(199.5), kRealValue(30)));
     }];
     
-    [bgIV mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.mas_equalTo(_labelView);
-    }];
-    
-    int i = 0;
-    for (UILabel * label in _labelView.subviews) {
+    int k = 0;
+    for (UILabel * label in _labelBgIV.subviews) {
+       
         [label mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.mas_equalTo(_labelView).offset(kRealValue(99.5)*i);
-            make.top.mas_equalTo(_labelView);
+            make.left.mas_equalTo(_labelBgIV).offset(kRealValue(99.5)*k);
+            make.top.mas_equalTo(_labelBgIV);
             make.size.mas_equalTo(CGSizeMake(kRealValue(100), kRealValue(30)));
         }];
-        i++;
+        k++;
     }
-    
     
     [_promptLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self).offset(kRealValue(43));
         make.right.mas_equalTo(self).offset(-kRealValue(43));
-        make.top.mas_equalTo(_labelView.mas_bottom).offset(kRealValue(20));
+        make.top.mas_equalTo(_labelBgIV.mas_bottom).offset(kRealValue(20));
         make.height.mas_equalTo(kRealValue(17));
     }];
     

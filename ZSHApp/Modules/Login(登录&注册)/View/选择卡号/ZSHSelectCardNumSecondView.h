@@ -10,4 +10,6 @@
 
 @interface ZSHSelectCardNumSecondView : ZSHBaseView
 
+@property (nonatomic, assign)  CGFloat   viewHeight;
+
 @end
