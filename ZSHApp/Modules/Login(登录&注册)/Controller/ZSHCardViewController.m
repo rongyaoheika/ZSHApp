@@ -198,7 +198,7 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
             [weakself.tableView reloadSections:[NSIndexSet indexSetWithIndex:realSection] withRowAnimation:UITableViewRowAnimationFade];
         } else { //展开 - 合并
             [_selectedArr replaceObjectAtIndex:realSection withObject:@"0"];
-            [weakself updateAddressSectionModelWithTag:realSection];
+            [weakself updateOtherSectionModelWithTag:realSection];
             [weakself.tableView reloadSections:[NSIndexSet indexSetWithIndex:realSection] withRowAnimation:UITableViewRowAnimationFade];
         }
     };
