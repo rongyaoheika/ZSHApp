@@ -21,6 +21,8 @@
 @property (nonatomic, strong) UIButton             *titleBtn;
 @property (nonatomic, strong) ZSHBottomBlurPopView *topBtnListView;
 @property (nonatomic, assign) NSInteger            typeIndex; // 吃，喝，玩，乐
+@property (nonatomic, strong) NSArray              *typeDicArr; //字典数组
+@property (nonatomic, strong) NSArray              *typeArr; // 吃，喝，玩，乐
 @property (nonatomic, strong) NSMutableArray       *dataArr;
 @property (nonatomic, strong) ZSHTogetherLogic     *togetherLogic;
 
@@ -91,20 +93,7 @@ static NSString *ZSHEnterTainmentCellID = @"ZSHEnterTainmentCell";
     [UIView animateWithDuration:0.5 animations:^{
         button.imageView.transform =CGAffineTransformMakeRotation(angle);
         if (angle == M_PI ) {//下拉展开
-            weakself.topBtnListView = [weakself createBottomBlurPopViewWith:ZSHFromGoodsMineVCToToBottomBlurPopView];
-            [ZSHBaseUIControl setAnimationWithHidden:NO view:weakself.topBtnListView completedBlock:nil];
-            
-            //订单列表button点击
-            ZSHCardBtnListView *listView = [weakself.topBtnListView viewWithTag:2];
-            listView.btnClickBlock = ^(UIButton *btn) {
-                [weakself orderTypeBtnAction:btn];
-            };
-            
-            //点击背景消失
-            weakself.topBtnListView .dissmissViewBlock = ^(UIView *blurView, NSIndexPath *indexpath) {
-                [ZSHBaseUIControl setAnimationWithHidden:YES view:blurView completedBlock:nil];
-            };
-            
+            [weakself requestTogetherDataType];
         } else if(angle == 0){//收起
             [ZSHBaseUIControl setAnimationWithHidden:YES view:weakself.topBtnListView completedBlock:nil];
         }
@@ -116,7 +105,8 @@ static NSString *ZSHEnterTainmentCellID = @"ZSHEnterTainmentCell";
 
 #pragma getter
 - (ZSHBottomBlurPopView *)createBottomBlurPopViewWith:(ZSHFromVCToBottomBlurPopView)fromClassType{
-    NSDictionary *nextParamDic = @{KFromClassType:@(fromClassType),@"titleArr":@[@"吃",@"喝",@"玩",@"乐"]};
+    
+    NSDictionary *nextParamDic = @{KFromClassType:@(fromClassType),@"titleArr":self.typeArr};
     ZSHBottomBlurPopView *bottomBlurPopView = [[ZSHBottomBlurPopView alloc]initWithFrame:CGRectMake(0, KNavigationBarHeight, KScreenWidth, KScreenHeight-KNavigationBarHeight) paramDic:nextParamDic];
     bottomBlurPopView.blurRadius = 20;
     bottomBlurPopView.dynamic = NO;
@@ -138,10 +128,7 @@ static NSString *ZSHEnterTainmentCellID = @"ZSHEnterTainmentCell";
     for (int i = 0; i<_togetherLogic.entertainModelArr.count; i++) {
         ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
         [sectionModel.cellModelArray addObject:cellModel];
-        
-    
         ZSHEntertainmentModel *model = _togetherLogic.entertainModelArr[i];
-
         if (model.CONVERGEIMGS.count) {
             cellModel.height = kRealValue(250);
         } else {
@@ -199,24 +186,50 @@ static NSString *ZSHEnterTainmentCellID = @"ZSHEnterTainmentCell";
 //选中某类型
 - (void)orderTypeBtnAction:(UIButton *)orderBtn {
     _typeIndex = orderBtn.tag-1;
-    NSArray *titleArr = @[@"吃", @"喝", @"玩", @"乐"];
-    [_titleBtn setTitle:titleArr[_typeIndex] forState:UIControlStateNormal];
+    [_titleBtn setTitle:self.typeArr[_typeIndex] forState:UIControlStateNormal];
     switch (orderBtn.tag) {
         case 1:{//吃
-            
-            
+            [self changeButtonObject:_titleBtn TransformAngle:0];
+             _titleBtn.selected = !_titleBtn.selected;
             break;
         }
         case 2:// 喝
         case 3:// 玩
         case 4:{// 乐
-       
-            
+            [self changeButtonObject:_titleBtn TransformAngle:0];
+             _titleBtn.selected = !_titleBtn.selected;
             break;
         }
         default:
             break;
+           
     }
+}
+
+- (void)requestTogetherDataType{//吃喝玩乐类型
+    kWeakSelf(self);
+    NSMutableArray *mTypeArr = [[NSMutableArray alloc]init];
+    [_togetherLogic requestTogetherDataTypeWithACONVERGE_ID:self.paramDic[@"CONVERGE_ID"]  success:^(id response) {
+        _typeDicArr = response;
+        for (NSDictionary *dic in _typeDicArr) {
+            [mTypeArr addObject:dic[@"NAME"]];
+        }
+        _typeArr = mTypeArr;
+        weakself.topBtnListView = [weakself createBottomBlurPopViewWith:ZSHFromGoodsMineVCToToBottomBlurPopView];
+        [ZSHBaseUIControl setAnimationWithHidden:NO view:weakself.topBtnListView completedBlock:nil];
+        
+        //订单列表button点击
+        ZSHCardBtnListView *listView = [weakself.topBtnListView viewWithTag:2];
+        listView.btnClickBlock = ^(UIButton *btn) {
+            [weakself orderTypeBtnAction:btn];
+        };
+        
+        //点击背景消失
+        weakself.topBtnListView .dissmissViewBlock = ^(UIView *blurView, NSIndexPath *indexpath) {
+            [ZSHBaseUIControl setAnimationWithHidden:YES view:blurView completedBlock:nil];
+        };
+    }];
+    
 }
 
 
