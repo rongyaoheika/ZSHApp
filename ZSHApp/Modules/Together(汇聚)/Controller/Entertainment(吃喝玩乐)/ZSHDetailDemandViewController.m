@@ -88,9 +88,14 @@
     
     
     kWeakSelf(self);
+    __weak typeof(_titleTextView)weakTitleTextView = _titleTextView;
     _titleTextView.beginEdit = ^{
         ZSHTopicViewController *topicVC = [[ZSHTopicViewController alloc]init];
         [weakself.navigationController pushViewController:topicVC animated:YES];
+        topicVC.didSelectRow = ^(NSString *topicTitle) {
+            weakTitleTextView.text = topicTitle;
+            
+        };
     };
     
     _contentTextView = [[XXTextView alloc] init];

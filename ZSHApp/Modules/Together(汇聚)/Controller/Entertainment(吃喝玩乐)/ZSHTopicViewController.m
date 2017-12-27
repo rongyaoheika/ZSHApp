@@ -7,13 +7,16 @@
 //
 
 #import "ZSHTopicViewController.h"
+#import "ZSHTopicCell.h"
+#import "ZSHTopicModel.h"
 
-@interface ZSHTopicViewController ()<UISearchControllerDelegate,UISearchResultsUpdating>
+@interface ZSHTopicViewController ()<UITableViewDelegate,UITableViewDataSource, UISearchBarDelegate>
 
 @property (strong, nonatomic)  UISearchController *searchController;
 @property (strong, nonatomic)  NSMutableArray  *dataList;
 @property (strong, nonatomic)  NSMutableArray  *searchList;
-
+@property (copy,   nonatomic)  NSString        *searhText;
+@property (assign, nonatomic)  BOOL            isSearchState;
 @end
 
 @implementation ZSHTopicViewController
@@ -27,127 +30,147 @@
 }
 
 - (void)loadData{
-    _dataList = [NSMutableArray array];
     _searchList = [NSMutableArray array];
-    self.dataList = [NSMutableArray arrayWithCapacity:100];
+    _dataList = [NSMutableArray array];
     
-    //产生100个“数字+三个随机字母”
-    for (NSInteger i=0; i<100; i++) {
-        [self.dataList addObject:[NSString stringWithFormat:@"%ld%@",(long)i,[self shuffledAlphabet]]];
-    }
-    
-    
-    [self initViewModel];
-}
+   NSArray *dataArr = [[NSMutableArray alloc]initWithObjects:@"ganen",@"#新年倒计时#",@"#舍不得删掉的聊天记录#",@"#冻死宝宝了#",@"#保护员工#",@"MicroSoft",@"Oracle",@"凯迪拉克",@"甲骨文",@"MSUNSOFT",@"数据",@"中国",@"联想",@"格力",@"苹果电脑",@"Iphone6s",@"中关村",@"东方明珠",@"美莲广场",@"火车站",nil];
 
-//产生3个随机字母
-- (NSString *)shuffledAlphabet {
-    NSMutableArray * shuffledAlphabet = [NSMutableArray arrayWithArray:@[@"A",@"B",@"C",@"D",@"E",@"F",@"G",@"H",@"I",@"J",@"K",@"L",@"M",@"N",@"O",@"P",@"Q",@"R",@"S",@"T",@"U",@"V",@"W",@"X",@"Y",@"Z"]];
-    
-    NSString *strTest = [[NSString alloc]init];
-    for (int i=0; i<3; i++) {
-        int x = arc4random() % 25;
-        strTest = [NSString stringWithFormat:@"%@%@",strTest,shuffledAlphabet[x]];
+    for (int i = 0; i<dataArr.count; i++) {
+        ZSHTopicModel *topicModel = [[ZSHTopicModel alloc]init];
+        NSString * PinYin = [dataArr[i] transformToPinyin];
+        NSString * FirstLetter = [dataArr[i] transformToPinyinFirstLetter];
+
+        topicModel.title = dataArr[i];
+        topicModel.titlePinYin = PinYin;
+        topicModel.titleFirstLetter = FirstLetter;
+        
+        [self.dataList addObject:topicModel];
     }
-    return strTest;
 }
 
 - (void)createUI{
-
-    self.searchController = [[UISearchController alloc]initWithSearchResultsController:nil];
-    _searchController.delegate = self;
-    _searchController.searchResultsUpdater= self;
-    //搜索时，背景变暗色
-    _searchController.dimsBackgroundDuringPresentation = NO;
-    //搜索时，背景变模糊
-    _searchController.obscuresBackgroundDuringPresentation = NO;
-    //隐藏导航栏
-    _searchController.hidesNavigationBarDuringPresentation = NO;
-    _searchController.searchBar.frame = CGRectMake(self.searchController.searchBar.frame.origin.x, self.searchController.searchBar.frame.origin.y, self.searchController.searchBar.frame.size.width, 44.0);
-    _searchController.searchBar.searchBarStyle = UISearchBarStyleMinimal;
-    _searchController.searchBar.backgroundColor = [UIColor whiteColor];
     
-//    self.navigationItem.titleView = self.searchView;
-//    self.searchView.searchBar.delegate = self;
+    self.navigationItem.titleView = self.searchView;
+    self.searchView.searchBar.delegate = self;
     
     [self.view addSubview:self.tableView];
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.mas_equalTo(self.view);
+        make.edges.mas_equalTo(self.view).insets(UIEdgeInsetsMake(KNavigationBarHeight, 0, 0, 0));
     }];
     
-    self.tableView.delegate = self.tableViewModel;
-    self.tableView.dataSource = self.tableViewModel;
-    [self.tableView registerClass:[ZSHBaseCell class] forCellReuseIdentifier:@"ZSHBaseCell"];
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    [self.tableView registerClass:[ZSHTopicCell class] forCellReuseIdentifier:@"ZSHTopicCell"];
     self.tableView.tableHeaderView = _searchController.searchBar;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    self.tableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
+    self.tableView.separatorColor = KZSHColor1D1D1D;
     
 }
 
-- (void)initViewModel {
-    [self.tableViewModel.sectionModelArray removeAllObjects];
-    [self.tableViewModel.sectionModelArray addObject:[self storeListSection]];
-    [self.tableView reloadData];
-}
-
-//list
-- (ZSHBaseTableViewSectionModel*)storeListSection {
-    ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
-    NSArray *realDataArr = nil;
-    if (self.searchController.active) {
-        realDataArr =  self.searchList;
+//设置区域的行数
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    if (_isSearchState) {
+        if (self.searchList.count > 0) {
+            return self.searchList.count;
+        } else {//无搜索结果
+            return 1;
+        }
     } else {
-        realDataArr = self.dataList;
+        return self.dataList.count;
     }
-    
-    
-    
-    for (int i = 0; i < realDataArr.count; i++) {
-        ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
-        [sectionModel.cellModelArray addObject:cellModel];
-        cellModel.height = kRealValue(50);
-        cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
-            ZSHBaseCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ZSHBaseCell" forIndexPath:indexPath];
-            cell.imageView.image = [UIImage imageWithColor:[UIColor redColor]];
-            if (self.searchController.active) {
-                [cell.textLabel setText:self.searchList[indexPath.row]];
-            } else {
-                [cell.textLabel setText:self.dataList[indexPath.row]];
-            }
-            
-            return cell;
-        };
-        
-        cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
-           
-        };
-    }
-    
-    return sectionModel;
 }
 
--(void)updateSearchResultsForSearchController:(UISearchController *)searchController {
-    
-    // 修改UISearchBar右侧的取消按钮文字颜色及背景图片
-    searchController.searchBar.showsCancelButton = YES;
-    for (id searchbuttons in [[searchController.searchBar subviews][0] subviews]) //只需在此处修改即可
-        
-        if ([searchbuttons isKindOfClass:[UIButton class]]) {
-            UIButton *cancelButton = (UIButton*)searchbuttons;
-            // 修改文字颜色
-            [cancelButton setTitle:@"返回"forState:UIControlStateNormal];
-            [cancelButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return kRealValue(80);
+}
+
+//返回单元格内容
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    static NSString *cellId = @"ZSHTopicCell";
+    ZSHTopicCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId forIndexPath:indexPath];
+    ZSHTopicModel *topicModel = nil;
+    if (_isSearchState) {
+        if (self.searchList.count) {
+            topicModel = self.searchList[indexPath.row];
+            cell.topLabel.text = topicModel.title;
+        } else {
+           
         }
     
+    } else {
+        topicModel = self.dataList[indexPath.row];
+        cell.topLabel.text = topicModel.title;
+    }
     
-    NSLog(@"updateSearchResultsForSearchController");
-    NSString *searchString = [self.searchController.searchBar text];
-    NSPredicate *preicate = [NSPredicate predicateWithFormat:@"SELF CONTAINS[c] %@", searchString];
-    if (self.searchList!= nil) {
+    
+    return cell;
+}
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
+    if (self.searchList.count > 0) {
         [self.searchList removeAllObjects];
     }
-    //过滤数据
-    self.searchList= [NSMutableArray arrayWithArray:[_dataList filteredArrayUsingPredicate:preicate]];
-    //刷新表格
+    
+    // 开始搜索
+    NSString *key = searchText.lowercaseString;
+    NSMutableArray *tempArr = [NSMutableArray array];
+    if (![key isEqualToString:@""] && ![key isEqual:[NSNull null]]) {
+        [self.dataList enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            ZSHTopicModel * topicModel = self.dataList[idx];
+            NSString * title = topicModel.title.lowercaseString;
+            NSString * titlePinyin = topicModel.titlePinYin.lowercaseString;
+            NSString * titleFirstLetter = topicModel.titleFirstLetter.lowercaseString;
+            NSRange rang1 = [title rangeOfString:key];
+            if (rang1.length > 0) {
+                [tempArr addObject:topicModel];
+            } else {
+                if ([titleFirstLetter containsString:key]) {
+                    [tempArr addObject:topicModel];
+                } else {
+                    if ([titleFirstLetter containsString:[key substringToIndex:1]]) {
+                        if ([titlePinyin containsString:key]) {
+                            [tempArr addObject:topicModel];
+                        }
+                    }
+                }
+            }
+            
+        }];
+        
+        [tempArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if (![self.searchList containsObject:tempArr[idx]]) {
+                [self.searchList addObject:tempArr[idx]];
+            }
+        }];
+        
+        self.isSearchState = YES;
+        if (!self.searchList.count) {
+            NSIndexPath *index = [NSIndexPath indexPathForRow:0 inSection:0];
+            ZSHTopicCell *cell = [self.tableView cellForRowAtIndexPath:index];
+            cell.topLabel.text = searchText;
+            
+//            UILabel * noResultLab = [[UILabel alloc] initWithFrame:CGRectMake(0,0,KScreenWidth,kRealValue(80))];
+//            noResultLab.font = [UIFont systemFontOfSize:20];
+//            noResultLab.textColor = [UIColor lightGrayColor];
+//            noResultLab.text = searchText;
+//            [self.tableView addSubview:noResultLab];
+            
+        }
+        
+    } else {
+        self.isSearchState = NO;
+    }
+    
     [self.tableView reloadData];
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    ZSHTopicCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+    if (self.didSelectRow) {
+        self.didSelectRow(cell.topLabel.text);
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 - (void)didReceiveMemoryWarning {

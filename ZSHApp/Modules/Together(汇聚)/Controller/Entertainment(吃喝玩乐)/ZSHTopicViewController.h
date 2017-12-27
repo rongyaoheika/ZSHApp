@@ -8,6 +8,10 @@
 
 #import "RootViewController.h"
 
+typedef void (^DidSelectRowBlock)(NSString *topicTitle);
+
 @interface ZSHTopicViewController : RootViewController
+
+@property (nonatomic, copy) DidSelectRowBlock   didSelectRow;
 
 @end

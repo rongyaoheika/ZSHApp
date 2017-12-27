@@ -462,6 +462,9 @@
 		FEC273A71F8E1FD700A0F91A /* ZSHNoticeViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC273A61F8E1FD700A0F91A /* ZSHNoticeViewCell.m */; };
 		FEC2F64D1FF2942100C24067 /* ZSHTopicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC2F64C1FF2942100C24067 /* ZSHTopicViewController.m */; };
 		FEC702B41FB3195000D5BAA1 /* ZSHEntertainmentDisViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC702B31FB3195000D5BAA1 /* ZSHEntertainmentDisViewController.m */; };
+		FED0BB461FF33604004B0783 /* ZSHTopicCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FED0BB451FF33604004B0783 /* ZSHTopicCell.m */; };
+		FED0BB491FF374A8004B0783 /* ZSHTopicModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FED0BB481FF374A8004B0783 /* ZSHTopicModel.m */; };
+		FED0BB4C1FF3763F004B0783 /* NSString+pinyin.m in Sources */ = {isa = PBXBuildFile; fileRef = FED0BB4B1FF3763E004B0783 /* NSString+pinyin.m */; };
 		FED308981FA414D900CD442B /* ZSHHotelDetailDeviceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FED308971FA414D900CD442B /* ZSHHotelDetailDeviceCell.m */; };
 		FED3C85C1FE7D02900E5F458 /* ZSHGoodsDetailCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FED3C85B1FE7D02900E5F458 /* ZSHGoodsDetailCommentCell.m */; };
 		FEDC1D9B1FC5109200AB0D92 /* ZSHButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEDC1D9A1FC5109200AB0D92 /* ZSHButtonView.m */; };
@@ -1358,6 +1361,12 @@
 		FEC2F64C1FF2942100C24067 /* ZSHTopicViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHTopicViewController.m; sourceTree = "<group>"; };
 		FEC702B21FB3195000D5BAA1 /* ZSHEntertainmentDisViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHEntertainmentDisViewController.h; sourceTree = "<group>"; };
 		FEC702B31FB3195000D5BAA1 /* ZSHEntertainmentDisViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHEntertainmentDisViewController.m; sourceTree = "<group>"; };
+		FED0BB441FF33604004B0783 /* ZSHTopicCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHTopicCell.h; sourceTree = "<group>"; };
+		FED0BB451FF33604004B0783 /* ZSHTopicCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHTopicCell.m; sourceTree = "<group>"; };
+		FED0BB471FF374A8004B0783 /* ZSHTopicModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHTopicModel.h; sourceTree = "<group>"; };
+		FED0BB481FF374A8004B0783 /* ZSHTopicModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHTopicModel.m; sourceTree = "<group>"; };
+		FED0BB4A1FF3763E004B0783 /* NSString+pinyin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+pinyin.h"; sourceTree = "<group>"; };
+		FED0BB4B1FF3763E004B0783 /* NSString+pinyin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+pinyin.m"; sourceTree = "<group>"; };
 		FED308961FA414D900CD442B /* ZSHHotelDetailDeviceCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHHotelDetailDeviceCell.h; sourceTree = "<group>"; };
 		FED308971FA414D900CD442B /* ZSHHotelDetailDeviceCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHHotelDetailDeviceCell.m; sourceTree = "<group>"; };
 		FED3C85A1FE7D02900E5F458 /* ZSHGoodsDetailCommentCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHGoodsDetailCommentCell.h; sourceTree = "<group>"; };
@@ -3236,6 +3245,8 @@
 		FE5537F31F47049D00803128 /* Category */ = {
 			isa = PBXGroup;
 			children = (
+				FED0BB4A1FF3763E004B0783 /* NSString+pinyin.h */,
+				FED0BB4B1FF3763E004B0783 /* NSString+pinyin.m */,
 				FE1783B71FDBD2660074A08A /* UIImage+ImageEffects.h */,
 				FE1783B61FDBD2650074A08A /* UIImage+ImageEffects.m */,
 				FEA105791F9B2738008652D6 /* UIView+ZSHExtension.h */,
@@ -3937,6 +3948,8 @@
 				FEF2B63F1FACBCE5000AEA6E /* ZSHEntertainmentDetailCell.m */,
 				FEDF28F71FB68C1C00CD5756 /* ZSHAgeView.h */,
 				FEDF28F81FB68C1C00CD5756 /* ZSHAgeView.m */,
+				FED0BB441FF33604004B0783 /* ZSHTopicCell.h */,
+				FED0BB451FF33604004B0783 /* ZSHTopicCell.m */,
 			);
 			path = "Entertainment（吃喝玩乐）";
 			sourceTree = "<group>";
@@ -3948,6 +3961,8 @@
 				FEF2B6391FAC5D39000AEA6E /* ZSHEntertainmentModel.m */,
 				1865D8D41FC7CD5A004170F1 /* ZSHEnterDisModel.h */,
 				1865D8D51FC7CD5A004170F1 /* ZSHEnterDisModel.m */,
+				FED0BB471FF374A8004B0783 /* ZSHTopicModel.h */,
+				FED0BB481FF374A8004B0783 /* ZSHTopicModel.m */,
 			);
 			path = "Entertainment(吃喝玩乐)";
 			sourceTree = "<group>";
@@ -4254,6 +4269,7 @@
 				185C6D8D1FC2D98A004EA461 /* LZShopModel.m in Sources */,
 				FE9CC3D11FA031F600285475 /* FXBlurView.h in Sources */,
 				FE9CC3D21FA031F600285475 /* FXBlurView.m in Sources */,
+				FED0BB491FF374A8004B0783 /* ZSHTopicModel.m in Sources */,
 				FE7CA9D51F9D8DAC00A2B15D /* ZSHGoodsDetailShufflingHeadView.h in Sources */,
 				FEE6AA331FCDC2E8001B5528 /* ZSHGuideLogic.m in Sources */,
 				FEA1057B1F9B274E008652D6 /* UIView+ZSHExtension.h in Sources */,
@@ -4450,9 +4466,11 @@
 				FE2555131FD2AB33002B3786 /* ZSHBarDetailViewController.m in Sources */,
 				FE1F761C1F8F191300C45B83 /* ZSHGoodsListView.m in Sources */,
 				FEADBD2A1FBEBBC00065B94B /* ZSHCardCustomizedThird.m in Sources */,
+				FED0BB4C1FF3763F004B0783 /* NSString+pinyin.m in Sources */,
 				FEF416001FAB70EB00137F0A /* ZSHAirTicketDetailViewController.m in Sources */,
 				FEDF292A1FB6DA3000CD5756 /* ZSHLiveRoomViewController.m in Sources */,
 				FE4DB1ED1F99998B008E12E9 /* ZSHBaseCollectionViewCell.m in Sources */,
+				FED0BB461FF33604004B0783 /* ZSHTopicCell.m in Sources */,
 				FE3683C01FBC02B300220477 /* ZSHCardViewController.m in Sources */,
 				FEADBD261FBEBBC00065B94B /* ZSHCardBtnListView.m in Sources */,
 				FE50245E1F8A2413005F0FF7 /* ZSHBaseLogic.m in Sources */,

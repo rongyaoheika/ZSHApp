@@ -19,6 +19,7 @@
 #import <TZVideoPlayerController.h>
 #import "XXTextView.h"
 #import "ZSHLiveLogic.h"
+#import "ZSHTopicViewController.h"
 
 @interface ZSHWeiboWriteController ()<TZImagePickerControllerDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 {
@@ -33,6 +34,7 @@
 @property (strong, nonatomic) UICollectionViewFlowLayout     *layout;
 
 @property (nonatomic, strong) ZSHLiveLogic *liveLogic;
+@property (nonatomic, strong) XXTextView *titleTextView;
 @property (nonatomic, strong) XXTextView *contentTextView;
 
 @end
@@ -56,20 +58,51 @@
     [self addNavigationItemWithTitles:@[@"取消"] isLeft:true target:self action:@selector(cancelAction) tags:@[@(1)]];
     [self addNavigationItemWithTitles:@[@"去发布"] isLeft:NO target:self action:@selector(distributeAction) tags:@[@(2)]];
     
+    
+    _titleTextView = [[XXTextView alloc] init];
+    _titleTextView.backgroundColor = KZSHColor181818;
+    _titleTextView.textColor = [UIColor whiteColor];
+    _titleTextView.textContainerInset = UIEdgeInsetsMake(10, 10, 10, 10);
+    _titleTextView.font = [UIFont systemFontOfSize:15];
+    _titleTextView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
+    _titleTextView.xx_placeholder = @"标题";
+    _titleTextView.xx_placeholderFont = [UIFont systemFontOfSize:15];
+    _titleTextView.xx_placeholderColor = KZSHColor454545;
+    [self.view addSubview:_titleTextView];
+    [_titleTextView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(self.view).offset(kRealValue(79));
+        make.left.mas_equalTo(self.view).offset(kRealValue(15));
+        make.right.mas_equalTo(self.view).offset(kRealValue(-15));
+        make.height.mas_equalTo(kRealValue(43.5));
+    }];
+    
+    
+    kWeakSelf(self);
+    __weak typeof(_titleTextView)weakTitleTextView = _titleTextView;
+    _titleTextView.beginEdit = ^{
+        ZSHTopicViewController *topicVC = [[ZSHTopicViewController alloc]init];
+        [weakself.navigationController pushViewController:topicVC animated:YES];
+        topicVC.didSelectRow = ^(NSString *topicTitle) {
+            weakTitleTextView.text = topicTitle;
+        };
+    };
+    
     XXTextView *contentTextView = [[XXTextView alloc] init];
     contentTextView.backgroundColor = KZSHColor181818;
     contentTextView.textColor = [UIColor whiteColor];
     contentTextView.font = [UIFont systemFontOfSize:15];
+    contentTextView.textContainerInset = UIEdgeInsetsMake(10, 10, 10, 10);
     contentTextView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
     contentTextView.keyboardAppearance = UIKeyboardAppearanceDark;
     contentTextView.xx_placeholder = @"请输入内容";
     contentTextView.xx_placeholderFont = [UIFont systemFontOfSize:15];
     contentTextView.xx_placeholderColor = KZSHColor454545;
     [self.view addSubview:contentTextView];
-    [contentTextView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.view).offset(kRealValue(KLeftMargin+KNavigationBarHeight));
-        make.left.mas_equalTo(self.view).offset(kRealValue(KLeftMargin));
-        make.size.mas_equalTo(CGSizeMake(KScreenWidth-30, kRealValue(177)));
+    [contentTextView mas_makeConstraints:^(MASConstraintMaker *make) {        
+        make.top.mas_equalTo(self.view).offset(kRealValue(123));
+        make.left.mas_equalTo(self.view).offset(kRealValue(15));
+        make.right.mas_equalTo(self.view).offset(kRealValue(-15));
+        make.height.mas_equalTo(kRealValue(144));
     }];
     self.contentTextView = contentTextView;
     
