@@ -20,9 +20,9 @@
 @property (nonatomic, strong) ZSHGuideView         *guideView;
 @property (nonatomic, strong) UIButton             *titleBtn;
 @property (nonatomic, strong) ZSHBottomBlurPopView *topBtnListView;
-@property (nonatomic, assign) NSInteger            typeIndex; // 吃，喝，玩，乐
+@property (nonatomic, assign) NSInteger            typeIndex;
 @property (nonatomic, strong) NSArray              *typeDicArr; //字典数组
-@property (nonatomic, strong) NSArray              *typeArr; // 吃，喝，玩，乐
+@property (nonatomic, strong) NSArray              *typeArr;
 @property (nonatomic, strong) NSMutableArray       *dataArr;
 @property (nonatomic, strong) ZSHTogetherLogic     *togetherLogic;
 

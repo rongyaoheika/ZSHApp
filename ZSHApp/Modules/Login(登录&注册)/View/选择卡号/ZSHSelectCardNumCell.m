@@ -89,7 +89,6 @@
         make.height.mas_equalTo(_secondView.viewHeight);
     }];
     
-//    [self layoutIfNeeded];
 }
 
 #pragma getter
