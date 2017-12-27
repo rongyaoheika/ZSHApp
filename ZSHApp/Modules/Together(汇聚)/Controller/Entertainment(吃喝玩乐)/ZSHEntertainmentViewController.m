@@ -12,11 +12,15 @@
 #import "ZSHEntertainmentDetailViewController.h"
 #import "ZSHEntertainmentDisViewController.h"
 #import "ZSHTogetherLogic.h"
+#import "ZSHBottomBlurPopView.h"
+#import "ZSHCardBtnListView.h"
 #import "ZSHGuideView.h"
-
 @interface ZSHEntertainmentViewController ()
 
 @property (nonatomic, strong) ZSHGuideView         *guideView;
+@property (nonatomic, strong) UIButton             *titleBtn;
+@property (nonatomic, strong) ZSHBottomBlurPopView *topBtnListView;
+@property (nonatomic, assign) NSInteger            typeIndex; // 吃，喝，玩，乐
 @property (nonatomic, strong) NSMutableArray       *dataArr;
 @property (nonatomic, strong) ZSHTogetherLogic     *togetherLogic;
 
@@ -39,7 +43,9 @@ static NSString *ZSHEnterTainmentCellID = @"ZSHEnterTainmentCell";
 }
 
 - (void)createUI{
-    self.title = self.paramDic[@"Title"];
+    self.navigationItem.titleView = self.titleBtn;
+    self.titleBtn.frame = CGRectMake(0, 0, 75, 20);
+    [self.titleBtn layoutButtonWithEdgeInsetsStyle:XYButtonEdgeInsetsStyleRight imageTitleSpace:kRealValue(15)];
     
     [self addNavigationItemWithTitles:@[@"去发布"] isLeft:NO target:self action:@selector(distributeAction) tags:@[@(1)]];
 
@@ -58,6 +64,65 @@ static NSString *ZSHEnterTainmentCellID = @"ZSHEnterTainmentCell";
         _guideView = [[ZSHGuideView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, kRealValue(175)) paramDic:nextParamDic];
     }
     return _guideView;
+}
+
+
+- (UIButton *)titleBtn{
+    if (!_titleBtn) {
+        NSDictionary *titleBtnDic = @{@"title":self.paramDic[@"Title"],@"font":kPingFangMedium(17)};
+        _titleBtn = [ZSHBaseUIControl createBtnWithParamDic:titleBtnDic];
+        [_titleBtn addTarget:self action:@selector(titleBtnAction) forControlEvents:UIControlEventTouchUpInside];
+        [_titleBtn setImage:[UIImage imageNamed:@"hotel_btn"] forState:UIControlStateNormal];
+    }
+    return _titleBtn;
+}
+
+- (void)titleBtnAction{
+    _titleBtn.selected = !_titleBtn.selected;
+    if (_titleBtn.selected) {
+        [self changeButtonObject:_titleBtn TransformAngle:M_PI];
+    } else {
+        [self changeButtonObject:_titleBtn TransformAngle:0];
+    }
+}
+
+-(void)changeButtonObject:(UIButton *)button TransformAngle:(CGFloat)angle{
+    kWeakSelf(self);
+    [UIView animateWithDuration:0.5 animations:^{
+        button.imageView.transform =CGAffineTransformMakeRotation(angle);
+        if (angle == M_PI ) {//下拉展开
+            weakself.topBtnListView = [weakself createBottomBlurPopViewWith:ZSHFromGoodsMineVCToToBottomBlurPopView];
+            [ZSHBaseUIControl setAnimationWithHidden:NO view:weakself.topBtnListView completedBlock:nil];
+            
+            //订单列表button点击
+            ZSHCardBtnListView *listView = [weakself.topBtnListView viewWithTag:2];
+            listView.btnClickBlock = ^(UIButton *btn) {
+                [weakself orderTypeBtnAction:btn];
+            };
+            
+            //点击背景消失
+            weakself.topBtnListView .dissmissViewBlock = ^(UIView *blurView, NSIndexPath *indexpath) {
+                [ZSHBaseUIControl setAnimationWithHidden:YES view:blurView completedBlock:nil];
+            };
+            
+        } else if(angle == 0){//收起
+            [ZSHBaseUIControl setAnimationWithHidden:YES view:weakself.topBtnListView completedBlock:nil];
+        }
+        
+    } completion:^(BOOL finished) {
+        
+    }];
+}
+
+#pragma getter
+- (ZSHBottomBlurPopView *)createBottomBlurPopViewWith:(ZSHFromVCToBottomBlurPopView)fromClassType{
+    NSDictionary *nextParamDic = @{KFromClassType:@(fromClassType),@"titleArr":@[@"吃",@"喝",@"玩",@"乐"]};
+    ZSHBottomBlurPopView *bottomBlurPopView = [[ZSHBottomBlurPopView alloc]initWithFrame:CGRectMake(0, KNavigationBarHeight, KScreenWidth, KScreenHeight-KNavigationBarHeight) paramDic:nextParamDic];
+    bottomBlurPopView.blurRadius = 20;
+    bottomBlurPopView.dynamic = NO;
+    bottomBlurPopView.tintColor = KClearColor;
+    [bottomBlurPopView setBlurEnabled:YES];
+    return bottomBlurPopView;
 }
 
 - (void)initViewModel {
@@ -130,5 +195,29 @@ static NSString *ZSHEnterTainmentCellID = @"ZSHEnterTainmentCell";
         [weakself.guideView updateViewWithParamDic:@{@"dataArr":response}];
     }];
 }
+
+//选中某类型
+- (void)orderTypeBtnAction:(UIButton *)orderBtn {
+    _typeIndex = orderBtn.tag-1;
+    NSArray *titleArr = @[@"吃", @"喝", @"玩", @"乐"];
+    [_titleBtn setTitle:titleArr[_typeIndex] forState:UIControlStateNormal];
+    switch (orderBtn.tag) {
+        case 1:{//吃
+            
+            
+            break;
+        }
+        case 2:// 喝
+        case 3:// 玩
+        case 4:{// 乐
+       
+            
+            break;
+        }
+        default:
+            break;
+    }
+}
+
 
 @end

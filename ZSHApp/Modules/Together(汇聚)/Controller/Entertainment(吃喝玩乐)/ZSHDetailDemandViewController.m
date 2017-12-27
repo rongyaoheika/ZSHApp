@@ -20,6 +20,7 @@
 #import <TZVideoPlayerController.h>
 #import "ZSHEnterDisModel.h"
 #import "ZSHTogetherLogic.h"
+#import "ZSHTopicViewController.h"
 
 @interface ZSHDetailDemandViewController ()<TZImagePickerControllerDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 {
@@ -84,6 +85,13 @@
         make.right.mas_equalTo(self.view).offset(kRealValue(-15));
         make.height.mas_equalTo(kRealValue(43.5));
     }];
+    
+    
+    kWeakSelf(self);
+    _titleTextView.beginEdit = ^{
+        ZSHTopicViewController *topicVC = [[ZSHTopicViewController alloc]init];
+        [weakself.navigationController pushViewController:topicVC animated:YES];
+    };
     
     _contentTextView = [[XXTextView alloc] init];
     _contentTextView.backgroundColor = KZSHColor181818;

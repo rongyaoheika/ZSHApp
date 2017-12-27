@@ -63,7 +63,7 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
     self.tableView.delegate = self.tableViewModel;
     self.tableView.dataSource = self.tableViewModel;
     [self.tableView registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHAddressViewID];
-    [self.tableView reloadData];
+    [self.tableView reloadData];//
     
     ZSHCardCommitBottomView *bottomView = [[ZSHCardCommitBottomView alloc]initWithFrame:CGRectMake(0, KScreenHeight - KBottomTabH, KScreenWidth, KBottomTabH)];
     kWeakSelf(self);
@@ -202,8 +202,6 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
             [weakself.tableView reloadSections:[NSIndexSet indexSetWithIndex:realSection] withRowAnimation:UITableViewRowAnimationFade];
         }
     };
-    
-    [self.tableView reloadData];
     return cardSubView;
 }
 
@@ -286,18 +284,23 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
         }
             
         case 4:{ //选取卡号
-            kWeakSelf(self);
+//            kWeakSelf(self);
             ZSHBaseTableViewSectionModel *sectionModel = self.tableViewModel.sectionModelArray[tag];
             if ([_selectedArr[tag] isEqualToString:@"1"])  {
                 ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
                 [sectionModel.cellModelArray addObject:cellModel];
-//                     kWeakSelf(cellModel);
+//                kWeakSelf(cellModel);
                 cellModel.height = kRealValue(1200);
                 cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
                     ZSHSelectCardNumCell *cell = [[ZSHSelectCardNumCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@""];
+//                    weakcellModel.height = CGRectGetMaxY(cell.bottomScrollView.frame);
+//
+//                    cell.cellHeightBlock = ^(CGFloat cellHeight) {
+//                        weakcellModel.height = cellHeight;
+//                        [weakself.tableView reloadData];
+//                    };
+
                     
-//                        [cell selectedByIndex:1];
-//                        weakcellModel.height = [cell rowHeightWithCellModel:nil];
                     return cell;
                 };
             } else {

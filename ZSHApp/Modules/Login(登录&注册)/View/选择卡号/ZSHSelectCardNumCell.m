@@ -39,6 +39,13 @@
     
     _secondView = [[ZSHSelectCardNumSecondView alloc]initWithFrame:CGRectZero];
     [self.bottomScrollView addSubview:_secondView];
+    
+    [self layoutIfNeeded];
+}
+
+- (void)layoutSubviews{
+    [super layoutSubviews];
+
     [_titleView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self).offset(kRealValue(20));
         make.centerX.mas_equalTo(self);
@@ -83,11 +90,6 @@
     }];
     
 //    [self layoutIfNeeded];
-}
-
-- (void)layoutSubviews{
-    [super layoutSubviews];
-    
 }
 
 #pragma getter
