@@ -268,6 +268,7 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
         }
             break;
             
+
         case 3:
         case 4:
         case 5:
@@ -286,6 +287,7 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
                 }
             };
             return cardSubView;
+
         }
             break;
             

@@ -223,7 +223,6 @@
     kWeakSelf(self);
     if (!_titleView) {
         _titleView = [[LXScollTitleView alloc] initWithFrame:CGRectMake(0, KNavigationBarHeight, KScreenWidth, kRealValue(35))];
-
         _titleView.normalImage = self.titleBtnImage;
         _titleView.imageStyle = self.imageStyle;
         _titleView.imageTitleSpace = self.imageTitleSpace;
