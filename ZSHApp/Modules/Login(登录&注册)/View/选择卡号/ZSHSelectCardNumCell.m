@@ -17,7 +17,7 @@
 @property (nonatomic, strong) LXScollTitleView              *titleView;
 @property (nonatomic, strong) ZSHSelectCardNumFirstView     *firstView;
 @property (nonatomic, strong) ZSHSelectCardNumSecondView    *secondView;
-@property (nonatomic, assign) NSInteger                     selectIndex;
+@property (nonatomic, strong) UIScrollView                  *bottomScrollView;
 
 @end
 
@@ -26,10 +26,10 @@
 - (void)setup{
     NSArray *btnTitleArr = @[@"随机",@"选号"];
     [self.contentView addSubview:self.titleView];
+    self.titleView.selectedIndex = 0;
     
     _bgIV = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"seg_two_bg"]];
     [self.titleView addSubview:_bgIV];
-    
     [self.titleView reloadViewWithTitles:btnTitleArr];
     
     [self.contentView addSubview:self.bottomScrollView];
@@ -69,7 +69,6 @@
     
     self.bottomScrollView.contentSize = CGSizeMake(2*kScreenWidth, 0);
     CGFloat scrollViewH = (_selectIndex == 0?_firstView.viewHeight:_secondView.viewHeight);
-    RLog(@"scrollViewH == %f,viewheight== %f, %f", scrollViewH, _firstView.viewHeight,_secondView.viewHeight);
     [self.bottomScrollView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.mas_equalTo(self).insets(UIEdgeInsetsMake(kRealValue(50), 0, 0, 0));
         make.height.mas_equalTo(scrollViewH);
@@ -116,9 +115,7 @@
         _titleView.indicatorHeight = 0;
         __weak typeof(self) weakSelf = self;
         _titleView.selectedBlock = ^(NSInteger index){
-            __weak typeof(self) strongSelf = weakSelf;
             weakSelf.selectIndex = index;
-            [strongSelf.bottomScrollView setContentOffset:CGPointMake(index * KScreenWidth, 0) animated:YES];
         };
         _titleView.titleWidth = kRealValue(100);
     }
@@ -127,27 +124,20 @@
 
 - (void)setSelectIndex:(NSInteger)selectIndex{
     _selectIndex = selectIndex;
-    [self layoutSubviews];
-    
-    CGFloat cellHeight = 0;
-    if (_selectIndex == 0) {
-        cellHeight = kRealValue(100) + _firstView.viewHeight;
-    } else {
-        cellHeight = kRealValue(100) + _secondView.viewHeight;
-    }
-    
+    _titleView.selectedIndex = selectIndex;
+    [self.bottomScrollView setContentOffset:CGPointMake(_selectIndex * KScreenWidth, 0) animated:YES];
     if (self.cellHeightBlock) {
-        self.cellHeightBlock(cellHeight);
+        self.cellHeightBlock(_selectIndex);
     }
+    
 }
 
 #pragma action
 
 -(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
     NSInteger index = scrollView.contentOffset.x/kScreenWidth;
-    self.selectIndex = index;
+    _selectIndex = index;
     self.titleView.selectedIndex = index;
 }
-
 
 @end

@@ -8,12 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void(^CellHeightChanged) (CGFloat);
+typedef void(^CellHeightChanged) (NSInteger selectIndex);
 
 @interface ZSHSelectCardNumCell : ZSHBaseCell
 
-@property (nonatomic, assign) CGFloat             cellHeight;
 @property (nonatomic, copy)   CellHeightChanged   cellHeightBlock;
-@property (nonatomic, strong) UIScrollView        *bottomScrollView;
+@property (nonatomic, assign) NSInteger           selectIndex;
 
 @end

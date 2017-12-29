@@ -18,12 +18,14 @@
 @property (nonatomic, strong) NSMutableArray   *btnArr;
 @property (nonatomic, assign) NSInteger        row;
 @property (nonatomic, assign) NSInteger        column;
+@property (nonatomic, assign) UIButton         *lastBtn;
 
 @end
 
 @implementation ZSHCardBtnListView
 
 - (void)setup{
+    
     _btnArr = [[NSMutableArray alloc]init];
     
     NSArray *titleListArr = self.paramDic[@"titleArr"];
@@ -39,8 +41,12 @@
         [cardTypeBtn addTarget:self action:@selector(cardTypeBtnAction:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:cardTypeBtn];
         [_btnArr addObject:cardTypeBtn];
+        
+        if (i == 0) {
+            cardTypeBtn.selected = YES;
+            _lastBtn = cardTypeBtn;
+        }
     }
-    
 }
 
 -  (void)layoutSubviews{
@@ -59,20 +65,18 @@
 
 #pragma action
 - (void)cardTypeBtnAction:(UIButton *)btn{
-    [self selectedByIndex:btn.tag];
-    if (self.btnClickBlock) {
-        self.btnClickBlock(btn);
-    }
-}
-
-- (void)selectedByIndex:(NSUInteger)index {
-    [_btnArr enumerateObjectsUsingBlock:^(UIButton *btn , NSUInteger idx, BOOL * _Nonnull stop) {
-        if (btn.tag == index) {
-            btn.selected = YES;
-        } else {
-            btn.selected = NO;
+    if (_lastBtn != btn) {
+        btn.selected = YES;
+        _lastBtn.selected = NO;
+        _lastBtn = btn;
+        if (self.btnClickBlock) {
+            self.btnClickBlock(btn);
         }
-    }];
+    } else {
+        UIButton *tempBtn = btn;
+        tempBtn.selected = !tempBtn.selected;
+        self.clickSameBtn(tempBtn.selected);
+    }
 }
 
 @end

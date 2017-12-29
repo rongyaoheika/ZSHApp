@@ -30,10 +30,6 @@
     if (self = [super initWithFrame:frame]) {
         [self initData];
         [self setupUI];
-        
-//        [self.scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
-//            make.edges.mas_equalTo(self);
-//        }];
     }
     return self;
 }

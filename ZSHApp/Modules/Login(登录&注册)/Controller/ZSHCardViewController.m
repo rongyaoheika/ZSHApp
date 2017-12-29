@@ -20,7 +20,11 @@
 #import "ZSHRegisterModel.h"
 #import "ZSHCardImgModel.h"
 
-@interface ZSHCardViewController ()
+
+static NSInteger numCellIndex;
+static NSInteger customizedCellIndex;
+
+@interface ZSHCardViewController ()<UITableViewDataSource,UITableViewDelegate>
 
 @property (nonatomic, strong) NSArray            *imageArr;
 @property (nonatomic, strong) NSArray            *pushVCsArr;
@@ -31,6 +35,16 @@
 @property (nonatomic, strong) ZSHLoginLogic      *loginLogic;
 @property (nonatomic, strong) ZSHCardImgModel    *cardImgModel;
 @property (nonatomic, assign) NSInteger          typeID;
+
+@property (nonatomic, strong) NSArray            *sectionParmaDicArr;
+@property (nonatomic, assign) NSInteger          cardBtnTag;
+
+//收货地址
+@property (nonatomic, strong) NSArray            *addressArr;
+@property (nonatomic, strong) NSArray            *addressParamArr;
+@property (nonatomic, strong) NSArray            *addressTypeArr;
+@property (nonatomic, assign) NSInteger          cellHeight;
+@property (nonatomic, assign) BOOL               isUpdate;
 
 @end
 
@@ -49,9 +63,23 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
     _loginLogic = [[ZSHLoginLogic alloc] init];
     _registerModel = [[ZSHRegisterModel alloc] init];
     self.imageArr = @[@"glory_card_big",@"glory_card_big",@"glory_card_big"];
-    _selectedArr = [NSMutableArray arrayWithObjects:@"0",@"0",@"0",@"0",@"0",@"0",@"0", nil];
-    [self initViewModel];
+    
     [self requestData:0];
+    
+    numCellIndex = 0;
+    customizedCellIndex = 0;
+    _selectedArr = [NSMutableArray arrayWithObjects:@(false),@(false),@(false),@(false),@(false),@(false),@(false), nil];
+    _addressArr = @[@"姓名",@"手机号码",@"重复手机号码",@"省市区",@"详细地址"];
+    _addressParamArr = @[@"REALNAME", @"PHONE", @"Repeat", @"PROVINCE",@"ADDRESS"];
+    _addressTypeArr =  @[@(ZSHTextFieldViewUser),@(ZSHTextFieldViewPhone),@(ZSHTextFieldViewPhone),@(ZSHTextFieldViewUser),@(ZSHTextFieldViewUser)];
+    _sectionParmaDicArr = @[
+                            @{KFromClassType:@(FromCustomizedCellToCardSubHeadView),@"title":@"收货地址",@"btnTitle":@"* 未选",@"tag":@(13)},
+                            @{KFromClassType:@(FromCustomizedCellToCardSubHeadView),@"title":@"选择卡号",@"btnTitle":@"* 随机",@"tag":@(14)},
+                            @{KFromClassType:@(FromCustomizedCellToCardSubHeadView),@"title":@"功能定制",@"btnTitle":@"* 定制",@"tag":@(15)},
+                            @{KFromClassType:@(FromCustomizedCellToCardSubHeadView),@"title":@"支付方式",@"btnTitle":@"* 微信",@"tag":@(16)}
+                            ];
+    
+    [self.tableView reloadData];
 }
 
 - (void)createUI{
@@ -60,8 +88,9 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.mas_equalTo(self.view).insets(UIEdgeInsetsMake(KNavigationBarHeight, 0, KBottomTabH, 0));
     }];
-    self.tableView.delegate = self.tableViewModel;
-    self.tableView.dataSource = self.tableViewModel;
+    
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
     [self.tableView registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHAddressViewID];
     
     ZSHCardCommitBottomView *bottomView = [[ZSHCardCommitBottomView alloc]initWithFrame:CGRectMake(0, KScreenHeight - KBottomTabH, KScreenWidth, KBottomTabH)];
@@ -72,276 +101,94 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
     [self.view addSubview:bottomView];
 }
 
-- (void)initViewModel {
-    [self.tableViewModel.sectionModelArray removeAllObjects];
-    [self.tableViewModel.sectionModelArray addObject:[self storeHeadSection]];
-    [self.tableViewModel.sectionModelArray addObject:[self storeBtnListSection]];
-    [self.tableViewModel.sectionModelArray addObject:[self storeQuotaSection]];
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    return 7;
+}
 
-    // 第3，4，5, 6组
-    NSArray *sectionParmaDicArr = @[@{KFromClassType:@(FromCustomizedCellToCardSubHeadView),@"title":@"收货地址",@"btnTitle":@"* 未选",@"tag":@(13)},
-          @{KFromClassType:@(FromCustomizedCellToCardSubHeadView),@"title":@"选择卡号",@"btnTitle":@"* 随机",@"tag":@(14)},
-          @{KFromClassType:@(FromCustomizedCellToCardSubHeadView),@"title":@"功能定制",@"btnTitle":@"* 定制",@"tag":@(15)},
-          @{KFromClassType:@(FromCustomizedCellToCardSubHeadView),@"title":@"支付方式",@"btnTitle":@"* 微信",@"tag":@(16)}];
-    for (NSDictionary *paramDic in sectionParmaDicArr) {//创建每组header
-        ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
-        sectionModel.headerHeight = kRealValue(35);
-        sectionModel.headerView = [self createHeadViewWithParamDic:paramDic];
-        [self.tableViewModel.sectionModelArray addObject:sectionModel];
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    switch (section) {
+        case 0:
+        case 1:
+        case 2:
+        case 4:
+        case 5:
+        case 6:{
+            return 1;
+            break;
+        }
+        case 3:{
+            return _addressArr.count;
+            break;
+        }
+            
+        default:
+            break;
     }
-    [self.tableView reloadData];
+    return 0;
 }
 
-//第0组：头部banner
-- (ZSHBaseTableViewSectionModel*)storeHeadSection{
-    kWeakSelf(self);
-    ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
-    sectionModel.footerHeight = kRealValue(10);
-    sectionModel.footerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kRealValue(10))];
-    
-    ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
-    [sectionModel.cellModelArray addObject:cellModel];
-    cellModel.height = kRealValue(240);
-    cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
-        ZSHBaseCell *cell = [[ZSHBaseCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@""];
-        if (![cell viewWithTag:9]){
-            NSDictionary *nextParamDic = @{KFromClassType:@(FromCardVCToGuideView),@"dataArr":self.imageArr,@"pageViewHeight":@(kRealValue(195)),@"min_scale":@(0.8),@"withRatio":@(1.18),@"pageImage":@"page_press",@"currentPageImage":@"page_normal",@"infinite":@(true)};
-            ZSHGuideView *midView = [[ZSHGuideView alloc]initWithFrame:CGRectZero paramDic:nextParamDic];
-            midView.tag = 9;
-            [cell.contentView addSubview:midView];
-            [midView mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.top.mas_equalTo(cell.contentView).offset(KLeftMargin);
-                make.centerX.mas_equalTo(cell.contentView);
-                make.width.mas_equalTo(cell.contentView);
-                make.bottom.mas_equalTo(cell.contentView);
-            }];
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    switch (indexPath.section) {
+        case 0:{
+            return kRealValue(240);
+            break;
         }
-        ZSHGuideView *midView = [cell viewWithTag:9];
-        if (weakself.cardImgModel.CARDIMGS.count) {
-            [midView updateViewWithModel:weakself.cardImgModel];
-        }
-        
-        return cell;
-    };
-    return sectionModel;
-}
-
-//第1组：btn列表header
-- (ZSHBaseTableViewSectionModel*)storeBtnListSection{
-    ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
-    sectionModel.headerHeight = kRealValue(95);
-    NSArray *titleArr = @[@"至尊会籍卡",@"荣耀会籍卡",@"名人联名卡",@"经典会籍卡",@"12星座卡",@"周易五行卡"];
-    NSDictionary *nextParamDic = @{@"titleArr":titleArr,@"normalImage":@"card_normal",@"selectedImage":@"card_press"};
-    sectionModel.headerView = [self createBtnListViewWithParamDic:nextParamDic];
-    
-    return sectionModel;
-}
-
-//第2组：本周剩余名额
-- (ZSHBaseTableViewSectionModel*)storeQuotaSection {
-    ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
-    ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
-    [sectionModel.cellModelArray addObject:cellModel];
-    cellModel.height = kRealValue(66);
-    cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
-        ZSHBaseCell *cell = [[ZSHBaseCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@""];
-        ZSHCardQuotaView  *cardQuotaView = [[ZSHCardQuotaView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kRealValue(66))];
-        [cell.contentView addSubview:cardQuotaView];
-        return cell;
-    };
-    
-    cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
-        
-    };
-    return sectionModel;
-}
-
-// 第一组：btn列表header
-- (ZSHCardBtnListView *)createBtnListViewWithParamDic:(NSDictionary *)paramDic{
-    kWeakSelf(self);
-    ZSHCardBtnListView *listView = [[ZSHCardBtnListView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kRealValue(90)) paramDic:paramDic];
-    listView.tag = 2;
-    [listView selectedByIndex:1];
-    
-    listView.btnClickBlock = ^(UIButton *btn) {
-        NSInteger realSection = 1;
-        NSInteger btnTag = btn.tag - 1;
-        [weakself requestData:btnTag];
-        if ([_selectedArr[realSection] isEqualToString:@"0"]) {
             
-            [_selectedArr replaceObjectAtIndex:realSection withObject:@"1"];
-            [weakself updateBtnListSectionModelWithSectionTag:realSection btnTag:btnTag];
-            [weakself.tableView reloadSections:[NSIndexSet indexSetWithIndex:realSection] withRowAnimation:UITableViewRowAnimationFade];
-            
-        } else {
-            
-            [_selectedArr replaceObjectAtIndex:realSection withObject:@"0"];
-            [weakself updateBtnListSectionModelWithSectionTag:realSection btnTag:btnTag];
-            [weakself.tableView reloadSections:[NSIndexSet indexSetWithIndex:realSection] withRowAnimation:UITableViewRowAnimationFade];
-        }
-    };
-    return listView;
-}
-
-//第一组点击后下拉btnList
-- (void)updateBtnListSectionModelWithSectionTag:(NSInteger)tag btnTag:(NSInteger)btnTag{
-    kWeakSelf(self);
-    ZSHBaseTableViewSectionModel *sectionModel = self.tableViewModel.sectionModelArray[tag];
-    if ([_selectedArr[tag] isEqualToString:@"1"])  {
-        NSArray *titleArr = nil;
-        NSDictionary *nextParamDic = nil;
-        CGFloat cellHeight = 0;
-        if (btnTag == 4) {
-            titleArr = @[@"白羊座",@"金牛座",@"双子座",@"巨蟹座",@"狮子座",@"处女座",@"天秤座",@"天蝎座",@"射手座",@"摩羯座",@"水瓶座",@"双鱼座"];
-            nextParamDic = @{@"titleArr":titleArr,@"normalImage":@"card_normal",@"selectedImage":@"card_layer_press",@"tag":@(2)};
-            cellHeight = kRealValue(175);
-        } else if (btnTag == 5){
-            titleArr = @[@"金",@"木",@"水",@"火",@"土"];
-            nextParamDic = @{@"titleArr":titleArr,@"normalImage":@"card_normal",@"selectedImage":@"card_layer_press",@"tag":@(3)};
-            cellHeight = kRealValue(90);
-        }
-        
-        ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
-        [sectionModel.cellModelArray addObject:cellModel];
-        cellModel.height = cellHeight;
-        cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
-            ZSHBaseCell *cell = [[ZSHBaseCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@""];
-            ZSHCardBtnListView *listView = [[ZSHCardBtnListView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth,cellHeight) paramDic:nextParamDic];
-            [cell.contentView addSubview:listView];
-            listView.btnClickBlock = ^(UIButton *btn) {
-                [weakself requestDetailData:btn.tag-1];
-            };
-            return cell;
-        };
-        
-    } else {
-        ZSHBaseTableViewSectionModel *sectionModel = self.tableViewModel.sectionModelArray[tag];
-        [sectionModel.cellModelArray removeAllObjects];
-        
-    }
-}
-
-
-//创建3，4，5，6组header
-- (ZSHCardSubHeadView *)createHeadViewWithParamDic:(NSDictionary *)paramDic{
-    kWeakSelf(self);
-    ZSHCardSubHeadView *cardSubView = [[ZSHCardSubHeadView alloc]initWithFrame:CGRectMake(kRealValue(15), 0, kScreenWidth-2*kRealValue(15), kRealValue(35)) paramDic:paramDic];
-    cardSubView.backgroundColor = KZSHColor141414;
-     
-    cardSubView.rightBtnActionBlock = ^(NSInteger tag) {
-        NSInteger realSection = tag - 10;
-        if ([_selectedArr[realSection] isEqualToString:@"0"]) {//合并 - 展开
-            
-            [_selectedArr replaceObjectAtIndex:realSection withObject:@"1"];
-            [weakself updateOtherSectionModelWithTag:realSection];
-            [weakself.tableView reloadSections:[NSIndexSet indexSetWithIndex:realSection] withRowAnimation:UITableViewRowAnimationFade];
-        } else { //展开 - 合并
-            [_selectedArr replaceObjectAtIndex:realSection withObject:@"0"];
-            [weakself updateOtherSectionModelWithTag:realSection];
-            [weakself.tableView reloadSections:[NSIndexSet indexSetWithIndex:realSection] withRowAnimation:UITableViewRowAnimationFade];
-        }
-    };
-    return cardSubView;
-}
-
-
-//刷新3，4，5，6组：row
-- (void)updateOtherSectionModelWithTag:(NSInteger)tag{
-    switch (tag) {
-        case 3:{//收获地址
-            NSArray *addressArr = @[@"姓名",@"手机号码",@"重复手机号码",@"省市区",@"详细地址"];
-            NSArray *parameterArr = @[@"REALNAME", @"PHONE", @"Repeat", @"PROVINCE",@"ADDRESS"];
-            NSArray *textTypeArr =  @[@(ZSHTextFieldViewUser),@(ZSHTextFieldViewPhone),@(ZSHTextFieldViewPhone),@(ZSHTextFieldViewUser),@(ZSHTextFieldViewUser)];
-            ZSHBaseTableViewSectionModel *sectionModel = self.tableViewModel.sectionModelArray[tag];
-            if ([_selectedArr[tag] isEqualToString:@"1"])  {
-                for (NSString *str in addressArr) {
-                    ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
-                    [sectionModel.cellModelArray addObject:cellModel];
-                    cellModel.height = kRealValue(35);
-                    cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
-                        ZSHBaseCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHAddressViewID forIndexPath:indexPath];
-                        if (![cell.contentView viewWithTag:2]) {
-                            NSDictionary *initParamDic = @{@"placeholder":str,@"textFieldType":textTypeArr[indexPath.row],KFromClassType:@(FromCardVCToTextFieldCellView),@"placeholderTextColor":KZSHColor454545};
-                            ZSHTextFieldCellView *textFieldView = [[ZSHTextFieldCellView alloc]initWithFrame:CGRectZero paramDic:initParamDic];
-                            textFieldView.textFieldChanged = ^(NSString *text,NSInteger tag) {
-                                [[NSUserDefaults standardUserDefaults] setObject:text forKey:parameterArr[indexPath.row]];
-                            };
-                            [cell.contentView addSubview:textFieldView];
-                            [textFieldView mas_makeConstraints:^(MASConstraintMaker *make) {
-                                make.left.mas_equalTo(cell).offset(kRealValue(KLeftMargin));
-                                make.right.mas_equalTo(cell).offset(-kRealValue(KLeftMargin));
-                                make.height.mas_equalTo(cell);
-                                make.top.mas_equalTo(cell);
-                            }];
-                        }
-                        return cell;
-                    };
+        case 1:{
+            if ([_selectedArr[indexPath.section]boolValue]) {
+                switch (_cardBtnTag) {
+                    case 4:
+                        return kRealValue(175);
+                        break;
+                    case 5:
+                        return kRealValue(90);
+                        break;
+                        
+                    default:
+                        break;
                 }
-            } else {
-                ZSHBaseTableViewSectionModel *sectionModel = self.tableViewModel.sectionModelArray[tag];
-                [sectionModel.cellModelArray removeAllObjects];
             }
             
             break;
         }
-            
-        case 4:{ //选取卡号
-            kWeakSelf(self);
-            ZSHBaseTableViewSectionModel *sectionModel = self.tableViewModel.sectionModelArray[tag];
-            if ([_selectedArr[tag] isEqualToString:@"1"])  {
-                ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
-                [sectionModel.cellModelArray addObject:cellModel];
-//                kWeakSelf(cellModel);
-                cellModel.height = kRealValue(1200);
-                cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
-                    ZSHSelectCardNumCell *cell = [[ZSHSelectCardNumCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@""];
-//                    weakcellModel.height = CGRectGetMaxY(cell.bottomScrollView.frame);
-//
-//                    cell.cellHeightBlock = ^(CGFloat cellHeight) {
-//                        weakcellModel.height = cellHeight;
-////                        [weakself.tableView reloadData];
-//                    };
-
-                    
-                    return cell;
-                };
-            } else {
-                ZSHBaseTableViewSectionModel *sectionModel = self.tableViewModel.sectionModelArray[tag];
-                [sectionModel.cellModelArray removeAllObjects];
+        case 2:{
+            return kRealValue(66);
+            break;
+        }
+        case 3:{
+            if ([_selectedArr[indexPath.section]boolValue]) {
+                return kRealValue(35);
+            }
+            break;
+        }
+        case 4:{
+            if ([_selectedArr[indexPath.section]boolValue]) {
+                if (numCellIndex == 0) {
+                    return kRealValue(150);
+                } else {
+                    return kRealValue(1200);
+                }
             }
             
             break;
         }
-        case 5:{ //功能定制
-            ZSHBaseTableViewSectionModel *sectionModel = self.tableViewModel.sectionModelArray[tag];
-            if ([_selectedArr[tag] isEqualToString:@"1"])  {
-                ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
-                [sectionModel.cellModelArray addObject:cellModel];
-                cellModel.height = kRealValue(423);
-                cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
-                    ZSHCardCustomizedCell *cell = [[ZSHCardCustomizedCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@""];
-                    return cell;
-                };
-            } else {
-                ZSHBaseTableViewSectionModel *sectionModel = self.tableViewModel.sectionModelArray[tag];
-                [sectionModel.cellModelArray removeAllObjects];
+        case 5:{
+            if ([_selectedArr[indexPath.section]boolValue]) {
+//                if (customizedCellIndex == 0) {
+//                    kRealValue(320);
+//                } else {
+//                    return kRealValue(220);
+//                }
+                
+                return kRealValue(320);
+                
             }
             
             break;
         }
-        case 6:{ //支付方式
-            ZSHBaseTableViewSectionModel *sectionModel = self.tableViewModel.sectionModelArray[tag];
-            if ([_selectedArr[tag] isEqualToString:@"1"])  {
-                ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
-                [sectionModel.cellModelArray addObject:cellModel];
-                cellModel.height = kRealValue(74);
-                cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
-                    ZSHCardPayCell *cell = [[ZSHCardPayCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@""];
-                    return cell;
-                };
-            } else {
-                ZSHBaseTableViewSectionModel *sectionModel = self.tableViewModel.sectionModelArray[tag];
-                [sectionModel.cellModelArray removeAllObjects];
+        case 6:{
+            if ([_selectedArr[indexPath.section]boolValue]) {
+                return kRealValue(74);
             }
             
             break;
@@ -350,7 +197,233 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
         default:
             break;
     }
+    
+    return 0;
+    
 }
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+    switch (section) {
+        case 0:{
+            return kRealValue(10);
+            break;
+        }
+            
+        default:
+            break;
+    }
+    return 0;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    switch (section) {
+        case 1:{
+            return kRealValue(90);
+            break;
+        }
+        case 3:
+        case 4:
+        case 5:
+        case 6:{
+            return kRealValue(35);
+            break;
+        }
+            
+        default:
+            break;
+    }
+    return 0;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    kWeakSelf(self);
+    switch (section) {
+        case 1:{
+            NSArray *titleArr = @[@"至尊会籍卡",@"荣耀会籍卡",@"名人联名卡",@"经典会籍卡",@"12星座卡",@"周易五行卡"];
+            NSDictionary *paramDic = @{@"titleArr":titleArr,@"normalImage":@"card_normal",@"selectedImage":@"card_press"};
+            ZSHCardBtnListView *listView = [[ZSHCardBtnListView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kRealValue(90)) paramDic:paramDic];
+            listView.tag = 2;
+            
+            //点击同一个btn
+            listView.clickSameBtn = ^(BOOL openBtnList){
+                if (openBtnList) {
+                    
+                    [_selectedArr replaceObjectAtIndex:section withObject:@(YES)];
+                    [weakself.tableView reloadRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:section] withRowAnimation:UITableViewRowAnimationFade];
+                } else {
+                    
+                    [_selectedArr replaceObjectAtIndex:section withObject:@(false)];
+                    [weakself.tableView reloadRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:section] withRowAnimation:UITableViewRowAnimationFade];
+                }
+            };
+            
+            //点击不同的btn-展开
+            listView.btnClickBlock = ^(UIButton *btn) {
+                _cardBtnTag = btn.tag-1;
+                //TODO:可能存在问题
+                [weakself requestData:_cardBtnTag];
+                [_selectedArr replaceObjectAtIndex:section withObject:@(YES)];
+                [weakself.tableView reloadRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:section] withRowAnimation:UITableViewRowAnimationFade];
+            };
+            
+            return listView;
+        }
+            break;
+            
+        case 3:
+        case 4:
+        case 5:
+        case 6:{
+            ZSHCardSubHeadView *cardSubView = [[ZSHCardSubHeadView alloc]initWithFrame:CGRectMake(kRealValue(15), 0, kScreenWidth-2*kRealValue(15), kRealValue(35)) paramDic:_sectionParmaDicArr[section-3]];
+            cardSubView.backgroundColor = KZSHColor141414;
+            cardSubView.rightBtnActionBlock = ^(NSInteger tag) {
+                if (![_selectedArr[section]boolValue]) {//合并 - 展开
+                    
+                    [_selectedArr replaceObjectAtIndex:section withObject:@(YES)];
+                    [weakself.tableView reloadSections:[NSIndexSet indexSetWithIndex:section] withRowAnimation:UITableViewRowAnimationFade];
+                } else { //展开 - 合并
+                    [_selectedArr replaceObjectAtIndex:section withObject:@(false)];
+                    [weakself.tableView reloadSections:[NSIndexSet indexSetWithIndex:section] withRowAnimation:UITableViewRowAnimationFade];
+                }
+            };
+            return cardSubView;
+        }
+            break;
+            
+        default:
+            break;
+    }
+    return nil;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
+    if (section == 0) {
+        UIView *footerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, kRealValue(10))];
+        return footerView;
+    }
+    return nil;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    kWeakSelf(self);
+    switch (indexPath.section) {
+        case 0:{
+            ZSHBaseCell *cell = [[ZSHBaseCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@""];
+            if (![cell viewWithTag:9]){
+                NSDictionary *nextParamDic = @{KFromClassType:@(FromCardVCToGuideView),@"dataArr":self.imageArr,@"pageViewHeight":@(kRealValue(195)),@"min_scale":@(0.8),@"withRatio":@(1.18),@"pageImage":@"page_press",@"currentPageImage":@"page_normal",@"infinite":@(true)};
+                ZSHGuideView *midView = [[ZSHGuideView alloc]initWithFrame:CGRectZero paramDic:nextParamDic];
+                midView.tag = 9;
+                [cell.contentView addSubview:midView];
+                [midView mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.top.mas_equalTo(cell.contentView).offset(KLeftMargin);
+                    make.centerX.mas_equalTo(cell.contentView);
+                    make.width.mas_equalTo(cell.contentView);
+                    make.bottom.mas_equalTo(cell.contentView);
+                }];
+            }
+            ZSHGuideView *midView = [cell viewWithTag:9];
+            if (weakself.cardImgModel.CARDIMGS.count) {
+                [midView updateViewWithModel:weakself.cardImgModel];
+            }
+            return cell;
+        }
+            
+            break;
+            
+        case 1:{
+            if ([_selectedArr[indexPath.section]boolValue])  {
+                NSArray *titleArr = nil;
+                NSDictionary *nextParamDic = nil;
+                if (_cardBtnTag == 4) {
+                    titleArr = @[@"白羊座",@"金牛座",@"双子座",@"巨蟹座",@"狮子座",@"处女座",@"天秤座",@"天蝎座",@"射手座",@"摩羯座",@"水瓶座",@"双鱼座"];
+                    nextParamDic = @{@"titleArr":titleArr,@"normalImage":@"card_normal",@"selectedImage":@"card_layer_press",@"tag":@(2)};
+                } else if (_cardBtnTag == 5){
+                    titleArr = @[@"金",@"木",@"水",@"火",@"土"];
+                    nextParamDic = @{@"titleArr":titleArr,@"normalImage":@"card_normal",@"selectedImage":@"card_layer_press",@"tag":@(3)};
+                }
+                
+                ZSHBaseCell *cell = [[ZSHBaseCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@""];
+                ZSHCardBtnListView *listView = [[ZSHCardBtnListView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth,0) paramDic:nextParamDic];
+                [cell.contentView addSubview:listView];
+                listView.btnClickBlock = ^(UIButton *btn) {
+                    [weakself requestDetailData:btn.tag-1];
+                };
+                return cell;
+            }
+        }
+            
+            break;
+            
+        case 2:{
+            ZSHBaseCell *cell = [[ZSHBaseCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@""];
+            ZSHCardQuotaView  *cardQuotaView = [[ZSHCardQuotaView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, 0)];
+            [cell.contentView addSubview:cardQuotaView];
+            return cell;
+        }
+            break;
+            
+        case 3:{
+            if ([_selectedArr[indexPath.section]boolValue]) {
+                ZSHBaseCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHAddressViewID forIndexPath:indexPath];
+                if (![cell.contentView viewWithTag:2]) {
+                    NSDictionary *initParamDic = @{@"placeholder":_addressArr[indexPath.row],@"textFieldType":_addressTypeArr[indexPath.row],KFromClassType:@(FromCardVCToTextFieldCellView),@"placeholderTextColor":KZSHColor454545};
+                    ZSHTextFieldCellView *textFieldView = [[ZSHTextFieldCellView alloc]initWithFrame:CGRectZero paramDic:initParamDic];
+                    textFieldView.tag = 2;
+                    textFieldView.textFieldChanged = ^(NSString *text,NSInteger tag) {
+                        [[NSUserDefaults standardUserDefaults] setObject:text forKey:_addressParamArr[indexPath.row]];
+                    };
+                    [cell.contentView addSubview:textFieldView];
+                    [textFieldView mas_makeConstraints:^(MASConstraintMaker *make) {
+                        make.left.mas_equalTo(cell).offset(kRealValue(KLeftMargin));
+                        make.right.mas_equalTo(cell).offset(-kRealValue(KLeftMargin));
+                        make.height.mas_equalTo(cell);
+                        make.top.mas_equalTo(cell);
+                    }];
+                }
+                return cell;
+            }
+        }
+            
+        case 4:{
+            if ([_selectedArr[indexPath.section]boolValue]) {
+                ZSHSelectCardNumCell *cell = [[ZSHSelectCardNumCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@""];
+                cell.selectIndex = numCellIndex;
+                cell.cellHeightBlock = ^(NSInteger index) {
+                    numCellIndex = index;
+                    [weakself.tableView reloadRowAtIndexPath:indexPath withRowAnimation:UITableViewRowAnimationFade];
+                };
+                return cell;
+            }
+        }
+            break;
+            
+        case 5:{
+            if ([_selectedArr[indexPath.section]boolValue]) {
+                ZSHCardCustomizedCell *cell = [[ZSHCardCustomizedCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@""];
+                cell.cellHeightBlock = ^(NSInteger selectIndex) {
+                    customizedCellIndex = selectIndex;
+                    [weakself.tableView reloadRowAtIndexPath:indexPath withRowAnimation:UITableViewRowAnimationFade];
+                };
+                return cell;
+            }
+        }
+            break;
+            
+        case 6:{
+            if ([_selectedArr[indexPath.section]boolValue]) {
+                ZSHCardPayCell *cell = [[ZSHCardPayCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@""];
+                return cell;
+            }
+        }
+            break;
+            
+        default:
+            break;
+    }
+    
+    return [UITableViewCell new];
+}
+
 
 - (void)textFieldWithText:(UITextField *)textfield {
     
@@ -418,7 +491,7 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
     } else if ([customContent isEqualToString:@""]) {
         message = @"请填写定制内容";
     }
-
+    
     if(message) {
         UIAlertController *ac = [UIAlertController alertControllerWithTitle:@"提示" message:message preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
@@ -428,22 +501,27 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
         return;
     }
     
-//    if (![cardNo isEqual:@""] && ![phone isEqual:@""] && ![realName isEqual:@""] && ![province isEqual:@""] && ![address isEqual:@""] && ![custom isEqual:@""] && ![customContent isEqual:@""]) {
+    //    if (![cardNo isEqual:@""] && ![phone isEqual:@""] && ![realName isEqual:@""] && ![province isEqual:@""] && ![address isEqual:@""] && ![custom isEqual:@""] && ![customContent isEqual:@""]) {
     
-        [_loginLogic userRegisterWithDic:@{@"CARDNO":SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"CARDNO"]),
-                                          @"PHONE":SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"PHONE"]),
-                                          @"REALNAME":SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"REALNAME"]),
-                                          @"PROVINCE":SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"PROVINCE"]),
-                                          @"ADDRESS":SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"ADDRESS"]),
-                                          @"CUSTOM":SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"CUSTOM"]),
-                                          @"CUSTOMCONTENT":NSStringFormat(@"%@%@", SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"CardCustom112311"]),SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"CardCustom112312"]))
-                                          }];
-        
-        _loginLogic.loginSuccess = ^(id response) {
-            RLog(@"请求成功：返回数据&%@",response);
-        };
-//    } 
+    [_loginLogic userRegisterWithDic:@{@"CARDNO":SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"CARDNO"]),
+                                       @"PHONE":SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"PHONE"]),
+                                       @"REALNAME":SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"REALNAME"]),
+                                       @"PROVINCE":SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"PROVINCE"]),
+                                       @"ADDRESS":SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"ADDRESS"]),
+                                       @"CUSTOM":SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"CUSTOM"]),
+                                       @"CUSTOMCONTENT":NSStringFormat(@"%@%@", SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"CardCustom112311"]),SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"CardCustom112312"]))
+                                       }];
+    
+    _loginLogic.loginSuccess = ^(id response) {
+        RLog(@"请求成功：返回数据&%@",response);
+    };
+    //    }
+    
+}
 
+
+- (void)headViewAction{
+    
 }
 
 @end

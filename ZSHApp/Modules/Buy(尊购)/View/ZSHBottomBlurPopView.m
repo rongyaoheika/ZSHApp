@@ -233,7 +233,7 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
         
         CGFloat listViewH = ceil(titleArr.count/3.0) *kRealValue(30) +  (ceil(titleArr.count/3.0) - 1)*kRealValue(15) + kRealValue(20);
         ZSHCardBtnListView *listView = [[ZSHCardBtnListView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, listViewH) paramDic:nextParamDic];
-        [listView selectedByIndex:1];
+       // [listView selectedByIndex:1];
         listView.tag = 2;
         [self addSubview:listView];
         return;

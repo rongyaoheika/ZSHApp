@@ -34,7 +34,7 @@
     [self.titleView reloadViewWithTitles:self.titleArr];
     [self.contentView addSubview:self.bottomScrollView];
     
-     _customizedFirstView = [[ZSHCardCustomizedFirst alloc]init];
+    _customizedFirstView = [[ZSHCardCustomizedFirst alloc]init];
     [self.bottomScrollView addSubview:_customizedFirstView];
     
     _customizedSecondView = [[ZSHCardCustomizedSecond alloc]init];
@@ -118,6 +118,9 @@
         __weak typeof(self) weakSelf = self;
         _titleView.selectedBlock = ^(NSInteger index){
             __weak typeof(self) strongSelf = weakSelf;
+            if (strongSelf.cellHeightBlock) {
+                strongSelf.cellHeightBlock(index);
+            }
             NSString *custom = @"";
             switch (index) {
                 case 0:
