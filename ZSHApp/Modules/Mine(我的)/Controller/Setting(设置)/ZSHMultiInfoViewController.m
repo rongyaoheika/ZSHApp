@@ -61,12 +61,11 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
         self.placeHolderArr = @[@"中国银行储蓄卡",@"6216615002674782",@"688686"];
 
     } else if (kFromClassTypeValue == FromUserInfoPhoneVCToMultiInfoVC){
-        
         //手机-修改手机号
         self.titleArr = @[@"当前手机号",@"新手机号",@"验证码"];
         self.textFieldTypeArr = @[@(ZSHTextFieldViewPhone),@(ZSHTextFieldViewPhone),@(ZSHTextFieldViewCaptcha)];
         self.placeHolderArr = @[@"请输入当前手机号",@"请输入新手机号",@"请输入验证码"];
-         self.toViewType = FromMultiPhoneVCToTextFieldCellView;
+        self.toViewType = FromMultiPhoneVCToTextFieldCellView;
     } else if (kFromClassTypeValue == FromUserInfoNickNameVCToMultiInfoVC){
         
         //昵称-修改昵称

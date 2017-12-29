@@ -8,7 +8,10 @@
 
 #import "ZSHTextFieldCellView.h"
 
-@interface ZSHTextFieldCellView()<UITextFieldDelegate>
+@interface ZSHTextFieldCellView()<UITextFieldDelegate>{
+    NSTimer *_timer;
+    NSInteger _i;
+}
 
 @property (nonatomic,strong) UILabel      *leftLabel;
 @property (nonatomic,strong) YYLabel      *getCaptchaBtn;
@@ -20,6 +23,7 @@
 @implementation ZSHTextFieldCellView
 
 - (void)setup{
+    _i = -1;
     [self addSubview:self.leftLabel];
     [self addSubview:self.textField];
     [self addSubview:self.getCaptchaBtn];
@@ -110,6 +114,7 @@
 
 - (YYLabel *)getCaptchaBtn{
     if (!_getCaptchaBtn) {
+        kWeakSelf(self)
         _getCaptchaBtn = [[YYLabel alloc] init];
         _getCaptchaBtn.text = @"获取验证码";
         _getCaptchaBtn.font = kPingFangRegular(14);
@@ -117,9 +122,14 @@
         _getCaptchaBtn.backgroundColor = KClearColor;
         _getCaptchaBtn.textAlignment = NSTextAlignmentRight;
         _getCaptchaBtn.textVerticalAlignment = YYTextVerticalAlignmentCenter;
-        //    getCaptchaBtn.textTapAction = ^(UIView * _Nonnull containerView, NSAttributedString * _Nonnull text, NSRange range, CGRect rect) {
-        //        [weakself skipAction];
-        //    };
+        _getCaptchaBtn.textTapAction = ^(UIView * _Nonnull containerView, NSAttributedString * _Nonnull text, NSRange range, CGRect rect) {
+            if (_i == -1) {
+                _timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(startCount) userInfo:nil repeats:YES];
+                _i = 60;
+                [weakself startCount];
+                [weakself submit];
+            }
+        };
     }
     return _getCaptchaBtn;
 }
@@ -144,6 +154,46 @@
 - (void)textFieldDidChange:(UITextField *)textField{
     if (self.textFieldChanged) {
         self.textFieldChanged(textField.text,self.tag);
+    }
+}
+
+- (void)submit {
+    
+//    [SMSSDKUIProcessHUD showProcessHUDWithInfo:SMSLocalized(@"commitingCode")];
+//
+//    [SMSSDK commitVerificationCode:_codeTextField.text phoneNumber:_phone zone:_zone result:^(NSError *error) {
+//
+//        NSString *msg = SMSLocalized(@"verifycodeerrortitle");
+//        if (error)
+//        {
+//            [SMSSDKUIProcessHUD dismiss];
+//            SMSSDKAlert(@"%@:%@",msg,error);
+//        }
+//        else
+//        {
+//            SMSUILog(@"commit code success !");
+//            [SMSSDKUIProcessHUD showSuccessInfo:SMSLocalized(@"commitSuccess")];
+//            [SMSSDKUIProcessHUD dismissWithDelay:1.5 result:^{
+//                [_timer invalidate];
+//                [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+//            }];
+//        }
+//    }];
+}
+
+
+- (void)startCount
+{
+    NSString *text = [@[[NSString stringWithFormat:@"%zd",_i], @"秒"] componentsJoinedByString:@""];
+    
+    
+    if (!_i--)
+    {
+        _getCaptchaBtn.text = @"重新发送";
+        [_timer invalidate];
+    } else {
+        
+        _getCaptchaBtn.text = text;
     }
 }
 

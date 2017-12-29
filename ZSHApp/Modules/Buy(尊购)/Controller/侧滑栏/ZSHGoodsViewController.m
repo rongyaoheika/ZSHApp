@@ -17,6 +17,8 @@
 #import "ZSHGoodsTitleContentViewController.h"
 #import "ZSHBuyLogic.h"
 #import "LXScollTitleView.h"
+#import "ZSHGoodsCollectionViewCell.h"
+#import "ZSHPickView.h"
 
 #define tableViewW  kRealValue(100)
 
@@ -31,7 +33,7 @@
 @property (nonatomic, assign) NSInteger                           currentSelectIndex;
 @property (nonatomic, strong) LXScollTitleView                    *titleView;
 @property (nonatomic, assign) NSInteger                           index;
-
+@property (nonatomic, strong) ZSHPickView                         *pickView;
 
 
 @end
@@ -82,6 +84,12 @@ static NSString *const ZSHBrandSortCellID = @"ZSHBrandSortCell";
     _titleView.titleWidth = (KScreenWidth-tableViewW) /_titleArr.count;
     [self.titleView reloadViewWithTitles:_titleArr];
     
+    UIButton *btn = [_titleView.titleButtons lastObject];
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hotel_btn"]];
+    imageView.frame = CGRectMake((_titleView.titleWidth+btn.titleLabel.width)/2, 0, 8, 7);
+    imageView.centerY = btn.centerY;
+    [btn addSubview:imageView];
+    
     self.collectionView.frame = CGRectMake(tableViewW, KNavigationBarHeight+kRealValue(40),kScreenWidth-tableViewW, kScreenHeight - KNavigationBarHeight-kRealValue(40));
     [self.view addSubview:self.collectionView];
     self.collectionView.delegate = self;
@@ -91,8 +99,9 @@ static NSString *const ZSHBrandSortCellID = @"ZSHBrandSortCell";
     self.collectionView.showsHorizontalScrollIndicator = NO;
     self.collectionView.alwaysBounceVertical = YES;
     
-    [self.collectionView registerClass:[ZSHGoodsSortCell class] forCellWithReuseIdentifier:ZSHGoodsSortCellID];
-    [self.collectionView registerClass:[ZSHBrandSortCell class] forCellWithReuseIdentifier:ZSHBrandSortCellID];
+//    [self.collectionView registerClass:[ZSHGoodsSortCell class] forCellWithReuseIdentifier:ZSHGoodsSortCellID];
+//    [self.collectionView registerClass:[ZSHBrandSortCell class] forCellWithReuseIdentifier:ZSHBrandSortCellID];
+    [self.collectionView registerClass:[ZSHGoodsCollectionViewCell class] forCellWithReuseIdentifier:ZSHGoodsSortCellID];
     
     //注册Header
     [self.collectionView registerClass:[ZSHBrandsSortHeadView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:ZSHBrandsSortHeadViewID];
@@ -110,7 +119,7 @@ static NSString *const ZSHBrandSortCellID = @"ZSHBrandSortCell";
     if (!_titleView) {
         _titleView = [[LXScollTitleView alloc] initWithFrame:CGRectMake(tableViewW, KNavigationBarHeight, KScreenWidth-tableViewW, kRealValue(40))];
         _titleView.normalTitleFont = kPingFangRegular(15);
-        _titleView.selectedTitleFont = kPingFangRegular(15);
+        _titleView.selectedTitleFont = kPingFangRegular(16);
         _titleView.selectedColor = KZSHColor929292;
         _titleView.normalColor = KZSHColor929292;
         _titleView.indicatorHeight = 0;
@@ -160,26 +169,8 @@ static NSString *const ZSHBrandSortCellID = @"ZSHBrandSortCell";
 
 #pragma mark - <UICollectionViewDelegate>
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    UICollectionViewCell *gridcell = nil;
-//    if ([_mainArr[_mainArr.count - 1].title isEqualToString:@"热门品牌"]) {
-//        if (indexPath.section == _mainArr.count - 1) {//品牌
-//            ZSHBrandSortCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:ZSHBrandSortCellID forIndexPath:indexPath];
-//            cell.subItem = _mainArr[indexPath.section].goods[indexPath.row];
-//            gridcell = cell;
-//        } else {//商品
-//            ZSHGoodsSortCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:ZSHGoodsSortCellID forIndexPath:indexPath];
-//            cell.subItem = _mainArr[indexPath.section].goods[indexPath.row];
-//            gridcell = cell;
-//        }
-//    } else {//商品
-//        ZSHGoodsSortCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:ZSHGoodsSortCellID forIndexPath:indexPath];
-//        cell.subItem = _mainArr[indexPath.section].goods[indexPath.row];
-//        gridcell = cell;
-//    }
-    ZSHGoodsSortCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:ZSHGoodsSortCellID forIndexPath:indexPath];
-    cell.subItem = _mainArr[indexPath.row];
-    gridcell = cell;
-    return gridcell;
+    ZSHGoodsCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:ZSHGoodsSortCellID forIndexPath:indexPath];
+    return cell;
 }
 
 //- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
@@ -196,16 +187,7 @@ static NSString *const ZSHBrandSortCellID = @"ZSHBrandSortCell";
 
 #pragma mark - item宽高
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-//    if ([_mainArr[_mainArr.count - 1].title isEqualToString:@"热门品牌"]) {
-//        if (indexPath.section == _mainArr.count - 1) {//品牌
-//            return CGSizeMake((kScreenWidth - tableViewW - 6)/3, 60);
-//        }else{//商品
-//            return CGSizeMake((kScreenWidth - tableViewW - 6)/3, (kScreenWidth - tableViewW - 6)/3 + 20);
-//        }
-//    }else{
-        return CGSizeMake((kScreenWidth - tableViewW - 6)/3, (kScreenWidth - tableViewW - 6)/3 + 20);
-//    }
-//    return CGSizeZero;
+    return CGSizeMake(kScreenWidth-tableViewW, kRealValue(130));
 }
 
 #pragma mark - head宽高
@@ -267,7 +249,28 @@ static NSString *const ZSHBrandSortCellID = @"ZSHBrandSortCell";
 }
 
 - (void)requestConData {
-    
+//    kWeakSelf(self);
+    switch (_index) {
+        case 0:{//推荐
+            break;
+        }
+        case 1:{//精选
+            break;
+        }
+        case 2:{//最热
+            NSDictionary *nextParamDic = @{@"type":@(WindowDefault),@"midTitle":@"筛选",@"dataArr":@[@"全部", @"名品", @"名物"]};
+            _pickView = [[ZSHPickView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight) paramDic:nextParamDic];
+            [_pickView show:WindowDefault];
+            _pickView.saveChangeBlock = ^(NSString *rowTitle, NSInteger tag) {
+            };
+            break;
+        }
+        case 3:{//最新
+            break;
+        }
+        default:
+            break;
+    }
 }
 
 @end

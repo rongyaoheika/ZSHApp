@@ -58,6 +58,7 @@ static NSString *ZSHMusicLibraryCellID = @"ZSHMusicLibraryCell";
 }
 
 - (void)loadData{
+    _musicLogic = [[ZSHMusicLogic alloc]init];
     self.titleArr = @[@"推荐",@"精选",@"最热",@"最新"];
     [self reloadListData];
     [self requestData];
@@ -65,7 +66,6 @@ static NSString *ZSHMusicLibraryCellID = @"ZSHMusicLibraryCell";
 
 - (void)requestData{
     kWeakSelf(self);
-    _musicLogic = [[ZSHMusicLogic alloc]init];
     switch (_index) {
         case 0:{//推荐
             [_musicLogic loadkSongListWithParamDic:nil Success:^(id responseObject) {

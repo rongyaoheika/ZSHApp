@@ -112,7 +112,7 @@ static NSString *ZSHHotelListCellID = @"ZSHHotelListCell";
     [self.tableViewModel.sectionModelArray addObject:[self storeHeadSection]];
     [self.tableViewModel.sectionModelArray addObject:[self storeSubSection]];
     [self.tableViewModel.sectionModelArray addObject:[self storeSetMenuSection]];
-     [self.tableViewModel.sectionModelArray addObject:[self storeMoreShopSection]];
+    [self.tableViewModel.sectionModelArray addObject:[self storeMoreShopSection]];
     [self.tableView reloadData];
 }
 
