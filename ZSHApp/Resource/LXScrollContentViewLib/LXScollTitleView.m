@@ -70,6 +70,7 @@
         [btn setTitleColor:self.normalColor forState:UIControlStateNormal];
         [btn setTitleColor:self.selectedColor forState:UIControlStateSelected];
         
+        
         [btn setBackgroundImage:self.normalBgImage?self.normalBgImage:self.normalBgImageArr[i] forState:UIControlStateNormal];
         [btn setBackgroundImage:self.selectedBgImage?self.selectedBgImage:self.selectedBgImageArr[i] forState:UIControlStateSelected];
         
@@ -141,17 +142,32 @@
         if (btn.tag-100 == selectedIndex) {
             btn.selected = !btn.selected;
             btn.titleLabel.font = self.selectedTitleFont;
+            
+            if (self.selectedBorderColor) {
+                btn.layer.borderWidth = 1.0;
+                btn.layer.borderColor = self.selectedBorderColor.CGColor;
+            }
+            
         } else {
             btn.selected = NO;
             btn.titleLabel.font = self.normalTitleFont;
+            if (self.normalBorderColor) {
+                btn.layer.borderWidth = 0.5;
+                btn.layer.borderColor = self.normalBorderColor.CGColor;
+            }
         }
     }];
     
     if (_selectedIndex == selectedIndex) {
         return;
     }
+    
     _selectedIndex = selectedIndex;
-    [self setSelectedIndicator:YES];
+    if (_indicatorHeight>0) {
+        [self setSelectedIndicator:YES];
+    }
+    
+   
 }
 
 - (void)setNormalColor:(UIColor *)normalColor{

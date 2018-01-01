@@ -33,6 +33,17 @@ typedef void(^BMPageTitleViewSelectedBlock)(NSInteger index);
 @property (nonatomic, strong) UIColor *selectedColor;
 
 
+/**
+ button 默认边框颜色
+ */
+@property (nonatomic, strong) UIColor *normalBorderColor;
+
+/**
+ button 选中时边框颜色
+ */
+@property (nonatomic, strong) UIColor *selectedBorderColor;
+
+
 //背景图片
 
 /**

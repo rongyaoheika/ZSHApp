@@ -68,7 +68,7 @@
     }
     
     self.bottomScrollView.contentSize = CGSizeMake(2*kScreenWidth, 0);
-    CGFloat scrollViewH = (_selectIndex == 0?_firstView.viewHeight:_secondView.viewHeight);
+    CGFloat scrollViewH = (_selectIndex == 0?kRealValue(120):kRealValue(1200));
     [self.bottomScrollView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.mas_equalTo(self).insets(UIEdgeInsetsMake(kRealValue(50), 0, 0, 0));
         make.height.mas_equalTo(scrollViewH);
@@ -76,16 +76,14 @@
     
     [_firstView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.mas_equalTo(_bottomScrollView);
-        make.left.mas_equalTo(_bottomScrollView);
         make.width.mas_equalTo(KScreenWidth);
-        make.height.mas_equalTo(_firstView.viewHeight);
     }];
     
     [_secondView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(_firstView.mas_right);
         make.top.mas_equalTo(_bottomScrollView);
         make.width.mas_equalTo(KScreenWidth);
-        make.height.mas_equalTo(_secondView.viewHeight);
+        make.height.mas_equalTo(kRealValue(1200));
     }];
     
 }
@@ -138,6 +136,9 @@
     NSInteger index = scrollView.contentOffset.x/kScreenWidth;
     _selectIndex = index;
     self.titleView.selectedIndex = index;
+    if (self.cellHeightBlock) {
+        self.cellHeightBlock(index);
+    }
 }
 
 @end

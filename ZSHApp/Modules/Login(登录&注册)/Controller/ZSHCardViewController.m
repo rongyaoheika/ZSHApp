@@ -43,8 +43,6 @@ static NSInteger customizedCellIndex;
 @property (nonatomic, strong) NSArray            *addressArr;
 @property (nonatomic, strong) NSArray            *addressParamArr;
 @property (nonatomic, strong) NSArray            *addressTypeArr;
-@property (nonatomic, assign) NSInteger          cellHeight;
-@property (nonatomic, assign) BOOL               isUpdate;
 
 @end
 
@@ -391,7 +389,7 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
                 cell.selectIndex = numCellIndex;
                 cell.cellHeightBlock = ^(NSInteger index) {
                     numCellIndex = index;
-                    [weakself.tableView reloadRowAtIndexPath:indexPath withRowAnimation:UITableViewRowAnimationFade];
+                     [weakself.tableView reloadData];
                 };
                 return cell;
             }
@@ -404,7 +402,7 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
                 cell.selectIndex = customizedCellIndex;
                 cell.cellHeightBlock = ^(NSInteger selectIndex) {
                     customizedCellIndex = selectIndex;
-                    [weakself.tableView reloadRowAtIndexPath:indexPath withRowAnimation:UITableViewRowAnimationFade];
+                    [weakself.tableView reloadData];
                 };
                 return cell;
             }

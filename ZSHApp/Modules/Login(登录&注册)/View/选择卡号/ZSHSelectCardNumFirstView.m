@@ -31,8 +31,4 @@
     }];
 }
 
-- (CGFloat)viewHeight{
-    return (kRealValue(35)+kRealValue(15));
-}
-
 @end

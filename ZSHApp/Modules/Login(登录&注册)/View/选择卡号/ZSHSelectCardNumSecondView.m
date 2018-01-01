@@ -115,6 +115,7 @@
     cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHBaseCell *cell = [[ZSHBaseCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@""];
         ZSHBlackCardPhoneNumView *blackCardPhoneView = [[ZSHBlackCardPhoneNumView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, kRealValue(280)) paramDic:@{@"type":@"5"}];
+        blackCardPhoneView.selectIndex = 0;
         [cell.contentView addSubview:blackCardPhoneView];
         return cell;
     };
@@ -122,10 +123,6 @@
 
 - (void)getSelectCardNum {
     
-}
-
-- (CGFloat)viewHeight{
-    return 5*(kRealValue(65)+ kRealValue(150)) + (kRealValue(65)+kRealValue(280));
 }
 
 @end

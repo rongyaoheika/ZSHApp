@@ -9,6 +9,7 @@
 #import "ZSHCardCustomizedCell.h"
 #import "ZSHCardCustomizedFirst.h"
 #import "ZSHCardCustomizedSecond.h"
+#import "ZSHCardCustomizedThird.h"
 #import "LXScollTitleView.h"
 @interface ZSHCardCustomizedCell ()<UIScrollViewDelegate>
 
@@ -19,6 +20,7 @@
 @property (nonatomic, strong) UIScrollView              *bottomScrollView;
 @property (nonatomic, strong) ZSHCardCustomizedFirst    *customizedFirstView;
 @property (nonatomic, strong) ZSHCardCustomizedSecond   *customizedSecondView;
+@property (nonatomic, strong) ZSHCardCustomizedThird    *customizedThirdView;
 
 @end
 
@@ -41,6 +43,9 @@
     _customizedSecondView = [[ZSHCardCustomizedSecond alloc]init];
     [_customizedSecondView selectedByIndex:2];
     [self.bottomScrollView addSubview:_customizedSecondView];
+    
+    _customizedThirdView = [[ZSHCardCustomizedThird alloc]init];
+    [self.bottomScrollView addSubview:_customizedThirdView];
     
     [self layoutIfNeeded];
 }
@@ -72,7 +77,7 @@
     self.bottomScrollView.contentSize = CGSizeMake(3*kScreenWidth, 0);
     [self.bottomScrollView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self).offset(kRealValue(50));
-        make.bottom.mas_equalTo(self).offset(-KLeftMargin);
+        make.height.mas_equalTo(self);
         make.left.mas_equalTo(self);
         make.width.mas_equalTo(self);
     }];
@@ -80,14 +85,22 @@
     [_customizedFirstView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(_bottomScrollView);
         make.width.mas_equalTo(kScreenWidth);
-        make.bottom.mas_equalTo(_bottomScrollView);
+        make.height.mas_equalTo(kRealValue(330));
         make.top.mas_equalTo(_bottomScrollView);
+        
     }];
     
     [_customizedSecondView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(_bottomScrollView).offset(KScreenWidth);
         make.width.mas_equalTo(kScreenWidth);
-        make.bottom.mas_equalTo(_bottomScrollView);
+        make.height.mas_equalTo(kRealValue(250));
+        make.top.mas_equalTo(_bottomScrollView);
+    }];
+    
+    [_customizedThirdView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(_bottomScrollView).offset(2*KScreenWidth);
+        make.width.mas_equalTo(kScreenWidth);
+        make.height.mas_equalTo(kRealValue(0));
         make.top.mas_equalTo(_bottomScrollView);
     }];
 }
@@ -137,7 +150,6 @@
                     break;
             }
             [[NSUserDefaults standardUserDefaults] setObject:custom forKey:@"CUSTOM"];
-//            [strongSelf.bottomScrollView setContentOffset:CGPointMake(index * KScreenWidth, 0) animated:YES];
         };
         _titleView.titleWidth = kRealValue(100);
     }
@@ -151,6 +163,8 @@
     if (self.cellHeightBlock) {
         self.cellHeightBlock(_selectIndex);
     }
+
+    
     
 }
 
@@ -159,6 +173,9 @@
 -(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
     NSInteger index = scrollView.contentOffset.x/kScreenWidth;
     self.titleView.selectedIndex = index;
+    if (self.cellHeightBlock) {
+        self.cellHeightBlock(index);
+    }
 }
 
 @end
