@@ -154,6 +154,13 @@
         _priceLabel.text  = [NSString stringWithFormat:@"¥%.0f",[dic[@"BARPRICE"]floatValue] ];
         _commentLabel.text = [NSString stringWithFormat:@"（%ld条评价）",(long)[dic[@"SHOPEVACOUNT"]intValue]];
         _starView.scorePercent = [dic[@"SHOPEVALUATE"]floatValue]/5.0;
+    } else if (_shopType == ZSHFoodShopType){//美食
+        _hotelDescLabel.text = dic[@"SHOPNAMES"];
+        _hotelAddressLabel.text = dic[@"SHOPADDRESS"];
+        _priceLabel.text = [NSString stringWithFormat:@"¥%.0f／位",[dic[@"SHOPPRICE"]floatValue] ];
+        _commentLabel.text = [NSString stringWithFormat:@"（%ld条评价）",(long)[dic[@"SHOPEVACOUNT"]integerValue] ];
+        _starView.scorePercent = [dic[@"SHOPEVALUATE"]floatValue] /5.0;
+        
     }
     
     

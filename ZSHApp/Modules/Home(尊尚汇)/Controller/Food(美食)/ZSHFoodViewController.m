@@ -10,9 +10,9 @@
 #import "ZSHFoodCell.h"
 #import "ZSHFoodModel.h"
 #import "ZSHHotelDetailViewController.h"
-
 #import "ZSHFoodDetailViewController.h"
 #import "ZSHFoodLogic.h"
+#import "ZSHHotelCell.h"
 
 @interface ZSHFoodViewController ()
 
@@ -55,10 +55,12 @@ static NSString *ZSHFoodCellID = @"ZSHFoodCell";
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.mas_equalTo(self.view);
     }];
-    
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    [self.tableView setSeparatorColor:KZSHColor1D1D1D];
+    [self.tableView setSeparatorInset:UIEdgeInsetsMake(0, 0, 0, 0)];
     self.tableView.delegate = self.tableViewModel;
     self.tableView.dataSource = self.tableViewModel;
-    [self.tableView registerClass:[ZSHFoodCell class] forCellReuseIdentifier:ZSHFoodCellID];
+    [self.tableView registerClass:[ZSHHotelCell class] forCellReuseIdentifier:ZSHFoodCellID];
    
 }
 
@@ -75,9 +77,13 @@ static NSString *ZSHFoodCellID = @"ZSHFoodCell";
     for (int i = 0; i < _foodListArr.count; i++) {
         ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
         [sectionModel.cellModelArray addObject:cellModel];
-        cellModel.height = kRealValue(250);
+        cellModel.height = kRealValue(110);
         cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
-            ZSHFoodCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHFoodCellID forIndexPath:indexPath];
+            ZSHHotelCell *cell =  [tableView dequeueReusableCellWithIdentifier:ZSHFoodCellID forIndexPath:indexPath];
+            if (i==_foodListArr.count-1) {
+                cell.separatorInset = UIEdgeInsetsMake(0, 0, 0, MAXFLOAT);
+            }
+            cell.shopType = ZSHFoodShopType;
             NSDictionary *foodDic = _foodListArr[indexPath.row];
             [cell updateCellWithParamDic:foodDic];
             return cell;
