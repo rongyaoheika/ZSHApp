@@ -164,7 +164,7 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
         case 4:{
             if ([_selectedArr[indexPath.section]boolValue]) {
                 if (numCellIndex == 0) {
-                    return kRealValue(150);
+                    return kRealValue(120);
                 } else {
                     return kRealValue(1200);
                 }
@@ -174,13 +174,13 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
         }
         case 5:{
             if ([_selectedArr[indexPath.section]boolValue]) {
-//                if (customizedCellIndex == 0) {
-//                    kRealValue(320);
-//                } else {
-//                    return kRealValue(220);
-//                }
-                
-                return kRealValue(320);
+                if (customizedCellIndex == 0) {
+                  return  kRealValue(380);
+                } else if(customizedCellIndex == 1) {
+                    return kRealValue(300);
+                } else if(customizedCellIndex == 2){
+                    return kRealValue(70);
+                }
                 
             }
             
@@ -282,6 +282,7 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
                     [_selectedArr replaceObjectAtIndex:section withObject:@(YES)];
                     [weakself.tableView reloadSections:[NSIndexSet indexSetWithIndex:section] withRowAnimation:UITableViewRowAnimationFade];
                 } else { //展开 - 合并
+                    
                     [_selectedArr replaceObjectAtIndex:section withObject:@(false)];
                     [weakself.tableView reloadSections:[NSIndexSet indexSetWithIndex:section] withRowAnimation:UITableViewRowAnimationFade];
                 }
@@ -400,6 +401,7 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
         case 5:{
             if ([_selectedArr[indexPath.section]boolValue]) {
                 ZSHCardCustomizedCell *cell = [[ZSHCardCustomizedCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@""];
+                cell.selectIndex = customizedCellIndex;
                 cell.cellHeightBlock = ^(NSInteger selectIndex) {
                     customizedCellIndex = selectIndex;
                     [weakself.tableView reloadRowAtIndexPath:indexPath withRowAnimation:UITableViewRowAnimationFade];

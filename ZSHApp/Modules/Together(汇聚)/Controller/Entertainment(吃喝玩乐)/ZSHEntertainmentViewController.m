@@ -25,7 +25,7 @@
 @property (nonatomic, strong) NSArray              *typeArr;
 @property (nonatomic, strong) NSMutableArray       *dataArr;
 @property (nonatomic, strong) ZSHTogetherLogic     *togetherLogic;
-
+@property (nonatomic, assign) NSInteger            selectIndex;
 @end
 
 static NSString *ZSHEnterTainmentCellID = @"ZSHEnterTainmentCell";
@@ -39,6 +39,7 @@ static NSString *ZSHEnterTainmentCellID = @"ZSHEnterTainmentCell";
 }
 
 - (void)loadData{
+    _selectIndex = 0;
     [self initViewModel];
     [self requestData];
     
@@ -95,7 +96,11 @@ static NSString *ZSHEnterTainmentCellID = @"ZSHEnterTainmentCell";
         if (angle == M_PI ) {//下拉展开
             [weakself requestTogetherDataType];
         } else if(angle == 0){//收起
-            [ZSHBaseUIControl setAnimationWithHidden:YES view:weakself.topBtnListView completedBlock:nil];
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+               [ZSHBaseUIControl setAnimationWithHidden:YES view:weakself.topBtnListView completedBlock:nil];
+            });
+            
         }
         
     } completion:^(BOOL finished) {
@@ -106,7 +111,7 @@ static NSString *ZSHEnterTainmentCellID = @"ZSHEnterTainmentCell";
 #pragma getter
 - (ZSHBottomBlurPopView *)createBottomBlurPopViewWith:(ZSHFromVCToBottomBlurPopView)fromClassType{
     
-    NSDictionary *nextParamDic = @{KFromClassType:@(fromClassType),@"titleArr":self.typeArr};
+    NSDictionary *nextParamDic = @{KFromClassType:@(fromClassType),@"titleArr":self.typeArr,@"btnTag":@(_selectIndex)};
     ZSHBottomBlurPopView *bottomBlurPopView = [[ZSHBottomBlurPopView alloc]initWithFrame:CGRectMake(0, KNavigationBarHeight, KScreenWidth, KScreenHeight-KNavigationBarHeight) paramDic:nextParamDic];
     bottomBlurPopView.blurRadius = 20;
     bottomBlurPopView.dynamic = NO;
@@ -185,26 +190,22 @@ static NSString *ZSHEnterTainmentCellID = @"ZSHEnterTainmentCell";
 
 //选中某类型
 - (void)orderTypeBtnAction:(UIButton *)orderBtn {
+    kWeakSelf(self);
     _typeIndex = orderBtn.tag-1;
     [_titleBtn setTitle:self.typeArr[_typeIndex] forState:UIControlStateNormal];
-    switch (orderBtn.tag) {
-        case 1:{//吃
-            [self changeButtonObject:_titleBtn TransformAngle:0];
-             _titleBtn.selected = !_titleBtn.selected;
-            break;
-        }
-        case 2:// 喝
-        case 3:// 玩
-        case 4:{// 乐
-            [self changeButtonObject:_titleBtn TransformAngle:0];
-             _titleBtn.selected = !_titleBtn.selected;
-            break;
-        }
-        default:
-            break;
-           
-    }
+    [self changeButtonObject:_titleBtn TransformAngle:0];
+    _titleBtn.selected = !_titleBtn.selected;
+    
+    NSDictionary *paramDic = @{@"CONVERGE_ID":self.paramDic[@"CONVERGE_ID"], @"HONOURUSER_ID":@"", @"STATUS":@"",@"CONVERGESORT_ID":_typeDicArr[orderBtn.tag - 1][@"CONVERGESORT_ID"]};
+    [_togetherLogic requestSinglePartyListWithDic:paramDic success:^(id response) {
+        [weakself initViewModel];
+        
+         [weakself.guideView updateViewWithParamDic:@{@"dataArr":response}];
+        
+    }];
 }
+
+
 
 - (void)requestTogetherDataType{//吃喝玩乐类型
     kWeakSelf(self);
@@ -221,6 +222,7 @@ static NSString *ZSHEnterTainmentCellID = @"ZSHEnterTainmentCell";
         //订单列表button点击
         ZSHCardBtnListView *listView = [weakself.topBtnListView viewWithTag:2];
         listView.btnClickBlock = ^(UIButton *btn) {
+            _selectIndex = btn.tag - 1;
             [weakself orderTypeBtnAction:btn];
         };
         

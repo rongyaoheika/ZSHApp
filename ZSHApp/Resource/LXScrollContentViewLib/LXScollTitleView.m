@@ -76,8 +76,7 @@
         //小图片可以
         [btn setImage:self.normalImage?self.normalImage:self.normalImageArr[i] forState:UIControlStateNormal];
         [btn setImage:self.selectedImage?self.selectedImage:self.selectedImageArr[i] forState:UIControlStateSelected];
-        
-        btn.selected = (i == self.selectedIndex);
+
         btn.titleLabel.font = btn.selected?self.selectedTitleFont:self.normalTitleFont;
         btn.tag = 100 + i++;
         [btn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];

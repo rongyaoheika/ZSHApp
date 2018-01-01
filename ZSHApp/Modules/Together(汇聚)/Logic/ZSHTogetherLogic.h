@@ -23,6 +23,8 @@
 - (void)requestConvergeList:(void(^)(id response))success;
 // 获得指定汇聚下所有聚会列表 (我发布,我参与)
 - (void)requestPartyListWithDic:(NSDictionary *)dic success:(void(^)(id response))success;
+// 获得指定某个类型下汇聚下所有聚会列表 (我发布,我参与)
+- (void)requestSinglePartyListWithDic:(NSDictionary *)dic success:(void(^)(id response))success;
 // 获取聚会详情
 - (void)requestPartyListWithConvergeDetailID:(NSString *)convergeDetailID success:(void(^)(id response))success;
 // 发布聚会

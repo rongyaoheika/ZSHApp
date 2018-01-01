@@ -25,8 +25,9 @@
 @implementation ZSHCardCustomizedCell
 
 - (void)setup{
-   _titleArr = @[@"定制（200元）",@"定制（800元）",@"放弃定制"];
+    _titleArr = @[@"定制（200元）",@"定制（800元）",@"放弃定制"];
     [self.contentView addSubview:self.titleView];
+    self.selectIndex = 0;
     
     _bgIV = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"seg_three_bg"]];
     [self.titleView addSubview:_bgIV];
@@ -118,9 +119,8 @@
         __weak typeof(self) weakSelf = self;
         _titleView.selectedBlock = ^(NSInteger index){
             __weak typeof(self) strongSelf = weakSelf;
-            if (strongSelf.cellHeightBlock) {
-                strongSelf.cellHeightBlock(index);
-            }
+            strongSelf.selectIndex = index;
+            
             NSString *custom = @"";
             switch (index) {
                 case 0:
@@ -137,12 +137,21 @@
                     break;
             }
             [[NSUserDefaults standardUserDefaults] setObject:custom forKey:@"CUSTOM"];
-            [strongSelf.bottomScrollView setContentOffset:CGPointMake(index * KScreenWidth, 0) animated:YES];
+//            [strongSelf.bottomScrollView setContentOffset:CGPointMake(index * KScreenWidth, 0) animated:YES];
         };
-//        _titleView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"seg_three_bg"] ];
         _titleView.titleWidth = kRealValue(100);
     }
     return _titleView;
+}
+
+- (void)setSelectIndex:(NSInteger)selectIndex{
+    _selectIndex = selectIndex;
+    _titleView.selectedIndex = selectIndex;
+    [self.bottomScrollView setContentOffset:CGPointMake(_selectIndex * KScreenWidth, 0) animated:YES];
+    if (self.cellHeightBlock) {
+        self.cellHeightBlock(_selectIndex);
+    }
+    
 }
 
 #pragma action

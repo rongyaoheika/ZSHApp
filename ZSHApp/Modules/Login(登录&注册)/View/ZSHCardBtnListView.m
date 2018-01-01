@@ -13,13 +13,14 @@
 #define midXSpace kRealValue(20)
 #define midYSpace kRealValue(15)
 
+
 @interface ZSHCardBtnListView ()
 
 @property (nonatomic, strong) NSMutableArray   *btnArr;
 @property (nonatomic, assign) NSInteger        row;
 @property (nonatomic, assign) NSInteger        column;
 @property (nonatomic, assign) UIButton         *lastBtn;
-
+@property (nonatomic, assign) NSInteger        selectIndex;
 @end
 
 @implementation ZSHCardBtnListView
@@ -36,13 +37,14 @@
         NSDictionary *cardTypeBtnDic = @{@"title":titleListArr[i],@"font":kPingFangLight(15), @"selectedTitleColor":KZSHColorF29E19};
         UIButton *cardTypeBtn = [ZSHBaseUIControl createBtnWithParamDic:cardTypeBtnDic];
         cardTypeBtn.tag = i + 1;
-        [cardTypeBtn setBackgroundImage:[UIImage imageNamed:self.paramDic[@"normalImage"]]    forState:UIControlStateNormal];
+        [cardTypeBtn setBackgroundImage:[UIImage imageNamed:self.paramDic[@"normalImage"]] forState:UIControlStateNormal];
         [cardTypeBtn setBackgroundImage:[UIImage imageNamed:self.paramDic[@"selectedImage"]] forState:UIControlStateSelected];
         [cardTypeBtn addTarget:self action:@selector(cardTypeBtnAction:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:cardTypeBtn];
         [_btnArr addObject:cardTypeBtn];
         
-        if (i == 0) {
+        _selectIndex = (self.paramDic[@"btnTag"]?[self.paramDic[@"btnTag"]integerValue]:0);
+        if (i == _selectIndex ) {
             cardTypeBtn.selected = YES;
             _lastBtn = cardTypeBtn;
         }
@@ -72,10 +74,17 @@
         if (self.btnClickBlock) {
             self.btnClickBlock(btn);
         }
-    } else {
+    } else if(btn.tag!=_selectIndex){
         UIButton *tempBtn = btn;
         tempBtn.selected = !tempBtn.selected;
-        self.clickSameBtn(tempBtn.selected);
+        if(self.clickSameBtn){
+            self.clickSameBtn(tempBtn.selected);
+        }
+    } else if(btn.tag == _selectIndex){
+        btn.selected = YES;
+        if (self.btnClickBlock) {
+            self.btnClickBlock(btn);
+        }
     }
 }
 

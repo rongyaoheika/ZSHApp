@@ -8,7 +8,6 @@
 
 #import "ZSHTogetherLogic.h"
 
-
 @implementation ZSHTogetherLogic
 - (instancetype)init {
     if (self == [super init]) {
@@ -31,6 +30,18 @@
 
 // 获得指定汇聚下所有聚会列表 (我发布,我参与) 
 - (void)requestPartyListWithDic:(NSDictionary *)dic success:(void(^)(id response))success {
+    kWeakSelf(self);
+    [PPNetworkHelper POST:kUrlGetPartyList parameters:dic success:^(id responseObject) {
+        weakself.entertainModelArr = [ZSHEntertainmentModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"]];
+        NSArray *arr = [ZSHADVERTISEMENTModel mj_objectArrayWithKeyValuesArray:responseObject[@"ad"]];
+        success(arr);
+    } failure:^(NSError *error) {
+        RLog(@"请求失败");
+    }];
+}
+
+// 获得指定某个类型下汇聚下所有聚会列表 (我发布,我参与)
+- (void)requestSinglePartyListWithDic:(NSDictionary *)dic success:(void(^)(id response))success {
     kWeakSelf(self);
     [PPNetworkHelper POST:kUrlGetPartyList parameters:dic success:^(id responseObject) {
         weakself.entertainModelArr = [ZSHEntertainmentModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"]];

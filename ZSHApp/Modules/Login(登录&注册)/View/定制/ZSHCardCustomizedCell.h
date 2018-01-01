@@ -13,5 +13,5 @@ typedef void(^CellHeightChanged) (NSInteger selectIndex);
 @interface ZSHCardCustomizedCell : ZSHBaseCell
 
 @property (nonatomic, copy) CellHeightChanged   cellHeightBlock;
-
+@property (nonatomic, assign) NSInteger         selectIndex;
 @end
