@@ -10,6 +10,7 @@
 #import "ZSHFriendListModel.h"
 #import "ZSHWeiBoCellModel.h"
 #import "ZSHCommentListModel.h"
+#import "ZSHWeiboTopicModel.h"
 
 @interface ZSHLiveLogic : ZSHBaseLogic
 
@@ -28,8 +29,11 @@
 - (void)requestDotAgreeWithDic:(NSDictionary *)dic success:(void (^)(id response))success;
 // 通过圈子ID获取所有评论
 - (void)requestCommentListWithCircleID:(NSString *)circleID success:(void (^)(id response))success;
-
 // 通过圈子ID评论
 - (void)requestAddCommentWithDic:(NSDictionary *)dic success:(void (^)(id response))success;
+// 获取话题列表(含模糊查询)
+- (void)requestGetTopicListWithTitle:(NSString *)title success:(void (^)(id response))success;
+// 添加话题
+- (void)requestAddTopicWithDic:(NSDictionary *)dic success:(void (^)(id response))success;
 
 @end

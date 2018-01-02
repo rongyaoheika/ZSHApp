@@ -123,5 +123,12 @@
     }];
 }
 
+- (void)requestTogetherDataTypeWithACONVERGE_ID:(NSString *)CONVERGE_ID success:(void (^)(id response))success{
+    [PPNetworkHelper POST:kUrlGetConvergesort parameters:@{@"CONVERGE_ID":CONVERGE_ID} success:^(id responseObject) {
+        success(responseObject[@"pd"]);
+    } failure:^(NSError *error) {
+        RLog(@"%@", error);
+    }];
+}
 
 @end

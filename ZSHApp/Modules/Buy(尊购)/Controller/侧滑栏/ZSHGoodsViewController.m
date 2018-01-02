@@ -19,6 +19,7 @@
 #import "LXScollTitleView.h"
 #import "ZSHGoodsCollectionViewCell.h"
 #import "ZSHPickView.h"
+#import "ZSHGuideView.h"
 
 #define tableViewW  kRealValue(100)
 
@@ -34,7 +35,7 @@
 @property (nonatomic, strong) LXScollTitleView                    *titleView;
 @property (nonatomic, assign) NSInteger                           index;
 @property (nonatomic, strong) ZSHPickView                         *pickView;
-
+@property (nonatomic, strong) ZSHGuideView                        *guideView;
 
 @end
 
@@ -90,7 +91,11 @@ static NSString *const ZSHBrandSortCellID = @"ZSHBrandSortCell";
     imageView.centerY = btn.centerY;
     [btn addSubview:imageView];
     
-    self.collectionView.frame = CGRectMake(tableViewW, KNavigationBarHeight+kRealValue(40),kScreenWidth-tableViewW, kScreenHeight - KNavigationBarHeight-kRealValue(40));
+    
+    [self.view addSubview:self.guideView];
+    
+    
+    self.collectionView.frame = CGRectMake(tableViewW, KNavigationBarHeight+kRealValue(115),kScreenWidth-tableViewW, kScreenHeight - KNavigationBarHeight-kRealValue(120));
     [self.view addSubview:self.collectionView];
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
@@ -112,6 +117,15 @@ static NSString *const ZSHBrandSortCellID = @"ZSHBrandSortCell";
     [self.tableViewModel.sectionModelArray addObject:[self storeListSection]];
     [self.tableView reloadData];
 }
+
+- (ZSHGuideView *)guideView {
+    if(!_guideView) {
+        NSDictionary *nextParamDic = @{KFromClassType:@(FromTogetherToGuideView),@"pageViewHeight":@(kRealValue(75)),@"min_scale":@(0.6),@"withRatio":@(1.8),@"infinite":@(false), @"dataArr":@[@"hotel_image", @"hotel_image"]};
+        _guideView = [[ZSHGuideView alloc]initWithFrame:CGRectMake(tableViewW, KNavigationBarHeight+kRealValue(40), kRealValue(275), kRealValue(75)) paramDic:nextParamDic];
+    }
+    return _guideView;
+}
+
 
 //getter
 - (LXScollTitleView *)titleView{

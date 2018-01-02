@@ -40,4 +40,7 @@
 // 修改点击广告的次数
 - (void)requestEditClickCountWithADVERTISEMENT_ID:(NSString *)ADVERTISEMENT_ID success:(void (^)(id response))success;
 
+//吃喝玩乐类型
+- (void)requestTogetherDataTypeWithACONVERGE_ID:(NSString *)CONVERGE_ID success:(void (^)(id response))success;
+
 @end

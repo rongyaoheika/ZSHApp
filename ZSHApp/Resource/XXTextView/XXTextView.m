@@ -42,9 +42,16 @@
     self.font = [UIFont systemFontOfSize:16.0f];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textDidChange) name:UITextViewTextDidChangeNotification object:self];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(beginEditAction) name:UITextViewTextDidBeginEditingNotification object:self];
 }
 
 #pragma mark - UITextViewTextDidChangeNotification
+- (void) beginEditAction{
+    if (self.beginEdit) {
+        self.beginEdit();
+    }
+}
+
 
 - (void)textDidChange {
     self.placeholderLabel.hidden = self.hasText;
@@ -102,6 +109,7 @@
 - (void)dealloc {
     
     [[NSNotificationCenter defaultCenter] removeObserver:UITextViewTextDidChangeNotification];
+    [[NSNotificationCenter defaultCenter]removeObserver:UITextViewTextDidBeginEditingNotification];
 }
 
 @end

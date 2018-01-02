@@ -709,6 +709,7 @@
 //参数：  CARDNO=390913360687792128   当前账号/   PHONE=13366847890   手机号/   USERIDCARD=654321  身份证号/
 //请求地址：/appuserin/getuserbyforget.do?USERBYFORGET  (混淆码)
 #define kUrlGetUserByForget [NSString stringWithFormat:@"/appuserin/getuserbyforget.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"USERBYFORGET"]]
+
 //137.修改用户手机号码
 //参数：  HONOURUSER_ID  用户ID/     PHONE   手机号/
 //请求地址：/appuserin/upduserphone.do?UPDUSERPHONE  (混淆码)
@@ -721,4 +722,23 @@
 //参数：  CLICK_COUNT  点击次数   /      ADVERTISEMENT_ID    广告栏的id
 //请求地址：/appadvertismentin/editClickCount.do?EDITCLICKCOUNT  (混淆码)
 #define kUrlEditClickCount [NSString stringWithFormat:@"/appadvertismentin/editClickCount.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"EDITCLICKCOUNT"]]
+
+//140.根据汇聚ID查询分类列表
+//参数：  CONVERGE_ID  所属汇聚的ID
+//请求地址：/appconvergein/getconvergesort.do?GETCONVERGESORT  (混淆码)
+#define kUrlGetConvergesort [NSString stringWithFormat:@"/appconvergein/getconvergesort.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"GETCONVERGESORT"]]
+//141.获取话题列表(含模糊查询)（完成）
+//可选参数：  TITLE  话题
+//请求地址：/appcirclein/gettopiclist.do?TOPICLIST  (混淆码)
+#define kUrGetTopicList [NSString stringWithFormat:@"/appcirclein/gettopiclist.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"TOPICLIST"]]
+//142.根据话题查询(弃用)
+//参数：  TITLE  话题
+//请求地址：/appcirclein/gettopicbytitle.do?TOPICBYTITLE  (混淆码)
+//143.添加话题 （话题头像名字 showfile）
+//参数：  HONOURUSER_ID  添加话题的用户ID/       TITLE  话题      /
+//请求地址：/appcirclein/addtopic.do?TOPICADD  (混淆码)
+#define kUrAddTopic [NSString stringWithFormat:@"/appcirclein/addtopic.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"TOPICADD"]]
+
+
+
 #endif /* URLMacros_h */

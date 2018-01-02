@@ -24,7 +24,5 @@
      NSString *returnStr = [NSPropertyListSerialization propertyListWithData:tempData options:NSPropertyListImmutable format:&format error:nil];
   
     return [returnStr stringByReplacingOccurrencesOfString:@"\\r\\n" withString:@"\n"];
-    
-  
 }
 @end

@@ -8,6 +8,11 @@
 
 #import "ZSHCardBtnListView.h"
 
+#define btnW kRealValue(100)
+#define btnH kRealValue(30)
+#define midXSpace kRealValue(20)
+#define midYSpace kRealValue(15)
+
 @interface ZSHCardBtnListView ()
 
 @property (nonatomic, strong) NSMutableArray   *btnArr;
@@ -40,10 +45,7 @@
 
 -  (void)layoutSubviews{
     [super layoutSubviews];
-    CGFloat btnW = kRealValue(100);
-    CGFloat btnH = kRealValue(30);
-    CGFloat midXSpace = (KScreenWidth - 2*KLeftMargin - _column*btnW)/(self.column-1);
-    CGFloat midYSpace = (CGRectGetHeight(self.frame) - 2*kRealValue(10) - _row*btnH)/(self.row-1);
+
     int i = 0;
     for (UIButton *btn in _btnArr) {
         [btn mas_makeConstraints:^(MASConstraintMaker *make) {

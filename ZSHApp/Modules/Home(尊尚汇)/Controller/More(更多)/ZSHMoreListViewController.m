@@ -10,12 +10,16 @@
 #import "ZSHMoreListCell.h"
 #import "ZSHMoreLogic.h"
 #import "ZSHSubscribeViewController.h"
+#import "ZSHGuideView.h"
+
 @interface ZSHMoreListViewController ()
 
 @property (nonatomic, assign) ZSHShopType    shopType;
 @property (nonatomic, strong) ZSHMoreLogic   *moreLogic;
 @property (nonatomic, strong) NSArray        *listDataArr;
 @property (nonatomic, strong) NSDictionary   *pushNextParamDic;
+@property (nonatomic, strong) ZSHGuideView   *guideView;
+
 
 @end
 
@@ -25,8 +29,6 @@ static NSString *ZSHMoreListCellID = @"ZSHMoreListCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    
     
     [self createUI];
     [self loadData];
@@ -46,8 +48,9 @@ static NSString *ZSHMoreListCellID = @"ZSHMoreListCell";
         case FromHorseVCToTitleContentVC:{//马术
             _shopType = ZSHHorseType;
             _pushNextParamDic = @{KFromClassType:@(ZSHHorseType),@"title":@"马术"};
-            [_moreLogic requestHorseListWithParamDic:paramDic success:^(NSArray *horseDicArr) {
-                weakself.listDataArr = horseDicArr;
+            [_moreLogic requestHorseListWithParamDic:paramDic success:^(id responseObject) {
+                weakself.listDataArr = responseObject[@"pd"];
+                [weakself updateAd:responseObject[@"ad"]];
                 [weakself initViewModel];
             } fail:nil];
             
@@ -56,8 +59,9 @@ static NSString *ZSHMoreListCellID = @"ZSHMoreListCell";
         case FromShipVCToTitleContentVC:{//游艇
             _shopType = ZSHShipType;
             _pushNextParamDic = @{KFromClassType:@(ZSHShipType),@"title":@"游艇"};
-            [_moreLogic requestYachtListWithParamDic:paramDic success:^(NSArray *golfDicArr) {
-                weakself.listDataArr = golfDicArr;
+            [_moreLogic requestYachtListWithParamDic:paramDic success:^(id responseObject) {
+                weakself.listDataArr = responseObject[@"pd"];
+                [weakself updateAd:responseObject[@"ad"]];
                 [weakself initViewModel];
             } fail:nil];
             
@@ -66,8 +70,9 @@ static NSString *ZSHMoreListCellID = @"ZSHMoreListCell";
         case FromGolfVCToTitleContentVC:{//高尔夫汇
             _shopType = ZSHGolfType;
             _pushNextParamDic = @{KFromClassType:@(ZSHGolfType),@"title":@"高尔夫汇"};
-            [_moreLogic requestGolfListWithParamDic:paramDic success:^(NSArray *golfDicArr) {
-                weakself.listDataArr = golfDicArr;
+            [_moreLogic requestGolfListWithParamDic:paramDic success:^(id responseObject) {
+                weakself.listDataArr = responseObject[@"pd"];
+                [weakself updateAd:responseObject[@"ad"]];
                 [weakself initViewModel];
             } fail:nil];
             
@@ -76,18 +81,27 @@ static NSString *ZSHMoreListCellID = @"ZSHMoreListCell";
         case FromLuxcarVCToTitleContentVC:{//豪车
             _shopType = ZSHLuxcarType;
             _pushNextParamDic = @{KFromClassType:@(ZSHLuxcarType),@"title":@"豪车"};
-            [_moreLogic requestLuxcarListWithParamDic:paramDic success:^(NSArray *golfDicArr) {
-                weakself.listDataArr = golfDicArr;
+            [_moreLogic requestLuxcarListWithParamDic:paramDic success:^(id responseObject) {
+                weakself.listDataArr = responseObject[@"pd"];
+                [weakself updateAd:responseObject[@"ad"]];
                 [weakself initViewModel];
             } fail:nil];
             
             break;
         }
-            
+
         default:
             break;
     }
     
+}
+
+- (void)updateAd:(NSArray *)arr {
+    NSMutableArray *imageArr = [[NSMutableArray alloc] init];
+    for (NSDictionary *dic  in arr) {
+        [imageArr addObject:dic[@"SHOWIMG"]];
+    }
+    [_guideView updateViewWithParamDic:@{@"dataArr":imageArr}];
 }
 
 - (void)createUI{
@@ -100,9 +114,8 @@ static NSString *ZSHMoreListCellID = @"ZSHMoreListCell";
     [self.tableView setSeparatorInset:UIEdgeInsetsMake(0, 0, 0, 0)];
     self.tableView.delegate = self.tableViewModel;
     self.tableView.dataSource = self.tableViewModel;
-    
     [self.tableView registerClass:[ZSHMoreListCell class] forCellReuseIdentifier:ZSHMoreListCellID];
-    
+    self.tableView.tableHeaderView = self.guideView;
 }
 
 - (void)initViewModel {
@@ -142,6 +155,14 @@ static NSString *ZSHMoreListCellID = @"ZSHMoreListCell";
     }
     
     return sectionModel;
+}
+
+- (ZSHGuideView *)guideView {
+    if(!_guideView) {
+        NSDictionary *nextParamDic = @{KFromClassType:@(FromBuyVCToGuideView),@"pageViewHeight":@(kRealValue(120)),@"min_scale":@(0.6),@"withRatio":@(1.8),@"infinite":@(false)};
+        _guideView = [[ZSHGuideView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, kRealValue(120)) paramDic:nextParamDic];
+    }
+    return _guideView;
 }
 
 - (void)didReceiveMemoryWarning {

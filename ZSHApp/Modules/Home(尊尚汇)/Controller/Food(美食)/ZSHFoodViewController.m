@@ -10,14 +10,15 @@
 #import "ZSHFoodCell.h"
 #import "ZSHFoodModel.h"
 #import "ZSHHotelDetailViewController.h"
-
 #import "ZSHFoodDetailViewController.h"
 #import "ZSHFoodLogic.h"
+#import "ZSHGuideView.h"
 
 @interface ZSHFoodViewController ()
 
 @property (nonatomic, strong) NSArray                  *foodListArr;
 @property (nonatomic, strong) ZSHFoodLogic             *foodLogic;
+@property (nonatomic, strong) ZSHGuideView             *guideView;
 
 @end
 
@@ -58,8 +59,10 @@ static NSString *ZSHFoodCellID = @"ZSHFoodCell";
     self.tableView.delegate = self.tableViewModel;
     self.tableView.dataSource = self.tableViewModel;
     [self.tableView registerClass:[ZSHFoodCell class] forCellReuseIdentifier:ZSHFoodCellID];
-   
+    self.tableView.tableHeaderView = self.guideView;
 }
+
+
 
 - (void)initViewModel {
     [self.tableViewModel.sectionModelArray removeAllObjects];
@@ -81,7 +84,7 @@ static NSString *ZSHFoodCellID = @"ZSHFoodCell";
             [cell updateCellWithParamDic:foodDic];
             return cell;
         };
-        
+
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
             NSDictionary *foodDic = _foodListArr[indexPath.row];
             NSDictionary *nextParamDic = @{@"shopId":foodDic[@"SORTFOOD_ID"]};
@@ -98,10 +101,19 @@ static NSString *ZSHFoodCellID = @"ZSHFoodCell";
     [_foodLogic loadFoodListDataWithParamDic:@{@"HONOURUSER_ID":HONOURUSER_IDValue} success:^(id responseObject) {
         [weakself.tableView.mj_header endRefreshing];
         [weakself.tableView.mj_footer endRefreshing];
-        _foodListArr = responseObject;
+        _foodListArr = responseObject[@"pd"];
+        [weakself updateAd:responseObject[@"ad"]];
         [weakself initViewModel];
     } fail:nil];
 
+}
+
+- (void)updateAd:(NSArray *)arr {
+    NSMutableArray *imageArr = [[NSMutableArray alloc] init];
+    for (NSDictionary *dic  in arr) {
+        [imageArr addObject:dic[@"SHOWIMG"]];
+    }
+    [_guideView updateViewWithParamDic:@{@"dataArr":imageArr}];
 }
 
 -(void)headerRereshing{
@@ -150,8 +162,14 @@ static NSString *ZSHFoodCellID = @"ZSHFoodCell";
          _foodListArr = responseObject;
         [weakself initViewModel];
     } fail:nil];
-    
-    
+}
+
+- (ZSHGuideView *)guideView {
+    if(!_guideView) {
+        NSDictionary *nextParamDic = @{KFromClassType:@(FromBuyVCToGuideView),@"pageViewHeight":@(kRealValue(120)),@"min_scale":@(0.6),@"withRatio":@(1.8),@"infinite":@(false)};
+        _guideView = [[ZSHGuideView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, kRealValue(120)) paramDic:nextParamDic];
+    }
+    return _guideView;
 }
 
 
