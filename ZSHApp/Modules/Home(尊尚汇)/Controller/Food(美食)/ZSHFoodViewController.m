@@ -34,6 +34,9 @@ static NSString *ZSHFoodCellID = @"ZSHFoodCell";
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateListData:) name:KUpdateDataWithSort object:nil];
     [self createUI];
     [self loadData];
+    
+    
+    //zwwTest
 }
 
 - (void)loadData{
