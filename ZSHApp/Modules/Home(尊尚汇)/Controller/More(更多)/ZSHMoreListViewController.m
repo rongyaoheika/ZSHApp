@@ -64,7 +64,7 @@ static NSString *ZSHMoreListCellID = @"ZSHMoreListCell";
                 [weakself updateAd:responseObject[@"ad"]];
                 [weakself initViewModel];
             } fail:nil];
-            
+            //a
             break;
         }
         case FromGolfVCToTitleContentVC:{//高尔夫汇
