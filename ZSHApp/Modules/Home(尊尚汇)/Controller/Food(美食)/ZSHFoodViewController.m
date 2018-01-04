@@ -35,11 +35,6 @@ static NSString *ZSHFoodCellID = @"ZSHFoodCell";
     [self createUI];
     [self loadData];
 
-
-    // abc 
-
-    
-    //zwwTest more
 }
 
 - (void)loadData{
