@@ -124,7 +124,7 @@
 - (void)login {
     if (_userView.textField.text.length && _pwdView.textField.text.length) {
         RLog(@"username;%@:password%@", _userView.textField.text,_pwdView.textField.text);
-        [userManager login:kUserLoginTypePwd params:@{@"CARDNO":_userView.textField.text,@"PASSWORD":_pwdView.textField.text} completion:^(BOOL success, NSString *des) {
+        [userManager login:kUserLoginTypePwd params:@{@"CARDNO":_userView.textField.text,@"PASSWORD":[ZSHBaseFunction md5StringFromString: _pwdView.textField.text]} completion:^(BOOL success, NSString *des) {
             if (success) {
                 [self skipAction];
             } else {

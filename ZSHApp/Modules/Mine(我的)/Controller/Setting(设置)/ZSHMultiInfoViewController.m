@@ -222,7 +222,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     kWeakSelf(self);
     if (kFromClassTypeValue == FromUserPasswordVCToMultiInfoVC) {
         if ([_text2 isEqualToString:_text3]) {
-            [_mineLogic requestUserUpdPasswordWithDic:@{@"HONOURUSER_ID":HONOURUSER_IDValue, @"PASSWORD":_text2, @"OLDPASSWORD":_text1} success:^(id response) {
+            [_mineLogic requestUserUpdPasswordWithDic:@{@"HONOURUSER_ID":HONOURUSER_IDValue, @"PASSWORD":[ZSHBaseFunction md5StringFromString:_text2], @"OLDPASSWORD":[ZSHBaseFunction md5StringFromString:_text1]} success:^(id response) {
                 NSString *message = @"";
                 if ([response[@"result"] isEqualToString:@"01"]) {// 成功
                     message = @"修改成功";
@@ -255,7 +255,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
         }];
     } else if (kFromClassTypeValue == FromSetPasswordToMultiInfoVC) {
         if ([_text1 isEqualToString:_text2]) {
-            [_mineLogic requestUserUpdPasswordWithDic:@{@"HONOURUSER_ID":self.paramDic[@"HONOURUSER_ID"], @"PASSWORD":_text2, @"OLDPASSWORD":@""} success:^(id response) {
+            [_mineLogic requestUserUpdPasswordWithDic:@{@"HONOURUSER_ID":self.paramDic[@"HONOURUSER_ID"], @"PASSWORD":[ZSHBaseFunction md5StringFromString:_text2], @"OLDPASSWORD":@""} success:^(id response) {
                 NSString *message = @"";
                 if ([response[@"result"] isEqualToString:@"01"]) {// 成功
                     message = @"修改成功";
