@@ -4091,8 +4091,8 @@
 				TargetAttributes = {
 					296F9EB71ECC64CE0063A255 = {
 						CreatedOnToolsVersion = 8.3.2;
-						DevelopmentTeam = 26ZQGX9T79;
-						ProvisioningStyle = Automatic;
+						DevelopmentTeam = 84479DR68T;
+						ProvisioningStyle = Manual;
 					};
 					296F9ED01ECC64CE0063A255 = {
 						CreatedOnToolsVersion = 8.3.2;
@@ -4826,8 +4826,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer: dawei hu (LDTZY7Z3JV)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = 84479DR68T;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4916,10 +4916,10 @@
 					"$(PROJECT_DIR)/ZSHApp/ThridParty/UMSocial/SocialLibraries/UniqueId",
 				);
 				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = com.zoe.TC168;
+				PRODUCT_BUNDLE_IDENTIFIER = com.combatworld.honourcard;
 				PRODUCT_NAME = "荣耀黑卡";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "69d02021-55e5-42e4-a8f5-77a82164d82b";
+				PROVISIONING_PROFILE_SPECIFIER = "dev_profile(0104)";
 				SKIP_INSTALL = NO;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/ZSHApp/Define";
@@ -4934,9 +4934,9 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: dawei hu (26ZQGX9T79)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = 84479DR68T;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -5025,10 +5025,10 @@
 					"$(PROJECT_DIR)/ZSHApp/ThridParty/UMSocial/SocialLibraries/UniqueId",
 				);
 				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = com.zoe.TC168;
+				PRODUCT_BUNDLE_IDENTIFIER = com.combatworld.honourcard;
 				PRODUCT_NAME = "荣耀黑卡";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "4dfc89ed-b1bf-46b5-9b04-a3e243fde090";
+				PROVISIONING_PROFILE_SPECIFIER = "dis_profile(0104)";
 				SKIP_INSTALL = NO;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/ZSHApp/Define";
@@ -5141,9 +5141,9 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: dawei hu (26ZQGX9T79)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = 84479DR68T;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -5232,10 +5232,10 @@
 					"$(PROJECT_DIR)/ZSHApp/ThridParty/UMSocial/SocialLibraries/UniqueId",
 				);
 				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = com.zoe.TC168;
+				PRODUCT_BUNDLE_IDENTIFIER = com.combatworld.honourcard;
 				PRODUCT_NAME = "荣耀黑卡";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "4dfc89ed-b1bf-46b5-9b04-a3e243fde090";
+				PROVISIONING_PROFILE_SPECIFIER = "dis_profile(0104)";
 				SKIP_INSTALL = NO;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/ZSHApp/Define";
