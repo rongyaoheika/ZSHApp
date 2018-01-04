@@ -21,7 +21,7 @@
         success(imageArr);
         
     } failure:^(NSError *error) {
-
+        RLog(@"引导页数据请求失败");
     }];
 }
 

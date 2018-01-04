@@ -26,6 +26,7 @@
 #define kSysVersion         [[[UIDevice currentDevice] systemVersion] floatValue]
 #ifndef kiOS11Later
 #define kiOS11Later         (kSysVersion >= 11)
+#define kIsIphoneX          (KScreenHeight == 812.0 ?YES:NO)
 #endif
 
 
@@ -33,15 +34,18 @@
 #define KScreenWidth ([[UIScreen mainScreen] bounds].size.width)
 #define KScreenHeight [[UIScreen mainScreen] bounds].size.height
 #define kScreen_Bounds [UIScreen mainScreen].bounds
-#define KBottomHeight (KScreenHeight == 812.0 ?34 : 0)
+#define KBottomHeight (kIsIphoneX ?34 : 0)
 #define KBottomNavH    49
-#define KBottomTabH   (KScreenHeight == 812.0 ? 83 : 49)
+#define KBottomTabH   (kIsIphoneX ? 83 : 49)
 
-#define KNavigationBarHeight (KScreenHeight == 812.0 ? 88 : 64)
+
+#define KNavigationBarHeight (kIsIphoneX ? 88 : 64)
 #define KLeftMargin 15
 
 //根据ip6的屏幕来拉伸
 #define kRealValue(with) ((with)*(KScreenWidth/375.0f))
+#define KTopHeight(top)  (kIsIphoneX ? kRealValue(top)+kRealValue(50):kRealValue(top))
+
 
 #define kWRatio (kScreenWidth / 375.0)
 #define kHRatio (kScreenHeight / 667.0)

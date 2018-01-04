@@ -43,7 +43,7 @@
     logoView.image = [UIImage imageNamed:@"login_icon"];
     [self.view addSubview:logoView];
     [logoView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.view).offset(kRealValue(129));
+        make.top.mas_equalTo(self.view).offset(KTopHeight(129));
         make.centerX.mas_equalTo(self.view);
         make.size.mas_equalTo(CGSizeMake(kRealValue(89.5),kRealValue(83)));
     }];

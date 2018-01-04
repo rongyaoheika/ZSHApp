@@ -51,7 +51,7 @@
      _midView = [[ZSHGuideView alloc]initWithFrame:CGRectZero paramDic:nextParamDic];
     [self.view addSubview:_midView];
     [_midView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.view).offset(kRealValue(71.5));
+        make.top.mas_equalTo(self.view).offset(KTopHeight(71.5));
         make.centerX.mas_equalTo(self.view);
         make.width.mas_equalTo(self.view);
         make.bottom.mas_equalTo(self.view).offset(-kRealValue(105));
