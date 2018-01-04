@@ -34,8 +34,10 @@
 @property (strong, nonatomic) UICollectionViewFlowLayout     *layout;
 
 @property (nonatomic, strong) ZSHLiveLogic *liveLogic;
-@property (nonatomic, strong) XXTextView *titleTextView;
-@property (nonatomic, strong) XXTextView *contentTextView;
+@property (nonatomic, strong) XXTextView   *titleTextView;
+@property (nonatomic, strong) XXTextView   *contentTextView;
+@property (nonatomic, copy)   NSString     *topic;
+@property (nonatomic, copy)   NSString     *topicID;
 
 @end
 
@@ -51,6 +53,8 @@
     _liveLogic = [[ZSHLiveLogic alloc] init];
     _selectedPhotos = [NSMutableArray array];
     _selectedAssets = [NSMutableArray array];
+    _topic = @"";
+    _topicID = @"";
 }
 
 - (void)createUI {
@@ -80,10 +84,13 @@
     kWeakSelf(self);
     __weak typeof(_titleTextView)weakTitleTextView = _titleTextView;
     _titleTextView.beginEdit = ^{
-        ZSHTopicViewController *topicVC = [[ZSHTopicViewController alloc]init];
+        ZSHTopicViewController *topicVC = [[ZSHTopicViewController alloc]initWithParamDic:@{KFromClassType:@(FromWeiboVCToTopicVC)}];
         [weakself.navigationController pushViewController:topicVC animated:YES];
-        topicVC.didSelectRow = ^(NSString *topicTitle) {
-            weakTitleTextView.text = topicTitle;
+        topicVC.didSelectRow = ^(NSString *topicTitle, NSString *topicID) {
+            weakTitleTextView.text = NSStringFormat(@"#%@#", topicTitle);
+            weakself.title = topicTitle;
+            weakself.topicID = topicID;
+            weakself.topic = topicTitle;
         };
     };
     
@@ -123,15 +130,27 @@
 
 
 - (void)distributeAction {
+    kWeakSelf(self);
     if (_contentTextView.text.length) {
         NSMutableArray *fileNames = [NSMutableArray arrayWithCapacity:_selectedAssets.count];
         for (PHAsset *asset in _selectedAssets) {
             [fileNames addObject:[asset valueForKey:@"filename"]];
         }
         
-        [_liveLogic requestAddCircle:@{@"HONOURUSER_ID":HONOURUSER_IDValue, @"CONTENT":_contentTextView.text} images:_selectedPhotos fileNames:fileNames success:^(id response) {
-            
+        [_liveLogic requestAddCircle:@{@"HONOURUSER_ID":HONOURUSER_IDValue, @"CONTENT":_contentTextView.text, @"TOPIC_ID":_topicID, @"TITLE":_topic} images:_selectedPhotos fileNames:fileNames success:^(id response) {
+            UIAlertController *ac = [UIAlertController alertControllerWithTitle:@"提示" message:@"发布成功" preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                [weakself.navigationController popViewControllerAnimated:true];
+            }];
+            [ac addAction:cancelAction];
+            [weakself presentViewController:ac animated:YES completion:nil];
         }];
+        
+        if ([_topicID isEqualToString:@""] && ![_topic isEqualToString:@""]) {
+            [_liveLogic requestAddTopicWithDic:@{@"HONOURUSER_ID":HONOURUSER_IDValue,@"TITLE":_topic} success:^(id response) {
+                
+            }];
+        }
     }
 }
 

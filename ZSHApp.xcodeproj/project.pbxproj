@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		04315E821FF5E9ED006C6BC8 /* ZSHWeiboTopicModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04315E811FF5E9ED006C6BC8 /* ZSHWeiboTopicModel.m */; };
+		04315E851FF61175006C6BC8 /* UIImage+String.m in Sources */ = {isa = PBXBuildFile; fileRef = 04315E841FF61175006C6BC8 /* UIImage+String.m */; };
 		043587591FF2564F00969DD7 /* ZSHGoodsCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 043587581FF2564F00969DD7 /* ZSHGoodsCollectionViewCell.m */; };
 		18063C541FC90379000F5A00 /* ZSHPersonalModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 18063C531FC90379000F5A00 /* ZSHPersonalModel.m */; };
 		18063C571FC90951000F5A00 /* ZSHPersonalDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 18063C561FC90951000F5A00 /* ZSHPersonalDetailModel.m */; };
@@ -529,6 +531,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		04315E801FF5E9ED006C6BC8 /* ZSHWeiboTopicModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHWeiboTopicModel.h; sourceTree = "<group>"; };
+		04315E811FF5E9ED006C6BC8 /* ZSHWeiboTopicModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHWeiboTopicModel.m; sourceTree = "<group>"; };
+		04315E831FF61175006C6BC8 /* UIImage+String.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+String.h"; sourceTree = "<group>"; };
+		04315E841FF61175006C6BC8 /* UIImage+String.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+String.m"; sourceTree = "<group>"; };
 		043587571FF2564F00969DD7 /* ZSHGoodsCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHGoodsCollectionViewCell.h; sourceTree = "<group>"; };
 		043587581FF2564F00969DD7 /* ZSHGoodsCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHGoodsCollectionViewCell.m; sourceTree = "<group>"; };
 		14ED69325E9FD4BDB1CA95F8 /* Pods-ZSHApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZSHApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-ZSHApp/Pods-ZSHApp.release.xcconfig"; sourceTree = "<group>"; };
@@ -2450,6 +2456,8 @@
 				1869C9401FD952C2002F2E37 /* ZSHWeiboListModel.m */,
 				1812E9FE1FDA678C0056C170 /* ZSHCommentListModel.h */,
 				1812E9FF1FDA678C0056C170 /* ZSHCommentListModel.m */,
+				04315E801FF5E9ED006C6BC8 /* ZSHWeiboTopicModel.h */,
+				04315E811FF5E9ED006C6BC8 /* ZSHWeiboTopicModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -3269,6 +3277,8 @@
 				184313481FD4E9E20046B128 /* NSString+unicode.m */,
 				1869C92D1FD78A37002F2E37 /* NSDictionary+Safe.h */,
 				1869C92E1FD78A37002F2E37 /* NSDictionary+Safe.m */,
+				04315E831FF61175006C6BC8 /* UIImage+String.h */,
+				04315E841FF61175006C6BC8 /* UIImage+String.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -4263,6 +4273,7 @@
 				185BB9AB1FB53BC6007A96FF /* ZSHLiveUserLevelViewController.m in Sources */,
 				FEA018D41FCBFB1700989FB2 /* ZSHShopCommentCell.m in Sources */,
 				182287161FB44FE600CA5B10 /* XXTextView.m in Sources */,
+				04315E851FF61175006C6BC8 /* UIImage+String.m in Sources */,
 				1846BB491FE3B282001B264B /* BEMSimpleLineGraphView.m in Sources */,
 				FEBD7C9D1FA70F6500CE2BA6 /* ZSHGoodsChartCell.m in Sources */,
 				FEDF28F91FB68C1C00CD5756 /* ZSHAgeView.m in Sources */,
@@ -4464,6 +4475,7 @@
 				181AD3251FCD45000015D004 /* ZSHBuyOrderModel.m in Sources */,
 				1874B9661FB99E9700059184 /* ZSHLivePersonInfoView.m in Sources */,
 				FE2555131FD2AB33002B3786 /* ZSHBarDetailViewController.m in Sources */,
+				04315E821FF5E9ED006C6BC8 /* ZSHWeiboTopicModel.m in Sources */,
 				FE1F761C1F8F191300C45B83 /* ZSHGoodsListView.m in Sources */,
 				FEADBD2A1FBEBBC00065B94B /* ZSHCardCustomizedThird.m in Sources */,
 				FED0BB4C1FF3763F004B0783 /* NSString+pinyin.m in Sources */,

@@ -13,10 +13,8 @@
 
 - (void)loadFoodListDataWithParamDic:(NSDictionary *)paramDic success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail{
     [PPNetworkHelper POST:kUrlSFood parameters:paramDic success:^(id responseObject) {
-        RLog(@"美食列表数据==%@",responseObject[@"pd"]);
-        NSArray *foodListArr = responseObject[@"pd"];
-        success(foodListArr);
-
+        RLog(@"美食列表数据==%@",responseObject);
+        success(responseObject);
     } failure:^(NSError *error) {
         
     }];

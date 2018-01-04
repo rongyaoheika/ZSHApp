@@ -92,9 +92,9 @@
     _titleTextView.beginEdit = ^{
         ZSHTopicViewController *topicVC = [[ZSHTopicViewController alloc]init];
         [weakself.navigationController pushViewController:topicVC animated:YES];
-        topicVC.didSelectRow = ^(NSString *topicTitle) {
-            weakTitleTextView.text = topicTitle;
-            
+        topicVC.didSelectRow = ^(NSString *topicTitle, NSString *topicID) {
+            weakTitleTextView.text = NSStringFormat(@"#%@#",  topicTitle);
+
         };
     };
     
