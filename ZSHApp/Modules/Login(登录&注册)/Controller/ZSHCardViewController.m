@@ -184,6 +184,7 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
             
             break;
         }
+
         case 6:{
             if ([_selectedArr[indexPath.section]boolValue]) {
                 return kRealValue(74);
@@ -294,6 +295,7 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
     }
     return nil;
 }
+
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
     if (section == 0) {

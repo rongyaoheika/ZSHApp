@@ -7,6 +7,8 @@
 //
 
 #import "ZSHTopicCell.h"
+#import "ZSHWeiboTopicModel.h"
+#import "UIImage+String.h"
 
 @interface ZSHTopicCell ()
 
@@ -59,7 +61,29 @@
 
 }
 
+- (void)updateCellWithModel:(ZSHWeiboTopicModel *)model  {
+    
+    if (model.TITLE){
+        _topLabel.text = NSStringFormat(@"#%@#", model.TITLE);
+        
+        if (model.SHOWIMG) {
+            if ([model.SHOWIMG isEqualToString:@"newTopic"]) {
+                _leftIV.image = [UIImage getImage:[model.TITLE substringToIndex:1]];
+            } else {
+                [_leftIV sd_setImageWithURL:[NSURL URLWithString:model.SHOWIMG]];
+            }
+        }
+    }
+    
+    if (model.DESCRIPTION) {
+        _bottomLabel.text = model.DESCRIPTION;
+    }
+}
 
-
+- (void)updateCellWithParamDic:(NSDictionary *)dic {
+    _leftIV.image = [[UIImage alloc] init];
+    _topLabel.text = dic[@"topic"];
+    _bottomLabel.text = @"新话题";
+}
 
 @end

@@ -727,5 +727,18 @@
 //参数：  CONVERGE_ID  所属汇聚的ID
 //请求地址：/appconvergein/getconvergesort.do?GETCONVERGESORT  (混淆码)
 #define kUrlGetConvergesort [NSString stringWithFormat:@"/appconvergein/getconvergesort.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"GETCONVERGESORT"]]
+//141.获取话题列表(含模糊查询)（完成）
+//可选参数：  TITLE  话题
+//请求地址：/appcirclein/gettopiclist.do?TOPICLIST  (混淆码)
+#define kUrGetTopicList [NSString stringWithFormat:@"/appcirclein/gettopiclist.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"TOPICLIST"]]
+//142.根据话题查询(弃用)
+//参数：  TITLE  话题
+//请求地址：/appcirclein/gettopicbytitle.do?TOPICBYTITLE  (混淆码)
+//143.添加话题 （话题头像名字 showfile）
+//参数：  HONOURUSER_ID  添加话题的用户ID/       TITLE  话题      /
+//请求地址：/appcirclein/addtopic.do?TOPICADD  (混淆码)
+#define kUrAddTopic [NSString stringWithFormat:@"/appcirclein/addtopic.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"TOPICADD"]]
+
+
 
 #endif /* URLMacros_h */

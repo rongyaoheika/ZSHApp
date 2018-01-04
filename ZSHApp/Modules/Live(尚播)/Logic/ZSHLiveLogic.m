@@ -39,9 +39,9 @@
 // 发布内容到我的圈子
 - (void)requestAddCircle:(NSDictionary *)dic images:(NSArray *)images fileNames:(NSArray *)fileNmaes success:(void (^)(id response))success {
     [PPNetworkHelper uploadImagesWithURL:kUrlAddCircle parameters:dic name:@"fileList" images:images fileNames:fileNmaes imageScale:1.0 imageType:nil progress:^(NSProgress *progress) {
-
+        
     } success:^(id responseObject) {
-
+        success(responseObject);
     } failure:^(NSError *error) {
 
     }];
@@ -84,6 +84,26 @@
 // 通过圈子ID评论 
 - (void)requestAddCommentWithDic:(NSDictionary *)dic success:(void (^)(id response))success {
     [PPNetworkHelper POST:kUrlAddComment parameters:dic success:^(id responseObject) {
+        success(responseObject);
+    } failure:^(NSError *error) {
+        RLog(@"%@", error);
+    }];
+}
+
+// 获取话题列表(含模糊查询)
+- (void)requestGetTopicListWithTitle:(NSString *)title success:(void (^)(id response))success {
+
+    [PPNetworkHelper POST:kUrGetTopicList parameters:@{@"TITLE":title} success:^(id responseObject) {
+         NSArray *arr = [ZSHWeiboTopicModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"]];
+        success(arr);
+    } failure:^(NSError *error) {
+        RLog(@"%@", error);
+    }];
+}
+
+// 添加话题
+- (void)requestAddTopicWithDic:(NSDictionary *)dic success:(void (^)(id response))success {
+    [PPNetworkHelper POST:kUrAddTopic parameters:dic success:^(id responseObject) {
         success(responseObject);
     } failure:^(NSError *error) {
         RLog(@"%@", error);

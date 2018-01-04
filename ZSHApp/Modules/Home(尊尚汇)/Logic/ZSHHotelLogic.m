@@ -13,8 +13,7 @@
 - (void)loadHotelListDataWithParamDic:(NSDictionary *)paramDic success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail{
     [PPNetworkHelper POST:kUrlSHotelDo parameters:paramDic success:^(id responseObject) {
         RLog(@"酒店列表数据==%@",responseObject)
-       NSArray *hotelListDicArr = responseObject[@"pd"];
-        success(hotelListDicArr);
+        success(responseObject);
         
     } failure:^(NSError *error) {
        

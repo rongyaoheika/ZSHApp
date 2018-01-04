@@ -8,7 +8,14 @@
 
 #import "RootViewController.h"
 
-typedef void (^DidSelectRowBlock)(NSString *topicTitle);
+typedef NS_ENUM(NSInteger,ZSHTopicVC){
+    FromWeiboVCToTopicVC,                             // 尚播-微博
+    FromTogetherToTopicVC,                            // 汇聚-吃喝玩乐
+    FromNoneToTopicVC
+};
+
+
+typedef void (^DidSelectRowBlock)(NSString *topicTitle, NSString *);
 
 @interface ZSHTopicViewController : RootViewController
 
