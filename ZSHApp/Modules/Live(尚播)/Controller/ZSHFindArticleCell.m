@@ -31,7 +31,6 @@
     }];
     
     _picView = [[UIImageView alloc] init];
-    _picView.image = [UIImage imageNamed:@"play_find_2"];
     [self addSubview:_picView];
     [_picView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self).offset(kRealValue(7.5));

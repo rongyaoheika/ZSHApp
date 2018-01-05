@@ -52,7 +52,7 @@ static NSString *ZSHEnterTainmentCellID = @"ZSHEnterTainmentCell";
     
     [self addNavigationItemWithTitles:@[@"去发布"] isLeft:NO target:self action:@selector(distributeAction) tags:@[@(1)]];
 
-    self.tableView.frame = CGRectMake(0, KNavigationBarHeight, KScreenWidth, KScreenHeight-KNavigationBarHeight);
+    self.tableView.frame = CGRectMake(0, KNavigationBarHeight, KScreenWidth, KScreenHeight-KNavigationBarHeight-KBottomHeight);
     [self.view addSubview:self.tableView];
     self.tableView.delegate = self.tableViewModel;
     self.tableView.dataSource = self.tableViewModel;

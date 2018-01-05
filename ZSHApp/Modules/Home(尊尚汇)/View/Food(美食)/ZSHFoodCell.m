@@ -25,8 +25,7 @@
 
 - (void)setup{
     //餐厅图片
-    UIImage *image = [UIImage imageNamed:@"hotel_image"];
-    _foodImageView = [[UIImageView alloc]initWithImage:image];
+    _foodImageView = [[UIImageView alloc]init];
     [self.contentView addSubview:_foodImageView];
     
     //餐厅价格

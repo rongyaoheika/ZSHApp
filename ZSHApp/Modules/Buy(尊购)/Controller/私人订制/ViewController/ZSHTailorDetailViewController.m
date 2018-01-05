@@ -50,8 +50,8 @@ static NSString *cellIdentifier = @"TailorDetailCell";
 
 - (UIView *)createTableviewHeaderView {
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, kRealValue(289))];
-    UIImageView *image = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"tailor_detail_1"]];
-    image.frame = CGRectMake(0, 0, kRealValue(375), kRealValue(225));
+    UIImageView *image = [[UIImageView alloc] init];
+    image.frame = CGRectMake(0, 0, KScreenWidth, kRealValue(225));
     [view addSubview:image];
     self.headImage = image;
     
