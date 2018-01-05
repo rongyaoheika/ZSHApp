@@ -28,6 +28,7 @@
 #import "ZSHGoodsTitleContentViewController.h"
 
 #import "GYZChooseCityController.h"
+#import "ZSHFindViewController.h"
 
 static NSString *Identify_HeadCell = @"headCell";
 static NSString *Identify_NoticeCell = @"noticeCell";
@@ -243,9 +244,9 @@ static NSString *Identify_MusicCell = @"musicCell";
     cellView.dataArr = mTitleArr;
    
     cellView.itemClickBlock = ^(NSInteger index) {
-        NSDictionary *nextParamDic = @{@"shopId":_homeLogic.newsArr[index][@"NEWS_ID"]};
-        ZSHToplineViewController *toplineVC = [[ZSHToplineViewController alloc] initWithParamDic:nextParamDic];
-        [weakself.navigationController pushViewController:toplineVC animated:YES];
+        NSDictionary *nextParamDic = @{KFromClassType:@(FromFindVCToTitleContentVC),@"title":@"发现",@"shopId":_homeLogic.newsArr[index][@"NEWS_ID"]};
+        ZSHTitleContentViewController *titleContentVC = [[ZSHTitleContentViewController alloc]initWithParamDic:nextParamDic];
+        [weakself.navigationController pushViewController:titleContentVC animated:YES];
     };
     sectionModel.headerView = cellView;
     
@@ -396,11 +397,6 @@ static NSString *Identify_MusicCell = @"musicCell";
         }
         return cell;
     };
-   
-    
-    cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
-       
-    };
     return sectionModel;
 }
 
@@ -497,7 +493,7 @@ static NSString *Identify_MusicCell = @"musicCell";
     
     GYZChooseCityController *cityVC = [[GYZChooseCityController alloc]init];
     [cityVC setDelegate:self];
-    cityVC.locationCityID = @"1400010000";
+//    cityVC.locationCityID = @"1400010000";
     cityVC.commonCitys = [[NSMutableArray alloc] initWithArray: @[@"1400010000", @"100010000"]];        // 最近访问城市，如果不设置，将自动管理
     cityVC.hotCitys = @[@"100010000", @"200010000", @"300210000", @"600010000", @"300110000"];
     [self.navigationController pushViewController:cityVC animated:YES];

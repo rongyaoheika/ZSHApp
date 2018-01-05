@@ -73,14 +73,6 @@ static NSString *ZSHToplineCellID = @"ZSHToplineCellID";
 }
 
 - (void)createBottomLine {
-    UIView *backgroundView = [[UIView alloc] init];
-    backgroundView.backgroundColor = KBlackColor;
-    [self.view addSubview:backgroundView];
-    [backgroundView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.mas_equalTo(self.view);
-        make.size.mas_equalTo(CGSizeMake(KScreenWidth, kRealValue(49)));
-    }];
-    
     
     UITextField *textField = [[UITextField alloc] init];
     textField.font = kPingFangRegular(15);
@@ -96,14 +88,14 @@ static NSString *ZSHToplineCellID = @"ZSHToplineCellID";
     [self.view addSubview:textField];
     [textField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self.view).offset(kRealValue(KLeftMargin));
-        make.bottom.mas_equalTo(self.view).offset(kRealValue(-9.5));
+        make.bottom.mas_equalTo(self.view).offset(kRealValue(-(9.5+KBottomHeight)));
         make.size.mas_equalTo(CGSizeMake(kRealValue(285), kRealValue(31)));
     }];
     
     UIButton *commentBtn = [ZSHBaseUIControl createBtnWithParamDic:@{@"withImage":@(YES),@"normalImage":@"head_image_1"}];
     [self.view addSubview:commentBtn];
     [commentBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.mas_equalTo(self.view).offset(kRealValue(-9.5));
+        make.bottom.mas_equalTo(textField);
         make.trailing.mas_equalTo(self.view).offset(kRealValue(-46));
         make.size.mas_equalTo(CGSizeMake(kRealValue(30), kRealValue(30)));
     }];
@@ -112,7 +104,7 @@ static NSString *ZSHToplineCellID = @"ZSHToplineCellID";
     UIButton *shareBtn = [ZSHBaseUIControl createBtnWithParamDic:@{@"withImage":@(YES),@"normalImage":@"head_image_2"}];
     [self.view addSubview:shareBtn];
     [shareBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.mas_equalTo(self.view).offset(kRealValue(-9.5));
+        make.bottom.mas_equalTo(textField);
         make.trailing.mas_equalTo(self.view).offset(kRealValue(-11));
         make.size.mas_equalTo(CGSizeMake(kRealValue(30), kRealValue(30)));
     }];

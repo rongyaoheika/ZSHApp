@@ -12,6 +12,7 @@
 #import "ADPlayer.h"
 #import "ZSHBuyLogic.h"
 #import "ZSHFindModel.h"
+#import "ZSHToplineViewController.h"
 
 static NSString *Identify_headCell = @"Identify_headCell";
 static NSString *Identify_ArticleCell = @"Identify_ArticleCell";
@@ -107,6 +108,13 @@ static NSString *Identify_ArticleCell = @"Identify_ArticleCell";
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
             [tableView deselectRowAtIndexPath:indexPath animated:YES];
             RLog(@"点击了该行%ld",(long)indexPath.row);
+            ZSHBaseCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+            if ([cell isKindOfClass:[ZSHFindArticleCell class]]) {
+                NSDictionary *nextParamDic = @{@"shopId":self.paramDic[@"shopId"]};
+                ZSHToplineViewController *toplineVC = [[ZSHToplineViewController alloc] initWithParamDic:nextParamDic];
+                [weakself.navigationController pushViewController:toplineVC animated:YES];
+            }
+            
         };
     }
     return sectionModel;

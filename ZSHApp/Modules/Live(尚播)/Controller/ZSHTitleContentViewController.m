@@ -70,11 +70,11 @@
         case FromFindVCToTitleContentVC:{
             self.titleArr = @[@"精选",@"数码",@"亲子",@"时尚",@"美食"];
             self.contentVCS = @[@"ZSHFindViewController",@"ZSHFindViewController",@"ZSHFindViewController",@"ZSHFindViewController",@"ZSHFindViewController"];
-            self.paramArr = @[@{@"CAIDAN_ID":@"387563351791632384"},
-                              @{@"CAIDAN_ID":@"387563399975796736"},
-                              @{@"CAIDAN_ID":@"387563457622310912"},
-                              @{@"CAIDAN_ID":@"387563486307155968"},
-                              @{@"CAIDAN_ID":@"387563525268045824"}];
+            self.paramArr = @[@{@"CAIDAN_ID":@"387563351791632384",@"shopId":self.paramDic[@"shopId"]},
+                              @{@"CAIDAN_ID":@"387563399975796736",@"shopId":self.paramDic[@"shopId"]},
+                              @{@"CAIDAN_ID":@"387563457622310912",@"shopId":self.paramDic[@"shopId"]},
+                              @{@"CAIDAN_ID":@"387563486307155968",@"shopId":self.paramDic[@"shopId"]},
+                              @{@"CAIDAN_ID":@"387563525268045824",@"shopId":self.paramDic[@"shopId"]}];
         }
             break;
         case FromAllOrderVCToTitleContentVC:{
