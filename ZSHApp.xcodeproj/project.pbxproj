@@ -2410,6 +2410,7 @@
 		FE291EB11F8CAEDC00D4BBE7 /* Live(尚播) */ = {
 			isa = PBXGroup;
 			children = (
+				FE24DA571FD9317900965DC8 /* Music（音乐） */,
 				1869C9301FD8DF66002F2E37 /* Logic */,
 				FE291EB21F8CAEDC00D4BBE7 /* Controller */,
 				FE291EB41F8CAEDC00D4BBE7 /* Model */,
@@ -3146,7 +3147,6 @@
 		FE5537741F47049D00803128 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				FE24DA571FD9317900965DC8 /* Music（音乐） */,
 				FE291EAC1F8CAEDC00D4BBE7 /* Home(尊尚汇) */,
 				FE291EBB1F8CAEDC00D4BBE7 /* Buy(尊购) */,
 				FE291EB11F8CAEDC00D4BBE7 /* Live(尚播) */,
