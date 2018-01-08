@@ -27,8 +27,8 @@
 
 @implementation ZSHGuideView
 
-- (void)setup{
-    
+- (void)setup {
+
     self.imageArr = self.paramDic[@"dataArr"];
     _min_scale = [self.paramDic[@"min_scale"]floatValue];
     _withRatio = [self.paramDic[@"withRatio"]floatValue];
@@ -67,7 +67,7 @@
     if (!_pagerView) {
         _pagerView = [[TYCyclePagerView alloc]init];
         _pagerView.isInfiniteLoop = [self.paramDic[@"infinite"] boolValue];
-//        _pagerView.autoScrollInterval = 3.0;
+        // _pagerView.autoScrollInterval = 3.0;
         _pagerView.dataSource = self;
         _pagerView.delegate = self;
         [_pagerView registerClass:[TYCyclePagerViewCell class] forCellWithReuseIdentifier:@"cellId"];
@@ -137,8 +137,9 @@
 
 - (void)pagerView:(TYCyclePagerView *)pageView didScrollFromIndex:(NSInteger)fromIndex toIndex:(NSInteger)toIndex {
     _pageControl.currentPage = toIndex;
-    //[_pageControl setCurrentPage:newIndex animate:YES];
-    //RLog(@"%zd ->  %zd",fromIndex,toIndex);
+    // [_pageControl setCurrentPage:toIndex];
+    // [_pageControl setCurrentPage:newIndex animate:YES];
+    // RLog(@"%zd ->  %zd",fromIndex,toIndex);
 }
 
 - (void)updateViewWithParamDic:(NSDictionary *)paramDic{
@@ -173,7 +174,6 @@
 - (void)pagerView:(TYCyclePagerView *)pageView didSelectedItemCell:(__kindof UICollectionViewCell *)cell atIndex:(NSInteger)index {
     if(kFromClassTypeValue == FromTogetherToGuideView) {
         [_togetherLogic requestEditClickCountWithADVERTISEMENT_ID:_dataArr[index].ADVERTISEMENT_ID success:^(id response) {
-            
         }];
     }
 }

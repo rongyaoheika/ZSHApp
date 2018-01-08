@@ -267,6 +267,28 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
         [self addSubview:calendar];
         self.calendar = calendar;
         return;
+    }  else if (kFromClassTypeValue == ZSHFromGoodsVCToBottomBlurPopView) {//商品分类
+        self.subTab.frame = CGRectMake(KScreenWidth - kRealValue(7.5) - kRealValue(60), KNavigationBarHeight+35, kRealValue(50),kRealValue(96));
+        self.subTab.backgroundColor = KClearColor;
+        UIImageView *tbBgImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"list_bg"]];
+        tbBgImageView.frame = self.subTab.bounds;
+        self.subTab.backgroundView = tbBgImageView;
+        [self.subTab registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHHeadCellID];
+        self.subTab.delegate = self.tableViewModel;
+        self.subTab.dataSource = self.tableViewModel;
+        [self.subTab reloadData];
+        return;
+    }  else if (kFromClassTypeValue == ZSHFromFoodVCToBottomBlurPopView) {//美食分类
+        self.subTab.frame = CGRectMake(kScreenWidth/[self.paramDic[@"count"]floatValue]*[self.paramDic[@"index"]floatValue]+kRealValue(17), KNavigationBarHeight+35, kRealValue(120),kRealValue(96));
+        self.subTab.backgroundColor = KClearColor;
+        UIImageView *tbBgImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"list_bg"]];
+        tbBgImageView.frame = self.subTab.bounds;
+        self.subTab.backgroundView = tbBgImageView;
+        [self.subTab registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHHeadCellID];
+        self.subTab.delegate = self.tableViewModel;
+        self.subTab.dataSource = self.tableViewModel;
+        [self.subTab reloadData];
+        return;
     }
     
     
@@ -333,6 +355,13 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
         [self.tableViewModel.sectionModelArray removeAllObjects];
         [self.tableViewModel.sectionModelArray addObject:[self stroreTrainUserInfo]];
         [self.tableViewModel.sectionModelArray addObject:[self storeConfirmBtnSection]];
+    } else if (kFromClassTypeValue == ZSHFromGoodsVCToBottomBlurPopView){// 商品分类
+        
+        [self.tableViewModel.sectionModelArray removeAllObjects];
+        [self.tableViewModel.sectionModelArray addObject:[self storeGoodsListSection]];
+    } else if (kFromClassTypeValue == ZSHFromFoodVCToBottomBlurPopView) { // 美食
+        [self.tableViewModel.sectionModelArray removeAllObjects];
+        [self.tableViewModel.sectionModelArray addObject:[self storeFoodListSection]];
     }
 
 }
@@ -688,6 +717,66 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
     return sectionModel;
 }
 
+
+- (ZSHBaseTableViewSectionModel*)storeFoodListSection {
+    //    NSArray *imageArr = @[@"list_scan",@"list_news",@"list_noti",@"list_unlock"];
+    NSArray *titleArr = self.paramDic[@"shopSortArr"];
+    ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
+    sectionModel.headerHeight = kRealValue(8);
+    sectionModel.headerView = [[UIView alloc]initWithFrame:self.subTab.bounds];
+    for (int i = 0; i<[titleArr count]; i++) {
+        ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
+        [sectionModel.cellModelArray addObject:cellModel];
+        cellModel.height = kRealValue(30);
+        cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
+            ZSHBaseCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHHeadCellID];
+            cell.textLabel.text = titleArr[i];
+            cell.textLabel.font = kPingFangLight(14);
+            //            cell.imageView.image = [UIImage imageNamed:imageArr[i]];
+            cell.imageEdgeInsets = UIEdgeInsetsMake(0, -10, 0, 0);
+            cell.textLabelEdgeInsets = UIEdgeInsetsMake(0, -10, 0, 0);
+            return cell;
+        };
+        cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
+            RLog(@"点击了");
+            if (self.dissmissViewBlock) {
+                self.dissmissViewBlock(self,indexPath);
+            }
+        };
+    }
+    return sectionModel;
+}
+
+//尊购商品分类
+- (ZSHBaseTableViewSectionModel*)storeGoodsListSection {
+//    NSArray *imageArr = @[@"list_scan",@"list_news",@"list_noti",@"list_unlock"];
+    NSArray *titleArr = @[@"全部",@"名品",@"名物"];
+    ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
+    sectionModel.headerHeight = kRealValue(8);
+    sectionModel.headerView = [[UIView alloc]initWithFrame:self.subTab.bounds];
+    for (int i = 0; i<[titleArr count]; i++) {
+        ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
+        [sectionModel.cellModelArray addObject:cellModel];
+        cellModel.height = kRealValue(30);
+        cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
+            ZSHBaseCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHHeadCellID];
+            cell.textLabel.text = titleArr[i];
+            cell.textLabel.font = kPingFangLight(14);
+//            cell.imageView.image = [UIImage imageNamed:imageArr[i]];
+            cell.imageEdgeInsets = UIEdgeInsetsMake(0, -10, 0, 0);
+            cell.textLabelEdgeInsets = UIEdgeInsetsMake(0, -10, 0, 0);
+            return cell;
+        };
+        cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
+            RLog(@"点击了");
+            if (self.dissmissViewBlock) {
+                self.dissmissViewBlock(self,indexPath);
+            }
+        };
+    }
+    return sectionModel;
+}
+
 //首页-菜单
 - (ZSHBaseTableViewSectionModel*)storeMenuListSection {
     NSArray *paramArr = @[
@@ -938,7 +1027,12 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
     UITouch *touch = [touches anyObject];
     if (touch.view.tag != 2) {
-        kFromClassTypeValue!= ZSHFromHomeMenuVCToBottomBlurPopView?[self dismiss]:self.dissmissViewBlock?self.dissmissViewBlock(self,nil):nil;
+        if (kFromClassTypeValue == ZSHFromHomeMenuVCToBottomBlurPopView || kFromClassTypeValue == ZSHFromGoodsVCToBottomBlurPopView || kFromClassTypeValue == ZSHFromFoodVCToBottomBlurPopView) {
+            self.dissmissViewBlock?self.dissmissViewBlock(self,nil):nil;
+        } else {
+            [self dismiss];
+        }
+        //kFromClassTypeValue!= ZSHFromHomeMenuVCToBottomBlurPopView?[self dismiss]:self.dissmissViewBlock?self.dissmissViewBlock(self,nil):nil;
     }
 }
 

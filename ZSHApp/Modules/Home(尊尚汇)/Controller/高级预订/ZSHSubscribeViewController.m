@@ -114,12 +114,23 @@
             break;
         }
         case ZSHServiceType:{//服务
-            paramDic = @{@"SERVER_ID":self.paramDic[@"shopId"]};
+            paramDic = @{@"SERVER_ID":self.paramDic[@"shopId"], @"SHOPTYPE":self.paramDic[@"SHOPTYPE"]};
             [_moreLogic requestServiceDetailDataWithParamDic:paramDic Success:^(NSArray *dataArr) {
                 _listDataDicArr = dataArr;
-                _imageArr = _listDataDicArr[0][@"HORSEDETIMGS"];
-                _subTitleLabel.text = _listDataDicArr[0][@"HORSEDETINTRO"];
-                [weakself updateUI];
+                if ([paramDic[@"SHOPTYPE"] isEqualToString:@"马术"]) {
+                    _imageArr = _listDataDicArr[0][@"HORSEDETIMGS"];
+                    _subTitleLabel.text = _listDataDicArr[0][@"HORSEDETINTRO"];
+                    [weakself updateUI];
+                } else if([paramDic[@"SHOPTYPE"] isEqualToString:@"飞机"]) {
+                    _imageArr = _listDataDicArr[0][@"PLANEDETIMGS"];
+                    _subTitleLabel.text = _listDataDicArr[0][@"PLANEDETINTRO"];
+                    [weakself updateUI];
+                } else if([paramDic[@"SHOPTYPE"] isEqualToString:@"豪车"]) {
+                    _imageArr = _listDataDicArr[0][@"LUXCARDETIMGS"];
+                    _subTitleLabel.text = _listDataDicArr[0][@"LUXCARDETINTRO"];
+                    [weakself updateUI];
+                } 
+
             } fail:nil];
             
             break;
@@ -251,12 +262,13 @@
     _noticeLabel.text = _listDataDicArr[0][@"PDOWNINTROTITLE"];
     _noticeDetailLabel.text = _listDataDicArr[0][@"PDOWNINTROCONTENT"];
     
+    
     NSMutableParagraphStyle  *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
     [paragraphStyle  setLineSpacing:5];
     [paragraphStyle setParagraphSpacing:22];
     NSMutableAttributedString  *setString = [[NSMutableAttributedString alloc] initWithString:_listDataDicArr[0][@"PDOWNINTROCONTENT"]];
     [setString  addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, [_listDataDicArr[0][@"PDOWNINTROCONTENT"] length])];
-    [_noticeDetailLabel  setAttributedText:setString];
+    [_noticeDetailLabel setAttributedText:setString];
     
 }
 

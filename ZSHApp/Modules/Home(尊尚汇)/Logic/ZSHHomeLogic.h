@@ -16,6 +16,7 @@
 @property (nonatomic, strong) NSArray       *noticeArr;
 @property (nonatomic, strong) NSArray       *serviceArr;
 @property (nonatomic, strong) NSDictionary  *partyDic;
+@property (nonatomic, strong) NSArray       *partyArr;
 @property (nonatomic, strong) NSArray       *musicArr;
 @property (nonatomic, strong) NSArray       *magzineArr;
 
@@ -33,5 +34,7 @@
 - (void)loadMorePrivilege;
 //杂志列表
 - (void)loadMagzineCellDataSuccess:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail;
+// 杂志详情
+- (void)loadMagzineOneWithDic:(NSDictionary *)dic success:(void(^)(id response))success;
 
 @end

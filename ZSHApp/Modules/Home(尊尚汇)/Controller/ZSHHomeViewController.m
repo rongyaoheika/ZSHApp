@@ -26,9 +26,11 @@
 #import "ZSHKTVDetailViewController.h"
 #import "PYSearchViewController.h"
 #import "ZSHGoodsTitleContentViewController.h"
-
 #import "GYZChooseCityController.h"
 #import "ZSHFindViewController.h"
+#import "ZSHMagazineViewController.h"
+#import "ZSHGuideView.h"
+
 
 static NSString *Identify_HeadCell = @"headCell";
 static NSString *Identify_NoticeCell = @"noticeCell";
@@ -54,6 +56,8 @@ static NSString *Identify_MusicCell = @"musicCell";
 
 @property (nonatomic, strong) NSArray                *musicPushVCsArr;
 @property (nonatomic, strong) NSArray                *musicParamArr;
+
+
 @end
 
 @implementation ZSHHomeViewController
@@ -116,7 +120,9 @@ static NSString *Identify_MusicCell = @"musicCell";
     _homeLogic = [[ZSHHomeLogic alloc]init];
     
     if (KScreenWidth == 812.0 && kiOS11Later) {
-         [self prefersHomeIndicatorAutoHidden];
+        if (@available(ios 11.0, *)) {
+            [self prefersHomeIndicatorAutoHidden];
+        }
     }
    
     
@@ -191,7 +197,7 @@ static NSString *Identify_MusicCell = @"musicCell";
 //	[self.tableView registerClass:[ZSHBaseTitleButtonCell class] forCellReuseIdentifier:Identify_NoticeCell];
     [self.tableView registerClass:[ZSHBaseTitleButtonCell class] forCellReuseIdentifier:Identify_ServiceCell];
 
-	[self.tableView registerClass:[ZSHNoticeViewCell class] forCellReuseIdentifier:Identify_PlayCell];
+	[self.tableView registerClass:[ZSHBaseCell class] forCellReuseIdentifier:Identify_PlayCell];
     [self.tableView registerClass:[ZSHBaseTitleButtonCell class] forCellReuseIdentifier:Identify_MagazineCell];
     [self.tableView registerClass:[ZSHBaseTitleButtonCell class] forCellReuseIdentifier:Identify_MusicCell];
     
@@ -301,7 +307,7 @@ static NSString *Identify_MusicCell = @"musicCell";
         ZSHBaseTitleButtonCell *cell = [tableView dequeueReusableCellWithIdentifier:Identify_ServiceCell forIndexPath:indexPath];
         cell.itemClickBlock = ^(NSInteger tag) {//荣耀服务详情
             NSDictionary *subDic = _homeLogic.serviceArr[tag];
-            NSDictionary *nextParamDic = @{KFromClassType:@(ZSHServiceType),@"shopId":subDic[@"SERVER_ID"]};
+            NSDictionary *nextParamDic = @{KFromClassType:@(ZSHServiceType),@"shopId":subDic[@"SERVER_ID"], @"SHOPTYPE":subDic[@"SHOPTYPE"]};
             ZSHSubscribeViewController *subScribeVC = [[ZSHSubscribeViewController alloc]initWithParamDic:nextParamDic];
             [weakself.navigationController pushViewController:subScribeVC animated:YES];
         };
@@ -331,16 +337,20 @@ static NSString *Identify_MusicCell = @"musicCell";
     cellModel.height = kRealValue(95);
     __block  CGFloat cellHeight = cellModel.height;
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
-        ZSHBaseCell *cell = [[ZSHBaseCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:Identify_PlayCell];
-        [tableView dequeueReusableCellWithIdentifier:Identify_PlayCell forIndexPath:indexPath];
+        ZSHBaseCell *cell = [tableView dequeueReusableCellWithIdentifier:Identify_PlayCell forIndexPath:indexPath];
         if (![cell.contentView viewWithTag:2]) {
-            UIImageView *imageView = [[UIImageView alloc]init];
-            [imageView sd_setImageWithURL:[NSURL URLWithString:_homeLogic.partyDic[@"PARTYIMG"]]];
-            
-            
-            imageView.tag = 2;
-            imageView.frame = CGRectMake(15, 0, KScreenWidth-30, cellHeight);
-            [cell.contentView addSubview:imageView];
+            NSDictionary *nextParamDic = @{KFromClassType:@(FromBuyVCToGuideView),@"pageViewHeight":@(cellHeight),@"min_scale":@(0.6),@"withRatio":@(1.8),@"infinite":@(false)};
+            ZSHGuideView *guideView = [[ZSHGuideView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, cellHeight) paramDic:nextParamDic];
+            guideView.tag = 2;
+            [cell addSubview:guideView];
+        }
+        if (_homeLogic.partyArr.count) {
+            ZSHGuideView *guideView = [cell viewWithTag:2];
+            NSMutableArray *imageArr = [[NSMutableArray alloc] init];
+            for (NSDictionary *dic  in _homeLogic.partyArr) {
+                [imageArr addObject:dic[@"PARTYIMG"]];
+            }
+            [guideView updateViewWithParamDic:@{@"dataArr":imageArr}];
         }
         return cell;
     };
@@ -353,6 +363,7 @@ static NSString *Identify_MusicCell = @"musicCell";
 
 //荣耀杂志
 - (ZSHBaseTableViewSectionModel*)storeMagazineSection {
+    kWeakSelf(self);
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     sectionModel.headerHeight = kRealValue(55);
     sectionModel.headerView = [self createHeaderiewWithTitle:@"荣耀杂志"];
@@ -361,6 +372,10 @@ static NSString *Identify_MusicCell = @"musicCell";
     cellModel.height = kRealValue(120);
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHBaseTitleButtonCell *cell = [tableView dequeueReusableCellWithIdentifier:Identify_MagazineCell forIndexPath:indexPath];
+        cell.itemClickBlock = ^(NSInteger tag) {
+            ZSHMagazineViewController *magazineVC = [[ZSHMagazineViewController alloc] initWithParamDic:@{@"magazine":weakself.homeLogic.magzineArr[tag]}];
+            [weakself.navigationController pushViewController:magazineVC animated:YES];
+        };
         if(_homeLogic.magzineArr){
             [cell updateCellWithDataArr:_homeLogic.magzineArr paramDic:@{KFromClassType:@(FromHomeMagazineVCToNoticeView)}];
         }
@@ -396,6 +411,9 @@ static NSString *Identify_MusicCell = @"musicCell";
             [cell updateCellWithDataArr:_homeLogic.musicArr paramDic:@{KFromClassType:@(FromHomeMusicVCToNoticeView)}];
         }
         return cell;
+    };
+    
+    cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
     };
     return sectionModel;
 }

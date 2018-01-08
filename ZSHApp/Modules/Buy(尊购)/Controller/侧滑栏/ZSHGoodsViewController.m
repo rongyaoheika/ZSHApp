@@ -20,6 +20,7 @@
 #import "ZSHGoodsCollectionViewCell.h"
 #import "ZSHPickView.h"
 #import "ZSHGuideView.h"
+#import "ZSHBottomBlurPopView.h"
 
 #define tableViewW  kRealValue(100)
 
@@ -265,21 +266,38 @@ static NSString *const ZSHBrandSortCellID = @"ZSHBrandSortCell";
 - (void)requestConData {
 //    kWeakSelf(self);
     switch (_index) {
-        case 0:{//推荐
+        case 0:{//
             break;
         }
-        case 1:{//精选
+        case 1:{//
             break;
         }
-        case 2:{//最热
-            NSDictionary *nextParamDic = @{@"type":@(WindowDefault),@"midTitle":@"筛选",@"dataArr":@[@"全部", @"名品", @"名物"]};
-            _pickView = [[ZSHPickView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight) paramDic:nextParamDic];
-            [_pickView show:WindowDefault];
-            _pickView.saveChangeBlock = ^(NSString *rowTitle, NSInteger tag) {
+        case 2:{//筛选
+            NSDictionary *nextParamDic = @{KFromClassType:@(ZSHFromGoodsVCToBottomBlurPopView)};
+            ZSHBottomBlurPopView *bottomBlurPopView = [[ZSHBottomBlurPopView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight) paramDic:nextParamDic];
+            bottomBlurPopView.blurRadius = 20;
+            bottomBlurPopView.dynamic = NO;
+            bottomBlurPopView.tintColor = KClearColor;
+            bottomBlurPopView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.6];
+            [bottomBlurPopView setBlurEnabled:NO];
+            [ZSHBaseUIControl setAnimationWithHidden:NO view:bottomBlurPopView completedBlock:nil];
+            bottomBlurPopView.dissmissViewBlock = ^(UIView *blurView, NSIndexPath *indexpath) {
+                [ZSHBaseUIControl setAnimationWithHidden:YES view:blurView completedBlock:^{
+                    if (indexpath) {//跳转到对应控制器
+//                        Class className = NSClassFromString(weakself.menuPushVCsArr[indexpath.row]);
+//                        RootViewController *vc = [[className alloc]initWithParamDic:weakself.menuParamArr[indexpath.row]];
+//                        [weakself.navigationController pushViewController:vc animated:YES];
+                    }
+                    return;
+                }];
             };
-            break;
-        }
-        case 3:{//最新
+
+            
+//            NSDictionary *nextParamDic = @{@"type":@(WindowDefault),@"midTitle":@"筛选",@"dataArr":@[@"全部", @"名品", @"名物"]};
+//            _pickView = [[ZSHPickView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight) paramDic:nextParamDic];
+//            [_pickView show:WindowDefault];
+//            _pickView.saveChangeBlock = ^(NSString *rowTitle, NSInteger tag) {
+//            };
             break;
         }
         default:

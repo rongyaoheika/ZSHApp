@@ -25,8 +25,8 @@
 #ifdef DEBUG
 
 #define DevelopSever    0
-#define TestSever       0
-#define ProductSever    1
+#define TestSever       1
+#define ProductSever    0
 
 #else
 
@@ -730,15 +730,17 @@
 //141.获取话题列表(含模糊查询)（完成）
 //可选参数：  TITLE  话题
 //请求地址：/appcirclein/gettopiclist.do?TOPICLIST  (混淆码)
-#define kUrGetTopicList [NSString stringWithFormat:@"/appcirclein/gettopiclist.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"TOPICLIST"]]
+#define kUrlGetTopicList [NSString stringWithFormat:@"/appcirclein/gettopiclist.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"TOPICLIST"]]
 //142.根据话题查询(弃用)
 //参数：  TITLE  话题
 //请求地址：/appcirclein/gettopicbytitle.do?TOPICBYTITLE  (混淆码)
 //143.添加话题 （话题头像名字 showfile）
 //参数：  HONOURUSER_ID  添加话题的用户ID/       TITLE  话题      /
 //请求地址：/appcirclein/addtopic.do?TOPICADD  (混淆码)
-#define kUrAddTopic [NSString stringWithFormat:@"/appcirclein/addtopic.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"TOPICADD"]]
-
-
+#define kUrlAddTopic [NSString stringWithFormat:@"/appcirclein/addtopic.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"TOPICADD"]]
+//144.通过ID获取杂志详情
+//参数：  MAGAZINE_ID     杂志的ID/       MAGAZINETYPE  杂志的类型      /
+//请求地址：/apphomein/magazineone?MAGAZINEONE  (混淆码)
+#define kUrlMagazineOne [NSString stringWithFormat:@"/apphomein/magazineone?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"MAGAZINEONE"]]
 
 #endif /* URLMacros_h */

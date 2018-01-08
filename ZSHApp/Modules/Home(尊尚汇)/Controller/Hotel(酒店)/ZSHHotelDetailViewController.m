@@ -94,7 +94,6 @@ static NSString *ZSHHotelCellID = @"ZSHHotelCell";
         weakself.tableViewModel.sectionModelArray[4] = [weakself storHotelMorShopSection];
         NSIndexSet *indexSet = [[NSIndexSet alloc]initWithIndex:4];
         [weakself updateSectionDatWithSet:indexSet];
-        
     } fail:nil];
 }
 
@@ -108,7 +107,7 @@ static NSString *ZSHHotelCellID = @"ZSHHotelCell";
     self.tableView.delegate = self.tableViewModel;
     self.tableView.dataSource = self.tableViewModel;
     
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     [self.tableView setSeparatorColor:KZSHColor1D1D1D];
     [self.tableView setSeparatorInset:UIEdgeInsetsMake(0, 0, 0, 0)];
     [self.tableView registerClass:[ZSHHotelDetailHeadCell class] forCellReuseIdentifier:ZSHHotelDetailHeadCellID];

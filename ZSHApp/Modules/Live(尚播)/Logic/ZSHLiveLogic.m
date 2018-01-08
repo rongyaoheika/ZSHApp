@@ -93,7 +93,7 @@
 // 获取话题列表(含模糊查询)
 - (void)requestGetTopicListWithTitle:(NSString *)title success:(void (^)(id response))success {
 
-    [PPNetworkHelper POST:kUrGetTopicList parameters:@{@"TITLE":title} success:^(id responseObject) {
+    [PPNetworkHelper POST:kUrlGetTopicList parameters:@{@"TITLE":title} success:^(id responseObject) {
          NSArray *arr = [ZSHWeiboTopicModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"]];
         success(arr);
     } failure:^(NSError *error) {
@@ -103,7 +103,7 @@
 
 // 添加话题
 - (void)requestAddTopicWithDic:(NSDictionary *)dic success:(void (^)(id response))success {
-    [PPNetworkHelper POST:kUrAddTopic parameters:dic success:^(id responseObject) {
+    [PPNetworkHelper POST:kUrlAddTopic parameters:dic success:^(id responseObject) {
         success(responseObject);
     } failure:^(NSError *error) {
         RLog(@"%@", error);

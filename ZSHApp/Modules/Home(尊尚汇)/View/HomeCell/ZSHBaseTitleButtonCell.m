@@ -53,7 +53,7 @@
             }];
         } else if ([paramDic[KFromClassType]integerValue] == FromHomeMagazineVCToNoticeView) {
             btnView.showLabel = NO;
-            [btnView.imageView sd_setImageWithURL:[NSURL URLWithString:subParamDic[@"ICONIMGS"]]];
+            [btnView.imageView sd_setImageWithURL:[NSURL URLWithString:subParamDic[@"SHOWIMG"]]];
             [btnView mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.width.mas_equalTo(kRealValue(95));
             }];

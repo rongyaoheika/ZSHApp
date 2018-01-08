@@ -116,8 +116,8 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     }];
     
     
+    // 头像点击Button
     UIButton *personBtn = [[UIButton alloc]init];
-    
     [personBtn addTarget:self action:@selector(personInfo) forControlEvents:UIControlEventTouchUpInside];
     [anchorView addSubview:personBtn];
     [personBtn mas_makeConstraints:^(MASConstraintMaker *make) {

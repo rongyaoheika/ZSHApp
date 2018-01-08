@@ -11,6 +11,7 @@
 		04315E851FF61175006C6BC8 /* UIImage+String.m in Sources */ = {isa = PBXBuildFile; fileRef = 04315E841FF61175006C6BC8 /* UIImage+String.m */; };
 		043587591FF2564F00969DD7 /* ZSHGoodsCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 043587581FF2564F00969DD7 /* ZSHGoodsCollectionViewCell.m */; };
 		0450A60D20036BC100D7B2D4 /* ZSHHomeSubListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0450A60C20036BC100D7B2D4 /* ZSHHomeSubListCell.m */; };
+		04CC219E1FFF79B200921863 /* ZSHMagazineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CC219D1FFF79B200921863 /* ZSHMagazineViewController.m */; };
 		18063C541FC90379000F5A00 /* ZSHPersonalModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 18063C531FC90379000F5A00 /* ZSHPersonalModel.m */; };
 		18063C571FC90951000F5A00 /* ZSHPersonalDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 18063C561FC90951000F5A00 /* ZSHPersonalDetailModel.m */; };
 		18063C5B1FC9140B000F5A00 /* ZSHCollectModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 18063C5A1FC9140B000F5A00 /* ZSHCollectModel.m */; };
@@ -538,8 +539,10 @@
 		04315E841FF61175006C6BC8 /* UIImage+String.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+String.m"; sourceTree = "<group>"; };
 		043587571FF2564F00969DD7 /* ZSHGoodsCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHGoodsCollectionViewCell.h; sourceTree = "<group>"; };
 		043587581FF2564F00969DD7 /* ZSHGoodsCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHGoodsCollectionViewCell.m; sourceTree = "<group>"; };
-		0450A60B20036BC100D7B2D4 /* ZSHHomeSubListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHHomeSubListCell.h; sourceTree = "<group>"; };
+    	0450A60B20036BC100D7B2D4 /* ZSHHomeSubListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHHomeSubListCell.h; sourceTree = "<group>"; };
 		0450A60C20036BC100D7B2D4 /* ZSHHomeSubListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHHomeSubListCell.m; sourceTree = "<group>"; };
+		04CC219C1FFF79B200921863 /* ZSHMagazineViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHMagazineViewController.h; sourceTree = "<group>"; };
+		04CC219D1FFF79B200921863 /* ZSHMagazineViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHMagazineViewController.m; sourceTree = "<group>"; };
 		14ED69325E9FD4BDB1CA95F8 /* Pods-ZSHApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZSHApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-ZSHApp/Pods-ZSHApp.release.xcconfig"; sourceTree = "<group>"; };
 		18063C521FC90379000F5A00 /* ZSHPersonalModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHPersonalModel.h; sourceTree = "<group>"; };
 		18063C531FC90379000F5A00 /* ZSHPersonalModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHPersonalModel.m; sourceTree = "<group>"; };
@@ -1488,6 +1491,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		04CC219B1FFF793800921863 /* 杂志 */ = {
+			isa = PBXGroup;
+			children = (
+				04CC219C1FFF79B200921863 /* ZSHMagazineViewController.h */,
+				04CC219D1FFF79B200921863 /* ZSHMagazineViewController.m */,
+			);
+			name = "杂志";
+			sourceTree = "<group>";
+		};
 		18063C511FC9035F000F5A00 /* 私人定制 */ = {
 			isa = PBXGroup;
 			children = (
@@ -2350,6 +2362,7 @@
 		FE291EAD1F8CAEDC00D4BBE7 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				04CC219B1FFF793800921863 /* 杂志 */,
 				FEC00D211FD28FB00061A705 /* Bar(酒吧) */,
 				FEA018D01FCBFAB600989FB2 /* Comment(评论) */,
 				FE0ED7D81FC2CB34008299C5 /* 城市 */,
@@ -4319,6 +4332,7 @@
 				FE2CD0991F984B5500E9E519 /* ZSHFindViewController.m in Sources */,
 				FE8FD0921FAE0997005F1184 /* ZSHServiceCenterViewController.m in Sources */,
 				185DE2F71FBFC31800720CAF /* ZSHVideoRecViewController.m in Sources */,
+				04CC219E1FFF79B200921863 /* ZSHMagazineViewController.m in Sources */,
 				185DE2FB1FBFD18D00720CAF /* ZSHBeginShowViewController.m in Sources */,
 				FE24DA731FD9605100965DC8 /* ZSHPlayListHeadView.m in Sources */,
 				FE5ED9A81FA47968003FB2BA /* ZSHHotelCalendarCell.m in Sources */,
