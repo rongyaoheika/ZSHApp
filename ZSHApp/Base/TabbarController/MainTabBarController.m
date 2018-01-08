@@ -61,7 +61,7 @@
     _VCS = @[].mutableCopy;
     
     ZSHHomeViewController *homeVC = [[ZSHHomeViewController alloc]init];
-    [self setupChildViewController:homeVC title:@"R黑卡" imageName:@"tab_home_normal" seleceImageName:@"tab_home_press"];
+    [self setupChildViewController:homeVC title:@"RYHK" imageName:@"tab_home_normal" seleceImageName:@"tab_home_press"];
     
     ZSHBuyViewController *buyVC = [[ZSHBuyViewController alloc]init];
     [self setupChildViewController:buyVC title:@"尊购" imageName:@"tab_buy_normal" seleceImageName:@"tab_buy_press"];

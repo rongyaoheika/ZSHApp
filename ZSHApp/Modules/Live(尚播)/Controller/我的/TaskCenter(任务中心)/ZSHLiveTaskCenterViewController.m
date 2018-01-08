@@ -53,7 +53,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
     NSArray *imageArr = @[@"task_Image_1",@"task_Image_2",@"task_Image_3",@"task_Image_4",@"task_Image_5"];
 
     NSArray *titleArr = @[@"设置头像", @"浏览主播", @"关注主播", @"送礼物给主播", @"完成全部任务"];
-    NSArray *contentArr = @[@"你的颜值不错哦，可获得10个黑咖币", @"浏览三个正在直播的主播，可获得20个黑咖币", @"关注五个主播，可获得30个黑咖币", @"为心仪的主播增加人气值，可获得50个黑咖币", @"额外获得100个黑咖币"];
+    NSArray *contentArr = @[@"你的颜值不错哦，可获得10个黑卡币", @"浏览三个正在直播的主播，可获得20个黑卡币", @"关注五个主播，可获得30个黑卡币", @"为心仪的主播增加人气值，可获得50个黑卡币", @"额外获得100个黑卡币"];
     
     for (int i = 0; i<imageArr.count; i++) {
         

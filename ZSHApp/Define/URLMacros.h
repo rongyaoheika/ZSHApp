@@ -25,8 +25,8 @@
 #ifdef DEBUG
 
 #define DevelopSever    0
-#define TestSever       1
-#define ProductSever    0
+#define TestSever       0
+#define ProductSever    1
 
 #else
 
@@ -701,7 +701,7 @@
 //参数：  PRODUCT_ID  商品ID/
 //请求地址：/appshipin/productevalist.do?PRODUCTEVALIST  (混淆码)
 #define kUrlProductEvaList [NSString stringWithFormat:@"/appshipin/sproductaddeva.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"PRODUCTEVALIST"]]
-//135.获取我的优惠券，黑咖币，能量值(完成)
+//135.获取我的优惠券，黑卡币，能量值(完成)
 //参数：  HONOURUSER_ID  用户ID/
 //请求地址：/getmycoublackenergy.do?MYCOUBLACKENERGY  (混淆码)
 #define kUrlGetMyCouBlackEnergy [NSString stringWithFormat:@"/appuserin/getmycoublackenergy.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"MYCOUBLACKENERGY"]]

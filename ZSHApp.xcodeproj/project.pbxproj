@@ -10,6 +10,7 @@
 		04315E821FF5E9ED006C6BC8 /* ZSHWeiboTopicModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04315E811FF5E9ED006C6BC8 /* ZSHWeiboTopicModel.m */; };
 		04315E851FF61175006C6BC8 /* UIImage+String.m in Sources */ = {isa = PBXBuildFile; fileRef = 04315E841FF61175006C6BC8 /* UIImage+String.m */; };
 		043587591FF2564F00969DD7 /* ZSHGoodsCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 043587581FF2564F00969DD7 /* ZSHGoodsCollectionViewCell.m */; };
+		0450A60D20036BC100D7B2D4 /* ZSHHomeSubListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0450A60C20036BC100D7B2D4 /* ZSHHomeSubListCell.m */; };
 		18063C541FC90379000F5A00 /* ZSHPersonalModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 18063C531FC90379000F5A00 /* ZSHPersonalModel.m */; };
 		18063C571FC90951000F5A00 /* ZSHPersonalDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 18063C561FC90951000F5A00 /* ZSHPersonalDetailModel.m */; };
 		18063C5B1FC9140B000F5A00 /* ZSHCollectModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 18063C5A1FC9140B000F5A00 /* ZSHCollectModel.m */; };
@@ -537,6 +538,8 @@
 		04315E841FF61175006C6BC8 /* UIImage+String.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+String.m"; sourceTree = "<group>"; };
 		043587571FF2564F00969DD7 /* ZSHGoodsCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHGoodsCollectionViewCell.h; sourceTree = "<group>"; };
 		043587581FF2564F00969DD7 /* ZSHGoodsCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHGoodsCollectionViewCell.m; sourceTree = "<group>"; };
+		0450A60B20036BC100D7B2D4 /* ZSHHomeSubListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHHomeSubListCell.h; sourceTree = "<group>"; };
+		0450A60C20036BC100D7B2D4 /* ZSHHomeSubListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHHomeSubListCell.m; sourceTree = "<group>"; };
 		14ED69325E9FD4BDB1CA95F8 /* Pods-ZSHApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZSHApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-ZSHApp/Pods-ZSHApp.release.xcconfig"; sourceTree = "<group>"; };
 		18063C521FC90379000F5A00 /* ZSHPersonalModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHPersonalModel.h; sourceTree = "<group>"; };
 		18063C531FC90379000F5A00 /* ZSHPersonalModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHPersonalModel.m; sourceTree = "<group>"; };
@@ -2636,6 +2639,8 @@
 				FE1377951F977AC3003C8DFB /* ZSHPickView.m */,
 				FE7AF2331FA30A0400E1A648 /* ZSHBottomBlurPopView.h */,
 				FE7AF2341FA30A0400E1A648 /* ZSHBottomBlurPopView.m */,
+				0450A60B20036BC100D7B2D4 /* ZSHHomeSubListCell.h */,
+				0450A60C20036BC100D7B2D4 /* ZSHHomeSubListCell.m */,
 				FE7AF2301FA307F400E1A648 /* ZSHTopLineView.h */,
 				FE7AF2311FA307F400E1A648 /* ZSHTopLineView.m */,
 				FE1F761A1F8F191300C45B83 /* ZSHGoodsListView.h */,
@@ -4439,6 +4444,7 @@
 				FEA30A4D1F9F064900AB0FFC /* ZSHLogisticsDetailCell.m in Sources */,
 				185B75DD1FC51D45008CBD2B /* TYCyclePagerViewCell.m in Sources */,
 				FE4B8D241FA9FEC500DE48A1 /* ZSHKTVListCell.m in Sources */,
+				0450A60D20036BC100D7B2D4 /* ZSHHomeSubListCell.m in Sources */,
 				FE4E4B251FBFDC4E00E3B2F4 /* ZSHSearchLiveFirstCell.m in Sources */,
 				FE24DA671FD949C700965DC8 /* ZSHMusicLibraryViewController.m in Sources */,
 				1824F1D11FCE800F000D805E /* ZSHBuySearchResultViewController.m in Sources */,

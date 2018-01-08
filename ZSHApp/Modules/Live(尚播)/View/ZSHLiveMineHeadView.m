@@ -57,8 +57,8 @@
     }];
     self.nameLabel = nameLabel;
     
-    //黑咖币
-    NSDictionary *coinBtnTopDic = @{@"text":@"黑咖币",@"font":kPingFangRegular(14),@"textAlignment":@(NSTextAlignmentCenter),@"height":@(14)};
+    //黑卡币
+    NSDictionary *coinBtnTopDic = @{@"text":@"黑卡币",@"font":kPingFangRegular(14),@"textAlignment":@(NSTextAlignmentCenter),@"height":@(14)};
     NSDictionary *coinBtnBottomDic = @{@"text":@"99",@"font":kPingFangMedium(18),@"textAlignment":@(NSTextAlignmentCenter),@"height":@(14)};
     _coinBtn = [ZSHBaseUIControl createLabelBtnWithTopDic:coinBtnTopDic bottomDic:coinBtnBottomDic];
     _coinBtn.tag = 2;

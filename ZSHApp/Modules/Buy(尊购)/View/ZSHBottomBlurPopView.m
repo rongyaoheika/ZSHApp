@@ -43,6 +43,9 @@
 #import "ZSHConfirmOrderLogic.h"
 #import <FSCalendar.h>
 
+//首页
+#import "ZSHHomeSubListCell.h"
+
 @interface ZSHBottomBlurPopView ()<STCalendarDelegate, FSCalendarDataSource, FSCalendarDelegate>
 
 @property (nonatomic, strong) NSDictionary           *paramDic;
@@ -94,7 +97,7 @@ static NSString *ZSHHotelPayHeadCellID = @"ZSHHotelPayHeadCell";
 static NSString *ZSHCalendarCellID = @"ZSHCalendarCell";
 
 //首页-菜单栏
-static NSString *ZSHBaseCellID = @"ZSHBaseCell";
+static NSString *ZSHHomeSubListCellID = @"ZSHHomeSubListCell";
 
 //直播 - 附近搜索
 static NSString *ZSHSearchLiveFirstCellID = @"ZSHSearchLiveFirstCell";
@@ -183,14 +186,17 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
         [self.subTab registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHHeadCellID];
     }  else if (kFromClassTypeValue == ZSHFromHomeMenuVCToBottomBlurPopView) {//首页-菜单栏
         
-        self.subTab.frame = CGRectMake(KScreenWidth - kRealValue(7.5) - kRealValue(100), 0, kRealValue(100),kRealValue(128));
+        self.subTab.frame = CGRectMake(KScreenWidth - kRealValue(15) - kRealValue(120), 0, kRealValue(120),kRealValue(175));
         self.subTab.backgroundColor = KClearColor;
         UIImageView *tbBgImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"list_bg"]];
         tbBgImageView.frame = self.subTab.bounds;
         self.subTab.backgroundView = tbBgImageView;
-        [self.subTab registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHBaseCellID];
         self.subTab.delegate = self.tableViewModel;
         self.subTab.dataSource = self.tableViewModel;
+        [self.subTab registerClass:[ZSHHomeSubListCell class] forCellReuseIdentifier:ZSHHomeSubListCellID];
+        self.subTab.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+        [self.subTab setSeparatorColor:KZSHColor3E3E3E];
+        [self.subTab setSeparatorInset:UIEdgeInsetsMake(0, kRealValue(12.5), 0, kRealValue(12.5))];
         [self.subTab reloadData];
         return;
         
@@ -684,22 +690,24 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
 
 //首页-菜单
 - (ZSHBaseTableViewSectionModel*)storeMenuListSection {
-    NSArray *imageArr = @[@"list_scan",@"list_news",@"list_noti",@"list_unlock"];
-    NSArray *titleArr = @[@"扫一扫",@"消息中心",@"系统通知",@"解锁特权"];
+    NSArray *paramArr = @[
+  @{@"imageName":@"list_scan",@"titleText":@"扫一扫"},
+  @{@"imageName":@"list_news",@"titleText":@"消息中心"},
+  @{@"imageName":@"list_noti",@"titleText":@"系统通知"},
+  @{@"imageName":@"list_unlock",@"titleText":@"解锁特权"}];
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     sectionModel.headerHeight = kRealValue(8);
     sectionModel.headerView = [[UIView alloc]initWithFrame:self.subTab.bounds];
-    for (int i = 0; i<[imageArr count]; i++) {
+    for (int i = 0; i<[paramArr count]; i++) {
         ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
         [sectionModel.cellModelArray addObject:cellModel];
-        cellModel.height = kRealValue(30);
+        cellModel.height = kRealValue(41.5);
         cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
-            ZSHBaseCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHBaseCellID];
-            cell.textLabel.text = titleArr[i];
-            cell.textLabel.font = kPingFangLight(14);
-            cell.imageView.image = [UIImage imageNamed:imageArr[i]];
-            cell.imageEdgeInsets = UIEdgeInsetsMake(0, -10, 0, 0);
-            cell.textLabelEdgeInsets = UIEdgeInsetsMake(0, -10, 0, 0);
+            ZSHHomeSubListCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHHomeSubListCellID forIndexPath:indexPath];
+            [cell updateCellWithParamDic:paramArr[indexPath.row]];
+            if (indexPath.row == paramArr.count - 1) {
+                cell.separatorInset = UIEdgeInsetsMake(0, 0, 0, MAXFLOAT);
+            }
             return cell;
         };
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
