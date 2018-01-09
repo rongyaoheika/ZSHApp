@@ -19,21 +19,19 @@
 @implementation ZSHHomeSubListCell
 
 - (void)setup{
-    UIImage *leftImage = [UIImage imageNamed:@"list_scan"];
-    _leftIV = [[UIImageView alloc]initWithImage:leftImage];
+    _leftIV = [[UIImageView alloc]init];
     _leftIV.contentMode =  UIViewContentModeScaleAspectFit;
     [self.contentView addSubview:_leftIV];
     [_leftIV mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(self).offset(kRealValue(7.5));
+        make.left.mas_equalTo(self).offset(kRealValue(12.5));
         make.centerY.mas_equalTo(self);
-        make.size.mas_equalTo(leftImage.size);
     }];
     
     NSDictionary *titleLabelDic = @{@"text":@"",@"font":kPingFangMedium(15)};
     _textLB = [ZSHBaseUIControl createLabelWithParamDic:titleLabelDic];
     [self.contentView addSubview:_textLB];
     [_textLB mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(_leftIV.mas_right).offset(kRealValue(15));
+        make.left.mas_equalTo(self).offset(kRealValue(45));
         make.height.mas_equalTo(self);
         make.right.mas_equalTo(self);
         make.centerY.mas_equalTo(self);
@@ -41,7 +39,9 @@
 }
 
 - (void)updateCellWithParamDic:(NSDictionary *)dic{
-    [_leftIV setImage:[UIImage imageNamed:dic[@"imageName"]]];
+    UIImage *leftImage = [UIImage imageNamed:dic[@"imageName"]];
+    _leftIV.size = leftImage.size;
+    _leftIV.image = leftImage;
     [_textLB setText:dic[@"titleText"]];
 }
 
