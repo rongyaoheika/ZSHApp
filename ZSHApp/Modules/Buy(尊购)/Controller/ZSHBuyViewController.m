@@ -31,7 +31,7 @@ static NSString *ZSHGoodsListViewID = @"ZSHGoodsListView";
 
 @implementation ZSHBuyViewController
 - (void)viewWillAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
+    [super viewWillAppear:animated];
     RLog(@"%@", kRootViewController);
     RXLSideSlipViewController *rxl = (RXLSideSlipViewController *)kRootViewController;
     rxl.panGestureEnabled = true;
@@ -109,7 +109,7 @@ static NSString *ZSHGoodsListViewID = @"ZSHGoodsListView";
         weakself.guideView = [[ZSHGuideView alloc]initWithFrame:CGRectZero paramDic:nextParamDic];
         [cell.contentView addSubview:_guideView];
         [weakself.guideView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.centerX.mas_equalTo(cell.contentView);
+            make.center.mas_equalTo(cell);
             make.size.mas_equalTo(CGSizeMake(KScreenWidth, kRealValue(175)));
         }];
         

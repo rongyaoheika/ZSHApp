@@ -69,6 +69,7 @@
         }
             break;
         case FromFindVCToTitleContentVC:{
+            [self createFindNaviUI];
             self.titleArr = @[@"精选",@"数码",@"亲子",@"时尚",@"美食"];
             self.contentVCS = @[@"ZSHFindViewController",@"ZSHFindViewController",@"ZSHFindViewController",@"ZSHFindViewController",@"ZSHFindViewController"];
             self.paramArr = @[@{@"CAIDAN_ID":@"387563351791632384",@"shopId":self.paramDic[@"shopId"]},
@@ -186,6 +187,10 @@
             break;
     }
     self.titleWidth = KScreenWidth/(self.titleArr.count);
+}
+
+- (void)createFindNaviUI{
+     [self addNavigationItemWithTitles:@[@"发布"] isLeft:NO target:self action:@selector(distributeAction) tags:@[@(2)]];
 }
 
 - (void)createTileViewUI{
@@ -407,6 +412,10 @@
     [self.navigationController pushViewController:searchViewController animated:YES];
 }
 
+//头条-发布
+- (void)distributeAction{
+    
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

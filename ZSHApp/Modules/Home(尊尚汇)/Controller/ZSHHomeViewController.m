@@ -250,7 +250,7 @@ static NSString *Identify_MusicCell = @"musicCell";
     cellView.dataArr = mTitleArr;
    
     cellView.itemClickBlock = ^(NSInteger index) {
-        NSDictionary *nextParamDic = @{KFromClassType:@(FromFindVCToTitleContentVC),@"title":@"发现",@"shopId":_homeLogic.newsArr[index][@"NEWS_ID"]};
+        NSDictionary *nextParamDic = @{KFromClassType:@(FromFindVCToTitleContentVC),@"title":@"头条",@"shopId":_homeLogic.newsArr[index][@"NEWS_ID"]};
         ZSHTitleContentViewController *titleContentVC = [[ZSHTitleContentViewController alloc]initWithParamDic:nextParamDic];
         [weakself.navigationController pushViewController:titleContentVC animated:YES];
     };
