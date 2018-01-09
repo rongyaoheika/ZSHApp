@@ -64,6 +64,7 @@
     for (int i = 0; i<4; i++) {
         UIImageView *detailImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, kRealValue(82.5), kRealValue(82.5))];
         [detailImageView setImage:[UIImage imageNamed:@"video_image_2"]];
+        detailImageView.tag = i+18010907;
         [_detailView addSubview:detailImageView];
         [detailImageView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.mas_equalTo(self.detailView);
@@ -74,7 +75,11 @@
     
 }
 
-
+- (void)updateCellWithParamDic:(NSDictionary *)dic {
+    _numLabe.text = NSStringFormat(@"共%@件宝贝",dic[@"PRODUCT_COUNT"]);
+    _headLabel.text = dic[@"SHOPNAME"];
+    [_headImageView sd_setImageWithURL:[NSURL URLWithString:dic[@"SHOWIMG"]]];
+}
 
 
 @end

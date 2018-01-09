@@ -32,7 +32,6 @@ static NSString *ZSHGoodsListViewID = @"ZSHGoodsListView";
 @implementation ZSHBuyViewController
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    RLog(@"%@", kRootViewController);
     RXLSideSlipViewController *rxl = (RXLSideSlipViewController *)kRootViewController;
     rxl.panGestureEnabled = true;
 }

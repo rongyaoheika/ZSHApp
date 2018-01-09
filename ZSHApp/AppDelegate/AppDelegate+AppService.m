@@ -109,7 +109,7 @@
             ZSHLeftContentViewController *leftVC = [[ZSHLeftContentViewController alloc] init];
             RXLSideSlipViewController *RXL = [[RXLSideSlipViewController alloc] initWithContentViewController:self.mainTabBarVC leftMenuViewController:leftVC rightMenuViewController:nil];
             
-            RXL.menuPreferredStatusBarStyle = 1; // UIStatusBarStyleLightContent
+            RXL.menuPreferredStatusBarStyle = UIStatusBarStyleDefault; // UIStatusBarStyleLightContent
             RXL.contentViewShadowColor = [UIColor blackColor];
             RXL.contentViewShadowOffset = CGSizeMake(0, 0);
             RXL.contentViewShadowOpacity = 0.6;

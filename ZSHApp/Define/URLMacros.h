@@ -742,5 +742,13 @@
 //参数：  MAGAZINE_ID     杂志的ID/       MAGAZINETYPE  杂志的类型      /
 //请求地址：/apphomein/magazineone?MAGAZINEONE  (混淆码)
 #define kUrlMagazineOne [NSString stringWithFormat:@"/apphomein/magazineone?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"MAGAZINEONE"]]
+//146 尊购首页各种专区点击后返回的商家列表（筛选同接口）
+//参数：  参数：BRAND_ID 类型参数id/
+//BRANDICON_ID   商品品牌 ID（筛选用参数）
+//请求地址：/appshipin/shipbusinesslist.do?SHIPPBUSINESS  (混淆码)
+#define kUrlShipbusinessList [NSString stringWithFormat:@"/appshipin/shipbusinesslist.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SHIPPBUSINESS"]]
+
+
+
 
 #endif /* URLMacros_h */

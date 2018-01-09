@@ -29,7 +29,7 @@
 /* 左边数据 */
 @property (nonatomic, strong) NSMutableArray<ZSHClassMainModel *> *titleArr;
 /* 右边数据 */
-@property (nonatomic, strong) NSMutableArray<ZSHClassSubModel *>  *mainArr;
+@property (nonatomic, strong) NSMutableArray                      *mainArr;
 
 @property (nonatomic, strong) ZSHBuyLogic                         *buyLogic;
 @property (nonatomic, assign) NSInteger                           currentSelectIndex;
@@ -185,6 +185,7 @@ static NSString *const ZSHBrandSortCellID = @"ZSHBrandSortCell";
 #pragma mark - <UICollectionViewDelegate>
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     ZSHGoodsCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:ZSHGoodsSortCellID forIndexPath:indexPath];
+    [cell updateCellWithParamDic:_mainArr[indexPath.row]];
     return cell;
 }
 
@@ -217,7 +218,7 @@ static NSString *const ZSHBrandSortCellID = @"ZSHBrandSortCell";
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     RLog(@"点击了个第%zd分组第%zd个Item",indexPath.section,indexPath.row);
-    ZSHGoodsTitleContentViewController *goodContentVC = [[ZSHGoodsTitleContentViewController alloc]initWithParamDic:@{@"PreBrandID":_mainArr[indexPath.row].BRAND_ID,
+    ZSHGoodsTitleContentViewController *goodContentVC = [[ZSHGoodsTitleContentViewController alloc]initWithParamDic:@{@"PreBrandID":_mainArr[indexPath.row][@"BUSINESS_ID"],
                                 KFromClassType:@(FromGoodsVCToGoodsTitleVC),
                                 @"cellType":@(ZSHCollectionViewCellType)
                                 }];
@@ -256,7 +257,7 @@ static NSString *const ZSHBrandSortCellID = @"ZSHBrandSortCell";
     kWeakSelf(self);
     ZSHBuyLogic *logic = [[ZSHBuyLogic alloc] init];
     [logic requestBrandIconListWithBrandID:model.BRAND_ID success:^(id response) {
-        _mainArr = [ZSHClassSubModel mj_objectArrayWithKeyValuesArray:response[@"pd"]];
+        _mainArr = response[@"pd"];
         [weakself.collectionView reloadData];
         [weakself.collectionView.mj_header endRefreshing];
         

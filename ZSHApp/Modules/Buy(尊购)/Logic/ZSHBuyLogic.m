@@ -36,7 +36,7 @@
 // 商品品牌
 - (void)requestBrandIconListWithBrandID:(NSString *)brandID success:(void (^)(id response))success {
     
-    [PPNetworkHelper POST:kUrlShipBrandIconList parameters:@{@"BRAND_ID":brandID} success:^(id responseObject) {
+    [PPNetworkHelper POST:kUrlShipbusinessList parameters:@{@"BRAND_ID":brandID} success:^(id responseObject) {
         success(responseObject);
     } failure:^(NSError *error) {
         RLog(@"请求失败");
