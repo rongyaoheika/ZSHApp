@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		042DC4992004D12A00AF2995 /* ZSHRecommendView.m in Sources */ = {isa = PBXBuildFile; fileRef = 042DC4982004D12A00AF2995 /* ZSHRecommendView.m */; };
 		04315E821FF5E9ED006C6BC8 /* ZSHWeiboTopicModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04315E811FF5E9ED006C6BC8 /* ZSHWeiboTopicModel.m */; };
 		04315E851FF61175006C6BC8 /* UIImage+String.m in Sources */ = {isa = PBXBuildFile; fileRef = 04315E841FF61175006C6BC8 /* UIImage+String.m */; };
 		043587591FF2564F00969DD7 /* ZSHGoodsCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 043587581FF2564F00969DD7 /* ZSHGoodsCollectionViewCell.m */; };
@@ -534,6 +535,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		042DC4972004D12A00AF2995 /* ZSHRecommendView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHRecommendView.h; sourceTree = "<group>"; };
+		042DC4982004D12A00AF2995 /* ZSHRecommendView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHRecommendView.m; sourceTree = "<group>"; };
 		04315E801FF5E9ED006C6BC8 /* ZSHWeiboTopicModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHWeiboTopicModel.h; sourceTree = "<group>"; };
 		04315E811FF5E9ED006C6BC8 /* ZSHWeiboTopicModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHWeiboTopicModel.m; sourceTree = "<group>"; };
 		04315E831FF61175006C6BC8 /* UIImage+String.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+String.h"; sourceTree = "<group>"; };
@@ -2389,6 +2392,8 @@
 				FE9CC3E01FA0A44200285475 /* Hotel(酒店) */,
 				FE2BB0C01F8E168B000D5800 /* ZSHHomeViewController.h */,
 				FE2BB0C11F8E168B000D5800 /* ZSHHomeViewController.m */,
+				042DC4972004D12A00AF2995 /* ZSHRecommendView.h */,
+				042DC4982004D12A00AF2995 /* ZSHRecommendView.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -4458,6 +4463,7 @@
 				FE1F76341F8F7DB600C45B83 /* ZSHLiveContentFirstViewController.h in Sources */,
 				182A70251FE24A0D000BA79B /* ZSHCardImgModel.m in Sources */,
 				FEBD7C991FA6F42900CE2BA6 /* ZSHHotelModel.m in Sources */,
+				042DC4992004D12A00AF2995 /* ZSHRecommendView.m in Sources */,
 				FE8FD0831FADE64A005F1184 /* ZSHWalletCenterViewController.m in Sources */,
 				FEA1056D1F9B20A9008652D6 /* ZSHClassSubModel.m in Sources */,
 				FE2CD0931F9833DE00E9E519 /* ZSHAddressListCell.m in Sources */,
@@ -5282,8 +5288,8 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.combatworld.honourcard;
 				PRODUCT_NAME = "荣耀黑卡";
-				PROVISIONING_PROFILE = "2ef115c3-858b-4c86-98f4-c55371b58d4b";
-				PROVISIONING_PROFILE_SPECIFIER = "Ad_hoc_profile(0106)";
+				PROVISIONING_PROFILE = "4dfc89ed-b1bf-46b5-9b04-a3e243fde090";
+				PROVISIONING_PROFILE_SPECIFIER = "dis_profile(0104)";
 				SKIP_INSTALL = NO;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/ZSHApp/Define";

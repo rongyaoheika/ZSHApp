@@ -6,6 +6,7 @@
 
 #import "PYSearchViewController.h"
 #import "PYSearchSuggestionViewController.h"
+#import "ZSHRecommendView.h"
 
 #define PYSEARCH_MARGIN 10
 #define PYRectangleTagMaxCol 3
@@ -87,6 +88,14 @@
  The current orientation of device
  */
 @property (nonatomic, assign) UIDeviceOrientation currentOrientation;
+
+/**
+ 为您推荐
+ */
+@property (nonatomic, strong) ZSHRecommendView    *recommendView;
+@property (nonatomic, strong) UILabel             *recommendHeader;
+@property (nonatomic, strong) UICollectionView    *recommendCV;
+
 
 @end
 
@@ -372,6 +381,8 @@
     self.baseSearchTableView.tableFooterView = footerView;
     
     self.hotSearches = nil;
+    
+    
 }
 
 - (UILabel *)setupTitleLabel:(NSString *)title
@@ -540,11 +551,19 @@
 
 - (void)setupSearchHistoryTags
 {
-    self.baseSearchTableView.tableFooterView = nil;
+    self.baseSearchTableView.tableFooterView = self.showRecommendView ? self.recommendView:nil;
     self.searchHistoryTagsContentView.zsh_y = PYSEARCH_MARGIN;
     self.emptyButton.zsh_y = self.searchHistoryHeader.zsh_y - PYSEARCH_MARGIN * 0.5;
     self.searchHistoryTagsContentView.zsh_y = CGRectGetMaxY(self.emptyButton.frame) + PYSEARCH_MARGIN;
     self.searchHistoryTags = [self addAndLayoutTagsWithTagsContentView:self.searchHistoryTagsContentView tagTexts:[self.searchHistories copy]];
+}
+
+- (ZSHRecommendView *)recommendView{
+    if (!_recommendView) {
+        NSDictionary *paramDic = @{KFromClassType:@(self.recommendViewType)};
+        _recommendView = [[ZSHRecommendView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, KScreenHeight*0.7) paramDic:paramDic];
+    }
+    return _recommendView;
 }
 
 - (NSArray *)addAndLayoutTagsWithTagsContentView:(UIView *)contentView tagTexts:(NSArray<NSString *> *)tagTexts;
@@ -867,6 +886,8 @@
     if (YES == self.swapHotSeachWithSearchHistory) {
         self.hotSearches = self.hotSearches;
     }
+    
+     [self.baseSearchTableView reloadData];
 }
 
 - (void)tagDidCLick:(UITapGestureRecognizer *)gr

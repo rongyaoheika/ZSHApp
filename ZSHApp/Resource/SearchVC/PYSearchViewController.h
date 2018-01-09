@@ -13,6 +13,12 @@
 
 typedef void(^PYDidSearchBlock)(PYSearchViewController *searchViewController, UISearchBar *searchBar, NSString *searchText);
 
+typedef NS_ENUM(NSInteger, ZSHRecommendViewType)  {
+    ZSHRecommendViewTypeHome,      //首页
+    ZSHRecommendViewTypeBuy,       //尊购
+    ZSHRecommendViewTypeDefault    //默认
+};
+
 /**
  style of popular search
  */
@@ -359,6 +365,9 @@ didSelectSearchSuggestionAtIndex:(NSInteger)index
  Note: it is effective only when `searchResultShowMode` is `PYSearchResultShowModeEmbed`.
  */
 @property (nonatomic, assign) BOOL showSearchResultWhenSearchBarRefocused;
+
+@property (nonatomic, assign) ZSHRecommendViewType recommendViewType;
+@property (nonatomic, assign) BOOL showRecommendView;
 
 /**
  Creates an instance of searchViewContoller with popular searches and search bar's placeholder.

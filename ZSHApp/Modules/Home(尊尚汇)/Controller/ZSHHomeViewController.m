@@ -465,6 +465,8 @@ static NSString *Identify_MusicCell = @"musicCell";
         ZSHGoodsTitleContentViewController *goodContentVC = [[ZSHGoodsTitleContentViewController alloc]initWithParamDic:@{@"searchText":searchText,KFromClassType:@(FromSearchResultVCTOGoodsTitleVC)}];
         [weakself.navigationController pushViewController:goodContentVC animated:YES];
     }];
+    searchViewController.recommendViewType = 0;
+    searchViewController.showRecommendView = YES;
     searchViewController.hotSearchStyle = PYHotSearchStyleARCBorderTag;
     searchViewController.searchHistoryStyle = PYSearchHistoryStyleARCBorderTag;
     searchViewController.searchBarBackgroundColor = KZSHColor1A1A1A;

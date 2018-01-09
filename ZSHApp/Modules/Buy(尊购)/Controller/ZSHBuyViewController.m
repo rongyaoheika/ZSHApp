@@ -170,28 +170,22 @@ static NSString *ZSHGoodsListViewID = @"ZSHGoodsListView";
     return sectionModel;
 }
 
+#pragma action
 - (void)searchAction{
-    // 1. Create an Array of popular search
-    NSArray *hotSeaches = @[@"阿哲", @"散打哥", @"天佑", @"赵小磊", @"赵雷", @"陈山", @"PHP", @"C#", @"Perl", @"Go", @"JavaScript", @"R", @"Ruby", @"MATLAB"];
-    // 2. Create a search view controller
     kWeakSelf(self);
-    PYSearchViewController *searchViewController = [PYSearchViewController searchViewControllerWithHotSearches:hotSeaches searchBarPlaceholder:NSLocalizedString(@"PYExampleSearchPlaceholderText", @"搜索编程语言") didSearchBlock:^(PYSearchViewController *searchViewController, UISearchBar *searchBar, NSString *searchText) {
-        // Called when search begain.
-        // eg：Push to a temp view conroller
+    NSArray *hotSeaches = @[@"手表", @"包袋", @"首饰", @"豪车", @"高尔夫", @"飞机", @"游艇",@"家电数码"];
+    PYSearchViewController *searchViewController = [PYSearchViewController searchViewControllerWithHotSearches:hotSeaches searchBarPlaceholder:@"搜索" didSearchBlock:^(PYSearchViewController *searchViewController, UISearchBar *searchBar, NSString *searchText) {
         ZSHGoodsTitleContentViewController *goodContentVC = [[ZSHGoodsTitleContentViewController alloc]initWithParamDic:@{@"searchText":searchText,KFromClassType:@(FromSearchResultVCTOGoodsTitleVC)}];
         [weakself.navigationController pushViewController:goodContentVC animated:YES];
     }];
-    // 3. Set style for popular search and search history
+    searchViewController.recommendViewType = 1;
+    searchViewController.showRecommendView = YES;
     searchViewController.hotSearchStyle = PYHotSearchStyleARCBorderTag;
     searchViewController.searchHistoryStyle = PYSearchHistoryStyleARCBorderTag;
     searchViewController.searchBarBackgroundColor = KZSHColor1A1A1A;
-    
-    // 4. Set delegate
     searchViewController.delegate = self;
-    // 5. Present a navigation controller
-    //    RootNavigationController *nav = [[RootNavigationController alloc] initWithRootViewController:searchViewController];
-    //    [self presentViewController:nav animated:YES completion:nil];
     [self.navigationController pushViewController:searchViewController animated:YES];
+    
 }
 
 #pragma action
