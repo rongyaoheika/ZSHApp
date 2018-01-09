@@ -122,7 +122,7 @@ static NSString *const ZSHBrandSortCellID = @"ZSHBrandSortCell";
 - (ZSHGuideView *)guideView {
     if(!_guideView) {
         NSDictionary *nextParamDic = @{KFromClassType:@(FromTogetherToGuideView),@"pageViewHeight":@(kRealValue(75)),@"min_scale":@(0.6),@"withRatio":@(1.8),@"infinite":@(false), @"dataArr":@[@"hotel_image", @"hotel_image"]};
-        _guideView = [[ZSHGuideView alloc]initWithFrame:CGRectMake(tableViewW, KNavigationBarHeight+kRealValue(40), kRealValue(275), kRealValue(75)) paramDic:nextParamDic];
+        _guideView = [[ZSHGuideView alloc]initWithFrame:CGRectMake(tableViewW, KNavigationBarHeight+kRealValue(70), kRealValue(275), kRealValue(75)) paramDic:nextParamDic];
     }
     return _guideView;
 }
@@ -132,9 +132,9 @@ static NSString *const ZSHBrandSortCellID = @"ZSHBrandSortCell";
 - (LXScollTitleView *)titleView{
     kWeakSelf(self)
     if (!_titleView) {
-        _titleView = [[LXScollTitleView alloc] initWithFrame:CGRectMake(tableViewW, KNavigationBarHeight, KScreenWidth-tableViewW, kRealValue(40))];
-        _titleView.normalTitleFont = kPingFangRegular(15);
-        _titleView.selectedTitleFont = kPingFangRegular(16);
+        _titleView = [[LXScollTitleView alloc] initWithFrame:CGRectMake(tableViewW, KNavigationBarHeight, KScreenWidth-tableViewW, kRealValue(70))];
+        _titleView.normalTitleFont = kPingFangRegular(12);
+        _titleView.selectedTitleFont = kPingFangRegular(14);
         _titleView.selectedColor = KZSHColor929292;
         _titleView.normalColor = KZSHColor929292;
         _titleView.indicatorHeight = 0;

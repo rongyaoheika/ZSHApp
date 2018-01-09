@@ -39,7 +39,7 @@ static NSString *Identify_PlayCell = @"playCell";
 static NSString *Identify_MagazineCell = @"magazineCell";
 static NSString *Identify_MusicCell = @"musicCell";
 
-@interface ZSHHomeViewController ()<UISearchBarDelegate,GYZChooseCityDelegate>
+@interface ZSHHomeViewController ()<UISearchBarDelegate,GYZChooseCityDelegate,PYSearchViewControllerDelegate>
 
 
 @property (nonatomic, strong) NSArray                *pushVCsArr;
@@ -459,39 +459,24 @@ static NSString *Identify_MusicCell = @"musicCell";
 
 #pragma action
 - (void)searchAction {
-    // 1. Create an Array of popular search
-    NSArray *hotSeaches = @[@"阿哲", @"散打哥", @"天佑", @"赵小磊", @"赵雷", @"陈山", @"PHP", @"C#", @"Perl", @"Go", @"JavaScript", @"R", @"Ruby", @"MATLAB"];
-    // 2. Create a search view controller
     kWeakSelf(self);
+    NSArray *hotSeaches = @[@"酒店", @"美食", @"旅游", @"聚会", @"KTV", @"酒吧", @"品鉴", @"豪车", @"游艇"];
     PYSearchViewController *searchViewController = [PYSearchViewController searchViewControllerWithHotSearches:hotSeaches searchBarPlaceholder:NSLocalizedString(@"PYExampleSearchPlaceholderText", @"搜索编程语言") didSearchBlock:^(PYSearchViewController *searchViewController, UISearchBar *searchBar, NSString *searchText) {
-        // Called when search begain.
-        // eg：Push to a temp view conroller
         ZSHGoodsTitleContentViewController *goodContentVC = [[ZSHGoodsTitleContentViewController alloc]initWithParamDic:@{@"searchText":searchText,KFromClassType:@(FromSearchResultVCTOGoodsTitleVC)}];
         [weakself.navigationController pushViewController:goodContentVC animated:YES];
     }];
-    // 3. Set style for popular search and search history
     searchViewController.hotSearchStyle = PYHotSearchStyleARCBorderTag;
     searchViewController.searchHistoryStyle = PYSearchHistoryStyleARCBorderTag;
     searchViewController.searchBarBackgroundColor = KZSHColor1A1A1A;
-    
-    // 4. Set delegate
     searchViewController.delegate = self;
-    // 5. Present a navigation controller
-    //    RootNavigationController *nav = [[RootNavigationController alloc] initWithRootViewController:searchViewController];
-    //    [self presentViewController:nav animated:YES completion:nil];
     [self.navigationController pushViewController:searchViewController animated:YES];
 }
 
 
 - (void)menuBtntClick:(UIButton *)menuBtn{
     kWeakSelf(self);
-    NSDictionary *nextParamDic = @{KFromClassType:@(ZSHFromHomeMenuVCToBottomBlurPopView)};
-    ZSHBottomBlurPopView *bottomBlurPopView = [[ZSHBottomBlurPopView alloc]initWithFrame:CGRectMake(0, KNavigationBarHeight, KScreenWidth, KScreenHeight - KNavigationBarHeight) paramDic:nextParamDic];
-    bottomBlurPopView.blurRadius = 20;
-    bottomBlurPopView.dynamic = NO;
-    bottomBlurPopView.tintColor = KClearColor;
-    [ZSHBaseUIControl setAnimationWithHidden:NO view:bottomBlurPopView completedBlock:nil];
-    bottomBlurPopView.dissmissViewBlock = ^(UIView *blurView, NSIndexPath *indexpath) {
+    [ZSHBaseUIControl setAnimationWithHidden:NO view:self.bottomBlurPopView completedBlock:nil];
+    self.bottomBlurPopView.dissmissViewBlock = ^(UIView *blurView, NSIndexPath *indexpath) {
         [ZSHBaseUIControl setAnimationWithHidden:YES view:blurView completedBlock:^{
             if (indexpath) {//跳转到对应控制器
                 Class className = NSClassFromString(weakself.menuPushVCsArr[indexpath.row]);
@@ -511,7 +496,6 @@ static NSString *Identify_MusicCell = @"musicCell";
     
     GYZChooseCityController *cityVC = [[GYZChooseCityController alloc]init];
     [cityVC setDelegate:self];
-//    cityVC.locationCityID = @"1400010000";
     cityVC.commonCitys = [[NSMutableArray alloc] initWithArray: @[@"1400010000", @"100010000"]];        // 最近访问城市，如果不设置，将自动管理
     cityVC.hotCitys = @[@"100010000", @"200010000", @"300210000", @"600010000", @"300110000"];
     [self.navigationController pushViewController:cityVC animated:YES];
@@ -520,13 +504,15 @@ static NSString *Identify_MusicCell = @"musicCell";
 
 
 #pragma getter
-- (ZSHBottomBlurPopView *)createBottomBlurPopViewWith:(ZSHFromVCToBottomBlurPopView)fromClassType{
-    NSDictionary *nextParamDic = @{KFromClassType:@(fromClassType)};
-    ZSHBottomBlurPopView *bottomBlurPopView = [[ZSHBottomBlurPopView alloc]initWithFrame:kAppDelegate.window.bounds paramDic:nextParamDic];
-    bottomBlurPopView.blurRadius = 20;
-    bottomBlurPopView.dynamic = NO;
-    bottomBlurPopView.tintColor = KClearColor;
-    return bottomBlurPopView;
+- (ZSHBottomBlurPopView *)bottomBlurPopView{
+    if (!_bottomBlurPopView) {
+         NSDictionary *nextParamDic = @{KFromClassType:@(ZSHFromHomeMenuVCToBottomBlurPopView)};
+        _bottomBlurPopView = [[ZSHBottomBlurPopView alloc]initWithFrame:CGRectMake(0, KNavigationBarHeight, KScreenWidth, KScreenHeight - KNavigationBarHeight) paramDic:nextParamDic];
+        _bottomBlurPopView.blurRadius = 20;
+        _bottomBlurPopView.dynamic = NO;
+        _bottomBlurPopView.tintColor = KClearColor;
+    }
+    return _bottomBlurPopView;
 }
 
 #pragma mark ————— 下拉刷新 —————

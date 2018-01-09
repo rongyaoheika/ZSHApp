@@ -55,7 +55,7 @@ static NSString *ZSHBaseBottomListCellID = @"ZSHBaseBottomListCell";
                    @"LZCartViewController",
                    @"ZSHCollectViewController",
                    @"ZSHPersonalTailorViewController",
-                   @""];
+                   @"ZSHMakeMoneyViewController"];
     self.paramDicArr = @[@{},
                          @{},
                          @{KFromClassType:@(FromFindVCToTitleContentVC),@"title":@"发现"},
