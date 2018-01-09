@@ -19,20 +19,21 @@
 @implementation ZSHHomeSubListCell
 
 - (void)setup{
-    
-    _leftIV = [[UIImageView alloc]init];
+    UIImage *leftImage = [UIImage imageNamed:@"list_scan"];
+    _leftIV = [[UIImageView alloc]initWithImage:leftImage];
+    _leftIV.contentMode =  UIViewContentModeScaleAspectFit;
     [self.contentView addSubview:_leftIV];
     [_leftIV mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self).offset(kRealValue(7.5));
         make.centerY.mas_equalTo(self);
-        make.size.mas_equalTo(CGSizeMake(kRealValue(30), kRealValue(30)));
+        make.size.mas_equalTo(leftImage.size);
     }];
     
     NSDictionary *titleLabelDic = @{@"text":@"",@"font":kPingFangMedium(15)};
     _textLB = [ZSHBaseUIControl createLabelWithParamDic:titleLabelDic];
     [self.contentView addSubview:_textLB];
     [_textLB mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(_leftIV.mas_right).offset(kRealValue(7.0));
+        make.left.mas_equalTo(_leftIV.mas_right).offset(kRealValue(15));
         make.height.mas_equalTo(self);
         make.right.mas_equalTo(self);
         make.centerY.mas_equalTo(self);
