@@ -67,8 +67,6 @@ static NSString *ZSHHotelCellID = @"ZSHHotelCell";
 
 }
 
-
-
 - (void)initViewModel {
     [self.tableViewModel.sectionModelArray removeAllObjects];
     [self.tableViewModel.sectionModelArray addObject:[self storeListSection]];

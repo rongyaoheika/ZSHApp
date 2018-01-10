@@ -377,7 +377,7 @@
 
 #pragma action
 - (void)titleViewSelectChangeWithIndex:(NSInteger)index{
-    
+    kWeakSelf(self);
     //0:排序  1：品牌  2：筛选
     NSArray *paramArr = nil;
     switch (kFromClassTypeValue) {
@@ -404,34 +404,34 @@
     }
     
     
-    NSMutableDictionary *nextParamDic = [[NSMutableDictionary alloc] initWithDictionary:@{KFromClassType:@(ZSHFromFoodVCToBottomBlurPopView)}];
-    [nextParamDic addEntriesFromDictionary:paramArr[index]];
-    [nextParamDic setObject:@(index) forKey:@"index"];
-    [nextParamDic setObject:@(self.contentVCS.count) forKey:@"count"];
-    ZSHBottomBlurPopView *bottomBlurPopView = [[ZSHBottomBlurPopView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight) paramDic:nextParamDic];
-    bottomBlurPopView.blurRadius = 20;
-    bottomBlurPopView.dynamic = NO;
-    bottomBlurPopView.tintColor = KClearColor;
-    bottomBlurPopView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.6];
-    [bottomBlurPopView setBlurEnabled:NO];
-    [ZSHBaseUIControl setAnimationWithHidden:NO view:bottomBlurPopView completedBlock:nil];
-    bottomBlurPopView.dissmissViewBlock = ^(UIView *blurView, NSIndexPath *indexpath) {
-        [ZSHBaseUIControl setAnimationWithHidden:YES view:blurView completedBlock:^{
-            if (indexpath) {//跳转到对应控制器
-                //                        Class className = NSClassFromString(weakself.menuPushVCsArr[indexpath.row]);
-                //                        RootViewController *vc = [[className alloc]initWithParamDic:weakself.menuParamArr[indexpath.row]];
-                //                        [weakself.navigationController pushViewController:vc animated:YES];
-            }
-            return;
-        }];
-    };
-    
-//    NSDictionary *nextParamDic = @{@"type":@(WindowDefault),@"midTitle":paramArr[index][@"midTitle"],@"dataArr":paramArr[index][@"shopSortArr"]};
-//    weakself.pickView = [weakself createPickViewWithParamDic:nextParamDic];
-//    [weakself.pickView show:WindowDefault];
-//    weakself.pickView.saveChangeBlock = ^(NSString *rowTitle, NSInteger tag) {
-//        [[NSNotificationCenter defaultCenter] postNotificationName:KUpdateDataWithSort object:@{@"row":@(tag),@"midTitle":paramArr[index][@"midTitle"],@"rowTitle":rowTitle,KFromClassType:@(kFromClassTypeValue)}];
+//    NSMutableDictionary *nextParamDic = [[NSMutableDictionary alloc] initWithDictionary:@{KFromClassType:@(ZSHFromFoodVCToBottomBlurPopView)}];
+//    [nextParamDic addEntriesFromDictionary:paramArr[index]];
+//    [nextParamDic setObject:@(index) forKey:@"index"];
+//    [nextParamDic setObject:@(self.contentVCS.count) forKey:@"count"];
+//    ZSHBottomBlurPopView *bottomBlurPopView = [[ZSHBottomBlurPopView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight) paramDic:nextParamDic];
+//    bottomBlurPopView.blurRadius = 20;
+//    bottomBlurPopView.dynamic = NO;
+//    bottomBlurPopView.tintColor = KClearColor;
+//    bottomBlurPopView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.6];
+//    [bottomBlurPopView setBlurEnabled:NO];
+//    [ZSHBaseUIControl setAnimationWithHidden:NO view:bottomBlurPopView completedBlock:nil];
+//    bottomBlurPopView.dissmissViewBlock = ^(UIView *blurView, NSIndexPath *indexpath) {
+//        [ZSHBaseUIControl setAnimationWithHidden:YES view:blurView completedBlock:^{
+//            if (indexpath) {//跳转到对应控制器
+//                //                        Class className = NSClassFromString(weakself.menuPushVCsArr[indexpath.row]);
+//                //                        RootViewController *vc = [[className alloc]initWithParamDic:weakself.menuParamArr[indexpath.row]];
+//                //                        [weakself.navigationController pushViewController:vc animated:YES];
+//            }
+//            return;
+//        }];
 //    };
+    
+    NSDictionary *nextParamDic = @{@"type":@(WindowDefault),@"midTitle":paramArr[index][@"midTitle"],@"dataArr":paramArr[index][@"shopSortArr"]};
+    weakself.pickView = [weakself createPickViewWithParamDic:nextParamDic];
+    [weakself.pickView show:WindowDefault];
+    weakself.pickView.saveChangeBlock = ^(NSString *rowTitle, NSInteger tag) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:KUpdateDataWithSort object:@{@"row":@(tag),@"midTitle":paramArr[index][@"midTitle"],@"rowTitle":rowTitle,KFromClassType:@(kFromClassTypeValue)}];
+    };
     
 }
 

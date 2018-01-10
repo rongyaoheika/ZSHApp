@@ -101,10 +101,11 @@ static NSString *const ZSHBrandSortCellID = @"ZSHBrandSortCell";
     [self.view addSubview:self.collectionView];
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
-    
     self.collectionView.showsVerticalScrollIndicator = NO;
     self.collectionView.showsHorizontalScrollIndicator = NO;
     self.collectionView.alwaysBounceVertical = YES;
+    self.collectionView.mj_header = nil;
+    self.collectionView.mj_footer = nil;
     
 //    [self.collectionView registerClass:[ZSHGoodsSortCell class] forCellWithReuseIdentifier:ZSHGoodsSortCellID];
 //    [self.collectionView registerClass:[ZSHBrandSortCell class] forCellWithReuseIdentifier:ZSHBrandSortCellID];
@@ -229,16 +230,6 @@ static NSString *const ZSHBrandSortCellID = @"ZSHBrandSortCell";
 - (void)headerRereshing {
     [self requestData];
 }
-- (void)collectionHeaderRereshing {
-    [self requestBrandIconListWithBrandID:_titleArr[_currentSelectIndex]];
-}
-
-- (void)collectionFooterRereshing {
-    kWeakSelf(self);
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [weakself.collectionView.mj_footer endRefreshing];
-    });
-}
 
 - (void)requestData {
     kWeakSelf(self);
@@ -287,22 +278,32 @@ static NSString *const ZSHBrandSortCellID = @"ZSHBrandSortCell";
             break;
         }
         case 2:{ // 筛选
-            NSDictionary *nextParamDic = @{KFromClassType:@(ZSHFromGoodsVCToBottomBlurPopView), @"filters":_filters};
-            ZSHBottomBlurPopView *bottomBlurPopView = [[ZSHBottomBlurPopView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight) paramDic:nextParamDic];
-            bottomBlurPopView.blurRadius = 20;
-            bottomBlurPopView.dynamic = NO;
-            bottomBlurPopView.tintColor = KClearColor;
-            bottomBlurPopView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.6];
-            [bottomBlurPopView setBlurEnabled:NO];
-            [ZSHBaseUIControl setAnimationWithHidden:NO view:bottomBlurPopView completedBlock:nil];
-            bottomBlurPopView.dissmissViewBlock = ^(UIView *blurView, NSIndexPath *indexpath) {
-                [ZSHBaseUIControl setAnimationWithHidden:YES view:blurView completedBlock:^{
-                    if (indexpath) {//跳转到对应控制器
-                        
-                        [weakself refreshBrandIconListWithBrandID:weakself.filters[indexpath.row][@"BRANDICON_ID"]];
-                    }
-                    return;
-                }];
+//            NSDictionary *nextParamDic = @{KFromClassType:@(ZSHFromGoodsVCToBottomBlurPopView), @"filters":_filters};
+//            ZSHBottomBlurPopView *bottomBlurPopView = [[ZSHBottomBlurPopView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight) paramDic:nextParamDic];
+//            bottomBlurPopView.blurRadius = 20;
+//            bottomBlurPopView.dynamic = NO;
+//            bottomBlurPopView.tintColor = KClearColor;
+//            bottomBlurPopView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.6];
+//            [bottomBlurPopView setBlurEnabled:NO];
+//            [ZSHBaseUIControl setAnimationWithHidden:NO view:bottomBlurPopView completedBlock:nil];
+//            bottomBlurPopView.dissmissViewBlock = ^(UIView *blurView, NSIndexPath *indexpath) {
+//                [ZSHBaseUIControl setAnimationWithHidden:YES view:blurView completedBlock:^{
+//                    if (indexpath) {//跳转到对应控制器
+//
+//                        [weakself refreshBrandIconListWithBrandID:weakself.filters[indexpath.row][@"BRANDICON_ID"]];
+//                    }
+//                    return;
+//                }];
+//            };
+            NSMutableArray *arr = [NSMutableArray array];
+            for (int i = 0; i < _filters.count; i++) {
+                [arr addObject:_filters[i][@"BRANDNAME"]];
+            }
+            NSDictionary *nextParamDic = @{@"type":@(WindowDefault),@"midTitle":@"筛选",@"dataArr":arr};
+            _pickView = [[ZSHPickView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight) paramDic:nextParamDic];
+            [_pickView show:WindowDefault];
+            _pickView.saveChangeBlock = ^(NSString *rowTitle, NSInteger tag) {
+                [weakself refreshBrandIconListWithBrandID:weakself.filters[tag][@"BRANDICON_ID"]];
             };
             break;
         }
