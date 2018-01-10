@@ -50,6 +50,24 @@
 @end
 
 @implementation ZSHTitleContentViewController
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    if (kFromClassTypeValue == FromBuyVCToTitleContentVC) {
+        RXLSideSlipViewController *rxl = (RXLSideSlipViewController *)kRootViewController;
+        rxl.panGestureEnabled = true;
+    }
+    
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    
+    if (kFromClassTypeValue == FromBuyVCToTitleContentVC) {
+        RXLSideSlipViewController *rxl = (RXLSideSlipViewController *)kRootViewController;
+        rxl.panGestureEnabled = false;
+    }
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -181,7 +199,17 @@
                                 @"ZSHMagazineListViewController"];
 //            self.paramArr = @[@{KFromClassType:@(kFromClassTypeValue)},@{KFromClassType:@(kFromClassTypeValue)},@{KFromClassType:@(kFromClassTypeValue)}];
         }
-        break;            
+        break;
+        case FromBuyVCToTitleContentVC : { //尊购
+            [self createBuyNaviUI];
+            self.titleArr = @[@"时尚圈",@"专柜店", @"旗舰店", @"会员特权"];
+            self.contentVCS = @[@"ZSHBuyViewController",
+                                @"ZSHBuyViewController",
+                                @"ZSHBuyViewController",
+                                @"ZSHBuyViewController"
+                                ];
+        }
+            break;
         default:{
             self.titleArr = self.paramDic[@"titleArr"];
             self.titleBtnImage = [UIImage imageNamed:@"hotel_btn"];
@@ -231,10 +259,28 @@
     [self.navigationItem setTitleView:self.ticketView];
 }
 
+- (void)createBuyNaviUI{
+    UIButton *searchBtn = [ZSHBaseUIControl createBtnWithParamDic:@{@"title":@"搜索",@"font":kPingFangRegular(14),@"withImage":@(YES),@"normalImage":@"nav_home_search"}];
+    searchBtn.frame = CGRectMake(0, 0, kRealValue(270), 30);
+    searchBtn.backgroundColor = KZSHColor1A1A1A;
+    searchBtn.layer.cornerRadius = 5.0;
+    searchBtn.layer.masksToBounds = YES;
+    kWeakSelf(self);
+    [searchBtn addTapBlock:^(UIButton *btn) {
+        [weakself searchAction];
+    }];
+    [self.navigationItem setTitleView:searchBtn];
+    
+    [self addNavigationItemWithImageName:@"nav_buy_mine" isLeft:YES target:self action:@selector(buyMineBtntAction) tag:1];
+    [self addNavigationItemWithImageName:@"nav_buy_scan" isLeft:NO target:self action:@selector(buyScanBtntAction) tag:2];
+}
+
 - (void)createUI{
     self.title = self.paramDic[@"title"];
     [self.view addSubview:self.titleView];
     [self.view addSubview:self.contentView];
+    
+    
     [self reloadListData];
 }
 
@@ -402,16 +448,30 @@
     tab.selectedIndex = 0;
 }
 
+//尊购
 - (void)searchAction{
-    NSArray *hotSeaches = @[@"阿哲", @"散打哥", @"天佑", @"赵小磊", @"赵雷", @"陈山", @"PHP", @"C#", @"Perl", @"Go", @"JavaScript", @"R", @"Ruby", @"MATLAB"];
-    PYSearchViewController *searchViewController = [PYSearchViewController searchViewControllerWithHotSearches:hotSeaches searchBarPlaceholder:NSLocalizedString(@"PYExampleSearchPlaceholderText", @"搜索") didSearchBlock:^(PYSearchViewController *searchViewController, UISearchBar *searchBar, NSString *searchText) {
+    NSArray *hotSeaches = @[@"手表", @"包袋", @"首饰", @"豪车", @"高尔夫", @"飞机", @"游艇",@"家电数码"];
+    PYSearchViewController *searchViewController = [PYSearchViewController searchViewControllerWithHotSearches:hotSeaches searchBarPlaceholder:@"搜索" didSearchBlock:^(PYSearchViewController *searchViewController, UISearchBar *searchBar, NSString *searchText) {
+        
     }];
- 
+    searchViewController.recommendViewType = 1;
+    searchViewController.showRecommendView = YES;
     searchViewController.hotSearchStyle = PYHotSearchStyleARCBorderTag;
     searchViewController.searchHistoryStyle = PYSearchHistoryStyleARCBorderTag;
     searchViewController.searchBarBackgroundColor = KZSHColor1A1A1A;
     searchViewController.delegate = self;
     [self.navigationController pushViewController:searchViewController animated:YES];
+    
+    
+}
+
+- (void)buyMineBtntAction{
+    [self.sideSlipVC presentLeftMenuViewController];
+    
+}
+
+- (void)buyScanBtntAction:(UIButton *)scanBtn{
+    
 }
 
 //头条-发布

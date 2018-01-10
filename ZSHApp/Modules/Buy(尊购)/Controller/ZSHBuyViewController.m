@@ -14,7 +14,6 @@
 #import "ZSHGoodsListView.h"
 #import "ZSHGoodsTitleContentViewController.h"
 #import "ZSHBuyLogic.h"
-#import "PYSearchViewController.h"
 #import "ZSHGuideView.h"
 
 static NSString *Identify_headCell = @"headCell";
@@ -22,26 +21,13 @@ static NSString *Identify_listLeftImageCell = @"listLeftImageCell";
 static NSString *Identify_listRightImageCell = @"listRightImageCell";
 static NSString *ZSHGoodsListViewID = @"ZSHGoodsListView";
 
-@interface ZSHBuyViewController ()<UISearchBarDelegate,PYSearchViewControllerDelegate>
+@interface ZSHBuyViewController ()
 
-@property (nonatomic, strong) UITableView           *leftTableview;
 @property (nonatomic, strong) ZSHBuyLogic           *buyLogic;
 @property (nonatomic, strong) ZSHGuideView          *guideView;
 @end
 
 @implementation ZSHBuyViewController
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    RXLSideSlipViewController *rxl = (RXLSideSlipViewController *)kRootViewController;
-    rxl.panGestureEnabled = true;
-}
-
-- (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
-    RXLSideSlipViewController *rxl = (RXLSideSlipViewController *)kRootViewController;
-    rxl.panGestureEnabled = false;
-}
-
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -58,72 +44,23 @@ static NSString *ZSHGoodsListViewID = @"ZSHGoodsListView";
 
 - (void)createUI{
     
-    UIButton *searchBtn = [ZSHBaseUIControl createBtnWithParamDic:@{@"title":@"搜索",@"font":kPingFangRegular(14),@"withImage":@(YES),@"normalImage":@"nav_home_search"}];
-    searchBtn.frame = CGRectMake(0, 0, kRealValue(270), 30);
-    searchBtn.backgroundColor = KZSHColor1A1A1A;
-    searchBtn.layer.cornerRadius = 5.0;
-    searchBtn.layer.masksToBounds = YES;
-    kWeakSelf(self);
-    [searchBtn addTapBlock:^(UIButton *btn) {
-        [weakself searchAction];
-    }];
-    [self.navigationItem setTitleView:searchBtn];
-    
-//    [self.navigationItem setTitleView:self.searchView];
-//    self.searchView.searchBar.delegate = self;
-
-    [self addNavigationItemWithImageName:@"nav_buy_mine" isLeft:YES target:self action:@selector(mineBtntAction) tag:11];
-    
-    [self addNavigationItemWithImageName:@"nav_buy_scan" isLeft:NO target:self action:@selector(scanBtntAction:) tag:11];
-    
-    self.tableView.frame = CGRectMake(0, KNavigationBarHeight, KScreenWidth, KScreenHeight-KNavigationBarHeight-KBottomTabH);
-    
     [self.view addSubview:self.tableView];
     self.tableView.delegate = self.tableViewModel;
     self.tableView.dataSource = self.tableViewModel;
     
     [self.tableView registerClass:[ZSHGoodsListView class] forCellReuseIdentifier:Identify_listLeftImageCell];
     [self.tableView registerClass:[ZSHGoodsListView class] forCellReuseIdentifier:Identify_listRightImageCell];
+    [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.mas_equalTo(self.view).insets(UIEdgeInsetsMake(0, 0, KBottomTabH, 0));
+    }];
+    self.tableView.tableHeaderView = self.guideView;
     [self.tableView reloadData];
     
 }
 
 - (void)initViewModel {
     [self.tableViewModel.sectionModelArray removeAllObjects];
-    [self.tableViewModel.sectionModelArray addObject:[self storeHeadSection]];
     [self.tableViewModel.sectionModelArray addObject:[self storeListSection]];
-}
-
-//head
-- (ZSHBaseTableViewSectionModel*)storeHeadSection {
-    ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
-    ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
-    [sectionModel.cellModelArray addObject:cellModel];
-    cellModel.height = kRealValue(175);
-//    __block  CGFloat cellHeight = cellModel.height;
-    kWeakSelf(self);
-    cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
-        ZSHBaseCell *cell = [[ZSHBaseCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:Identify_headCell];
-        NSDictionary *nextParamDic = @{KFromClassType:@(FromBuyVCToGuideView),@"pageViewHeight":@(kRealValue(175)),@"min_scale":@(0.6),@"withRatio":@(1.8),@"infinite":@(false)};
-        weakself.guideView = [[ZSHGuideView alloc]initWithFrame:CGRectZero paramDic:nextParamDic];
-        [cell.contentView addSubview:_guideView];
-        [weakself.guideView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.center.mas_equalTo(cell);
-            make.size.mas_equalTo(CGSizeMake(KScreenWidth, kRealValue(175)));
-        }];
-        
-//        UIImage *image = [UIImage imageNamed:@"buy_banner1"];
-//        ZSHCycleScrollView *cellView = [[ZSHCycleScrollView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, cellHeight)];
-//        cellView.scrollDirection =  ZSHCycleScrollViewHorizontal;
-//        cellView.autoScroll = YES;
-//        cellView.dataArr = [@[image,image,image]mutableCopy];
-//        [cell.contentView addSubview:cellView];
-        return cell;
-    };
-    
-    cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
-    };
-    return sectionModel;
 }
 
 //list
@@ -170,35 +107,13 @@ static NSString *ZSHGoodsListViewID = @"ZSHGoodsListView";
     return sectionModel;
 }
 
-#pragma action
-- (void)searchAction{
-    kWeakSelf(self);
-    NSArray *hotSeaches = @[@"手表", @"包袋", @"首饰", @"豪车", @"高尔夫", @"飞机", @"游艇",@"家电数码"];
-    PYSearchViewController *searchViewController = [PYSearchViewController searchViewControllerWithHotSearches:hotSeaches searchBarPlaceholder:@"搜索" didSearchBlock:^(PYSearchViewController *searchViewController, UISearchBar *searchBar, NSString *searchText) {
-        ZSHGoodsTitleContentViewController *goodContentVC = [[ZSHGoodsTitleContentViewController alloc]initWithParamDic:@{@"searchText":searchText,KFromClassType:@(FromSearchResultVCTOGoodsTitleVC)}];
-        [weakself.navigationController pushViewController:goodContentVC animated:YES];
-    }];
-    searchViewController.recommendViewType = 1;
-    searchViewController.showRecommendView = YES;
-    searchViewController.hotSearchStyle = PYHotSearchStyleARCBorderTag;
-    searchViewController.searchHistoryStyle = PYSearchHistoryStyleARCBorderTag;
-    searchViewController.searchBarBackgroundColor = KZSHColor1A1A1A;
-    searchViewController.delegate = self;
-    [self.navigationController pushViewController:searchViewController animated:YES];
-    
+- (ZSHGuideView *)guideView {
+    if(!_guideView) {
+        NSDictionary *nextParamDic = @{KFromClassType:@(FromBuyVCToGuideView),@"pageViewHeight":@(kRealValue(175)),@"min_scale":@(0.6),@"withRatio":@(1.8),@"infinite":@(false)};
+        _guideView = [[ZSHGuideView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, kRealValue(175)) paramDic:nextParamDic];
+    }
+    return _guideView;
 }
-
-#pragma action
-
-- (void)mineBtntAction{
-    [self.sideSlipVC presentLeftMenuViewController];
-    
-}
-
-- (void)scanBtntAction:(UIButton *)scanBtn{
-    
-}
-
 
 - (void)requestCarouselFigure {
     kWeakSelf(self);
