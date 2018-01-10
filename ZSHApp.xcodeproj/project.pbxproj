@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0418532D2005E688000E0D09 /* ZSHFindTopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0418532C2005E688000E0D09 /* ZSHFindTopView.m */; };
+		041853302005ED97000E0D09 /* ZSHLeftFindViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0418532F2005ED97000E0D09 /* ZSHLeftFindViewController.m */; };
 		042DC4992004D12A00AF2995 /* ZSHRecommendView.m in Sources */ = {isa = PBXBuildFile; fileRef = 042DC4982004D12A00AF2995 /* ZSHRecommendView.m */; };
 		04315E821FF5E9ED006C6BC8 /* ZSHWeiboTopicModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04315E811FF5E9ED006C6BC8 /* ZSHWeiboTopicModel.m */; };
 		04315E851FF61175006C6BC8 /* UIImage+String.m in Sources */ = {isa = PBXBuildFile; fileRef = 04315E841FF61175006C6BC8 /* UIImage+String.m */; };
@@ -456,7 +458,7 @@
 		FEBD7CAF1FA730F600CE2BA6 /* ZSHGoodsDetailSubCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FEBD7CAE1FA730F600CE2BA6 /* ZSHGoodsDetailSubCell.m */; };
 		FEBD7CB21FA74BBF00CE2BA6 /* ZSHGoodsDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FEBD7CB11FA74BBF00CE2BA6 /* ZSHGoodsDetailModel.m */; };
 		FEBD7CB61FA75F3400CE2BA6 /* ZSHFoodViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEBD7CB51FA75F3400CE2BA6 /* ZSHFoodViewController.m */; };
-		FEBD7CBA1FA75FBC00CE2BA6 /* ZSHFoodCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FEBD7CB91FA75FBC00CE2BA6 /* ZSHFoodCell.m */; };
+		FEBD7CBA1FA75FBC00CE2BA6 /* ZSHLeftFindCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FEBD7CB91FA75FBC00CE2BA6 /* ZSHLeftFindCell.m */; };
 		FEBD7CBE1FA7608200CE2BA6 /* ZSHFoodModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FEBD7CBD1FA7608200CE2BA6 /* ZSHFoodModel.m */; };
 		FEC2739A1F8E1D0C00A0F91A /* MainTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE55374B1F47049D00803128 /* MainTabBarController.m */; };
 		FEC2739B1F8E1D1E00A0F91A /* ZSHHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE2BB0C11F8E168B000D5800 /* ZSHHomeViewController.m */; };
@@ -534,6 +536,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0418532B2005E688000E0D09 /* ZSHFindTopView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHFindTopView.h; sourceTree = "<group>"; };
+		0418532C2005E688000E0D09 /* ZSHFindTopView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHFindTopView.m; sourceTree = "<group>"; };
+		0418532E2005ED97000E0D09 /* ZSHLeftFindViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHLeftFindViewController.h; sourceTree = "<group>"; };
+		0418532F2005ED97000E0D09 /* ZSHLeftFindViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHLeftFindViewController.m; sourceTree = "<group>"; };
 		042DC4972004D12A00AF2995 /* ZSHRecommendView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHRecommendView.h; sourceTree = "<group>"; };
 		042DC4982004D12A00AF2995 /* ZSHRecommendView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHRecommendView.m; sourceTree = "<group>"; };
 		04315E801FF5E9ED006C6BC8 /* ZSHWeiboTopicModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHWeiboTopicModel.h; sourceTree = "<group>"; };
@@ -1364,8 +1370,8 @@
 		FEBD7CB11FA74BBF00CE2BA6 /* ZSHGoodsDetailModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHGoodsDetailModel.m; sourceTree = "<group>"; };
 		FEBD7CB41FA75F3400CE2BA6 /* ZSHFoodViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHFoodViewController.h; sourceTree = "<group>"; };
 		FEBD7CB51FA75F3400CE2BA6 /* ZSHFoodViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHFoodViewController.m; sourceTree = "<group>"; };
-		FEBD7CB81FA75FBC00CE2BA6 /* ZSHFoodCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHFoodCell.h; sourceTree = "<group>"; };
-		FEBD7CB91FA75FBC00CE2BA6 /* ZSHFoodCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHFoodCell.m; sourceTree = "<group>"; };
+		FEBD7CB81FA75FBC00CE2BA6 /* ZSHLeftFindCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHLeftFindCell.h; sourceTree = "<group>"; };
+		FEBD7CB91FA75FBC00CE2BA6 /* ZSHLeftFindCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHLeftFindCell.m; sourceTree = "<group>"; };
 		FEBD7CBC1FA7608200CE2BA6 /* ZSHFoodModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHFoodModel.h; sourceTree = "<group>"; };
 		FEBD7CBD1FA7608200CE2BA6 /* ZSHFoodModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHFoodModel.m; sourceTree = "<group>"; };
 		FEC2739F1F8E1F4A00A0F91A /* ZSHNotCycleScrollView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHNotCycleScrollView.m; sourceTree = "<group>"; };
@@ -2508,6 +2514,8 @@
 				1822871C1FB45CE800CA5B10 /* ZSHLiveMineHeadView.m */,
 				185BB9BC1FB5762E007A96FF /* ZSHLiveDayListCell.h */,
 				185BB9BD1FB5762E007A96FF /* ZSHLiveDayListCell.m */,
+				0418532B2005E688000E0D09 /* ZSHFindTopView.h */,
+				0418532C2005E688000E0D09 /* ZSHFindTopView.m */,
 				18F9024A1FB6CFDF0044967F /* ZSHFollowCell.h */,
 				18F9024B1FB6CFDF0044967F /* ZSHFollowCell.m */,
 				18F902511FB6DED20044967F /* ZSHChargeRecCell.h */,
@@ -3737,6 +3745,8 @@
 			children = (
 				FE2CD0971F984B5500E9E519 /* ZSHFindViewController.h */,
 				FE2CD0981F984B5500E9E519 /* ZSHFindViewController.m */,
+				0418532E2005ED97000E0D09 /* ZSHLeftFindViewController.h */,
+				0418532F2005ED97000E0D09 /* ZSHLeftFindViewController.m */,
 			);
 			path = "发现";
 			sourceTree = "<group>";
@@ -3894,8 +3904,8 @@
 		FEBD7CB71FA75FA200CE2BA6 /* Food(美食) */ = {
 			isa = PBXGroup;
 			children = (
-				FEBD7CB81FA75FBC00CE2BA6 /* ZSHFoodCell.h */,
-				FEBD7CB91FA75FBC00CE2BA6 /* ZSHFoodCell.m */,
+				FEBD7CB81FA75FBC00CE2BA6 /* ZSHLeftFindCell.h */,
+				FEBD7CB91FA75FBC00CE2BA6 /* ZSHLeftFindCell.m */,
 			);
 			path = "Food(美食)";
 			sourceTree = "<group>";
@@ -4332,7 +4342,7 @@
 				FE9CC3D51FA05D2200285475 /* ZSHOrderDetailViewController.m in Sources */,
 				182F578E1FDB91390085BFC6 /* KNActionSheetView.m in Sources */,
 				1846BB461FE3B282001B264B /* BEMCircle.m in Sources */,
-				FEBD7CBA1FA75FBC00CE2BA6 /* ZSHFoodCell.m in Sources */,
+				FEBD7CBA1FA75FBC00CE2BA6 /* ZSHLeftFindCell.m in Sources */,
 				FEA105811F9B292B008652D6 /* ZSHBrandsSortHeadView.m in Sources */,
 				FEB099161FD127F300E8F03D /* ZSHMoreListCell.m in Sources */,
 				FEA018BF1FCBB5E800989FB2 /* ZSHFoodDetailViewController.m in Sources */,
@@ -4443,6 +4453,7 @@
 				FE1F76351F8F7E1100C45B83 /* LXScollTitleView.h in Sources */,
 				18063C571FC90951000F5A00 /* ZSHPersonalDetailModel.m in Sources */,
 				FEADBD281FBEBBC00065B94B /* ZSHCardCustomizedFirst.m in Sources */,
+				0418532D2005E688000E0D09 /* ZSHFindTopView.m in Sources */,
 				FE8FD0771FADAA9F005F1184 /* ZSHMemberCenterHeadView.m in Sources */,
 				FE24DA761FD96A0100965DC8 /* ZSHMusicPlayListCell.m in Sources */,
 				FE1F76361F8F7E1100C45B83 /* LXScollTitleView.m in Sources */,
@@ -4552,6 +4563,7 @@
 				FE1F76221F8F738700C45B83 /* ZSHLiveTabBarController.m in Sources */,
 				FEBD7CA31FA716AC00CE2BA6 /* ZSHGoodsCommentCell.m in Sources */,
 				FE291EF31F8CCD2200D4BBE7 /* ZSHLoginViewController.m in Sources */,
+				041853302005ED97000E0D09 /* ZSHLeftFindViewController.m in Sources */,
 				FEF2B63A1FAC5D39000AEA6E /* ZSHEntertainmentModel.m in Sources */,
 				FED308981FA414D900CD442B /* ZSHHotelDetailDeviceCell.m in Sources */,
 				181AD3171FCCF3C30015D004 /* ZSHAddrModel.m in Sources */,

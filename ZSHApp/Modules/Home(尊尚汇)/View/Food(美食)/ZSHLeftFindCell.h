@@ -1,5 +1,5 @@
 //
-//  ZSHFoodCell.h
+//  ZSHFindCell.h
 //  ZSHApp
 //
 //  Created by zhaoweiwei on 2017/10/30.
@@ -8,6 +8,6 @@
 
 #import "ZSHBaseCell.h"
 
-@interface ZSHFoodCell : ZSHBaseCell
+@interface ZSHLeftFindCell : ZSHBaseCell
 
 @end

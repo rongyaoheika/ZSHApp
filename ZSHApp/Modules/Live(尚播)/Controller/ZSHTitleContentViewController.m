@@ -72,11 +72,12 @@
             [self createFindNaviUI];
             self.titleArr = @[@"精选",@"数码",@"亲子",@"时尚",@"美食"];
             self.contentVCS = @[@"ZSHFindViewController",@"ZSHFindViewController",@"ZSHFindViewController",@"ZSHFindViewController",@"ZSHFindViewController"];
-            self.paramArr = @[@{@"CAIDAN_ID":@"387563351791632384",@"shopId":self.paramDic[@"shopId"]},
-                              @{@"CAIDAN_ID":@"387563399975796736",@"shopId":self.paramDic[@"shopId"]},
-                              @{@"CAIDAN_ID":@"387563457622310912",@"shopId":self.paramDic[@"shopId"]},
-                              @{@"CAIDAN_ID":@"387563486307155968",@"shopId":self.paramDic[@"shopId"]},
-                              @{@"CAIDAN_ID":@"387563525268045824",@"shopId":self.paramDic[@"shopId"]}];
+            NSString *shopId  = self.paramDic[@"shopId"]?self.paramDic[@"shopId"]:@"";
+            self.paramArr = @[@{@"CAIDAN_ID":@"387563351791632384",@"shopId":shopId},
+                              @{@"CAIDAN_ID":@"387563399975796736",@"shopId":shopId},
+                              @{@"CAIDAN_ID":@"387563457622310912",@"shopId":shopId},
+                              @{@"CAIDAN_ID":@"387563486307155968",@"shopId":shopId},
+                              @{@"CAIDAN_ID":@"387563525268045824",@"shopId":shopId}];
         }
             break;
         case FromAllOrderVCToTitleContentVC:{
@@ -318,7 +319,6 @@
 
 #pragma action
 - (void)titleViewSelectChangeWithIndex:(NSInteger)index{
-    kWeakSelf(self);
     
     //0:排序  1：品牌  2：筛选
     NSArray *paramArr = nil;
@@ -392,29 +392,20 @@
 }
 
 - (void)searchAction{
-    // 1. Create an Array of popular search
     NSArray *hotSeaches = @[@"阿哲", @"散打哥", @"天佑", @"赵小磊", @"赵雷", @"陈山", @"PHP", @"C#", @"Perl", @"Go", @"JavaScript", @"R", @"Ruby", @"MATLAB"];
-    // 2. Create a search view controller
     PYSearchViewController *searchViewController = [PYSearchViewController searchViewControllerWithHotSearches:hotSeaches searchBarPlaceholder:NSLocalizedString(@"PYExampleSearchPlaceholderText", @"搜索") didSearchBlock:^(PYSearchViewController *searchViewController, UISearchBar *searchBar, NSString *searchText) {
-        // Called when search begain.
-        // eg：Push to a temp view conroller
     }];
-    // 3. Set style for popular search and search history
+ 
     searchViewController.hotSearchStyle = PYHotSearchStyleARCBorderTag;
     searchViewController.searchHistoryStyle = PYSearchHistoryStyleARCBorderTag;
     searchViewController.searchBarBackgroundColor = KZSHColor1A1A1A;
-    
-    // 4. Set delegate
     searchViewController.delegate = self;
-    // 5. Present a navigation controller
-//    RootNavigationController *nav = [[RootNavigationController alloc] initWithRootViewController:searchViewController];
-//    [self presentViewController:nav animated:YES completion:nil];
     [self.navigationController pushViewController:searchViewController animated:YES];
 }
 
 //头条-发布
 - (void)distributeAction{
-    
+    RLog(@"发布");
     
     
 }

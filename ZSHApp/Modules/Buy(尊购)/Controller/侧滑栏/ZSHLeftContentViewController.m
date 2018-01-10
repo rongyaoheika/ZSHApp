@@ -51,14 +51,14 @@ static NSString *ZSHBaseBottomListCellID = @"ZSHBaseBottomListCell";
     self.vcArr = @[
                    @"",
                    @"ZSHGoodsViewController",
-                   @"ZSHTitleContentViewController",
+                   @"ZSHLeftFindViewController",
                    @"LZCartViewController",
                    @"ZSHCollectViewController",
                    @"ZSHPersonalTailorViewController",
                    @"ZSHMakeMoneyViewController"];
     self.paramDicArr = @[@{},
                          @{},
-                         @{KFromClassType:@(FromFindVCToTitleContentVC),@"title":@"发现"},
+                         @{},
                          @{},
                          @{},
                          @{},
@@ -72,8 +72,6 @@ static NSString *ZSHBaseBottomListCellID = @"ZSHBaseBottomListCell";
 }
 
 - (void)createUI{
-   
-    
     self.tableView.frame = CGRectMake(0, KNavigationBarHeight, KScreenWidth, KScreenHeight-KNavigationBarHeight-KBottomNavH);
     [self.view addSubview:self.tableView];
     [self.tableView registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHBaseHeadListCellID];

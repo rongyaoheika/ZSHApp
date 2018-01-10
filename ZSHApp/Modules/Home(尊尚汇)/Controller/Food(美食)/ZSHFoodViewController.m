@@ -7,7 +7,6 @@
 //
 
 #import "ZSHFoodViewController.h"
-#import "ZSHFoodCell.h"
 #import "ZSHFoodModel.h"
 #import "ZSHHotelDetailViewController.h"
 #import "ZSHFoodDetailViewController.h"
@@ -24,7 +23,7 @@
 
 @end
 
-static NSString *ZSHFoodCellID = @"ZSHFoodCell";
+static NSString *ZSHHotelCellID = @"ZSHHotelCell";
 @implementation ZSHFoodViewController
 
 - (void)viewDidLoad {
@@ -63,7 +62,7 @@ static NSString *ZSHFoodCellID = @"ZSHFoodCell";
     [self.tableView setSeparatorInset:UIEdgeInsetsMake(0, 0, 0, 0)];
     self.tableView.delegate = self.tableViewModel;
     self.tableView.dataSource = self.tableViewModel;
-    [self.tableView registerClass:[ZSHHotelCell class] forCellReuseIdentifier:ZSHFoodCellID];
+    [self.tableView registerClass:[ZSHHotelCell class] forCellReuseIdentifier:ZSHHotelCellID];
     self.tableView.tableHeaderView = self.guideView;
 
 }
@@ -85,7 +84,7 @@ static NSString *ZSHFoodCellID = @"ZSHFoodCell";
         [sectionModel.cellModelArray addObject:cellModel];
         cellModel.height = kRealValue(110);
         cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
-            ZSHHotelCell *cell =  [tableView dequeueReusableCellWithIdentifier:ZSHFoodCellID forIndexPath:indexPath];
+            ZSHHotelCell *cell =  [tableView dequeueReusableCellWithIdentifier:ZSHHotelCellID forIndexPath:indexPath];
             if (i==_foodListArr.count-1) {
                 cell.separatorInset = UIEdgeInsetsMake(0, 0, 0, MAXFLOAT);
             }
