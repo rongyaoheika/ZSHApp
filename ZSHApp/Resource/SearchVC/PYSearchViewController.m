@@ -5,14 +5,14 @@
 //
 
 #import "PYSearchViewController.h"
-#import "PYSearchSuggestionViewController.h"
+//#import "PYSearchSuggestionViewController.h"
 #import "ZSHRecommendView.h"
 
 #define PYSEARCH_MARGIN 10
 #define PYRectangleTagMaxCol 3
 #define PYSEARCH_COLORPolRandomColor self.colorPol[arc4random_uniform((uint32_t)self.colorPol.count)]
 
-@interface PYSearchViewController () <UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource, PYSearchSuggestionViewDataSource>
+@interface PYSearchViewController () <UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource>//PYSearchSuggestionViewDataSource
 
 /**
  The header view of search view
@@ -93,17 +93,12 @@
  为您推荐
  */
 @property (nonatomic, strong) ZSHRecommendView    *recommendView;
-@property (nonatomic, strong) UILabel             *recommendHeader;
-@property (nonatomic, strong) UICollectionView    *recommendCV;
+
 
 
 @end
 
 @implementation PYSearchViewController
-
-- (void)createUI{
-    
-}
 
 - (instancetype)init
 {
@@ -145,8 +140,6 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    
-//    [self.searchBar resignFirstResponder];
     [self.searchView.searchBar resignFirstResponder];
 }
 
@@ -159,8 +152,6 @@
 {
     PYSearchViewController *searchVC = [[PYSearchViewController alloc] init];
     searchVC.hotSearches = hotSearches;
-//    searchVC.searchBar.placeholder = placeholder;
-    
     searchVC.searchView.searchBar.placeholder = placeholder;
     return searchVC;
 }
@@ -188,46 +179,6 @@
         _baseSearchTableView = baseSearchTableView;
     }
     return _baseSearchTableView;
-}
-
-- (PYSearchSuggestionViewController *)searchSuggestionVC
-{
-    if (!_searchSuggestionVC) {
-        PYSearchSuggestionViewController *searchSuggestionVC = [[PYSearchSuggestionViewController alloc] initWithStyle:UITableViewStyleGrouped];
-        __weak typeof(self) _weakSelf = self;
-        searchSuggestionVC.didSelectCellBlock = ^(UITableViewCell *didSelectCell) {
-            __strong typeof(_weakSelf) _swSelf = _weakSelf;
-//            _swSelf.searchBar.text = didSelectCell.textLabel.text;
-            
-            _swSelf.searchView.searchBar.text = didSelectCell.textLabel.text;
-            NSIndexPath *indexPath = [_swSelf.searchSuggestionVC.tableView indexPathForCell:didSelectCell];
-            
-            if ([_swSelf.delegate respondsToSelector:@selector(searchViewController:didSelectSearchSuggestionAtIndexPath:searchBar:)]) {
-//                [_swSelf.delegate searchViewController:_swSelf didSelectSearchSuggestionAtIndexPath:indexPath searchBar:_swSelf.searchBar];
-                [_swSelf.delegate searchViewController:_swSelf didSelectSearchSuggestionAtIndexPath:indexPath searchBar:_swSelf.searchView.searchBar];
-                [_swSelf saveSearchCacheAndRefreshView];
-            } else if ([_swSelf.delegate respondsToSelector:@selector(searchViewController:didSelectSearchSuggestionAtIndex:searchText:)]) {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-//                [_swSelf.delegate searchViewController:_swSelf didSelectSearchSuggestionAtIndex:indexPath.row searchText:_swSelf.searchBar.text];
-                 [_swSelf.delegate searchViewController:_swSelf didSelectSearchSuggestionAtIndex:indexPath.row searchText:_swSelf.searchView.searchBar.text];
-#pragma clang diagnostic pop
-                [_swSelf saveSearchCacheAndRefreshView];
-            } else {
-//                [_swSelf searchBarSearchButtonClicked:_swSelf.searchBar];
-                 [_swSelf searchBarSearchButtonClicked:_swSelf.searchView.searchBar];
-            }
-        };
-        searchSuggestionVC.view.frame = CGRectMake(0, CGRectGetMaxY(self.navigationController.navigationBar.frame), KScreenWidth, KScreenHeight);
-        searchSuggestionVC.view.backgroundColor = self.baseSearchTableView.backgroundColor;
-        searchSuggestionVC.view.hidden = YES;
-        _searchSuggestionView = (UITableView *)searchSuggestionVC.view;
-        searchSuggestionVC.dataSource = self;
-        [self.view addSubview:searchSuggestionVC.view];
-        [self addChildViewController:searchSuggestionVC];
-        _searchSuggestionVC = searchSuggestionVC;
-    }
-    return _searchSuggestionVC;
 }
 
 - (UIButton *)emptyButton
@@ -327,7 +278,6 @@
     self.hotSearchStyle = PYHotSearchStyleDefault;
     self.searchHistoryStyle = PYHotSearchStyleDefault;
     self.searchResultShowMode = PYSearchResultShowModeDefault;
-    self.searchSuggestionHidden = NO;
     self.searchHistoriesCachePath = PYSEARCH_SEARCH_HISTORY_CACHE_PATH;
     self.searchHistoriesCount = 20;
     self.showSearchHistory = YES;
@@ -380,9 +330,9 @@
     footerView.zsh_height = emptySearchHistoryLabel.zsh_height;
     self.baseSearchTableView.tableFooterView = footerView;
     
+    self.baseSearchTableView.tableFooterView = self.recommendView;
+    
     self.hotSearches = nil;
-    
-    
 }
 
 - (UILabel *)setupTitleLabel:(NSString *)title
@@ -654,10 +604,6 @@
 - (void)setShowSearchResultWhenSearchTextChanged:(BOOL)showSearchResultWhenSearchTextChanged
 {
     _showSearchResultWhenSearchTextChanged = showSearchResultWhenSearchTextChanged;
-    
-    if (YES == _showSearchResultWhenSearchTextChanged) {
-        self.searchSuggestionHidden = YES;
-    }
 }
 
 - (void)setShowHotSearch:(BOOL)showHotSearch
@@ -705,23 +651,7 @@
 - (void)setSearchBarBackgroundColor:(UIColor *)searchBarBackgroundColor
 {
     _searchBarBackgroundColor = searchBarBackgroundColor;
-//    _searchTextField.backgroundColor = searchBarBackgroundColor;
     self.searchView.searchTextField.backgroundColor = searchBarBackgroundColor;
-}
-
-- (void)setSearchSuggestions:(NSArray<NSString *> *)searchSuggestions
-{
-    if ([self.dataSource respondsToSelector:@selector(searchSuggestionView:cellForRowAtIndexPath:)]) {
-        // set searchSuggestion is nil when cell of suggestion view is custom.
-        _searchSuggestions = nil;
-        return;
-    }
-    
-    _searchSuggestions = [searchSuggestions copy];
-    self.searchSuggestionVC.searchSuggestions = [searchSuggestions copy];
-    
-    self.baseSearchTableView.hidden = !self.searchSuggestionHidden && [self.searchSuggestionVC.tableView numberOfRowsInSection:0];
-    self.searchSuggestionVC.view.hidden = self.searchSuggestionHidden || ![self.searchSuggestionVC.tableView numberOfRowsInSection:0];
 }
 
 - (void)setRankTagBackgroundColorHexStrings:(NSArray<NSString *> *)rankTagBackgroundColorHexStrings
@@ -869,8 +799,6 @@
     NSDictionary *info = noti.userInfo;
     self.keyboardHeight = [info[UIKeyboardFrameEndUserInfoKey] CGRectValue].size.height;
     self.keyboardShowing = YES;
-    // Adjust the content inset of suggestion view
-    self.searchSuggestionVC.tableView.contentInset = UIEdgeInsetsMake(-30, 0, self.keyboardHeight + 30, 0);
 }
 
 
@@ -971,7 +899,6 @@
                 self.searchResultController.view.hidden = NO;
                 self.searchResultController.view.zsh_y = NO == self.navigationController.navigationBar.translucent ? 0 : CGRectGetMaxY(self.navigationController.navigationBar.frame);
                 self.searchResultController.view.zsh_height = self.view.zsh_height - self.searchResultController.view.zsh_y;
-                self.searchSuggestionVC.view.hidden = YES;
             } else {
                 RLog(@"PYSearchDebug： searchResultController cannot be nil when searchResultShowMode is PYSearchResultShowModeEmbed.");
             }
@@ -982,42 +909,6 @@
         default:
             break;
     }
-}
-
-#pragma mark - PYSearchSuggestionViewDataSource
-- (NSInteger)numberOfSectionsInSearchSuggestionView:(UITableView *)searchSuggestionView
-{
-    if ([self.dataSource respondsToSelector:@selector(numberOfSectionsInSearchSuggestionView:)]) {
-        return [self.dataSource numberOfSectionsInSearchSuggestionView:searchSuggestionView];
-    }
-    return 1;
-}
-
-- (NSInteger)searchSuggestionView:(UITableView *)searchSuggestionView numberOfRowsInSection:(NSInteger)section
-{
-    if ([self.dataSource respondsToSelector:@selector(searchSuggestionView:numberOfRowsInSection:)]) {
-        NSInteger numberOfRow = [self.dataSource searchSuggestionView:searchSuggestionView numberOfRowsInSection:section];
-         searchSuggestionView.hidden = self.searchSuggestionHidden || !self.searchView.searchBar.text.length || 0 == numberOfRow;
-        self.baseSearchTableView.hidden = !searchSuggestionView.hidden;
-        return numberOfRow;
-    }
-    return self.searchSuggestions.count;
-}
-
-- (UITableViewCell *)searchSuggestionView:(UITableView *)searchSuggestionView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if ([self.dataSource respondsToSelector:@selector(searchSuggestionView:cellForRowAtIndexPath:)]) {
-        return [self.dataSource searchSuggestionView:searchSuggestionView cellForRowAtIndexPath:indexPath];
-    }
-    return nil;
-}
-
-- (CGFloat)searchSuggestionView:(UITableView *)searchSuggestionView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if ([self.dataSource respondsToSelector:@selector(searchSuggestionView:heightForRowAtIndexPath:)]) {
-        return [self.dataSource searchSuggestionView:searchSuggestionView heightForRowAtIndexPath:indexPath];
-    }
-    return 44.0;
 }
 
 #pragma mark - UISearchBarDelegate
@@ -1040,28 +931,13 @@
     } else if (self.searchResultController) {
         self.searchResultController.view.hidden = YES;
     }
-    self.baseSearchTableView.hidden = searchText.length && !self.searchSuggestionHidden && [self.searchSuggestionVC.tableView numberOfRowsInSection:0];
-    self.searchSuggestionVC.view.hidden = self.searchSuggestionHidden || !searchText.length || ![self.searchSuggestionVC.tableView numberOfRowsInSection:0];
-    if (self.searchSuggestionVC.view.hidden) {
-        self.searchSuggestions = nil;
-    }
-    [self.view bringSubviewToFront:self.searchSuggestionVC.view];
-    if ([self.delegate respondsToSelector:@selector(searchViewController:searchTextDidChange:searchText:)]) {
-        [self.delegate searchViewController:self searchTextDidChange:searchBar searchText:searchText];
-    }
 }
 
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
 {
     if (PYSearchResultShowModeEmbed == self.searchResultShowMode) {
         self.searchResultController.view.hidden = 0 == searchBar.text.length || !self.showSearchResultWhenSearchBarRefocused;
-        self.searchSuggestionVC.view.hidden = self.searchSuggestionHidden || !searchBar.text.length || ![self.searchSuggestionVC.tableView numberOfRowsInSection:0];
-        if (self.searchSuggestionVC.view.hidden) {
-            self.searchSuggestions = nil;
-        }
-        self.baseSearchTableView.hidden = searchBar.text.length && !self.searchSuggestionHidden && ![self.searchSuggestionVC.tableView numberOfRowsInSection:0];
     }
-    [self setSearchSuggestions:self.searchSuggestions];
     return YES;
 }
 
@@ -1079,7 +955,8 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    self.baseSearchTableView.tableFooterView.hidden = 0 == self.searchHistories.count || !self.showSearchHistory;
+//    self.baseSearchTableView.tableFooterView.hidden = 0 == self.searchHistories.count || !self.showSearchHistory;
+    self.baseSearchTableView.tableFooterView.hidden = NO;
     return self.showSearchHistory && PYSearchHistoryStyleCell == self.searchHistoryStyle ? self.searchHistories.count : 0;
 }
 
@@ -1122,6 +999,8 @@
     return self.showSearchHistory && self.searchHistories.count && PYSearchHistoryStyleCell == self.searchHistoryStyle ? (self.searchHistoryTitle.length ? self.searchHistoryTitle : @"搜索历史") : nil;
 }
 
+
+
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     return self.searchHistories.count && self.showSearchHistory && PYSearchHistoryStyleCell == self.searchHistoryStyle ? 25 : 0.01;
@@ -1150,7 +1029,6 @@
 {
     if (self.keyboardShowing) {
         // Adjust the content inset of suggestion view
-        self.searchSuggestionVC.tableView.contentInset = UIEdgeInsetsMake(-30, 0, 30, 0);
         [self.searchView.searchBar resignFirstResponder];
     }
 }

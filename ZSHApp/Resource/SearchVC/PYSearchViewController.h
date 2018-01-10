@@ -340,12 +340,12 @@ didSelectSearchSuggestionAtIndex:(NSInteger)index
  
  Note: it is't effective when `searchSuggestionHidden` is NO or cell of suggestion view is custom.
  */
-@property (nonatomic, copy) NSArray<NSString *> *searchSuggestions;
+//@property (nonatomic, copy) NSArray<NSString *> *searchSuggestions;
 
 /**
  Whether hidden search suggstion view, default is NO.
  */
-@property (nonatomic, assign) BOOL searchSuggestionHidden;
+//@property (nonatomic, assign) BOOL searchSuggestionHidden;
 
 /**
  The view controller of search result.
