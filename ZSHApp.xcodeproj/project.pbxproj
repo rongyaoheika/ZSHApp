@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0418532D2005E688000E0D09 /* ZSHFindTopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0418532C2005E688000E0D09 /* ZSHFindTopView.m */; };
 		041853302005ED97000E0D09 /* ZSHLeftFindViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0418532F2005ED97000E0D09 /* ZSHLeftFindViewController.m */; };
+		041853332005FB3D000E0D09 /* ZSHToplineTopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 041853322005FB3D000E0D09 /* ZSHToplineTopView.m */; };
 		042DC4992004D12A00AF2995 /* ZSHRecommendView.m in Sources */ = {isa = PBXBuildFile; fileRef = 042DC4982004D12A00AF2995 /* ZSHRecommendView.m */; };
 		04315E821FF5E9ED006C6BC8 /* ZSHWeiboTopicModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04315E811FF5E9ED006C6BC8 /* ZSHWeiboTopicModel.m */; };
 		04315E851FF61175006C6BC8 /* UIImage+String.m in Sources */ = {isa = PBXBuildFile; fileRef = 04315E841FF61175006C6BC8 /* UIImage+String.m */; };
@@ -542,6 +543,8 @@
 		0418532C2005E688000E0D09 /* ZSHFindTopView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHFindTopView.m; sourceTree = "<group>"; };
 		0418532E2005ED97000E0D09 /* ZSHLeftFindViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHLeftFindViewController.h; sourceTree = "<group>"; };
 		0418532F2005ED97000E0D09 /* ZSHLeftFindViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHLeftFindViewController.m; sourceTree = "<group>"; };
+		041853312005FB3D000E0D09 /* ZSHToplineTopView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHToplineTopView.h; sourceTree = "<group>"; };
+		041853322005FB3D000E0D09 /* ZSHToplineTopView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHToplineTopView.m; sourceTree = "<group>"; };
 		042DC4972004D12A00AF2995 /* ZSHRecommendView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHRecommendView.h; sourceTree = "<group>"; };
 		042DC4982004D12A00AF2995 /* ZSHRecommendView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHRecommendView.m; sourceTree = "<group>"; };
 		04315E801FF5E9ED006C6BC8 /* ZSHWeiboTopicModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHWeiboTopicModel.h; sourceTree = "<group>"; };
@@ -1855,6 +1858,8 @@
 			children = (
 				183C65781FC03B400081DCFF /* ZSHToplineCell.h */,
 				183C65791FC03B400081DCFF /* ZSHToplineCell.m */,
+				041853312005FB3D000E0D09 /* ZSHToplineTopView.h */,
+				041853322005FB3D000E0D09 /* ZSHToplineTopView.m */,
 			);
 			name = "头条";
 			sourceTree = "<group>";
@@ -4623,6 +4628,7 @@
 				FE2BB0B81F8E03FB000D5800 /* ZSHHomeHeadView.m in Sources */,
 				FE1377751F972745003C8DFB /* ZSHOrderCell.m in Sources */,
 				FE55385F1F47049D00803128 /* UICollectionView+IndexPath.m in Sources */,
+				041853332005FB3D000E0D09 /* ZSHToplineTopView.m in Sources */,
 				FE24DA611FD9377300965DC8 /* ZSHMusicLogic.m in Sources */,
 				FEADBD271FBEBBC00065B94B /* ZSHCardCustomizedCell.m in Sources */,
 				1846BB371FE37D9A001B264B /* ZSHFindModel.m in Sources */,

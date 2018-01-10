@@ -191,4 +191,10 @@
     return _bottomBtnView;
 }
 
++ (UIView *)createLineViewWihtFrame:(CGRect)frame color:(UIColor*)lineColor{
+    UIView *lineView = [[UIView alloc]initWithFrame:frame];
+    lineView.backgroundColor = lineColor;
+    return lineView;
+}
+
 @end

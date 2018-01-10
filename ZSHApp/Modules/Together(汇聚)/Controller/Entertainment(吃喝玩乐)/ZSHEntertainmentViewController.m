@@ -234,5 +234,9 @@ static NSString *ZSHEnterTainmentCellID = @"ZSHEnterTainmentCell";
     
 }
 
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [ZSHBaseUIControl setAnimationWithHidden:YES view:self.topBtnListView completedBlock:nil];
+}
 
 @end

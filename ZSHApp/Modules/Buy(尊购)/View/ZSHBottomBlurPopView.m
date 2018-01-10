@@ -45,7 +45,7 @@
 
 //首页
 #import "ZSHHomeSubListCell.h"
-
+#import "ZSHToplineTopView.h"
 @interface ZSHBottomBlurPopView ()<STCalendarDelegate, FSCalendarDataSource, FSCalendarDelegate>
 
 @property (nonatomic, strong) NSDictionary           *paramDic;
@@ -80,6 +80,8 @@
 @property (strong, nonatomic) FSCalendar *calendar;
 @property (strong, nonatomic) NSString *currentDate;
 
+//头条
+@property (nonatomic, strong) ZSHToplineTopView    *toplineTopView;
 @end
 
 static NSString *ZSHHeadCellID = @"ZSHHeadCell";
@@ -103,6 +105,7 @@ static NSString *ZSHHomeSubListCellID = @"ZSHHomeSubListCell";
 static NSString *ZSHSearchLiveFirstCellID = @"ZSHSearchLiveFirstCell";
 static NSString *ZSHSearchLiveSecondCellID = @"ZSHSearchLiveSecondCell";
 static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
+
 
 
 @implementation ZSHBottomBlurPopView
@@ -291,6 +294,10 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
         
         [self.subTab reloadData];
         return;
+    } else if (kFromClassTypeValue == ZSHFromFoodVCToBottomBlurPopView) {//头条
+        [self addSubview:self.toplineTopView];
+        return;
+        
     }
     
     
@@ -900,6 +907,14 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
         _weekView.backgroundColor = [UIColor whiteColor];
     }
     return _weekView;
+}
+
+//头条顶部发布view
+- (ZSHToplineTopView *)toplineTopView{
+    if (!_toplineTopView) {
+        _toplineTopView = [[ZSHToplineTopView alloc]initWithFrame:CGRectMake(0, KNavigationBarHeight, kScreenWidth, kRealValue(50))];
+    }
+    return _toplineTopView;
 }
 
 #pragma mark - event response 日历事件相应

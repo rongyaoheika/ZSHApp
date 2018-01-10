@@ -21,7 +21,8 @@
 #import "PYSearchViewController.h"
 #import "ZSHPickView.h"
 #import "ZSHBottomBlurPopView.h"
-
+#import "ZSHToplineTopView.h"
+#import "ZSHWeiboWriteController.h"
 @interface ZSHTitleContentViewController ()<UISearchBarDelegate,PYSearchViewControllerDelegate>
 
 @property (nonatomic, strong) LXScrollContentView *contentView;
@@ -44,6 +45,8 @@
 @property (nonatomic, strong) ZSHPickView          *pickView;
 @property (nonatomic, strong) ZSHTicketPlaceCell   *ticketView;
 
+@property (nonatomic, strong) ZSHToplineTopView    *toplineTopView;
+
 @end
 
 @implementation ZSHTitleContentViewController
@@ -57,7 +60,7 @@
 
 - (void)loadData{
     self.indicatorHeight = 0.0;
-    //
+   
     switch (kFromClassTypeValue) {
         case FromLiveTabBarVCToTitleContentVC:{
             self.titleArr = @[@"推荐",@"附近",@"分类"];
@@ -230,10 +233,8 @@
 
 - (void)createUI{
     self.title = self.paramDic[@"title"];
-    
     [self.view addSubview:self.titleView];
     [self.view addSubview:self.contentView];
-
     [self reloadListData];
 }
 
@@ -345,8 +346,7 @@
         case FromFoodVCToTitleContentVC://美食排序
         case FromKTVVCToTitleContentVC:{//KTV排序
             paramArr = @[@{@"shopSortArr":@[@"推荐",@"距离由近到远",@"评分由高到低",@"价格由高到低",@"价格由低到高"],@"midTitle":@"排序"},
-                         @{@"shopSortArr":@[@"全聚德",@"海底捞",@"眉州小吃",@"呷浦呷哺",@"肯德基",@"必胜客"
-],@"midTitle":@"品牌"},
+                         @{@"shopSortArr":@[@"全聚德",@"海底捞",@"眉州小吃",@"呷浦呷哺",@"肯德基",@"必胜客"],@"midTitle":@"品牌"},
                          @{@"shopSortArr":@[@"甜点饮品",@"火锅",@"自助餐",@"小吃快餐",@"日韩料理",@"西餐",@"烧烤烤肉",@"素食"],@"midTitle":@"筛选"}];
             break;
         }
@@ -417,8 +417,30 @@
 //头条-发布
 - (void)distributeAction{
     RLog(@"发布");
-    
-    
+    kWeakSelf(self);
+    if (![self.view viewWithTag:2]) {
+        [UIView transitionWithView:self.toplineTopView duration:1.0 options:UIViewAnimationOptionCurveEaseIn animations:^ {
+            [self.view addSubview:self.toplineTopView];
+            self.toplineTopView.btnClickBlock = ^(UIButton *btn) {
+                ZSHWeiboWriteController *weiboWriteVC = [[ZSHWeiboWriteController alloc]init];
+                [weakself.navigationController pushViewController:weiboWriteVC animated:YES];
+            };
+        } completion:nil];
+        
+    } else {
+        [UIView transitionWithView:self.toplineTopView duration:1.0 options:UIViewAnimationOptionCurveEaseOut animations:^ {
+            [self.toplineTopView removeFromSuperview];
+            self.toplineTopView = nil;
+        } completion:nil];
+    }
+}
+
+- (ZSHToplineTopView *)toplineTopView{
+    if (!_toplineTopView) {
+        _toplineTopView = [[ZSHToplineTopView alloc]initWithFrame:CGRectMake(0, KNavigationBarHeight, kScreenWidth, kScreenHeight - KNavigationBarHeight)];
+        _toplineTopView.tag = 2;
+    }
+    return _toplineTopView;
 }
 
 - (void)didReceiveMemoryWarning {

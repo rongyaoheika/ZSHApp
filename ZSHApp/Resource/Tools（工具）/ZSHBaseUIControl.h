@@ -157,6 +157,7 @@ typedef NS_ENUM(NSInteger, ShowCellType) {
     ZSHOtherType,                      // 其他
 };
 
+
 @interface ZSHBaseUIControl : NSObject
 
 + (UILabel *)createLabelWithParamDic:(NSDictionary *)paramDic;
@@ -166,6 +167,6 @@ typedef NS_ENUM(NSInteger, ShowCellType) {
 + (UIView *)createTabHeadLabelViewWithParamDic:(NSDictionary *)paramDic;
 + (void) setAnimationWithHidden:(BOOL)hidden view:(UIView *)view completedBlock:(RemoveCompletedBlock)completedBlock;
 + (UIView *)createBottomButton:(void (^)(NSInteger ))tapBlock;
-
++ (UIView *)createLineViewWihtFrame:(CGRect)frame color:(UIColor*)lineColor;
 
 @end
