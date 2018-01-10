@@ -37,6 +37,7 @@
 @property (nonatomic, assign) NSInteger                           index;
 @property (nonatomic, strong) ZSHPickView                         *pickView;
 @property (nonatomic, strong) ZSHGuideView                        *guideView;
+@property (nonatomic, strong) NSArray                             *filters;
 
 @end
 
@@ -96,7 +97,7 @@ static NSString *const ZSHBrandSortCellID = @"ZSHBrandSortCell";
     [self.view addSubview:self.guideView];
     
     
-    self.collectionView.frame = CGRectMake(tableViewW, KNavigationBarHeight+kRealValue(115),kScreenWidth-tableViewW, kScreenHeight - KNavigationBarHeight-kRealValue(120));
+    self.collectionView.frame = CGRectMake(tableViewW, KNavigationBarHeight+kRealValue(155),kScreenWidth-tableViewW, kScreenHeight - KNavigationBarHeight-kRealValue(155));
     [self.view addSubview:self.collectionView];
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
@@ -121,7 +122,7 @@ static NSString *const ZSHBrandSortCellID = @"ZSHBrandSortCell";
 
 - (ZSHGuideView *)guideView {
     if(!_guideView) {
-        NSDictionary *nextParamDic = @{KFromClassType:@(FromTogetherToGuideView),@"pageViewHeight":@(kRealValue(75)),@"min_scale":@(0.6),@"withRatio":@(1.8),@"infinite":@(false), @"dataArr":@[@"hotel_image", @"hotel_image"]};
+        NSDictionary *nextParamDic = @{KFromClassType:@(FromBuyVCToGuideView),@"pageViewHeight":@(kRealValue(75)),@"min_scale":@(0.6),@"withRatio":@(1.8),@"infinite":@(false), @"dataArr":@[@"hotel_image", @"hotel_image"]};
         _guideView = [[ZSHGuideView alloc]initWithFrame:CGRectMake(tableViewW, KNavigationBarHeight+kRealValue(70), kRealValue(275), kRealValue(75)) paramDic:nextParamDic];
     }
     return _guideView;
@@ -206,10 +207,10 @@ static NSString *const ZSHBrandSortCellID = @"ZSHBrandSortCell";
     return CGSizeMake(kScreenWidth-tableViewW, kRealValue(130));
 }
 
-#pragma mark - head宽高
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
-    return CGSizeMake(kScreenWidth, 25);
-}
+//#pragma mark - head宽高
+//- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
+//    return CGSizeMake(kScreenWidth, 25);
+//}
 
 #pragma mark - foot宽高
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section {
@@ -256,25 +257,37 @@ static NSString *const ZSHBrandSortCellID = @"ZSHBrandSortCell";
 - (void)requestBrandIconListWithBrandID:(ZSHClassMainModel *)model {
     kWeakSelf(self);
     ZSHBuyLogic *logic = [[ZSHBuyLogic alloc] init];
-    [logic requestBrandIconListWithBrandID:model.BRAND_ID success:^(id response) {
+    
+    [logic requestBrandIconListWithDic:@{@"BRAND_ID":model.BRAND_ID} success:^(id response) {
         _mainArr = response[@"pd"];
+        [weakself updateAd:response[@"adList"]];
+        [weakself updateFilter:response[@"brandIconList"]];
         [weakself.collectionView reloadData];
         [weakself.collectionView.mj_header endRefreshing];
-        
     }];
 }
 
+- (void)refreshBrandIconListWithBrandID:(NSString *)brandID {
+    kWeakSelf(self);
+    ZSHClassMainModel *model = _titleArr[_currentSelectIndex];
+    [_buyLogic requestBrandIconListWithDic:@{@"BRAND_ID":model.BRAND_ID,@"BRANDICON_ID":brandID} success:^(id response) {
+        _mainArr = response[@"pd"];
+        [weakself.collectionView reloadData];
+        [weakself.collectionView.mj_header endRefreshing];
+    }];
+}
 - (void)requestConData {
-//    kWeakSelf(self);
+    kWeakSelf(self);
     switch (_index) {
-        case 0:{//
+        case 0:{ // 综合排序
+            [self requestBrandIconListWithBrandID:_titleArr[_currentSelectIndex]];
             break;
         }
-        case 1:{//
+        case 1:{ //
             break;
         }
-        case 2:{//筛选
-            NSDictionary *nextParamDic = @{KFromClassType:@(ZSHFromGoodsVCToBottomBlurPopView)};
+        case 2:{ // 筛选
+            NSDictionary *nextParamDic = @{KFromClassType:@(ZSHFromGoodsVCToBottomBlurPopView), @"filters":_filters};
             ZSHBottomBlurPopView *bottomBlurPopView = [[ZSHBottomBlurPopView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight) paramDic:nextParamDic];
             bottomBlurPopView.blurRadius = 20;
             bottomBlurPopView.dynamic = NO;
@@ -285,25 +298,33 @@ static NSString *const ZSHBrandSortCellID = @"ZSHBrandSortCell";
             bottomBlurPopView.dissmissViewBlock = ^(UIView *blurView, NSIndexPath *indexpath) {
                 [ZSHBaseUIControl setAnimationWithHidden:YES view:blurView completedBlock:^{
                     if (indexpath) {//跳转到对应控制器
-//                        Class className = NSClassFromString(weakself.menuPushVCsArr[indexpath.row]);
-//                        RootViewController *vc = [[className alloc]initWithParamDic:weakself.menuParamArr[indexpath.row]];
-//                        [weakself.navigationController pushViewController:vc animated:YES];
+                        
+                        [weakself refreshBrandIconListWithBrandID:weakself.filters[indexpath.row][@"BRANDICON_ID"]];
                     }
                     return;
                 }];
             };
-
-            
-//            NSDictionary *nextParamDic = @{@"type":@(WindowDefault),@"midTitle":@"筛选",@"dataArr":@[@"全部", @"名品", @"名物"]};
-//            _pickView = [[ZSHPickView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight) paramDic:nextParamDic];
-//            [_pickView show:WindowDefault];
-//            _pickView.saveChangeBlock = ^(NSString *rowTitle, NSInteger tag) {
-//            };
             break;
         }
         default:
             break;
     }
+}
+
+- (void)updateAd:(NSArray *)arr {
+    NSMutableArray *dataArr = [NSMutableArray array];
+    for (NSDictionary *dic  in arr) {
+        [dataArr addObject:dic[@"SHOWIMG"]];
+    }
+    [_guideView updateViewWithParamDic:@{@"dataArr":dataArr}];
+}
+
+- (void)updateFilter:(NSArray *)arr {
+    NSMutableArray *dataArr = [NSMutableArray array];
+    for (NSDictionary *dic  in arr) {
+        [dataArr addObject:@{@"BRANDICON_ID":dic[@"BRANDICON_ID"], @"BRANDNAME":dic[@"BRANDNAME"]}];
+    }
+    _filters = dataArr.mutableCopy;
 }
 
 @end

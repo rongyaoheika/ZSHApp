@@ -146,6 +146,7 @@ typedef NS_ENUM(NSUInteger,ZSHToTitleContentVC){
     FromMineLevelVCToTitleContentVC,         //我的等级（用户等级，主播等级）
     FromContributionListVCToTitleContentVC,  //贡献榜（日榜，周榜，月榜，总榜）
     FromPeronalCenterVCToTitleContentVC,     //个人中心（黑微博，小视频， 资料）
+    FromMagazineVCToTitleContentVC,          //荣耀杂志（推荐，科技，吃喝，心灵， 时尚....）
     
     FromNoneToTitleContentVC
 };

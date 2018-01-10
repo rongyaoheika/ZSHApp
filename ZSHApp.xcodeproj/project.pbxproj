@@ -15,6 +15,8 @@
 		043587591FF2564F00969DD7 /* ZSHGoodsCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 043587581FF2564F00969DD7 /* ZSHGoodsCollectionViewCell.m */; };
 		044A2F462004BBF100B05CE7 /* ZSHMakeMoneyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 044A2F452004BBF000B05CE7 /* ZSHMakeMoneyViewController.m */; };
 		0450A60D20036BC100D7B2D4 /* ZSHHomeSubListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0450A60C20036BC100D7B2D4 /* ZSHHomeSubListCell.m */; };
+		04BAD7BD2005C0DB00950195 /* ZSHMagazineListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04BAD7BC2005C0DB00950195 /* ZSHMagazineListViewController.m */; };
+		04BAD7C12005EEB100950195 /* ZSHMagazineListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04BAD7C02005EEB100950195 /* ZSHMagazineListCell.m */; };
 		04CC219E1FFF79B200921863 /* ZSHMagazineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CC219D1FFF79B200921863 /* ZSHMagazineViewController.m */; };
 		18063C541FC90379000F5A00 /* ZSHPersonalModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 18063C531FC90379000F5A00 /* ZSHPersonalModel.m */; };
 		18063C571FC90951000F5A00 /* ZSHPersonalDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 18063C561FC90951000F5A00 /* ZSHPersonalDetailModel.m */; };
@@ -552,6 +554,10 @@
 		044A2F452004BBF000B05CE7 /* ZSHMakeMoneyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHMakeMoneyViewController.m; sourceTree = "<group>"; };
 		0450A60B20036BC100D7B2D4 /* ZSHHomeSubListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHHomeSubListCell.h; sourceTree = "<group>"; };
 		0450A60C20036BC100D7B2D4 /* ZSHHomeSubListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHHomeSubListCell.m; sourceTree = "<group>"; };
+		04BAD7BB2005C0DB00950195 /* ZSHMagazineListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHMagazineListViewController.h; sourceTree = "<group>"; };
+		04BAD7BC2005C0DB00950195 /* ZSHMagazineListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHMagazineListViewController.m; sourceTree = "<group>"; };
+		04BAD7BF2005EEB100950195 /* ZSHMagazineListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHMagazineListCell.h; sourceTree = "<group>"; };
+		04BAD7C02005EEB100950195 /* ZSHMagazineListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHMagazineListCell.m; sourceTree = "<group>"; };
 		04CC219C1FFF79B200921863 /* ZSHMagazineViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHMagazineViewController.h; sourceTree = "<group>"; };
 		04CC219D1FFF79B200921863 /* ZSHMagazineViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHMagazineViewController.m; sourceTree = "<group>"; };
 		14ED69325E9FD4BDB1CA95F8 /* Pods-ZSHApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZSHApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-ZSHApp/Pods-ZSHApp.release.xcconfig"; sourceTree = "<group>"; };
@@ -1509,9 +1515,20 @@
 			path = "分享赚钱";
 			sourceTree = "<group>";
 		};
+		04BAD7BE2005EE6000950195 /* 杂志 */ = {
+			isa = PBXGroup;
+			children = (
+				04BAD7BF2005EEB100950195 /* ZSHMagazineListCell.h */,
+				04BAD7C02005EEB100950195 /* ZSHMagazineListCell.m */,
+			);
+			name = "杂志";
+			sourceTree = "<group>";
+		};
 		04CC219B1FFF793800921863 /* 杂志 */ = {
 			isa = PBXGroup;
 			children = (
+				04BAD7BB2005C0DB00950195 /* ZSHMagazineListViewController.h */,
+				04BAD7BC2005C0DB00950195 /* ZSHMagazineListViewController.m */,
 				04CC219C1FFF79B200921863 /* ZSHMagazineViewController.h */,
 				04CC219D1FFF79B200921863 /* ZSHMagazineViewController.m */,
 			);
@@ -2417,6 +2434,7 @@
 		FE291EB01F8CAEDC00D4BBE7 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				04BAD7BE2005EE6000950195 /* 杂志 */,
 				FEB099131FD127DD00E8F03D /* More */,
 				FEA018D11FCBFB0000989FB2 /* Comment */,
 				FE9E6D6D1FC4227600F7AD95 /* HomeCell */,
@@ -4328,6 +4346,7 @@
 				185BB9C61FB58DD6007A96FF /* ZSHLiveTaskCenterCell.m in Sources */,
 				FE940B001FEB9C6D002D03EB /* ZegoSettings.m in Sources */,
 				185BB9C21FB5860E007A96FF /* ZSHLiveTaskCenterViewController.m in Sources */,
+				04BAD7BD2005C0DB00950195 /* ZSHMagazineListViewController.m in Sources */,
 				FE3E009A1FDA743200A0F7CA /* RotatingView.m in Sources */,
 				FE7502C11F9A11DE002F2708 /* ZSHSearchBarView.m in Sources */,
 				1826CDB41FBAFD3D00A0ECE2 /* ZSHApplyServiceViewController.m in Sources */,
@@ -4591,6 +4610,7 @@
 				FE55381A1F47049D00803128 /* RootWebViewController.m in Sources */,
 				FE55380F1F47049D00803128 /* AppDelegate+PushService.m in Sources */,
 				FE5538521F47049D00803128 /* main.m in Sources */,
+				04BAD7C12005EEB100950195 /* ZSHMagazineListCell.m in Sources */,
 				18063C621FC95759000F5A00 /* TZTestCell.m in Sources */,
 				FE3E00891FDA743200A0F7CA /* NSString+time.m in Sources */,
 				182F57A31FDBD2ED0085BFC6 /* ZSHUserInfoModel.m in Sources */,

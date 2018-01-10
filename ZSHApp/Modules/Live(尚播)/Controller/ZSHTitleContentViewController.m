@@ -167,7 +167,18 @@
             [self createSearchNaviUI];
         }
             break;
-            
+        case FromMagazineVCToTitleContentVC : { //荣耀杂志
+            self.titleArr = @[@"推荐",@"科技", @"吃喝", @"心灵", @"时尚", @"运动", @"摄影"];
+            self.contentVCS = @[@"ZSHMagazineListViewController",
+                                @"ZSHMagazineListViewController",
+                                @"ZSHMagazineListViewController",
+                                @"ZSHMagazineListViewController",
+                                @"ZSHMagazineListViewController",
+                                @"ZSHMagazineListViewController",
+                                @"ZSHMagazineListViewController"];
+//            self.paramArr = @[@{KFromClassType:@(kFromClassTypeValue)},@{KFromClassType:@(kFromClassTypeValue)},@{KFromClassType:@(kFromClassTypeValue)}];
+        }
+        break;            
         default:{
             self.titleArr = self.paramDic[@"titleArr"];
             self.titleBtnImage = [UIImage imageNamed:@"hotel_btn"];

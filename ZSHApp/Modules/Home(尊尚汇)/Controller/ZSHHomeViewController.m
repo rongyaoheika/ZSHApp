@@ -367,6 +367,7 @@ static NSString *Identify_MusicCell = @"musicCell";
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     sectionModel.headerHeight = kRealValue(55);
     sectionModel.headerView = [self createHeaderiewWithTitle:@"荣耀杂志"];
+    
     ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
     [sectionModel.cellModelArray addObject:cellModel];
     cellModel.height = kRealValue(120);
@@ -421,6 +422,7 @@ static NSString *Identify_MusicCell = @"musicCell";
 
 #pragma getter
 - (UIView *)createHeaderiewWithTitle:(NSString *)title{
+    kWeakSelf(self);
     UIView *headView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, kRealValue(55))];
     NSDictionary *headLabellDic = @{@"text":title, @"font":kPingFangMedium(15),@"textAlignment":@(NSTextAlignmentLeft)};
     UILabel *headLabel = [ZSHBaseUIControl createLabelWithParamDic:headLabellDic];
@@ -431,6 +433,22 @@ static NSString *Identify_MusicCell = @"musicCell";
         make.width.mas_equalTo(KScreenWidth -2*kRealValue(13));
         make.height.mas_equalTo(kRealValue(15));
     }];
+    
+    if ([title isEqualToString:@"荣耀杂志"]) {
+        UIButton *moreBtn = [ZSHBaseUIControl createBtnWithParamDic:@{@"withImage":@(YES),@"normalImage":@"mine_next"}];
+        [moreBtn addTapBlock:^(UIButton *btn) {
+            // 荣耀杂志
+            ZSHTitleContentViewController *magazineVC = [[ZSHTitleContentViewController alloc] initWithParamDic:@{KFromClassType:@(FromMagazineVCToTitleContentVC),@"title":@"荣耀杂志"}];
+            [weakself.navigationController pushViewController:magazineVC animated:YES];
+        }];
+        
+        [headView addSubview:moreBtn];
+        [moreBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.right.mas_equalTo(headView).offset(kRealValue(-KLeftMargin));
+            make.center.centerY.mas_equalTo(headLabel);
+            make.size.mas_equalTo(CGSizeMake(kRealValue(9), kRealValue(14)));
+        }];
+    }
     return headView;
 }
 
@@ -475,7 +493,7 @@ static NSString *Identify_MusicCell = @"musicCell";
 }
 
 
-- (void)menuBtntClick:(UIButton *)menuBtn{
+- (void)menuBtntClick:(UIButton *)menuBtn {
     kWeakSelf(self);
     [ZSHBaseUIControl setAnimationWithHidden:NO view:self.bottomBlurPopView completedBlock:nil];
     self.bottomBlurPopView.dissmissViewBlock = ^(UIView *blurView, NSIndexPath *indexpath) {
@@ -490,12 +508,10 @@ static NSString *Identify_MusicCell = @"musicCell";
     };
 }
 
-- (void)locateBtnAction{
-    
+- (void)locateBtnAction {
 //    ZSHCityViewController *cityVC = [[ZSHCityViewController alloc]init];
 //    [self.navigationController pushViewController:cityVC animated:YES];
 
-    
     GYZChooseCityController *cityVC = [[GYZChooseCityController alloc]init];
     [cityVC setDelegate:self];
     cityVC.commonCitys = [[NSMutableArray alloc] initWithArray: @[@"1400010000", @"100010000"]];        // 最近访问城市，如果不设置，将自动管理
@@ -530,7 +546,7 @@ static NSString *Identify_MusicCell = @"musicCell";
 #pragma mark - GYZCityPickerDelegate
 - (void) cityPickerController:(GYZChooseCityController *)chooseCityController didSelectCity:(GYZCity *)city
 {
-     [self addNavigationItemWithImageName:@"nav_home_more" title:city.cityName locate:XYButtonEdgeInsetsStyleRight isLeft:YES target:self action:@selector(locateBtnAction) tag:10];
+    [self addNavigationItemWithImageName:@"nav_home_more" title:city.cityName locate:XYButtonEdgeInsetsStyleRight isLeft:YES target:self action:@selector(locateBtnAction) tag:10];
     [chooseCityController.navigationController popViewControllerAnimated:YES];
 }
 

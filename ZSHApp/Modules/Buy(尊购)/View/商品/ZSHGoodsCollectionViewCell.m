@@ -79,6 +79,12 @@
     _numLabe.text = NSStringFormat(@"共%@件宝贝",dic[@"PRODUCT_COUNT"]);
     _headLabel.text = dic[@"SHOPNAME"];
     [_headImageView sd_setImageWithURL:[NSURL URLWithString:dic[@"SHOWIMG"]]];
+    NSArray *images = dic[@"PRODUCTIMGS"];
+    for (int i = 0; i < images.count; i++) {
+        UIImageView *imageView = [_detailView viewWithTag:i+18010907];
+        [imageView sd_setImageWithURL:[NSURL URLWithString:images[i]]];
+    }
+    
 }
 
 

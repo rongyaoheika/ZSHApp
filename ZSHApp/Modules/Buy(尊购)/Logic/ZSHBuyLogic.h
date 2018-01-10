@@ -34,7 +34,8 @@
 // 商品分类
 - (void)requestShipBrandList:(void(^)(id response))success;
 // 商品品牌
-- (void)requestBrandIconListWithBrandID:(NSString *)BrandID success:(void (^)(id response))success;
+- (void)requestBrandIconListWithDic:(NSDictionary *)dic success:(void (^)(id response))success;
+
 - (void)requestShipListAllsuccess:(void (^)(id response))success;
 // 尊购专区点击之后跳转页面
 - (void)requestShipPrefectureWithBrandID:(NSString *)brandID success:(void (^)(id response))success;

@@ -268,7 +268,7 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
         self.calendar = calendar;
         return;
     }  else if (kFromClassTypeValue == ZSHFromGoodsVCToBottomBlurPopView) {//商品分类
-        self.subTab.frame = CGRectMake(KScreenWidth - kRealValue(7.5) - kRealValue(60), KNavigationBarHeight+35, kRealValue(50),kRealValue(96));
+        self.subTab.frame = CGRectMake(KScreenWidth - kRealValue(7.5) - kRealValue(120), KNavigationBarHeight+45, kRealValue(120),kRealValue(96));
         self.subTab.backgroundColor = KClearColor;
         UIImageView *tbBgImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"list_bg"]];
         tbBgImageView.frame = self.subTab.bounds;
@@ -276,6 +276,7 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
         [self.subTab registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHHeadCellID];
         self.subTab.delegate = self.tableViewModel;
         self.subTab.dataSource = self.tableViewModel;
+        self.subTab.scrollEnabled = YES;
         [self.subTab reloadData];
         return;
     }  else if (kFromClassTypeValue == ZSHFromFoodVCToBottomBlurPopView) {//美食分类
@@ -287,6 +288,7 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
         [self.subTab registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHHeadCellID];
         self.subTab.delegate = self.tableViewModel;
         self.subTab.dataSource = self.tableViewModel;
+        
         [self.subTab reloadData];
         return;
     }
@@ -750,7 +752,12 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
 //尊购商品分类
 - (ZSHBaseTableViewSectionModel*)storeGoodsListSection {
 //    NSArray *imageArr = @[@"list_scan",@"list_news",@"list_noti",@"list_unlock"];
-    NSArray *titleArr = @[@"全部",@"名品",@"名物"];
+    NSMutableArray *titleArr = [NSMutableArray array];
+    NSArray *filters = self.paramDic[@"filters"];
+    for (NSDictionary *dic in filters) {
+        [titleArr addObject:dic[@"BRANDNAME"]];
+    }
+//    NSArray *titleArr = @[@"全部",@"名品",@"名物"];
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     sectionModel.headerHeight = kRealValue(8);
     sectionModel.headerView = [[UIView alloc]initWithFrame:self.subTab.bounds];
@@ -764,7 +771,7 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
             cell.textLabel.font = kPingFangLight(14);
 //            cell.imageView.image = [UIImage imageNamed:imageArr[i]];
             cell.imageEdgeInsets = UIEdgeInsetsMake(0, -10, 0, 0);
-            cell.textLabelEdgeInsets = UIEdgeInsetsMake(0, -10, 0, 0);
+            cell.textLabelEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
             return cell;
         };
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
