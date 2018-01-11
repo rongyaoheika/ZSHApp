@@ -30,7 +30,7 @@
 #import "ZSHFindViewController.h"
 #import "ZSHMagazineViewController.h"
 #import "ZSHGuideView.h"
-
+#import "ZSHMusicMainViewController.h"
 
 static NSString *Identify_HeadCell = @"headCell";
 static NSString *Identify_NoticeCell = @"noticeCell";
@@ -193,8 +193,6 @@ static NSString *Identify_MusicCell = @"musicCell";
     self.tableView.dataSource = self.tableViewModel;
     
 	[self.tableView registerClass:[ZSHHomeHeadView class] forCellReuseIdentifier:Identify_HeadCell];
-
-//	[self.tableView registerClass:[ZSHBaseTitleButtonCell class] forCellReuseIdentifier:Identify_NoticeCell];
     [self.tableView registerClass:[ZSHBaseTitleButtonCell class] forCellReuseIdentifier:Identify_ServiceCell];
 
 	[self.tableView registerClass:[ZSHBaseCell class] forCellReuseIdentifier:Identify_PlayCell];
@@ -299,7 +297,10 @@ static NSString *Identify_MusicCell = @"musicCell";
     kWeakSelf(self);
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     sectionModel.headerHeight = kRealValue(55);
-    sectionModel.headerView = [self createHeaderiewWithTitle:@"荣耀服务"];
+    
+    NSDictionary *headTitleParamDic = @{@"text":@"荣耀服务",@"font":kPingFangMedium(15)};
+    sectionModel.headerView = [ZSHBaseUIControl createTabHeadLabelViewWithParamDic:headTitleParamDic];
+    
     ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
     [sectionModel.cellModelArray addObject:cellModel];
     cellModel.height = kRealValue(100);
@@ -330,7 +331,9 @@ static NSString *Identify_MusicCell = @"musicCell";
 - (ZSHBaseTableViewSectionModel*)storePlaySection {
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     sectionModel.headerHeight = kRealValue(55);
-    sectionModel.headerView = [self createHeaderiewWithTitle:@"汇聚玩趴"];
+    
+    NSDictionary *headTitleParamDic = @{@"text":@"汇聚玩趴",@"font":kPingFangMedium(15)};
+    sectionModel.headerView = [ZSHBaseUIControl createTabHeadLabelViewWithParamDic:headTitleParamDic];
     
     ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
     [sectionModel.cellModelArray addObject:cellModel];
@@ -366,7 +369,16 @@ static NSString *Identify_MusicCell = @"musicCell";
     kWeakSelf(self);
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     sectionModel.headerHeight = kRealValue(55);
-    sectionModel.headerView = [self createHeaderiewWithTitle:@"荣耀杂志"];
+    
+    NSDictionary *headTitleParamDic = @{@"text":@"荣耀杂志",@"font":kPingFangMedium(15),@"btnTitle":@"",@"btnImage":@"mine_next",@"btnRightValue":@(5)};
+    sectionModel.headerView = [ZSHBaseUIControl createTabHeadLabelViewWithParamDic:headTitleParamDic];
+    UIButton *btn = [sectionModel.headerView viewWithTag:2];
+    btn.hidden = NO;
+    [btn addTapBlock:^(UIButton *btn) {
+        // 荣耀杂志
+        ZSHTitleContentViewController *magazineVC = [[ZSHTitleContentViewController alloc] initWithParamDic:@{KFromClassType:@(FromMagazineVCToTitleContentVC),@"title":@"荣耀杂志"}];
+        [weakself.navigationController pushViewController:magazineVC animated:YES];
+    }];
     
     ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
     [sectionModel.cellModelArray addObject:cellModel];
@@ -394,7 +406,16 @@ static NSString *Identify_MusicCell = @"musicCell";
     kWeakSelf(self);
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     sectionModel.headerHeight = kRealValue(55);
-    sectionModel.headerView = [self createHeaderiewWithTitle:@"荣耀音乐"];
+    
+    NSDictionary *headTitleParamDic = @{@"text":@"荣耀音乐",@"font":kPingFangMedium(15),@"btnTitle":@"",@"btnImage":@"mine_next",@"btnRightValue":@(5)};
+    sectionModel.headerView = [ZSHBaseUIControl createTabHeadLabelViewWithParamDic:headTitleParamDic];
+    UIButton *btn = [sectionModel.headerView viewWithTag:2];
+    btn.hidden = NO;
+    [btn addTapBlock:^(UIButton *btn) {
+        ZSHMusicMainViewController *musicMainVC = [[ZSHMusicMainViewController alloc]init];
+        [weakself.navigationController pushViewController:musicMainVC animated:YES];
+    }];
+
     sectionModel.footerHeight = kRealValue(37);
     sectionModel.footerView = nil;
     ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
@@ -417,39 +438,6 @@ static NSString *Identify_MusicCell = @"musicCell";
     cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
     };
     return sectionModel;
-}
-
-
-#pragma getter
-- (UIView *)createHeaderiewWithTitle:(NSString *)title{
-    kWeakSelf(self);
-    UIView *headView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, kRealValue(55))];
-    NSDictionary *headLabellDic = @{@"text":title, @"font":kPingFangMedium(15),@"textAlignment":@(NSTextAlignmentLeft)};
-    UILabel *headLabel = [ZSHBaseUIControl createLabelWithParamDic:headLabellDic];
-    [headView addSubview:headLabel];
-    [headLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(headView).offset(kRealValue(13));
-        make.bottom.mas_equalTo(headView).offset(-kRealValue(18));
-        make.width.mas_equalTo(KScreenWidth -2*kRealValue(13));
-        make.height.mas_equalTo(kRealValue(15));
-    }];
-    
-    if ([title isEqualToString:@"荣耀杂志"]) {
-        UIButton *moreBtn = [ZSHBaseUIControl createBtnWithParamDic:@{@"withImage":@(YES),@"normalImage":@"mine_next"}];
-        [moreBtn addTapBlock:^(UIButton *btn) {
-            // 荣耀杂志
-            ZSHTitleContentViewController *magazineVC = [[ZSHTitleContentViewController alloc] initWithParamDic:@{KFromClassType:@(FromMagazineVCToTitleContentVC),@"title":@"荣耀杂志"}];
-            [weakself.navigationController pushViewController:magazineVC animated:YES];
-        }];
-        
-        [headView addSubview:moreBtn];
-        [moreBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.right.mas_equalTo(headView).offset(kRealValue(-KLeftMargin));
-            make.center.centerY.mas_equalTo(headLabel);
-            make.size.mas_equalTo(CGSizeMake(kRealValue(9), kRealValue(14)));
-        }];
-    }
-    return headView;
 }
 
 #pragma mark - UISearchBar Delegate
@@ -559,6 +547,7 @@ static NSString *Identify_MusicCell = @"musicCell";
 {
     return YES;
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

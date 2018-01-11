@@ -202,8 +202,9 @@
         break;
         case FromBuyVCToTitleContentVC : { //尊购
             [self createBuyNaviUI];
-            self.titleArr = @[@"时尚圈",@"专柜店", @"旗舰店", @"会员特权"];
+            self.titleArr = @[@"首页",@"时尚圈",@"专柜店", @"旗舰店", @"会员特权"];
             self.contentVCS = @[@"ZSHBuyViewController",
+                                @"ZSHBuyViewController",
                                 @"ZSHBuyViewController",
                                 @"ZSHBuyViewController",
                                 @"ZSHBuyViewController"

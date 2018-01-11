@@ -25,6 +25,7 @@ static NSString *ZSHGoodsListViewID = @"ZSHGoodsListView";
 
 @property (nonatomic, strong) ZSHBuyLogic           *buyLogic;
 @property (nonatomic, strong) ZSHGuideView          *guideView;
+
 @end
 
 @implementation ZSHBuyViewController

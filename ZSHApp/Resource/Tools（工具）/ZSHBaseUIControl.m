@@ -92,10 +92,12 @@
     headLabel.tag = 1;
     [headView addSubview:headLabel];
     [headLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        if ([paramDic[@"textAlignment"]integerValue] == NSTextAlignmentLeft) {
-            make.left.mas_equalTo(headView).offset(KLeftMargin);
-        } else if ([paramDic[@"textAlignment"]integerValue] == NSTextAlignmentCenter) {
+        if ([paramDic[@"textAlignment"]integerValue] == NSTextAlignmentCenter) {
              make.centerX.mas_equalTo(headView);
+        } else if ([paramDic[@"leftValue"]integerValue]){
+             make.left.mas_equalTo(headView).offset([paramDic[@"leftValue"]integerValue]);
+        } else {
+            make.left.mas_equalTo(headView).offset(KLeftMargin);
         }
        
         make.height.mas_equalTo(headView);
@@ -103,8 +105,11 @@
         make.centerY.mas_equalTo(headView);
     }];
     
-    NSDictionary *btnDic = @{@"title":@"换一批",@"titleColor":KZSHColor929292,@"selectedTitleColor":KZSHColorF29E19,@"font":kPingFangMedium(15)};
+    NSString *btnTitle = paramDic[@"btnTitle"]?paramDic[@"btnTitle"]:@"换一批";
+    NSDictionary *btnDic = @{@"title":btnTitle,@"selectedTitleColor":KZSHColorF29E19,@"font":kPingFangMedium(15)};
+    
     UIButton *refreshBtn = [ZSHBaseUIControl createBtnWithParamDic:btnDic];
+    [refreshBtn setImage:[UIImage imageNamed:paramDic[@"btnImage"]] forState:UIControlStateNormal];
     refreshBtn.tag = 2;
     refreshBtn.hidden = YES;
     [headView addSubview:refreshBtn];
@@ -112,7 +117,11 @@
         make.centerY.mas_equalTo(headView);
         make.width.mas_equalTo(kRealValue(50));
         make.height.mas_equalTo(headView);
-        make.right.mas_equalTo(headView).offset(-KLeftMargin);
+        if ([paramDic[@"btnRightValue"]integerValue]) {
+            make.right.mas_equalTo(headView).offset([paramDic[@"btnRightValue"]integerValue]);
+        } else {
+            make.right.mas_equalTo(headView).offset(-KLeftMargin);
+        }
     }];
     
     return headView;

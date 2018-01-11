@@ -216,7 +216,7 @@ static NSString *ZSHHotelListCellID = @"ZSHHotelListCell";
     kWeakSelf(self);
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     sectionModel.headerHeight = kRealValue(40);
-    NSDictionary *headTitleParamDic = @{@"text":@"套餐",@"font":kPingFangMedium(15),@"textAlignment":@(NSTextAlignmentLeft)};
+    NSDictionary *headTitleParamDic = @{@"text":@"套餐",@"font":kPingFangMedium(15)};
     sectionModel.headerView = [ZSHBaseUIControl createTabHeadLabelViewWithParamDic:headTitleParamDic];
     
     for (int i = 0; i<_foodDetailSetDicArr.count; i++) {
@@ -247,7 +247,7 @@ static NSString *ZSHHotelListCellID = @"ZSHHotelListCell";
 - (ZSHBaseTableViewSectionModel*)storeMoreShopSection {
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     sectionModel.headerHeight = kRealValue(40);
-    NSDictionary *headTitleParamDic = @{@"text":@"更多商家",@"font":kPingFangMedium(15),@"textAlignment":@(NSTextAlignmentLeft)};
+    NSDictionary *headTitleParamDic = @{@"text":@"更多商家",@"font":kPingFangMedium(15)};
     sectionModel.headerView = [ZSHBaseUIControl createTabHeadLabelViewWithParamDic:headTitleParamDic];
     UIButton *btn = [sectionModel.headerView viewWithTag:2];
     btn.hidden = NO;

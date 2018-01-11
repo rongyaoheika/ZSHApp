@@ -37,6 +37,10 @@ typedef NS_ENUM(NSInteger,ZSHToChangePWDView){
     FromKTVRoomTypeVCToNoticeView,      //KTV详情 - 包间类型
     FromMemberCenterVCToNoticeView,     //会员中心 - 类型
     FromEnergyValueVCToNoticeView,      //能量值 - 类型
+    FromMusicMenuToNoticeView,          //音乐 - 歌单推荐
+    FromMusicLibraryToNoticeView,       //音乐 - 曲库推荐
+    FromMusicSingerToNoticeView,        //音乐 - 歌手推荐
+    FromMusicRankToNoticeView,          //音乐 - 榜单推荐
     FromNoneVCToChangePWDView
 };
 

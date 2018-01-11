@@ -57,6 +57,24 @@
             [btnView mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.width.mas_equalTo(kRealValue(95));
             }];
+        } else if ([paramDic[KFromClassType]integerValue] == FromMusicMenuToNoticeView) {
+            btnView.label.text = subParamDic[@"imageTitle"];
+            [btnView.imageView setImage:[UIImage imageNamed:subParamDic[@"imageName"]]];
+            [btnView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.width.mas_equalTo(kRealValue(120));
+            }];
+        } else if ([paramDic[KFromClassType]integerValue] == FromMusicLibraryToNoticeView) {
+            btnView.showLabel = NO;
+            [btnView.imageView setImage:[UIImage imageNamed:subParamDic[@"imageName"]]];
+            [btnView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.width.mas_equalTo(kRealValue(120));
+            }];
+        } else if ([paramDic[KFromClassType]integerValue] == FromMusicRankToNoticeView) {
+            btnView.showLabel = NO;
+            [btnView.imageView setImage:[UIImage imageNamed:subParamDic[@"imageName"]]];
+            [btnView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.width.mas_equalTo(kRealValue(110));
+            }];
         }
         
         [_scrollView addSubview:btnView];

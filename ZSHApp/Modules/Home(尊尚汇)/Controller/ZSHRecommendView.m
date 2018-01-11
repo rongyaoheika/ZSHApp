@@ -62,7 +62,7 @@
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
     UICollectionReusableView *reusableview = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"HeadViewID" forIndexPath:indexPath];
     if (kind == UICollectionElementKindSectionHeader){
-        NSDictionary *headTitleParamDic = @{@"text":@"为您推荐",@"font":kPingFangMedium(15),@"textAlignment":@(NSTextAlignmentLeft)};
+        NSDictionary *headTitleParamDic = @{@"text":@"为您推荐",@"font":kPingFangMedium(15)};
         UIView *headView = [ZSHBaseUIControl createTabHeadLabelViewWithParamDic:headTitleParamDic];
         headView.frame = CGRectMake(0, 0, KScreenWidth, kRealValue(40));
         [reusableview addSubview:headView];
