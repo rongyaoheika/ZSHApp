@@ -179,7 +179,6 @@ static NSString *ZSHToplineCellID = @"ZSHToplineCellID";
 
 - (void)updateUI{
     _titleLabel.text = _dataDic[@"NEWSTITLE"];
-    
     _contentLabel.text = _dataDic[@"NEWSCONTENT"];
     NSMutableParagraphStyle  *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
     [paragraphStyle  setLineSpacing:5];

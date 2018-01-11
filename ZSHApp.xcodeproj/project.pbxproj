@@ -19,9 +19,16 @@
 		04A6FCCB2007152700DDE79E /* ZSHMusicMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A6FCCA2007152700DDE79E /* ZSHMusicMainViewController.m */; };
 		04A6FCCE200756F800DDE79E /* ZSHRadioScrollCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A6FCCD200756F800DDE79E /* ZSHRadioScrollCell.m */; };
 		04A6FCD120075A2900DDE79E /* ZSHRadioSubView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A6FCD020075A2900DDE79E /* ZSHRadioSubView.m */; };
+		049823B520074D9C0080626D /* ZSHCabinetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 049823B420074D9C0080626D /* ZSHCabinetViewController.m */; };
+		049823B920074F180080626D /* ZSHCabinetCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 049823B820074F180080626D /* ZSHCabinetCollectionCell.m */; };
+		049823BC20074F640080626D /* ZSHCabinetReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 049823BB20074F640080626D /* ZSHCabinetReusableView.m */; };
+		049823BF20076BCD0080626D /* ZSHCabinetHeadReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 049823BE20076BCD0080626D /* ZSHCabinetHeadReusableView.m */; };
+		049823C320078D590080626D /* ZSHFlagshipViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 049823C220078D590080626D /* ZSHFlagshipViewController.m */; };
+		049823C720078E470080626D /* ZSHFlagshipCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 049823C620078E470080626D /* ZSHFlagshipCell.m */; };
 		04BAD7BD2005C0DB00950195 /* ZSHMagazineListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04BAD7BC2005C0DB00950195 /* ZSHMagazineListViewController.m */; };
 		04BAD7C12005EEB100950195 /* ZSHMagazineListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04BAD7C02005EEB100950195 /* ZSHMagazineListCell.m */; };
 		04CC219E1FFF79B200921863 /* ZSHMagazineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CC219D1FFF79B200921863 /* ZSHMagazineViewController.m */; };
+		04E2F3C120070E2200F902A4 /* ZSHMagazineReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E2F3C020070E2200F902A4 /* ZSHMagazineReusableView.m */; };
 		18063C541FC90379000F5A00 /* ZSHPersonalModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 18063C531FC90379000F5A00 /* ZSHPersonalModel.m */; };
 		18063C571FC90951000F5A00 /* ZSHPersonalDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 18063C561FC90951000F5A00 /* ZSHPersonalDetailModel.m */; };
 		18063C5B1FC9140B000F5A00 /* ZSHCollectModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 18063C5A1FC9140B000F5A00 /* ZSHCollectModel.m */; };
@@ -566,12 +573,26 @@
 		04A6FCCD200756F800DDE79E /* ZSHRadioScrollCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHRadioScrollCell.m; sourceTree = "<group>"; };
 		04A6FCCF20075A2900DDE79E /* ZSHRadioSubView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHRadioSubView.h; sourceTree = "<group>"; };
 		04A6FCD020075A2900DDE79E /* ZSHRadioSubView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHRadioSubView.m; sourceTree = "<group>"; };
+		049823B320074D9C0080626D /* ZSHCabinetViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHCabinetViewController.h; sourceTree = "<group>"; };
+		049823B420074D9C0080626D /* ZSHCabinetViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHCabinetViewController.m; sourceTree = "<group>"; };
+		049823B720074F180080626D /* ZSHCabinetCollectionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHCabinetCollectionCell.h; sourceTree = "<group>"; };
+		049823B820074F180080626D /* ZSHCabinetCollectionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHCabinetCollectionCell.m; sourceTree = "<group>"; };
+		049823BA20074F640080626D /* ZSHCabinetReusableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHCabinetReusableView.h; sourceTree = "<group>"; };
+		049823BB20074F640080626D /* ZSHCabinetReusableView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHCabinetReusableView.m; sourceTree = "<group>"; };
+		049823BD20076BCD0080626D /* ZSHCabinetHeadReusableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHCabinetHeadReusableView.h; sourceTree = "<group>"; };
+		049823BE20076BCD0080626D /* ZSHCabinetHeadReusableView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHCabinetHeadReusableView.m; sourceTree = "<group>"; };
+		049823C120078D590080626D /* ZSHFlagshipViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHFlagshipViewController.h; sourceTree = "<group>"; };
+		049823C220078D590080626D /* ZSHFlagshipViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHFlagshipViewController.m; sourceTree = "<group>"; };
+		049823C520078E470080626D /* ZSHFlagshipCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHFlagshipCell.h; sourceTree = "<group>"; };
+		049823C620078E470080626D /* ZSHFlagshipCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHFlagshipCell.m; sourceTree = "<group>"; };
 		04BAD7BB2005C0DB00950195 /* ZSHMagazineListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHMagazineListViewController.h; sourceTree = "<group>"; };
 		04BAD7BC2005C0DB00950195 /* ZSHMagazineListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHMagazineListViewController.m; sourceTree = "<group>"; };
 		04BAD7BF2005EEB100950195 /* ZSHMagazineListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHMagazineListCell.h; sourceTree = "<group>"; };
 		04BAD7C02005EEB100950195 /* ZSHMagazineListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHMagazineListCell.m; sourceTree = "<group>"; };
 		04CC219C1FFF79B200921863 /* ZSHMagazineViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHMagazineViewController.h; sourceTree = "<group>"; };
 		04CC219D1FFF79B200921863 /* ZSHMagazineViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHMagazineViewController.m; sourceTree = "<group>"; };
+		04E2F3BF20070E2200F902A4 /* ZSHMagazineReusableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHMagazineReusableView.h; sourceTree = "<group>"; };
+		04E2F3C020070E2200F902A4 /* ZSHMagazineReusableView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHMagazineReusableView.m; sourceTree = "<group>"; };
 		14ED69325E9FD4BDB1CA95F8 /* Pods-ZSHApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZSHApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-ZSHApp/Pods-ZSHApp.release.xcconfig"; sourceTree = "<group>"; };
 		18063C521FC90379000F5A00 /* ZSHPersonalModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHPersonalModel.h; sourceTree = "<group>"; };
 		18063C531FC90379000F5A00 /* ZSHPersonalModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHPersonalModel.m; sourceTree = "<group>"; };
@@ -1546,15 +1567,57 @@
 			path = Music;
 			sourceTree = "<group>";
 		};
-		04BAD7BE2005EE6000950195 /* 杂志 */ = {
-			isa = PBXGroup;
-			children = (
-				04BAD7BF2005EEB100950195 /* ZSHMagazineListCell.h */,
-				04BAD7C02005EEB100950195 /* ZSHMagazineListCell.m */,
-			);
-			name = "杂志";
-			sourceTree = "<group>";
-		};
+        049823B2200748640080626D /* 专柜店 */ = {
+            isa = PBXGroup;
+            children = (
+                049823B320074D9C0080626D /* ZSHCabinetViewController.h */,
+                049823B420074D9C0080626D /* ZSHCabinetViewController.m */,
+            );
+            path = "专柜店";
+            sourceTree = "<group>";
+        };
+        049823B620074E990080626D /* 专柜店 */ = {
+            isa = PBXGroup;
+            children = (
+                049823B720074F180080626D /* ZSHCabinetCollectionCell.h */,
+                049823B820074F180080626D /* ZSHCabinetCollectionCell.m */,
+                049823BD20076BCD0080626D /* ZSHCabinetHeadReusableView.h */,
+                049823BE20076BCD0080626D /* ZSHCabinetHeadReusableView.m */,
+                049823BA20074F640080626D /* ZSHCabinetReusableView.h */,
+                049823BB20074F640080626D /* ZSHCabinetReusableView.m */,
+            );
+            name = "专柜店";
+            sourceTree = "<group>";
+        };
+        049823C020078D110080626D /* 旗舰店 */ = {
+            isa = PBXGroup;
+            children = (
+                049823C120078D590080626D /* ZSHFlagshipViewController.h */,
+                049823C220078D590080626D /* ZSHFlagshipViewController.m */,
+            );
+            path = "旗舰店";
+            sourceTree = "<group>";
+        };
+        049823C420078E210080626D /* 旗舰店 */ = {
+            isa = PBXGroup;
+            children = (
+                049823C520078E470080626D /* ZSHFlagshipCell.h */,
+                049823C620078E470080626D /* ZSHFlagshipCell.m */,
+            );
+            name = "旗舰店";
+            sourceTree = "<group>";
+        };
+        04BAD7BE2005EE6000950195 /* 杂志 */ = {
+            isa = PBXGroup;
+            children = (
+                04BAD7BF2005EEB100950195 /* ZSHMagazineListCell.h */,
+                04BAD7C02005EEB100950195 /* ZSHMagazineListCell.m */,
+                04E2F3BF20070E2200F902A4 /* ZSHMagazineReusableView.h */,
+                04E2F3C020070E2200F902A4 /* ZSHMagazineReusableView.m */,
+            );
+            name = "杂志";
+            sourceTree = "<group>";
+        };
 		04CC219B1FFF793800921863 /* 杂志 */ = {
 			isa = PBXGroup;
 			children = (
@@ -2685,6 +2748,8 @@
 		FE291EBC1F8CAEDC00D4BBE7 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				049823C020078D110080626D /* 旗舰店 */,
+				049823B2200748640080626D /* 专柜店 */,
 				044A2F432004BBF000B05CE7 /* 分享赚钱 */,
 				FEA1058D1F9B49B3008652D6 /* 发现 */,
 				FE0F9D8B1F948717004F8D2A /* 购物车 */,
@@ -2719,6 +2784,8 @@
 		FE291EBF1F8CAEDC00D4BBE7 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				049823C420078E210080626D /* 旗舰店 */,
+				049823B620074E990080626D /* 专柜店 */,
 				FE8FD0961FAE0D80005F1184 /* 炫购收藏 */,
 				FE9CC3D61FA06ECF00285475 /* 积分 */,
 				FEA1058E1F9B49DA008652D6 /* 发现 */,
@@ -4367,6 +4434,7 @@
 				FEA018D41FCBFB1700989FB2 /* ZSHShopCommentCell.m in Sources */,
 				182287161FB44FE600CA5B10 /* XXTextView.m in Sources */,
 				04315E851FF61175006C6BC8 /* UIImage+String.m in Sources */,
+				049823BF20076BCD0080626D /* ZSHCabinetHeadReusableView.m in Sources */,
 				1846BB491FE3B282001B264B /* BEMSimpleLineGraphView.m in Sources */,
 				FEBD7C9D1FA70F6500CE2BA6 /* ZSHGoodsChartCell.m in Sources */,
 				FEDF28F91FB68C1C00CD5756 /* ZSHAgeView.m in Sources */,
@@ -4610,6 +4678,7 @@
 				FE4BC2BA1FE21A6100007C4C /* HCLocationManager.m in Sources */,
 				FE55385B1F47049D00803128 /* AdPageView.m in Sources */,
 				FEBD7CBE1FA7608200CE2BA6 /* ZSHFoodModel.m in Sources */,
+				049823B920074F180080626D /* ZSHCabinetCollectionCell.m in Sources */,
 				180C95CE1F57E10200CE570C /* UIImage+BlurGlass.m in Sources */,
 				FEA1056A1F9B208A008652D6 /* ZSHClassMainModel.m in Sources */,
 				FEDF292D1FB6F24A00CD5756 /* ZSHLiveProfitViewController.m in Sources */,
@@ -4652,6 +4721,7 @@
 				FE8FD07F1FADD306005F1184 /* ZSHGameCenterViewController.m in Sources */,
 				FEF2B6401FACBCE5000AEA6E /* ZSHEntertainmentDetailCell.m in Sources */,
 				FE1F76331F8F7D0500C45B83 /* ZSHLiveContentFirstViewController.m in Sources */,
+				049823C320078D590080626D /* ZSHFlagshipViewController.m in Sources */,
 				FE3E00681FDA6A7300A0F7CA /* ZSHSingerViewController.m in Sources */,
 				FE5538611F47049D00803128 /* MBProgressHUD+XY.m in Sources */,
 				FE2CD0B01F98B6DB00E9E519 /* ZSHIntegalModel.m in Sources */,
@@ -4672,6 +4742,7 @@
 				1891C1391FC6D115000AFEFB /* ZSHTogetherModel.m in Sources */,
 				FEA30A5F1F9F494E00AB0FFC /* ZSHNumberCount.m in Sources */,
 				FE3E005F1FDA269600A0F7CA /* ZSHMusicRankViewController.m in Sources */,
+				049823BC20074F640080626D /* ZSHCabinetReusableView.m in Sources */,
 				18762B291FE108E100E1857F /* ZSHWeiboWriteController.m in Sources */,
 				FE5538821F470BAF00803128 /* UserInfo.m in Sources */,
 				18762B261FE1088300E1857F /* ZSHReviewViewController.m in Sources */,
@@ -4682,9 +4753,11 @@
 				FE7502BD1F9A0671002F2708 /* ZSHPersonalTailorViewController.m in Sources */,
 				1826CDAD1FBAE1F000A0ECE2 /* ZSHVideoViewController.m in Sources */,
 				FE2B2A811FB9FD26001F8A61 /* TLMenuButtonView.m in Sources */,
+				049823B520074D9C0080626D /* ZSHCabinetViewController.m in Sources */,
 				FEA1057A1F9B2738008652D6 /* UIView+ZSHExtension.m in Sources */,
 				18F902451FB68D740044967F /* ZSHSubscribeViewController.m in Sources */,
 				1846BB4C1FE3D191001B264B /* ZSHEnergyValueModel.m in Sources */,
+				04E2F3C120070E2200F902A4 /* ZSHMagazineReusableView.m in Sources */,
 				1813E2731FBD400D00624405 /* ZSHTrainTicketDetailHeadView.m in Sources */,
 				FE2CD0B91F98F9C200E9E519 /* ZSHCouponViewController.m in Sources */,
 				FE55385E1F47049D00803128 /* UIButton+XYButton.m in Sources */,
@@ -4727,6 +4800,7 @@
 				FE5538831F470BAF00803128 /* UserManager.m in Sources */,
 				FEBD7C901FA6C47300CE2BA6 /* ZSHHotelListCell.m in Sources */,
 				FE24DA641FD942EC00965DC8 /* ZSHRadioModel.m in Sources */,
+				049823C720078E470080626D /* ZSHFlagshipCell.m in Sources */,
 				FE7CA9E41F9DBE5100A2B15D /* ZSHGoodsDetailColorCell.m in Sources */,
 				18B2DECC1F497B88005A74A7 /* ZSHBaseModel.m in Sources */,
 				FEC2F64D1FF2942100C24067 /* ZSHTopicViewController.m in Sources */,

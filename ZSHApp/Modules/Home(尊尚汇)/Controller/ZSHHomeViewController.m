@@ -341,7 +341,7 @@ static NSString *Identify_MusicCell = @"musicCell";
     __block  CGFloat cellHeight = cellModel.height;
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHBaseCell *cell = [tableView dequeueReusableCellWithIdentifier:Identify_PlayCell forIndexPath:indexPath];
-        if (![cell.contentView viewWithTag:2]) {
+        if (![cell viewWithTag:2]) {
             NSDictionary *nextParamDic = @{KFromClassType:@(FromBuyVCToGuideView),@"pageViewHeight":@(cellHeight),@"min_scale":@(0.6),@"withRatio":@(1.8),@"infinite":@(false)};
             ZSHGuideView *guideView = [[ZSHGuideView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, cellHeight) paramDic:nextParamDic];
             guideView.tag = 2;

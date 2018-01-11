@@ -220,11 +220,11 @@
 }
 
 - (void)collectionHeaderRereshing {
-    
+    [self.collectionView.mj_header endRefreshing];
 }
 
 - (void)collectionFooterRereshing {
-    
+    [self.collectionView.mj_footer endRefreshing];
 }
 
 /**
