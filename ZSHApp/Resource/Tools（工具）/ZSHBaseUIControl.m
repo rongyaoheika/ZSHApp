@@ -109,7 +109,10 @@
     NSDictionary *btnDic = @{@"title":btnTitle,@"selectedTitleColor":KZSHColorF29E19,@"font":kPingFangMedium(15)};
     
     UIButton *refreshBtn = [ZSHBaseUIControl createBtnWithParamDic:btnDic];
-    [refreshBtn setImage:[UIImage imageNamed:paramDic[@"btnImage"]] forState:UIControlStateNormal];
+    if (paramDic[@"btnImage"]) {
+        [refreshBtn setImage:[UIImage imageNamed:paramDic[@"btnImage"]] forState:UIControlStateNormal];
+    }
+    
     refreshBtn.tag = 2;
     refreshBtn.hidden = YES;
     [headView addSubview:refreshBtn];

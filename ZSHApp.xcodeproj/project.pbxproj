@@ -16,15 +16,15 @@
 		043587591FF2564F00969DD7 /* ZSHGoodsCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 043587581FF2564F00969DD7 /* ZSHGoodsCollectionViewCell.m */; };
 		044A2F462004BBF100B05CE7 /* ZSHMakeMoneyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 044A2F452004BBF000B05CE7 /* ZSHMakeMoneyViewController.m */; };
 		0450A60D20036BC100D7B2D4 /* ZSHHomeSubListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0450A60C20036BC100D7B2D4 /* ZSHHomeSubListCell.m */; };
-		04A6FCCB2007152700DDE79E /* ZSHMusicMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A6FCCA2007152700DDE79E /* ZSHMusicMainViewController.m */; };
-		04A6FCCE200756F800DDE79E /* ZSHRadioScrollCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A6FCCD200756F800DDE79E /* ZSHRadioScrollCell.m */; };
-		04A6FCD120075A2900DDE79E /* ZSHRadioSubView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A6FCD020075A2900DDE79E /* ZSHRadioSubView.m */; };
 		049823B520074D9C0080626D /* ZSHCabinetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 049823B420074D9C0080626D /* ZSHCabinetViewController.m */; };
 		049823B920074F180080626D /* ZSHCabinetCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 049823B820074F180080626D /* ZSHCabinetCollectionCell.m */; };
 		049823BC20074F640080626D /* ZSHCabinetReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 049823BB20074F640080626D /* ZSHCabinetReusableView.m */; };
 		049823BF20076BCD0080626D /* ZSHCabinetHeadReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 049823BE20076BCD0080626D /* ZSHCabinetHeadReusableView.m */; };
 		049823C320078D590080626D /* ZSHFlagshipViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 049823C220078D590080626D /* ZSHFlagshipViewController.m */; };
 		049823C720078E470080626D /* ZSHFlagshipCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 049823C620078E470080626D /* ZSHFlagshipCell.m */; };
+		04A6FCCB2007152700DDE79E /* ZSHMusicMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A6FCCA2007152700DDE79E /* ZSHMusicMainViewController.m */; };
+		04A6FCCE200756F800DDE79E /* ZSHRadioScrollCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A6FCCD200756F800DDE79E /* ZSHRadioScrollCell.m */; };
+		04A6FCD120075A2900DDE79E /* ZSHRadioSubView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A6FCD020075A2900DDE79E /* ZSHRadioSubView.m */; };
 		04BAD7BD2005C0DB00950195 /* ZSHMagazineListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04BAD7BC2005C0DB00950195 /* ZSHMagazineListViewController.m */; };
 		04BAD7C12005EEB100950195 /* ZSHMagazineListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04BAD7C02005EEB100950195 /* ZSHMagazineListCell.m */; };
 		04CC219E1FFF79B200921863 /* ZSHMagazineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CC219D1FFF79B200921863 /* ZSHMagazineViewController.m */; };
@@ -567,12 +567,6 @@
 		044A2F452004BBF000B05CE7 /* ZSHMakeMoneyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHMakeMoneyViewController.m; sourceTree = "<group>"; };
 		0450A60B20036BC100D7B2D4 /* ZSHHomeSubListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHHomeSubListCell.h; sourceTree = "<group>"; };
 		0450A60C20036BC100D7B2D4 /* ZSHHomeSubListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHHomeSubListCell.m; sourceTree = "<group>"; };
-		04A6FCC92007152700DDE79E /* ZSHMusicMainViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHMusicMainViewController.h; sourceTree = "<group>"; };
-		04A6FCCA2007152700DDE79E /* ZSHMusicMainViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHMusicMainViewController.m; sourceTree = "<group>"; };
-		04A6FCCC200756F800DDE79E /* ZSHRadioScrollCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHRadioScrollCell.h; sourceTree = "<group>"; };
-		04A6FCCD200756F800DDE79E /* ZSHRadioScrollCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHRadioScrollCell.m; sourceTree = "<group>"; };
-		04A6FCCF20075A2900DDE79E /* ZSHRadioSubView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHRadioSubView.h; sourceTree = "<group>"; };
-		04A6FCD020075A2900DDE79E /* ZSHRadioSubView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHRadioSubView.m; sourceTree = "<group>"; };
 		049823B320074D9C0080626D /* ZSHCabinetViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHCabinetViewController.h; sourceTree = "<group>"; };
 		049823B420074D9C0080626D /* ZSHCabinetViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHCabinetViewController.m; sourceTree = "<group>"; };
 		049823B720074F180080626D /* ZSHCabinetCollectionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHCabinetCollectionCell.h; sourceTree = "<group>"; };
@@ -585,6 +579,12 @@
 		049823C220078D590080626D /* ZSHFlagshipViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHFlagshipViewController.m; sourceTree = "<group>"; };
 		049823C520078E470080626D /* ZSHFlagshipCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHFlagshipCell.h; sourceTree = "<group>"; };
 		049823C620078E470080626D /* ZSHFlagshipCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHFlagshipCell.m; sourceTree = "<group>"; };
+		04A6FCC92007152700DDE79E /* ZSHMusicMainViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHMusicMainViewController.h; sourceTree = "<group>"; };
+		04A6FCCA2007152700DDE79E /* ZSHMusicMainViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHMusicMainViewController.m; sourceTree = "<group>"; };
+		04A6FCCC200756F800DDE79E /* ZSHRadioScrollCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHRadioScrollCell.h; sourceTree = "<group>"; };
+		04A6FCCD200756F800DDE79E /* ZSHRadioScrollCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHRadioScrollCell.m; sourceTree = "<group>"; };
+		04A6FCCF20075A2900DDE79E /* ZSHRadioSubView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHRadioSubView.h; sourceTree = "<group>"; };
+		04A6FCD020075A2900DDE79E /* ZSHRadioSubView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHRadioSubView.m; sourceTree = "<group>"; };
 		04BAD7BB2005C0DB00950195 /* ZSHMagazineListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHMagazineListViewController.h; sourceTree = "<group>"; };
 		04BAD7BC2005C0DB00950195 /* ZSHMagazineListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHMagazineListViewController.m; sourceTree = "<group>"; };
 		04BAD7BF2005EEB100950195 /* ZSHMagazineListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHMagazineListCell.h; sourceTree = "<group>"; };
@@ -1547,6 +1547,46 @@
 			path = "分享赚钱";
 			sourceTree = "<group>";
 		};
+		049823B2200748640080626D /* 专柜店 */ = {
+			isa = PBXGroup;
+			children = (
+				049823B320074D9C0080626D /* ZSHCabinetViewController.h */,
+				049823B420074D9C0080626D /* ZSHCabinetViewController.m */,
+			);
+			path = "专柜店";
+			sourceTree = "<group>";
+		};
+		049823B620074E990080626D /* 专柜店 */ = {
+			isa = PBXGroup;
+			children = (
+				049823B720074F180080626D /* ZSHCabinetCollectionCell.h */,
+				049823B820074F180080626D /* ZSHCabinetCollectionCell.m */,
+				049823BD20076BCD0080626D /* ZSHCabinetHeadReusableView.h */,
+				049823BE20076BCD0080626D /* ZSHCabinetHeadReusableView.m */,
+				049823BA20074F640080626D /* ZSHCabinetReusableView.h */,
+				049823BB20074F640080626D /* ZSHCabinetReusableView.m */,
+			);
+			name = "专柜店";
+			sourceTree = "<group>";
+		};
+		049823C020078D110080626D /* 旗舰店 */ = {
+			isa = PBXGroup;
+			children = (
+				049823C120078D590080626D /* ZSHFlagshipViewController.h */,
+				049823C220078D590080626D /* ZSHFlagshipViewController.m */,
+			);
+			path = "旗舰店";
+			sourceTree = "<group>";
+		};
+		049823C420078E210080626D /* 旗舰店 */ = {
+			isa = PBXGroup;
+			children = (
+				049823C520078E470080626D /* ZSHFlagshipCell.h */,
+				049823C620078E470080626D /* ZSHFlagshipCell.m */,
+			);
+			name = "旗舰店";
+			sourceTree = "<group>";
+		};
 		04A6FCC72007135700DDE79E /* Music */ = {
 			isa = PBXGroup;
 			children = (
@@ -1567,57 +1607,17 @@
 			path = Music;
 			sourceTree = "<group>";
 		};
-        049823B2200748640080626D /* 专柜店 */ = {
-            isa = PBXGroup;
-            children = (
-                049823B320074D9C0080626D /* ZSHCabinetViewController.h */,
-                049823B420074D9C0080626D /* ZSHCabinetViewController.m */,
-            );
-            path = "专柜店";
-            sourceTree = "<group>";
-        };
-        049823B620074E990080626D /* 专柜店 */ = {
-            isa = PBXGroup;
-            children = (
-                049823B720074F180080626D /* ZSHCabinetCollectionCell.h */,
-                049823B820074F180080626D /* ZSHCabinetCollectionCell.m */,
-                049823BD20076BCD0080626D /* ZSHCabinetHeadReusableView.h */,
-                049823BE20076BCD0080626D /* ZSHCabinetHeadReusableView.m */,
-                049823BA20074F640080626D /* ZSHCabinetReusableView.h */,
-                049823BB20074F640080626D /* ZSHCabinetReusableView.m */,
-            );
-            name = "专柜店";
-            sourceTree = "<group>";
-        };
-        049823C020078D110080626D /* 旗舰店 */ = {
-            isa = PBXGroup;
-            children = (
-                049823C120078D590080626D /* ZSHFlagshipViewController.h */,
-                049823C220078D590080626D /* ZSHFlagshipViewController.m */,
-            );
-            path = "旗舰店";
-            sourceTree = "<group>";
-        };
-        049823C420078E210080626D /* 旗舰店 */ = {
-            isa = PBXGroup;
-            children = (
-                049823C520078E470080626D /* ZSHFlagshipCell.h */,
-                049823C620078E470080626D /* ZSHFlagshipCell.m */,
-            );
-            name = "旗舰店";
-            sourceTree = "<group>";
-        };
-        04BAD7BE2005EE6000950195 /* 杂志 */ = {
-            isa = PBXGroup;
-            children = (
-                04BAD7BF2005EEB100950195 /* ZSHMagazineListCell.h */,
-                04BAD7C02005EEB100950195 /* ZSHMagazineListCell.m */,
-                04E2F3BF20070E2200F902A4 /* ZSHMagazineReusableView.h */,
-                04E2F3C020070E2200F902A4 /* ZSHMagazineReusableView.m */,
-            );
-            name = "杂志";
-            sourceTree = "<group>";
-        };
+		04BAD7BE2005EE6000950195 /* 杂志 */ = {
+			isa = PBXGroup;
+			children = (
+				04BAD7BF2005EEB100950195 /* ZSHMagazineListCell.h */,
+				04BAD7C02005EEB100950195 /* ZSHMagazineListCell.m */,
+				04E2F3BF20070E2200F902A4 /* ZSHMagazineReusableView.h */,
+				04E2F3C020070E2200F902A4 /* ZSHMagazineReusableView.m */,
+			);
+			name = "杂志";
+			sourceTree = "<group>";
+		};
 		04CC219B1FFF793800921863 /* 杂志 */ = {
 			isa = PBXGroup;
 			children = (
@@ -4262,7 +4262,7 @@
 					296F9EB71ECC64CE0063A255 = {
 						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = 84479DR68T;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 					296F9ED01ECC64CE0063A255 = {
 						CreatedOnToolsVersion = 8.3.2;
@@ -5017,8 +5017,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer: pei sun (3PA2XG4XY3)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = 84479DR68T;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -5109,8 +5109,8 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.combatworld.honourcard;
 				PRODUCT_NAME = "荣耀黑卡";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "69d02021-55e5-42e4-a8f5-77a82164d82b";
+				PROVISIONING_PROFILE_SPECIFIER = "dev_profile(0104)";
 				SKIP_INSTALL = NO;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/ZSHApp/Define";
@@ -5125,9 +5125,9 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: pei sun (84479DR68T)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = 84479DR68T;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -5218,8 +5218,8 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.combatworld.honourcard;
 				PRODUCT_NAME = "荣耀黑卡";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "4dfc89ed-b1bf-46b5-9b04-a3e243fde090";
+				PROVISIONING_PROFILE_SPECIFIER = "dis_profile(0104)";
 				SKIP_INSTALL = NO;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/ZSHApp/Define";
@@ -5333,9 +5333,9 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: pei sun (84479DR68T)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = 84479DR68T;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -5426,8 +5426,8 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.combatworld.honourcard;
 				PRODUCT_NAME = "荣耀黑卡";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "e34a817b-c124-4360-906e-afa4da88ff42";
+				PROVISIONING_PROFILE_SPECIFIER = "Ad_Hoc_profile(0104)";
 				SKIP_INSTALL = NO;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/ZSHApp/Define";

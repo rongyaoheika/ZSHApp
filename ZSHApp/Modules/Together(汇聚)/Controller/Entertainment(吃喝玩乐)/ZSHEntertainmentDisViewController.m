@@ -25,7 +25,9 @@
 @property (nonatomic, strong) NSArray                   *images;
 @property (nonatomic, strong) NSArray                   *assets;
 @property (nonatomic, strong) NSArray                   *typeArr;
+
 @end
+
 static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 @implementation ZSHEntertainmentDisViewController
 

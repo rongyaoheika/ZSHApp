@@ -27,7 +27,7 @@
     [self.scrollView removeAllSubviews];
     
     ZSHButtonView *lastBtnView = nil;
-    NSDictionary *titleLabelDic = @{@"text":@"2.4.6.8娱乐吧",@"font":kPingFangRegular(12),@"textAlignment":@(NSTextAlignmentCenter)};
+    NSDictionary *titleLabelDic = @{@"text":@"2.4.6.8娱乐吧",@"font":kPingFangRegular(12),@"textAlignment":@(NSTextAlignmentCenter),KFromClassType:@([paramDic[KFromClassType]integerValue])};
     int i = 0;
     for (NSDictionary *subParamDic in dataArr) {
         ZSHButtonView *btnView = [[ZSHButtonView alloc]initWithFrame:CGRectZero paramDic:titleLabelDic];
