@@ -41,7 +41,7 @@ typedef NS_ENUM(NSInteger,ZSHToChangePWDView){
     FromMusicLibraryToNoticeView,       //音乐 - 曲库推荐
     FromMusicSingerToNoticeView,        //音乐 - 歌手推荐
     FromMusicRankToNoticeView,          //音乐 - 榜单推荐
-    FromNoneVCToChangePWDView
+    FromDefaultVCToChangePWDView
 };
 
 typedef NS_ENUM(NSUInteger,ZSHFromVCToHotelDetailVC){//** -> 详情页面

@@ -25,8 +25,8 @@
 #ifdef DEBUG
 
 #define DevelopSever    0
-#define TestSever       1
-#define ProductSever    0
+#define TestSever       0
+#define ProductSever    1
 
 #else
 
@@ -50,7 +50,7 @@
 #elif ProductSever
 
 /**生产服务器（阿里云）*/
-#define kUrlRoot                    @"http://47.104.16.215:8080/ZSHINTER/"
+#define kUrlRoot                    @"http://47.104.16.215/ZSHINTER/"
 
 
 #endif

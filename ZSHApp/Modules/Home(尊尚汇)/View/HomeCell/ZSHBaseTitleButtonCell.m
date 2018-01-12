@@ -31,6 +31,7 @@
     int i = 0;
     for (NSDictionary *subParamDic in dataArr) {
         ZSHButtonView *btnView = [[ZSHButtonView alloc]initWithFrame:CGRectZero paramDic:titleLabelDic];
+        btnView.label.textAlignment = NSTextAlignmentLeft;
         btnView.tag = i++;
         [btnView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(btnViewAction:)]];
         if ([paramDic[KFromClassType]integerValue] == FromHomeNoticeVCToNoticeView) {

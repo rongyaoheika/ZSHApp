@@ -28,7 +28,7 @@
     
 
     _label = [ZSHBaseUIControl createLabelWithParamDic:self.paramDic];
-    _label.textAlignment = NSTextAlignmentLeft;
+    
     _label.numberOfLines = 0;
     [self addSubview:_label];
     [_label mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -39,6 +39,7 @@
         } else {
             make.height.mas_equalTo(kRealValue(12));
         }
+                
     }];
 }
 
