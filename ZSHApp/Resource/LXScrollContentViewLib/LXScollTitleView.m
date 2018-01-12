@@ -138,6 +138,7 @@
 #pragma mark - setter
 
 - (void)setSelectedIndex:(NSInteger)selectedIndex{
+    
     [self.titleButtons enumerateObjectsUsingBlock:^(UIButton *btn , NSUInteger idx, BOOL * _Nonnull stop) {
         if (btn.tag-100 == selectedIndex) {
             btn.selected = !btn.selected;
@@ -166,8 +167,6 @@
     if (_indicatorHeight>0) {
         [self setSelectedIndicator:YES];
     }
-    
-   
 }
 
 - (void)setNormalColor:(UIColor *)normalColor{

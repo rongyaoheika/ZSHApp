@@ -1,52 +1,46 @@
 //
-//  ZSHPersonalTailorViewController.m
+//  ZSHPrivilegeController.m
 //  ZSHApp
 //
-//  Created by zhaoweiwei on 2017/10/20.
-//  Copyright © 2017年 apple. All rights reserved.
+//  Created by mac on 12/01/2018.
+//  Copyright © 2018 apple. All rights reserved.
 //
 
-#import "ZSHPersonalTailorViewController.h"
+#import "ZSHPrivilegeController.h"
 #import "ZSHTogetherView.h"
-#import "ZSHTailorDetailViewController.h"
 #import "ZSHBuyLogic.h"
 
-static NSString *cellIdentifier = @"listCell";
-@interface ZSHPersonalTailorViewController ()
+static NSString *ZSHPrivilegeCellID = @"ZSHPrivilegeCellID";
 
-@property (nonatomic, strong) NSArray      *titleArr;
-@property (nonatomic, strong) NSArray      *vcArr;
-@property (nonatomic, strong) NSArray      *paramDicArr;
+@interface ZSHPrivilegeController ()
+
 @property (nonatomic, strong) ZSHBuyLogic  *buyLogic;
 @end
 
-@implementation ZSHPersonalTailorViewController
+@implementation ZSHPrivilegeController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     [self loadData];
     [self createUI];
 }
 
 - (void)loadData{
-    
-    self.vcArr = @[@"",@"ZSHGoodsViewController",@"ZSHTitleContentViewController",@"LZCartViewController",@"",@"ZSHPersonalTailorViewController"];
     [self initViewModel];
     _buyLogic = [[ZSHBuyLogic alloc] init];
     [self requestData];
 }
 
 - (void)createUI{
-    self.title = @"私人频道";
+    
     [self.view addSubview:self.tableView];
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.mas_equalTo(self.view).insets(UIEdgeInsetsMake(KNavigationBarHeight, 0, 0, 0));
+        make.edges.mas_equalTo(self.view).insets(UIEdgeInsetsMake(0, 0, KBottomTabH, 0));
     }];
     self.tableView.delegate = self.tableViewModel;
     self.tableView.dataSource = self.tableViewModel;
-    [self.tableView registerClass:[ZSHTogetherView class] forCellReuseIdentifier:cellIdentifier];
-    [self.tableView reloadData];
+    
+    [self.tableView registerClass:[ZSHTogetherView class] forCellReuseIdentifier:ZSHPrivilegeCellID];
 }
 
 - (void)initViewModel {
@@ -56,23 +50,20 @@ static NSString *cellIdentifier = @"listCell";
 }
 
 - (ZSHBaseTableViewSectionModel*)storeListSection {
-    ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     kWeakSelf(self);
-    for (int i = 0; i<_buyLogic.personModelArr.count; i++) {
+    ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
+    for (int i = 0; i<self.buyLogic.personModelArr.count; i++) {
         ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
         [sectionModel.cellModelArray addObject:cellModel];
         cellModel.height = kRealValue(185);
         cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
             //需要注册，无需判空
-            ZSHTogetherView *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
+            ZSHTogetherView *cell = [tableView dequeueReusableCellWithIdentifier:ZSHPrivilegeCellID forIndexPath:indexPath];
             [cell setParamDic:@{KFromClassType:@(ZSHFromPersonalTailorVCToTogetherView)}];
-            [cell updateCellWithModel:_buyLogic.personModelArr[indexPath.row]];
+            [cell updateCellWithModel:weakself.buyLogic.personModelArr[indexPath.row]];
             return cell;
         };
-        
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
-            ZSHTailorDetailViewController *tailorDetailVC = [[ZSHTailorDetailViewController alloc] initWithParamDic:@{@"PersonalID":_buyLogic.personModelArr[indexPath.row].PERSONAL_ID}];
-            [weakself.navigationController pushViewController:tailorDetailVC animated:YES];
         };
     }
     return sectionModel;

@@ -22,6 +22,11 @@
 		049823BF20076BCD0080626D /* ZSHCabinetHeadReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 049823BE20076BCD0080626D /* ZSHCabinetHeadReusableView.m */; };
 		049823C320078D590080626D /* ZSHFlagshipViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 049823C220078D590080626D /* ZSHFlagshipViewController.m */; };
 		049823C720078E470080626D /* ZSHFlagshipCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 049823C620078E470080626D /* ZSHFlagshipCell.m */; };
+		04A69033200845FE00C583E6 /* ZSHFashionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A69032200845FE00C583E6 /* ZSHFashionCell.m */; };
+		04A690362008461500C583E6 /* ZSHFashionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A690352008461500C583E6 /* ZSHFashionViewController.m */; };
+		04A69039200847E900C583E6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04A69038200847E700C583E6 /* Assets.xcassets */; };
+		04A6903D20084E6800C583E6 /* ZSHPrivilegeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A6903C20084E6800C583E6 /* ZSHPrivilegeController.m */; };
+		04A6904020084EA800C583E6 /* ZSHPrivilegeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A6903F20084EA800C583E6 /* ZSHPrivilegeCell.m */; };
 		04A6FCCB2007152700DDE79E /* ZSHMusicMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A6FCCA2007152700DDE79E /* ZSHMusicMainViewController.m */; };
 		04A6FCCE200756F800DDE79E /* ZSHRadioScrollCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A6FCCD200756F800DDE79E /* ZSHRadioScrollCell.m */; };
 		04A6FCD120075A2900DDE79E /* ZSHRadioSubView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A6FCD020075A2900DDE79E /* ZSHRadioSubView.m */; };
@@ -324,7 +329,6 @@
 		FE5538321F47049D00803128 /* MBHUD_Success@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE5537B21F47049D00803128 /* MBHUD_Success@3x.png */; };
 		FE5538331F47049D00803128 /* MBHUD_Warn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE5537B31F47049D00803128 /* MBHUD_Warn@2x.png */; };
 		FE5538341F47049D00803128 /* MBHUD_Warn@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE5537B41F47049D00803128 /* MBHUD_Warn@3x.png */; };
-		FE55384F1F47049D00803128 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FE5537D11F47049D00803128 /* Assets.xcassets */; };
 		FE5538501F47049D00803128 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FE5537D21F47049D00803128 /* LaunchScreen.storyboard */; };
 		FE5538511F47049D00803128 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FE5537D41F47049D00803128 /* Info.plist */; };
 		FE5538521F47049D00803128 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FE5537D51F47049D00803128 /* main.m */; };
@@ -579,6 +583,15 @@
 		049823C220078D590080626D /* ZSHFlagshipViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHFlagshipViewController.m; sourceTree = "<group>"; };
 		049823C520078E470080626D /* ZSHFlagshipCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHFlagshipCell.h; sourceTree = "<group>"; };
 		049823C620078E470080626D /* ZSHFlagshipCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHFlagshipCell.m; sourceTree = "<group>"; };
+		04A69031200845FE00C583E6 /* ZSHFashionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHFashionCell.h; sourceTree = "<group>"; };
+		04A69032200845FE00C583E6 /* ZSHFashionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHFashionCell.m; sourceTree = "<group>"; };
+		04A690342008461500C583E6 /* ZSHFashionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHFashionViewController.h; sourceTree = "<group>"; };
+		04A690352008461500C583E6 /* ZSHFashionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHFashionViewController.m; sourceTree = "<group>"; };
+		04A69038200847E700C583E6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		04A6903B20084E6800C583E6 /* ZSHPrivilegeController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHPrivilegeController.h; sourceTree = "<group>"; };
+		04A6903C20084E6800C583E6 /* ZSHPrivilegeController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHPrivilegeController.m; sourceTree = "<group>"; };
+		04A6903E20084EA800C583E6 /* ZSHPrivilegeCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHPrivilegeCell.h; sourceTree = "<group>"; };
+		04A6903F20084EA800C583E6 /* ZSHPrivilegeCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHPrivilegeCell.m; sourceTree = "<group>"; };
 		04A6FCC92007152700DDE79E /* ZSHMusicMainViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHMusicMainViewController.h; sourceTree = "<group>"; };
 		04A6FCCA2007152700DDE79E /* ZSHMusicMainViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHMusicMainViewController.m; sourceTree = "<group>"; };
 		04A6FCCC200756F800DDE79E /* ZSHRadioScrollCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHRadioScrollCell.h; sourceTree = "<group>"; };
@@ -1146,7 +1159,6 @@
 		FE5537B21F47049D00803128 /* MBHUD_Success@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MBHUD_Success@3x.png"; sourceTree = "<group>"; };
 		FE5537B31F47049D00803128 /* MBHUD_Warn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MBHUD_Warn@2x.png"; sourceTree = "<group>"; };
 		FE5537B41F47049D00803128 /* MBHUD_Warn@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MBHUD_Warn@3x.png"; sourceTree = "<group>"; };
-		FE5537D11F47049D00803128 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FE5537D31F47049D00803128 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FE5537D41F47049D00803128 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FE5537D51F47049D00803128 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -1585,6 +1597,42 @@
 				049823C620078E470080626D /* ZSHFlagshipCell.m */,
 			);
 			name = "旗舰店";
+			sourceTree = "<group>";
+		};
+		04A69030200845C200C583E6 /* 时尚圈 */ = {
+			isa = PBXGroup;
+			children = (
+				04A690342008461500C583E6 /* ZSHFashionViewController.h */,
+				04A690352008461500C583E6 /* ZSHFashionViewController.m */,
+			);
+			path = "时尚圈";
+			sourceTree = "<group>";
+		};
+		04A690372008461F00C583E6 /* 时尚圈 */ = {
+			isa = PBXGroup;
+			children = (
+				04A69031200845FE00C583E6 /* ZSHFashionCell.h */,
+				04A69032200845FE00C583E6 /* ZSHFashionCell.m */,
+			);
+			path = "时尚圈";
+			sourceTree = "<group>";
+		};
+		04A6903A20084DB400C583E6 /* 会员特权 */ = {
+			isa = PBXGroup;
+			children = (
+				04A6903B20084E6800C583E6 /* ZSHPrivilegeController.h */,
+				04A6903C20084E6800C583E6 /* ZSHPrivilegeController.m */,
+			);
+			path = "会员特权";
+			sourceTree = "<group>";
+		};
+		04A69041200853F600C583E6 /* 会员特权 */ = {
+			isa = PBXGroup;
+			children = (
+				04A6903E20084EA800C583E6 /* ZSHPrivilegeCell.h */,
+				04A6903F20084EA800C583E6 /* ZSHPrivilegeCell.m */,
+			);
+			path = "会员特权";
 			sourceTree = "<group>";
 		};
 		04A6FCC72007135700DDE79E /* Music */ = {
@@ -2748,6 +2796,8 @@
 		FE291EBC1F8CAEDC00D4BBE7 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				04A6903A20084DB400C583E6 /* 会员特权 */,
+				04A69030200845C200C583E6 /* 时尚圈 */,
 				049823C020078D110080626D /* 旗舰店 */,
 				049823B2200748640080626D /* 专柜店 */,
 				044A2F432004BBF000B05CE7 /* 分享赚钱 */,
@@ -2784,6 +2834,8 @@
 		FE291EBF1F8CAEDC00D4BBE7 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				04A69041200853F600C583E6 /* 会员特权 */,
+				04A690372008461F00C583E6 /* 时尚圈 */,
 				049823C420078E210080626D /* 旗舰店 */,
 				049823B620074E990080626D /* 专柜店 */,
 				FE8FD0961FAE0D80005F1184 /* 炫购收藏 */,
@@ -3358,7 +3410,7 @@
 		FE5537D01F47049D00803128 /* Supporting Flies */ = {
 			isa = PBXGroup;
 			children = (
-				FE5537D11F47049D00803128 /* Assets.xcassets */,
+				04A69038200847E700C583E6 /* Assets.xcassets */,
 				FE5537D21F47049D00803128 /* LaunchScreen.storyboard */,
 				FE5537D41F47049D00803128 /* Info.plist */,
 				FE5537D51F47049D00803128 /* main.m */,
@@ -4305,6 +4357,7 @@
 			files = (
 				FE2BC8A01FDEAB7A00E98B2B /* QQLrcCell.xib in Resources */,
 				185C6D751FC2C168004EA461 /* cart_default_bg.png in Resources */,
+				04A69039200847E900C583E6 /* Assets.xcassets in Resources */,
 				FEA1059B1F9B5D06008652D6 /* ZSHSpeedy.h in Resources */,
 				FEA1059C1F9B5D06008652D6 /* ZSHSpeedy.m in Resources */,
 				FEA1058C1F9B43B8008652D6 /* ClassiftyGoods02.plist in Resources */,
@@ -4345,7 +4398,6 @@
 				FE5538501F47049D00803128 /* LaunchScreen.storyboard in Resources */,
 				18177E8F1FD29C7500213B3B /* area.plist in Resources */,
 				FE3E008C1FDA743200A0F7CA /* MusicPlayer_顺序播放@2x.png in Resources */,
-				FE55384F1F47049D00803128 /* Assets.xcassets in Resources */,
 				185C6D741FC2C168004EA461 /* cart_cutBtn_nomal@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4509,6 +4561,7 @@
 				1811057D1FBC12900046D229 /* ZSHDiscussViewController.m in Sources */,
 				FE9E6D741FC4275A00F7AD95 /* ZSHHomeMainModel.m in Sources */,
 				18F799E11FB313B8004CDB0E /* ZSHTailorDetailViewController.m in Sources */,
+				04A690362008461500C583E6 /* ZSHFashionViewController.m in Sources */,
 				FE24DA6A1FD94DDF00965DC8 /* ZSHMusicLibraryCell.m in Sources */,
 				FE4DB1E51F99970D008E12E9 /* ZSHGoodsCell.m in Sources */,
 				FE4E4B361FC025C500E3B2F4 /* YHSlider.m in Sources */,
@@ -4600,6 +4653,7 @@
 				185C6D901FC2DA5D004EA461 /* JSNummberCount.m in Sources */,
 				FE7CA9E71F9DC59300A2B15D /* ZSHGoodsDetailCountCell.m in Sources */,
 				FEF2B6361FAC4FE2000AEA6E /* ZSHEntertainmentHeadView.m in Sources */,
+				04A69033200845FE00C583E6 /* ZSHFashionCell.m in Sources */,
 				FEC2739D1F8E1D7900A0F91A /* ZSHCycleScrollView.h in Sources */,
 				FEA30A4D1F9F064900AB0FFC /* ZSHLogisticsDetailCell.m in Sources */,
 				185B75DD1FC51D45008CBD2B /* TYCyclePagerViewCell.m in Sources */,
@@ -4709,6 +4763,7 @@
 				FE55381B1F47049D00803128 /* RxWebViewController.m in Sources */,
 				FE0ED7E21FC2CC46008299C5 /* ZSHCityView.m in Sources */,
 				FE1377931F977628003C8DFB /* ZSHManageAddressViewController.m in Sources */,
+				04A6904020084EA800C583E6 /* ZSHPrivilegeCell.m in Sources */,
 				FE3005F71FC6779100A801C9 /* CWStarRateView.m in Sources */,
 				FE24DA701FD95FD100965DC8 /* ZSHPlayListViewController.m in Sources */,
 				FE55381A1F47049D00803128 /* RootWebViewController.m in Sources */,
@@ -4861,6 +4916,7 @@
 				FE2CD0AA1F98AEAC00E9E519 /* ZSHIntegralBillViewController.m in Sources */,
 				18F9024C1FB6CFDF0044967F /* ZSHFollowCell.m in Sources */,
 				182F578D1FDB91390085BFC6 /* KNActionSheet.m in Sources */,
+				04A6903D20084E6800C583E6 /* ZSHPrivilegeController.m in Sources */,
 				FE1F761F1F8F3D4100C45B83 /* ZSHTogetherView.m in Sources */,
 				FE0F9DC31F94DB85004F8D2A /* ZSHWeiBoBottomView.m in Sources */,
 				FE4E4B281FC000E800E3B2F4 /* ZSHSearchLiveSecondCell.m in Sources */,

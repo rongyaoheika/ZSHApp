@@ -24,6 +24,7 @@
 #import "ZSHToplineTopView.h"
 #import "ZSHWeiboWriteController.h"
 #import "ZSHHomeLogic.h"
+
 @interface ZSHTitleContentViewController ()<UISearchBarDelegate,PYSearchViewControllerDelegate>
 
 @property (nonatomic, strong) LXScrollContentView *contentView;
@@ -205,10 +206,10 @@
             [self createBuyNaviUI];
             self.titleArr = @[@"首页",@"时尚圈",@"专柜店", @"旗舰店", @"会员特权"];
             self.contentVCS = @[@"ZSHBuyViewController",
+                                @"ZSHFashionViewController",
                                 @"ZSHCabinetViewController",
                                 @"ZSHFlagshipViewController",
-                                @"ZSHBuyViewController",
-                                @"ZSHBuyViewController"
+                                @"ZSHPrivilegeController"
                                 ];
         }
             break;
@@ -278,10 +279,10 @@
 }
 
 - (void)createUI{
+    self.extendedLayoutIncludesOpaqueBars = YES;
     self.title = self.paramDic[@"title"];
     [self.view addSubview:self.titleView];
     [self.view addSubview:self.contentView];
-    
     
     [self reloadListData];
 }
@@ -331,7 +332,7 @@
     
     [self.titleView reloadViewWithTitles:self.titleArr];
     self.vcs = [[NSMutableArray alloc]init];
-    RootViewController *vc  = nil;
+    RootViewController *vc = nil;
 
     if (kFromClassTypeValue == FromAllOrderVCToTitleContentVC) {
         for (int i = 0;i< [self.paramDic[@"titleArr"] count]; i++) {
