@@ -57,6 +57,8 @@ static NSString *Identify_MusicCell = @"musicCell";
 @property (nonatomic, strong) NSArray                *musicPushVCsArr;
 @property (nonatomic, strong) NSArray                *musicParamArr;
 
+@property (nonatomic, strong) NSArray                *hotSearchArr;
+@property (nonatomic, strong) NSArray                *recommendImageArr;
 
 @end
 
@@ -463,23 +465,6 @@ static NSString *Identify_MusicCell = @"musicCell";
     [self.view endEditing:YES];
 }
 
-#pragma action
-- (void)searchAction {
-    kWeakSelf(self);
-    NSArray *hotSeaches = @[@"酒店", @"美食", @"旅游", @"聚会", @"KTV", @"酒吧", @"品鉴", @"豪车", @"游艇"];
-    PYSearchViewController *searchViewController = [PYSearchViewController searchViewControllerWithHotSearches:hotSeaches searchBarPlaceholder:NSLocalizedString(@"PYExampleSearchPlaceholderText", @"搜索编程语言") didSearchBlock:^(PYSearchViewController *searchViewController, UISearchBar *searchBar, NSString *searchText) {
-        ZSHGoodsTitleContentViewController *goodContentVC = [[ZSHGoodsTitleContentViewController alloc]initWithParamDic:@{@"searchText":searchText,KFromClassType:@(FromSearchResultVCTOGoodsTitleVC)}];
-        [weakself.navigationController pushViewController:goodContentVC animated:YES];
-    }];
-    searchViewController.recommendViewType = 0;
-    searchViewController.showRecommendView = YES;
-    searchViewController.hotSearchStyle = PYHotSearchStyleARCBorderTag;
-    searchViewController.searchHistoryStyle = PYSearchHistoryStyleARCBorderTag;
-    searchViewController.searchBarBackgroundColor = KZSHColor1A1A1A;
-    searchViewController.delegate = self;
-    [self.navigationController pushViewController:searchViewController animated:YES];
-}
-
 
 - (void)menuBtntClick:(UIButton *)menuBtn {
     kWeakSelf(self);
@@ -497,8 +482,6 @@ static NSString *Identify_MusicCell = @"musicCell";
 }
 
 - (void)locateBtnAction {
-//    ZSHCityViewController *cityVC = [[ZSHCityViewController alloc]init];
-//    [self.navigationController pushViewController:cityVC animated:YES];
 
     GYZChooseCityController *cityVC = [[GYZChooseCityController alloc]init];
     [cityVC setDelegate:self];
@@ -507,7 +490,40 @@ static NSString *Identify_MusicCell = @"musicCell";
     [self.navigationController pushViewController:cityVC animated:YES];
 }
 
-
+#pragma action
+- (void)searchAction {
+    kWeakSelf(self);
+    _homeLogic = [[ZSHHomeLogic alloc]init];
+    NSDictionary *paramDic = @{@"PARENT_ID":@(1)};
+    NSMutableArray *hotSearchMArr = [[NSMutableArray alloc]init];
+    NSMutableArray *recommendImageMArr = [[NSMutableArray alloc]init];
+    [_homeLogic loadSearchListWithDic:paramDic success:^(id response) {
+        for (NSDictionary *dic in response[@"pd"]) {
+            [hotSearchMArr addObject:dic[@"NAME"]];
+        }
+        
+        for (NSDictionary *dic in response[@"showimgs"]) {
+            [recommendImageMArr addObject:dic[@"SHOWIMAGES"]];
+        }
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            PYSearchViewController *searchViewController = [PYSearchViewController searchViewControllerWithHotSearches:hotSearchMArr searchBarPlaceholder:NSLocalizedString(@"Search", @"搜索") recommendArr:recommendImageMArr didSearchBlock:^(PYSearchViewController *searchViewController, UISearchBar *searchBar, NSString *searchText) {
+                ZSHGoodsTitleContentViewController *goodContentVC = [[ZSHGoodsTitleContentViewController alloc]initWithParamDic:@{@"searchText":searchText,KFromClassType:@(FromSearchResultVCTOGoodsTitleVC)}];
+                [weakself.navigationController pushViewController:goodContentVC animated:YES];
+            }];
+            
+            searchViewController.showRecommendView = YES;
+            searchViewController.hotSearchStyle = PYHotSearchStyleARCBorderTag;
+            searchViewController.searchHistoryStyle = PYSearchHistoryStyleARCBorderTag;
+            searchViewController.searchBarBackgroundColor = KZSHColor1A1A1A;
+            searchViewController.delegate = self;
+            [self.navigationController pushViewController:searchViewController animated:YES];
+        });
+        
+        
+    }];
+    
+}
 
 #pragma getter
 - (ZSHBottomBlurPopView *)bottomBlurPopView{

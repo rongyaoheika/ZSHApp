@@ -12,10 +12,12 @@
 #import "UIImage+BlurGlass.h"
 #import "PYSearchViewController.h"
 #import "ZSHBaseTableView.h"
+
 @interface RootViewController ()
 
-@property (nonatomic,strong) UIImageView        *noDataView;
-@property (nonatomic, weak)  UITextField        *searchTextField;
+@property (nonatomic, strong) UIImageView        *noDataView;
+@property (nonatomic, weak)   UITextField        *searchTextField;
+
 @end
 
 @implementation RootViewController

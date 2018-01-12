@@ -11,30 +11,17 @@
 @interface ZSHRecommendView ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic, strong) UICollectionView          *collectionView;
-@property (nonatomic, strong) NSMutableArray            *dataArr;
+@property (nonatomic, strong) NSArray                   *dataArr;
 @end
 
 @implementation ZSHRecommendView
 
 -(void)setup{
-    _dataArr = [[NSMutableArray alloc]init];
-    if (kFromClassTypeValue == 0) {//首页
-        for (int i = 10; i<18; i++) {
-            NSString *imageName = [NSString stringWithFormat:@"search_image_%zd",i];
-            [_dataArr addObject:imageName];
-        }
-    } else {//尊购
-        for (int i = 18; i<26; i++) {
-            NSString *imageName = [NSString stringWithFormat:@"search_image_%zd",i];
-            [_dataArr addObject:imageName];
-        }
-    }
-   
     
     UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout *)self.collectionView.collectionViewLayout;
     layout.sectionInset = UIEdgeInsetsMake(25, 5, 0, 5);
     layout.itemSize = CGSizeMake((KScreenWidth - 15)/2, kRealValue(120));
-    layout.minimumLineSpacing = 0;
+    layout.minimumLineSpacing = 5.0;
     layout.minimumInteritemSpacing = 5.0;
     
     [self addSubview:self.collectionView];
@@ -47,7 +34,6 @@
     [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"UICollectionViewCellID"];
     [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"HeadViewID"];
     [self addSubview:self.collectionView];
-    
 }
 
 #pragma collectionView delegate
@@ -64,7 +50,7 @@
     if (kind == UICollectionElementKindSectionHeader){
         NSDictionary *headTitleParamDic = @{@"text":@"为您推荐",@"font":kPingFangMedium(15)};
         UIView *headView = [ZSHBaseUIControl createTabHeadLabelViewWithParamDic:headTitleParamDic];
-        headView.frame = CGRectMake(0, 0, KScreenWidth, kRealValue(40));
+        headView.frame = CGRectMake(0, 0, KScreenWidth, kRealValue(30));
         [reusableview addSubview:headView];
     }
     return reusableview;
@@ -72,7 +58,7 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
     if (section == 0) {
-        return CGSizeMake(kScreenWidth,kRealValue(50));
+        return CGSizeMake(kScreenWidth,kRealValue(30));
     }
     return CGSizeMake(0, 0);
 }
@@ -80,9 +66,12 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"UICollectionViewCellID" forIndexPath:indexPath];
-    UIImageView *cellIV = [[UIImageView alloc]initWithImage:[UIImage imageNamed:_dataArr[indexPath.item]]];
+    UIImageView *cellIV = [[UIImageView alloc]initWithFrame:cell.contentView.bounds];//WithImage:[UIImage imageNamed:_dataArr[indexPath.item]]];
+    cellIV.tag = 2;
+    [cellIV sd_setImageWithURL:[NSURL URLWithString:_dataArr[indexPath.item]]];
     cellIV.layer.cornerRadius = 5.0;
     cellIV.clipsToBounds = YES;
+    cellIV.backgroundColor = [UIColor purpleColor];
     [cell.contentView addSubview:cellIV];
     return cell;
 }
@@ -101,6 +90,11 @@
         
     }
     return _collectionView;
+}
+
+- (void)updateViewWithParamDic:(NSDictionary *)paramDic{
+    _dataArr = paramDic[@"imageArr"];
+    [self.collectionView reloadData];
 }
 
 @end

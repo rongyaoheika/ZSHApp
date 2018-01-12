@@ -148,17 +148,18 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-+ (instancetype)searchViewControllerWithHotSearches:(NSArray<NSString *> *)hotSearches searchBarPlaceholder:(NSString *)placeholder
++ (instancetype)searchViewControllerWithHotSearches:(NSArray<NSString *> *)hotSearches searchBarPlaceholder:(NSString *)placeholder recommendArr:(NSArray *)recommendArr
 {
     PYSearchViewController *searchVC = [[PYSearchViewController alloc] init];
     searchVC.hotSearches = hotSearches;
     searchVC.searchView.searchBar.placeholder = placeholder;
+    searchVC.recommendArr = recommendArr;
     return searchVC;
 }
 
-+ (instancetype)searchViewControllerWithHotSearches:(NSArray<NSString *> *)hotSearches searchBarPlaceholder:(NSString *)placeholder didSearchBlock:(PYDidSearchBlock)block
++ (instancetype)searchViewControllerWithHotSearches:(NSArray<NSString *> *)hotSearches searchBarPlaceholder:(NSString *)placeholder recommendArr:(NSArray *)recommendArr didSearchBlock:(PYDidSearchBlock)block
 {
-    PYSearchViewController *searchVC = [self searchViewControllerWithHotSearches:hotSearches searchBarPlaceholder:placeholder];
+    PYSearchViewController *searchVC = [self searchViewControllerWithHotSearches:hotSearches searchBarPlaceholder:placeholder recommendArr:recommendArr];
     searchVC.didSearchBlock = [block copy];
     return searchVC;
 }
@@ -510,8 +511,7 @@
 
 - (ZSHRecommendView *)recommendView{
     if (!_recommendView) {
-        NSDictionary *paramDic = @{KFromClassType:@(self.recommendViewType)};
-        _recommendView = [[ZSHRecommendView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, KScreenHeight*0.7) paramDic:paramDic];
+        _recommendView = [[ZSHRecommendView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, KScreenHeight*0.7)];
     }
     return _recommendView;
 }
@@ -781,6 +781,11 @@
         default:
             break;
     }
+}
+
+- (void)setRecommendArr:(NSArray *)recommendArr{
+    _recommendArr = recommendArr;
+    [self.recommendView updateViewWithParamDic:@{@"imageArr":_recommendArr}];
 }
 
 - (void)cancelDidClick

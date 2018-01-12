@@ -111,33 +111,7 @@
 }
 
 - (void)searchAction{
-    // 1. Create an Array of popular search
-    NSArray *hotSeaches = @[@"阿哲", @"散打哥", @"天佑", @"赵小磊", @"赵雷", @"陈山", @"PHP", @"C#", @"Perl", @"Go", @"JavaScript", @"R", @"Ruby", @"MATLAB"];
-    // 2. Create a search view controller
-    kWeakSelf(self);
-    PYSearchViewController *searchViewController = [PYSearchViewController searchViewControllerWithHotSearches:hotSeaches searchBarPlaceholder:NSLocalizedString(@"PYExampleSearchPlaceholderText", @"搜索编程语言") didSearchBlock:^(PYSearchViewController *searchViewController, UISearchBar *searchBar, NSString *searchText) {
-        [weakself.searchDataSource removeAllObjects];
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF BEGINSWITH %@",searchText];
-        for (NSArray *arr in weakself.letterResultArr) {
-            NSArray *newArr = [arr filteredArrayUsingPredicate:predicate];
-            if (newArr.count) {
-               [weakself.searchDataSource addObjectsFromArray:[weakself.searchDataSource arrayByAddingObjectsFromArray:newArr]];
-            }
-        }
-        [searchViewController.tableView reloadData];
-    }];
-    // 3. Set style for popular search and search history
-    searchViewController.hotSearchStyle = PYHotSearchStyleARCBorderTag;
-    searchViewController.searchHistoryStyle = PYSearchHistoryStyleARCBorderTag;
-    searchViewController.searchBarBackgroundColor = KZSHColor1A1A1A;
-    
-    // 4. Set delegate
-    searchViewController.delegate = self;
-    searchViewController.dataSource = self;
-    // 5. Present a navigation controller
-    //    RootNavigationController *nav = [[RootNavigationController alloc] initWithRootViewController:searchViewController];
-    //    [self presentViewController:nav animated:YES completion:nil];
-    [self.navigationController pushViewController:searchViewController animated:YES];
+   
 }
 
 

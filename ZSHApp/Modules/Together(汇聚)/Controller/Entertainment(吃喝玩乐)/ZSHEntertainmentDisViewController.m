@@ -24,7 +24,7 @@
 @property (nonatomic, strong) ZSHTogetherLogic          *togetherLogic;
 @property (nonatomic, strong) NSArray                   *images;
 @property (nonatomic, strong) NSArray                   *assets;
-
+@property (nonatomic, strong) NSArray                   *typeArr;
 @end
 static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 @implementation ZSHEntertainmentDisViewController
@@ -38,10 +38,11 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 
 - (void)loadData{
     _togetherLogic = [[ZSHTogetherLogic alloc] init];
-    self.titleArr = @[@"开始时间",@"结束时间",@"期望价格",@"方式",@"人数要求",@"性别要求",@"年龄要求",@"详细要求"];
-    self.detailTitleArr = [NSMutableArray arrayWithArray:@[@"2017-10-1",@"2017-10-7",@"0-1000",@"AA互动趴",@"一对一",@"不限",@"18-30岁",@" "]];
+    self.titleArr = @[@"类型",@"开始时间",@"结束时间",@"期望价格",@"方式",@"人数要求",@"性别要求",@"年龄要求",@"详细要求"];
+    self.detailTitleArr = [NSMutableArray arrayWithArray:@[@"吃",@"2017-10-1",@"2017-10-7",@"0-1000",@"AA互动趴",@"一对一",@"不限",@"18-30岁",@" "]];
     
-    NSDictionary *dic = @{@"STARTTIME":@"2017-10-1",
+    NSDictionary *dic = @{@"CONVERGESORT_ID":@"吃",
+                          @"STARTTIME":@"2017-10-1",
                           @"ENDTIME":@"2017-10-7",
                           @"PRICEMIN":@"0",
                           @"PRICEMAX":@"1000",
@@ -57,6 +58,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     _togetherLogic.enterDisModel = [ZSHEnterDisModel mj_objectWithKeyValues:dic];
     _images = [NSArray array];
     _assets = [NSArray array];
+    [self requestTogetherDataType];
     [self initViewModel];
 }
 
@@ -103,7 +105,16 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
         };
         
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
-            if(indexPath.row == 0||indexPath.row == 1){//开始，结束时间
+            if (indexPath.row == 0) {//吃喝玩乐类型
+                NSDictionary *nextParamDic = @{@"midTitle":@"类型",@"dataArr":self.typeArr};
+                weakself.pickView = [weakself createPickViewWithParamDic:nextParamDic];
+                [weakself.pickView show:WindowDefault];
+                weakself.pickView.saveChangeBlock = ^(NSString *text, NSInteger tag) {
+                    _togetherLogic.enterDisModel.TYPE = text;
+                    weakself.detailTitleArr[indexPath.row] = text;
+                    [weakself.tableView reloadData];
+                };
+            } else if(indexPath.row == 1||indexPath.row == 2){//开始，结束时间
                 NSDictionary *nextParamDic = @{@"type":@(WindowBirthDay),@"midTitle":@"生日"};
                 weakself.pickView = [weakself createPickViewWithParamDic:nextParamDic];
                 weakself.pickView.tag = indexPath.row;
@@ -118,7 +129,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
                     [weakself.tableView reloadData];
                 };
                 [weakself.pickView show:WindowBirthDay];
-            } else if (indexPath.row == 2) {//期望价格
+            } else if (indexPath.row == 3) {//期望价格
                 NSMutableArray *priceMArr = [[NSMutableArray alloc]init];
                 for (int i = 0; i<=1000; i+=100) {
                     NSString *priceSingle = [NSString stringWithFormat:@"%d",i];
@@ -140,7 +151,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
                     weakself.detailTitleArr[indexPath.row] = text;
                     [weakself.tableView reloadData];
                 };
-            } else if (indexPath.row == 3) {//方式
+            } else if (indexPath.row == 4) {//方式
                 NSArray *togetherArr = @[@"不限",@"给力邀约",@"AA互动趴"];
                 NSDictionary *nextParamDic = @{@"type":@(WindowTogether),@"midTitle":@"方式选择",@"dataArr":togetherArr};
                 weakself.pickView = [weakself createPickViewWithParamDic:nextParamDic];
@@ -150,7 +161,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
                     weakself.detailTitleArr[indexPath.row] = text;
                     [weakself.tableView reloadData];
                 };
-            }else if (indexPath.row == 4) {//人数要求
+            }else if (indexPath.row == 5) {//人数要求
                 NSArray *togetherArr = @[@"一对一",@"多对多"];
                 NSDictionary *nextParamDic = @{@"type":@(WindowTogether),@"midTitle":@"人数要求",@"dataArr":togetherArr};
                 weakself.pickView = [weakself createPickViewWithParamDic:nextParamDic];
@@ -160,7 +171,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
                     weakself.detailTitleArr[indexPath.row] = text;
                     [weakself.tableView reloadData];
                 };
-            }else if (indexPath.row == 5) {//性别要求 0为女1为男2为不限
+            }else if (indexPath.row == 6) {//性别要求 0为女1为男2为不限
                 NSArray *togetherArr = @[@"女",@"男",@"不限"];
                 NSDictionary *nextParamDic = @{@"type":@(WindowTogether),@"midTitle":@"性别要求",@"dataArr":togetherArr};
                 weakself.pickView = [weakself createPickViewWithParamDic:nextParamDic];
@@ -170,7 +181,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
                     weakself.detailTitleArr[indexPath.row] = @(tag);
                     [weakself.tableView reloadData];
                 };
-            } else if (indexPath.row == 6){//年龄要求
+            } else if (indexPath.row == 7){//年龄要求
                 ZSHBaseCell *cell = [tableView cellForRowAtIndexPath:indexPath];
                 weakself.bottomBlurPopView = [weakself createBottomBlurPopViewWith:ZSHFromAirplaneAgeVCToBottomBlurPopView];
                 [kAppDelegate.window addSubview:self.bottomBlurPopView];
@@ -180,7 +191,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
                     _togetherLogic.enterDisModel.AGEMIN = arr[0];
                     _togetherLogic.enterDisModel.AGEMAX = arr[1];
                 };
-            } else if (indexPath.row == 7) {//详细要求
+            } else if (indexPath.row == 8) {//详细要求
                 
                 ZSHDetailDemandViewController *demandDetailVC = [[ZSHDetailDemandViewController alloc] initWithParamDic:@{@"EnterDisModel":_togetherLogic.enterDisModel, @"SelectedAssets":_assets, @"SelectedPhotos":_images}];
                 
@@ -233,6 +244,18 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     ZSHPickView *pickView = [[ZSHPickView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight) paramDic:paramDic];
     pickView.controller = self;
     return pickView;
+}
+
+- (void)requestTogetherDataType{//吃喝玩乐类型
+    ZSHTogetherLogic *togetherLogic = [[ZSHTogetherLogic alloc] init];
+    NSMutableArray *mTypeArr = [[NSMutableArray alloc]init];
+    [togetherLogic requestTogetherDataTypeWithACONVERGE_ID:self.paramDic[@"CONVERGE_ID"]  success:^(id response) {
+        for (NSDictionary *dic in response) {
+            [mTypeArr addObject:dic[@"NAME"]];
+        }
+        _typeArr = mTypeArr;
+    }];
+    
 }
 
 

@@ -21,7 +21,7 @@
 - (void)setup{
     
     _headImageView = [[UIImageView alloc]init];
-    _headImageView.backgroundColor = [UIColor greenColor];
+    _headImageView.image = [UIImage imageNamed:@"music_image_1"];
     [self addSubview:_headImageView];
     [_headImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self).offset(KLeftMargin);

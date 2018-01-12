@@ -13,12 +13,6 @@
 
 typedef void(^PYDidSearchBlock)(PYSearchViewController *searchViewController, UISearchBar *searchBar, NSString *searchText);
 
-typedef NS_ENUM(NSInteger, ZSHRecommendViewType)  {
-    ZSHRecommendViewTypeHome,      //首页
-    ZSHRecommendViewTypeBuy,       //尊购
-    ZSHRecommendViewTypeDefault    //默认
-};
-
 /**
  style of popular search
  */
@@ -189,7 +183,7 @@ didSelectSearchSuggestionAtIndex:(NSInteger)index
 
 @end
 
-@interface PYSearchViewController : RootViewController //UIViewController
+@interface PYSearchViewController : RootViewController
 
 /**
  The delegate
@@ -366,9 +360,8 @@ didSelectSearchSuggestionAtIndex:(NSInteger)index
  */
 @property (nonatomic, assign) BOOL showSearchResultWhenSearchBarRefocused;
 
-@property (nonatomic, assign) ZSHRecommendViewType recommendViewType;
 @property (nonatomic, assign) BOOL showRecommendView;
-
+@property (nonatomic, strong) NSArray *recommendArr;
 /**
  Creates an instance of searchViewContoller with popular searches and search bar's placeholder.
 
@@ -376,7 +369,7 @@ didSelectSearchSuggestionAtIndex:(NSInteger)index
  @param placeholder     placeholder of search bar
  @return new instance of `PYSearchViewController` class
  */
-+ (instancetype)searchViewControllerWithHotSearches:(NSArray<NSString *> *)hotSearches
++ (instancetype)searchViewControllerWithHotSearches:(NSArray<NSString *> *)hotSearches recommendArr:(NSArray *)recommendArr
                                searchBarPlaceholder:(NSString *)placeholder;
 
 /**
@@ -390,7 +383,7 @@ didSelectSearchSuggestionAtIndex:(NSInteger)index
  Note: The `delegate` has a priority greater than the `block`, `block` is't effective when `searchViewController:didSearchWithSearchBar:searchText:` is implemented.
  */
 + (instancetype)searchViewControllerWithHotSearches:(NSArray<NSString *> *)hotSearches
-                               searchBarPlaceholder:(NSString *)placeholder
+                               searchBarPlaceholder:(NSString *)placeholder recommendArr:(NSArray *)recommendArr
                                      didSearchBlock:(PYDidSearchBlock)block;
 
 @end

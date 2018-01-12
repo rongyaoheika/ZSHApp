@@ -23,6 +23,7 @@
 #import "ZSHBottomBlurPopView.h"
 #import "ZSHToplineTopView.h"
 #import "ZSHWeiboWriteController.h"
+#import "ZSHHomeLogic.h"
 @interface ZSHTitleContentViewController ()<UISearchBarDelegate,PYSearchViewControllerDelegate>
 
 @property (nonatomic, strong) LXScrollContentView *contentView;
@@ -450,19 +451,35 @@
 }
 
 //尊购
-- (void)searchAction{
-    NSArray *hotSeaches = @[@"手表", @"包袋", @"首饰", @"豪车", @"高尔夫", @"飞机", @"游艇",@"家电数码"];
-    PYSearchViewController *searchViewController = [PYSearchViewController searchViewControllerWithHotSearches:hotSeaches searchBarPlaceholder:@"搜索" didSearchBlock:^(PYSearchViewController *searchViewController, UISearchBar *searchBar, NSString *searchText) {
+- (void)searchAction {
+    ZSHHomeLogic *homeLogic = [[ZSHHomeLogic alloc]init];
+    NSDictionary *paramDic = @{@"PARENT_ID":@(2)};
+    NSMutableArray *hotSearchMArr = [[NSMutableArray alloc]init];
+    NSMutableArray *recommendImageMArr = [[NSMutableArray alloc]init];
+    [homeLogic loadSearchListWithDic:paramDic success:^(id response) {
+        for (NSDictionary *dic in response[@"pd"]) {
+            [hotSearchMArr addObject:dic[@"NAME"]];
+        }
+        
+        for (NSDictionary *dic in response[@"showimgs"]) {
+            [recommendImageMArr addObject:dic[@"SHOWIMAGES"]];
+        }
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            PYSearchViewController *searchViewController = [PYSearchViewController searchViewControllerWithHotSearches:hotSearchMArr searchBarPlaceholder:NSLocalizedString(@"Search", @"搜索") recommendArr:recommendImageMArr didSearchBlock:^(PYSearchViewController *searchViewController, UISearchBar *searchBar, NSString *searchText) {
+
+            }];
+            
+            searchViewController.showRecommendView = YES;
+            searchViewController.hotSearchStyle = PYHotSearchStyleARCBorderTag;
+            searchViewController.searchHistoryStyle = PYSearchHistoryStyleARCBorderTag;
+            searchViewController.searchBarBackgroundColor = KZSHColor1A1A1A;
+            searchViewController.delegate = self;
+            [self.navigationController pushViewController:searchViewController animated:YES];
+        });
+        
         
     }];
-    searchViewController.recommendViewType = 1;
-    searchViewController.showRecommendView = YES;
-    searchViewController.hotSearchStyle = PYHotSearchStyleARCBorderTag;
-    searchViewController.searchHistoryStyle = PYSearchHistoryStyleARCBorderTag;
-    searchViewController.searchBarBackgroundColor = KZSHColor1A1A1A;
-    searchViewController.delegate = self;
-    [self.navigationController pushViewController:searchViewController animated:YES];
-    
     
 }
 
@@ -471,7 +488,7 @@
     
 }
 
-- (void)buyScanBtntAction:(UIButton *)scanBtn{
+- (void)buyScanBtntAction{
     
 }
 

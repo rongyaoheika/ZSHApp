@@ -747,7 +747,10 @@
 //BRANDICON_ID   商品品牌 ID（筛选用参数）
 //请求地址：/appshipin/shipbusinesslist.do?SHIPPBUSINESS  (混淆码)
 #define kUrlShipbusinessList [NSString stringWithFormat:@"/appshipin/shipbusinesslist.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SHIPPBUSINESS"]]
-
+//147.显示首页（1）/尊购（2）/汇聚（3）→搜索的字
+//参数：  参数：PARENT_ID 类型参数id/
+//请求地址：/apphomein/searchlist.do?SERRCHLIST  (混淆码)
+#define kUrlSearchList [NSString stringWithFormat:@"/apphomein/searchlist.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SERRCHLIST"]]
 
 
 

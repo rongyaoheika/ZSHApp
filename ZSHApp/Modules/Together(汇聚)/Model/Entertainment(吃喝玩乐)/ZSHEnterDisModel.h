@@ -10,6 +10,7 @@
 // 发布和详情
 @interface ZSHEnterDisModel : ZSHBaseModel
 
+@property (nonatomic, copy) NSString *TYPE;
 @property (nonatomic, copy) NSString *STARTTIME;
 @property (nonatomic, copy) NSString *ENDTIME;
 @property (nonatomic, copy) NSString *PRICEMIN;

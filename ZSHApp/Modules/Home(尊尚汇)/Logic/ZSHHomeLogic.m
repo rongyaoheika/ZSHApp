@@ -110,4 +110,14 @@
     }];
 }
 
+- (void)loadSearchListWithDic:(NSDictionary *)dic success:(void(^)(id response))success {
+    [PPNetworkHelper POST:kUrlSearchList parameters:dic success:^(id responseObject) {
+        RLog(@"搜索推荐列表%@",responseObject);
+        success(responseObject);
+    } failure:^(NSError *error) {
+        RLog(@"搜索推荐列表请求失败");
+    }];
+}
+
+
 @end

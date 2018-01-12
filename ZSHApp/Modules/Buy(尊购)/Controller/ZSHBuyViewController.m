@@ -45,6 +45,7 @@ static NSString *ZSHGoodsListViewID = @"ZSHGoodsListView";
 
 - (void)createUI{
     
+//    self.tableView.frame = CGRectMake(0, 0, kScreenWidth, kScreenHeight - KNavigationBarHeight - KBottomTabH);
     [self.view addSubview:self.tableView];
     self.tableView.delegate = self.tableViewModel;
     self.tableView.dataSource = self.tableViewModel;
@@ -54,8 +55,10 @@ static NSString *ZSHGoodsListViewID = @"ZSHGoodsListView";
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.mas_equalTo(self.view).insets(UIEdgeInsetsMake(0, 0, KBottomTabH, 0));
     }];
+    
     self.tableView.tableHeaderView = self.guideView;
     [self.tableView reloadData];
+    [self endTabViewRefresh];
     
 }
 
