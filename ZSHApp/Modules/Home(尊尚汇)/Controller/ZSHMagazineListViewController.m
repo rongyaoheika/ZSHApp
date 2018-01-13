@@ -10,13 +10,18 @@
 #import "ZSHMagazineListCell.h"
 #import "ZSHMagazineViewController.h"
 #import "ZSHMagazineReusableView.h"
+#import "ZSHHomeLogic.h"
+
 
 static NSString * ZSHMagazineCellID = @"ZSHMagazineCellID";
 static NSString * ZSHMagazineReusableHeadID = @"ZSHMagazineReusableHeadID";
 
 @interface ZSHMagazineListViewController ()<UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 
-@property(nonatomic, strong) NSArray *mainArr;
+@property (nonatomic, strong) NSArray      *mainArr;
+@property (nonatomic, strong) NSArray      *adsArr;
+@property (nonatomic, strong) ZSHHomeLogic *homeLogic;
+
 
 @end
 
@@ -29,16 +34,19 @@ static NSString * ZSHMagazineReusableHeadID = @"ZSHMagazineReusableHeadID";
 }
 
 - (void)loadData {
-    NSArray *titles = @[@"国家地理", @"时尚芭莎", @"瑞丽", @"时代周刊", @"中国烹饪", @"环球人物", @"商界", @"财经"];
-    NSMutableArray *arr = [NSMutableArray array];
-    for (int i = 0; i<titles.count; i++) {
-        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-        [dic setValue:titles[i] forKey:@"title"];
-        [dic setValue:NSStringFormat(@"magazine%d", i) forKey:@"image"];
-        [arr addObject:dic];
-    }
-    _mainArr = arr.mutableCopy;
-    [self.collectionView reloadData];
+//    NSArray *titles = @[@"国家地理", @"时尚芭莎", @"瑞丽", @"时代周刊", @"中国烹饪", @"环球人物", @"商界", @"财经"];
+//    NSMutableArray *arr = [NSMutableArray array];
+//    for (int i = 0; i<titles.count; i++) {
+//        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+//        [dic setValue:titles[i] forKey:@"title"];
+//        [dic setValue:NSStringFormat(@"magazine%d", i) forKey:@"image"];
+//        [arr addObject:dic];
+//    }
+//    _mainArr = arr.mutableCopy;
+//    [self.collectionView reloadData];
+    
+    _homeLogic = [[ZSHHomeLogic alloc] init];
+    [self requestData];
 }
 
 - (void)createUI {
@@ -75,6 +83,7 @@ static NSString * ZSHMagazineReusableHeadID = @"ZSHMagazineReusableHeadID";
     UICollectionReusableView *reusableview = nil;
     if (kind == UICollectionElementKindSectionHeader){
         ZSHMagazineReusableView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:ZSHMagazineReusableHeadID forIndexPath:indexPath];
+        [headerView updateAd:_adsArr];
         reusableview = headerView;
     }
     return reusableview;
@@ -103,6 +112,18 @@ static NSString * ZSHMagazineReusableHeadID = @"ZSHMagazineReusableHeadID";
     ZSHMagazineViewController *magazineVC = [[ZSHMagazineViewController alloc] initWithParamDic:@{@"magazine":dic}];
     [self.navigationController pushViewController:magazineVC animated:YES];
 }
+
+
+
+- (void)requestData {
+    kWeakSelf(self);
+    [_homeLogic loadMagzineListSubMenuWithMenuID:@{@"MENU_ID":@"213"} success:^(id response) {
+        weakself.mainArr = response[@"magazines"];
+        weakself.adsArr = response[@"ads"];
+        [weakself.collectionView reloadData];
+    }];
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

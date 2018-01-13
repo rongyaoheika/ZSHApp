@@ -92,12 +92,25 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
         self.textFieldTypeArr = @[@(ZSHTextFieldViewPwd), @(ZSHTextFieldViewPwd), @(ZSHTextFieldViewPwd)];
         self.placeHolderArr = @[@"", @"", @""];
         self.toViewType = FromUserPasswordVCToMultiInfoVC;
-    }else if (kFromClassTypeValue ==  FromSetPasswordToMultiInfoVC) {
+    }else if (kFromClassTypeValue == FromSetPasswordToMultiInfoVC) {
         //重置密码
         self.titleArr = @[@"新密码", @"确认密码"];
         self.textFieldTypeArr = @[@(ZSHTextFieldViewPwd), @(ZSHTextFieldViewPwd), @(ZSHTextFieldViewPwd)];
         self.placeHolderArr = @[@"请输入新密码", @"再次输入新密码"];
         self.toViewType = FromSetPasswordToMultiInfoVC;
+    }else if (kFromClassTypeValue ==  FromCreateStoreVCToMultiInfoVC) {
+        // 创建门店
+        self.titleArr = @[@"门店名称", @"门店地址", @"详细地址", @"门店电话"];
+        self.textFieldTypeArr = @[@(ZSHTextFieldViewUser), @(ZSHTextFieldViewUser), @(ZSHTextFieldViewUser), @(ZSHTextFieldViewUser)];
+        self.placeHolderArr = @[@"若有分店，请具体到分店名", @"请选择", @"请输入", @"填写座机/手机，座机需加区号"];
+    }else if (kFromClassTypeValue ==  FromVerifyVCToMultiInfoVC) {
+        // 提交审核
+        self.titleArr = @[@"上传身份证", @"经营者姓名", @"身份证号", @"店铺照片", @"营业执照",
+                          @"注册号", @"执照名称", @"法人姓名",@"经营者手机", @"经营者手机"];
+        self.textFieldTypeArr = @[
+    @(ZSHTextFieldViewUser), @(ZSHTextFieldViewUser), @(ZSHTextFieldViewUser), @(ZSHTextFieldViewUser),@(ZSHTextFieldViewUser),
+    @(ZSHTextFieldViewUser), @(ZSHTextFieldViewUser), @(ZSHTextFieldViewUser),@(ZSHTextFieldViewUser), @(ZSHTextFieldViewCaptcha)];
+        self.placeHolderArr = @[@"本人身份证照片", @"须与身份证姓名一致", @"请输入经营者身份证号码", @"请上传实体店铺照片",@"请上传营业执照照片", @"注册号或同一社会信用代码", @"营业执照名称这一行的内容", @"营业执照上法人或经营者姓名",@"用本人身份证办理的手机号", @"输入验证码"];
     }
     [self initViewModel];
 }
@@ -117,7 +130,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
         [self.bottomBtn setTitle:self.paramDic[@"bottomBtnTitle"] forState:UIControlStateNormal];
         [self.bottomBtn addTarget:self action:@selector(nextBtnAction) forControlEvents:UIControlEventTouchUpInside];
         
-    } else if (kFromClassTypeValue == FromUserPasswordVCToMultiInfoVC || kFromClassTypeValue == FromAccountVCToMultiInfoVC || kFromClassTypeValue == FromSetPasswordToMultiInfoVC) {
+    } else if (kFromClassTypeValue == FromUserPasswordVCToMultiInfoVC || kFromClassTypeValue == FromAccountVCToMultiInfoVC || kFromClassTypeValue == FromSetPasswordToMultiInfoVC || kFromClassTypeValue == FromCreateStoreVCToMultiInfoVC) {
         
         [self.view addSubview:self.bottomBtn];
         [self.bottomBtn setTitle:self.paramDic[@"bottomBtnTitle"] forState:UIControlStateNormal];
@@ -293,6 +306,9 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
             [ac addAction:cancelAction];
             [weakself presentViewController:ac animated:YES completion:nil];
         }];
+    } else if (kFromClassTypeValue == FromCreateStoreVCToMultiInfoVC) {
+        ZSHMultiInfoViewController *multiInfoVC = [[ZSHMultiInfoViewController alloc] initWithParamDic:@{KFromClassType:@(FromVerifyVCToMultiInfoVC),@"title":@"提交资质", @"bottomBtnTitle":@"提交审核"}];
+        [self.navigationController pushViewController:multiInfoVC animated:YES];
     }
 }
 

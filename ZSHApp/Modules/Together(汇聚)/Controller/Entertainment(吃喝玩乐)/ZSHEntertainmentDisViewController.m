@@ -55,7 +55,8 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
                           @"AGEMAX":@"30",
                           @"CONVERGEDET":@"",
                           @"CONVERGETITLE":@"",
-                          @"HONOURUSER_ID":HONOURUSER_IDValue};
+                          @"HONOURUSER_ID":HONOURUSER_IDValue,
+                          };
     
     _togetherLogic.enterDisModel = [ZSHEnterDisModel mj_objectWithKeyValues:dic];
     _images = [NSArray array];
@@ -112,7 +113,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
                 weakself.pickView = [weakself createPickViewWithParamDic:nextParamDic];
                 [weakself.pickView show:WindowDefault];
                 weakself.pickView.saveChangeBlock = ^(NSString *text, NSInteger tag) {
-                    _togetherLogic.enterDisModel.TYPE = text;
+                    _togetherLogic.enterDisModel.CONVERGESORT_ID = text;
                     weakself.detailTitleArr[indexPath.row] = text;
                     [weakself.tableView reloadData];
                 };
@@ -211,8 +212,17 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 
 #pragma action
 - (void)distributeAction{
+    
+    if (!_togetherLogic.enterDisModel.CONVERGEDET.length) {
+        UIAlertController *ac = [UIAlertController alertControllerWithTitle:@"提示" message:@"请填写详细要求" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        }];
+        [ac addAction:cancelAction];
+        [self presentViewController:ac animated:YES completion:nil];
+        return;
+    }
+    
     kWeakSelf(self);
-    _togetherLogic.enterDisModel.HONOURUSER_ID = HONOURUSER_IDValue;
     _togetherLogic.enterDisModel.CONVERGE_ID = self.paramDic[@"CONVERGE_ID"];
     NSMutableArray *fileNames = [NSMutableArray arrayWithCapacity:_assets.count];
     for (PHAsset *asset in _assets) {

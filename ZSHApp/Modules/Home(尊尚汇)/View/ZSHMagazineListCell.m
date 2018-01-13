@@ -35,8 +35,8 @@
 }
 
 - (void)updateCellWithParamDic:(NSDictionary *)dic {
-    _imageView.image = [UIImage imageNamed:dic[@"image"]];
-    _titleLabel.text = dic[@"title"];
+    [_imageView sd_setImageWithURL:[NSURL URLWithString:dic[@"SHOWIMG"]]];
+//    _titleLabel.text = dic[@"title"];
 }
 
 @end

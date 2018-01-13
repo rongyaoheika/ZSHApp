@@ -44,19 +44,23 @@ static NSString *bottomCellIdentifier   = @"listCell";
     self.titleArr = @[@"会员中心",@"管家中心",@"圈子中心",
                       @"活动中心",@"购物中心",@"客服中心",
                       @"钱包中心",@"游戏中心",@"订单中心",
-                      @"音乐中心",@"设置"];
-    self.imageArr = @[@"mine_icon_1",@"mine_icon_2",@"mine_icon_3",@"mine_icon_4",@"mine_icon_5",@"mine_icon_6",@"mine_icon_7",@"mine_icon_8",@"mine_icon_10",@"mine_icon_11",@"mine_icon_9"];
+                      @"音乐中心",@"我要入住",@"设置"];
+    self.imageArr = @[@"mine_icon_1",@"mine_icon_2",@"mine_icon_3",
+                      @"mine_icon_4",@"mine_icon_5",@"mine_icon_6",
+                      @"mine_icon_7",@"mine_icon_8",@"mine_icon_10",
+                      @"mine_icon_11",@"mine_icon_12",@"mine_icon_9"];
     self.pushVCS = @[
   @"ZSHMemberCenterViewController",@"",@"ZSHWeiboViewController",
   @"ZSHTitleContentViewController",@"",@"ZSHServiceCenterViewController",
   @"ZSHWalletCenterViewController",@"ZSHGameCenterViewController", @"ZSHGoodsMineViewController",
-  @"ZSHMusicLibraryViewController",@"ZSHSettingViewController"];
+  @"ZSHMusicLibraryViewController",@"ZSHJoininViewController", @"ZSHSettingViewController"];
     self.paramArr = @[@{},@{},@{KFromClassType:@(FromMineVCToWeiboVC)},
   @{KFromClassType:@(FromActivityCenterVCToTitleContentVC),@"title":@"活动中心"},@{},
   @{KFromClassType:@(ZSHFromMineServiceVCToServiceCenterVC),@"title":@"客服中心",
    @"titleArr":@[@"客服1",@"客服2",@"客服3",@"客服4"],
    @"imageArr":@[@"mine_service",@"mine_service",@"mine_service",@"mine_service"]},
-                      @{},@{},@{},@{},@{}];
+                      @{},@{},
+                      @{},@{},@{},@{}];
     
     [self initViewModel];
     _mineLogic = [[ZSHMineLogic alloc] init];

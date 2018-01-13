@@ -38,4 +38,7 @@
 - (void)loadMagzineOneWithDic:(NSDictionary *)dic success:(void(^)(id response))success;
 //搜索推荐数据
 - (void)loadSearchListWithDic:(NSDictionary *)dic success:(void(^)(id response))success;
+// 杂志列表
+- (void)loadMagzineListSubMenuWithMenuID:(NSDictionary *)dic success:(void(^)(id response))success;
+
 @end

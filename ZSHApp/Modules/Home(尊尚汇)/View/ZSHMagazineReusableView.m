@@ -7,20 +7,29 @@
 //
 
 #import "ZSHMagazineReusableView.h"
+#import "ZSHGuideView.h"
+
+
+@interface ZSHMagazineReusableView ()
+
+@property (nonatomic, strong) ZSHGuideView *guideView;
+
+@end
 
 @implementation ZSHMagazineReusableView
 - (void)drawRect:(CGRect)rect {
-    UIImageView *headImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"magazineHead"]];
-    [self addSubview:headImageView];
-    [headImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+    
+    [self addSubview:self.guideView];
+    [_guideView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.left.right.mas_equalTo(self);
         make.height.mas_equalTo(120);
     }];
     
+    
     UILabel *designerLabel = [ZSHBaseUIControl createLabelWithParamDic:@{@"text":@"设计师", @"font":kPingFangMedium(15)}];
     [self addSubview:designerLabel];
     [designerLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(headImageView.mas_bottom).offset(25);
+        make.top.mas_equalTo(_guideView.mas_bottom).offset(25);
         make.left.mas_equalTo(self).offset(kRealValue(KLeftMargin));
         make.size.mas_equalTo(CGSizeMake(kRealValue(50), 16));
     }];
@@ -60,4 +69,21 @@
         make.size.mas_equalTo(CGSizeMake(kRealValue(50), 16));
     }];
 }
+
+- (void)updateAd:(NSArray *)arr {
+    NSMutableArray *imageArr = [[NSMutableArray alloc] init];
+    for (NSDictionary *dic  in arr) {
+        [imageArr addObject:dic[@"SHOWIMG"]];
+    }
+    [_guideView updateViewWithParamDic:@{@"dataArr":imageArr}];
+}
+
+- (ZSHGuideView *)guideView {
+    if(!_guideView) {
+        NSDictionary *nextParamDic = @{KFromClassType:@(FromBuyVCToGuideView),@"pageViewHeight":@(kRealValue(120)),@"min_scale":@(0.6),@"withRatio":@(1.8),@"infinite":@(false)};
+        _guideView = [[ZSHGuideView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, kRealValue(120)) paramDic:nextParamDic];
+    }
+    return _guideView;
+}
+
 @end

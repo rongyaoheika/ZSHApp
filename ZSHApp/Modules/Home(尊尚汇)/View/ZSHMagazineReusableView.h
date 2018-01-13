@@ -10,4 +10,6 @@
 
 @interface ZSHMagazineReusableView : UICollectionReusableView
 
+- (void)updateAd:(NSArray *)arr;
+
 @end

@@ -751,7 +751,10 @@
 //参数：  参数：PARENT_ID 类型参数id/
 //请求地址：/apphomein/searchlist.do?SERRCHLIST  (混淆码)
 #define kUrlSearchList [NSString stringWithFormat:@"/apphomein/searchlist.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SERRCHLIST"]]
-
+//148.荣耀杂志首页接口
+//参数：  无
+//请求地址：/appmagazinein/getlistsubmenu.do?LISTSUBMENU  (混淆码)
+#define kUrlGetListSubmenu [NSString stringWithFormat:@"/appmagazinein/getlistsubmenu.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"LISTSUBMENU"]]
 
 
 #endif /* URLMacros_h */

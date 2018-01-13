@@ -27,6 +27,9 @@
 		04A69039200847E900C583E6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04A69038200847E700C583E6 /* Assets.xcassets */; };
 		04A6903D20084E6800C583E6 /* ZSHPrivilegeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A6903C20084E6800C583E6 /* ZSHPrivilegeController.m */; };
 		04A6904020084EA800C583E6 /* ZSHPrivilegeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A6903F20084EA800C583E6 /* ZSHPrivilegeCell.m */; };
+		04A6904520089F5E00C583E6 /* ZSHJoininViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A6904420089F5E00C583E6 /* ZSHJoininViewController.m */; };
+		04A690492008A01400C583E6 /* ZSHJoininCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A690482008A01400C583E6 /* ZSHJoininCell.m */; };
+		04A6904C2008C0A500C583E6 /* ZSHCreateStoreController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A6904B2008C0A400C583E6 /* ZSHCreateStoreController.m */; };
 		04A6FCCB2007152700DDE79E /* ZSHMusicMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A6FCCA2007152700DDE79E /* ZSHMusicMainViewController.m */; };
 		04A6FCCE200756F800DDE79E /* ZSHRadioScrollCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A6FCCD200756F800DDE79E /* ZSHRadioScrollCell.m */; };
 		04A6FCD120075A2900DDE79E /* ZSHRadioSubView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A6FCD020075A2900DDE79E /* ZSHRadioSubView.m */; };
@@ -592,6 +595,12 @@
 		04A6903C20084E6800C583E6 /* ZSHPrivilegeController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHPrivilegeController.m; sourceTree = "<group>"; };
 		04A6903E20084EA800C583E6 /* ZSHPrivilegeCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHPrivilegeCell.h; sourceTree = "<group>"; };
 		04A6903F20084EA800C583E6 /* ZSHPrivilegeCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHPrivilegeCell.m; sourceTree = "<group>"; };
+		04A6904320089F5E00C583E6 /* ZSHJoininViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHJoininViewController.h; sourceTree = "<group>"; };
+		04A6904420089F5E00C583E6 /* ZSHJoininViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHJoininViewController.m; sourceTree = "<group>"; };
+		04A690472008A01400C583E6 /* ZSHJoininCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHJoininCell.h; sourceTree = "<group>"; };
+		04A690482008A01400C583E6 /* ZSHJoininCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHJoininCell.m; sourceTree = "<group>"; };
+		04A6904A2008C0A400C583E6 /* ZSHCreateStoreController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHCreateStoreController.h; sourceTree = "<group>"; };
+		04A6904B2008C0A400C583E6 /* ZSHCreateStoreController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHCreateStoreController.m; sourceTree = "<group>"; };
 		04A6FCC92007152700DDE79E /* ZSHMusicMainViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHMusicMainViewController.h; sourceTree = "<group>"; };
 		04A6FCCA2007152700DDE79E /* ZSHMusicMainViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHMusicMainViewController.m; sourceTree = "<group>"; };
 		04A6FCCC200756F800DDE79E /* ZSHRadioScrollCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHRadioScrollCell.h; sourceTree = "<group>"; };
@@ -1633,6 +1642,26 @@
 				04A6903F20084EA800C583E6 /* ZSHPrivilegeCell.m */,
 			);
 			path = "会员特权";
+			sourceTree = "<group>";
+		};
+		04A6904220089F3100C583E6 /* 我要入驻 */ = {
+			isa = PBXGroup;
+			children = (
+				04A6904320089F5E00C583E6 /* ZSHJoininViewController.h */,
+				04A6904420089F5E00C583E6 /* ZSHJoininViewController.m */,
+				04A6904A2008C0A400C583E6 /* ZSHCreateStoreController.h */,
+				04A6904B2008C0A400C583E6 /* ZSHCreateStoreController.m */,
+			);
+			path = "我要入驻";
+			sourceTree = "<group>";
+		};
+		04A6904620089FDA00C583E6 /* 我要入驻 */ = {
+			isa = PBXGroup;
+			children = (
+				04A690472008A01400C583E6 /* ZSHJoininCell.h */,
+				04A690482008A01400C583E6 /* ZSHJoininCell.m */,
+			);
+			path = "我要入驻";
 			sourceTree = "<group>";
 		};
 		04A6FCC72007135700DDE79E /* Music */ = {
@@ -2709,6 +2738,7 @@
 		FE291EB71F8CAEDC00D4BBE7 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				04A6904220089F3100C583E6 /* 我要入驻 */,
 				04A6FCC72007135700DDE79E /* Music */,
 				1826CDB11FBAFD0B00A0ECE2 /* ApplyService(申请售后) */,
 				FEAE11201FB41967008DCB3E /* Energy(能量值) */,
@@ -2761,6 +2791,7 @@
 		FE291EBA1F8CAEDC00D4BBE7 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				04A6904620089FDA00C583E6 /* 我要入驻 */,
 				04A6FCC82007138D00DDE79E /* Music */,
 				1824F1D51FCFDA87000D805E /* 订单中心 */,
 				FEDF29211FB6CF9200CD5756 /* Wallet */,
@@ -4760,6 +4791,7 @@
 				1826CDB01FBAE20C00A0ECE2 /* ZSHPersonalDetailViewController.m in Sources */,
 				FE7AF2321FA307F400E1A648 /* ZSHTopLineView.m in Sources */,
 				1869C92F1FD78A37002F2E37 /* NSDictionary+Safe.m in Sources */,
+				04A690492008A01400C583E6 /* ZSHJoininCell.m in Sources */,
 				FE55381B1F47049D00803128 /* RxWebViewController.m in Sources */,
 				FE0ED7E21FC2CC46008299C5 /* ZSHCityView.m in Sources */,
 				FE1377931F977628003C8DFB /* ZSHManageAddressViewController.m in Sources */,
@@ -4779,6 +4811,7 @@
 				049823C320078D590080626D /* ZSHFlagshipViewController.m in Sources */,
 				FE3E00681FDA6A7300A0F7CA /* ZSHSingerViewController.m in Sources */,
 				FE5538611F47049D00803128 /* MBProgressHUD+XY.m in Sources */,
+				04A6904520089F5E00C583E6 /* ZSHJoininViewController.m in Sources */,
 				FE2CD0B01F98B6DB00E9E519 /* ZSHIntegalModel.m in Sources */,
 				FE2BB0B81F8E03FB000D5800 /* ZSHHomeHeadView.m in Sources */,
 				FE1377751F972745003C8DFB /* ZSHOrderCell.m in Sources */,
@@ -4909,6 +4942,7 @@
 				1846BB451FE3B282001B264B /* BEMAverageLine.m in Sources */,
 				FE5538121F47049D00803128 /* RootNavigationController.m in Sources */,
 				FE291EE91F8CCC5900D4BBE7 /* ZSHMineViewController.m in Sources */,
+				04A6904C2008C0A500C583E6 /* ZSHCreateStoreController.m in Sources */,
 				FE7502D01F9A4360002F2708 /* ZSHEntertainmentViewController.m in Sources */,
 				FE5538601F47049D00803128 /* UIViewController+AlertViewAndActionSheet.m in Sources */,
 				FEAE11231FB41977008DCB3E /* ZSHEnergyValueViewController.m in Sources */,

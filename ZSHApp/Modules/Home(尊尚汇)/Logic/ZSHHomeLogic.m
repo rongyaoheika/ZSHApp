@@ -101,7 +101,6 @@
 
 // 杂志详情
 - (void)loadMagzineOneWithDic:(NSDictionary *)dic success:(void(^)(id response))success {
-    kWeakSelf(self);
     [PPNetworkHelper POST:kUrlMagazineOne parameters:dic success:^(id responseObject) {
         RLog(@"杂志详情%@",responseObject);
         success(responseObject);
@@ -119,5 +118,14 @@
     }];
 }
 
+// 杂志列表
+- (void)loadMagzineListSubMenuWithMenuID:(NSDictionary *)dic success:(void(^)(id response))success {
+    [PPNetworkHelper POST:kUrlGetListSubmenu parameters:dic success:^(id responseObject) {
+        RLog(@"杂志列表%@",responseObject);
+        success(responseObject);
+    } failure:^(NSError *error) {
+        RLog(@"音乐列表请求失败");
+    }];
+}
 
 @end
