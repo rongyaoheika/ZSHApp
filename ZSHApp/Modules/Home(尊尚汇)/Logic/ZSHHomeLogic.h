@@ -40,5 +40,6 @@
 - (void)loadSearchListWithDic:(NSDictionary *)dic success:(void(^)(id response))success;
 // 杂志列表
 - (void)loadMagzineListSubMenuWithMenuID:(NSDictionary *)dic success:(void(^)(id response))success;
-
+//蒲公英更新
+- (void)loadUpdateWithDic:(NSDictionary *)dic success:(void(^)(id response))success;
 @end

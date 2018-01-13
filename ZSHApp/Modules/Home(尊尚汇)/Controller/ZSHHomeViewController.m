@@ -172,6 +172,7 @@ static NSString *Identify_MusicCell = @"musicCell";
 }
 
 - (void)createUI{
+    [self hasUpdateVersion];
     [self addNavigationItemWithImageName:@"nav_home_more" title:@"三亚" locate:XYButtonEdgeInsetsStyleRight isLeft:YES target:self action:@selector(locateBtnAction) tag:10];
     [self addNavigationItemWithImageName:@"nav_home_menu" isLeft:NO target:self action:@selector(menuBtntClick:) tag:11];
     
@@ -517,7 +518,6 @@ static NSString *Identify_MusicCell = @"musicCell";
         
         
     }];
-    
 }
 
 #pragma getter
@@ -557,6 +557,30 @@ static NSString *Identify_MusicCell = @"musicCell";
 - (BOOL)prefersHomeIndicatorAutoHidden
 {
     return YES;
+}
+
+- (void)hasUpdateVersion{
+    kWeakSelf(self);
+    NSDictionary *infoDic=[[NSBundle mainBundle] infoDictionary];
+    NSString *currentVersion=infoDic[@"CFBundleShortVersionString"];
+    
+    ZSHHomeLogic *homeLogic = [[ZSHHomeLogic alloc]init];
+    NSDictionary *paramDic = @{@"_api_key":kPGYApiKey,@"appKey":kPGYAppKey,@"buildVersion":@"1.0",@"buildBuildVersion":@(1.0)};
+    [homeLogic loadUpdateWithDic:paramDic success:^(id response) {
+        RLog(@"更新信息");
+        if ([currentVersion integerValue]>[response[@"data"][@"buildVersion"]integerValue]) {
+            UIAlertController *ac = [UIAlertController alertControllerWithTitle:@"版本有更新" message:[NSString stringWithFormat:@"检测到新版本(%@),是否更新?",currentVersion]  preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+            [ac addAction:cancelAction];
+            UIAlertAction *doneAction = [UIAlertAction actionWithTitle:@"更新" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                NSURL *url = [NSURL URLWithString:response[@"data"][@"buildShortcutUrl"]];
+                [[UIApplication sharedApplication] openURL:url];
+            }];
+            [ac addAction:doneAction];
+            [weakself presentViewController:ac animated:YES completion:nil];
+            
+        }
+    }];
 }
 
 

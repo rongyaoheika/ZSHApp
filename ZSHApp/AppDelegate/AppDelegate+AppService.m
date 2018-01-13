@@ -15,6 +15,7 @@
 #import "ZSHLiveTabBarController.h"
 #import "ZSHGuideViewController.h"
 #import "ZegoAVKitManager.h"
+#import "ZSHHomeLogic.h"
 @implementation AppDelegate (AppService)
 
 

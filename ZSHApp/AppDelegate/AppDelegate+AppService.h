@@ -45,5 +45,7 @@
 -(UIViewController*) getCurrentVC;
 
 -(UIViewController*) getCurrentUIVC;
+
+- (void)hasUpdateVersion;
  
 @end
