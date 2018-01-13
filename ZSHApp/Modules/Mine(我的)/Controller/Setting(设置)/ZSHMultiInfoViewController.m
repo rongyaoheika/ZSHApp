@@ -9,6 +9,7 @@
 #import "ZSHMultiInfoViewController.h"
 #import "ZSHTextFieldCellView.h"
 #import "ZSHMineLogic.h"
+#import "ZSHUploadIDCardController.h"
 
 @interface ZSHMultiInfoViewController ()
 
@@ -120,8 +121,6 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
    
     if (kFromClassTypeValue == FromUserInfoNickNameVCToMultiInfoVC || kFromClassTypeValue == FromUserInfoResumeVCToMultiInfoVC) {//修改昵称
          [self addNavigationItemWithTitles:@[self.paramDic[@"rightNaviTitle"]] isLeft:NO target:self action:@selector(rightNaviBtnAction:) tags:@[@(kFromClassTypeValue)]];
-        
-
     } else if (kFromClassTypeValue == FromUserInfoQQVCToMultiInfoVC){//QQ授权
        [self addNavigationItemWithTitles:@[self.paramDic[@"rightNaviTitle"]] isLeft:NO target:self action:@selector(rightNaviBtnAction:) tags:@[@(kFromClassTypeValue)]];
         
@@ -130,7 +129,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
         [self.bottomBtn setTitle:self.paramDic[@"bottomBtnTitle"] forState:UIControlStateNormal];
         [self.bottomBtn addTarget:self action:@selector(nextBtnAction) forControlEvents:UIControlEventTouchUpInside];
         
-    } else if (kFromClassTypeValue == FromUserPasswordVCToMultiInfoVC || kFromClassTypeValue == FromAccountVCToMultiInfoVC || kFromClassTypeValue == FromSetPasswordToMultiInfoVC || kFromClassTypeValue == FromCreateStoreVCToMultiInfoVC) {
+    } else if (kFromClassTypeValue == FromUserPasswordVCToMultiInfoVC || kFromClassTypeValue == FromAccountVCToMultiInfoVC || kFromClassTypeValue == FromSetPasswordToMultiInfoVC || kFromClassTypeValue == FromCreateStoreVCToMultiInfoVC | kFromClassTypeValue == FromVerifyVCToMultiInfoVC) {
         
         [self.view addSubview:self.bottomBtn];
         [self.bottomBtn setTitle:self.paramDic[@"bottomBtnTitle"] forState:UIControlStateNormal];
@@ -150,51 +149,84 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     [self.tableView reloadData];
 }
 
+- (UIView *)createTableHeadView {
+    UIView *backgroundView = [[UIView alloc] init];
+    UILabel *addLabel = [ZSHBaseUIControl createLabelWithParamDic:@{@"text":@"龙兴莱曼海景度假酒店"}];
+    addLabel.frame = CGRectMake(15, 17.5, 200, 16);
+    UILabel *detailLabel = [ZSHBaseUIControl createLabelWithParamDic:@{@"text":@"天涯区三亚湾路128号", @"font":kPingFangMedium(12)}];
+    detailLabel.frame = CGRectMake(15, 46.5, 130, 16);
+    [backgroundView addSubview:addLabel];
+    [backgroundView addSubview:detailLabel];
+    return backgroundView;
+}
+
 - (void)initViewModel {
     [self.tableViewModel.sectionModelArray removeAllObjects];
     [self.tableViewModel.sectionModelArray addObject:[self storeListSection]];
+    if (kFromClassTypeValue == FromVerifyVCToMultiInfoVC) {
+        self.tableView.tableHeaderView = [self createTableHeadView];
+    }
     [self.tableView reloadData];
 }
 
 - (ZSHBaseTableViewSectionModel*)storeListSection{
     kWeakSelf(self);
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
+    if (kFromClassTypeValue == FromVerifyVCToMultiInfoVC) {
+        sectionModel.headerHeight = 80;
+    }
     for (int i = 0; i<self.titleArr.count; i++) {
         ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
         [sectionModel.cellModelArray addObject:cellModel];
         cellModel.height = kRealValue(44);
         cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
             ZSHBaseCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHBaseCellID forIndexPath:indexPath];
-//            if (![cell.contentView viewWithTag:2]) {
-                NSDictionary *paramDic = @{@"leftTitle":self.titleArr[indexPath.row],@"placeholder":self.placeHolderArr[indexPath.row],@"textFieldType":self.textFieldTypeArr[indexPath.row],KFromClassType:@(self.toViewType)};
-                ZSHTextFieldCellView *textFieldView = [[ZSHTextFieldCellView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, kRealValue(44)) paramDic:paramDic];
-                textFieldView.tag = 2+indexPath.row;
-                textFieldView.textFieldChanged = ^(NSString *str, NSInteger index) {
-                    if (kFromClassTypeValue == FromUserInfoNickNameVCToMultiInfoVC || kFromClassTypeValue == FromUserInfoResumeVCToMultiInfoVC){
-                        weakself.changedData = str;
-                    } else {
-                        if (index == 2) {
-                            weakself.text1 = str;
-                        } else if (index == 3) {
-                            weakself.text2 = str;
-                        } else if (index == 4) {
-                            weakself.text3 = str;
-                        } else if (index == 5) {
-                            weakself.text4 = str;
-                        } else if (index == 6) {
-                            weakself.text5 = str;
-                        } else if (index == 7) {
-                            weakself.text6 = str;
-                        }
+            if (kFromClassTypeValue ==  FromCreateStoreVCToMultiInfoVC) {
+                if (indexPath.row == 1) {
+                    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                }
+            } else if (kFromClassTypeValue ==  FromVerifyVCToMultiInfoVC) {
+                if (indexPath.row == 0 || indexPath.row == 3 || indexPath.row == 4) {
+                    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                }
+            }
+            NSDictionary *paramDic = @{@"leftTitle":self.titleArr[indexPath.row],@"placeholder":self.placeHolderArr[indexPath.row],@"textFieldType":self.textFieldTypeArr[indexPath.row],KFromClassType:@(self.toViewType)};
+            ZSHTextFieldCellView *textFieldView = [[ZSHTextFieldCellView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth-10, kRealValue(44)) paramDic:paramDic];
+            textFieldView.tag = 2+indexPath.row;
+            textFieldView.textFieldChanged = ^(NSString *str, NSInteger index) {
+                if (kFromClassTypeValue == FromUserInfoNickNameVCToMultiInfoVC || kFromClassTypeValue == FromUserInfoResumeVCToMultiInfoVC){
+                    weakself.changedData = str;
+                } else {
+                    if (index == 2) {
+                        weakself.text1 = str;
+                    } else if (index == 3) {
+                        weakself.text2 = str;
+                    } else if (index == 4) {
+                        weakself.text3 = str;
+                    } else if (index == 5) {
+                        weakself.text4 = str;
+                    } else if (index == 6) {
+                        weakself.text5 = str;
+                    } else if (index == 7) {
+                        weakself.text6 = str;
                     }
-                };
-                [cell.contentView addSubview:textFieldView];
-//            }
+                }
+            };
+            [cell.contentView addSubview:textFieldView];
             return cell;
         };
         
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
-            
+            if (kFromClassTypeValue ==  FromCreateStoreVCToMultiInfoVC) {
+                if (indexPath.row == 1) {
+                    
+                }
+            } else if (kFromClassTypeValue ==  FromVerifyVCToMultiInfoVC) {
+                if (indexPath.row == 0 ) { // 上传身份证
+                    ZSHUploadIDCardController *uploadIDCardVC = [[ZSHUploadIDCardController alloc] init];
+                    [self.navigationController pushViewController:uploadIDCardVC animated:true];
+                }
+            }
         };
     }
     return sectionModel;

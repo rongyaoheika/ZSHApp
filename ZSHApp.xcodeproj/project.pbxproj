@@ -29,7 +29,6 @@
 		04A6904020084EA800C583E6 /* ZSHPrivilegeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A6903F20084EA800C583E6 /* ZSHPrivilegeCell.m */; };
 		04A6904520089F5E00C583E6 /* ZSHJoininViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A6904420089F5E00C583E6 /* ZSHJoininViewController.m */; };
 		04A690492008A01400C583E6 /* ZSHJoininCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A690482008A01400C583E6 /* ZSHJoininCell.m */; };
-		04A6904C2008C0A500C583E6 /* ZSHCreateStoreController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A6904B2008C0A400C583E6 /* ZSHCreateStoreController.m */; };
 		04A6FCCB2007152700DDE79E /* ZSHMusicMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A6FCCA2007152700DDE79E /* ZSHMusicMainViewController.m */; };
 		04A6FCCE200756F800DDE79E /* ZSHRadioScrollCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A6FCCD200756F800DDE79E /* ZSHRadioScrollCell.m */; };
 		04A6FCD120075A2900DDE79E /* ZSHRadioSubView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A6FCD020075A2900DDE79E /* ZSHRadioSubView.m */; };
@@ -37,6 +36,7 @@
 		04BAD7C12005EEB100950195 /* ZSHMagazineListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04BAD7C02005EEB100950195 /* ZSHMagazineListCell.m */; };
 		04CC219E1FFF79B200921863 /* ZSHMagazineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CC219D1FFF79B200921863 /* ZSHMagazineViewController.m */; };
 		04E2F3C120070E2200F902A4 /* ZSHMagazineReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E2F3C020070E2200F902A4 /* ZSHMagazineReusableView.m */; };
+		04ED27382009AAC7000B1541 /* ZSHUploadIDCardController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04ED27372009AAC7000B1541 /* ZSHUploadIDCardController.m */; };
 		18063C541FC90379000F5A00 /* ZSHPersonalModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 18063C531FC90379000F5A00 /* ZSHPersonalModel.m */; };
 		18063C571FC90951000F5A00 /* ZSHPersonalDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 18063C561FC90951000F5A00 /* ZSHPersonalDetailModel.m */; };
 		18063C5B1FC9140B000F5A00 /* ZSHCollectModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 18063C5A1FC9140B000F5A00 /* ZSHCollectModel.m */; };
@@ -615,6 +615,8 @@
 		04CC219D1FFF79B200921863 /* ZSHMagazineViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHMagazineViewController.m; sourceTree = "<group>"; };
 		04E2F3BF20070E2200F902A4 /* ZSHMagazineReusableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHMagazineReusableView.h; sourceTree = "<group>"; };
 		04E2F3C020070E2200F902A4 /* ZSHMagazineReusableView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHMagazineReusableView.m; sourceTree = "<group>"; };
+		04ED27362009AAC7000B1541 /* ZSHUploadIDCardController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHUploadIDCardController.h; sourceTree = "<group>"; };
+		04ED27372009AAC7000B1541 /* ZSHUploadIDCardController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHUploadIDCardController.m; sourceTree = "<group>"; };
 		14ED69325E9FD4BDB1CA95F8 /* Pods-ZSHApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZSHApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-ZSHApp/Pods-ZSHApp.release.xcconfig"; sourceTree = "<group>"; };
 		18063C521FC90379000F5A00 /* ZSHPersonalModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHPersonalModel.h; sourceTree = "<group>"; };
 		18063C531FC90379000F5A00 /* ZSHPersonalModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHPersonalModel.m; sourceTree = "<group>"; };
@@ -1649,8 +1651,8 @@
 			children = (
 				04A6904320089F5E00C583E6 /* ZSHJoininViewController.h */,
 				04A6904420089F5E00C583E6 /* ZSHJoininViewController.m */,
-				04A6904A2008C0A400C583E6 /* ZSHCreateStoreController.h */,
-				04A6904B2008C0A400C583E6 /* ZSHCreateStoreController.m */,
+				04ED27362009AAC7000B1541 /* ZSHUploadIDCardController.h */,
+				04ED27372009AAC7000B1541 /* ZSHUploadIDCardController.m */,
 			);
 			path = "我要入驻";
 			sourceTree = "<group>";
@@ -4762,6 +4764,7 @@
 				FE5538661F47049D00803128 /* YYFPSLabel.m in Sources */,
 				FE4BC2BA1FE21A6100007C4C /* HCLocationManager.m in Sources */,
 				FE55385B1F47049D00803128 /* AdPageView.m in Sources */,
+				04ED27382009AAC7000B1541 /* ZSHUploadIDCardController.m in Sources */,
 				FEBD7CBE1FA7608200CE2BA6 /* ZSHFoodModel.m in Sources */,
 				049823B920074F180080626D /* ZSHCabinetCollectionCell.m in Sources */,
 				180C95CE1F57E10200CE570C /* UIImage+BlurGlass.m in Sources */,
@@ -4942,7 +4945,6 @@
 				1846BB451FE3B282001B264B /* BEMAverageLine.m in Sources */,
 				FE5538121F47049D00803128 /* RootNavigationController.m in Sources */,
 				FE291EE91F8CCC5900D4BBE7 /* ZSHMineViewController.m in Sources */,
-				04A6904C2008C0A500C583E6 /* ZSHCreateStoreController.m in Sources */,
 				FE7502D01F9A4360002F2708 /* ZSHEntertainmentViewController.m in Sources */,
 				FE5538601F47049D00803128 /* UIViewController+AlertViewAndActionSheet.m in Sources */,
 				FEAE11231FB41977008DCB3E /* ZSHEnergyValueViewController.m in Sources */,

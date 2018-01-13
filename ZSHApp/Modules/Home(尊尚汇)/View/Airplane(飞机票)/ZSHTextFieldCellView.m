@@ -13,11 +13,11 @@
     NSInteger _i;
 }
 
-@property (nonatomic,strong) UILabel      *leftLabel;
-@property (nonatomic,strong) YYLabel      *getCaptchaBtn;
-@property (nonatomic,strong) UIView       *verticalLine;
-@property (nonatomic,strong) UIView       *bottomLine;
-
+@property (nonatomic, strong) UILabel      *leftLabel;
+@property (nonatomic, strong) YYLabel      *getCaptchaBtn;
+@property (nonatomic, strong) UIView       *verticalLine;
+@property (nonatomic, strong) UIView       *bottomLine;
+ 
 @end
 
 @implementation ZSHTextFieldCellView
