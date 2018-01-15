@@ -25,8 +25,8 @@
 #ifdef DEBUG
 
 #define DevelopSever    0
-#define TestSever       1
-#define ProductSever    0
+#define TestSever       0
+#define ProductSever    1
 
 #else
 
@@ -39,18 +39,18 @@
 
 /**开发服务器*/
 
-#define kUrlRoot                    @"http://192.168.1.108:8080/ZSHINTER/"   // 洪磊
+#define kUrlRoot                    @"http://inter.rongyaohk.com/ZSHINTER/"   // 洪磊
 
 
 #elif TestSever
 
 /**测试服务器*/
-#define kUrlRoot                    @"http://192.168.1.125:8081/ZSHINTER/"   // 振华
+#define kUrlRoot                    @"http://inter.rongyaohk.com/ZSHINTER/"   // 振华
 
 #elif ProductSever
 
 /**生产服务器（阿里云）*/
-#define kUrlRoot                    @"http://47.104.16.215:8080/ZSHINTER/"
+#define kUrlRoot                    @"http://inter.rongyaohk.com/ZSHINTER/"
 
 
 #endif

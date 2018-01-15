@@ -562,14 +562,14 @@ static NSString *Identify_MusicCell = @"musicCell";
 - (void)hasUpdateVersion{
     kWeakSelf(self);
     NSDictionary *infoDic=[[NSBundle mainBundle] infoDictionary];
-    NSString *currentVersion=infoDic[@"CFBundleShortVersionString"];
+    NSString *currentBulidVersion=infoDic[@"CFBundleVersion"];
     
     ZSHHomeLogic *homeLogic = [[ZSHHomeLogic alloc]init];
     NSDictionary *paramDic = @{@"_api_key":kPGYApiKey,@"appKey":kPGYAppKey,@"buildVersion":@"1.0",@"buildBuildVersion":@(1.0)};
     [homeLogic loadUpdateWithDic:paramDic success:^(id response) {
         RLog(@"更新信息");
-        if ([currentVersion integerValue]>[response[@"data"][@"buildVersion"]integerValue]) {
-            UIAlertController *ac = [UIAlertController alertControllerWithTitle:@"版本有更新" message:[NSString stringWithFormat:@"检测到新版本(%@),是否更新?",currentVersion]  preferredStyle:UIAlertControllerStyleAlert];
+        if ([currentBulidVersion integerValue]>[response[@"data"][@"buildBuildVersion"]integerValue]) {
+            UIAlertController *ac = [UIAlertController alertControllerWithTitle:@"版本有更新" message:@"检测到新版本,是否更新?"  preferredStyle:UIAlertControllerStyleAlert];
             UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
             [ac addAction:cancelAction];
             UIAlertAction *doneAction = [UIAlertAction actionWithTitle:@"更新" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {

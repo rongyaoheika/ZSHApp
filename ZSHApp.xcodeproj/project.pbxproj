@@ -599,8 +599,6 @@
 		04A6904420089F5E00C583E6 /* ZSHJoininViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHJoininViewController.m; sourceTree = "<group>"; };
 		04A690472008A01400C583E6 /* ZSHJoininCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHJoininCell.h; sourceTree = "<group>"; };
 		04A690482008A01400C583E6 /* ZSHJoininCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHJoininCell.m; sourceTree = "<group>"; };
-		04A6904A2008C0A400C583E6 /* ZSHCreateStoreController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHCreateStoreController.h; sourceTree = "<group>"; };
-		04A6904B2008C0A400C583E6 /* ZSHCreateStoreController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHCreateStoreController.m; sourceTree = "<group>"; };
 		04A6FCC92007152700DDE79E /* ZSHMusicMainViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHMusicMainViewController.h; sourceTree = "<group>"; };
 		04A6FCCA2007152700DDE79E /* ZSHMusicMainViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHMusicMainViewController.m; sourceTree = "<group>"; };
 		04A6FCCC200756F800DDE79E /* ZSHRadioScrollCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHRadioScrollCell.h; sourceTree = "<group>"; };
@@ -4288,6 +4286,7 @@
 				FCE002867A10AABD9CA626C2 /* [CP] Embed Pods Frameworks */,
 				BAD1716792B72D02CEED4423 /* [CP] Copy Pods Resources */,
 				188662431FE9F42D00EA7FA1 /* CopyFiles */,
+				042DD7272009E84900CF8AFB /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -4452,6 +4451,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		042DD7272009E84900CF8AFB /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#!/bin/bash\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"$INFOPLIST_FILE\")\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"$INFOPLIST_FILE\"";
+		};
 		BAD1716792B72D02CEED4423 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
