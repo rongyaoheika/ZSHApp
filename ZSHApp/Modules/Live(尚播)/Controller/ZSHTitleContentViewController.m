@@ -438,7 +438,7 @@
     
 }
 
-- (void)locateBtnAction{
+- (void)locateBtnAction {
     
 }
 
@@ -497,15 +497,17 @@
 - (void)distributeAction{
     RLog(@"发布");
     kWeakSelf(self);
-    if (![self.view viewWithTag:2]) {
+    if (![self.view viewWithTag:18011506]) {
         [UIView transitionWithView:self.toplineTopView duration:1.0 options:UIViewAnimationOptionCurveEaseIn animations:^ {
             [self.view addSubview:self.toplineTopView];
             self.toplineTopView.btnClickBlock = ^(UIButton *btn) {
-                ZSHWeiboWriteController *weiboWriteVC = [[ZSHWeiboWriteController alloc]init];
+                NSArray *values = @[@(FromWordVCToZSHWeiboWriteVC), @(FromPhotoVCToZSHWeiboWriteVC), @(FromVideoVCToZSHWeiboWriteVC)];
+                NSMutableDictionary *mutableDic = [[NSMutableDictionary alloc] initWithDictionary:weakself.paramArr[btn.tag]];
+                [mutableDic addEntriesFromDictionary:@{KFromClassType:values[btn.tag]}];
+                ZSHWeiboWriteController *weiboWriteVC = [[ZSHWeiboWriteController alloc]initWithParamDic:mutableDic];
                 [weakself.navigationController pushViewController:weiboWriteVC animated:YES];
             };
         } completion:nil];
-        
     } else {
         [UIView transitionWithView:self.toplineTopView duration:1.0 options:UIViewAnimationOptionCurveEaseOut animations:^ {
             [self.toplineTopView removeFromSuperview];
@@ -517,7 +519,7 @@
 - (ZSHToplineTopView *)toplineTopView{
     if (!_toplineTopView) {
         _toplineTopView = [[ZSHToplineTopView alloc]initWithFrame:CGRectMake(0, KNavigationBarHeight, kScreenWidth, kScreenHeight - KNavigationBarHeight)];
-        _toplineTopView.tag = 2;
+        _toplineTopView.tag = 18011506;
     }
     return _toplineTopView;
 }

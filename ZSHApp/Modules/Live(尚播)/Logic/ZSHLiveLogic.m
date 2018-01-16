@@ -48,6 +48,30 @@
 
 }
 
+// 商家发布自媒体广告流-单独上传视频
+- (void)requestUpVideoWithDic:(NSDictionary *)dic withFilePath:(NSString *)filePath success:(void (^)(id response))success {
+    [PPNetworkHelper uploadFileWithURL:kUrlAddSelfMediaad parameters:dic name:@"showfile" filePath:filePath progress:^(NSProgress *progress) {
+        
+    } success:^(id responseObject) {
+        success(responseObject);
+    } failure:^(NSError *error) {
+        
+    }];
+}
+
+
+// 商家发布自媒体广告流
+- (void)requestAddSelfMediaAD:(NSDictionary *)dic images:(NSArray *)images fileNames:(NSArray *)fileNmaes success:(void (^)(id response))success {
+    [PPNetworkHelper uploadImagesWithURL:kUrlAddSelfMediaad parameters:dic name:@"fileList" images:images fileNames:fileNmaes imageScale:1.0 imageType:nil progress:^(NSProgress *progress) {
+        
+    } success:^(id responseObject) {
+        success(responseObject);
+    } failure:^(NSError *error) {
+        
+    }];
+    
+}
+
 
 // 获取我和我关注的好友的所有圈子并根据时间排序
 - (void)requestCircleList:(void (^)(id response))success {

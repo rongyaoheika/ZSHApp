@@ -58,7 +58,7 @@
 
 - (void)updateCellWithModel:(ZSHFindModel *)model {
     _titleLabel.text = model.TITLE;
-    [_picView sd_setImageWithURL:[NSURL URLWithString:model.VIDEOBACKIMAGE]];
+    [_picView sd_setImageWithURL:[NSURL URLWithString:model.VIDEOBACKIMAGE.firstObject]];
     _pageviewLabel.text = NSStringFormat(@"%@人浏览", model.PAGEVIEWS);
     
 }

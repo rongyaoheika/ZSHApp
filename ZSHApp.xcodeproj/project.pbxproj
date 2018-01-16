@@ -2512,6 +2512,7 @@
 				1869C93D1FD94FBA002F2E37 /* ZSHWeiboViewController.m */,
 				18762B241FE1088300E1857F /* ZSHReviewViewController.h */,
 				18762B251FE1088300E1857F /* ZSHReviewViewController.m */,
+				FE2CD0911F9833DE00E9E519 /* ZSHAddressListCell.h */,
 				18762B271FE108E100E1857F /* ZSHWeiboWriteController.h */,
 				18762B281FE108E100E1857F /* ZSHWeiboWriteController.m */,
 			);
@@ -3182,7 +3183,6 @@
 				FEB3058A1F95F9EB00E4A061 /* ZSHGoodsMineGridCell.m */,
 				FE1377731F972745003C8DFB /* ZSHOrderCell.h */,
 				FE1377741F972745003C8DFB /* ZSHOrderCell.m */,
-				FE2CD0911F9833DE00E9E519 /* ZSHAddressListCell.h */,
 				FE2CD0921F9833DE00E9E519 /* ZSHAddressListCell.m */,
 			);
 			path = View;
@@ -5573,7 +5573,7 @@
 					"$(PROJECT_DIR)/ZSHApp/ThridParty/UMSocial/SocialLibraries/Sina",
 					"$(PROJECT_DIR)/ZSHApp/ThridParty/UMSocial/SocialLibraries/UniqueId",
 				);
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.combatworld.honourcard;
 				PRODUCT_NAME = "荣耀黑卡";
 				PROVISIONING_PROFILE = "69d02021-55e5-42e4-a8f5-77a82164d82b";

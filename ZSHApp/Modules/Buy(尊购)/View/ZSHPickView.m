@@ -309,7 +309,7 @@ NSInteger yearSatrt = 1900;
             break;
         }
         default:{
-             [_pickerView selectRow:1 inComponent:0 animated:NO];
+             [_pickerView selectRow:0 inComponent:0 animated:NO];
             break;
         }
     }

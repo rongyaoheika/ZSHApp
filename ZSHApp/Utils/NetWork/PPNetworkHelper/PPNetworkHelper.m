@@ -189,7 +189,8 @@ static AFHTTPSessionManager *_sessionManager;
     
     NSURLSessionTask *sessionTask = [_sessionManager POST:requestUrl parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         NSError *error = nil;
-        [formData appendPartWithFileURL:[NSURL URLWithString:filePath] name:name error:&error];
+//        [formData appendPartWithFileURL:[NSURL URLWithString:filePath] name:name error:&error];
+        [formData appendPartWithFileData:[NSData dataWithContentsOfFile:filePath] name:name fileName:@"123.mp4" mimeType:@"video/mp4"];
         (failure && error) ? failure(error) : nil;
     } progress:^(NSProgress * _Nonnull uploadProgress) {
         //上传进度

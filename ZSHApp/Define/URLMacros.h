@@ -755,6 +755,15 @@
 //参数：  无
 //请求地址：/appmagazinein/getlistsubmenu.do?LISTSUBMENU  (混淆码)
 #define kUrlGetListSubmenu [NSString stringWithFormat:@"/appmagazinein/getlistsubmenu.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"LISTSUBMENU"]]
+//149.商家发布自媒体广告流-单独上传视频
+//参数：  showfile  视频文件名
+//请求地址：/appdiscoverin/upvideo.do?UPVIDEO (混淆码)
+#define kUrlUpVideo [NSString stringWithFormat:@"/appdiscoverin/upvideo.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"UPVIDEO"]]
+//150.商家发布自媒体广告流
+//参数：  TITLE 标题 /     HONOURUSER_ID  用户id     /fileList   上传的图片名
+//请求地址：/appdiscoverin/addselfmediaad.do?SELFMEDIAADD (混淆码)
+#define kUrlAddSelfMediaad [NSString stringWithFormat:@"/appdiscoverin/addselfmediaad.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SELFMEDIAADD"]]
+
 
 
 #endif /* URLMacros_h */
