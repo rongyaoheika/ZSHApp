@@ -53,10 +53,22 @@
 
 #pragma getter
 - (void)clickButton:(NSInteger)index {
-    NSArray *VCS = @[@"ZSHWeiboWriteController",@"ZSHBeginShowViewController",@"ZSHVideoRecViewController"];
-    NSArray *fromclassTypes = @[@(FromTabbarToWeiboVC),@(FromTabbarToVideoVC), @(FromTabbarToPersonalDetailVC)];
+//    NSArray *VCS = @[@"ZSHWeiboWriteController",@"ZSHBeginShowViewController",@"ZSHVideoRecViewController"];
+//    NSArray *fromclassTypes = @[@(FromTabbarToWeiboVC),@(FromTabbarToVideoVC), @(FromTabbarToPersonalDetailVC)];
+    
+    NSArray *VCS = @[@"ZSHWeiboWriteController",@"AlivcLivePushConfigViewController",@"ZSHVideoRecViewController"];
+    NSArray *fromclassTypes = @[@(FromTabbarToWeiboVC),@"", @(FromTabbarToPersonalDetailVC)];
+    
+    
     Class className = NSClassFromString(VCS[index-1]);
-    RootViewController *vc =  [[className alloc] initWithParamDic:@{KFromClassType:fromclassTypes[index-1]}];
+    RootViewController *vc = nil;
+    if (index == 2) {
+       vc =  [[className alloc] init];
+    } else {
+        vc =  [[className alloc] initWithParamDic:@{KFromClassType:fromclassTypes[index-1]}];
+    }
+    
+//    RootViewController *vc =  [[className alloc] initWithParamDic:@{KFromClassType:fromclassTypes[index-1]}];
 
     [ZSHBaseUIControl setAnimationWithHidden:YES view:self.superview completedBlock:^{
         [[kAppDelegate getCurrentUIVC].navigationController pushViewController:vc animated:YES];

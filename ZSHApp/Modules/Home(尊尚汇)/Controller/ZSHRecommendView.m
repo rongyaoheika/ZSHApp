@@ -71,7 +71,6 @@
     [cellIV sd_setImageWithURL:[NSURL URLWithString:_dataArr[indexPath.item]]];
     cellIV.layer.cornerRadius = 5.0;
     cellIV.clipsToBounds = YES;
-    cellIV.backgroundColor = [UIColor purpleColor];
     [cell.contentView addSubview:cellIV];
     return cell;
 }

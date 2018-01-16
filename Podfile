@@ -13,5 +13,7 @@ pod 'MJExtension'
 pod 'IQKeyboardManager'
 pod 'TZImagePickerController'
 pod 'FSCalendar'
-
+pod 'AlivcLivePusherWithPlayer'
+pod 'AliyunPlayer_iOS/AliyunPlayerSDK'
+pod 'AliyunPlayer_iOS/AliyunVodPlayerSDK'
 end

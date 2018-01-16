@@ -51,9 +51,14 @@
 #define KZSHColor58AABE               [UIColor colorWithHexString:@"58AABE"]
 #define KZSHColor3E3E3E               [UIColor colorWithHexString:@"3E3E3E"]
 #define KZSHColorA61CE7               [UIColor colorWithHexString:@"A61CE7"]
+
+#define KZSHColorRGB(R,G,B)            [UIColor colorWithRed:(R * 1.0) / 255.0 green:(G * 1.0) / 255.0 blue:(B * 1.0) / 255.0 alpha:1.0]
+#define KZSHColorRGBA(R,G,B,A)         [UIColor colorWithRed:(R * 1.0) / 255.0 green:(G * 1.0) / 255.0 blue:(B * 1.0) / 255.0 alpha:A]
 #define kRandomColor                   KRGBColor(arc4random_uniform(256)/255.0,arc4random_uniform(256)/255.0,arc4random_uniform(256)/255.0)        //随机色生成
-#define KShadowColor                   [UIColor colorWithRed:0 green:0 blue:0 alpha:0.85]
-#define KLightWhiteColor               [UIColor colorWithRed:255/255.0 green:255/255.0f blue:255/255.0f alpha:0.7]
+#define KShadowColor                   KZSHColorRGBA(0,0,0,0.85)
+#define KLightWhiteColor               KZSHColorRGBA(255,255,255,0.7)
+
+
 #pragma mark -  字体区
 
 #define kFontTypeANB                    @"AvenirNext-Bold"

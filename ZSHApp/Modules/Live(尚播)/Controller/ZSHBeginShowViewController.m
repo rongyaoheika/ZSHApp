@@ -10,6 +10,8 @@
 #import "ZegoAVKitManager.h"
 #import "ZegoSettings.h"
 #import "XXTextView.h"
+#import <AlivcLivePusher/AlivcLivePusherHeader.h>
+#import "AlivcLivePushConfigViewController.h"
 
 @interface ZSHBeginShowViewController ()<ZegoDeviceEventDelegate>
 
@@ -23,6 +25,8 @@
 @property (nonatomic, strong)  UIImageView    *videoView;
 @property (nonatomic, strong)  NSTimer        *previewTimer;
 
+@property (nonatomic, strong) AlivcLivePusher *livePusher;
+
 @end
 
 @implementation ZSHBeginShowViewController
@@ -31,6 +35,48 @@
     [super viewDidLoad];
     [self loadData];
     [self createUI];
+}
+
+- (void)initLivePusher{
+    AlivcLivePushConfig *config = [[AlivcLivePushConfig alloc] init];
+    config.resolution = AlivcLivePushResolution540P;
+    config.fps = AlivcLivePushFPS20;
+    config.qualityMode = AlivcLivePushQualityModeResolutionFirst;
+    config.targetVideoBitrate = 1200; //  目标码率1200Kbps
+    config.minVideoBitrate = 400; //  最小码率400Kbps
+    config.initialVideoBitrate = 900; //  初始码率900Kbps
+    config.videoEncodeGop = AlivcLivePushVideoEncodeGOP_2;//默认值为2
+    config.connectRetryInterval = 2000; // 单位为毫秒，重连时长2s
+    config.previewMirror = false; // 关闭预览镜像
+    config.beautyOn = false; // 关闭美颜
+    config.beautyMode = AlivcLivePushBeautyModeProfessional;//人脸识别专业版本
+    // 美白范围0-100
+    config.beautyWhite = 70;
+    // 磨皮范围0-100
+    config.beautyBuffing = 40;
+    // 红润设置范围0-100
+    config.beautyRuddy = 40;
+    /* 下面接口是人脸识别下的高级美颜参数 */
+    // 大眼设置范围0-100
+    config.beautyBigEye = 30;
+    // 瘦脸设置范围0-100
+    config.beautyThinFace = 40;
+    // 收下巴设置范围0-100
+    config.beautyShortenFace = 50;
+    // 腮红设置范围0-100
+    config.beautyCheekPink = 15;
+    config.orientation = AlivcLivePushOrientationLandscapeLeft; // Left横屏推流
+    NSString *watermarkBundlePath = [[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"watermark"] ofType:@"png"];
+    [config addWatermarkWithPath: watermarkBundlePath
+                 watermarkCoordX:0.1
+                 watermarkCoordY:0.1
+                  watermarkWidth:0.3];
+    
+    self.livePusher = [[AlivcLivePusher alloc] initWithConfig:config];
+    
+//    [self.livePusher setInfoDelegate:self];
+//    [self.livePusher setErrorDelegate:self];
+//    [self.livePusher setNetworkDelegate:self];
 }
 
 - (void)loadData {
@@ -183,6 +229,9 @@
 
 - (void)beginShowAction {
     RLog(@"开始直播");
+    
+//    AlivcLivePushConfigViewController *pushConfigVC = [[AlivcLivePushConfigViewController alloc] init];
+//    [self.navigationController pushViewController:pushConfigVC animated:YES];
 }
 
 //

@@ -33,4 +33,14 @@
 
 #define kPGYApiKey @"925b799ec8ce5d19910288cdde27bfdc"
 #define kPGYAppKey @"ba5cdab1acf602dd6b5ffc206905d0a8"
+
+
+
+//阿里云直播
+#define KZSHColorRGB(R,G,B)  [UIColor colorWithRed:(R * 1.0) / 255.0 green:(G * 1.0) / 255.0 blue:(B * 1.0) / 255.0 alpha:1.0]
+#define KZSHColorRGBA(R,G,B,A)  [UIColor colorWithRed:(R * 1.0) / 255.0 green:(G * 1.0) / 255.0 blue:(B * 1.0) / 255.0 alpha:A]
+#define AlivcTextPushURL @"rtmp://video-center.alivecdn.com/ZSHApp/stream00?vhost=live.rongyaohk.com&auth_key=1516071856-0-0-a62187626d924c1cfedf863846855965"
+#define AlivcUserDefaultsIndentifierFirst @"AlivcUserDefaultsIndentifierFirst"
+
+
 #endif /* ThirdMacros_h */
