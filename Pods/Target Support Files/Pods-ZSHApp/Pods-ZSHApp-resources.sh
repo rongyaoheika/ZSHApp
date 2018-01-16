@@ -85,6 +85,7 @@ EOM
 }
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_resource "${PODS_ROOT}/AlivcLivePusherWithPlayer/AlivcLibFaceResource.bundle"
+  install_resource "${PODS_ROOT}/AliyunPlayer_iOS/AliyunImageSource.bundle"
   install_resource "${PODS_ROOT}/AliyunPlayer_iOS/AliyunLanguageSource.bundle"
   install_resource "${PODS_ROOT}/IQKeyboardManager/IQKeyboardManager/Resources/IQKeyboardManager.bundle"
   install_resource "${PODS_ROOT}/MJRefresh/MJRefresh/MJRefresh.bundle"
@@ -93,6 +94,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_resource "${PODS_ROOT}/AlivcLivePusherWithPlayer/AlivcLibFaceResource.bundle"
+  install_resource "${PODS_ROOT}/AliyunPlayer_iOS/AliyunImageSource.bundle"
   install_resource "${PODS_ROOT}/AliyunPlayer_iOS/AliyunLanguageSource.bundle"
   install_resource "${PODS_ROOT}/IQKeyboardManager/IQKeyboardManager/Resources/IQKeyboardManager.bundle"
   install_resource "${PODS_ROOT}/MJRefresh/MJRefresh/MJRefresh.bundle"
@@ -101,6 +103,7 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
 fi
 if [[ "$CONFIGURATION" == "AdHoc" ]]; then
   install_resource "${PODS_ROOT}/AlivcLivePusherWithPlayer/AlivcLibFaceResource.bundle"
+  install_resource "${PODS_ROOT}/AliyunPlayer_iOS/AliyunImageSource.bundle"
   install_resource "${PODS_ROOT}/AliyunPlayer_iOS/AliyunLanguageSource.bundle"
   install_resource "${PODS_ROOT}/IQKeyboardManager/IQKeyboardManager/Resources/IQKeyboardManager.bundle"
   install_resource "${PODS_ROOT}/MJRefresh/MJRefresh/MJRefresh.bundle"

@@ -14,7 +14,7 @@
 #import "ZSHLiveRoomViewController.h"
 #import "ZSHNearHeadView.h"
 #import "ZSHBottomBlurPopView.h"
-
+#import "AdvancedPlayerViewController.h"
 
 @interface ZSHLiveContentFirstViewController ()< UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,ZSHCustomWaterFlowLayoutDelegate>
 
@@ -105,8 +105,11 @@ static NSString * const ZSHNearHeadViewID = @"ZSHNearHeadView";
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     
-    ZSHLiveRoomViewController *liveRoomVC = [[ZSHLiveRoomViewController alloc]init];
-    [self.navigationController pushViewController:liveRoomVC animated:YES];
+//    ZSHLiveRoomViewController *liveRoomVC = [[ZSHLiveRoomViewController alloc]init];
+//    [self.navigationController pushViewController:liveRoomVC animated:YES];
+    AdvancedPlayerViewController *demoTwo = [[AdvancedPlayerViewController alloc] init];
+    demoTwo.title = @"高级播放";
+    [self.navigationController pushViewController:demoTwo animated:YES];
 }
 
 #pragma WaterFlowLayoutDelegate

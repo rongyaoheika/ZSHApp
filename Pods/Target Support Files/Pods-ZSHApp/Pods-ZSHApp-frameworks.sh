@@ -104,18 +104,21 @@ strip_invalid_archs() {
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${PODS_ROOT}/AlivcLivePusherWithPlayer/AlivcLivePusher.framework"
   install_framework "${PODS_ROOT}/AlivcLivePusherWithPlayer/AlivcLibRtmp.framework"
+  install_framework "${PODS_ROOT}/AliyunPlayer_iOS/AliyunVodPlayerViewSDK.framework"
   install_framework "${PODS_ROOT}/AliyunPlayer_iOS/AliyunPlayerSDK.framework"
   install_framework "${PODS_ROOT}/AliyunPlayer_iOS/AliyunVodPlayerSDK.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${PODS_ROOT}/AlivcLivePusherWithPlayer/AlivcLivePusher.framework"
   install_framework "${PODS_ROOT}/AlivcLivePusherWithPlayer/AlivcLibRtmp.framework"
+  install_framework "${PODS_ROOT}/AliyunPlayer_iOS/AliyunVodPlayerViewSDK.framework"
   install_framework "${PODS_ROOT}/AliyunPlayer_iOS/AliyunPlayerSDK.framework"
   install_framework "${PODS_ROOT}/AliyunPlayer_iOS/AliyunVodPlayerSDK.framework"
 fi
 if [[ "$CONFIGURATION" == "AdHoc" ]]; then
   install_framework "${PODS_ROOT}/AlivcLivePusherWithPlayer/AlivcLivePusher.framework"
   install_framework "${PODS_ROOT}/AlivcLivePusherWithPlayer/AlivcLibRtmp.framework"
+  install_framework "${PODS_ROOT}/AliyunPlayer_iOS/AliyunVodPlayerViewSDK.framework"
   install_framework "${PODS_ROOT}/AliyunPlayer_iOS/AliyunPlayerSDK.framework"
   install_framework "${PODS_ROOT}/AliyunPlayer_iOS/AliyunVodPlayerSDK.framework"
 fi

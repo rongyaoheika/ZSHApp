@@ -135,4 +135,12 @@ return shared##className; \
 
 #define HONOURUSER_IDValue         curUser.HONOURUSER_ID
 
+//阿里
+#define PLAY_AUTH @""
+#define VID @""
+#define ACCESS_KEY_ID @""
+#define ACCESS_KEY_SECRET @""
+#define SECURITY_TOKEN @""
+
+
 #endif /* define_h */

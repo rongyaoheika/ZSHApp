@@ -39,8 +39,10 @@
 //阿里云直播
 #define KZSHColorRGB(R,G,B)  [UIColor colorWithRed:(R * 1.0) / 255.0 green:(G * 1.0) / 255.0 blue:(B * 1.0) / 255.0 alpha:1.0]
 #define KZSHColorRGBA(R,G,B,A)  [UIColor colorWithRed:(R * 1.0) / 255.0 green:(G * 1.0) / 255.0 blue:(B * 1.0) / 255.0 alpha:A]
-#define AlivcTextPushURL @"rtmp://video-center.alivecdn.com/ZSHApp/stream00?vhost=live.rongyaohk.com&auth_key=1516071856-0-0-a62187626d924c1cfedf863846855965"
+#define AlivcTextPushURL @"rtmp://video-center.alivecdn.com/ZSHApp/stream05?vhost=live.rongyaohk.com&auth_key=1516107658-0-0-d7329c978bb523ea03615f5db323afdb"
 #define AlivcUserDefaultsIndentifierFirst @"AlivcUserDefaultsIndentifierFirst"
+
+#define AlivcTextPullURL  @"rtmp://live.rongyaohk.com/ZSHApp/stream05?auth_key=1516105321-0-0-62914471277664fcc6cff37fff2d91df"
 
 
 #endif /* ThirdMacros_h */

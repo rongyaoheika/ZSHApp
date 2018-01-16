@@ -16,4 +16,5 @@ pod 'FSCalendar'
 pod 'AlivcLivePusherWithPlayer'
 pod 'AliyunPlayer_iOS/AliyunPlayerSDK'
 pod 'AliyunPlayer_iOS/AliyunVodPlayerSDK'
+pod 'AliyunPlayer_iOS'
 end
