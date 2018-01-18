@@ -68,7 +68,10 @@
             [[kAppDelegate getCurrentUIVC].navigationController pushViewController:vc animated:YES];
         }];
     } else {//跳转直播预览页
-         [[NSNotificationCenter defaultCenter] postNotificationName:KPresentPreviewVC object:nil];
+        [ZSHBaseUIControl setAnimationWithHidden:YES view:self.superview completedBlock:^{
+            [[NSNotificationCenter defaultCenter] postNotificationName:KPresentPreviewVC object:nil];
+        }];
+        
     }
 
 }
