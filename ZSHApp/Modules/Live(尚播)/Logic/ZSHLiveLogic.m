@@ -49,8 +49,8 @@
 }
 
 // 商家发布自媒体广告流-单独上传视频
-- (void)requestUpVideoWithDic:(NSDictionary *)dic withFilePath:(NSString *)filePath success:(void (^)(id response))success {
-    [PPNetworkHelper uploadFileWithURL:kUrlAddSelfMediaad parameters:dic name:@"showfile" filePath:filePath progress:^(NSProgress *progress) {
+- (void)requestUpVideoWithDic:(NSDictionary *)dic withFilePath:(NSString *)filePath thumb:(UIImage *)thumb success:(void (^)(id response))success {
+    [PPNetworkHelper uploadFileWithURL:kUrlAddSelfMediaad parameters:dic name:@"showfile" filePath:filePath thumb:thumb progress:^(NSProgress *progress) {
         
     } success:^(id responseObject) {
         success(responseObject);

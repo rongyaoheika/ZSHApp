@@ -25,8 +25,8 @@
 #ifdef DEBUG
 
 #define DevelopSever    0
-#define TestSever       0
-#define ProductSever    1
+#define TestSever       1
+#define ProductSever    0
 
 #else
 
@@ -40,6 +40,7 @@
 /**开发服务器*/
 
 #define kUrlRoot                    @"http://192.168.1.108:8080/"   // 洪磊
+
 
 
 #elif TestSever

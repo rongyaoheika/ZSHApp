@@ -195,6 +195,16 @@ typedef void(^PPNetworkStatus)(PPNetworkStatusType status);
                                          success:(PPHttpRequestSuccess)success
                                          failure:(PPHttpRequestFailed)failure;
 
+/*上传视频+缩略图*/
++ (NSURLSessionTask *)uploadFileWithURL:(NSString *)URL
+                             parameters:(id)parameters
+                                   name:(NSString *)name
+                               filePath:(NSString *)filePath
+                                  thumb:(UIImage *)image
+                               progress:(PPHttpProgress)progress
+                                success:(PPHttpRequestSuccess)success
+                                failure:(PPHttpRequestFailed)failure;
+
 /**
  *  上传单/多张图片
  *

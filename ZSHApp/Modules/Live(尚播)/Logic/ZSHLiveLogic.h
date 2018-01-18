@@ -24,7 +24,7 @@
 // 发布内容到我的圈子
 - (void)requestAddCircle:(NSDictionary *)dic images:(NSArray *)images fileNames:(NSArray *)fileNmaes success:(void (^)(id response))success;
 // 商家发布自媒体广告流-单独上传视频
-- (void)requestUpVideoWithDic:(NSDictionary *)dic withFilePath:(NSString *)filePath success:(void (^)(id response))success;
+- (void)requestUpVideoWithDic:(NSDictionary *)dic withFilePath:(NSString *)filePath thumb:(UIImage *)thumb success:(void (^)(id response))success;
 // 商家发布自媒体广告流
 - (void)requestAddSelfMediaAD:(NSDictionary *)dic images:(NSArray *)images fileNames:(NSArray *)fileNmaes success:(void (^)(id response))success;
 // 获取我和我关注的好友的所有圈子并根据时间排序

@@ -198,7 +198,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 }
 
 - (void)btnAction:(UIButton *)btn {
-    if ((btn.tag -11179) == 2) {
+     if ((btn.tag -11179) == 2) {
         [self.view addSubview:[self createBottomBlurPopViewWith:ZSHFromShareVCToToBottomBlurPopView]];
     }
 }

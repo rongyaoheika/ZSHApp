@@ -201,7 +201,7 @@
         } else if (kFromClassTypeValue == FromVideoVCToZSHWeiboWriteVC) {
             [[TZImageManager manager] getVideoOutputPathWithAsset:_selectedAssets.firstObject presetName:AVAssetExportPreset640x480 success:^(NSString *outputPath) {
                 NSLog(@"视频导出到本地完成,沙盒路径为:%@",outputPath);
-                [weakself.liveLogic requestUpVideoWithDic:@{@"DIS_TYPE": @"2001", @"TITLE ":_contentTextView.text, @"HONOURUSER_ID":HONOURUSER_IDValue, @"CAIDAN_ID":self.paramDic[@"CAIDAN_ID"]} withFilePath:outputPath success:^(id response) {
+                [weakself.liveLogic requestUpVideoWithDic:@{@"DIS_TYPE": @"2001", @"TITLE ":_contentTextView.text, @"HONOURUSER_ID":HONOURUSER_IDValue, @"CAIDAN_ID":self.paramDic[@"CAIDAN_ID"]} withFilePath:outputPath thumb:_selectedPhotos.firstObject success:^(id response) {
                     UIAlertController *ac = [UIAlertController alertControllerWithTitle:@"提示" message:@"发布成功" preferredStyle:UIAlertControllerStyleAlert];
                     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
                         [weakself.navigationController popViewControllerAnimated:true];
@@ -495,9 +495,9 @@
     
     // You can get the photos by block, the same as by delegate.
     // 你可以通过block或者代理，来得到用户选择的照片.
-    [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL isSelectOriginalPhoto) {
-        
-    }];
+//    [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL isSelectOriginalPhoto) {
+//
+//    }];
     
     [self presentViewController:imagePickerVc animated:YES completion:nil];
 }
@@ -676,13 +676,13 @@
     _selectedPhotos = [NSMutableArray arrayWithArray:@[coverImage]];
     _selectedAssets = [NSMutableArray arrayWithArray:@[asset]];
     // open this code to send video / 打开这段代码发送视频
-    [[TZImageManager manager] getVideoOutputPathWithAsset:asset presetName:AVAssetExportPreset640x480 success:^(NSString *outputPath) {
-        NSLog(@"视频导出到本地完成,沙盒路径为:%@",outputPath);
-        // Export completed, send video here, send by outputPath or NSData
-        // 导出完成，在这里写上传代码，通过路径或者通过NSData上传
-    } failure:^(NSString *errorMessage, NSError *error) {
-        NSLog(@"视频导出失败:%@,error:%@",errorMessage, error);
-    }];
+//    [[TZImageManager manager] getVideoOutputPathWithAsset:asset presetName:AVAssetExportPreset640x480 success:^(NSString *outputPath) {
+//        NSLog(@"视频导出到本地完成,沙盒路径为:%@",outputPath);
+//        // Export completed, send video here, send by outputPath or NSData
+//        // 导出完成，在这里写上传代码，通过路径或者通过NSData上传
+//    } failure:^(NSString *errorMessage, NSError *error) {
+//        NSLog(@"视频导出失败:%@,error:%@",errorMessage, error);
+//    }];
     [self.collectionView reloadData];
     // self.collectionView.contentSize = CGSizeMake(0, ((_selectedPhotos.count + 2) / 3 ) * (_margin + _itemWH));
 }

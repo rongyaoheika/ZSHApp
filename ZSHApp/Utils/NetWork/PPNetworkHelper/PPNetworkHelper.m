@@ -177,21 +177,69 @@ static AFHTTPSessionManager *_sessionManager;
     return sessionTask;
 }
 
-#pragma mark - 上传文件
+
++ (__kindof NSURLSessionTask *)uploadFileWithURL:(NSString *)URL
+                                      parameters:(id)parameters
+                                            name:(NSString *)name
+                                        filePath:(NSString *)filePath
+                                        progress:(PPHttpProgress)progress
+                                         success:(PPHttpRequestSuccess)success
+                                         failure:(PPHttpRequestFailed)failure {
+    NSString *requestUrl = [NSString stringWithFormat:@"%@%@", kUrlRoot, URL];
+    
+    NSURLSessionTask *sessionTask = [_sessionManager POST:requestUrl parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+        NSError *error = nil;
+        
+        [formData appendPartWithFileData:[NSData dataWithContentsOfFile:filePath] name:name fileName:@"123.mp4" mimeType:@"video/mp4"];
+
+        
+        (failure && error) ? failure(error) : nil;
+    } progress:^(NSProgress * _Nonnull uploadProgress) {
+        //上传进度
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            progress ? progress(uploadProgress) : nil;
+        });
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        if (_isOpenLog) {RLog(@"responseObject = %@",responseObject);}
+        [[self allSessionTask] removeObject:task];
+        success ? success(responseObject) : nil;
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+        if (_isOpenLog) {RLog(@"error = %@",error);}
+        [[self allSessionTask] removeObject:task];
+        failure ? failure(error) : nil;
+    }];
+    
+    // 添加sessionTask到数组
+    sessionTask ? [[self allSessionTask] addObject:sessionTask] : nil ;
+    
+    return sessionTask;
+}
+
+#pragma mark - 上传视频+缩略图
 + (NSURLSessionTask *)uploadFileWithURL:(NSString *)URL
                              parameters:(id)parameters
                                    name:(NSString *)name
                                filePath:(NSString *)filePath
+                                  thumb:(UIImage *)image
                                progress:(PPHttpProgress)progress
                                 success:(PPHttpRequestSuccess)success
                                 failure:(PPHttpRequestFailed)failure {
     NSString *requestUrl = [NSString stringWithFormat:@"%@%@", kUrlRoot, URL];
     
     NSURLSessionTask *sessionTask = [_sessionManager POST:requestUrl parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
-        NSError *error = nil;
-//        [formData appendPartWithFileURL:[NSURL URLWithString:filePath] name:name error:&error];
         [formData appendPartWithFileData:[NSData dataWithContentsOfFile:filePath] name:name fileName:@"123.mp4" mimeType:@"video/mp4"];
-        (failure && error) ? failure(error) : nil;
+        // 缩略图
+        NSData *imageData = UIImageJPEGRepresentation(image, 1.f);
+        // 默认图片的文件名, 若fileNames为nil就使用
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        formatter.dateFormat = @"yyyyMMddHHmmss";
+        NSString *str = [formatter stringFromDate:[NSDate date]];
+        NSString *imageFileName = NSStringFormat(@"%@.%@",str,@"jpg");
+        [formData appendPartWithFileData:imageData name:@"fileList" fileName:imageFileName mimeType:@"image/jpg"];
+        
     } progress:^(NSProgress * _Nonnull uploadProgress) {
         //上传进度
         dispatch_sync(dispatch_get_main_queue(), ^{
