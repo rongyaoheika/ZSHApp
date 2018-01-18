@@ -32,7 +32,9 @@
     [self addSubview:self.playerView];
     self.playerView.frame= CGRectMake(10, 10, self.contentView.frame.size.width-20, (self.contentView.frame.size.width-20) * 9 / 16.0);
     [self.aliPlayer setAutoPlay:YES];
-    [self.aliPlayer prepareWithURL:[NSURL URLWithString:@"rtmp://live.hkstv.hk.lxdns.com/live/hks"]];
+    
+    //@"rtmp://live.hkstv.hk.lxdns.com/live/hks"
+    [self.aliPlayer prepareWithURL:[NSURL URLWithString:AlivcPullURL]];
 }
 
 - (void)startPlay{

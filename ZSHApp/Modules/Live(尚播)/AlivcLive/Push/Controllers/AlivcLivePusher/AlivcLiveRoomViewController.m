@@ -1,24 +1,20 @@
 //
-//  AlivcPublisherViewController.m
-//  AlivcLiveCaptureDev
+//  AlivcLiveRoomViewController.m
+//  ZSHApp
 //
-//  Created by TripleL on 17/7/10.
-//  Copyright © 2017年 Alivc. All rights reserved.
+//  Created by mac on 2018/1/18.
+//  Copyright © 2018年 apple. All rights reserved.
 //
 
-#import "AlivcLivePusherViewController.h"
+#import "AlivcLiveRoomViewController.h"
 #import "AlivcPublisherView.h"
 #import "AlivcPushViewsProtocol.h"
-
 #import <AlivcLivePusher/AlivcLivePusherHeader.h>
-#import "AlivcLiveRoomViewController.h"
 
 #define kAlivcLivePusherVCAlertTag 89976
 #define kAlivcLivePusherNoticeTimerInterval 5.0
 
-
-
-@interface AlivcLivePusherViewController () <AlivcPublisherViewDelegate, AlivcMusicViewDelegate, AlivcLivePusherInfoDelegate, AlivcLivePusherErrorDelegate, AlivcLivePusherNetworkDelegate, AlivcLivePusherBGMDelegate, UIAlertViewDelegate>
+@interface AlivcLiveRoomViewController ()<AlivcPublisherViewDelegate, AlivcMusicViewDelegate, AlivcLivePusherInfoDelegate, AlivcLivePusherErrorDelegate, AlivcLivePusherNetworkDelegate, AlivcLivePusherBGMDelegate, UIAlertViewDelegate>
 
 // UI
 @property (nonatomic, strong) AlivcPublisherView *publisherView;
@@ -33,20 +29,18 @@
 
 @end
 
-@implementation AlivcLivePusherViewController
+@implementation AlivcLiveRoomViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    // Do any additional setup after loading the view.
     
-    // 如果不需要退后台继续推流，可以参考这套退后台通知的实现。
-//    [self addBackgroundNotifications];
-
     [self createUI];
     [self loadData];
 }
 
 - (void)createUI{
-     [self setupSubviews];
+    [self setupSubviews];
 }
 
 - (void)loadData{
@@ -68,6 +62,7 @@
     }
     
     [UIApplication sharedApplication].idleTimerDisabled = YES;
+    [self publisherOnClickedPushButton:YES button:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -171,7 +166,7 @@
     if (self.isUseAsyncInterface) {
         // 使用异步接口
         ret = [self.livePusher startPushWithURLAsync:self.pushURL];
-    
+        
     } else {
         // 使用同步接口
         ret = [self.livePusher startPushWithURL:self.pushURL];
@@ -202,7 +197,7 @@
     if (!self.livePusher) {
         return -1;
     }
-
+    
     int ret = [self.livePusher pause];
     return ret;
 }
@@ -212,16 +207,16 @@
  恢复推流
  */
 - (int)resumePush {
-   
+    
     if (!self.livePusher) {
         return -1;
     }
     
     int ret = 0;
-
+    
     if (self.isUseAsyncInterface) {
         // 使用异步接口
-       ret = [self.livePusher resumeAsync];
+        ret = [self.livePusher resumeAsync];
         
     } else {
         // 使用同步接口
@@ -266,7 +261,7 @@
 #pragma mark - AlivcLivePusherErrorDelegate
 
 - (void)onSystemError:(AlivcLivePusher *)pusher error:(AlivcLivePushError *)error {
-
+    
     [self showAlertViewWithErrorCode:error.errorCode
                             errorStr:error.errorDescription
                                  tag:kAlivcLivePusherVCAlertTag+11
@@ -304,7 +299,7 @@
                             delegate:self
                          cancelTitle:NSLocalizedString(@"reconnect_button", nil)
                    otherButtonTitles:NSLocalizedString(@"exit", nil), nil];
-
+    
 }
 
 
@@ -487,12 +482,12 @@
                                              selector:@selector(applicationDidBecomeActive:)
                                                  name:UIApplicationDidBecomeActiveNotification
                                                object:nil];
-
+    
 }
 
 
 - (void)applicationWillResignActive:(NSNotification *)notification {
-
+    
     if (!self.livePusher) {
         return;
     }
@@ -504,7 +499,7 @@
 }
 
 - (void)applicationDidBecomeActive:(NSNotification *)notification {
-
+    
     if (!self.livePusher) {
         return;
     }
@@ -574,7 +569,7 @@
             [self showPusherPausePushErrorAlert:ret isPause:YES];
             [sender setSelected:!sender.selected];
         }
-
+        
     } else {
         int ret = [self resumePush];
         if (ret != 0) {
@@ -647,14 +642,14 @@
 
 
 - (void)publisherSliderBeautyBuffingValueChanged:(int)value {
- 
+    
     if (self.livePusher) {
         [self.livePusher setBeautyBuffing:value];
     }
 }
 
 - (void)publisherSliderBeautyCheekPinkValueChanged:(int)value{
-
+    
     if (self.livePusher) {
         [self.livePusher setBeautyCheekPink:value];
     }
@@ -714,7 +709,7 @@
     
     if (self.livePusher) {
         int ret = [self.livePusher setMinVideoBitrate:minBitrate];
-    
+        
         if (ret != 0) {
             [self showAlertViewWithErrorCode:ret
                                     errorStr:nil
@@ -897,7 +892,7 @@
     if (isStart) {
         message = @"Start Push Error";
     }
-
+    
     [self showAlertViewWithErrorCode:error
                             errorStr:nil
                                  tag:0
@@ -977,7 +972,7 @@
     if (!self.livePusher) {
         return;
     }
-
+    
     BOOL isPushing = [self.livePusher isPushing];
     NSString *text = @"";
     if (isPushing) {
@@ -985,7 +980,7 @@
     } else {
         text = [NSString stringWithFormat:@"%@:%@",NSLocalizedString(@"ispushing_log", nil), isPushing?@"YES":@"NO"];
     }
-
+    
     [self.publisherView updateInfoText:text];
 }
 
@@ -993,10 +988,10 @@
 #pragma mark - 懒加载
 
 - (AlivcPublisherView *)publisherView {
-
+    
     if (!_publisherView) {
         _publisherView = [[AlivcPublisherView alloc] initWithFrame:[self getFullScreenFrame]
-                                                            config:self.pushConfig type:AlivcPublisherViewTypePreview];
+                                                            config:self.pushConfig type:AlivcPublisherViewTypeLive];
         [_publisherView setPushViewsDelegate:self];
         _publisherView.backgroundColor = [UIColor clearColor];
     }
@@ -1007,6 +1002,7 @@
     
     if (!_previewView) {
         _previewView = [[UIView alloc] init];
+        
         _previewView.backgroundColor = [UIColor clearColor];
         _previewView.frame = [self getFullScreenFrame];
     }
@@ -1029,16 +1025,9 @@
         CGFloat temPoint = frame.origin.y;
         frame.origin.y = frame.origin.x;
         frame.origin.x = temPoint;
-
+        
     }
     return frame;
-}
-
- //直播页跳转
-- (void)previewClick{
-    AlivcLiveRoomViewController *liveRoomVC = [[AlivcLiveRoomViewController alloc] init];
-    liveRoomVC.pushConfig = self.pushConfig;
-    [self presentViewController:liveRoomVC animated:YES completion:nil];
 }
 
 @end

@@ -111,6 +111,7 @@
 
     
     self.waterSettingView = [[AlivcWatermarkSettingView alloc] initWithFrame:(CGRectMake(0, KScreenHeight - kRealValue(330), KScreenWidth, kRealValue(330)))];
+    self.waterSettingView.backgroundColor = [UIColor redColor];
     
     [self.view addSubview:self.publisherURLTextField];
     [self.view addSubview:noticeLabel];

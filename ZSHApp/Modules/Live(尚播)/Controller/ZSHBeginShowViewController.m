@@ -7,25 +7,14 @@
 //
 
 #import "ZSHBeginShowViewController.h"
-#import "ZegoAVKitManager.h"
-#import "ZegoSettings.h"
 #import "XXTextView.h"
-#import <AlivcLivePusher/AlivcLivePusherHeader.h>
-#import "AlivcLivePushConfigViewController.h"
 
-@interface ZSHBeginShowViewController ()<ZegoDeviceEventDelegate>
+@interface ZSHBeginShowViewController ()
 
-@property (nonatomic, strong)  UIView         *preView;
 @property (nonatomic, strong)  XXTextView     *textView;
 @property (nonatomic, strong)  UIButton       *beginShowBtn;
-
 @property (nonatomic, strong)  UIButton       *cameraBtn;
-@property (nonatomic, assign)  BOOL           headCamera;  //摄像头向前
 
-@property (nonatomic, strong)  UIImageView    *videoView;
-@property (nonatomic, strong)  NSTimer        *previewTimer;
-
-@property (nonatomic, strong) AlivcLivePusher *livePusher;
 
 @end
 
@@ -33,54 +22,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self loadData];
     [self createUI];
-}
-
-- (void)initLivePusher{
-    AlivcLivePushConfig *config = [[AlivcLivePushConfig alloc] init];
-    config.resolution = AlivcLivePushResolution540P;
-    config.fps = AlivcLivePushFPS20;
-    config.qualityMode = AlivcLivePushQualityModeResolutionFirst;
-    config.targetVideoBitrate = 1200; //  目标码率1200Kbps
-    config.minVideoBitrate = 400; //  最小码率400Kbps
-    config.initialVideoBitrate = 900; //  初始码率900Kbps
-    config.videoEncodeGop = AlivcLivePushVideoEncodeGOP_2;//默认值为2
-    config.connectRetryInterval = 2000; // 单位为毫秒，重连时长2s
-    config.previewMirror = false; // 关闭预览镜像
-    config.beautyOn = false; // 关闭美颜
-    config.beautyMode = AlivcLivePushBeautyModeProfessional;//人脸识别专业版本
-    // 美白范围0-100
-    config.beautyWhite = 70;
-    // 磨皮范围0-100
-    config.beautyBuffing = 40;
-    // 红润设置范围0-100
-    config.beautyRuddy = 40;
-    /* 下面接口是人脸识别下的高级美颜参数 */
-    // 大眼设置范围0-100
-    config.beautyBigEye = 30;
-    // 瘦脸设置范围0-100
-    config.beautyThinFace = 40;
-    // 收下巴设置范围0-100
-    config.beautyShortenFace = 50;
-    // 腮红设置范围0-100
-    config.beautyCheekPink = 15;
-    config.orientation = AlivcLivePushOrientationLandscapeLeft; // Left横屏推流
-    NSString *watermarkBundlePath = [[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"watermark"] ofType:@"png"];
-    [config addWatermarkWithPath: watermarkBundlePath
-                 watermarkCoordX:0.1
-                 watermarkCoordY:0.1
-                  watermarkWidth:0.3];
-    
-    self.livePusher = [[AlivcLivePusher alloc] initWithConfig:config];
-    
-//    [self.livePusher setInfoDelegate:self];
-//    [self.livePusher setErrorDelegate:self];
-//    [self.livePusher setNetworkDelegate:self];
-}
-
-- (void)loadData {
-    _headCamera = YES;
 }
 
 - (void)createUI {
@@ -176,9 +118,6 @@
         make.centerX.mas_equalTo(self.view);
         make.size.mas_equalTo(CGSizeMake(kRealValue(200), kRealValue(12)));
     }];
-    
-    [self addPreview];
-    [[ZegoAVKitManager api] setDeviceEventDelegate:self];
 }
 
 - (XXTextView *)textView {
@@ -200,22 +139,6 @@
     return _textView;
 }
 
-- (void)addPreview
-{
-    _preView = [[UIView alloc] init];
-    _preView.backgroundColor = [UIColor redColor];
-    _preView.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addSubview:_preView];
-    [self.view sendSubviewToBack:_preView];
-    [self.preView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.mas_equalTo(self.view);
-    }];
-    
-    [UIView animateWithDuration:0.1 animations:^{
-        [self.view layoutIfNeeded];
-    }];
-}
-
 #pragma mark - Event
 - (void)locationAction {
     
@@ -234,282 +157,10 @@
 //    [self.navigationController pushViewController:pushConfigVC animated:YES];
 }
 
-//
-- (void)refresAction {//切换摄像头方向
-    _headCamera = !_headCamera;
-    
-    [self.textView resignFirstResponder];
-    [[ZegoAVKitManager api] setFrontCam:_headCamera];
-}
-
-
-- (void)startPreview
-{
-    ZegoAVConfig *config = [ZegoSettings sharedInstance].currentConfig;
-    
-    CGFloat height = config.videoEncodeResolution.height;
-    CGFloat width = config.videoEncodeResolution.width;
-    
-    // 如果开播前横屏，则切换视频采集分辨率的宽高
-    if (UIInterfaceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation))
-    {
-        // * adjust width/height for landscape
-        config.videoEncodeResolution = CGSizeMake(MAX(height, width), MIN(height, width));
-    }
-    else
-    {
-        config.videoEncodeResolution = CGSizeMake(MIN(height, width), MAX(height, width));
-    }
-    
-    config.videoCaptureResolution = config.videoEncodeResolution;
-    
-    int ret = [[ZegoAVKitManager api] setAVConfig:config];
-    assert(ret);
-    
-    bool b = [[ZegoAVKitManager api] setFrontCam:YES];
-    assert(b);
-    
-    b = [[ZegoAVKitManager api] enableMic:YES];
-    assert(b);
-    
-    b = [[ZegoAVKitManager api] enableTorch:NO];
-    assert(b);
-    
-    b = [[ZegoAVKitManager api] enableBeautifying:2];
-    assert(b);
-    
-    
-    [[ZegoAVKitManager api] setPolishFactor:4.0];
-    [[ZegoAVKitManager api] setPolishStep:4.0];
-    [[ZegoAVKitManager api] setWhitenFactor:0.6];
-    
-    
-    b = [[ZegoAVKitManager api] setFilter:1];
-    assert(b);
-    
-    [[ZegoAVKitManager api] setPreviewViewMode:ZegoVideoViewModeScaleAspectFill];
-    
-    {
-        [[ZegoAVKitManager api] setWaterMarkImagePath:@"asset:watermark"];
-        
-        [[ZegoAVKitManager api] setPreviewWaterMarkRect:CGRectMake(10, 40, 100, 100)];
-        [[ZegoAVKitManager api] setPublishWaterMarkRect:CGRectMake(10, 40, 50, 50)];
-    }
-    
-    [[ZegoAVKitManager api] setPreviewView:self.preView];
-    [[ZegoAVKitManager api] setDeviceEventDelegate:self];
-    [[ZegoAVKitManager api] startPreview];
-    
-    if ([ZegoAVKitManager recordTime])
-    {
-        [[ZegoAVKitManager api] enablePreviewMirror:false];
-    }
-    
-    if ([ZegoAVKitManager usingExternalCapture])
-    {
-        [self addExternalCaptureView];
-    }
-}
-
-- (void)addExternalCaptureView
-{
-    if (self.videoView)
-    {
-        [self.videoView removeFromSuperview];
-        self.videoView = nil;
-    }
-    
-    if (self.previewTimer)
-    {
-        [self.previewTimer invalidate];
-        self.previewTimer = nil;
-    }
-    
-    _videoView = [[UIImageView alloc] init];
-    self.videoView.translatesAutoresizingMaskIntoConstraints = YES;
-    [self.preView addSubview:self.videoView];
-    self.videoView.frame = self.preView.bounds;
-    
-    //timer
-    self.previewTimer = [NSTimer scheduledTimerWithTimeInterval:1.0/60 target:self selector:@selector(handlePreview) userInfo:nil repeats:YES];
-}
-
-- (void)removeExternalCaptureView
-{
-    [self.previewTimer invalidate];
-    self.previewTimer = nil;
-    
-    if (self.videoView)
-    {
-        [self.videoView removeFromSuperview];
-        self.videoView = nil;
-        [self.preView setNeedsLayout];
-    }
-}
-
-- (void)handlePreview
-{
-    
-}
-
-
-- (void)stopPreview
-{
-    if ([ZegoAVKitManager usingExternalCapture]){
-        [self removeExternalCaptureView];
-    }
-    
-    [[ZegoAVKitManager api] setPreviewView:nil];
-    [[ZegoAVKitManager api] stopPreview];
-}
-
-//权限
-- (void)showAuthorizationAlert:(NSString *)message title:(NSString *)title
-{
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] < 8.0)
-    {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:NSLocalizedString(@"取消", nil) otherButtonTitles:NSLocalizedString(@"设置权限", nil), nil];
-        [alertView show];
-    }
-    else
-    {
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"取消", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-            self.beginShowBtn.enabled = NO;
-        }];
-        UIAlertAction *settingAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"设置权限", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            [self openSetting];
-        }];
-        
-        [alertController addAction:settingAction];
-        [alertController addAction:cancelAction];
-        
-        alertController.preferredAction = settingAction;
-        
-        [self presentViewController:alertController animated:YES completion:nil];
-    }
-}
-
-#pragma mark alert view delegate
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex == 0)
-        self.beginShowBtn.enabled = NO;
-    else
-        [self openSetting];
-}
-
-- (void)openSetting
-{
-    NSURL *settingURL = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
-    if ([[UIApplication sharedApplication] canOpenURL:settingURL])
-        [[UIApplication sharedApplication] openURL:settingURL];
-}
-
-//检查相机权限
-- (BOOL)checkVideoAuthorization
-{
-    AVAuthorizationStatus videoAuthStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
-    if (videoAuthStatus == AVAuthorizationStatusDenied || videoAuthStatus == AVAuthorizationStatusRestricted){
-        return NO;
-    }
-    if (videoAuthStatus == AVAuthorizationStatusNotDetermined)
-    {
-        [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted) {
-            if (granted == NO)
-                self.beginShowBtn.enabled = NO;
-        }];
-    }
-    return YES;
-}
-
-- (BOOL)checkAudioAuthorization
-{
-    AVAuthorizationStatus audioAuthStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeAudio];
-    if (audioAuthStatus == AVAuthorizationStatusDenied || audioAuthStatus == AVAuthorizationStatusRestricted){
-        return NO;
-    }
-    if (audioAuthStatus == AVAuthorizationStatusNotDetermined)
-    {
-        [AVCaptureDevice requestAccessForMediaType:AVMediaTypeAudio completionHandler:^(BOOL granted) {
-            if (granted == NO)
-                self.beginShowBtn.enabled = NO;
-        }];
-    }
-    
-    return YES;
-}
-
-#pragma mark - ZegoDeviceEventDelegate
-
-- (void)zego_onDevice:(NSString *)deviceName error:(int)errorCode
-{
-    NSLog(@"device name: %@, error code: %d", deviceName, errorCode);
-}
 
 - (void)thirdLogin:(UIButton *)btn{
     RLog(@"点击第三方");
     btn.selected = !btn.selected;
-}
-
-- (void)onTapView:(UIGestureRecognizer *)recognizer
-{
-    [self.textView resignFirstResponder];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onApplicationActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onApplicationDeactive:) name:UIApplicationWillResignActiveNotification object:nil];
-    
-    if (self.preView == nil){
-        [self addPreview];
-    }
-    
-    BOOL videoAuthorization = [self checkVideoAuthorization];
-    BOOL audioAuthorization = [self checkAudioAuthorization];
-    [self startPreview];
-    
-//    if (videoAuthorization == YES)
-//    {
-//        [self startPreview];
-//        [[ZegoAVKitManager api] setAppOrientation:[UIApplication sharedApplication].statusBarOrientation];
-//
-//        if (audioAuthorization == NO)
-//        {
-//            [self showAuthorizationAlert:NSLocalizedString(@"直播视频,访问麦克风", nil) title:NSLocalizedString(@"需要访问麦克风", nil)];
-//        }
-//    }
-//    else
-//    {
-//        [self showAuthorizationAlert:NSLocalizedString(@"直播视频,访问相机", nil) title:NSLocalizedString(@"需要访问相机", nil)];
-//    }
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    if (self.preView){
-        [self stopPreview];
-    }
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [super viewWillDisappear:animated];
-}
-
-- (void)onApplicationActive:(NSNotification *)notification
-{
-    if (self.preView != nil)
-    {
-        [self stopPreview];
-        [self startPreview];
-    }
-}
-
-
-- (void)onApplicationDeactive:(NSNotification *)notification
-{
-        [self stopPreview];
 }
 
 

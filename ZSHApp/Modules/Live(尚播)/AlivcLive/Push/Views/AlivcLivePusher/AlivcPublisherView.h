@@ -8,6 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "AlivcPushViewsProtocol.h"
+typedef NS_ENUM (NSUInteger,AlivcPublisherViewType){
+    AlivcPublisherViewTypePreview,   //预览
+     AlivcPublisherViewTypeLive,     //直播
+};
+
 
 @class AlivcLivePushStatsInfo, AlivcLivePushConfig;
 
@@ -17,7 +22,7 @@
 - (void)setPushViewsDelegate:(id)delegate;
 
 
-- (instancetype)initWithFrame:(CGRect)frame config:(AlivcLivePushConfig *)config;
+- (instancetype)initWithFrame:(CGRect)frame config:(AlivcLivePushConfig *)config type:(AlivcPublisherViewType)type;
 
 - (void)updateInfoText:(NSString *)text;
 

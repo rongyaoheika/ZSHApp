@@ -1,15 +1,15 @@
 //
-//  AlivcPublisherViewController.h
-//  AlivcLiveCaptureDev
+//  AlivcLiveRoomViewController.h
+//  ZSHApp
 //
-//  Created by TripleL on 17/7/10.
-//  Copyright © 2017年 Alivc. All rights reserved.
+//  Created by mac on 2018/1/18.
+//  Copyright © 2018年 apple. All rights reserved.
 //
 
 #import "RootViewController.h"
 @class AlivcLivePushConfig;
 
-@interface AlivcLivePusherViewController : RootViewController
+@interface AlivcLiveRoomViewController : RootViewController
 
 // URL
 @property (nonatomic, strong) NSString *pushURL;
@@ -17,5 +17,6 @@
 @property (nonatomic, strong) AlivcLivePushConfig *pushConfig;
 
 @property (nonatomic, assign) BOOL isUseAsyncInterface;
+
 
 @end

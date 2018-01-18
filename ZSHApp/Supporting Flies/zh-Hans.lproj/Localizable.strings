@@ -247,7 +247,8 @@
 
 "push_url_log" = "推流地址";
 
-"ispushing_log" = "是否推流";
+//"ispushing_log" = "是否推流";
+"ispushing_log" = "开始直播";
 
 "restart_push_log" = "重新推流";
 

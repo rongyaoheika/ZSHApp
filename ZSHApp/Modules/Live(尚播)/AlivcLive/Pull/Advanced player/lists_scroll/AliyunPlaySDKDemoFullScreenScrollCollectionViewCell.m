@@ -43,7 +43,7 @@
 }
 
 - (void)prepare{
-    [self.aliPlayer prepareWithURL:[NSURL URLWithString:AlivcTextPullURL]];
+    [self.aliPlayer prepareWithURL:[NSURL URLWithString:AlivcPullURL]];
 }
 
 - (void)startPlay{
