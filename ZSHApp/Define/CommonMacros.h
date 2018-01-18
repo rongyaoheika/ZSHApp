@@ -32,9 +32,11 @@
 #pragma mark - ——————— 网络状态相关 ————————
 
 //网络状态变化
-#define KNotificationNetWorkStateChange    @"KNotificationNetWorkStateChange"
+#define KNotificationNetWorkStateChange     @"KNotificationNetWorkStateChange"
 
 // 美食（酒店，KTV,酒吧等）排序通知
 #define KUpdateDataWithSort                 @"KUpdateDataWithSort"
 
+//跳转直播预览页
+#define KPresentPreviewVC                   @"KPresentPreviewVC"
 #endif /* CommonMacros_h */

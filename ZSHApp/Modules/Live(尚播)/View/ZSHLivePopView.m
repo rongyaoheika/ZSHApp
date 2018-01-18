@@ -53,26 +53,23 @@
 
 #pragma getter
 - (void)clickButton:(NSInteger)index {
-//    NSArray *VCS = @[@"ZSHWeiboWriteController",@"ZSHBeginShowViewController",@"ZSHVideoRecViewController"];
+    //ZSHBeginShowViewController
+//    NSArray *VCS = @[@"ZSHWeiboWriteController",@"AlivcLivePushConfigViewController",@"ZSHVideoRecViewController"];
 //    NSArray *fromclassTypes = @[@(FromTabbarToWeiboVC),@(FromTabbarToVideoVC), @(FromTabbarToPersonalDetailVC)];
     
-    NSArray *VCS = @[@"ZSHWeiboWriteController",@"AlivcLivePushConfigViewController",@"ZSHVideoRecViewController"];
+   
+    NSArray *VCS = @[@"ZSHWeiboWriteController",@"AlivcLivePusherViewController",@"ZSHVideoRecViewController"];
     NSArray *fromclassTypes = @[@(FromTabbarToWeiboVC),@"", @(FromTabbarToPersonalDetailVC)];
     
-    
     Class className = NSClassFromString(VCS[index-1]);
-    RootViewController *vc = nil;
-    if (index == 2) {
-       vc =  [[className alloc] init];
-    } else {
-        vc =  [[className alloc] initWithParamDic:@{KFromClassType:fromclassTypes[index-1]}];
+    if (index != 2) {
+         RootViewController *vc =  [[className alloc] initWithParamDic:@{KFromClassType:fromclassTypes[index-1]}];
+        [ZSHBaseUIControl setAnimationWithHidden:YES view:self.superview completedBlock:^{
+            [[kAppDelegate getCurrentUIVC].navigationController pushViewController:vc animated:YES];
+        }];
+    } else {//跳转直播预览页
+         [[NSNotificationCenter defaultCenter] postNotificationName:KPresentPreviewVC object:nil];
     }
-    
-//    RootViewController *vc =  [[className alloc] initWithParamDic:@{KFromClassType:fromclassTypes[index-1]}];
-
-    [ZSHBaseUIControl setAnimationWithHidden:YES view:self.superview completedBlock:^{
-        [[kAppDelegate getCurrentUIVC].navigationController pushViewController:vc animated:YES];
-    }];
 
 }
 
@@ -101,5 +98,6 @@
 //    }
 //    _ISShowMenuButton = !_ISShowMenuButton;
 }
+
 
 @end
