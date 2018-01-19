@@ -110,25 +110,21 @@
     if (self.type == AlivcPublisherViewTypeLive) {
         [self setupLiveTopViews];
         [self setupLiveBottomViews];
+        [self setupInfoLabel];
+        if (self.config.audioOnly) {
+            [self hiddenVideoViews];
+        }
+        
+        self.currentIndex = 1;
+        //    [self setupDebugViews];
         
     } else {
         [self setupPreviewTopViews];
         [self setupCustomUI];
-        [self setupPreviewBottomViews];
-        
+//        [self setupPreviewBottomViews];
     }
-    
-    [self setupInfoLabel];
-    
-//    [self setupDebugViews];
-    
-    [self addGesture];
-    
-    if (self.config.audioOnly) {
-        [self hiddenVideoViews];
-    }
-    
-    self.currentIndex = 1;
+   
+     [self addGesture];
 }
 
 
@@ -160,7 +156,7 @@
                                             action:@selector(switchButtonAction:)];
     [self.topView addSubview:self.switchButton];
     
-    self.flashButton = [self setupButtonWithFrame:(CGRectMake(CGRectGetMinX(self.switchButton.frame) - retractX - topViewButtonSize, 0, topViewButtonSize, topViewButtonSize))
+    /*self.flashButton = [self setupButtonWithFrame:(CGRectMake(CGRectGetMinX(self.switchButton.frame) - retractX - topViewButtonSize, 0, topViewButtonSize, topViewButtonSize))
                                                    normalImage:[UIImage imageNamed:@"camera_flash_close"]
                                                    selectImage:[UIImage imageNamed:@"camera_flash_on"]
                                                    action:@selector(flashButtonAction:)];
@@ -182,7 +178,14 @@
                                               normalImage:[UIImage imageNamed:@"record_beauty_on"]
                                               selectImage:nil
                                                    action:@selector(beautySettingButtonAction:)];
-    [self.topView addSubview: self.beautySettingButton];
+    [self.topView addSubview: self.beautySettingButton];*/
+    
+    
+    UIButton *locateBtn = [self setupButtonWithFrame:(CGRectMake(CGRectGetMinX(self.switchButton.frame) - retractX - topViewButtonSize, 0, topViewButtonSize, topViewButtonSize))
+                                      normalImage:[UIImage imageNamed:@"begin_show_locate"]
+                                      selectImage:nil
+                                           action:@selector(locateAction:)];
+    [self.topView addSubview:locateBtn];
     
     //[self setupMusicSettingView];
     self.isBeautySettingShow = NO;
@@ -368,10 +371,14 @@
     }
     
     self.beautySettingView = [[UIView alloc] init];
+//    self.beautySettingView.frame = CGRectMake(retractX,
+//                                              CGRectGetMinY(self.bottomView.frame) - height * sliderCount,
+//                                              CGRectGetWidth(self.frame) - retractX * 2,
+//                                              height * sliderCount);
     self.beautySettingView.frame = CGRectMake(retractX,
-                                              CGRectGetMinY(self.bottomView.frame) - height * sliderCount,
+                                              KScreenHeight - height * sliderCount - kRealValue(30),
                                               CGRectGetWidth(self.frame) - retractX * 2,
-                                              height * sliderCount);
+                                              height * sliderCount + kRealValue(30));
     
     self.beautySettingView.backgroundColor = KZSHColorRGBA(1, 1, 1, 0.3);
     self.beautySettingView.layer.masksToBounds = YES;
@@ -646,7 +653,6 @@
 
 - (void)pushButtonAction:(UIButton *)sender {
     
-    
     //开始推流
     [sender setSelected:!sender.selected];
     if (self.delegate) {
@@ -804,9 +810,6 @@
 
 static CGFloat lastPinchDistance = 0;
 - (void)pinchGesture:(UIPinchGestureRecognizer *)gesture {
-    if (self.type == AlivcPublisherViewTypePreview) {//预览时不用放大效果
-        return;
-    }
     if (gesture.numberOfTouches != 2) {
         return;
     }
@@ -1208,5 +1211,10 @@ static CGFloat lastPinchDistance = 0;
     [ZSHBaseUIControl setAnimationWithHidden:NO view:bottomBlurPopView completedBlock:nil];
 }
 
+//预览界面-定位
+- (void)locateAction:(UIButton *)btn{
+    
+    
+}
 
 @end

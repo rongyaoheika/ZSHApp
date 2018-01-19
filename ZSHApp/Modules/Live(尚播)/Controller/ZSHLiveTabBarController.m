@@ -70,11 +70,11 @@
     self.pushConfig.videoEncoderMode = AlivcLivePushVideoEncoderModeHard; //硬编
     self.pushConfig.videoOnly = NO; //纯视频
     self.pushConfig.autoFocus = YES;//自动对焦
-    self.pushConfig.flash = YES;//关闭闪光灯
+    self.pushConfig.flash = NO;//开启闪光灯
     self.pushConfig.beautyOn = YES; // 打开美颜
     self.pushConfig.cameraType = AlivcLivePushCameraTypeFront; //前置摄像头
     self.isUseAsync = YES;//异步接口
-    self.isUseWatermark = YES;//使用水印
+//    self.isUseWatermark = YES;//使用水印
     self.pushConfig.beautyMode = AlivcLivePushBeautyModeProfessional;//美颜模式：人脸识别专业版本
     
     // 美白范围0-100
@@ -95,22 +95,22 @@
     
     
     
-    NSString *watermarkBundlePath01 = [[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"watermark"] ofType:@"png"];
-    [self.pushConfig addWatermarkWithPath: watermarkBundlePath01
-                          watermarkCoordX:0.1
-                          watermarkCoordY:0.1
-                           watermarkWidth:0.15];
-    
-    NSString *watermarkBundlePath02 = [[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"watermark"] ofType:@"png"];
-    [self.pushConfig addWatermarkWithPath: watermarkBundlePath02
-                          watermarkCoordX:0.1
-                          watermarkCoordY:0.3
-                           watermarkWidth:0.15];
-    NSString *watermarkBundlePath03 = [[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"watermark"] ofType:@"png"];
-    [self.pushConfig addWatermarkWithPath: watermarkBundlePath03
-                          watermarkCoordX:0.1
-                          watermarkCoordY:0.5
-                           watermarkWidth:0.15];
+//    NSString *watermarkBundlePath01 = [[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"watermark"] ofType:@"png"];
+//    [self.pushConfig addWatermarkWithPath: watermarkBundlePath01
+//                          watermarkCoordX:0.1
+//                          watermarkCoordY:0.1
+//                           watermarkWidth:0.15];
+//    
+//    NSString *watermarkBundlePath02 = [[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"watermark"] ofType:@"png"];
+//    [self.pushConfig addWatermarkWithPath: watermarkBundlePath02
+//                          watermarkCoordX:0.1
+//                          watermarkCoordY:0.3
+//                           watermarkWidth:0.15];
+//    NSString *watermarkBundlePath03 = [[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"watermark"] ofType:@"png"];
+//    [self.pushConfig addWatermarkWithPath: watermarkBundlePath03
+//                          watermarkCoordX:0.1
+//                          watermarkCoordY:0.5
+//                           watermarkWidth:0.15];
     
     AlivcLivePusherViewController *publisherVC = [[AlivcLivePusherViewController alloc] init];
     publisherVC.pushURL = AlivcTextPushURL;

@@ -28,6 +28,8 @@
 // flags
 @property (nonatomic, assign) BOOL isAutoFocus;
 
+
+
 // SDK
 @property (nonatomic, strong) AlivcLivePusher *livePusher;
 
@@ -50,6 +52,15 @@
 }
 
 - (void)loadData{
+    self.livePusher = [[AlivcLivePusher alloc] initWithConfig:self.pushConfig];
+    [self.livePusher setInfoDelegate:self];
+    [self.livePusher setErrorDelegate:self];
+    [self.livePusher setNetworkDelegate:self];
+    [self startPreview];
+    return;
+    
+    
+    
     [self setupDefaultValues];
     [self setupDebugTimer];
     
@@ -98,14 +109,14 @@
 - (int)setupPusher {
     
     self.livePusher = [[AlivcLivePusher alloc] initWithConfig:self.pushConfig];
-    [self.livePusher setLogLevel:(AlivcLivePushLogLevelFatal)];
-    if (!self.livePusher) {
-        return -1;
-    }
+//    [self.livePusher setLogLevel:(AlivcLivePushLogLevelFatal)];
+//    if (!self.livePusher) {
+//        return -1;
+//    }
     [self.livePusher setInfoDelegate:self];
     [self.livePusher setErrorDelegate:self];
     [self.livePusher setNetworkDelegate:self];
-    [self.livePusher setBGMDelegate:self];
+//    [self.livePusher setBGMDelegate:self];
     return 0;
 }
 
@@ -127,6 +138,8 @@
  开始预览
  */
 - (int)startPreview {
+    
+    
     
     if (!self.livePusher) {
         return -1;
@@ -553,6 +566,11 @@
             [sender setSelected:!sender.selected];
             return NO;
         }
+        
+        //跳转页面
+        //AlivcLiveRoomViewController *liveRoomVC = [[AlivcLiveRoomViewController alloc]init];
+        
+        
         return YES;
     } else {
         // 停止推流
