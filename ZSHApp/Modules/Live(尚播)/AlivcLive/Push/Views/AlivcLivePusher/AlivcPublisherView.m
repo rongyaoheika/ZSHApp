@@ -61,15 +61,20 @@
 @property (nonatomic, strong) AlivcLivePushConfig *config;
 
 //自定义界面
-@property (nonatomic, strong)  XXTextView     *textView;
-@property (nonatomic, strong)  UIButton       *beginShowBtn;
-@property (nonatomic, strong)  UIButton       *beautyBtn;
-@property (nonatomic, strong)  NSMutableArray *shareBtnArr;
+@property (nonatomic, strong)  XXTextView               *textView;
+@property (nonatomic, strong)  UIButton                 *beginShowBtn;
+@property (nonatomic, strong)  UIButton                 *beautyBtn;
+@property (nonatomic, strong)  NSMutableArray           *shareBtnArr;
+@property (nonatomic, strong) ZSHBaseTableViewModel     *tableViewModel;
 //类型
-@property (nonatomic, assign)  AlivcPublisherViewType       type;
+@property (nonatomic, assign)  AlivcPublisherViewType   type;
+//直播互动
+@property (nonatomic, strong) UITableView               *subTab;
 
 @end
 
+
+static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 @implementation AlivcPublisherView
 
 
@@ -108,7 +113,9 @@
 //    }
     
     if (self.type == AlivcPublisherViewTypeLive) {
+        
         [self setupLiveTopViews];
+        [self setupLiveChatTabView];
         [self setupLiveBottomViews];
         [self setupInfoLabel];
         if (self.config.audioOnly) {
@@ -261,6 +268,51 @@
         }];
     }
    
+}
+
+- (void)setupLiveChatTabView{
+    self.tableViewModel = [[ZSHBaseTableViewModel alloc] init];
+    self.subTab = [ZSHBaseUIControl createTableView];
+    self.subTab.backgroundColor = KClearColor;
+    [self addSubview: self.subTab];
+    self.subTab.delegate = self.tableViewModel;
+    self.subTab.dataSource = self.tableViewModel;
+    [self.subTab mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.height.mas_equalTo(kRealValue(150));
+        make.bottom.mas_equalTo(self).offset(-(kRealValue(49)+ kRealValue(18)));
+        make.left.mas_equalTo(self);
+        make.right.mas_equalTo(self);
+    }];
+    [self.subTab registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHBaseCellID];
+    [self initViewModel];
+}
+
+- (void)initViewModel {
+    [self.tableViewModel.sectionModelArray removeAllObjects];
+    [self.tableViewModel.sectionModelArray addObject:[self storeListSection]];
+    [self.subTab reloadData];
+}
+
+//list
+- (ZSHBaseTableViewSectionModel*)storeListSection {
+    ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
+    for (int i = 0; i < 3; i++) {
+        ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
+        cellModel.height = kRealValue(44);
+        [sectionModel.cellModelArray addObject:cellModel];
+        cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
+            ZSHBaseCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHBaseCellID forIndexPath:indexPath];
+            cell.textLabel.text = @"李志：三月的艳遇飘摇的南方";
+            cell.textLabel.textColor = KWhiteColor;
+            return cell;
+        };
+        
+        cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
+            
+        };
+    }
+    
+    return sectionModel;
 }
 
 - (void)setupLiveBottomViews{

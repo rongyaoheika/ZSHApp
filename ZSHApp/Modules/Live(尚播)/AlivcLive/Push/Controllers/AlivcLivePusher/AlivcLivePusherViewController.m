@@ -9,9 +9,8 @@
 #import "AlivcLivePusherViewController.h"
 #import "AlivcPublisherView.h"
 #import "AlivcPushViewsProtocol.h"
-
 #import <AlivcLivePusher/AlivcLivePusherHeader.h>
-#import "AlivcLiveRoomViewController.h"
+
 
 #define kAlivcLivePusherVCAlertTag 89976
 #define kAlivcLivePusherNoticeTimerInterval 5.0
@@ -33,6 +32,9 @@
 // SDK
 @property (nonatomic, strong) AlivcLivePusher *livePusher;
 
+//直播UI类型：预览，直播
+@property (nonatomic, assign) AlivcPublisherViewType  viewType;
+
 @end
 
 @implementation AlivcLivePusherViewController
@@ -42,7 +44,8 @@
     
     // 如果不需要退后台继续推流，可以参考这套退后台通知的实现。
 //    [self addBackgroundNotifications];
-
+    
+    _viewType = AlivcPublisherViewTypePreview;
     [self createUI];
     [self loadData];
 }
@@ -52,15 +55,6 @@
 }
 
 - (void)loadData{
-    self.livePusher = [[AlivcLivePusher alloc] initWithConfig:self.pushConfig];
-    [self.livePusher setInfoDelegate:self];
-    [self.livePusher setErrorDelegate:self];
-    [self.livePusher setNetworkDelegate:self];
-    [self startPreview];
-    return;
-    
-    
-    
     [self setupDefaultValues];
     [self setupDebugTimer];
     
@@ -109,14 +103,14 @@
 - (int)setupPusher {
     
     self.livePusher = [[AlivcLivePusher alloc] initWithConfig:self.pushConfig];
-//    [self.livePusher setLogLevel:(AlivcLivePushLogLevelFatal)];
-//    if (!self.livePusher) {
-//        return -1;
-//    }
+    [self.livePusher setLogLevel:(AlivcLivePushLogLevelFatal)];
+    if (!self.livePusher) {
+        return -1;
+    }
     [self.livePusher setInfoDelegate:self];
     [self.livePusher setErrorDelegate:self];
     [self.livePusher setNetworkDelegate:self];
-//    [self.livePusher setBGMDelegate:self];
+    [self.livePusher setBGMDelegate:self];
     return 0;
 }
 
@@ -138,8 +132,6 @@
  开始预览
  */
 - (int)startPreview {
-    
-    
     
     if (!self.livePusher) {
         return -1;
@@ -557,7 +549,7 @@
 }
 
 - (BOOL)publisherOnClickedPushButton:(BOOL)isPush button:(UIButton *)sender {
-    
+    _viewType = AlivcPublisherViewTypeLive;
     if (isPush) {
         // 开始推流
         int ret = [self startPush];
@@ -568,7 +560,11 @@
         }
         
         //跳转页面
-        //AlivcLiveRoomViewController *liveRoomVC = [[AlivcLiveRoomViewController alloc]init];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self.publisherView removeFromSuperview];
+            self.publisherView = nil;
+            [self.view addSubview: self.publisherView];
+        });
         
         
         return YES;
@@ -1011,10 +1007,9 @@
 #pragma mark - 懒加载
 
 - (AlivcPublisherView *)publisherView {
-
     if (!_publisherView) {
         _publisherView = [[AlivcPublisherView alloc] initWithFrame:[self getFullScreenFrame]
-                                                            config:self.pushConfig type:AlivcPublisherViewTypePreview];
+                                                            config:self.pushConfig type:self.viewType];
         [_publisherView setPushViewsDelegate:self];
         _publisherView.backgroundColor = [UIColor clearColor];
     }
@@ -1054,9 +1049,7 @@
 
  //直播页跳转
 - (void)previewClick{
-    AlivcLiveRoomViewController *liveRoomVC = [[AlivcLiveRoomViewController alloc] init];
-    liveRoomVC.pushConfig = self.pushConfig;
-    [self presentViewController:liveRoomVC animated:YES completion:nil];
+    
 }
 
 @end
