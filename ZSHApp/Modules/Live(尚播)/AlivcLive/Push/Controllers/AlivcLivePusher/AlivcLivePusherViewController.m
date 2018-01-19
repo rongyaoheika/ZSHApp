@@ -10,7 +10,7 @@
 #import "AlivcPublisherView.h"
 #import "AlivcPushViewsProtocol.h"
 #import <AlivcLivePusher/AlivcLivePusherHeader.h>
-
+#import "ZSHLiveLogic.h"
 
 #define kAlivcLivePusherVCAlertTag 89976
 #define kAlivcLivePusherNoticeTimerInterval 5.0
@@ -27,13 +27,14 @@
 // flags
 @property (nonatomic, assign) BOOL isAutoFocus;
 
-
-
 // SDK
 @property (nonatomic, strong) AlivcLivePusher *livePusher;
 
 //直播UI类型：预览，直播
 @property (nonatomic, assign) AlivcPublisherViewType  viewType;
+
+//直播UI类型：预览，直播
+@property (nonatomic, strong) ZSHLiveLogic  *liveLogic;
 
 @end
 
@@ -55,6 +56,9 @@
 }
 
 - (void)loadData{
+//    _liveLogic = [[ZSHLiveLogic alloc]init];
+//    [self getPushAddress];
+    
     [self setupDefaultValues];
     [self setupDebugTimer];
     
@@ -559,7 +563,7 @@
             return NO;
         }
         
-        //跳转页面
+        //预览->直播
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [self.publisherView removeFromSuperview];
             self.publisherView = nil;
@@ -1047,8 +1051,12 @@
     return frame;
 }
 
- //直播页跳转
-- (void)previewClick{
+//获取推流地址
+- (void)getPushAddress{
+    [_liveLogic requestPushAddressWithSuccess:^(id response) {
+        RLog(@"推流地址==%@",response);
+//        self.pushURL = response[@"pd"][@"PUSHADDRESS"];
+    }];
     
 }
 

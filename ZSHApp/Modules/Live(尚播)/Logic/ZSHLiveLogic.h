@@ -40,4 +40,13 @@
 // 添加话题
 - (void)requestAddTopicWithDic:(NSDictionary *)dic success:(void (^)(id response))success;
 
+
+
+
+// 获取推流地址
+- (void)requestPushAddressWithSuccess:(void (^)(id response))success;
+// 获取推流列表地址
+- (void)requestPushAddressListWithSuccess:(void (^)(id response))success;
+//获取拉流地址
+- (void)requestPushAddressWithDic:(NSDictionary *)dic Success:(void (^)(id response))success;
 @end

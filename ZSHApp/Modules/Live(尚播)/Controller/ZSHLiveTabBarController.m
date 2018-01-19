@@ -72,7 +72,7 @@
     self.pushConfig.autoFocus = YES;//自动对焦
     self.pushConfig.flash = NO;//开启闪光灯
     self.pushConfig.beautyOn = YES; // 打开美颜
-    self.pushConfig.cameraType = AlivcLivePushCameraTypeFront; //前置摄像头
+    self.pushConfig.cameraType = AlivcLivePushCameraTypeBack; //前置摄像头
     self.isUseAsync = YES;//异步接口
 //    self.isUseWatermark = YES;//使用水印
     self.pushConfig.beautyMode = AlivcLivePushBeautyModeProfessional;//美颜模式：人脸识别专业版本

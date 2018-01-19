@@ -24,9 +24,9 @@
 
 #ifdef DEBUG
 
-#define DevelopSever    0
+#define DevelopSever    1
 #define TestSever       0
-#define ProductSever    1
+#define ProductSever    0
 
 #else
 
@@ -39,9 +39,8 @@
 
 /**开发服务器*/
 
-#define kUrlRoot                    @"http://192.168.1.108:8080/"   // 洪磊
-
-
+#define kUrlRoot                    @"http://192.168.1.135:8081/ZSHINTER/"   // 洪磊
+//http://192.168.1.135:8081/ZSHINTER/livein/getpushaddress?PUSHADDRESS
 
 #elif TestSever
 
@@ -764,6 +763,17 @@
 //参数：  TITLE 标题 /     HONOURUSER_ID  用户id     /fileList   上传的图片名
 //请求地址：/appdiscoverin/addselfmediaad.do?SELFMEDIAADD (混淆码)
 #define kUrlAddSelfMediaad [NSString stringWithFormat:@"/appdiscoverin/addselfmediaad.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SELFMEDIAADD"]]
+
+//直播
+//151.主播开播接口(获取一个推流地址)
+//请求地址：/livein/getpushaddress?PUSHADDRESS
+#define kUrlGetPushAddress [NSString stringWithFormat:@"/livein/getpushaddress?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"PUSHADDRESS"]]
+//152.获得所有正在推流的地址(所有正在直播的地址)
+//请求地址：/livein/getpushlist?PUSHLIST
+#define kUrlGetPushList [NSString stringWithFormat:@"/livein/getpushlist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"PUSHLIST"]]
+//153.用户看直播接口(获取一个拉流地址)
+//请求地址：/livein/getpulladdress?PULLADDRESS  参数：STREAMNAME(每个主播单独的地址)
+#define kUrlGetPullAddress [NSString stringWithFormat:@"/livein/getpulladdress?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"PULLADDRESS"]]
 
 
 

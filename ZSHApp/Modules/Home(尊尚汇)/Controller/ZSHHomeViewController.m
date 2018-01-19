@@ -565,10 +565,10 @@ static NSString *Identify_MusicCell = @"musicCell";
     NSString *currentBulidVersion=infoDic[@"CFBundleVersion"];
     
     ZSHHomeLogic *homeLogic = [[ZSHHomeLogic alloc]init];
-    NSDictionary *paramDic = @{@"_api_key":kPGYApiKey,@"appKey":kPGYAppKey,@"buildVersion":@"1.0",@"buildBuildVersion":@(1.0)};
+    NSDictionary *paramDic = @{@"_api_key":kPGYApiKey,@"appKey":kPGYAppKey};
     [homeLogic loadUpdateWithDic:paramDic success:^(id response) {
         RLog(@"更新信息");
-        if ([currentBulidVersion integerValue]>[response[@"data"][@"buildBuildVersion"]integerValue]) {
+        if ([currentBulidVersion integerValue]<[response[@"data"][@"buildVersionNo"]integerValue]) {
             UIAlertController *ac = [UIAlertController alertControllerWithTitle:@"版本有更新" message:@"检测到新版本,是否更新?"  preferredStyle:UIAlertControllerStyleAlert];
             UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
             [ac addAction:cancelAction];

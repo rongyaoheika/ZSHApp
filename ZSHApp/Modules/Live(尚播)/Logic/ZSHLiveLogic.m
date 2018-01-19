@@ -134,5 +134,35 @@
     }];
 }
 
+//获取推流地址
+- (void)requestPushAddressWithSuccess:(void (^)(id response))success{
+    [PPNetworkHelper POST:kUrlGetPushAddress parameters:nil success:^(id responseObject) {
+        RLog(@"推流地址==%@",responseObject);
+        success(responseObject);
+    } failure:^(NSError *error) {
+        RLog(@"推流地址获取失败%@", error);
+    }];
+}
+
+//获取推流列表地址
+- (void)requestPushAddressListWithSuccess:(void (^)(id response))success{
+    [PPNetworkHelper POST:kUrlGetPushList parameters:nil success:^(id responseObject) {
+        RLog(@"推流列表地址==%@",responseObject);
+        success(responseObject);
+    } failure:^(NSError *error) {
+        RLog(@"推流列表地址获取失败%@", error);
+    }];
+}
+
+//获取拉流地址
+- (void)requestPushAddressWithDic:(NSDictionary *)dic Success:(void (^)(id response))success{
+    [PPNetworkHelper POST:kUrlGetPullAddress parameters:dic success:^(id responseObject) {
+        RLog(@"拉流地址==%@",responseObject);
+        success(responseObject);
+    } failure:^(NSError *error) {
+        RLog(@"拉流地址获取失败%@", error);
+    }];
+}
+
 
 @end
