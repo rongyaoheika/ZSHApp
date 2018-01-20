@@ -43,7 +43,7 @@
 #define AlivcTextPushURL @"rtmp://video-center.alivecdn.com/ZSHApp/stream00?vhost=live.rongyaohk.com&auth_key=1516417147-0-0-7b5549b1f901c18f84a0bef816cb5a75"
 #define AlivcUserDefaultsIndentifierFirst @"AlivcUserDefaultsIndentifierFirst"
 
-#define AlivcPullURL  @"rtmp://live.rongyaohk.com/ZSHApp/stream00?auth_key=1516259255-0-0-fb06b2faba14a161a47faf1f8762ab43"
+#define AlivcPullURL  @"rtmp://live.rongyaohk.com/ZSHApp/game1000001332958882?auth_key=1516442532-0-0-c94169850efaa7f15a2c565bec67d671"
 
 
 #endif /* ThirdMacros_h */

@@ -339,6 +339,9 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
             [weakself presentViewController:ac animated:YES completion:nil];
         }];
     } else if (kFromClassTypeValue == FromCreateStoreVCToMultiInfoVC) {
+        
+        
+        
         ZSHMultiInfoViewController *multiInfoVC = [[ZSHMultiInfoViewController alloc] initWithParamDic:@{KFromClassType:@(FromVerifyVCToMultiInfoVC),@"title":@"提交资质", @"bottomBtnTitle":@"提交审核"}];
         [self.navigationController pushViewController:multiInfoVC animated:YES];
     }

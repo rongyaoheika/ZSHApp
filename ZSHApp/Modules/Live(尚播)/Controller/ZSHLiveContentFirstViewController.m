@@ -15,12 +15,15 @@
 #import "ZSHNearHeadView.h"
 #import "ZSHBottomBlurPopView.h"
 #import "AdvancedPlayerViewController.h"
+#import "AliyunPlaySDKDemoFullScreenScrollViewController.h"
+#import "ZSHLiveLogic.h"
 
 @interface ZSHLiveContentFirstViewController ()< UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,ZSHCustomWaterFlowLayoutDelegate>
 
 @property (nonatomic, strong)ZSHCustomWaterFlowLayout *waterLayout;
 @property (nonatomic, strong)ZSHLiveListModel         *listModel;
 @property (nonatomic, strong)NSMutableArray           *dataArr;
+@property (nonatomic, strong)ZSHLiveLogic             *liveLogic;
 
 @end
 
@@ -38,6 +41,10 @@ static NSString * const ZSHNearHeadViewID = @"ZSHNearHeadView";
 }
 
 - (void)loadData{
+//    _liveLogic = [[ZSHLiveLogic alloc]init];
+//    [_liveLogic requestPushAddressListWithSuccess:^(id response) {
+//        RLog(@"拉流接口==%@",response);
+//    }];
     
     NSArray *baseDataArr = @[
                             @{@"liveName":@"夏天在我手中",@"imageName":@"live_image_1", @"loveCount":@"33"},
@@ -105,11 +112,22 @@ static NSString * const ZSHNearHeadViewID = @"ZSHNearHeadView";
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     
+    
+    
 //    ZSHLiveRoomViewController *liveRoomVC = [[ZSHLiveRoomViewController alloc]init];
 //    [self.navigationController pushViewController:liveRoomVC animated:YES];
-    AdvancedPlayerViewController *demoTwo = [[AdvancedPlayerViewController alloc] init];
-    demoTwo.title = @"高级播放";
-    [self.navigationController pushViewController:demoTwo animated:YES];
+    
+//    AdvancedPlayerViewController *demoTwo = [[AdvancedPlayerViewController alloc] init];
+//    demoTwo.title = @"高级播放";
+//    [self.navigationController pushViewController:demoTwo animated:YES];
+    
+    
+    AliyunPlaySDKDemoFullScreenScrollViewController *demoThree = [[AliyunPlaySDKDemoFullScreenScrollViewController alloc] init];
+    demoThree.title = @"观众端";
+    [self.navigationController pushViewController:demoThree animated:YES];
+//    [self presentViewController:demoThree animated:YES completion:nil];
+    
+    
 }
 
 #pragma WaterFlowLayoutDelegate

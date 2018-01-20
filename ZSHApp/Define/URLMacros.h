@@ -24,9 +24,9 @@
 
 #ifdef DEBUG
 
-#define DevelopSever    1
+#define DevelopSever    0
 #define TestSever       0
-#define ProductSever    0
+#define ProductSever    1
 
 #else
 

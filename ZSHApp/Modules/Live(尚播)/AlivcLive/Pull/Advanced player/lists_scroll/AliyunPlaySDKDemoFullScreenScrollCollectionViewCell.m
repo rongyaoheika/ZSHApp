@@ -8,17 +8,23 @@
 
 #import "AliyunPlaySDKDemoFullScreenScrollCollectionViewCell.h"
 #import "UIView+Layout.h"
+#import "ZSHLiveLogic.h"
+
 
 #define SCREEN_WIDTH  [UIScreen mainScreen].bounds.size.width
 #define SCREEN_HEIGHT  [UIScreen mainScreen].bounds.size.height
 
 @interface AliyunPlaySDKDemoFullScreenScrollCollectionViewCell()
-@property (nonatomic, strong)UIView *playerView;
+
+@property (nonatomic, strong)UIView             *playerView;
+@property (nonatomic, strong)ZSHLiveLogic       *liveLogic;
+
 @end
 @implementation AliyunPlaySDKDemoFullScreenScrollCollectionViewCell
 
 - (instancetype)initWithFrame:(CGRect)frame{
     if (self = [super initWithFrame:frame]) {
+        _liveLogic = [[ZSHLiveLogic alloc]init];
         self.isStart = NO;
         [self setContentView];
     }
@@ -43,7 +49,14 @@
 }
 
 - (void)prepare{
-    [self.aliPlayer prepareWithURL:[NSURL URLWithString:AlivcPullURL]];
+    //AlivcPullURL
+     [self.aliPlayer prepareWithURL:[NSURL URLWithString:AlivcPullURL]];
+//     [_liveLogic requestPushAddressListWithSuccess:^(id response) {
+//        NSArray *arr = response[@"pd"][@"OnlineInfo"][@"OnlineInfo"][@"LiveStreamOnlineInfo"];
+//         [self.aliPlayer prepareWithURL:[NSURL URLWithString:arr[0][@"PublishUrl"]]];
+//         RLog(@"直播推流结果==%@ ==%@",response,arr[0][@"PublishUrl"]);
+//    }];
+    
 }
 
 - (void)startPlay{
@@ -67,5 +80,7 @@
     [self.aliPlayer releasePlayer];
     self.isStart = NO;
 }
+
+
 
 @end
