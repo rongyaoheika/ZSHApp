@@ -33,9 +33,6 @@
 //直播UI类型：预览，直播
 @property (nonatomic, assign) AlivcPublisherViewType  viewType;
 
-//直播UI类型：预览，直播
-@property (nonatomic, strong) ZSHLiveLogic  *liveLogic;
-
 @end
 
 @implementation AlivcLivePusherViewController
@@ -56,8 +53,6 @@
 }
 
 - (void)loadData{
-    _liveLogic = [[ZSHLiveLogic alloc]init];
-    [self getPushAddress];
     
     [self setupDefaultValues];
     [self setupDebugTimer];
@@ -1049,15 +1044,6 @@
 
     }
     return frame;
-}
-
-//获取推流地址
-- (void)getPushAddress{
-    [_liveLogic requestPushAddressWithSuccess:^(id response) {
-        RLog(@"推流地址==%@",response);
-//        self.pushURL = response[@"pd"][@"PUSHADDRESS"];
-    }];
-    
 }
 
 @end

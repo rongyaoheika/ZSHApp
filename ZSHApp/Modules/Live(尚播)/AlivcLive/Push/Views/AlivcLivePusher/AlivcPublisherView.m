@@ -113,7 +113,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 //    }
     
     if (self.type == AlivcPublisherViewTypeLive) {
-        
+
         [self setupLiveTopViews];
         [self setupLiveChatTabView];
         [self setupLiveBottomViews];
@@ -121,17 +121,28 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
         if (self.config.audioOnly) {
             [self hiddenVideoViews];
         }
-        
+
         self.currentIndex = 1;
+        [self addGesture];
         //    [self setupDebugViews];
-        
+
     } else {
         [self setupPreviewTopViews];
         [self setupCustomUI];
+        [self addGesture];
 //        [self setupPreviewBottomViews];
+    
+//    [self setupPreviewTopViews];
+//    [self setupPreviewBottomViews];
+//    [self setupInfoLabel];
+//    //    [self setupDebugViews];
+//    [self addGesture];
+//    if (self.config.audioOnly) {
+//        [self hiddenVideoViews];
+//    }
+//    self.currentIndex = 1;
     }
-   
-     [self addGesture];
+
 }
 
 
