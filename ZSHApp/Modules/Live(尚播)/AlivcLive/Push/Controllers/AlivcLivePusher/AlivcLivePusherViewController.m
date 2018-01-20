@@ -56,8 +56,8 @@
 }
 
 - (void)loadData{
-//    _liveLogic = [[ZSHLiveLogic alloc]init];
-//    [self getPushAddress];
+    _liveLogic = [[ZSHLiveLogic alloc]init];
+    [self getPushAddress];
     
     [self setupDefaultValues];
     [self setupDebugTimer];
