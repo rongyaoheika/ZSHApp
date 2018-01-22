@@ -12,7 +12,7 @@
 
 @property (nonatomic, strong)AliyunVodPlayer *aliPlayer;
 @property (nonatomic, assign)BOOL isStart;
-- (void)prepare;
+- (void)prepareWithPublishUrl:(NSString *)publishUrl;
 - (void)startPlay;
 - (void)pausePlay;
 - (void)resumePlay;

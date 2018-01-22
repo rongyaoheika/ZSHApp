@@ -147,6 +147,7 @@
 //获取推流列表地址
 - (void)requestPushAddressListWithSuccess:(void (^)(id response))success{
     [PPNetworkHelper POST:kUrlGetPushList parameters:nil success:^(id responseObject) {
+        
         RLog(@"推流列表地址==%@",responseObject);
         success(responseObject);
     } failure:^(NSError *error) {

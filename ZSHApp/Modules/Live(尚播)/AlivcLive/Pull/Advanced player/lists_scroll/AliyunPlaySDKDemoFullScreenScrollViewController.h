@@ -10,4 +10,5 @@
 
 @interface AliyunPlaySDKDemoFullScreenScrollViewController : UIViewController
 @property (nonatomic ,copy)NSString *pageTitle;
+@property (nonatomic ,copy)NSString *publishUrl;
 @end

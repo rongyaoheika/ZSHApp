@@ -48,15 +48,8 @@
     
 }
 
-- (void)prepare{
-    //AlivcPullURL
-     [self.aliPlayer prepareWithURL:[NSURL URLWithString:AlivcPullURL]];
-//     [_liveLogic requestPushAddressListWithSuccess:^(id response) {
-//        NSArray *arr = response[@"pd"][@"OnlineInfo"][@"OnlineInfo"][@"LiveStreamOnlineInfo"];
-//         [self.aliPlayer prepareWithURL:[NSURL URLWithString:arr[0][@"PublishUrl"]]];
-//         RLog(@"直播推流结果==%@ ==%@",response,arr[0][@"PublishUrl"]);
-//    }];
-    
+- (void)prepareWithPublishUrl:(NSString *)publishUrl{
+   [self.aliPlayer prepareWithURL:[NSURL URLWithString:publishUrl]];
 }
 
 - (void)startPlay{

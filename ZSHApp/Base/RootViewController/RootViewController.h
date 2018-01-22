@@ -127,5 +127,7 @@ typedef void(^ZSHBottomBtnViewBtnBlock)(NSInteger);
 
 - (void)endTabViewRefresh;
 - (void)endCollectionViewRefresh;
+- (void)collectionHeaderRereshing;
+- (void)collectionFooterRereshing;
 
 @end

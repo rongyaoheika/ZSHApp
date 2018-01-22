@@ -97,6 +97,8 @@
 		04A6FCCB2007152700DDE79E /* ZSHMusicMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A6FCCA2007152700DDE79E /* ZSHMusicMainViewController.m */; };
 		04A6FCCE200756F800DDE79E /* ZSHRadioScrollCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A6FCCD200756F800DDE79E /* ZSHRadioScrollCell.m */; };
 		04A6FCD120075A2900DDE79E /* ZSHRadioSubView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A6FCD020075A2900DDE79E /* ZSHRadioSubView.m */; };
+		04A9FE98201576D00099D467 /* ZSHCreateStoreGuideView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A9FE97201576D00099D467 /* ZSHCreateStoreGuideView.m */; };
+		04A9FE9B2015CA900099D467 /* ZSHAudienceLivePopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A9FE9A2015CA900099D467 /* ZSHAudienceLivePopView.m */; };
 		04BAD7BD2005C0DB00950195 /* ZSHMagazineListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04BAD7BC2005C0DB00950195 /* ZSHMagazineListViewController.m */; };
 		04BAD7C12005EEB100950195 /* ZSHMagazineListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04BAD7C02005EEB100950195 /* ZSHMagazineListCell.m */; };
 		04CC219E1FFF79B200921863 /* ZSHMagazineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CC219D1FFF79B200921863 /* ZSHMagazineViewController.m */; };
@@ -768,6 +770,10 @@
 		04A6FCCD200756F800DDE79E /* ZSHRadioScrollCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHRadioScrollCell.m; sourceTree = "<group>"; };
 		04A6FCCF20075A2900DDE79E /* ZSHRadioSubView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHRadioSubView.h; sourceTree = "<group>"; };
 		04A6FCD020075A2900DDE79E /* ZSHRadioSubView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHRadioSubView.m; sourceTree = "<group>"; };
+		04A9FE96201576D00099D467 /* ZSHCreateStoreGuideView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHCreateStoreGuideView.h; sourceTree = "<group>"; };
+		04A9FE97201576D00099D467 /* ZSHCreateStoreGuideView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHCreateStoreGuideView.m; sourceTree = "<group>"; };
+		04A9FE992015CA900099D467 /* ZSHAudienceLivePopView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHAudienceLivePopView.h; sourceTree = "<group>"; };
+		04A9FE9A2015CA900099D467 /* ZSHAudienceLivePopView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHAudienceLivePopView.m; sourceTree = "<group>"; };
 		04BAD7BB2005C0DB00950195 /* ZSHMagazineListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHMagazineListViewController.h; sourceTree = "<group>"; };
 		04BAD7BC2005C0DB00950195 /* ZSHMagazineListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHMagazineListViewController.m; sourceTree = "<group>"; };
 		04BAD7BF2005EEB100950195 /* ZSHMagazineListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHMagazineListCell.h; sourceTree = "<group>"; };
@@ -1953,6 +1959,8 @@
 				043F2E0A200DFF3500CE18DE /* AlivcParamTableViewCell.m */,
 				043F2E0B200DFF3500CE18DE /* AlivcSweepCodeView.h */,
 				043F2E0C200DFF3500CE18DE /* AlivcSweepCodeView.m */,
+				04A9FE992015CA900099D467 /* ZSHAudienceLivePopView.h */,
+				04A9FE9A2015CA900099D467 /* ZSHAudienceLivePopView.m */,
 			);
 			path = Others;
 			sourceTree = "<group>";
@@ -2067,6 +2075,8 @@
 			children = (
 				04A690472008A01400C583E6 /* ZSHJoininCell.h */,
 				04A690482008A01400C583E6 /* ZSHJoininCell.m */,
+				04A9FE96201576D00099D467 /* ZSHCreateStoreGuideView.h */,
+				04A9FE97201576D00099D467 /* ZSHCreateStoreGuideView.m */,
 			);
 			path = "我要入驻";
 			sourceTree = "<group>";
@@ -5142,6 +5152,7 @@
 				043F2E1E200DFF3500CE18DE /* AlivcNavigationController.m in Sources */,
 				FE1F76351F8F7E1100C45B83 /* LXScollTitleView.h in Sources */,
 				18063C571FC90951000F5A00 /* ZSHPersonalDetailModel.m in Sources */,
+				04A9FE9B2015CA900099D467 /* ZSHAudienceLivePopView.m in Sources */,
 				FEADBD281FBEBBC00065B94B /* ZSHCardCustomizedFirst.m in Sources */,
 				0418532D2005E688000E0D09 /* ZSHFindTopView.m in Sources */,
 				FE8FD0771FADAA9F005F1184 /* ZSHMemberCenterHeadView.m in Sources */,
@@ -5355,6 +5366,7 @@
 				043F2E44200DFF3500CE18DE /* AlivcMusicSettingView.m in Sources */,
 				185C6D8C1FC2D98A004EA461 /* LZGoodsModel.m in Sources */,
 				1843134E1FD550F90046B128 /* ZSHRegisterModel.m in Sources */,
+				04A9FE98201576D00099D467 /* ZSHCreateStoreGuideView.m in Sources */,
 				FE1F76251F8F788100C45B83 /* ZSHTitleContentViewController.m in Sources */,
 				18A2C6511F483A66005F394F /* PPNetworkHelper.m in Sources */,
 				182F57921FDB91390085BFC6 /* KNPhotoBrowerImageView.m in Sources */,

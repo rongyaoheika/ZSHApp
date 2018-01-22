@@ -182,7 +182,6 @@
         
         //底部刷新
         _collectionView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(collectionFooterRereshing)];
-        
     }
     return _collectionView;
 }

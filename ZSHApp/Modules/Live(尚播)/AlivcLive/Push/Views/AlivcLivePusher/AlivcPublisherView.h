@@ -10,7 +10,8 @@
 #import "AlivcPushViewsProtocol.h"
 typedef NS_ENUM (NSUInteger,AlivcPublisherViewType){
     AlivcPublisherViewTypePreview,   //预览
-     AlivcPublisherViewTypeLive,     //直播
+    AlivcPublisherViewTypeLive,     // 开始直播
+    AlivcPublisherViewTypeAudience, // 观众观看
 };
 
 

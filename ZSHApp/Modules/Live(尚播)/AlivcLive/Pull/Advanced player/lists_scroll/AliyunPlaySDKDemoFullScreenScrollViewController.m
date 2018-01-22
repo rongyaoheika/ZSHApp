@@ -9,13 +9,18 @@
 #import "AliyunPlaySDKDemoFullScreenScrollViewController.h"
 #import <AliyunVodPlayerSDK/AliyunVodPlayer.h>
 #import "AliyunPlaySDKDemoFullScreenScrollCollectionViewCell.h"
-
+#import "ZSHAudienceLivePopView.h"
+#import "ZSHLiveLogic.h"
 #define SCREEN_WIDTH  [UIScreen mainScreen].bounds.size.width
 #define SCREEN_HEIGHT  [UIScreen mainScreen].bounds.size.height
 
 @interface AliyunPlaySDKDemoFullScreenScrollViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UIScrollViewDelegate>
-@property (nonatomic, strong)UICollectionView *collectionView;
+
+@property (nonatomic, strong) UICollectionView           *collectionView;
+@property (nonatomic, strong) ZSHAudienceLivePopView     *audienceView;
+
 @end
+
 @implementation AliyunPlaySDKDemoFullScreenScrollViewController
 static NSString *cellId = @"customCell";
 #pragma mark - naviBar
@@ -49,6 +54,12 @@ static NSString *cellId = @"customCell";
     self.collectionView.showsHorizontalScrollIndicator = YES;
     [self.view addSubview:self.collectionView];
     
+    [self.view addSubview:self.audienceView];
+    kWeakSelf(self);
+    self.audienceView.dissmissViewBlock = ^(UIButton *btn) {
+        [weakself dismissViewControllerAnimated:YES completion:nil];
+    };
+    
     // Do any additional setup after loading the view.
 }
 
@@ -58,7 +69,9 @@ static NSString *cellId = @"customCell";
 
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    return 5;
+//    return 5;
+    
+    return 1;
 }
 
 
@@ -75,7 +88,7 @@ static NSString *cellId = @"customCell";
 
 - (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath{
     AliyunPlaySDKDemoFullScreenScrollCollectionViewCell *temp =  (AliyunPlaySDKDemoFullScreenScrollCollectionViewCell*)cell;
-   [temp prepare];
+    [temp prepareWithPublishUrl:self.publishUrl];
 }
 
 -(void)collectionView:(UICollectionView *)collectionView didEndDisplayingCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath{
@@ -83,6 +96,15 @@ static NSString *cellId = @"customCell";
     [temp stopPlay];
 }
 
+
+#pragma mark - 懒加载
+- (ZSHAudienceLivePopView *)audienceView {
+    if (!_audienceView) {
+        _audienceView = [[ZSHAudienceLivePopView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight)];
+        _audienceView.backgroundColor = [UIColor clearColor];
+    }
+    return _audienceView;
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

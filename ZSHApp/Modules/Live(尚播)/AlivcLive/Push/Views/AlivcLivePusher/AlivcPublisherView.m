@@ -65,12 +65,12 @@
 @property (nonatomic, strong)  UIButton                 *beginShowBtn;
 @property (nonatomic, strong)  UIButton                 *beautyBtn;
 @property (nonatomic, strong)  NSMutableArray           *shareBtnArr;
-@property (nonatomic, strong) ZSHBaseTableViewModel     *tableViewModel;
+
 //类型
 @property (nonatomic, assign)  AlivcPublisherViewType   type;
 //直播互动
 @property (nonatomic, strong) UITableView               *subTab;
-
+@property (nonatomic, strong) ZSHBaseTableViewModel     *tableViewModel;
 @end
 
 
@@ -112,35 +112,36 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 //        [self setupGuideView];
 //    }
     
-    if (self.type == AlivcPublisherViewTypeLive) {
-
-        [self setupLiveTopViews];
-        [self setupLiveChatTabView];
-        [self setupLiveBottomViews];
-        [self setupInfoLabel];
-        if (self.config.audioOnly) {
-            [self hiddenVideoViews];
+    switch (self.type) {
+        case AlivcPublisherViewTypeLive:{//主播直播
+            [self setupLiveTopViews];
+            [self setupLiveChatTabView];
+            [self setupLiveBottomViews];
+            [self setupInfoLabel];
+            if (self.config.audioOnly) {
+                [self hiddenVideoViews];
+            }
+            
+            self.currentIndex = 1;
+            [self addGesture];
+            //    [self setupDebugViews];
+            break;
         }
-
-        self.currentIndex = 1;
-        [self addGesture];
-        //    [self setupDebugViews];
-
-    } else {
-        [self setupPreviewTopViews];
-        [self setupCustomUI];
-        [self addGesture];
-//        [self setupPreviewBottomViews];
-    
-//    [self setupPreviewTopViews];
-//    [self setupPreviewBottomViews];
-//    [self setupInfoLabel];
-//    //    [self setupDebugViews];
-//    [self addGesture];
-//    if (self.config.audioOnly) {
-//        [self hiddenVideoViews];
-//    }
-//    self.currentIndex = 1;
+        case AlivcPublisherViewTypePreview:{//预览
+            [self setupPreviewTopViews];
+            [self setupCustomUI];
+            [self addGesture];
+            break;
+        }
+        case AlivcPublisherViewTypeAudience:{//观众
+            [self setupLiveTopViews];
+            [self setupLiveChatTabView];
+            [self setupLiveBottomViews];
+            break;
+        }
+            
+        default:
+            break;
     }
 
 }
