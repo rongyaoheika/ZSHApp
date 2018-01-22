@@ -8,6 +8,10 @@
 
 #import "ZSHBaseView.h"
 
+typedef void (^DidSelect)(NSInteger);
+
 @interface ZSHRadioSubView : ZSHBaseView
+
+@property (nonatomic, copy) DidSelect didSelect;
 
 @end

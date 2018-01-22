@@ -36,7 +36,7 @@
 
 - (void)updateCellWithParamDic:(NSDictionary *)dic {
     [_imageView sd_setImageWithURL:[NSURL URLWithString:dic[@"SHOWIMG"]]];
-//    _titleLabel.text = dic[@"title"];
+    _titleLabel.text = dic[@"TITLE"];
 }
 
 @end

@@ -36,4 +36,19 @@
 //歌手歌曲列表
 - (void)loadSingerSongListWithParamDic:(NSDictionary *)paramDic Success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail;
 
+// 音乐中心-歌手推荐-获取歌手歌曲列表
+- (void)loadSingerSongList:(NSDictionary *)dic success:(void (^)(id response))success;
+
+// 音乐中心-首页：歌手推荐和广告
+- (void)loadGetSongRecommend:(NSDictionary *)dic success:(void (^)(id response))success;
+
+// 音乐中心-电台
+- (void)loadGetRadioStationList:(NSDictionary *)dic success:(void (^)(id response))success;
+
+// 音乐中心-曲库推荐
+- (void)loadGetMusicLibrary:(NSDictionary *)dic success:(void (^)(id response))success;
+
+// 音乐中心-歌单推荐
+- (void)loadGetSongsRecommend:(NSDictionary *)dic success:(void (^)(id response))success;
+
 @end

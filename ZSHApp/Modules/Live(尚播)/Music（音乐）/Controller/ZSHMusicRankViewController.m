@@ -100,7 +100,7 @@ static NSString *ZSHMusicRankCellID = @"ZSHMusicRankCell";
         
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
             NSDictionary *dic = _allMusicArr[indexPath.row];
-            NSDictionary *paramDic = @{KFromClassType:@(ZSHFromRankVCToPlayListVC),@"headImage":dic[@"billboard"][@"pic_s640"],@"type":_typeArr[indexPath.row]};
+            NSDictionary *paramDic = @{KFromClassType:@(ZSHFromRankVCToPlayListVC),@"headImage":dic[@"billboard"][@"pic_s640"], @"type":_typeArr[indexPath.row]};
             ZSHPlayListViewController  *playListVC = [[ZSHPlayListViewController alloc]initWithParamDic:paramDic];
             [weakself.navigationController pushViewController:playListVC animated:YES];
         };

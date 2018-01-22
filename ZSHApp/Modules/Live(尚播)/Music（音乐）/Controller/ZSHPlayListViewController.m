@@ -78,7 +78,7 @@ static NSString *ZSHMusicPlayListCellID = @"ZSHMusicPlayListCell";
             [self requestRadioData];
             break;
         }
-            
+
         default:
             break;
     }
@@ -243,7 +243,6 @@ static NSString *ZSHMusicPlayListCellID = @"ZSHMusicPlayListCell";
                 ZSHRankModel *rankModel = _songArr[indexPath.row];
                 [cell updateCellWithModel:rankModel];
             }
-           
             return cell;
         };
 

@@ -20,6 +20,12 @@
 
 - (void)setup{
     
+    self.userInteractionEnabled = true;
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAction:)];
+    [self addGestureRecognizer:tap];
+    
+    
     _headImageView = [[UIImageView alloc]init];
     _headImageView.image = [UIImage imageNamed:@"music_image_1"];
     [self addSubview:_headImageView];
@@ -49,6 +55,18 @@
         make.right.mas_equalTo(self).offset(-KLeftMargin);
         make.bottom.mas_equalTo(self).offset(-kRealValue(10));
     }];
+}
+
+- (void)updateViewWithParamDic:(NSDictionary *)paramDic {
+    [_headImageView sd_setImageWithURL:[NSURL URLWithString:paramDic[@"thumb"]]];
+    _titleLabel.text = paramDic[@"name"];
+    _detailLabel.text = paramDic[@"cate_sname"];
+}
+
+- (void)tapAction:(UITapGestureRecognizer *)view {
+    if (_didSelect) {
+        _didSelect(self.tag);
+    }
 }
 
 @end

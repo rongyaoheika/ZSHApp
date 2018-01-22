@@ -48,6 +48,8 @@
         }];
     }
     
+
+    
     if ([self.paramDic[@"textFieldType"]integerValue] == ZSHTextFieldViewCaptcha) {
         [self.getCaptchaBtn mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerY.mas_equalTo(self);
@@ -155,6 +157,13 @@
     if (self.textFieldChanged) {
         self.textFieldChanged(textField.text,self.tag);
     }
+}
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    if ([self.paramDic[@"textFieldType"]integerValue] == ZSHTextFieldSelect) {
+            return false;
+    } else
+        return true;
 }
 
 - (void)submit {

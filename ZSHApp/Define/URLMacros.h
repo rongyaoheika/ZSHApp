@@ -763,7 +763,6 @@
 //参数：  TITLE 标题 /     HONOURUSER_ID  用户id     /fileList   上传的图片名
 //请求地址：/appdiscoverin/addselfmediaad.do?SELFMEDIAADD (混淆码)
 #define kUrlAddSelfMediaad [NSString stringWithFormat:@"/appdiscoverin/addselfmediaad.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SELFMEDIAADD"]]
-
 //直播
 //151.主播开播接口(获取一个推流地址)
 //请求地址：/livein/getpushaddress?PUSHADDRESS
@@ -774,7 +773,27 @@
 //153.用户看直播接口(获取一个拉流地址)
 //请求地址：/livein/getpulladdress?PULLADDRESS  参数：STREAMNAME(每个主播单独的地址)
 #define kUrlGetPullAddress [NSString stringWithFormat:@"/livein/getpulladdress?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"PULLADDRESS"]]
-
+//151.音乐中心-首页：歌手推荐和广告
+//参数：  无
+//请求地址：/appmusicin/getsongrecommend?SONGRECOMMEND (混淆码)
+#define kUrlGetSongRecommend [NSString stringWithFormat:@"/appmusicin/getsongrecommend?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SONGRECOMMEND"]]
+//152.音乐中心-歌手推荐-获取歌手歌曲列表
+//参数：  singer_id歌手id /
+//offset  偏移量（从0开始）    /
+//请求地址：/appmusicin/getsingersonglist?SINGERSONGLIST (混淆码)
+#define kUrlGetSingerSongList [NSString stringWithFormat:@"/appmusicin/getsingersonglist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SINGERSONGLIST"]]
+//153.音乐中心-电台
+//参数：  无    /
+//请求地址：/appmusicin/getradiostationlist?RADIOSTATIONLIST (混淆码)
+#define kUrlGetRadioStationList [NSString stringWithFormat:@"/appmusicin/getradiostationlist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"RADIOSTATIONLIST"]]
+//154.音乐中心-曲库推荐
+//参数：  无    /
+//请求地址：/appmusicin/getmusiclibrary?MUSICLIBRARY(混淆码)
+#define kUrlGetMusicLibrary [NSString stringWithFormat:@"/appmusicin/getmusiclibrary?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"MUSICLIBRARY"]]
+//155.音乐中心-歌单推荐
+//参数：  无    /
+//请求地址：/appmusicin/getsongsrecommend?SONGRECOMMEND(混淆码)
+#define kUrlGetSongsRecommend [NSString stringWithFormat:@"/appmusicin/getsongsrecommend?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SONGRECOMMEND"]]
 
 
 #endif /* URLMacros_h */

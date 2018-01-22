@@ -16,6 +16,7 @@ typedef NS_ENUM(NSInteger,ZSHTextFieldViewType){
     ZSHTextFieldViewCardNumer,
     ZSHTextFieldViewCaptcha,
     ZSHTextFieldViewGoldAlert,
+    ZSHTextFieldSelect,
     ZSHTextFieldViewNone
 };
 

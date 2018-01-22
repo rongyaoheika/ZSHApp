@@ -176,6 +176,10 @@
         [_togetherLogic requestEditClickCountWithADVERTISEMENT_ID:_dataArr[index].ADVERTISEMENT_ID success:^(id response) {
         }];
     }
+    
+    if (self.didSelected) {
+        self.didSelected(index);
+    }
 }
 
 @end

@@ -44,7 +44,7 @@ static NSString *bottomCellIdentifier   = @"listCell";
     self.titleArr = @[@"会员中心",@"管家中心",@"圈子中心",
                       @"活动中心",@"购物中心",@"客服中心",
                       @"钱包中心",@"游戏中心",@"订单中心",
-                      @"音乐中心",@"我要入住",@"设置"];
+                      @"音乐中心",@"我要入驻",@"设置"];
     self.imageArr = @[@"mine_icon_1",@"mine_icon_2",@"mine_icon_3",
                       @"mine_icon_4",@"mine_icon_5",@"mine_icon_6",
                       @"mine_icon_7",@"mine_icon_8",@"mine_icon_10",
@@ -145,7 +145,6 @@ static NSString *bottomCellIdentifier   = @"listCell";
             [weakself.navigationController pushViewController:vc animated:YES];
         };
     }
-    
     return sectionModel;
 }
 

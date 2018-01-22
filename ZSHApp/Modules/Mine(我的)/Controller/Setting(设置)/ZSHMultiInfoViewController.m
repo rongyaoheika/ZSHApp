@@ -109,7 +109,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
         self.titleArr = @[@"上传身份证", @"经营者姓名", @"身份证号", @"店铺照片", @"营业执照",
                           @"注册号", @"执照名称", @"法人姓名",@"经营者手机", @"经营者手机"];
         self.textFieldTypeArr = @[
-    @(ZSHTextFieldViewUser), @(ZSHTextFieldViewUser), @(ZSHTextFieldViewUser), @(ZSHTextFieldViewUser),@(ZSHTextFieldViewUser),
+    @(ZSHTextFieldSelect), @(ZSHTextFieldViewUser), @(ZSHTextFieldViewUser), @(ZSHTextFieldSelect),@(ZSHTextFieldSelect),
     @(ZSHTextFieldViewUser), @(ZSHTextFieldViewUser), @(ZSHTextFieldViewUser),@(ZSHTextFieldViewUser), @(ZSHTextFieldViewCaptcha)];
         self.placeHolderArr = @[@"本人身份证照片", @"须与身份证姓名一致", @"请输入经营者身份证号码", @"请上传实体店铺照片",@"请上传营业执照照片", @"注册号或同一社会信用代码", @"营业执照名称这一行的内容", @"营业执照上法人或经营者姓名",@"用本人身份证办理的手机号", @"输入验证码"];
     }
@@ -154,7 +154,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     UILabel *addLabel = [ZSHBaseUIControl createLabelWithParamDic:@{@"text":@"龙兴莱曼海景度假酒店"}];
     addLabel.frame = CGRectMake(15, 17.5, 200, 16);
     UILabel *detailLabel = [ZSHBaseUIControl createLabelWithParamDic:@{@"text":@"天涯区三亚湾路128号", @"font":kPingFangMedium(12)}];
-    detailLabel.frame = CGRectMake(15, 46.5, 130, 16);
+    detailLabel.frame = CGRectMake(15, 46.5, 2000, 16);
     [backgroundView addSubview:addLabel];
     [backgroundView addSubview:detailLabel];
     return backgroundView;

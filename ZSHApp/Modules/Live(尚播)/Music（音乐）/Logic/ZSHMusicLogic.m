@@ -114,5 +114,51 @@
     }];
 }
 
+// 音乐中心-歌手推荐-获取歌手歌曲列表
+- (void)loadSingerSongList:(NSDictionary *)dic success:(void (^)(id response))success {
+    [PPNetworkHelper POST:kUrlGetSingerSongList parameters:dic success:^(id responseObject) {
+        success(responseObject);
+    } failure:^(NSError *error) {
+        RLog(@"请求失败");
+    }];
+}
+
+// 音乐中心-首页：歌手推荐和广告
+- (void)loadGetSongRecommend:(NSDictionary *)dic success:(void (^)(id response))success {
+    [PPNetworkHelper POST:kUrlGetSongRecommend parameters:dic success:^(id responseObject) {
+        success(responseObject);
+    } failure:^(NSError *error) {
+        RLog(@"请求失败");
+    }];
+}
+
+
+// 音乐中心-电台
+- (void)loadGetRadioStationList:(NSDictionary *)dic success:(void (^)(id response))success {
+    [PPNetworkHelper POST:kUrlGetRadioStationList parameters:dic success:^(id responseObject) {
+        success(responseObject);
+    } failure:^(NSError *error) {
+        RLog(@"请求失败");
+    }];
+}
+
+
+// 音乐中心-曲库推荐
+- (void)loadGetMusicLibrary:(NSDictionary *)dic success:(void (^)(id response))success {
+    [PPNetworkHelper POST:kUrlGetMusicLibrary parameters:dic success:^(id responseObject) {
+        success(responseObject);
+    } failure:^(NSError *error) {
+        RLog(@"请求失败");
+    }];
+}
+
+// 音乐中心-歌单推荐
+- (void)loadGetSongsRecommend:(NSDictionary *)dic success:(void (^)(id response))success {
+    [PPNetworkHelper POST:kUrlGetSongsRecommend parameters:dic success:^(id responseObject) {
+        success(responseObject);
+    } failure:^(NSError *error) {
+        RLog(@"请求失败");
+    }];
+}
 
 @end
