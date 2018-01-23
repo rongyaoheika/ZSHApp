@@ -17,7 +17,7 @@
 #import "XXTextView.h"
 #import "ZSHBottomBlurPopView.h"
 #import "ZSHLiveMoreView.h"
-
+#import "ZSHBeautyView.h"
 //定位服务
 #import "HCLocationManager.h"
 #import "GYZCity.h"
@@ -74,9 +74,17 @@
 @property (nonatomic, strong)  NSMutableArray           *shareBtnArr;
 @property (nonatomic, strong)  ZSHBottomBlurPopView     *bottomBlurPopView;
 @property (nonatomic, assign)  BOOL                     isLocate;
+
+
+
 //更多功能
 @property (nonatomic, strong)  ZSHLiveMoreView          *moreView;
 @property (nonatomic, assign)  BOOL                     isMoreViewShow;
+
+//美颜设置功能
+@property (nonatomic, strong)  ZSHBeautyView            *beautyView;
+@property (nonatomic, assign)  BOOL                     isBeautyViewShow;
+
 //类型
 @property (nonatomic, assign)  AlivcPublisherViewType   type;
 //直播互动
@@ -214,7 +222,6 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     //[self setupMusicSettingView];
     self.isBeautySettingShow = NO;
     self.isMusicSettingShow = NO;
-    self.isMoreSettingShow = NO;
     self.isLocate = NO;
 }
 
@@ -851,7 +858,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 
 
 - (void)tapGesture:(UITapGestureRecognizer *)gesture{
-
+    kWeakSelf(self);
     if (self.isBeautySettingShow) {
         
         [self.beautySettingView removeFromSuperview];
@@ -867,16 +874,19 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
         
         [self.musicSettingView removeFromSuperview];
         self.isMusicSettingShow = NO;
+        
     } else if (self.isMoreViewShow) {
-        [UIView animateWithDuration:0.5 animations:^{
-            CGRect moreViewFrame = self.moreView.frame;
-            moreViewFrame.origin.y = KScreenHeight;
-            self.moreView.frame = moreViewFrame;
-        } completion:^(BOOL finished) {
-            [self.moreView removeFromSuperview];
-            self.isMoreViewShow = NO;
+        [self dismissPopView:self.moreView block:^{
+            [weakself.moreView removeFromSuperview];
+            weakself.isMoreViewShow = NO;
         }];
        
+    }else if (self.isBeautyViewShow) {
+        [self dismissPopView:self.beautyView block:^{
+            [weakself.beautyView removeFromSuperview];
+            weakself.isBeautyViewShow = NO;
+        }];
+        
     }else {
         
         CGPoint point = [gesture locationInView:self];
@@ -1279,6 +1289,13 @@ static CGFloat lastPinchDistance = 0;
     return _moreView;
 }
 
+- (ZSHBeautyView *)beautyView{
+    if (!_beautyView) {
+        _beautyView = [[ZSHBeautyView alloc]initWithFrame:CGRectMake(0, KScreenHeight, kScreenWidth, KScreenHeight*0.4)];
+    }
+    return _beautyView;
+}
+
 //直播action
 - (ZSHBottomBlurPopView *)createBottomBlurPopViewWith:(ZSHFromVCToBottomBlurPopView)fromClassType{
     if (!_bottomBlurPopView) {
@@ -1328,11 +1345,7 @@ static CGFloat lastPinchDistance = 0;
     kWeakSelf(self);
     [self addSubview:self.moreView];
     self.isMoreViewShow = YES;
-    [UIView animateWithDuration:0.5 animations:^{
-        CGRect moreViewFrame =  self.moreView.frame;
-        moreViewFrame.origin.y = KScreenHeight - moreViewFrame.size.height;
-        self.moreView.frame = moreViewFrame;
-    }];
+    [self showPopView:self.moreView];
     
     self.moreView.btnClickBlock = ^(UIButton *btn) {
         switch (btn.tag) {
@@ -1345,11 +1358,54 @@ static CGFloat lastPinchDistance = 0;
                 [weakself flashButtonAction:btn];
                 break;
             }
+            case 2:{//背景音乐
+                [btn setSelected:!btn.selected];
+                [weakself flashButtonAction:btn];
+                break;
+            }
+            case 3:{//美颜
+                [weakself dismissPopView:weakself.moreView block:^{
+                    [weakself.moreView removeFromSuperview];
+                    weakself.isMoreViewShow = NO;
+                    
+                    [weakself addSubview:weakself.beautyView];
+                    weakself.isBeautyViewShow = YES;
+                    [weakself showPopView:weakself.beautyView];
+                    
+                    weakself.beautyView.btnClickBlock = ^(UIButton *btn) {
+                        [weakself beautyBtnSetAction:btn];
+                    };
+                }];
+                break;
+            }
                 
             default:
                 break;
         }
     };
+}
+
+- (void)beautyBtnSetAction:(UIButton *)btn{
+    
+    
+}
+
+- (void)showPopView:(UIView *)customView{
+    [UIView animateWithDuration:0.5 animations:^{
+        CGRect customViewFrame = customView.frame;
+        customViewFrame.origin.y = KScreenHeight - customViewFrame.size.height;
+        customView.frame = customViewFrame;
+    } completion:nil];
+}
+
+- (void)dismissPopView:(UIView *)customView block:(void(^)())completion{
+    [UIView animateWithDuration:0.5 animations:^{
+        CGRect moreViewFrame = self.moreView.frame;
+        moreViewFrame.origin.y = KScreenHeight;
+        self.moreView.frame = moreViewFrame;
+    } completion:^(BOOL finished) {
+        completion();
+    }];
 }
 
 //点击主播头像

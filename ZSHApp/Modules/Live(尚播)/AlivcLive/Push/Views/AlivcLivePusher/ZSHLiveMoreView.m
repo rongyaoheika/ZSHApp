@@ -28,7 +28,7 @@
   @{@"btnNormalImage":@"camera_id",@"btnSelectImage":@"camera_id",@"btnTitle":@"反转"},
   @{@"btnNormalImage":@"camera_flash_close",@"btnSelectImage":@"camera_flash_on",@"btnTitle":@"闪光灯"},
   @{@"btnNormalImage":@"music_button",@"btnSelectImage":@"music_button",@"btnTitle":@"音乐"},
-  @{@"btnNormalImage":@"begin_show_0",@"btnSelectImage":@"begin_show_0",@"btnTitle":@"美颜"},
+  @{@"btnNormalImage":@"record_beauty_on",@"btnSelectImage":@"record_beauty_on",@"btnTitle":@"美颜"},
   ],
   
   @[

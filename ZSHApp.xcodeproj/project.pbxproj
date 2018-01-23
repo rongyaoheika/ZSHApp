@@ -82,6 +82,7 @@
 		044A2F462004BBF100B05CE7 /* ZSHMakeMoneyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 044A2F452004BBF000B05CE7 /* ZSHMakeMoneyViewController.m */; };
 		0450A60D20036BC100D7B2D4 /* ZSHHomeSubListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0450A60C20036BC100D7B2D4 /* ZSHHomeSubListCell.m */; };
 		04647D022017068800A21600 /* ZSHLiveMoreView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04647D012017068800A21600 /* ZSHLiveMoreView.m */; };
+		04647D052017602000A21600 /* ZSHBeautyView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04647D042017602000A21600 /* ZSHBeautyView.m */; };
 		049823B520074D9C0080626D /* ZSHCabinetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 049823B420074D9C0080626D /* ZSHCabinetViewController.m */; };
 		049823B920074F180080626D /* ZSHCabinetCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 049823B820074F180080626D /* ZSHCabinetCollectionCell.m */; };
 		049823BC20074F640080626D /* ZSHCabinetReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 049823BB20074F640080626D /* ZSHCabinetReusableView.m */; };
@@ -742,6 +743,8 @@
 		0450A60C20036BC100D7B2D4 /* ZSHHomeSubListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHHomeSubListCell.m; sourceTree = "<group>"; };
 		04647D002017068800A21600 /* ZSHLiveMoreView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHLiveMoreView.h; sourceTree = "<group>"; };
 		04647D012017068800A21600 /* ZSHLiveMoreView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHLiveMoreView.m; sourceTree = "<group>"; };
+		04647D032017602000A21600 /* ZSHBeautyView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHBeautyView.h; sourceTree = "<group>"; };
+		04647D042017602000A21600 /* ZSHBeautyView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHBeautyView.m; sourceTree = "<group>"; };
 		049823B320074D9C0080626D /* ZSHCabinetViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHCabinetViewController.h; sourceTree = "<group>"; };
 		049823B420074D9C0080626D /* ZSHCabinetViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHCabinetViewController.m; sourceTree = "<group>"; };
 		049823B720074F180080626D /* ZSHCabinetCollectionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHCabinetCollectionCell.h; sourceTree = "<group>"; };
@@ -1951,6 +1954,8 @@
 				043F2E05200DFF3500CE18DE /* AlivcWatermarkSettingView.m */,
 				04647D002017068800A21600 /* ZSHLiveMoreView.h */,
 				04647D012017068800A21600 /* ZSHLiveMoreView.m */,
+				04647D032017602000A21600 /* ZSHBeautyView.h */,
+				04647D042017602000A21600 /* ZSHBeautyView.m */,
 			);
 			path = AlivcLivePusher;
 			sourceTree = "<group>";
@@ -5326,6 +5331,7 @@
 				FE2BB0B81F8E03FB000D5800 /* ZSHHomeHeadView.m in Sources */,
 				043F2E17200DFF3500CE18DE /* AlivcLivePushConfigViewController.m in Sources */,
 				FE1377751F972745003C8DFB /* ZSHOrderCell.m in Sources */,
+				04647D052017602000A21600 /* ZSHBeautyView.m in Sources */,
 				FE55385F1F47049D00803128 /* UICollectionView+IndexPath.m in Sources */,
 				041853332005FB3D000E0D09 /* ZSHToplineTopView.m in Sources */,
 				FE24DA611FD9377300965DC8 /* ZSHMusicLogic.m in Sources */,
