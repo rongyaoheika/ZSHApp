@@ -38,6 +38,12 @@
 
 
 //阿里云直播
+#define PLAY_AUTH @""
+#define VID @""
+#define ACCESS_KEY_ID @""
+#define ACCESS_KEY_SECRET @""
+#define SECURITY_TOKEN @""
+
 #define KZSHColorRGB(R,G,B)  [UIColor colorWithRed:(R * 1.0) / 255.0 green:(G * 1.0) / 255.0 blue:(B * 1.0) / 255.0 alpha:1.0]
 #define KZSHColorRGBA(R,G,B,A)  [UIColor colorWithRed:(R * 1.0) / 255.0 green:(G * 1.0) / 255.0 blue:(B * 1.0) / 255.0 alpha:A]
 #define AlivcTextPushURL @"rtmp://video-center.alivecdn.com/ZSHApp/stream00?vhost=live.rongyaohk.com&auth_key=1516417147-0-0-7b5549b1f901c18f84a0bef816cb5a75"

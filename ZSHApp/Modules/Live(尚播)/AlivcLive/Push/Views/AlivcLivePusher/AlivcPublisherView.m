@@ -16,11 +16,17 @@
 
 #import "XXTextView.h"
 #import "ZSHBottomBlurPopView.h"
+#import "ZSHLiveMoreView.h"
+
+//定位服务
+#import "HCLocationManager.h"
+#import "GYZCity.h"
+
 #define viewWidth kRealValue(58)
 #define viewHeight viewWidth/4*3
 #define topViewButtonSize kRealValue(35)
 
-@interface AlivcPublisherView () <UIGestureRecognizerDelegate>
+@interface AlivcPublisherView () <UIGestureRecognizerDelegate,HCLocationManagerDelegate,UIAlertViewDelegate>
 
 @property (nonatomic, weak) id<AlivcPublisherViewDelegate> delegate;
 
@@ -61,11 +67,16 @@
 @property (nonatomic, strong) AlivcLivePushConfig *config;
 
 //自定义界面
+@property (nonatomic, strong)  UIButton                 *locateBtn;
 @property (nonatomic, strong)  XXTextView               *textView;
 @property (nonatomic, strong)  UIButton                 *beginShowBtn;
 @property (nonatomic, strong)  UIButton                 *beautyBtn;
 @property (nonatomic, strong)  NSMutableArray           *shareBtnArr;
-
+@property (nonatomic, strong)  ZSHBottomBlurPopView     *bottomBlurPopView;
+@property (nonatomic, assign)  BOOL                     isLocate;
+//更多功能
+@property (nonatomic, strong)  ZSHLiveMoreView          *moreView;
+@property (nonatomic, assign)  BOOL                     isMoreViewShow;
 //类型
 @property (nonatomic, assign)  AlivcPublisherViewType   type;
 //直播互动
@@ -128,17 +139,14 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
             break;
         }
         case AlivcPublisherViewTypePreview:{//预览
+           
             [self setupPreviewTopViews];
             [self setupCustomUI];
             [self addGesture];
+            [self locateAction:nil];
             break;
         }
-        case AlivcPublisherViewTypeAudience:{//观众
-            [self setupLiveTopViews];
-            [self setupLiveChatTabView];
-            [self setupLiveBottomViews];
-            break;
-        }
+        
             
         default:
             break;
@@ -200,15 +208,14 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     [self.topView addSubview: self.beautySettingButton];*/
     
     
-    UIButton *locateBtn = [self setupButtonWithFrame:(CGRectMake(CGRectGetMinX(self.switchButton.frame) - retractX - topViewButtonSize, 0, topViewButtonSize, topViewButtonSize))
-                                      normalImage:[UIImage imageNamed:@"begin_show_locate"]
-                                      selectImage:nil
-                                           action:@selector(locateAction:)];
-    [self.topView addSubview:locateBtn];
+   
+    [self.topView addSubview:self.locateBtn];
     
     //[self setupMusicSettingView];
     self.isBeautySettingShow = NO;
     self.isMusicSettingShow = NO;
+    self.isMoreSettingShow = NO;
+    self.isLocate = NO;
 }
 
 - (void)setupLiveTopViews{
@@ -333,6 +340,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     
     UIImage *chatImage = [UIImage imageNamed:@"live_room_chat"];
     UIButton *chatBtn = [[UIButton alloc]initWithFrame:CGRectZero];
+    [chatBtn addTarget:self action:@selector(chatBtnAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.bottomView addSubview:chatBtn];
     [chatBtn setBackgroundImage:chatImage forState:UIControlStateNormal];
     [chatBtn mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -341,7 +349,8 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
         make.size.mas_equalTo(CGSizeMake(kRealValue(32), kRealValue(32)));
     }];
     
-    NSArray *imageArr = @[@"live_room_gift",@"live_room_love",@"live_room_share"];
+//    NSArray *imageArr = @[@"live_room_gift",@"live_room_love",@"live_room_share"];
+    NSArray *imageArr = @[@"room_more",@"live_room_share"];
     for (int i = 0; i<imageArr.count; i++) {
         UIImage *btnImage = [UIImage imageNamed:imageArr[i]];
         UIButton *btn = [[UIButton alloc]initWithFrame:CGRectZero];
@@ -858,7 +867,17 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
         
         [self.musicSettingView removeFromSuperview];
         self.isMusicSettingShow = NO;
-    } else {
+    } else if (self.isMoreViewShow) {
+        [UIView animateWithDuration:0.5 animations:^{
+            CGRect moreViewFrame = self.moreView.frame;
+            moreViewFrame.origin.y = KScreenHeight;
+            self.moreView.frame = moreViewFrame;
+        } completion:^(BOOL finished) {
+            [self.moreView removeFromSuperview];
+            self.isMoreViewShow = NO;
+        }];
+       
+    }else {
         
         CGPoint point = [gesture locationInView:self];
         CGPoint percentPoint = CGPointZero;
@@ -1201,13 +1220,14 @@ static CGFloat lastPinchDistance = 0;
     [_beautyBtn setTitle:@"美颜" forState:UIControlStateNormal];
     [_beautyBtn setTitleColor:KWhiteColor forState:UIControlStateNormal];
     [_beautyBtn setImage:[UIImage imageNamed:@"begin_show_0"] forState:UIControlStateNormal];
-    [_beautyBtn layoutButtonWithEdgeInsetsStyle:XYButtonEdgeInsetsStyleTop imageTitleSpace:kRealValue(20)];
+   
     [self addSubview:_beautyBtn];
     [_beautyBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.mas_equalTo(_beginShowBtn);
         make.left.mas_equalTo(self).offset(kRealValue(30));
         make.size.mas_equalTo(CGSizeMake(kRealValue(80), kRealValue(80)));
     }];
+     [_beautyBtn layoutButtonWithEdgeInsetsStyle:XYButtonEdgeInsetsStyleTop imageTitleSpace:kRealValue(20)];
     
     UILabel *noticeLabel = [ZSHBaseUIControl createLabelWithParamDic:@{@"text":@"开启直播即代表同意《尚播用户协议》",@"font":kPingFangRegular(11),@"textColor":KWhiteColor,@"textAlignment":@(NSTextAlignmentCenter)}];
     [self addSubview:noticeLabel];
@@ -1236,6 +1256,43 @@ static CGFloat lastPinchDistance = 0;
     return _textView;
 }
 
+
+#pragma setter 懒加载
+//定位按钮
+- (UIButton *)locateBtn{
+    if (!_locateBtn) {
+        _locateBtn = [self setupButtonWithFrame:(CGRectMake(CGRectGetMinX(self.switchButton.frame) - kRealValue(110), 0, kRealValue(100), topViewButtonSize))
+                                        normalImage:[UIImage imageNamed:@"begin_show_locate"]
+                                        selectImage:nil
+                                             action:@selector(locateAction:)];
+        [_locateBtn setTitle:@"" forState:UIControlStateNormal];
+        _locateBtn.titleLabel.font = kPingFangRegular(12);
+        [_locateBtn layoutButtonWithEdgeInsetsStyle:XYButtonEdgeInsetsStyleLeft imageTitleSpace:kRealValue(5.0)];
+    }
+    return _locateBtn;
+}
+
+- (ZSHLiveMoreView *)moreView{
+    if (!_moreView) {
+        _moreView = [[ZSHLiveMoreView alloc]initWithFrame:CGRectMake(0, KScreenHeight, kScreenWidth, KScreenHeight*0.4) paramDic:@{@"config":self.config}];
+    }
+    return _moreView;
+}
+
+//直播action
+- (ZSHBottomBlurPopView *)createBottomBlurPopViewWith:(ZSHFromVCToBottomBlurPopView)fromClassType{
+    if (!_bottomBlurPopView) {
+        NSDictionary *nextParamDic = @{KFromClassType:@(fromClassType)};
+        _bottomBlurPopView = [[ZSHBottomBlurPopView alloc]initWithFrame:kAppDelegate.window.bounds paramDic:nextParamDic];
+        _bottomBlurPopView.blurRadius = 20;
+        _bottomBlurPopView.dynamic = NO;
+        _bottomBlurPopView.tintColor = KClearColor;
+        _bottomBlurPopView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.6];
+        [_bottomBlurPopView setBlurEnabled:NO];
+    }
+    return _bottomBlurPopView;
+}
+
 #pragma mark - Event
 - (void)thirdLogin:(UIButton *)send{
     [_shareBtnArr enumerateObjectsUsingBlock:^(UIButton *btn , NSUInteger idx, BOOL * _Nonnull stop) {
@@ -1247,25 +1304,55 @@ static CGFloat lastPinchDistance = 0;
     }];
 }
 
-
-//直播action
-- (ZSHBottomBlurPopView *)createBottomBlurPopViewWith:(ZSHFromVCToBottomBlurPopView)fromClassType{
-    NSDictionary *nextParamDic = @{KFromClassType:@(fromClassType)};
-    ZSHBottomBlurPopView *bottomBlurPopView = [[ZSHBottomBlurPopView alloc]initWithFrame:kAppDelegate.window.bounds paramDic:nextParamDic];
-    bottomBlurPopView.blurRadius = 20;
-    bottomBlurPopView.dynamic = NO;
-    bottomBlurPopView.tintColor = KClearColor;
-    bottomBlurPopView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.6];
-    [bottomBlurPopView setBlurEnabled:NO];
-    return bottomBlurPopView;
+- (void)chatBtnAction:(UIButton *)chatBtn{
+   
 }
 
 - (void)btnAction:(UIButton *)btn {
-    if ((btn.tag -11179) == 2) {
-        [self addSubview:[self createBottomBlurPopViewWith:ZSHFromShareVCToToBottomBlurPopView]];
+    switch (btn.tag - 11179) {
+        case 0:{//更多
+            [self moreAction:btn];
+            break;
+        }
+        case 1:{//分享
+            [self addSubview:self.bottomBlurPopView];
+            break;
+        }
+        default:
+            break;
     }
 }
 
+//更多功能
+- (void)moreAction:(UIButton*)moreBtn{
+    kWeakSelf(self);
+    [self addSubview:self.moreView];
+    self.isMoreViewShow = YES;
+    [UIView animateWithDuration:0.5 animations:^{
+        CGRect moreViewFrame =  self.moreView.frame;
+        moreViewFrame.origin.y = KScreenHeight - moreViewFrame.size.height;
+        self.moreView.frame = moreViewFrame;
+    }];
+    
+    self.moreView.btnClickBlock = ^(UIButton *btn) {
+        switch (btn.tag) {
+            case 0:{//反转
+                [weakself switchButtonAction:btn];
+                break;
+            }
+            case 1:{//闪光灯
+                [btn setSelected:!btn.selected];
+                [weakself flashButtonAction:btn];
+                break;
+            }
+                
+            default:
+                break;
+        }
+    };
+}
+
+//点击主播头像
 - (void)personInfo {
     NSDictionary *nextParamDic = @{KFromClassType:@(ZSHFromPersonInfoVCToBottomBlurPopView)};
     ZSHBottomBlurPopView *bottomBlurPopView = [[ZSHBottomBlurPopView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight) paramDic:nextParamDic];
@@ -1277,8 +1364,37 @@ static CGFloat lastPinchDistance = 0;
 
 //预览界面-定位
 - (void)locateAction:(UIButton *)btn{
-    
-    
+    if (!self.isLocate) {
+        HCLocationManager *locationManager = [HCLocationManager sharedManager];
+        locationManager.delegate = self;
+        [locationManager startLocate];
+        self.isLocate = YES;
+    } else {
+        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"提示" message:@"关闭定位后，直播间不会出现在附近直播和同城直播中，会减少入场观众，确认关闭吗？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        [alertView show];
+    }
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == 1) {
+        [self.locateBtn setTitle:@"未知星球" forState:UIControlStateNormal];
+        self.isLocate = NO;
+    }
+}
+
+#pragma mark - <HCLocationManagerDelegate>
+- (void)loationMangerSuccessLocationWithCity:(NSString *)city{
+    NSLog(@"city = %@",city);
+    [self.locateBtn setTitle:city forState:UIControlStateNormal];
+}
+- (void)loationMangerSuccessLocationWithLatitude:(CLLocationDegrees)latitude longitude:(CLLocationDegrees)longitude{
+    NSLog(@"latitude = %f , longitude = %f",latitude,longitude);
+}
+- (void)loationMangerFaildWithError:(NSError *)error{
+    NSLog(@"%@",error);
+    if (error.code ==kCLErrorDenied) {
+        // 提示用户出错原因，可按住Option键点击 KCLErrorDenied的查看更多出错信息，可打印error.code值查找原因所在
+    }
 }
 
 @end

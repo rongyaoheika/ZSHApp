@@ -32,6 +32,7 @@ typedef void(^ZSHBottomBtnViewBtnBlock)(NSInteger);
 @property (nonatomic, strong) UICollectionView          *collectionView;
 @property (nonatomic, strong) ZSHSearchBarView          *searchView;
 @property (nonatomic, strong) NSDictionary              *paramDic;
+@property (nonatomic, strong) UIButton                  *leftBtn;
 
 /**
  跳转登录
@@ -129,5 +130,8 @@ typedef void(^ZSHBottomBtnViewBtnBlock)(NSInteger);
 - (void)endCollectionViewRefresh;
 - (void)collectionHeaderRereshing;
 - (void)collectionFooterRereshing;
+
+//定位
+- (void)locateAction;
 
 @end

@@ -58,7 +58,6 @@ static NSString * const ZSHNearHeadViewID = @"ZSHNearHeadView";
          self.waterLayout.headerReferenceSize = CGSizeMake(KScreenWidth, kRealValue(40));
     }
 
-//    self.collectionView = [[UICollectionView alloc]initWithFrame:self.view.bounds collectionViewLayout:self.waterLayout];
     [self.collectionView setCollectionViewLayout:self.waterLayout];
     self.collectionView.dataSource = self;
     self.collectionView.delegate = self;

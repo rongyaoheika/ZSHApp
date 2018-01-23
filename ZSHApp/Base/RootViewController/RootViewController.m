@@ -12,12 +12,12 @@
 #import "UIImage+BlurGlass.h"
 #import "PYSearchViewController.h"
 #import "ZSHBaseTableView.h"
-
-@interface RootViewController ()
+#import "HCLocationManager.h"
+@interface RootViewController ()<HCLocationManagerDelegate>
 
 @property (nonatomic, strong) UIImageView        *noDataView;
 @property (nonatomic, weak)   UITextField        *searchTextField;
-
+@property (nonatomic, assign) BOOL               isLocate;
 @end
 
 @implementation RootViewController
@@ -38,12 +38,13 @@
 
     //是否显示返回按钮
     self.isShowLiftBack = YES;
+    self.isLocate = NO;
     self.StatusBarStyle = UIStatusBarStyleLightContent;
     self.tableViewModel = [[ZSHBaseTableViewModel alloc] init];
     UIImageView *image = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"home_bg"]];
     image.frame = self.view.bounds;
     [self.view insertSubview:image atIndex:0];
-    
+    [self locateAction];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -257,17 +258,17 @@
 }
 
 - (void)addNavigationItemWithImageName:(NSString *)imageName title:(NSString *)title locate:(XYButtonEdgeInsetsStyle)imageLocate isLeft:(BOOL)isLeft target:(id)target action:(SEL)action tag:(NSInteger)tag {
-    UIButton * btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btn setTitle:title forState:UIControlStateNormal];
-    [btn setTitleColor:KZSHColor929292 forState:UIControlStateNormal];
-    btn.titleLabel.font = kPingFangMedium(14);
-    [btn setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
-    btn.size = CGSizeMake(44, 44);
-    [btn layoutButtonWithEdgeInsetsStyle:imageLocate imageTitleSpace:kRealValue(4)];
-    [btn addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
-    btn.tag = tag;
-    btn.imageView.contentMode = UIViewContentModeScaleAspectFit;
-    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:btn];
+    _leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_leftBtn setTitle:title forState:UIControlStateNormal];
+    [_leftBtn setTitleColor:KZSHColor929292 forState:UIControlStateNormal];
+    _leftBtn.titleLabel.font = kPingFangMedium(14);
+    [_leftBtn setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
+    _leftBtn.size = CGSizeMake(44, 44);
+    [_leftBtn layoutButtonWithEdgeInsetsStyle:imageLocate imageTitleSpace:kRealValue(4)];
+    [_leftBtn addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
+    _leftBtn.tag = tag;
+    _leftBtn.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:_leftBtn];
     UIBarButtonItem *spaceButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
     if (isLeft) {
         spaceButtonItem.width = -15;
@@ -411,6 +412,32 @@
 
 - (void) hideProgress {
     [MBProgressHUD hideHUDForView:self.view animated:YES];
+}
+
+//定位
+- (void)locateAction{
+    if (!self.isLocate) {
+        HCLocationManager *locationManager = [HCLocationManager sharedManager];
+        locationManager.delegate = self;
+        [locationManager startLocate];
+    }
+    
+}
+
+#pragma mark - <HCLocationManagerDelegate>
+- (void)loationMangerSuccessLocationWithCity:(NSString *)city{
+    RLog(@"city = %@",city);
+    self.isLocate = YES;
+    [[NSNotificationCenter defaultCenter]postNotificationName:KLocateNoti object:@{@"cityName":city}];
+}
+- (void)loationMangerSuccessLocationWithLatitude:(CLLocationDegrees)latitude longitude:(CLLocationDegrees)longitude{
+    RLog(@"latitude = %f , longitude = %f",latitude,longitude);
+}
+- (void)loationMangerFaildWithError:(NSError *)error{
+    RLog(@"%@",error);
+    if (error.code ==kCLErrorDenied) {
+        // 提示用户出错原因，可按住Option键点击 KCLErrorDenied的查看更多出错信息，可打印error.code值查找原因所在
+    }
 }
 
 @end
