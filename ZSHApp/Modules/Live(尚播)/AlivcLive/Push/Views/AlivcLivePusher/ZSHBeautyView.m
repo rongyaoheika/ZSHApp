@@ -9,7 +9,7 @@
 #import "ZSHBeautyView.h"
 #import <AlivcLivePusher/AlivcLivePusherHeader.h>
 #import "AlivcPushViewsProtocol.h"
-
+#import "ZSHCustomSlider.h"
 @interface ZSHBeautyView ()
 @property (nonatomic, weak) id<AlivcPublisherViewDelegate> delegate;
 @property (nonatomic, strong) UIView                *beautySettingView;
@@ -19,6 +19,7 @@
 @property (nonatomic, strong) NSMutableArray        *sliderArr;
 @property (nonatomic, strong) AlivcLivePushConfig   *config;
 @property (nonatomic, strong) NSArray               *beautyDefaultValueArr;
+@property (nonatomic, strong) NSArray               *sliderActionArr;
 
 @end
 
@@ -95,7 +96,7 @@
                           @[@"瘦脸",@"大眼"],
                           @[@"收下巴"]];
     
-    NSArray *sliderActionArr = @[@[@"buffingValueChange:",@"whiteValueChange:"],
+    _sliderActionArr = @[@[@"buffingValueChange:",@"whiteValueChange:"],
                                  @[@"ruddyValueChange:",@"cheekPinkValueChange:"],
                                  @[@"thinfaceValueChange:",@"bigeyeValueChange:"],
                                  @[@"shortenfaceValueChange:"]];
@@ -109,21 +110,24 @@
     for (int i = 0; i<titleArr.count; i++) {
         for (int j = 0; j<[titleArr[i]count]; j++) {
             NSDictionary *beautyLBDic = @{@"text":titleArr[i][j],@"font":kPingFangRegular(15),@"textColor":KWhiteColor};
+//            CGSize titleSize = [titleArr[i][j] sizeWithFont:kPingFangRegular(15) constrainedToSize:CGSizeMake(MAXFLOAT, 15)];
+           
             UILabel *beautyLB = [ZSHBaseUIControl createLabelWithParamDic:beautyLBDic];
-            beautyLB.frame = CGRectMake(kRealValue(25)+(j%2)*kRealValue(200), kRealValue(15)+i*(kRealValue(15)+kRealValue(15)) , kRealValue(40), kRealValue(15));
+            CGSize titleSize = [titleArr[i][j] sizeWithAttributes:[NSDictionary dictionaryWithObjectsAndKeys:beautyLB.font,NSFontAttributeName,nil]];
+            beautyLB.frame = CGRectMake(KLeftMargin+(j%2)*kRealValue(180), kRealValue(15)+i*(kRealValue(15)+kRealValue(15)) , titleSize.width+kRealValue(5), kRealValue(15));
             [self.beautySettingView addSubview:beautyLB];
             
             CGFloat sliderX = CGRectGetMaxX(beautyLB.frame)+ kRealValue(5);
             CGFloat sliderY = CGRectGetCenter(beautyLB.frame).y;
             
-            UISlider *slider = [[UISlider alloc] init];
+            ZSHCustomSlider *slider = [[ZSHCustomSlider alloc] init];
             slider.tag = i+j;
             slider.minimumTrackTintColor = KZSHColorA61CE7;
             slider.maximumTrackTintColor = KZSHColor929292;
             
             [slider setThumbImage:[UIImage imageNamed:@"age_icon"] forState:UIControlStateNormal];
-            slider.frame = CGRectMake(sliderX,sliderY, kRealValue(100), kRealValue(2));
-            [slider addTarget:self action:NSSelectorFromString(sliderActionArr[i][j]) forControlEvents:(UIControlEventValueChanged)];
+            slider.frame = CGRectMake(sliderX,sliderY, kRealValue(120), kRealValue(2));
+            [slider addObserver:self forKeyPath:@"value" options:(NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew) context:nil];
             slider.maximumValue = 100;
             slider.minimumValue = 0;
             slider.value = [_beautyDefaultValueArr[i][j] intValue];
@@ -133,9 +137,17 @@
     }
 }
 
-
 #pragma mark - Slider Actions
-
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context
+{
+    if (!object) { return;}
+    UISlider *slider = object;
+    SEL method = NSSelectorFromString(_sliderActionArr[slider.tag/2][slider.tag%2]);
+    IMP imp = [self methodForSelector:method];
+    void (*func)(id, SEL, id) = (void *)imp;
+    func(self, method, object);
+}
+//其中一个磨皮方法
 - (void)buffingValueChange:(UISlider *)slider {
     
     if (self.delegate) {
@@ -221,6 +233,11 @@
     }
 }
 
-
+- (void)dealloc{
+    RLog(@"beautyView销毁");
+    for (UISlider *slider in _sliderArr) {
+        [slider removeObserver:self forKeyPath:@"value"];
+    }
+}
 
 @end

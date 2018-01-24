@@ -104,6 +104,7 @@
 		04BAD7BD2005C0DB00950195 /* ZSHMagazineListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04BAD7BC2005C0DB00950195 /* ZSHMagazineListViewController.m */; };
 		04BAD7C12005EEB100950195 /* ZSHMagazineListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04BAD7C02005EEB100950195 /* ZSHMagazineListCell.m */; };
 		04CC219E1FFF79B200921863 /* ZSHMagazineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CC219D1FFF79B200921863 /* ZSHMagazineViewController.m */; };
+		04DD819E2018AEEB00B1E3CE /* ZSHCustomSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DD819D2018AEEB00B1E3CE /* ZSHCustomSlider.m */; };
 		04E2F3C120070E2200F902A4 /* ZSHMagazineReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E2F3C020070E2200F902A4 /* ZSHMagazineReusableView.m */; };
 		04ED27382009AAC7000B1541 /* ZSHUploadIDCardController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04ED27372009AAC7000B1541 /* ZSHUploadIDCardController.m */; };
 		18063C541FC90379000F5A00 /* ZSHPersonalModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 18063C531FC90379000F5A00 /* ZSHPersonalModel.m */; };
@@ -786,6 +787,8 @@
 		04BAD7C02005EEB100950195 /* ZSHMagazineListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHMagazineListCell.m; sourceTree = "<group>"; };
 		04CC219C1FFF79B200921863 /* ZSHMagazineViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHMagazineViewController.h; sourceTree = "<group>"; };
 		04CC219D1FFF79B200921863 /* ZSHMagazineViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHMagazineViewController.m; sourceTree = "<group>"; };
+		04DD819C2018AEEB00B1E3CE /* ZSHCustomSlider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHCustomSlider.h; sourceTree = "<group>"; };
+		04DD819D2018AEEB00B1E3CE /* ZSHCustomSlider.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHCustomSlider.m; sourceTree = "<group>"; };
 		04E2F3BF20070E2200F902A4 /* ZSHMagazineReusableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHMagazineReusableView.h; sourceTree = "<group>"; };
 		04E2F3C020070E2200F902A4 /* ZSHMagazineReusableView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHMagazineReusableView.m; sourceTree = "<group>"; };
 		04ED27362009AAC7000B1541 /* ZSHUploadIDCardController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHUploadIDCardController.h; sourceTree = "<group>"; };
@@ -3670,6 +3673,8 @@
 				FE0ED82A1FC34703008299C5 /* StepSlider.m */,
 				FE4E4B331FC025C500E3B2F4 /* YHSlider.h */,
 				FE4E4B341FC025C500E3B2F4 /* YHSlider.m */,
+				04DD819C2018AEEB00B1E3CE /* ZSHCustomSlider.h */,
+				04DD819D2018AEEB00B1E3CE /* ZSHCustomSlider.m */,
 			);
 			path = Slider;
 			sourceTree = "<group>";
@@ -5239,6 +5244,7 @@
 				FEADBD2A1FBEBBC00065B94B /* ZSHCardCustomizedThird.m in Sources */,
 				FED0BB4C1FF3763F004B0783 /* NSString+pinyin.m in Sources */,
 				FEF416001FAB70EB00137F0A /* ZSHAirTicketDetailViewController.m in Sources */,
+				04DD819E2018AEEB00B1E3CE /* ZSHCustomSlider.m in Sources */,
 				FEDF292A1FB6DA3000CD5756 /* ZSHLiveRoomViewController.m in Sources */,
 				FE4DB1ED1F99998B008E12E9 /* ZSHBaseCollectionViewCell.m in Sources */,
 				FED0BB461FF33604004B0783 /* ZSHTopicCell.m in Sources */,
