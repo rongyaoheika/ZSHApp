@@ -67,8 +67,14 @@ static NSString *Identify_MusicCell = @"musicCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(locateSuccess:) name:KLocateNoti object:nil];
     [self createUI];
     [self loadData];
+}
+
+- (void)locateSuccess:(NSNotification  *)noti{
+    NSString *cityName = noti.object[@"cityName"];
+    [self.leftBtn setTitle:cityName forState:UIControlStateNormal];
 }
 
 - (void)loadData{
@@ -121,7 +127,7 @@ static NSString *Identify_MusicCell = @"musicCell";
     kWeakSelf(self);
     _homeLogic = [[ZSHHomeLogic alloc]init];
     
-    if (KScreenWidth == 812.0 && kiOS11Later) {
+    if (kIsIphoneX && kiOS11Later) {
         if (@available(ios 11.0, *)) {
             [self prefersHomeIndicatorAutoHidden];
         }
@@ -173,7 +179,7 @@ static NSString *Identify_MusicCell = @"musicCell";
 
 - (void)createUI{
     [self hasUpdateVersion];
-    [self addNavigationItemWithImageName:@"nav_home_more" title:@"三亚" locate:XYButtonEdgeInsetsStyleRight isLeft:YES target:self action:@selector(locateBtnAction) tag:10];
+    [self addNavigationItemWithImageName:@"nav_home_more" title:@"三亚市" locate:XYButtonEdgeInsetsStyleRight isLeft:YES target:self action:@selector(locateBtnAction) tag:10];
     [self addNavigationItemWithImageName:@"nav_home_menu" isLeft:NO target:self action:@selector(menuBtntClick:) tag:11];
     
     UIButton *searchBtn = [ZSHBaseUIControl createBtnWithParamDic:@{@"title":@"搜索",@"font":kPingFangRegular(14),@"withImage":@(YES),@"normalImage":@"nav_home_search"}];
@@ -264,16 +270,22 @@ static NSString *Identify_MusicCell = @"musicCell";
         ZSHBaseTitleButtonCell *cell = [tableView dequeueReusableCellWithIdentifier:Identify_NoticeCell forIndexPath:indexPath];
         cell.itemClickBlock = ^(NSInteger tag) {
             NSDictionary *subDic = _homeLogic.noticeArr[tag];
-            if (tag < weakself.noticePushVCsArr.count) {
-                NSDictionary *nextParamDic = @{@"shopId":subDic[@"SORT_ID"]};
-                Class className = NSClassFromString(weakself.noticePushVCsArr[tag]);
-                RootViewController *vc = [[className alloc]initWithParamDic:nextParamDic];
-                [weakself.navigationController pushViewController:vc animated:YES];
-            } else {//游艇(4)
-                NSDictionary *nextParamDic = @{KFromClassType:@(ZSHShipType),@"shopId":subDic[@"SORT_ID"]};
-                ZSHSubscribeViewController *subScribeVC = [[ZSHSubscribeViewController alloc]initWithParamDic:nextParamDic];
-                [weakself.navigationController pushViewController:subScribeVC animated:YES];
+            NSInteger index = 0;
+            if ([subDic[@"SHOPTYPE"]isEqualToString:@"酒吧"]) {
+                index = 0;
+            } else if([subDic[@"SHOPTYPE"]isEqualToString:@"美食"]){
+                index = 1;
+            }  else if([subDic[@"SHOPTYPE"]isEqualToString:@"KTV"]){
+                index = 2;
+            } else if([subDic[@"SHOPTYPE"]isEqualToString:@"酒店"]){
+                index = 3;
             }
+           
+            NSDictionary *nextParamDic = @{@"shopId":subDic[@"SORT_ID"]};
+            Class className = NSClassFromString(weakself.noticePushVCsArr[index]);
+            RootViewController *vc = [[className alloc]initWithParamDic:nextParamDic];
+            [weakself.navigationController pushViewController:vc animated:YES];
+           
             
         };
 
@@ -544,7 +556,7 @@ static NSString *Identify_MusicCell = @"musicCell";
 #pragma mark - GYZCityPickerDelegate
 - (void) cityPickerController:(GYZChooseCityController *)chooseCityController didSelectCity:(GYZCity *)city
 {
-    [self addNavigationItemWithImageName:@"nav_home_more" title:city.cityName locate:XYButtonEdgeInsetsStyleRight isLeft:YES target:self action:@selector(locateBtnAction) tag:10];
+    [self.leftBtn setTitle:city.cityName forState:UIControlStateNormal];
     [chooseCityController.navigationController popViewControllerAnimated:YES];
 }
 

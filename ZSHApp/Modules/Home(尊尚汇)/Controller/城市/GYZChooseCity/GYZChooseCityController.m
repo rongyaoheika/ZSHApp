@@ -57,6 +57,7 @@ NSString *const cityCell = @"CityCell";
 
     self.isSearch = NO;
     [self locationService];
+    
     self.navigationItem.titleView = self.searchView;
     self.searchView.searchBar.delegate = self;
     

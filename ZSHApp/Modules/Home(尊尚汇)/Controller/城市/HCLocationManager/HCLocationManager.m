@@ -74,7 +74,7 @@
             }
             if ([city containsString:@"市辖区"] || [city containsString:@"市"]) {
                 city = [city stringByReplacingOccurrencesOfString:@"市辖区" withString:@""];
-                city = [city stringByReplacingOccurrencesOfString:@"市" withString:@""];
+//                city = [city stringByReplacingOccurrencesOfString:@"市" withString:@""];
             }
             
             if ([_delegate respondsToSelector:@selector(loationMangerSuccessLocationWithCity:)]) {

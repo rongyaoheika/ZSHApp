@@ -161,8 +161,8 @@
 - (void)alivcLiveVideoLiveSessionNetworkSlow:(AlivcLiveSession *)session {
     
     dispatch_async(dispatch_get_main_queue(), ^{
-//        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"当前网络环境较差" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-//        [alertView show];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"当前网络环境较差" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        [alertView show];
         self.textView.text = @"网速过慢，影响推流效果，拉流端会造成卡顿等，建议暂停直播";
         NSLog(@"网速过慢");
     });

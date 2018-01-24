@@ -28,7 +28,6 @@
     
 
     _label = [ZSHBaseUIControl createLabelWithParamDic:self.paramDic];
-    
     _label.numberOfLines = 0;
     [self addSubview:_label];
     [_label mas_makeConstraints:^(MASConstraintMaker *make) {

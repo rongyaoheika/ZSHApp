@@ -39,7 +39,7 @@
 
 /**开发服务器*/
 
-#define kUrlRoot                    @"http://192.168.1.135:8081/ZSHINTER/"   // 洪磊
+#define kUrlRoot                    @"http://192.107.1.135:8081/ZSHINTER/"   // 泓磊  
 
 
 #elif TestSever

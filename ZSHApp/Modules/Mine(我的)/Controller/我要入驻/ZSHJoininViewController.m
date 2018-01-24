@@ -69,7 +69,7 @@ static NSString * ZSHJoininCellID = @"ZSHJoininCellID";
         };
         
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
-            ZSHMultiInfoViewController *multiInfoVC = [[ZSHMultiInfoViewController alloc] initWithParamDic:@{KFromClassType:@(FromCreateStoreVCToMultiInfoVC),@"title":@"创建门店", @"bottomBtnTitle":@"确认创建"}];
+            ZSHMultiInfoViewController *multiInfoVC = [[ZSHMultiInfoViewController alloc] initWithParamDic:@{KFromClassType:@(FromCreateStoreVCToMultiInfoVC),@"title":@"创建门店", @"bottomBtnTitle":@"确认创建",@"showGuide":@(YES)}];
             [weakself.navigationController pushViewController:multiInfoVC animated:YES];
         };
     }

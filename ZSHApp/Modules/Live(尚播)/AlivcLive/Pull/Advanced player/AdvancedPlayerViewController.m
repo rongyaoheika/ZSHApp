@@ -136,6 +136,7 @@
             AliyunPlaySDKDemoFullScreenScrollViewController *demoThree = [[AliyunPlaySDKDemoFullScreenScrollViewController alloc] init];
             demoThree.title = self.titlesAry[indexPath.row];
             [self.navigationController pushViewController:demoThree animated:YES];
+            
         }
             break;
         case 3 :

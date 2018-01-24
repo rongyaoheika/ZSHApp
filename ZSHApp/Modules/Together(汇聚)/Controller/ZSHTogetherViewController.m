@@ -32,9 +32,16 @@ static NSString *cellIdentifier = @"listCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(locateSuccess:) name:KLocateNoti object:nil];
     [self loadData];
     [self createUI];
 }
+
+- (void)locateSuccess:(NSNotification  *)noti{
+    NSString *cityName = noti.object[@"cityName"];
+    [self.leftBtn setTitle:cityName forState:UIControlStateNormal];
+}
+
 
 - (void)loadData{
     self.pushVCsArr = @[@"ZSHEntertainmentViewController",@"ZSHEntertainmentViewController",@"ZSHEntertainmentViewController",@"ZSHEntertainmentViewController",@"ZSHEntertainmentViewController",@"ZSHEntertainmentViewController"];
@@ -56,8 +63,6 @@ static NSString *cellIdentifier = @"listCell";
         [weakself searchAction];
     }];
     [self.navigationItem setTitleView:searchBtn];
-//    [self.navigationItem setTitleView:self.searchView];
-//    self.searchView.searchBar.delegate = self;
     
     [self.view addSubview:self.tableView];
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -68,7 +73,7 @@ static NSString *cellIdentifier = @"listCell";
     [self.tableView registerClass:[ZSHTogetherView class] forCellReuseIdentifier:cellIdentifier];
     [self.tableView reloadData];
     
-    [self addNavigationItemWithImageName:@"nav_home_more" title:@"三亚" locate:XYButtonEdgeInsetsStyleRight isLeft:YES target:self action:@selector(locateBtnAction) tag:10];
+    [self addNavigationItemWithImageName:@"nav_home_more" title:@"三亚市" locate:XYButtonEdgeInsetsStyleRight isLeft:YES target:self action:@selector(locateBtnAction) tag:10];
     
 }
 
@@ -153,7 +158,8 @@ static NSString *cellIdentifier = @"listCell";
 #pragma mark - GYZCityPickerDelegate
 - (void) cityPickerController:(GYZChooseCityController *)chooseCityController didSelectCity:(GYZCity *)city
 {
-    [self addNavigationItemWithImageName:@"nav_home_more" title:city.cityName locate:XYButtonEdgeInsetsStyleRight isLeft:YES target:self action:@selector(locateBtnAction) tag:10];
+//    [self addNavigationItemWithImageName:@"nav_home_more" title:city.cityName locate:XYButtonEdgeInsetsStyleRight isLeft:YES target:self action:@selector(locateBtnAction) tag:10];
+    [self.leftBtn setTitle:city.cityName forState:UIControlStateNormal];
     [chooseCityController.navigationController popViewControllerAnimated:YES];
 }
 

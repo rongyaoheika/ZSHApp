@@ -27,7 +27,8 @@
 //用户model缓存
 #define KUserModelCache                    @"KUserModelCache"
 
-
+//定位位置成功
+#define KLocateNoti                        @"KLocateNoti"
 
 #pragma mark - ——————— 网络状态相关 ————————
 

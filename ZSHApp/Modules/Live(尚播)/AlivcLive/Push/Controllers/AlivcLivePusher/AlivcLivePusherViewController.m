@@ -11,7 +11,6 @@
 #import "AlivcPushViewsProtocol.h"
 #import <AlivcLivePusher/AlivcLivePusherHeader.h>
 #import "ZSHLiveLogic.h"
-
 #define kAlivcLivePusherVCAlertTag 89976
 #define kAlivcLivePusherNoticeTimerInterval 5.0
 
@@ -30,8 +29,8 @@
 // SDK
 @property (nonatomic, strong) AlivcLivePusher *livePusher;
 
-//直播UI类型：预览，直播
-@property (nonatomic, assign) AlivcPublisherViewType  viewType;
+
+@property (nonatomic, assign) AlivcPublisherViewType  viewType;             //直播UI类型：预览，直播
 
 @end
 
@@ -56,6 +55,7 @@
     
     [self setupDefaultValues];
     [self setupDebugTimer];
+    
     
     int ret = [self setupPusher];
     
@@ -1045,5 +1045,6 @@
     }
     return frame;
 }
+
 
 @end

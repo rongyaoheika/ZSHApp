@@ -10,6 +10,7 @@
 #import "ZSHTextFieldCellView.h"
 #import "ZSHMineLogic.h"
 #import "ZSHUploadIDCardController.h"
+#import "ZSHCreateStoreGuideView.h"
 
 @interface ZSHMultiInfoViewController ()
 
@@ -32,6 +33,7 @@
 @property (nonatomic, copy) NSString *text5;
 @property (nonatomic, copy) NSString *text6;
 
+@property (nonatomic, strong) ZSHCreateStoreGuideView   *guideView;
 
 @end
 
@@ -44,6 +46,20 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     
     [self loadData];
     [self createUI];
+}
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    if (kFromClassTypeValue == FromCreateStoreVCToMultiInfoVC && [self.paramDic[@"showGuide"]integerValue] ) {
+        //创建门店引导
+        [ZSHBaseUIControl setAnimationWithHidden:NO view:self.guideView completedBlock:nil];
+    }
+}
+
+- (void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:animated];
+    
+    self.paramDic = nil;
 }
 
 - (void)loadData{
@@ -147,6 +163,8 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     
     [self.tableView registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHBaseCellID];
     [self.tableView reloadData];
+    
+   
 }
 
 - (UIView *)createTableHeadView {
@@ -338,15 +356,21 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
             [ac addAction:cancelAction];
             [weakself presentViewController:ac animated:YES completion:nil];
         }];
-    } else if (kFromClassTypeValue == FromCreateStoreVCToMultiInfoVC) {
-        
-        
-        
+    } else if (kFromClassTypeValue == FromCreateStoreVCToMultiInfoVC) {//创建门店
         ZSHMultiInfoViewController *multiInfoVC = [[ZSHMultiInfoViewController alloc] initWithParamDic:@{KFromClassType:@(FromVerifyVCToMultiInfoVC),@"title":@"提交资质", @"bottomBtnTitle":@"提交审核"}];
         [self.navigationController pushViewController:multiInfoVC animated:YES];
     }
 }
 
+- (ZSHCreateStoreGuideView *)guideView{
+    if (!_guideView) {
+        _guideView = [[ZSHCreateStoreGuideView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight)];
+        _guideView.tag = 3;
+        
+        
+    }
+    return _guideView;
+}
 
 
 - (void)didReceiveMemoryWarning {
