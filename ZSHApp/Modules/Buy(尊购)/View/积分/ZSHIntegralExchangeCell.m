@@ -18,7 +18,7 @@
 @implementation ZSHIntegralExchangeCell
 
 - (void)setup{
-    
+
     UIImageView *bgImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"exchange coupon_bg"]];
     [self insertSubview:bgImageView atIndex:0];
     [bgImageView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -54,9 +54,9 @@
 
 - (void)updateCellWithParamDic:(NSDictionary *)dic{
     if ([dic[KFromClassType]integerValue]== FromCouponVCToIntegralExchangeCell) {
-        self.typeNameLabel.text = @"满999即可使用";
-        [self.exchangeBtn setTitle:@"¥99" forState:UIControlStateNormal];
-        self.exchangeBtn.titleLabel.font = kPingFangMedium(40);
+        self.typeNameLabel.text =  NSStringFormat(@"满%@即可使用", dic[@"COUPON_MININUM"]);
+        [self.exchangeBtn setTitle:NSStringFormat(@"¥%@",dic[@"COUPON_VALUE"]) forState:UIControlStateNormal];
+        self.exchangeBtn.titleLabel.font = kPingFangMedium(30);
     }
 }
 

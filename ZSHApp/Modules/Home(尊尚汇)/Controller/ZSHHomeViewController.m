@@ -273,7 +273,6 @@ static NSString *Identify_MusicCell = @"musicCell";
                 NSDictionary *nextParamDic = @{KFromClassType:@(ZSHShipType),@"shopId":subDic[@"SORT_ID"]};
                 ZSHSubscribeViewController *subScribeVC = [[ZSHSubscribeViewController alloc]initWithParamDic:nextParamDic];
                 [weakself.navigationController pushViewController:subScribeVC animated:YES];
-                
             }
             
         };

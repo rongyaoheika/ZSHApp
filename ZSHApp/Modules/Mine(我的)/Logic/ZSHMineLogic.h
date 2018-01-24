@@ -65,6 +65,7 @@
 - (void)requestForgetUser:(NSDictionary *)dic success:(void (^)(id response))success;
 // 修改用户手机号码
 - (void)requestUserPhone:(NSDictionary *)dic success:(void (^)(id response))success;
-
+// 根据店铺获取优惠券列表
+- (void)requestCouponList:(NSDictionary *)dic success:(void (^)(id response))success;
 
 @end

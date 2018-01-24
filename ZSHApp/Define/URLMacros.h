@@ -25,8 +25,8 @@
 #ifdef DEBUG
 
 #define DevelopSever    0
-#define TestSever       0
-#define ProductSever    1
+#define TestSever       1 
+#define ProductSever    0
 
 #else
 
@@ -794,6 +794,26 @@
 //参数：  无    /
 //请求地址：/appmusicin/getsongsrecommend?SONGRECOMMEND(混淆码)
 #define kUrlGetSongsRecommend [NSString stringWithFormat:@"/appmusicin/getsongsrecommend?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SONGRECOMMEND"]]
+//156.根据店铺获取优惠券列表
+//参数： BUSINESS_ID   店铺id(如果BUSINESS_ID=system则表示官方)    /
+//请求地址：/couponin/couponlist.do?COUPONLIST(混淆码)
+#define kUrlCouponList [NSString stringWithFormat:@"/couponin/couponlist.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"COUPONLIST"]]
+//157.用户领取优惠券
+//参数： BUSINESS_ID   店铺id(如果BUSINESS_ID=system则表示官方)    /
+//HONOURUSER_ID  用户id
+//COUPON_ID    优惠券id
+//请求地址：/couponin/addcoupon.do?ADDCOUPON(混淆码)
+#define kUrlAddCoupon [NSString stringWithFormat:@"/couponin/addcoupon.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"ADDCOUPON"]]
+//158.根据店铺id获取可用的优惠券
+//参数： BUSINESS_ID   店铺id(如果BUSINESS_ID=system则表示官方)    /
+//请求地址：couponin/getcouponsuser?COUPONSUSER(混淆码)
+#define kUrlGetCouponsUser [NSString stringWithFormat:@"couponin/getcouponsuser?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"COUPONSUSER"]]
+//159.添加商品到购物车
+//参数： PRODUCT_ID   商品id
+//HONOURUSER_ID  用户id
+//QUANTITY  商品数量
+//请求地址：appcartin/addcart?ADDCART(混淆码)
+#define kUrlAddCart [NSString stringWithFormat:@"appcartin/addcart?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"ADDCART"]]
 
 
 #endif /* URLMacros_h */

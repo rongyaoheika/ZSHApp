@@ -95,11 +95,11 @@ static NSString *MusicRadioCellID = @"MusicRadioCell";
     [sectionModel.cellModelArray addObject:cellModel];
     cellModel.height = kRealValue(163);
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
-//        NSArray *paramDicArr = @[@{@"imageName":@"search_image_10",@"imageTitle":@"聆听一首打开你心情的乡村音乐"},@{@"imageName":@"search_image_11",@"imageTitle":@"那些年我们爱不释耳的音乐"},
-//                                 @{@"imageName":@"search_image_12",@"imageTitle":@"心灵的声音 声音的艺术"}];
+//        NSArray *imageTitle = @[@"KTV热歌榜", @"叱咤歌曲榜", @"Billboard", @"", @"", @"", @"", @"", @""];
+//        NSInteger i = 0;
         NSMutableArray *paramDicArr = [NSMutableArray arrayWithCapacity:weakself.songsRecommendArr.count];
         for (NSDictionary *dic in weakself.songsRecommendArr) {
-            [paramDicArr addObject:@{@"imageName":dic[@"billboard"][@"pic_s640"], @"imageTitle":dic[@"billboard"][@"comment"]}];
+            [paramDicArr addObject:@{@"imageName":dic[@"billboard"][@"pic_s640"], @"imageTitle":dic[@"billboard"][@"name"]}];
         }
         ZSHBaseTitleButtonCell *cell = [tableView dequeueReusableCellWithIdentifier:MusicListCellID forIndexPath:indexPath];
         if(paramDicArr.count)
@@ -136,8 +136,11 @@ static NSString *MusicRadioCellID = @"MusicRadioCell";
     cellModel.height = kRealValue(110);
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
         NSMutableArray *paramDicArr = [NSMutableArray arrayWithCapacity:weakself.MusicLibraryArr.count];
+        NSArray *imageTitle = @[@"Timeless Fusion Party", @"继续嚎叫", @"你过得还好吗", @"电视剧《琅琊榜之风起长林》原声带配乐", @"Timeless Fusion Party", @"Timeless Fusion Party", @"你好，旧时光 原声配乐大碟"];
+        NSInteger i = 0;
         for (NSDictionary *dic in weakself.MusicLibraryArr) {
-            [paramDicArr addObject:@{@"imageName":dic[@"pic_big"], @"imageTitle":dic[@"author"]}];
+            [paramDicArr addObject:@{@"imageName":dic[@"pic_big"], @"imageTitle":imageTitle[i]}];
+            i++;
         }
         ZSHBaseTitleButtonCell *cell = [tableView dequeueReusableCellWithIdentifier:MusicListCellID forIndexPath:indexPath];
         if(paramDicArr.count)
@@ -224,9 +227,12 @@ static NSString *MusicRadioCellID = @"MusicRadioCell";
     [sectionModel.cellModelArray addObject:cellModel];
     cellModel.height = kRealValue(110);
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
-        NSMutableArray *paramDicArr = [NSMutableArray array];
+        NSMutableArray *paramDicArr = [NSMutableArray arrayWithCapacity:weakself.allMusicArr.count];
+        NSArray *imageTitle = @[@"飙升榜", @"新歌榜", @"歌手榜", @"热歌榜", @"原创榜", @"赞赏榜", @"老歌榜", @"", @""];
+        NSInteger i = 0;
         for (NSDictionary *dic in weakself.allMusicArr) {
-            [paramDicArr addObject:@{@"imageName":dic[@"billboard"][@"pic_s640"], @"imageTitle":dic[@"billboard"][@"name"]}];
+            [paramDicArr addObject:@{@"imageName":dic[@"billboard"][@"pic_s640"], @"imageTitle":imageTitle[i]}];
+            i++;
         }
         ZSHBaseTitleButtonCell *cell = [tableView dequeueReusableCellWithIdentifier:MusicListCellID forIndexPath:indexPath];
         if (weakself.allMusicArr.count) {
@@ -282,12 +288,6 @@ static NSString *MusicRadioCellID = @"MusicRadioCell";
 - (void)requestData {
     kWeakSelf(self);
 
-    // 音乐排行榜
-    [_musicLogic loadTotalRankListWithParamDic:@{@"type":@"21,1,12,2,11,24,22",@"offset":@(0)} Success:^(id responseObject) {
-        weakself.allMusicArr = responseObject;
-        [weakself initViewModel];
-    } fail:nil];
-    
     // 音乐中心-首页：歌手推荐和广告
     [_musicLogic loadGetSongRecommend:@{} success:^(id response) {
         NSArray *adsArr = response[@"ads"];
@@ -297,16 +297,16 @@ static NSString *MusicRadioCellID = @"MusicRadioCell";
         }
         if (dataArr.count)
             [weakself.guideView updateViewWithParamDic:@{@"dataArr":dataArr}];
-
+        
         weakself.singer_picArr = response[@"singerList"];
         [weakself.tableViewModel.sectionModelArray replaceObjectAtIndex:2 withObject:[weakself storeMusicSingerSection]];
         [weakself.tableView reloadData];
     }];
     
-    // 音乐中心-电台
-    [_musicLogic loadGetRadioStationList:@{} success:^(id response) {
-        weakself.radioStationListArr = response[@"pd"];
-        [weakself.tableViewModel.sectionModelArray replaceObjectAtIndex:4 withObject:[weakself storeMusicRadioSection]];
+    // 歌单推荐
+    [_musicLogic loadGetSongsRecommend:@{} success:^(id response) {
+        weakself.songsRecommendArr = response[@"song_recommend"];
+        [weakself.tableViewModel.sectionModelArray replaceObjectAtIndex:0 withObject:[weakself storeMusicListSection]];
         [weakself.tableView reloadData];
     }];
     
@@ -317,12 +317,20 @@ static NSString *MusicRadioCellID = @"MusicRadioCell";
         [weakself.tableView reloadData];
     }];
     
-    // 歌单推荐
-    [_musicLogic loadGetSongsRecommend:@{} success:^(id response) {
-        weakself.songsRecommendArr = response[@"song_recommend"];
-        [weakself.tableViewModel.sectionModelArray replaceObjectAtIndex:0 withObject:[weakself storeMusicListSection]];
+    // 音乐排行榜
+    [_musicLogic loadTotalRankListWithParamDic:@{@"type":@"21,1,12,2,11,24,22",@"offset":@(0)} Success:^(id responseObject) {
+        weakself.allMusicArr = responseObject;
+        [weakself initViewModel];
+    } fail:nil];
+    
+
+    // 音乐中心-电台
+    [_musicLogic loadGetRadioStationList:@{} success:^(id response) {
+        weakself.radioStationListArr = response[@"pd"];
+        [weakself.tableViewModel.sectionModelArray replaceObjectAtIndex:4 withObject:[weakself storeMusicRadioSection]];
         [weakself.tableView reloadData];
     }];
+    
 }
 
 - (void)didReceiveMemoryWarning {

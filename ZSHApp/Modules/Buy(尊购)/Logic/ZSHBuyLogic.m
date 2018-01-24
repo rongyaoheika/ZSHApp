@@ -157,7 +157,7 @@
 
 // 加入购物车
 - (void)requestShoppingCartAddWithDic:(NSDictionary *)dic success:(void (^)(id response))success {
-    [PPNetworkHelper POST:kUrlShoppingCartAdd parameters:dic success:^(id responseObject) {
+    [PPNetworkHelper POST:kUrlAddCart parameters:dic success:^(id responseObject) {
         success(responseObject);
     } failure:^(NSError *error) {
         RLog(@"请求失败");

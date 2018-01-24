@@ -225,7 +225,14 @@
 }
 
 
-
+// 根据店铺获取优惠券列表
+- (void)requestCouponList:(NSDictionary *)dic success:(void (^)(id response))success {
+    [PPNetworkHelper POST:kUrlCouponList parameters:dic success:^(id responseObject) {
+        success(responseObject);
+    } failure:^(NSError *error) {
+        RLog(@"请求失败");
+    }];
+}
 
 
 

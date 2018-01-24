@@ -350,7 +350,7 @@ static NSString *ZSHGoodsDetailCommentCellID = @"ZSHGoodsDetailCommentCell";
 
 - (void)addCart {
     if (_count<1) _count = 1;
-    [_buyLogic requestShoppingCartAddWithDic:@{@"PRODUCT_ID":_buyLogic.goodDetailModel.PRODUCT_ID, @"HONOURUSER_ID":HONOURUSER_IDValue, @"PRODUCTCOUNT":@(_count)} success:^(id response) {
+    [_buyLogic requestShoppingCartAddWithDic:@{@"PRODUCT_ID":_buyLogic.goodDetailModel.PRODUCT_ID, @"HONOURUSER_ID":HONOURUSER_IDValue, @"QUANTITY":@(_count)} success:^(id response) {
         UIAlertController *ac = [UIAlertController alertControllerWithTitle:@"提示" message:@"添加成功" preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleCancel handler:nil];
         [ac addAction:cancelAction];
