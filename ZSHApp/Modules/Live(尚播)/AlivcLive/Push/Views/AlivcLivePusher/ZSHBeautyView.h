@@ -10,4 +10,6 @@
 
 @interface ZSHBeautyView : ZSHBaseView
 
+- (void)setBeautyDelegate:(id)delegate;
+
 @end

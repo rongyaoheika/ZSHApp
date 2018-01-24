@@ -120,6 +120,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     
     self.delegate = delegate;
     [self.musicSettingView setMusicDelegate:delegate];
+    [self.beautyView setBeautyDelegate:delegate];
 
 }
 
@@ -1207,7 +1208,7 @@ static CGFloat lastPinchDistance = 0;
         [typeBtn addTarget:self action:@selector(thirdLogin:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:typeBtn];
         [typeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.mas_equalTo(self).offset(kRealValue(83.5+i%5*(24.5+25)));
+            make.left.mas_equalTo(self).offset(kRealValue(81.5+i%5*(22.5+25)));
             make.bottom.mas_equalTo(self).offset(kRealValue(-173.5+i/5*(13+25)));
             make.size.mas_equalTo(CGSizeMake(kRealValue(25), kRealValue(25)));
         }];
@@ -1220,7 +1221,7 @@ static CGFloat lastPinchDistance = 0;
     [self addSubview:_beginShowBtn];
     [_beginShowBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.mas_equalTo(self).offset(kRealValue(-83.5));
-        make.right.mas_equalTo(self).offset(-kRealValue(30));
+        make.left.mas_equalTo(self).offset(kRealValue(120));
         make.size.mas_equalTo(CGSizeMake(kRealValue(166), kRealValue(36)));
     }];
     
@@ -1234,8 +1235,8 @@ static CGFloat lastPinchDistance = 0;
     [self addSubview:_beautyBtn];
     [_beautyBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.mas_equalTo(_beginShowBtn);
-        make.left.mas_equalTo(self).offset(kRealValue(30));
-        make.size.mas_equalTo(CGSizeMake(kRealValue(80), kRealValue(80)));
+        make.right.mas_equalTo(_beginShowBtn.mas_left).offset(-kRealValue(10));
+        make.size.mas_equalTo(CGSizeMake(kRealValue(30), kRealValue(50)));
     }];
      [_beautyBtn layoutButtonWithEdgeInsetsStyle:XYButtonEdgeInsetsStyleTop imageTitleSpace:kRealValue(20)];
     
@@ -1291,7 +1292,7 @@ static CGFloat lastPinchDistance = 0;
 
 - (ZSHBeautyView *)beautyView{
     if (!_beautyView) {
-        _beautyView = [[ZSHBeautyView alloc]initWithFrame:CGRectMake(0, KScreenHeight, kScreenWidth, KScreenHeight*0.4)];
+        _beautyView = [[ZSHBeautyView alloc]initWithFrame:CGRectMake(0, KScreenHeight, kScreenWidth, KScreenHeight*0.4) paramDic:@{@"config":self.config}];
     }
     return _beautyView;
 }

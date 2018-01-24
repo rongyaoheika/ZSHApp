@@ -270,17 +270,22 @@ static NSString *Identify_MusicCell = @"musicCell";
         ZSHBaseTitleButtonCell *cell = [tableView dequeueReusableCellWithIdentifier:Identify_NoticeCell forIndexPath:indexPath];
         cell.itemClickBlock = ^(NSInteger tag) {
             NSDictionary *subDic = _homeLogic.noticeArr[tag];
-            if (tag < weakself.noticePushVCsArr.count) {
-                NSDictionary *nextParamDic = @{@"shopId":subDic[@"SORT_ID"]};
-                Class className = NSClassFromString(weakself.noticePushVCsArr[tag]);
-                RootViewController *vc = [[className alloc]initWithParamDic:nextParamDic];
-                [weakself.navigationController pushViewController:vc animated:YES];
-            } else {//游艇(4)
-                NSDictionary *nextParamDic = @{KFromClassType:@(ZSHShipType),@"shopId":subDic[@"SORT_ID"]};
-                ZSHSubscribeViewController *subScribeVC = [[ZSHSubscribeViewController alloc]initWithParamDic:nextParamDic];
-                [weakself.navigationController pushViewController:subScribeVC animated:YES];
-                
+            NSInteger index = 0;
+            if ([subDic[@"SHOPTYPE"]isEqualToString:@"酒吧"]) {
+                index = 0;
+            } else if([subDic[@"SHOPTYPE"]isEqualToString:@"美食"]){
+                index = 1;
+            }  else if([subDic[@"SHOPTYPE"]isEqualToString:@"KTV"]){
+                index = 2;
+            } else if([subDic[@"SHOPTYPE"]isEqualToString:@"酒店"]){
+                index = 3;
             }
+           
+            NSDictionary *nextParamDic = @{@"shopId":subDic[@"SORT_ID"]};
+            Class className = NSClassFromString(weakself.noticePushVCsArr[index]);
+            RootViewController *vc = [[className alloc]initWithParamDic:nextParamDic];
+            [weakself.navigationController pushViewController:vc animated:YES];
+           
             
         };
 
