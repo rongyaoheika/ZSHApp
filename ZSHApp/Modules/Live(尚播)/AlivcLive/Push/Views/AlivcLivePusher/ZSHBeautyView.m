@@ -147,7 +147,7 @@
     void (*func)(id, SEL, id) = (void *)imp;
     func(self, method, object);
 }
-//其中一个磨皮方法
+
 - (void)buffingValueChange:(UISlider *)slider {
     
     if (self.delegate) {
