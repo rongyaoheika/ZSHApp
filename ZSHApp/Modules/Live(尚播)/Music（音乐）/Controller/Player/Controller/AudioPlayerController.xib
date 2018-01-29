@@ -36,7 +36,7 @@
                         <constraint firstAttribute="width" constant="44" id="5BH-D9-CGW"/>
                         <constraint firstAttribute="height" constant="44" id="ieI-ZR-hzS"/>
                     </constraints>
-                    <state key="normal" image="MusicPlayer_后退.png"/>
+                    <state key="normal" image="MusicPlayer_后退"/>
                     <connections>
                         <action selector="disMissSelfClick:" destination="-1" eventType="touchUpInside" id="vbx-FH-0Wv"/>
                     </connections>
@@ -106,7 +106,7 @@
                                 <constraint firstAttribute="height" constant="35" id="HYx-TW-6Fg"/>
                                 <constraint firstAttribute="width" constant="35" id="xkf-KS-3Ps"/>
                             </constraints>
-                            <state key="normal" image="MusicPlayer_顺序播放.png"/>
+                            <state key="normal" image="MusicPlayer_顺序播放"/>
                             <connections>
                                 <action selector="clickPlayerMode:" destination="-1" eventType="touchUpInside" id="lof-vw-rCI"/>
                             </connections>
@@ -117,7 +117,7 @@
                                 <constraint firstAttribute="width" constant="35" id="NRW-xt-SBR"/>
                                 <constraint firstAttribute="height" constant="35" id="dd7-04-kcS"/>
                             </constraints>
-                            <state key="normal" image="MusicPlayer_下载.png"/>
+                            <state key="normal" image="MusicPlayer_下载"/>
                             <connections>
                                 <action selector="downloadAction:" destination="-1" eventType="touchUpInside" id="3ey-mu-oL6"/>
                             </connections>
@@ -241,9 +241,9 @@
         </view>
     </objects>
     <resources>
-        <image name="MusicPlayer_下载.png" width="23" height="21"/>
-        <image name="MusicPlayer_后退.png" width="27" height="27"/>
-        <image name="MusicPlayer_顺序播放.png" width="17" height="19"/>
+        <image name="MusicPlayer_下载" width="23" height="21"/>
+        <image name="MusicPlayer_后退" width="27" height="27"/>
+        <image name="MusicPlayer_顺序播放" width="17" height="19"/>
         <image name="music_front" width="26" height="26"/>
         <image name="music_image" width="375" height="667"/>
         <image name="music_next" width="26" height="26"/>

@@ -25,6 +25,7 @@
 }
 
 - (void)createUI{
+    self.view.backgroundColor = [UIColor redColor];
     self.isShowLiftBack = false;
     self.isHidenNaviBar = true;
     
@@ -61,6 +62,7 @@
     
     
     UIButton *backBtn = [ZSHBaseUIControl createBtnWithParamDic:@{@"title":@"返回大厅",@"titleColor":KZSHColorFF2068,@"font":kPingFangRegular(17)}];
+    [backBtn addTarget:self action:@selector(closeLiveRoom) forControlEvents:UIControlEventTouchUpInside];
     backBtn.layer.cornerRadius = 18;
     backBtn.layer.borderColor = KZSHColorFF2068.CGColor;
     backBtn.layer.borderWidth = 1.0;
@@ -183,6 +185,7 @@
 }
 
 - (void)closeLiveRoom{
+    [self dismissViewControllerAnimated:NO completion:nil];
     
 }
 

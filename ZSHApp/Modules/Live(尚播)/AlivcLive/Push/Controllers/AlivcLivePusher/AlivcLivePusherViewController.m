@@ -11,6 +11,8 @@
 #import "AlivcPushViewsProtocol.h"
 #import <AlivcLivePusher/AlivcLivePusherHeader.h>
 #import "ZSHLiveLogic.h"
+#import "ZSHCountdowView.h"
+#import "ZSHFinishShowViewController.h"
 #define kAlivcLivePusherVCAlertTag 89976
 #define kAlivcLivePusherNoticeTimerInterval 5.0
 
@@ -20,8 +22,11 @@
 
 // UI
 @property (nonatomic, strong) AlivcPublisherView *publisherView;
-@property (nonatomic, strong) UIView *previewView;
-@property (nonatomic, strong) NSTimer *noticeTimer;
+@property (nonatomic, strong) UIView             *previewView;
+@property (nonatomic, strong) NSTimer            *noticeTimer;
+@property (nonatomic, strong) ZSHCountdowView    *countLabel;
+// URL
+@property (nonatomic, strong) NSString *pushURL;
 
 // flags
 @property (nonatomic, assign) BOOL isAutoFocus;
@@ -29,8 +34,8 @@
 // SDK
 @property (nonatomic, strong) AlivcLivePusher *livePusher;
 
-
-@property (nonatomic, assign) AlivcPublisherViewType  viewType;             //直播UI类型：预览，直播
+// 直播UI类型：预览，直播
+@property (nonatomic, assign) AlivcPublisherViewType  viewType;
 
 @end
 
@@ -51,11 +56,70 @@
      [self setupSubviews];
 }
 
+#pragma - UI
+- (void)setupSubviews {
+    
+    self.view.backgroundColor = [UIColor grayColor];
+    [self.view addSubview: self.previewView];
+    [self.view addSubview: self.publisherView];
+}
+
+#pragma mark - 懒加载
+- (AlivcPublisherView *)publisherView {
+    if (!_publisherView) {
+        _publisherView = [[AlivcPublisherView alloc] initWithFrame:[self getFullScreenFrame]
+                                                            config:self.pushConfig type:self.viewType];
+        [_publisherView setPushViewsDelegate:self];
+        _publisherView.backgroundColor = [UIColor clearColor];
+    }
+    return _publisherView;
+}
+
+- (UIView *)previewView {
+    
+    if (!_previewView) {
+        _previewView = [[UIView alloc] init];
+        _previewView.backgroundColor = [UIColor clearColor];
+        _previewView.frame = [self getFullScreenFrame];
+    }
+    return _previewView;
+}
+
+//倒计时
+- (ZSHCountdowView *)countLabel{
+    if (!_countLabel) {
+        
+        _countLabel = [[ZSHCountdowView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, 120)];
+        _countLabel.center = self.view.center;
+    }
+    return _countLabel;
+}
+
+- (CGRect)getFullScreenFrame {
+    
+    CGRect frame = self.view.bounds;
+    if (kIsIphoneX) {
+        // iPhone X UI适配
+        frame = CGRectMake(0, 88, KScreenWidth, KScreenHeight-88-57);
+    }
+    if (self.pushConfig.orientation != AlivcLivePushOrientationPortrait) {
+        CGFloat temSize = frame.size.height;
+        frame.size.height = frame.size.width;
+        frame.size.width = temSize;
+        
+        CGFloat temPoint = frame.origin.y;
+        frame.origin.y = frame.origin.x;
+        frame.origin.x = temPoint;
+        
+    }
+    return frame;
+}
+
+#pragma - Data
 - (void)loadData{
     
     [self setupDefaultValues];
     [self setupDebugTimer];
-    
     
     int ret = [self setupPusher];
     
@@ -521,12 +585,20 @@
 
 #pragma mark - AlivcPublisherViewDelegate
 
-- (void)publisherOnClickedBackButton {
+- (void)publisherOnClickedBackButton:(NSInteger)type {
     
     [self cancelTimer];
     [self destoryPusher];
     [UIApplication sharedApplication].idleTimerDisabled = NO;
-    [self dismissViewControllerAnimated:NO completion:nil];
+
+    if (type == AlivcPublisherViewTypeLive) {//关闭直播
+        [self dismissViewControllerAnimated:NO completion:^{
+             [[NSNotificationCenter defaultCenter]postNotificationName:KPresentFinishShowVC object:nil];
+        }];
+    } else {//预览结束
+        [self dismissViewControllerAnimated:NO completion:nil];
+    }
+   
 }
 
 
@@ -547,24 +619,36 @@
     }
 }
 
-- (BOOL)publisherOnClickedPushButton:(BOOL)isPush button:(UIButton *)sender {
-    _viewType = AlivcPublisherViewTypeLive;
+- (BOOL)publisherOnClickedPushButton:(BOOL)isPush button:(UIButton *)sender pushURL:(NSString *)pushURL{
+    _pushURL = pushURL;
+   
     if (isPush) {
-        // 开始推流
-        int ret = [self startPush];
-        if (ret != 0) {
-            [self showPusherStartPushErrorAlert:ret isStart:YES];
-            [sender setSelected:!sender.selected];
-            return NO;
-        }
         
-        //预览->直播
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [self.publisherView removeFromSuperview];
-            self.publisherView = nil;
-            [self.view addSubview: self.publisherView];
-        });
+        [self.publisherView removeFromSuperview];
+        self.publisherView = nil;
         
+        _viewType = AlivcPublisherViewTypeLive;
+        [self.view addSubview: self.publisherView];
+  
+        [self.view addSubview:self.countLabel];
+        [self.countLabel startCount];
+
+        kWeakSelf(self);
+        __block int ret;
+
+        weakself.countLabel.TimeBlock = ^(NSInteger count) {
+            
+            // 开始推流
+            ret = [weakself startPush];
+            if (ret != 0) {
+                [weakself showPusherStartPushErrorAlert:ret isStart:YES];
+                [sender setSelected:!sender.selected];
+                return NO;
+            }
+            return YES;
+        };
+        
+       
         
         return YES;
     } else {
@@ -847,7 +931,7 @@
         alertView.tag == kAlivcLivePusherVCAlertTag+33) {
         
         if (buttonIndex == alertView.cancelButtonIndex) {
-            [self publisherOnClickedBackButton];
+            [self publisherOnClickedBackButton:0];
         }
     }
     
@@ -857,19 +941,12 @@
         if (buttonIndex == alertView.cancelButtonIndex) {
             [self reconnectPush];
         } else {
-            [self publisherOnClickedBackButton];
+            [self publisherOnClickedBackButton:0];
         }
     }
 }
 
 
-#pragma - UI
-- (void)setupSubviews {
-    
-    self.view.backgroundColor = [UIColor grayColor];
-    [self.view addSubview: self.previewView];
-    [self.view addSubview: self.publisherView];
-}
 
 
 - (void)showPusherInitErrorAlert:(int)error {
@@ -1001,50 +1078,5 @@
 
     [self.publisherView updateInfoText:text];
 }
-
-
-#pragma mark - 懒加载
-
-- (AlivcPublisherView *)publisherView {
-    if (!_publisherView) {
-        _publisherView = [[AlivcPublisherView alloc] initWithFrame:[self getFullScreenFrame]
-                                                            config:self.pushConfig type:self.viewType];
-        [_publisherView setPushViewsDelegate:self];
-        _publisherView.backgroundColor = [UIColor clearColor];
-    }
-    return _publisherView;
-}
-
-- (UIView *)previewView {
-    
-    if (!_previewView) {
-        _previewView = [[UIView alloc] init];
-        _previewView.backgroundColor = [UIColor clearColor];
-        _previewView.frame = [self getFullScreenFrame];
-    }
-    return _previewView;
-}
-
-
-- (CGRect)getFullScreenFrame {
-    
-    CGRect frame = self.view.bounds;
-    if (kIsIphoneX) {
-        // iPhone X UI适配
-        frame = CGRectMake(0, 88, KScreenWidth, KScreenHeight-88-57);
-    }
-    if (self.pushConfig.orientation != AlivcLivePushOrientationPortrait) {
-        CGFloat temSize = frame.size.height;
-        frame.size.height = frame.size.width;
-        frame.size.width = temSize;
-        
-        CGFloat temPoint = frame.origin.y;
-        frame.origin.y = frame.origin.x;
-        frame.origin.x = temPoint;
-
-    }
-    return frame;
-}
-
 
 @end

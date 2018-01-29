@@ -132,6 +132,6 @@ typedef void(^ZSHBottomBtnViewBtnBlock)(NSInteger);
 - (void)collectionFooterRereshing;
 
 //定位
-- (void)locateAction;
+- (void)startLocate;
 
 @end

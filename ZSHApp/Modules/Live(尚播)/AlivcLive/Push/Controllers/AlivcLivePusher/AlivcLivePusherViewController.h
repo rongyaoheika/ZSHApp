@@ -11,8 +11,7 @@
 
 @interface AlivcLivePusherViewController : RootViewController
 
-// URL
-@property (nonatomic, strong) NSString *pushURL;
+
 // SDK
 @property (nonatomic, strong) AlivcLivePushConfig *pushConfig;
 

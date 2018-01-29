@@ -56,6 +56,7 @@
     //国内经纬度转换为火星坐标
     currentLocation = [HCCoordinateConvert transformToMars:currentLocation];
     [_locationManager stopUpdatingLocation];
+    
     //获取经纬度
     CLLocationDegrees aLatitude = currentLocation.coordinate.latitude;
     CLLocationDegrees aLongitude = currentLocation.coordinate.longitude;
@@ -80,6 +81,8 @@
             if ([_delegate respondsToSelector:@selector(loationMangerSuccessLocationWithCity:)]) {
                 [_delegate loationMangerSuccessLocationWithCity:city];
             }
+            RLog(@"定位成功的城市%@，经度=%lf,纬度 = %lf",city,aLatitude,aLongitude);
+//            [[NSNotificationCenter defaultCenter]postNotificationName:KLocateNoti object:@{@"cityName":city,@"latitude":@(aLatitude),@"longitude":@(aLongitude)}];
         }
     }];
 }

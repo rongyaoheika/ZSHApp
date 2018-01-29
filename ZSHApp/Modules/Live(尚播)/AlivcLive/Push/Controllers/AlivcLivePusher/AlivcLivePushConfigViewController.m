@@ -14,7 +14,6 @@
 #import "AlivcQRCodeViewController.h"
 
 #import <AlivcLivePusher/AlivcLivePusherHeader.h>
-#import "ZSHLiveLogic.h"
 @interface AlivcLivePushConfigViewController () <UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) UITextField *publisherURLTextField;
@@ -28,11 +27,7 @@
 @property (nonatomic, assign) BOOL isUseWatermark; // 是否使用水印
 
 @property (nonatomic, strong) AlivcLivePushConfig *pushConfig;
-@property (nonatomic, strong) NSString            *pushURL;
 
-
-//直播UI类型：预览，直播
-@property (nonatomic, strong) ZSHLiveLogic  *liveLogic;
 @end
 
 @implementation AlivcLivePushConfigViewController
@@ -129,10 +124,7 @@
 
 #pragma mark - Data
 - (void)setupParamData {
-    _liveLogic = [[ZSHLiveLogic alloc]init];
-    [self getPushAddress];
-    
-    
+
     self.isUseWatermark = YES;
     self.isUseAsync = YES;
     
@@ -621,7 +613,6 @@
 //    }
     
     AlivcLivePusherViewController *publisherVC = [[AlivcLivePusherViewController alloc] init];
-    publisherVC.pushURL = self.pushURL;//self.publisherURLTextField.text;
     publisherVC.pushConfig = self.pushConfig;
     publisherVC.isUseAsyncInterface = self.isUseAsync;
     [self presentViewController:publisherVC animated:YES completion:nil];
@@ -644,14 +635,6 @@
     [self.navigationController pushViewController:QRController animated:YES];
 }
 
-//获取推流地址
-- (void)getPushAddress{
-    [_liveLogic requestPushAddressWithSuccess:^(id response) {
-        RLog(@"推流地址==%@",response);
-        self.pushURL = response[@"pd"][@"PUSHADDRESS"];
-    }];
-    
-}
 
 @end
 

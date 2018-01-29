@@ -139,4 +139,14 @@
     }];
 }
 
+//传递经纬度
+- (void)locateDic:(NSDictionary *)dic success:(void (^)(id response))success{
+    [PPNetworkHelper POST:kUrlUpdtrapeze parameters:dic success:^(id responseObject) {
+        RLog(@"请求成功：%@", responseObject);
+        success(responseObject);
+    } failure:^(NSError *error) {
+        RLog(@"请求失败");
+    }];
+}
+
 @end

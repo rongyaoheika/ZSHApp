@@ -104,6 +104,7 @@
 		04BAD7BD2005C0DB00950195 /* ZSHMagazineListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04BAD7BC2005C0DB00950195 /* ZSHMagazineListViewController.m */; };
 		04BAD7C12005EEB100950195 /* ZSHMagazineListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04BAD7C02005EEB100950195 /* ZSHMagazineListCell.m */; };
 		04CC219E1FFF79B200921863 /* ZSHMagazineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CC219D1FFF79B200921863 /* ZSHMagazineViewController.m */; };
+		04CC545E201EBBAF00917089 /* ZSHCountdowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CC545D201EBBAF00917089 /* ZSHCountdowView.m */; };
 		04DD819E2018AEEB00B1E3CE /* ZSHCustomSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DD819D2018AEEB00B1E3CE /* ZSHCustomSlider.m */; };
 		04E2F3C120070E2200F902A4 /* ZSHMagazineReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E2F3C020070E2200F902A4 /* ZSHMagazineReusableView.m */; };
 		04ED27382009AAC7000B1541 /* ZSHUploadIDCardController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04ED27372009AAC7000B1541 /* ZSHUploadIDCardController.m */; };
@@ -343,12 +344,6 @@
 		FE3E00651FDA329900A0F7CA /* ZSHMusicRankCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE3E00641FDA329900A0F7CA /* ZSHMusicRankCell.m */; };
 		FE3E00681FDA6A7300A0F7CA /* ZSHSingerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE3E00671FDA6A7300A0F7CA /* ZSHSingerViewController.m */; };
 		FE3E00891FDA743200A0F7CA /* NSString+time.m in Sources */ = {isa = PBXBuildFile; fileRef = FE3E006E1FDA743200A0F7CA /* NSString+time.m */; };
-		FE3E008C1FDA743200A0F7CA /* MusicPlayer_顺序播放@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE3E00721FDA743200A0F7CA /* MusicPlayer_顺序播放@2x.png */; };
-		FE3E008D1FDA743200A0F7CA /* MusicPlayer_下载@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE3E00731FDA743200A0F7CA /* MusicPlayer_下载@2x.png */; };
-		FE3E008E1FDA743200A0F7CA /* MusicPlayer_随机播放@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE3E00741FDA743200A0F7CA /* MusicPlayer_随机播放@2x.png */; };
-		FE3E008F1FDA743200A0F7CA /* MusicPlayer_后退@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE3E00751FDA743200A0F7CA /* MusicPlayer_后退@2x.png */; };
-		FE3E00921FDA743200A0F7CA /* MusicPlayer_单曲循环@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE3E00781FDA743200A0F7CA /* MusicPlayer_单曲循环@2x.png */; };
-		FE3E00951FDA743200A0F7CA /* 音乐_播放器_默认唱片头像@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE3E007B1FDA743200A0F7CA /* 音乐_播放器_默认唱片头像@2x.png */; };
 		FE3E00961FDA743200A0F7CA /* AudioPlayerController+methods.m in Sources */ = {isa = PBXBuildFile; fileRef = FE3E007D1FDA743200A0F7CA /* AudioPlayerController+methods.m */; };
 		FE3E00971FDA743200A0F7CA /* AudioPlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE3E007E1FDA743200A0F7CA /* AudioPlayerController.m */; };
 		FE3E00981FDA743200A0F7CA /* AudioPlayerController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE3E007F1FDA743200A0F7CA /* AudioPlayerController.xib */; };
@@ -568,7 +563,6 @@
 		FEDF290C1FB69C2800CD5756 /* ZSHGuideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEDF290B1FB69C2800CD5756 /* ZSHGuideViewController.m */; };
 		FEDF29241FB6CFD300CD5756 /* ZSHQuotaHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEDF29231FB6CFD300CD5756 /* ZSHQuotaHeadView.m */; };
 		FEDF29271FB6D1C100CD5756 /* ZSHCoinViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEDF29261FB6D1C100CD5756 /* ZSHCoinViewController.m */; };
-		FEDF292A1FB6DA3000CD5756 /* ZSHLiveRoomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEDF29291FB6DA3000CD5756 /* ZSHLiveRoomViewController.m */; };
 		FEDF292D1FB6F24A00CD5756 /* ZSHLiveProfitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEDF292C1FB6F24A00CD5756 /* ZSHLiveProfitViewController.m */; };
 		FEE697C01FC566B5002120F0 /* ZSHHomeLogic.m in Sources */ = {isa = PBXBuildFile; fileRef = FEE697BF1FC566B4002120F0 /* ZSHHomeLogic.m */; };
 		FEE6AA331FCDC2E8001B5528 /* ZSHGuideLogic.m in Sources */ = {isa = PBXBuildFile; fileRef = FEE6AA321FCDC2E8001B5528 /* ZSHGuideLogic.m */; };
@@ -787,6 +781,8 @@
 		04BAD7C02005EEB100950195 /* ZSHMagazineListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHMagazineListCell.m; sourceTree = "<group>"; };
 		04CC219C1FFF79B200921863 /* ZSHMagazineViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHMagazineViewController.h; sourceTree = "<group>"; };
 		04CC219D1FFF79B200921863 /* ZSHMagazineViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHMagazineViewController.m; sourceTree = "<group>"; };
+		04CC545C201EBBAF00917089 /* ZSHCountdowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHCountdowView.h; sourceTree = "<group>"; };
+		04CC545D201EBBAF00917089 /* ZSHCountdowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHCountdowView.m; sourceTree = "<group>"; };
 		04DD819C2018AEEB00B1E3CE /* ZSHCustomSlider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHCustomSlider.h; sourceTree = "<group>"; };
 		04DD819D2018AEEB00B1E3CE /* ZSHCustomSlider.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHCustomSlider.m; sourceTree = "<group>"; };
 		04E2F3BF20070E2200F902A4 /* ZSHMagazineReusableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHMagazineReusableView.h; sourceTree = "<group>"; };
@@ -1236,12 +1232,6 @@
 		FE3E00671FDA6A7300A0F7CA /* ZSHSingerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHSingerViewController.m; sourceTree = "<group>"; };
 		FE3E006C1FDA743200A0F7CA /* NSString+time.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+time.h"; sourceTree = "<group>"; };
 		FE3E006E1FDA743200A0F7CA /* NSString+time.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+time.m"; sourceTree = "<group>"; };
-		FE3E00721FDA743200A0F7CA /* MusicPlayer_顺序播放@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MusicPlayer_顺序播放@2x.png"; sourceTree = "<group>"; };
-		FE3E00731FDA743200A0F7CA /* MusicPlayer_下载@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MusicPlayer_下载@2x.png"; sourceTree = "<group>"; };
-		FE3E00741FDA743200A0F7CA /* MusicPlayer_随机播放@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MusicPlayer_随机播放@2x.png"; sourceTree = "<group>"; };
-		FE3E00751FDA743200A0F7CA /* MusicPlayer_后退@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MusicPlayer_后退@2x.png"; sourceTree = "<group>"; };
-		FE3E00781FDA743200A0F7CA /* MusicPlayer_单曲循环@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MusicPlayer_单曲循环@2x.png"; sourceTree = "<group>"; };
-		FE3E007B1FDA743200A0F7CA /* 音乐_播放器_默认唱片头像@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "音乐_播放器_默认唱片头像@2x.png"; sourceTree = "<group>"; };
 		FE3E007D1FDA743200A0F7CA /* AudioPlayerController+methods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AudioPlayerController+methods.m"; sourceTree = "<group>"; };
 		FE3E007E1FDA743200A0F7CA /* AudioPlayerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioPlayerController.m; sourceTree = "<group>"; };
 		FE3E007F1FDA743200A0F7CA /* AudioPlayerController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AudioPlayerController.xib; sourceTree = "<group>"; };
@@ -1638,8 +1628,6 @@
 		FEDF29231FB6CFD300CD5756 /* ZSHQuotaHeadView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHQuotaHeadView.m; sourceTree = "<group>"; };
 		FEDF29251FB6D1C100CD5756 /* ZSHCoinViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHCoinViewController.h; sourceTree = "<group>"; };
 		FEDF29261FB6D1C100CD5756 /* ZSHCoinViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHCoinViewController.m; sourceTree = "<group>"; };
-		FEDF29281FB6DA3000CD5756 /* ZSHLiveRoomViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHLiveRoomViewController.h; sourceTree = "<group>"; };
-		FEDF29291FB6DA3000CD5756 /* ZSHLiveRoomViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHLiveRoomViewController.m; sourceTree = "<group>"; };
 		FEDF292B1FB6F24A00CD5756 /* ZSHLiveProfitViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHLiveProfitViewController.h; sourceTree = "<group>"; };
 		FEDF292C1FB6F24A00CD5756 /* ZSHLiveProfitViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHLiveProfitViewController.m; sourceTree = "<group>"; };
 		FEE697BE1FC566B4002120F0 /* ZSHHomeLogic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHHomeLogic.h; sourceTree = "<group>"; };
@@ -2134,6 +2122,15 @@
 				04CC219D1FFF79B200921863 /* ZSHMagazineViewController.m */,
 			);
 			name = "杂志";
+			sourceTree = "<group>";
+		};
+		04CC545B201EBBAF00917089 /* CountdownLabel */ = {
+			isa = PBXGroup;
+			children = (
+				04CC545C201EBBAF00917089 /* ZSHCountdowView.h */,
+				04CC545D201EBBAF00917089 /* ZSHCountdowView.m */,
+			);
+			path = CountdownLabel;
 			sourceTree = "<group>";
 		};
 		18063C511FC9035F000F5A00 /* 私人定制 */ = {
@@ -3084,8 +3081,6 @@
 				182287171FB4555700CA5B10 /* 我的 */,
 				FE1F76201F8F738700C45B83 /* ZSHLiveTabBarController.h */,
 				FE1F76211F8F738700C45B83 /* ZSHLiveTabBarController.m */,
-				FEDF29281FB6DA3000CD5756 /* ZSHLiveRoomViewController.h */,
-				FEDF29291FB6DA3000CD5756 /* ZSHLiveRoomViewController.m */,
 				FE1F76231F8F788100C45B83 /* ZSHTitleContentViewController.h */,
 				FE1F76241F8F788100C45B83 /* ZSHTitleContentViewController.m */,
 				FE1F76261F8F795C00C45B83 /* ZSHCustomWaterFlowLayout.h */,
@@ -3424,7 +3419,6 @@
 			isa = PBXGroup;
 			children = (
 				FE3E006A1FDA743200A0F7CA /* Tools */,
-				FE3E006F1FDA743200A0F7CA /* Image */,
 				FE3E007C1FDA743200A0F7CA /* Controller */,
 				FE3E00851FDA743200A0F7CA /* View */,
 			);
@@ -3440,19 +3434,6 @@
 				FE3E006E1FDA743200A0F7CA /* NSString+time.m */,
 			);
 			path = Tools;
-			sourceTree = "<group>";
-		};
-		FE3E006F1FDA743200A0F7CA /* Image */ = {
-			isa = PBXGroup;
-			children = (
-				FE3E00721FDA743200A0F7CA /* MusicPlayer_顺序播放@2x.png */,
-				FE3E00731FDA743200A0F7CA /* MusicPlayer_下载@2x.png */,
-				FE3E00741FDA743200A0F7CA /* MusicPlayer_随机播放@2x.png */,
-				FE3E00751FDA743200A0F7CA /* MusicPlayer_后退@2x.png */,
-				FE3E00781FDA743200A0F7CA /* MusicPlayer_单曲循环@2x.png */,
-				FE3E007B1FDA743200A0F7CA /* 音乐_播放器_默认唱片头像@2x.png */,
-			);
-			path = Image;
 			sourceTree = "<group>";
 		};
 		FE3E007C1FDA743200A0F7CA /* Controller */ = {
@@ -3834,6 +3815,7 @@
 		FE5537AA1F47049D00803128 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				04CC545B201EBBAF00917089 /* CountdownLabel */,
 				1846BB3A1FE3B26B001B264B /* SimpleLineChart */,
 				182F57971FDB949A0085BFC6 /* FLAnimatedImage */,
 				182F57771FDB91390085BFC6 /* KNPhotoBrower */,
@@ -4837,7 +4819,6 @@
 				FEA1058C1F9B43B8008652D6 /* ClassiftyGoods02.plist in Resources */,
 				043F2E28200DFF3500CE18DE /* camera_flash_on@2x.png in Resources */,
 				FE4BC2B21FE21A3100007C4C /* CityData.plist in Resources */,
-				FE3E00921FDA743200A0F7CA /* MusicPlayer_单曲循环@2x.png in Resources */,
 				FEA1058A1F9B438F008652D6 /* ClassiftyGoods03.plist in Resources */,
 				043F2E40200DFF3500CE18DE /* watermark_small.png in Resources */,
 				FEA105841F9B2B4B008652D6 /* ClassiftyGoods01.plist in Resources */,
@@ -4882,22 +4863,17 @@
 				182F578F1FDB91390085BFC6 /* KNPhotoBrower.bundle in Resources */,
 				FE5538311F47049D00803128 /* MBHUD_Success@2x.png in Resources */,
 				043F2E3C200DFF3500CE18DE /* volume_off@3x.png in Resources */,
-				FE3E008F1FDA743200A0F7CA /* MusicPlayer_后退@2x.png in Resources */,
-				FE3E008E1FDA743200A0F7CA /* MusicPlayer_随机播放@2x.png in Resources */,
-				FE3E008D1FDA743200A0F7CA /* MusicPlayer_下载@2x.png in Resources */,
 				043F2E29200DFF3500CE18DE /* camera_flash_on@3x.png in Resources */,
 				185C6D771FC2C168004EA461 /* cart_unSelect_btn@2x.png in Resources */,
 				185C6D761FC2C168004EA461 /* cart_selected_btn@2x.png in Resources */,
 				043F2E36200DFF3500CE18DE /* QR@3x.png in Resources */,
 				043F2E1C200DFF3500CE18DE /* AlivcLiveViewController.xib in Resources */,
-				FE3E00951FDA743200A0F7CA /* 音乐_播放器_默认唱片头像@2x.png in Resources */,
 				185C6D701FC2C168004EA461 /* back_button@2x.png in Resources */,
 				FE3E009F1FDA8CD300A0F7CA /* musicPaper.json in Resources */,
 				FE5538501F47049D00803128 /* LaunchScreen.storyboard in Resources */,
 				043F2E32200DFF3500CE18DE /* music_check@3x.png in Resources */,
 				18177E8F1FD29C7500213B3B /* area.plist in Resources */,
 				043F2E2E200DFF3500CE18DE /* Pas de Deux.mp3 in Resources */,
-				FE3E008C1FDA743200A0F7CA /* MusicPlayer_顺序播放@2x.png in Resources */,
 				185C6D741FC2C168004EA461 /* cart_cutBtn_nomal@2x.png in Resources */,
 				043F2E26200DFF3500CE18DE /* camera_flash_close@2x.png in Resources */,
 			);
@@ -5152,6 +5128,7 @@
 				18F902491FB6CF270044967F /* ZSHFollowViewController.m in Sources */,
 				183C657A1FC03B400081DCFF /* ZSHToplineCell.m in Sources */,
 				1824F1D41FCE8E01000D805E /* ZSHBuySearchModel.m in Sources */,
+				04CC545E201EBBAF00917089 /* ZSHCountdowView.m in Sources */,
 				18F902501FB6DE460044967F /* ZSHChargeRecViewController.m in Sources */,
 				FE7CA9EA1F9DD15300A2B15D /* ZSHLiveListModel.m in Sources */,
 				1869C9331FD8DF7C002F2E37 /* ZSHLiveLogic.m in Sources */,
@@ -5245,7 +5222,6 @@
 				FED0BB4C1FF3763F004B0783 /* NSString+pinyin.m in Sources */,
 				FEF416001FAB70EB00137F0A /* ZSHAirTicketDetailViewController.m in Sources */,
 				04DD819E2018AEEB00B1E3CE /* ZSHCustomSlider.m in Sources */,
-				FEDF292A1FB6DA3000CD5756 /* ZSHLiveRoomViewController.m in Sources */,
 				FE4DB1ED1F99998B008E12E9 /* ZSHBaseCollectionViewCell.m in Sources */,
 				FED0BB461FF33604004B0783 /* ZSHTopicCell.m in Sources */,
 				FE3683C01FBC02B300220477 /* ZSHCardViewController.m in Sources */,

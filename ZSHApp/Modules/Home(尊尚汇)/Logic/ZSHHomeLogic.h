@@ -42,4 +42,7 @@
 - (void)loadMagzineListSubMenuWithMenuID:(NSDictionary *)dic success:(void(^)(id response))success;
 //蒲公英更新
 - (void)loadUpdateWithDic:(NSDictionary *)dic success:(void(^)(id response))success;
+
+//传递经纬度
+- (void)locateDic:(NSDictionary *)dic success:(void (^)(id response))success;
 @end

@@ -75,9 +75,14 @@ static NSString *Identify_MusicCell = @"musicCell";
 - (void)locateSuccess:(NSNotification  *)noti{
     NSString *cityName = noti.object[@"cityName"];
     [self.leftBtn setTitle:cityName forState:UIControlStateNormal];
+    NSDictionary *paramic= @{@"USERLONGITUDE":noti.object[@"latitude"],@"USERLATITUDE":noti.object[@"longitude"],@"HONOURUSER_ID":HONOURUSER_IDValue,};
+    [_homeLogic locateDic:paramic success:^(id response) {
+        RLog(@"传递经纬度成功");
+    }];
 }
 
 - (void)loadData{
+     _homeLogic = [[ZSHHomeLogic alloc]init];
     //加载网络数据
     [self requestData];
     
@@ -125,7 +130,7 @@ static NSString *Identify_MusicCell = @"musicCell";
 
 - (void)requestData{
     kWeakSelf(self);
-    _homeLogic = [[ZSHHomeLogic alloc]init];
+   
     
     if (kIsIphoneX && kiOS11Later) {
         if (@available(ios 11.0, *)) {
@@ -593,6 +598,7 @@ static NSString *Identify_MusicCell = @"musicCell";
         }
     }];
 }
+
 
 
 - (void)didReceiveMemoryWarning {

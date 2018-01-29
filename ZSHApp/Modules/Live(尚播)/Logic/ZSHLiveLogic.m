@@ -135,8 +135,8 @@
 }
 
 //获取推流地址
-- (void)requestPushAddressWithSuccess:(void (^)(id response))success{
-    [PPNetworkHelper POST:kUrlGetPushAddress parameters:nil success:^(id responseObject) {
+- (void)requestPushAddressWithDic:(NSDictionary *)dic success:(void (^)(id response))success{
+    [PPNetworkHelper POST:kUrlGetPushAddress parameters:dic success:^(id responseObject) {
         RLog(@"推流地址==%@",responseObject);
         success(responseObject);
     } failure:^(NSError *error) {
@@ -144,19 +144,30 @@
     }];
 }
 
-//获取推流列表地址
-- (void)requestPushAddressListWithSuccess:(void (^)(id response))success{
-    [PPNetworkHelper POST:kUrlGetPushList parameters:nil success:^(id responseObject) {
+//获取推荐分类拉流列表地址
+- (void)requestRecommendPushAddressListWithDic:(NSDictionary *)dic success:(void (^)(id response))success{
+    [PPNetworkHelper POST:kUrlGetPushList parameters:dic success:^(id responseObject) {
         
-        RLog(@"推流列表地址==%@",responseObject);
+        RLog(@"拉流列表地址==%@",responseObject);
         success(responseObject);
     } failure:^(NSError *error) {
-        RLog(@"推流列表地址获取失败%@", error);
+        RLog(@"拉流列表地址获取失败%@", error);
     }];
 }
 
-//获取拉流地址
-- (void)requestPushAddressWithDic:(NSDictionary *)dic Success:(void (^)(id response))success{
+//获取附近拉流列表地址
+- (void)requestNearPushAddressListWithDic:(NSDictionary *)dic success:(void (^)(id response))success{
+    [PPNetworkHelper POST:kUrlGetNearbyPushList parameters:dic success:^(id responseObject) {
+        
+        RLog(@"附近拉流列表地址==%@",responseObject);
+        success(responseObject);
+    } failure:^(NSError *error) {
+        RLog(@"拉流列表地址获取失败%@", error);
+    }];
+}
+
+//获取单个拉流地址
+- (void)requestPullAddressWithDic:(NSDictionary *)dic Success:(void (^)(id response))success{
     [PPNetworkHelper POST:kUrlGetPullAddress parameters:dic success:^(id responseObject) {
         RLog(@"拉流地址==%@",responseObject);
         success(responseObject);
@@ -165,5 +176,15 @@
     }];
 }
 
+//获取直播分类数据
+- (void)requestkUrlGetLiveTypeListWithDic:(NSDictionary *)dic success:(void (^)(id response))success{
+    [PPNetworkHelper POST:kUrlGetLiveTypeList parameters:dic success:^(id responseObject) {
+        
+        RLog(@"直播分类==%@",responseObject);
+        success(responseObject);
+    } failure:^(NSError *error) {
+        RLog(@"直播分类数据获取失败%@", error);
+    }];
+}
 
 @end

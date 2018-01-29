@@ -13,7 +13,7 @@
 #import "ZSHCardViewController.h"
 #import "UserInfo.h"
 #import "ZSHMultiInfoViewController.h"
-
+#import "ZSHLoginLogic.h"
 @interface ZSHLoginViewController ()
 
 @property (nonatomic, strong) ZSHTextFieldCellView  *userView;
@@ -29,7 +29,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
+
     [self createUI];
 }
 
@@ -122,6 +122,8 @@
 
 #pragma action
 - (void)login {
+   
+    
     if (_userView.textField.text.length && _pwdView.textField.text.length) {
         RLog(@"username;%@:password%@", _userView.textField.text,_pwdView.textField.text);
         [userManager login:kUserLoginTypePwd params:@{@"CARDNO":_userView.textField.text,@"PASSWORD":[ZSHBaseFunction md5StringFromString: _pwdView.textField.text]} completion:^(BOOL success, NSString *des) {

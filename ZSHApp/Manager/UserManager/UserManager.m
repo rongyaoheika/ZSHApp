@@ -84,6 +84,8 @@ SINGLETON_FOR_CLASS(UserManager);
         [loginLogic loginUserNamePwdWithDic:params success:^(id responseObject) {
             [self LoginSuccess:responseObject completion:completion];
         }];
+        
+        
      }
 }
 

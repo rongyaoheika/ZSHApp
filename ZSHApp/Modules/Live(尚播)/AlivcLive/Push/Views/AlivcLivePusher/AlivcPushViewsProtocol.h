@@ -11,11 +11,11 @@
 
 @protocol AlivcPublisherViewDelegate <NSObject>
 
-- (void)publisherOnClickedBackButton;
+- (void)publisherOnClickedBackButton:(NSInteger)type;
 
 - (void)publisherOnClickedPreviewButton:(BOOL)isPreview button:(UIButton *)sender;
 
-- (BOOL)publisherOnClickedPushButton:(BOOL)isPush button:(UIButton *)sender;
+- (BOOL)publisherOnClickedPushButton:(BOOL)isPush button:(UIButton *)sender pushURL:(NSString *)pushURL;
 
 - (void)publisherOnClickedPauseButton:(BOOL)isPause button:(UIButton *)sender;
 

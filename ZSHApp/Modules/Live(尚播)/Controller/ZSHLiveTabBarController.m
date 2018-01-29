@@ -20,7 +20,7 @@
 #import "AlivcLivePusherViewController.h"
 #import "AlivcLivePushConfigViewController.h"
 #import "ZSHLiveLogic.h"
-
+#import "ZSHFinishShowViewController.h"
 
 
 @interface ZSHLiveTabBarController ()<TabBarDelegate>
@@ -51,6 +51,12 @@
     [self setUpAllChildViewController];
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(presentPreViewVC) name:KPresentPreviewVC object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(presentFinishShowVC) name:KPresentFinishShowVC object:nil];
+}
+
+- (void)presentFinishShowVC{
+    ZSHFinishShowViewController *finishShowVC = [[ZSHFinishShowViewController alloc]init];
+    [self presentViewController:finishShowVC animated:NO completion:nil];
 }
 
 - (void)presentPreViewVC{
@@ -123,7 +129,10 @@
 //                           watermarkWidth:0.15];
     
     _liveLogic = [[ZSHLiveLogic alloc]init];
-    [self getPushAddress];
+    AlivcLivePusherViewController *publisherVC = [[AlivcLivePusherViewController alloc] init];
+    publisherVC.pushConfig = self.pushConfig;
+    publisherVC.isUseAsyncInterface = YES;
+    [self presentViewController:publisherVC animated:YES completion:nil];
     
 }
 
@@ -256,21 +265,6 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-//获取推流地址
-- (void)getPushAddress{
-    [_liveLogic requestPushAddressWithSuccess:^(id response) {
-        RLog(@"推流地址==%@",response);
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            AlivcLivePusherViewController *publisherVC = [[AlivcLivePusherViewController alloc] init];
-            publisherVC.pushURL = response[@"pd"][@"PUSHADDRESS"];
-            publisherVC.pushConfig = self.pushConfig;
-            publisherVC.isUseAsyncInterface = YES;
-            [self presentViewController:publisherVC animated:YES completion:nil];
-        });
-    }];
-    
 }
 
 @end

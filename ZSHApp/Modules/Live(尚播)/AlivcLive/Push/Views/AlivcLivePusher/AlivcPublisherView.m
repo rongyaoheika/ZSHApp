@@ -18,9 +18,12 @@
 #import "ZSHBottomBlurPopView.h"
 #import "ZSHLiveMoreView.h"
 #import "ZSHBeautyView.h"
+#import "ZSHLiveLogic.h"
 //定位服务
+#import "ZSHBaseFunction.h"
 #import "HCLocationManager.h"
 #import "GYZCity.h"
+#import "ZSHFinishShowViewController.h"
 
 #define viewWidth kRealValue(58)
 #define viewHeight viewWidth/4*3
@@ -73,13 +76,14 @@
 @property (nonatomic, strong)  UIButton                 *beautyBtn;
 @property (nonatomic, strong)  NSMutableArray           *shareBtnArr;
 @property (nonatomic, strong)  ZSHBottomBlurPopView     *bottomBlurPopView;
-@property (nonatomic, assign)  BOOL                     isLocate;
-
-
+@property (nonatomic, strong)  ZSHLiveLogic             *liveLogic;
+@property (nonatomic, strong)  NSString                 *pushURL;
+@property (nonatomic, copy)    NSString                 *cityName;
+@property (nonatomic, assign)  BOOL                     isMoreViewShow;
 
 //更多功能
 @property (nonatomic, strong)  ZSHLiveMoreView          *moreView;
-@property (nonatomic, assign)  BOOL                     isMoreViewShow;
+@property (nonatomic, assign)  BOOL                     isLocate;
 
 //美颜设置功能
 @property (nonatomic, strong)  ZSHBeautyView            *beautyView;
@@ -87,9 +91,11 @@
 
 //类型
 @property (nonatomic, assign)  AlivcPublisherViewType   type;
+
 //直播互动
 @property (nonatomic, strong) UITableView               *subTab;
 @property (nonatomic, strong) ZSHBaseTableViewModel     *tableViewModel;
+
 @end
 
 
@@ -712,10 +718,11 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 #pragma mark - Button Actions
 
 - (void)backButtonAction:(UIButton *)sender {
-    
+
     if (self.delegate) {
-        [self.delegate publisherOnClickedBackButton];
+        [self.delegate publisherOnClickedBackButton:self.type];
     }
+
 }
 
 
@@ -733,15 +740,28 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 
 
 - (void)pushButtonAction:(UIButton *)sender {
-    
     //开始推流
     [sender setSelected:!sender.selected];
-    if (self.delegate) {
-        BOOL ret = [self.delegate publisherOnClickedPushButton:sender.selected button:sender];
-        if (ret) {
-            [self.pauseButton setSelected:NO];
-        }
+    if (!self.textView.text.length) {
+        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"提示" message:@"您还未给直播起标题" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        [alertView show];
+    } else {
+
+         RLog(@"textView的内容是%@",self.textView.text);
+        
+        _liveLogic = [[ZSHLiveLogic alloc]init];
+        NSDictionary *paramDic = @{@"LIVE_TITLE":self.textView.text,@"HONOURUSER_ID":HONOURUSER_IDValue};
+        [_liveLogic requestPushAddressWithDic:paramDic success:^(id response) {
+            RLog(@"推流地址==%@",response);
+            if (self.delegate) {
+                BOOL ret = [self.delegate publisherOnClickedPushButton:sender.selected button:sender pushURL:response[@"pd"][@"PUSHADDRESS"]];
+                if (ret) {
+                    [self.pauseButton setSelected:NO];
+                }
+            }
+        }];
     }
+   
 }
 
 
@@ -1419,14 +1439,14 @@ static CGFloat lastPinchDistance = 0;
     [ZSHBaseUIControl setAnimationWithHidden:NO view:bottomBlurPopView completedBlock:nil];
 }
 
-//预览界面-定位
 - (void)locateAction:(UIButton *)btn{
-    if (!self.isLocate) {
+    if (!_isLocate) {
         HCLocationManager *locationManager = [HCLocationManager sharedManager];
         locationManager.delegate = self;
         [locationManager startLocate];
         self.isLocate = YES;
     } else {
+        self.isLocate = NO;
         UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"提示" message:@"关闭定位后，直播间不会出现在附近直播和同城直播中，会减少入场观众，确认关闭吗？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
         [alertView show];
     }
@@ -1435,7 +1455,7 @@ static CGFloat lastPinchDistance = 0;
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (buttonIndex == 1) {
         [self.locateBtn setTitle:@"未知星球" forState:UIControlStateNormal];
-        self.isLocate = NO;
+        _cityName = nil;
     }
 }
 

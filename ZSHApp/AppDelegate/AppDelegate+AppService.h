@@ -46,6 +46,6 @@
 
 -(UIViewController*) getCurrentUIVC;
 
-- (void)hasUpdateVersion;
+- (void)openLocate;
  
 @end

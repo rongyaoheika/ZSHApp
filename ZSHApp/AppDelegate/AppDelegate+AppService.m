@@ -16,6 +16,8 @@
 #import "ZSHGuideViewController.h"
 #import "ZegoAVKitManager.h"
 #import "ZSHHomeLogic.h"
+//#import "ZSHBaseFunction.h"
+#import "HCLocationManager.h"
 @implementation AppDelegate (AppService)
 
 
@@ -311,6 +313,10 @@
 
 - (void)initZego{
     [ZegoAVKitManager api];
+}
+
+- (void)openLocate{
+    [[HCLocationManager sharedManager]startLocate];
 }
 
 @end

@@ -44,9 +44,14 @@
 
 
 // 获取推流地址
-- (void)requestPushAddressWithSuccess:(void (^)(id response))success;
-// 获取推流列表地址
-- (void)requestPushAddressListWithSuccess:(void (^)(id response))success;
+- (void)requestPushAddressWithDic:(NSDictionary *)dic success:(void (^)(id response))success;
+// 获取推荐拉流列表地址
+- (void)requestRecommendPushAddressListWithDic:(NSDictionary *)dic success:(void (^)(id response))success;
+// 获取附近拉流列表地址
+- (void)requestNearPushAddressListWithDic:(NSDictionary *)dic success:(void (^)(id response))success;
+
 //获取拉流地址
-- (void)requestPushAddressWithDic:(NSDictionary *)dic Success:(void (^)(id response))success;
+- (void)requestPullAddressWithDic:(NSDictionary *)dic success:(void (^)(id response))success;
+//获取直播分类数据
+- (void)requestkUrlGetLiveTypeListWithDic:(NSDictionary *)dic success:(void (^)(id response))success;
 @end

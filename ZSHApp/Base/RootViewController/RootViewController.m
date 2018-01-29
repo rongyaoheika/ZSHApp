@@ -13,11 +13,15 @@
 #import "PYSearchViewController.h"
 #import "ZSHBaseTableView.h"
 #import "HCLocationManager.h"
+
 @interface RootViewController ()<HCLocationManagerDelegate>
 
 @property (nonatomic, strong) UIImageView        *noDataView;
 @property (nonatomic, weak)   UITextField        *searchTextField;
 @property (nonatomic, assign) BOOL               isLocate;
+@property (nonatomic, assign) CLLocationDegrees  latitude;
+@property (nonatomic, assign) CLLocationDegrees  longitude;
+
 @end
 
 @implementation RootViewController
@@ -44,7 +48,7 @@
     UIImageView *image = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"home_bg"]];
     image.frame = self.view.bounds;
     [self.view insertSubview:image atIndex:0];
-    [self locateAction];
+    [self startLocate];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -415,23 +419,26 @@
 }
 
 //定位
-- (void)locateAction{
+- (void)startLocate{
     if (!self.isLocate) {
         HCLocationManager *locationManager = [HCLocationManager sharedManager];
         locationManager.delegate = self;
         [locationManager startLocate];
     }
-    
+
 }
 
 #pragma mark - <HCLocationManagerDelegate>
 - (void)loationMangerSuccessLocationWithCity:(NSString *)city{
     RLog(@"city = %@",city);
     self.isLocate = YES;
-    [[NSNotificationCenter defaultCenter]postNotificationName:KLocateNoti object:@{@"cityName":city}];
+    [[NSNotificationCenter defaultCenter]postNotificationName:KLocateNoti object:@{@"cityName":city,@"latitude":@(self.latitude),@"longitude":@(self.longitude)}];
+
 }
 - (void)loationMangerSuccessLocationWithLatitude:(CLLocationDegrees)latitude longitude:(CLLocationDegrees)longitude{
     RLog(@"latitude = %f , longitude = %f",latitude,longitude);
+    self.latitude = latitude;
+    self.longitude = longitude;
 }
 - (void)loationMangerFaildWithError:(NSError *)error{
     RLog(@"%@",error);
