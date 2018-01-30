@@ -53,7 +53,7 @@ static NSString *bottomCellIdentifier   = @"listCell";
   @"ZSHMemberCenterViewController",@"",@"ZSHWeiboViewController",
   @"ZSHTitleContentViewController",@"",@"ZSHServiceCenterViewController",
   @"ZSHWalletCenterViewController",@"ZSHGameCenterViewController", @"ZSHGoodsMineViewController",
-  @"ZSHMusicLibraryViewController",@"ZSHJoininViewController", @"ZSHSettingViewController"];
+  @"ZSHMusicMainViewController",@"ZSHJoininViewController", @"ZSHSettingViewController"];
     self.paramArr = @[@{},@{},@{KFromClassType:@(FromMineVCToWeiboVC)},
   @{KFromClassType:@(FromActivityCenterVCToTitleContentVC),@"title":@"活动中心"},@{},
   @{KFromClassType:@(ZSHFromMineServiceVCToServiceCenterVC),@"title":@"客服中心",

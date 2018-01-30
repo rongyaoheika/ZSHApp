@@ -12,7 +12,8 @@
 
 + (NSDictionary *)mj_replacedKeyFromPropertyName {
     RLog(@"执行songid转换");
-    return @{@"artist": @"author"};
+    //电台
+    return @{@"author":@"artist"};
 }
 
 @end

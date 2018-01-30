@@ -340,9 +340,9 @@ static AudioPlayerController *audioVC;
 {
     NSMutableDictionary *musicInfo = [NSMutableDictionary dictionary];
     // 设置Singer
-    [musicInfo setObject:model.author forKey:MPMediaItemPropertyArtist];
+    [musicInfo setObject:model.author?model.author:@"" forKey:MPMediaItemPropertyArtist];
     // 设置歌曲名
-    [musicInfo setObject:model.title forKey:MPMediaItemPropertyArtist];
+    [musicInfo setObject:model.title?model.title:@"" forKey:MPMediaItemPropertyTitle];
     
     // 设置封面
     MPMediaItemArtwork *artwork;

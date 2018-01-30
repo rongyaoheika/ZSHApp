@@ -38,7 +38,6 @@
 #if DevelopSever
 
 /**开发服务器*/
-
 #define kUrlRoot                    @"http://192.168.1.107:8081/ZSHINTER/"   // 泓磊
 
 
