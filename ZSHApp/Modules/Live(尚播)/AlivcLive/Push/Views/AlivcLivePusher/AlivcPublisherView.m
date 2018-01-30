@@ -718,11 +718,15 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 #pragma mark - Button Actions
 
 - (void)backButtonAction:(UIButton *)sender {
-
-    if (self.delegate) {
-        [self.delegate publisherOnClickedBackButton:self.type];
+    if (self.type == AlivcPublisherViewTypeLive) {
+        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"提示" message:@"确定要关闭直播吗？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        alertView.tag = 10;
+        [alertView show];
+    } else {
+        if (self.delegate) {
+            [self.delegate publisherOnClickedBackButton:self.type];
+        }
     }
-
 }
 
 
@@ -744,6 +748,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     
     if (!self.textView.text.length) {
         UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"提示" message:@"您还未给直播起标题" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        alertView.tag = 12;
         [alertView show];
     } else {
         RLog(@"textView的内容是%@",self.textView.text);
@@ -1448,15 +1453,33 @@ static CGFloat lastPinchDistance = 0;
     } else {
         self.isLocate = NO;
         UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"提示" message:@"关闭定位后，直播间不会出现在附近直播和同城直播中，会减少入场观众，确认关闭吗？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        alertView.tag = 11;
         [alertView show];
     }
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    if (buttonIndex == 1) {
-        [self.locateBtn setTitle:@"未知星球" forState:UIControlStateNormal];
-        _cityName = nil;
+    switch (alertView.tag) {
+        case 10:{//关闭直播
+            if (buttonIndex == 1) {
+                if (self.delegate) {
+                    [self.delegate publisherOnClickedBackButton:self.type];
+                }
+            }
+            break;
+        }
+        case 11:{//关闭定位
+            if (buttonIndex == 1) {
+                [self.locateBtn setTitle:@"未知星球" forState:UIControlStateNormal];
+                _cityName = nil;
+            }
+            break;
+        }
+            
+        default:
+            break;
     }
+    
 }
 
 #pragma mark - <HCLocationManagerDelegate>
