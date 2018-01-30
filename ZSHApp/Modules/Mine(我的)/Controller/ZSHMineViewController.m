@@ -135,6 +135,16 @@ static NSString *bottomCellIdentifier   = @"listCell";
             ZSHBaseCell *cell = [tableView dequeueReusableCellWithIdentifier:bottomCellIdentifier];
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             cell.imageView.image = [UIImage imageNamed:weakself.imageArr[indexPath.row]];
+            if (indexPath.row == 10) {
+                //调整image的大小
+                CGSize size = CGSizeMake(19, 19);
+                cell.imageView.size = size;
+                UIGraphicsBeginImageContextWithOptions(size, NO,0.0);
+                CGRect imageRect=CGRectMake(0.0, 0.0, size.width, size.height);
+                [cell.imageView.image drawInRect:imageRect];
+                cell.imageView.image = UIGraphicsGetImageFromCurrentImageContext();
+                UIGraphicsEndImageContext();
+            }
             cell.textLabel.text = weakself.titleArr[indexPath.row];
             return cell;
         };

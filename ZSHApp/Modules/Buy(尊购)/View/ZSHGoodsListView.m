@@ -59,10 +59,9 @@
     [_goodsImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.mas_equalTo(_containImageView);
         make.centerY.mas_equalTo(_containImageView);
-        make.width.mas_equalTo(KScreenWidth/2);
-        make.height.mas_equalTo(_containImageView);
+        make.size.mas_offset(CGSizeMake(100, 100));
     }];
-    
+
     [_detailView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self).offset(kScreenWidth/2);
         make.width.mas_equalTo(kScreenWidth/2);
@@ -101,18 +100,11 @@
     }
 }
 
+
 - (void)updateCellWithParamDic:(NSDictionary *)dic{
     self.paramDic = dic;
-    UIImage *image =  [UIImage imageNamed:dic[@"goodsImageName"]];
-    _goodsImageView.image = image;
-    _nameLabel.text = dic[@"goodsName"];
-    
-    [_goodsImageView mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.mas_equalTo(_containImageView);
-        make.centerY.mas_equalTo(_containImageView);
-        make.size.mas_equalTo(image.size);
-    }];
-    
+    [_goodsImageView sd_setImageWithURL:[NSURL URLWithString:dic[@"SHOWIMG"]]];
+    _nameLabel.text = dic[@"BRANDBANE"];
 }
 
 @end

@@ -25,6 +25,7 @@ static NSString *ZSHGoodsListViewID = @"ZSHGoodsListView";
 
 @property (nonatomic, strong) ZSHBuyLogic           *buyLogic;
 @property (nonatomic, strong) ZSHGuideView          *guideView;
+@property (nonatomic, strong) NSArray               *dataArr;
 
 @end
 
@@ -41,6 +42,7 @@ static NSString *ZSHGoodsListViewID = @"ZSHGoodsListView";
     _buyLogic = [[ZSHBuyLogic alloc] init];
     [self initViewModel];
     [self requestCarouselFigure];
+    [self requestData];
 }
 
 - (void)createUI{
@@ -57,7 +59,7 @@ static NSString *ZSHGoodsListViewID = @"ZSHGoodsListView";
     }];
     
     self.tableView.tableHeaderView = self.guideView;
-    [self.tableView reloadData];
+    
     [self endTabViewRefresh];
     
 }
@@ -65,6 +67,7 @@ static NSString *ZSHGoodsListViewID = @"ZSHGoodsListView";
 - (void)initViewModel {
     [self.tableViewModel.sectionModelArray removeAllObjects];
     [self.tableViewModel.sectionModelArray addObject:[self storeListSection]];
+    [self.tableView reloadData];
 }
 
 //list
@@ -73,17 +76,7 @@ static NSString *ZSHGoodsListViewID = @"ZSHGoodsListView";
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     sectionModel.headerHeight = kRealValue(10);
     
-    NSArray *imageArr = @[@"buy_watch",@"buy_bag",@"buy_bracelet",@"buy_car",@"buy_goft",@"buy_plane",@"buy_camera"];
-    NSArray *titleArr = @[@"手表专区",@"包袋专区",@"首饰专区",@"豪车世界",@"高尔夫汇",@"飞机游艇",@"家电数码"];
-    NSArray *brandIDArr = @[@"1b4ed4c57ef04933b97e8def48fc423a",
-                            @"a34d1f14a4b7481e8284ad4ba97a496b",
-                            @"2df2c7e628b14341be1e2932cb377c82",
-                            @"c387f598e5c64a1ea275a7ca3e77518c",
-                            @"",
-                            @"668b21fc68a44080899cfd840107af22",
-                            @"a1d59672053f45e1a5499fb1d5850144"
-                            ];
-    for (int i = 0; i < imageArr.count; i++) {
+    for (int i = 0; i < _dataArr.count; i++) {
         ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
         [sectionModel.cellModelArray addObject:cellModel];
         cellModel.height = kRealValue(140);
@@ -95,13 +88,14 @@ static NSString *ZSHGoodsListViewID = @"ZSHGoodsListView";
                 identifier = Identify_listRightImageCell;
             }
             ZSHGoodsListView *cell = [tableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
-            NSDictionary *nextParamDic = @{@"goodsImageName":imageArr[i],@"goodsName":titleArr[i],@"row":@(indexPath.row)};
-            [cell updateCellWithParamDic:nextParamDic];
+            NSMutableDictionary *mutaDic = [NSMutableDictionary dictionaryWithDictionary:weakself.dataArr[indexPath.row]];
+            [mutaDic setObject:@(indexPath.row) forKey:@"row"];
+            [cell updateCellWithParamDic:mutaDic];
             return cell;
         };
         
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
-            ZSHGoodsTitleContentViewController *goodContentVC = [[ZSHGoodsTitleContentViewController alloc]initWithParamDic:@{@"PreBrandID":brandIDArr[indexPath.row],
+            ZSHGoodsTitleContentViewController *goodContentVC = [[ZSHGoodsTitleContentViewController alloc]initWithParamDic:@{@"PreBrandID":weakself.dataArr[indexPath.row][@"BRAND_ID"],
                                   KFromClassType:@(FromBuyVCToGoodsTitleVC)
                                    }];
             [weakself.navigationController pushViewController:goodContentVC animated:YES];
@@ -127,6 +121,14 @@ static NSString *ZSHGoodsListViewID = @"ZSHGoodsListView";
            [weakself.guideView updateViewWithParamDic:@{@"dataArr":imageArr}];
        }
    }];
+}
+
+- (void)requestData {
+    kWeakSelf(self);
+    [_buyLogic requestGetFectureList:@{} success:^(id response) {
+        weakself.dataArr = response[@"pd"];
+        [weakself initViewModel];
+    }];
 }
 
 @end

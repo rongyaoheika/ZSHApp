@@ -65,5 +65,6 @@
 - (void)requestSProductAddEva:(NSDictionary *)dic success:(void (^)(id response))success;
 - (void)requestProductEvaList:(NSDictionary *)dic success:(void (^)(id response))success;
 
-
+// 获得尊购首页专区列表
+- (void)requestGetFectureList:(NSDictionary *)dic success:(void (^)(id response))success;
 @end

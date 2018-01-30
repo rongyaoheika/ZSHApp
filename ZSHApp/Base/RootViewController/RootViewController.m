@@ -265,9 +265,11 @@
     _leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [_leftBtn setTitle:title forState:UIControlStateNormal];
     [_leftBtn setTitleColor:KZSHColor929292 forState:UIControlStateNormal];
-    _leftBtn.titleLabel.font = kPingFangMedium(14);
+    _leftBtn.titleLabel.font = kPingFangMedium(12);
     [_leftBtn setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
-    _leftBtn.size = CGSizeMake(44, 44);
+//    _leftBtn.size = CGSizeMake(44, 44);
+    _leftBtn.frame = CGRectMake(0, 0, 44, 44);
+    [_leftBtn.titleLabel setLineBreakMode:NSLineBreakByTruncatingMiddle];
     [_leftBtn layoutButtonWithEdgeInsetsStyle:imageLocate imageTitleSpace:kRealValue(4)];
     [_leftBtn addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
     _leftBtn.tag = tag;
@@ -277,7 +279,6 @@
     if (isLeft) {
         spaceButtonItem.width = -15;
         self.navigationItem.leftBarButtonItems = @[spaceButtonItem, item];
-        
     } else {
         spaceButtonItem.width = -15;
         self.navigationItem.rightBarButtonItems = @[spaceButtonItem, item];

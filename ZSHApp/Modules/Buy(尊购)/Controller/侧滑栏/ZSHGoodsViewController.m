@@ -56,7 +56,7 @@ static NSString *const ZSHBrandSortCellID = @"ZSHBrandSortCell";
 }
 
 - (void)loadData{
-    _currentSelectIndex = 0;
+    _currentSelectIndex = 5;
     if ([self.paramDic[@"currentSelectIndex"] integerValue]) {
         _currentSelectIndex = [self.paramDic[@"currentSelectIndex"] integerValue];
     }

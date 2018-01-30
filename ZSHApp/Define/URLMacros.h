@@ -832,6 +832,11 @@
 //参数：USERLONGITUDE 经度，USERLATITUDE 纬度，HONOURUSER_ID 用户id
 //请求地址：apphomein/updtrapeze?TRAPEZE(混淆码)
 #define kUrlUpdtrapeze [NSString stringWithFormat:@"apphomein/updtrapeze?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"TRAPEZE"]]
+//160.获得尊购首页专区列表
+//参数： 无
+//请求地址：/appshipin/getfecturelist?FECTURELIST(混淆码)
+#define kUrlGetFectureList [NSString stringWithFormat:@"/appshipin/getfecturelist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"FECTURELIST"]]
+
 
 
 

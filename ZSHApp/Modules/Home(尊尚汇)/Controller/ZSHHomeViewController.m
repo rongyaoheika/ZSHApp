@@ -302,6 +302,7 @@ static NSString *Identify_MusicCell = @"musicCell";
     };
     
     cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
+        
     };
     return sectionModel;
 }
@@ -562,6 +563,10 @@ static NSString *Identify_MusicCell = @"musicCell";
 - (void) cityPickerController:(GYZChooseCityController *)chooseCityController didSelectCity:(GYZCity *)city
 {
     [self.leftBtn setTitle:city.cityName forState:UIControlStateNormal];
+    
+    CGSize detailLabelSize = [city.cityName boundingRectWithSize:CGSizeMake(MAXFLOAT, 44) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12]} context:nil].size;
+    [self.leftBtn sizeThatFits:detailLabelSize];
+//    [self.leftBtn layoutButtonWithEdgeInsetsStyle:XYButtonEdgeInsetsStyleRight imageTitleSpace:kRealValue(self.leftBtn.titleLabel.frame.size.width/2-15)];
     [chooseCityController.navigationController popViewControllerAnimated:YES];
 }
 

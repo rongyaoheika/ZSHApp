@@ -419,7 +419,7 @@ NSString *const cityCell = @"CityCell";
 
 #pragma mark - <HCLocationManagerDelegate>
 - (void)loationMangerSuccessLocationWithCity:(NSString *)city{
-    NSLog(@"city = %@",city);
+//    NSLog(@"city = %@",city);
     
     if (self.localCityData.count <= 0) {
         GYZCity *currentCity = [[GYZCity alloc] init];

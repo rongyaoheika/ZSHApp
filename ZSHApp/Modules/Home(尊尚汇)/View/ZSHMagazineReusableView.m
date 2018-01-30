@@ -17,6 +17,7 @@
 @end
 
 @implementation ZSHMagazineReusableView
+
 - (void)drawRect:(CGRect)rect {
     
     [self addSubview:self.guideView];

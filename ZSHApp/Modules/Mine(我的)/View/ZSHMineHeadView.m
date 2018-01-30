@@ -46,6 +46,9 @@
     }];
     self.headImageView = headImageView;
     
+    //结束画图
+    UIGraphicsEndImageContext();
+    
     NSDictionary *nameLabelDic = @{@"text":@"",@"font":kPingFangRegular(15),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentCenter)};
     UILabel *nameLabel = [ZSHBaseUIControl createLabelWithParamDic:nameLabelDic];
     nameLabel.text = curUser.NICKNAME;
