@@ -741,14 +741,14 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 
 - (void)pushButtonAction:(UIButton *)sender {
     //开始推流
-    [sender setSelected:!sender.selected];
+    
     if (!self.textView.text.length) {
         UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"提示" message:@"您还未给直播起标题" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
         [alertView show];
     } else {
-
-         RLog(@"textView的内容是%@",self.textView.text);
+        RLog(@"textView的内容是%@",self.textView.text);
         
+        [sender setSelected:!sender.selected];
         _liveLogic = [[ZSHLiveLogic alloc]init];
         NSDictionary *paramDic = @{@"LIVE_TITLE":self.textView.text,@"HONOURUSER_ID":HONOURUSER_IDValue};
         [_liveLogic requestPushAddressWithDic:paramDic success:^(id response) {
