@@ -785,10 +785,7 @@
 //参数:HONOURUSER_ID 当前登录用户id
 //请求地址：/livein/getnearbypushlist?PUSHNEARLIST
 #define kUrlGetNearbyPushList [NSString stringWithFormat:@"/livein/getnearbypushlist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"PUSHNEARLIST"]]
-//154. 关闭直播
-//参数:HONOURUSER_ID 当前直播用户id
-//地址: /livein/updlive?UPDLIVE
-#define kUrlCloseLive [NSString stringWithFormat:@"/livein/updlive?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"UPDLIVE"]]
+
 
 //155.直播中筛选直播
 //参数:SEX 性别（全部，男，女），LIVE_START 活跃时间（0，15，2，1，7）

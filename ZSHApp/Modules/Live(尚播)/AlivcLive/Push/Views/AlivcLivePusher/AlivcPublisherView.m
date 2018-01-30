@@ -1449,12 +1449,9 @@ static CGFloat lastPinchDistance = 0;
     switch (alertView.tag) {
         case 10:{//关闭直播
             if (buttonIndex == 1) {
-                [_liveLogic requestCloseLiveWithDic:@{@"HONOURUSER_ID":HONOURUSER_IDValue} success:^(id response) {
-                    RLog(@"结束直播");
-                    if (self.delegate) {
-                        [self.delegate publisherOnClickedBackButton:self.type];
-                    }
-                }];
+                if (self.delegate) {
+                    [self.delegate publisherOnClickedBackButton:self.type];
+                }
             }
             break;
         }

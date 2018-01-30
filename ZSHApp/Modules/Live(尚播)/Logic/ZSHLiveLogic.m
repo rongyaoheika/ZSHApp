@@ -179,21 +179,10 @@
 //获取直播分类数据
 - (void)requestkUrlGetLiveTypeListWithDic:(NSDictionary *)dic success:(void (^)(id response))success{
     [PPNetworkHelper POST:kUrlGetLiveTypeList parameters:dic success:^(id responseObject) {
-        
         RLog(@"直播分类==%@",responseObject);
         success(responseObject);
     } failure:^(NSError *error) {
         RLog(@"直播分类数据获取失败%@", error);
-    }];
-}
-
-//关闭直播
-- (void)requestCloseLiveWithDic:(NSDictionary *)dic success:(void (^)(id response))success{
-    [PPNetworkHelper POST:kUrlCloseLive parameters:dic success:^(id responseObject) {
-        RLog(@"结束直播%@",responseObject);
-        success(responseObject);
-    } failure:^(NSError *error) {
-        RLog(@"结束直播失败%@", error);
     }];
 }
 
