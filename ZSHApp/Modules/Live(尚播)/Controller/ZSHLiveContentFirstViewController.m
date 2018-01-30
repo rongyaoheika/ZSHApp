@@ -21,7 +21,6 @@
 
 @property (nonatomic, strong)ZSHCustomWaterFlowLayout *waterLayout;
 @property (nonatomic, strong)ZSHLiveListModel         *listModel;
-@property (nonatomic, strong)NSMutableArray           *dataArr;
 @property (nonatomic, strong)ZSHLiveLogic             *liveLogic;
 @property (nonatomic, strong)NSArray                  *liveListArr;
 
@@ -115,6 +114,9 @@ static NSString * const ZSHNearHeadViewID = @"ZSHNearHeadView";
         ZSHNearHeadView *nearView = [[ZSHNearHeadView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, kRealValue(40))];
         nearView.btnClickBlock = ^(UIButton *searchLiveBtn) {
             ZSHBottomBlurPopView *bottomBlurPopView = [weakself createBottomBlurPopViewWith:ZSHFromLiveNearSearchVCToBottomBlurPopView];
+            bottomBlurPopView.confirmOrderBlock = ^(NSDictionary *paramDic) {
+                [weakself requestNearSearchLiveListWithParamDic:paramDic];
+            };
             [kAppDelegate.window addSubview:bottomBlurPopView];
         };
         [reusableview addSubview:nearView];
@@ -147,8 +149,6 @@ static NSString * const ZSHNearHeadViewID = @"ZSHNearHeadView";
 
 #pragma WaterFlowLayoutDelegate
 - (CGFloat)heightForItem:(ZSHCustomWaterFlowLayout *)layout heightForItemAtIndex:(NSInteger)index itemWith:(CGFloat)itemWith{
-    ZSHLiveListModel *model = self.dataArr[index];
-   
     return (arc4random()%65 + 165 + kRealValue(22));
 }
 
@@ -198,6 +198,17 @@ static NSString * const ZSHNearHeadViewID = @"ZSHNearHeadView";
         _liveListArr = [ZSHLiveListModel mj_objectArrayWithKeyValuesArray:response[@"pd"][@"PUSHONLINE"][@"OnlineInfo"][@"LiveStreamOnlineInfo"]];
         [weakself.collectionView reloadData];
     }];
+}
+
+//附近筛选
+- (void)requestNearSearchLiveListWithParamDic:(NSDictionary *)paramDic{
+    kWeakSelf(self);
+    [_liveLogic requestScreenListWithDic:paramDic success:^(id response) {
+        [weakself endCollectionViewRefresh];
+        _liveListArr = [ZSHLiveListModel mj_objectArrayWithKeyValuesArray:response[@"pd"][@"PUSHONLINE"][@"OnlineInfo"][@"LiveStreamOnlineInfo"]];
+        [weakself.collectionView reloadData];
+    }];
+    
 }
 
 - (void)collectionHeaderRereshing {

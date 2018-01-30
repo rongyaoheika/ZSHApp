@@ -24,9 +24,9 @@
 
 #ifdef DEBUG
 
-#define DevelopSever    0
+#define DevelopSever    1
 #define TestSever       0
-#define ProductSever    1
+#define ProductSever    0
 
 #else
 
@@ -762,6 +762,7 @@
 //参数：  TITLE 标题 /     HONOURUSER_ID  用户id     /fileList   上传的图片名
 //请求地址：/appdiscoverin/addselfmediaad.do?SELFMEDIAADD (混淆码)
 #define kUrlAddSelfMediaad [NSString stringWithFormat:@"/appdiscoverin/addselfmediaad.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SELFMEDIAADD"]]
+
 //直播
 //151.主播开播接口(获取一个推流地址)
 //参数：LIVE_TITLE  HONOURUSER_ID
@@ -784,7 +785,15 @@
 //参数:HONOURUSER_ID 当前登录用户id
 //请求地址：/livein/getnearbypushlist?PUSHNEARLIST
 #define kUrlGetNearbyPushList [NSString stringWithFormat:@"/livein/getnearbypushlist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"PUSHNEARLIST"]]
+//154. 关闭直播
+//参数:HONOURUSER_ID 当前直播用户id
+//地址: /livein/updlive?UPDLIVE
+#define kUrlCloseLive [NSString stringWithFormat:@"/livein/updlive?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"UPDLIVE"]]
 
+//155.直播中筛选直播
+//参数:SEX 性别（全部，男，女），LIVE_START 活跃时间（0，15，2，1，7）
+//地址: http://192.168.1.107:8081/ZSHINTER/livein/getscreenlist?SCREENLIST
+#define kUrlGetScreenList [NSString stringWithFormat:@"/livein/getscreenlist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SCREENLIST"]]
 
 //151.音乐中心-首页：歌手推荐和广告
 //参数：  无

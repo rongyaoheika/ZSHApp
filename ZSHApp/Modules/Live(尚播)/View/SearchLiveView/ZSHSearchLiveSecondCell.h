@@ -10,4 +10,6 @@
 
 @interface ZSHSearchLiveSecondCell : ZSHBaseCell
 
+- (void)selectedByIndex:(NSUInteger)index;
+
 @end

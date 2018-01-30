@@ -53,11 +53,7 @@
 
 #pragma getter
 - (void)clickButton:(NSInteger)index {
-    //ZSHBeginShowViewController
-//    NSArray *VCS = @[@"ZSHWeiboWriteController",@"AlivcLivePushConfigViewController",@"ZSHVideoRecViewController"];
-//    NSArray *fromclassTypes = @[@(FromTabbarToWeiboVC),@(FromTabbarToVideoVC), @(FromTabbarToPersonalDetailVC)];
-    
-   
+
     NSArray *VCS = @[@"ZSHWeiboWriteController",@"AlivcLivePusherViewController",@"ZSHVideoRecViewController"];
     NSArray *fromclassTypes = @[@(FromTabbarToWeiboVC),@"", @(FromTabbarToPersonalDetailVC)];
     
@@ -86,20 +82,6 @@
         }];
     }];
    
-//    if (!_ISShowMenuButton) {
-//        [UIView animateWithDuration:0.2 animations:^{
-////            CGAffineTransform rotate = CGAffineTransformMakeRotation( M_PI / 4 );
-////            [sender setTransform:rotate];
-//        }];
-//        [_tlMenuView showItems];
-//    }else{
-//        [UIView animateWithDuration:0.2 animations:^{
-//            CGAffineTransform rotate = CGAffineTransformMakeRotation( 0 );
-//            [sender setTransform:rotate];
-//        }];
-//        [_tlMenuView dismiss];
-//    }
-//    _ISShowMenuButton = !_ISShowMenuButton;
 }
 
 

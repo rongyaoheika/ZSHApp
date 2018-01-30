@@ -232,7 +232,6 @@
 		185DDCCC1FBE8CE9004D4688 /* ZSHVideoDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 185DDCCB1FBE8CE9004D4688 /* ZSHVideoDetailCell.m */; };
 		185DDCD31FBEDD79004D4688 /* ZSHShareView.m in Sources */ = {isa = PBXBuildFile; fileRef = 185DDCD21FBEDD79004D4688 /* ZSHShareView.m */; };
 		185DE2F71FBFC31800720CAF /* ZSHVideoRecViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 185DE2F61FBFC31800720CAF /* ZSHVideoRecViewController.m */; };
-		185DE2FB1FBFD18D00720CAF /* ZSHBeginShowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 185DE2FA1FBFD18D00720CAF /* ZSHBeginShowViewController.m */; };
 		185DE2FE1FBFDEFB00720CAF /* ZSHFinishShowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 185DE2FD1FBFDEFB00720CAF /* ZSHFinishShowViewController.m */; };
 		185DE3011FC0079B00720CAF /* ZSHFindCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 185DE3001FC0079B00720CAF /* ZSHFindCell.m */; };
 		185DE3041FC0120600720CAF /* ZSHFindArticleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 185DE3031FC0120600720CAF /* ZSHFindArticleCell.m */; };
@@ -1016,8 +1015,6 @@
 		185DDCD21FBEDD79004D4688 /* ZSHShareView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHShareView.m; sourceTree = "<group>"; };
 		185DE2F51FBFC31800720CAF /* ZSHVideoRecViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHVideoRecViewController.h; sourceTree = "<group>"; };
 		185DE2F61FBFC31800720CAF /* ZSHVideoRecViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHVideoRecViewController.m; sourceTree = "<group>"; };
-		185DE2F91FBFD18D00720CAF /* ZSHBeginShowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHBeginShowViewController.h; sourceTree = "<group>"; };
-		185DE2FA1FBFD18D00720CAF /* ZSHBeginShowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHBeginShowViewController.m; sourceTree = "<group>"; };
 		185DE2FC1FBFDEFB00720CAF /* ZSHFinishShowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHFinishShowViewController.h; sourceTree = "<group>"; };
 		185DE2FD1FBFDEFB00720CAF /* ZSHFinishShowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHFinishShowViewController.m; sourceTree = "<group>"; };
 		185DE2FF1FC0079B00720CAF /* ZSHFindCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSHFindCell.h; path = "ZSHApp/Modules/Live(尚播)/Controller/ZSHFindCell.h"; sourceTree = SOURCE_ROOT; };
@@ -2616,8 +2613,6 @@
 		185DE2F81FBFD15B00720CAF /* 开启直播 */ = {
 			isa = PBXGroup;
 			children = (
-				185DE2F91FBFD18D00720CAF /* ZSHBeginShowViewController.h */,
-				185DE2FA1FBFD18D00720CAF /* ZSHBeginShowViewController.m */,
 				185DE2FC1FBFDEFB00720CAF /* ZSHFinishShowViewController.h */,
 				185DE2FD1FBFDEFB00720CAF /* ZSHFinishShowViewController.m */,
 			);
@@ -5039,7 +5034,6 @@
 				FE8FD0921FAE0997005F1184 /* ZSHServiceCenterViewController.m in Sources */,
 				185DE2F71FBFC31800720CAF /* ZSHVideoRecViewController.m in Sources */,
 				04CC219E1FFF79B200921863 /* ZSHMagazineViewController.m in Sources */,
-				185DE2FB1FBFD18D00720CAF /* ZSHBeginShowViewController.m in Sources */,
 				FE24DA731FD9605100965DC8 /* ZSHPlayListHeadView.m in Sources */,
 				FE5ED9A81FA47968003FB2BA /* ZSHHotelCalendarCell.m in Sources */,
 				FEBD7C961FA6CCEC00CE2BA6 /* ZSHHotelPayHeadCell.m in Sources */,

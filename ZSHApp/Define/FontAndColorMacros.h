@@ -41,7 +41,6 @@
 #define KZSHColorDFDFDF               [UIColor colorWithHexString:@"DFDFDF"]
 #define KZSHColor181818               [UIColor colorWithHexString:@"181818"]
 #define KZSHColor454545               [UIColor colorWithHexString:@"454545"]
-#define KZSHColorF29E19               [UIColor colorWithHexString:@"F29E19"]    // 进度条填充颜色
 #define KZSHColorFF2068               [UIColor colorWithHexString:@"FF2068"]
 #define KZSHColor141414               [UIColor colorWithHexString:@"141414"]
 #define KZSHColorD8D8D8               [UIColor colorWithHexString:@"D8D8D8"]

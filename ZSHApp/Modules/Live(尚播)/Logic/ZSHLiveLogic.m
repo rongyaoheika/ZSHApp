@@ -187,4 +187,25 @@
     }];
 }
 
+//关闭直播
+- (void)requestCloseLiveWithDic:(NSDictionary *)dic success:(void (^)(id response))success{
+    [PPNetworkHelper POST:kUrlCloseLive parameters:dic success:^(id responseObject) {
+        RLog(@"结束直播%@",responseObject);
+        success(responseObject);
+    } failure:^(NSError *error) {
+        RLog(@"结束直播失败%@", error);
+    }];
+}
+
+//附近-筛选直播
+- (void)requestScreenListWithDic:(NSDictionary *)dic success:(void (^)(id response))success{
+    [PPNetworkHelper POST:kUrlGetScreenList parameters:dic success:^(id responseObject) {
+        RLog(@"附近筛选直播%@",responseObject);
+        success(responseObject);
+    } failure:^(NSError *error) {
+        RLog(@"附近筛选直播失败%@", error);
+    }];
+}
+
+
 @end

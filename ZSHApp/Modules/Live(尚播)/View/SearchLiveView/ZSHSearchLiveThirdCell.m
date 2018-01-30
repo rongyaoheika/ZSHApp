@@ -54,7 +54,10 @@
 
 - (void)changeValue:(StepSlider *)sender
 {
-    RLog(@"值变化");
+    NSArray *btnTitleArr = @[@"0",@"15",@"2",@"1",@"7"];
+    if (self.btnClickBlock) {
+        self.btnClickBlock(btnTitleArr[sender.index]);
+    }
 }
 
 @end

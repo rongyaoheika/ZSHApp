@@ -133,7 +133,7 @@ shared##className = [[self alloc] init]; \
 return shared##className; \
 }
 
-#define HONOURUSER_IDValue         curUser.HONOURUSER_ID
+#define HONOURUSER_IDValue         @"388279486010884100"//curUser.HONOURUSER_ID
 
 
 

@@ -25,11 +25,13 @@
 #import "GYZCity.h"
 #import "ZSHFinishShowViewController.h"
 
+#import "ZSHShareView.h"
+
 #define viewWidth kRealValue(58)
 #define viewHeight viewWidth/4*3
 #define topViewButtonSize kRealValue(35)
 
-@interface AlivcPublisherView () <UIGestureRecognizerDelegate,HCLocationManagerDelegate,UIAlertViewDelegate>
+@interface AlivcPublisherView () <UIGestureRecognizerDelegate,HCLocationManagerDelegate,UIAlertViewDelegate,UITextViewDelegate>
 
 @property (nonatomic, weak) id<AlivcPublisherViewDelegate> delegate;
 
@@ -75,7 +77,7 @@
 @property (nonatomic, strong)  UIButton                 *beginShowBtn;
 @property (nonatomic, strong)  UIButton                 *beautyBtn;
 @property (nonatomic, strong)  NSMutableArray           *shareBtnArr;
-@property (nonatomic, strong)  ZSHBottomBlurPopView     *bottomBlurPopView;
+@property (nonatomic, strong)  ZSHShareView             *shareView;
 @property (nonatomic, strong)  ZSHLiveLogic             *liveLogic;
 @property (nonatomic, strong)  NSString                 *pushURL;
 @property (nonatomic, copy)    NSString                 *cityName;
@@ -137,9 +139,11 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 //    if (![[NSUserDefaults standardUserDefaults] boolForKey:AlivcUs                                                                                                                                                                                                                                                                                                                                                                                                                                    erDefaultsIndentifierFirst]) {
 //        [self setupGuideView];
 //    }
+     _liveLogic = [[ZSHLiveLogic alloc]init];
     
     switch (self.type) {
         case AlivcPublisherViewTypeLive:{//主播直播
+            
             [self setupLiveTopViews];
             [self setupLiveChatTabView];
             [self setupLiveBottomViews];
@@ -303,6 +307,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
    
 }
 
+//聊天互动UI
 - (void)setupLiveChatTabView{
     self.tableViewModel = [[ZSHBaseTableViewModel alloc] init];
     self.subTab = [ZSHBaseUIControl createTableView];
@@ -326,7 +331,6 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     [self.subTab reloadData];
 }
 
-//list
 - (ZSHBaseTableViewSectionModel*)storeListSection {
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     for (int i = 0; i < 3; i++) {
@@ -348,6 +352,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     return sectionModel;
 }
 
+//直播底部View
 - (void)setupLiveBottomViews{
     self.bottomView = [[UIView alloc] initWithFrame:CGRectMake(0,  CGRectGetHeight(self.frame) -KBottomTabH , CGRectGetWidth(self.frame), KBottomNavH)];
     [self addSubview: self.bottomView];
@@ -363,7 +368,6 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
         make.size.mas_equalTo(CGSizeMake(kRealValue(32), kRealValue(32)));
     }];
     
-//    NSArray *imageArr = @[@"live_room_gift",@"live_room_love",@"live_room_share"];
     NSArray *imageArr = @[@"room_more",@"live_room_share"];
     for (int i = 0; i<imageArr.count; i++) {
         UIImage *btnImage = [UIImage imageNamed:imageArr[i]];
@@ -754,7 +758,6 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
         RLog(@"textView的内容是%@",self.textView.text);
         
         [sender setSelected:!sender.selected];
-        _liveLogic = [[ZSHLiveLogic alloc]init];
         NSDictionary *paramDic = @{@"LIVE_TITLE":self.textView.text,@"HONOURUSER_ID":HONOURUSER_IDValue};
         [_liveLogic requestPushAddressWithDic:paramDic success:^(id response) {
             RLog(@"推流地址==%@",response);
@@ -902,18 +905,19 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
         self.isMusicSettingShow = NO;
         
     } else if (self.isMoreViewShow) {
-        [self dismissPopView:self.moreView block:^{
-            [weakself.moreView removeFromSuperview];
+        [ZSHBaseFunction dismissPopView:self.moreView block:^{
             weakself.isMoreViewShow = NO;
         }];
        
-    }else if (self.isBeautyViewShow) {
-        [self dismissPopView:self.beautyView block:^{
-            [weakself.beautyView removeFromSuperview];
+    } else if (self.isBeautyViewShow) {
+        [ZSHBaseFunction dismissPopView:self.beautyView block:^{
             weakself.isBeautyViewShow = NO;
         }];
         
-    }else {
+    } else if ([self viewWithTag:100]) {
+        [ZSHBaseFunction dismissPopView:self.shareView block:nil];
+        
+    } else {
         
         CGPoint point = [gesture locationInView:self];
         CGPoint percentPoint = CGPointZero;
@@ -1274,9 +1278,11 @@ static CGFloat lastPinchDistance = 0;
     }];
 }
 
+#pragma setter 懒加载
 - (XXTextView *)textView {
     if (!_textView) {
         _textView  = [[XXTextView alloc] initWithFrame:CGRectMake(15, 9.5, KScreenWidth-80, 30)];
+        _textView.delegate = self;
         _textView.backgroundColor = KWhiteColor;
         _textView.textColor = [UIColor blackColor];
         _textView.font = kPingFangRegular(20);
@@ -1284,7 +1290,7 @@ static CGFloat lastPinchDistance = 0;
         _textView.keyboardAppearance = UIKeyboardAppearanceDark;
         _textView.xx_placeholder = @"给直播写个标题吧！";
         _textView.xx_placeholderFont = kPingFangRegular(20);
-        _textView.xx_placeholderColor = [UIColor blackColor];
+        _textView.xx_placeholderColor = KZSHColor929292;
         _textView.layer.cornerRadius = 15;
         _textView.layer.masksToBounds = true;
         _textView.layer.borderColor = KWhiteColor.CGColor;
@@ -1292,8 +1298,6 @@ static CGFloat lastPinchDistance = 0;
     return _textView;
 }
 
-
-#pragma setter 懒加载
 //定位按钮
 - (UIButton *)locateBtn{
     if (!_locateBtn) {
@@ -1322,18 +1326,12 @@ static CGFloat lastPinchDistance = 0;
     return _beautyView;
 }
 
-//直播action
-- (ZSHBottomBlurPopView *)createBottomBlurPopViewWith:(ZSHFromVCToBottomBlurPopView)fromClassType{
-    if (!_bottomBlurPopView) {
-        NSDictionary *nextParamDic = @{KFromClassType:@(fromClassType)};
-        _bottomBlurPopView = [[ZSHBottomBlurPopView alloc]initWithFrame:kAppDelegate.window.bounds paramDic:nextParamDic];
-        _bottomBlurPopView.blurRadius = 20;
-        _bottomBlurPopView.dynamic = NO;
-        _bottomBlurPopView.tintColor = KClearColor;
-        _bottomBlurPopView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.6];
-        [_bottomBlurPopView setBlurEnabled:NO];
+- (ZSHShareView *)shareView{
+    if (!_shareView) {
+        _shareView = [[ZSHShareView alloc]initWithFrame:CGRectMake(0, KScreenHeight, kScreenWidth, kRealValue(185))];
+        _shareView.tag = 100;
     }
-    return _bottomBlurPopView;
+    return _shareView;
 }
 
 #pragma mark - Event
@@ -1358,7 +1356,11 @@ static CGFloat lastPinchDistance = 0;
             break;
         }
         case 1:{//分享
-            [self addSubview:self.bottomBlurPopView];
+            if (![self viewWithTag:100]) {
+                [self addSubview:self.shareView];
+                [ZSHBaseFunction showPopView:self.shareView];
+            }
+            
             break;
         }
         default:
@@ -1371,7 +1373,7 @@ static CGFloat lastPinchDistance = 0;
     kWeakSelf(self);
     [self addSubview:self.moreView];
     self.isMoreViewShow = YES;
-    [self showPopView:self.moreView];
+    [ZSHBaseFunction showPopView:self.moreView];
     
     self.moreView.btnClickBlock = ^(UIButton *btn) {
         switch (btn.tag) {
@@ -1386,17 +1388,20 @@ static CGFloat lastPinchDistance = 0;
             }
             case 2:{//背景音乐
                 [btn setSelected:!btn.selected];
-                [weakself flashButtonAction:btn];
+                
+                [ZSHBaseFunction dismissPopView:weakself.moreView block:^{
+                    weakself.isMoreViewShow = NO;
+                   [weakself musicButtonAction:btn];
+                }];
                 break;
             }
             case 3:{//美颜
-                [weakself dismissPopView:weakself.moreView block:^{
-                    [weakself.moreView removeFromSuperview];
+                [ZSHBaseFunction dismissPopView:weakself.moreView block:^{
                     weakself.isMoreViewShow = NO;
                     
                     [weakself addSubview:weakself.beautyView];
                     weakself.isBeautyViewShow = YES;
-                    [weakself showPopView:weakself.beautyView];
+                    [ZSHBaseFunction showPopView:weakself.beautyView];
                     
                     weakself.beautyView.btnClickBlock = ^(UIButton *btn) {
                         [weakself beautyBtnSetAction:btn];
@@ -1414,24 +1419,6 @@ static CGFloat lastPinchDistance = 0;
 - (void)beautyBtnSetAction:(UIButton *)btn{
     
     
-}
-
-- (void)showPopView:(UIView *)customView{
-    [UIView animateWithDuration:0.5 animations:^{
-        CGRect customViewFrame = customView.frame;
-        customViewFrame.origin.y = KScreenHeight - customViewFrame.size.height;
-        customView.frame = customViewFrame;
-    } completion:nil];
-}
-
-- (void)dismissPopView:(UIView *)customView block:(void(^)())completion{
-    [UIView animateWithDuration:0.5 animations:^{
-        CGRect moreViewFrame = self.moreView.frame;
-        moreViewFrame.origin.y = KScreenHeight;
-        self.moreView.frame = moreViewFrame;
-    } completion:^(BOOL finished) {
-        completion();
-    }];
 }
 
 //点击主播头像
@@ -1462,9 +1449,12 @@ static CGFloat lastPinchDistance = 0;
     switch (alertView.tag) {
         case 10:{//关闭直播
             if (buttonIndex == 1) {
-                if (self.delegate) {
-                    [self.delegate publisherOnClickedBackButton:self.type];
-                }
+                [_liveLogic requestCloseLiveWithDic:@{@"HONOURUSER_ID":HONOURUSER_IDValue} success:^(id response) {
+                    RLog(@"结束直播");
+                    if (self.delegate) {
+                        [self.delegate publisherOnClickedBackButton:self.type];
+                    }
+                }];
             }
             break;
         }
@@ -1480,6 +1470,17 @@ static CGFloat lastPinchDistance = 0;
             break;
     }
     
+}
+#pragma mark - <TextViewDelegate>
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+
+    if([text length] == 0) {
+        return YES;
+    }
+    if([textView.text length] + range.length >= 15) {
+        return NO;
+    }
+    return YES;
 }
 
 #pragma mark - <HCLocationManagerDelegate>

@@ -54,6 +54,8 @@
             make.width.mas_equalTo(0.5);
         }];
     }
+ 
+    [self selectedByIndex:1];
 }
 
 - (void)btnAction:(UIButton *)btn{

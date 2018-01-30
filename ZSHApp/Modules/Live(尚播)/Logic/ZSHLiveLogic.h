@@ -54,4 +54,8 @@
 - (void)requestPullAddressWithDic:(NSDictionary *)dic success:(void (^)(id response))success;
 //获取直播分类数据
 - (void)requestkUrlGetLiveTypeListWithDic:(NSDictionary *)dic success:(void (^)(id response))success;
+//关闭直播
+- (void)requestCloseLiveWithDic:(NSDictionary *)dic success:(void (^)(id response))success;
+//附近-筛选直播
+- (void)requestScreenListWithDic:(NSDictionary *)dic success:(void (^)(id response))success;
 @end

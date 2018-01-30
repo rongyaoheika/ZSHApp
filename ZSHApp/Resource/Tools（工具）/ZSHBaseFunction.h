@@ -15,6 +15,7 @@
  */
 + (NSString *)md5StringFromString:(NSString *)string;
 + (NSString *)getFKEYWithCommand:(NSString *)cmd;
-
++ (void)showPopView:(UIView *)customView;
++ (void)dismissPopView:(UIView *)customView block:(void(^)())completion;
 
 @end

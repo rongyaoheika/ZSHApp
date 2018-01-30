@@ -44,4 +44,27 @@
     return base64String;
 }
 
+//底部弹出框消失
++ (void)dismissPopView:(UIView *)customView block:(void(^)())completion{
+    [UIView animateWithDuration:0.5 animations:^{
+        CGRect moreViewFrame = customView.frame;
+        moreViewFrame.origin.y = KScreenHeight;
+        customView.frame = moreViewFrame;
+    } completion:^(BOOL finished) {
+        [customView removeFromSuperview];
+        if (completion) {
+            completion();
+        }
+    }];
+}
+
+//底部弹出view
++ (void)showPopView:(UIView *)customView{
+    [UIView animateWithDuration:0.5 animations:^{
+        CGRect customViewFrame = customView.frame;
+        customViewFrame.origin.y = KScreenHeight - customViewFrame.size.height;
+        customView.frame = customViewFrame;
+    } completion:nil];
+}
+
 @end

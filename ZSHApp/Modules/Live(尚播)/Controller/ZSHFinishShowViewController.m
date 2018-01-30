@@ -7,8 +7,11 @@
 //
 
 #import "ZSHFinishShowViewController.h"
+#import "ZSHBottomBlurPopView.h"
 
 @interface ZSHFinishShowViewController ()
+
+@property (nonatomic, strong)  ZSHBottomBlurPopView     *bottomBlurPopView;
 
 @end
 
@@ -188,5 +191,38 @@
     [self dismissViewControllerAnimated:NO completion:nil];
     
 }
+
+- (void)btnAction:(UIButton *)btn{
+    switch (btn.tag - 11179) {
+        case 0:
+        case 1:{
+            RLog(@"点击按钮tag==%ld",btn.tag);
+            break;
+        }
+        case 2:{//分享
+            if (![self.view viewWithTag:100]) {
+                 [self.view addSubview:self.bottomBlurPopView];
+            }
+           
+        }
+        default:
+            break;
+    }
+}
+
+
+- (ZSHBottomBlurPopView *)bottomBlurPopView{
+    if (!_bottomBlurPopView) {
+        _bottomBlurPopView = [[ZSHBottomBlurPopView alloc]initWithFrame:kAppDelegate.window.bounds paramDic:@{KFromClassType:@(ZSHFromShareVCToToBottomBlurPopView)}];
+        _bottomBlurPopView.tag = 100;
+        _bottomBlurPopView.blurRadius = 20;
+        _bottomBlurPopView.dynamic = NO;
+        _bottomBlurPopView.tintColor = KClearColor;
+        _bottomBlurPopView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.6];
+        [_bottomBlurPopView setBlurEnabled:NO];
+    }
+    return _bottomBlurPopView;
+}
+
 
 @end
