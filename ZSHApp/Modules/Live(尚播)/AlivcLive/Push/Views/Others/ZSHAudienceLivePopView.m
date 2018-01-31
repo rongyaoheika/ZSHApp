@@ -8,13 +8,15 @@
 
 #import "ZSHAudienceLivePopView.h"
 #import "ZSHBottomBlurPopView.h"
+#import "ZSHLiveGiftView.h"
 @interface ZSHAudienceLivePopView ()
 
+@property (nonatomic, strong) ZSHBottomBlurPopView           *bottomBlurPopView;
 @property (nonatomic, strong) UIView                         *topView;
 @property (nonatomic, strong) ZSHBaseTableViewModel          *tableViewModel;
 @property (nonatomic, strong) UITableView                    *subTab;
 @property (nonatomic, strong) UIView                         *bottomView;
-
+@property (nonatomic, strong) ZSHLiveGiftView                *giftView;
 
 @end
 
@@ -176,22 +178,56 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 }
 
 - (void)btnAction:(UIButton *)btn {
-    if ((btn.tag -11179) == 2) {
-        [self addSubview:[self createBottomBlurPopViewWith:ZSHFromShareVCToToBottomBlurPopView]];
+    switch (btn.tag - 11179) {
+        case 0:{
+            kWeakSelf(self);
+            [ZSHBaseFunction dismissPopView:self.bottomBlurPopView block:^{
+                [weakself addSubview:self.giftView];
+                [ZSHBaseFunction showPopView:self.giftView];
+            }];
+            break;
+        }
+            
+        case 1:{
+            RLog(@"点击按钮tag==%ld",btn.tag);
+            break;
+        }
+        case 2:{//分享
+            if (![self viewWithTag:100]) {
+                [self addSubview:self.bottomBlurPopView];
+                [ZSHBaseFunction showPopView:self.bottomBlurPopView];
+            }
+            
+        }
+        default:
+            break;
     }
 }
 
-//直播action
-- (ZSHBottomBlurPopView *)createBottomBlurPopViewWith:(ZSHFromVCToBottomBlurPopView)fromClassType{
-    NSDictionary *nextParamDic = @{KFromClassType:@(fromClassType)};
-    ZSHBottomBlurPopView *bottomBlurPopView = [[ZSHBottomBlurPopView alloc]initWithFrame:kAppDelegate.window.bounds paramDic:nextParamDic];
-    bottomBlurPopView.blurRadius = 20;
-    bottomBlurPopView.dynamic = NO;
-    bottomBlurPopView.tintColor = KClearColor;
-    bottomBlurPopView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.6];
-    [bottomBlurPopView setBlurEnabled:NO];
-    return bottomBlurPopView;
+- (ZSHLiveGiftView *)giftView{
+    if (!_giftView) {
+        _giftView = [[ZSHLiveGiftView alloc]initWithFrame:CGRectMake(0, KScreenHeight, KScreenHeight, kRealValue(290))];
+        _giftView.tag = 20;
+    }
+    return _giftView;
 }
+
+
+//直播action
+- (ZSHBottomBlurPopView *)bottomBlurPopView{
+    if (!_bottomBlurPopView) {
+        _bottomBlurPopView = [[ZSHBottomBlurPopView alloc]initWithFrame:kAppDelegate.window.bounds paramDic:@{KFromClassType:@(ZSHFromShareVCToToBottomBlurPopView)}];
+        _bottomBlurPopView.tag = 100;
+        _bottomBlurPopView.blurRadius = 20;
+        _bottomBlurPopView.dynamic = NO;
+        _bottomBlurPopView.tintColor = KClearColor;
+        _bottomBlurPopView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.6];
+        [_bottomBlurPopView setBlurEnabled:NO];
+    }
+    return _bottomBlurPopView;
+}
+
+
 
 - (void)personInfo {
     NSDictionary *nextParamDic = @{KFromClassType:@(ZSHFromPersonInfoVCToBottomBlurPopView)};

@@ -55,7 +55,7 @@
             [btn setTitleColor:KZSHColor929292 forState:UIControlStateNormal];
             [btn layoutButtonWithEdgeInsetsStyle:XYButtonEdgeInsetsStyleTop imageTitleSpace:kRealValue(5.0)];
             btn.titleLabel.font = kPingFangRegular(12);
-            btn.tag = i+j;
+            btn.tag = i*4+j;
             [btn addTarget:self action:@selector(moreBtnAction:) forControlEvents:UIControlEventTouchUpInside];
             [self addSubview:btn];
             if (btn.tag == 1) {//闪光灯

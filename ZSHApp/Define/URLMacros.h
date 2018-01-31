@@ -763,34 +763,41 @@
 //请求地址：/appdiscoverin/addselfmediaad.do?SELFMEDIAADD (混淆码)
 #define kUrlAddSelfMediaad [NSString stringWithFormat:@"/appdiscoverin/addselfmediaad.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SELFMEDIAADD"]]
 
-//直播
+//**********直播**************
 //151.主播开播接口(获取一个推流地址)
 //参数：LIVE_TITLE  HONOURUSER_ID
-//请求地址：/livein/getpushaddress?PUSHADDRESS
-#define kUrlGetPushAddress [NSString stringWithFormat:@"/livein/getpushaddress?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"PUSHADDRESS"]]
+//请求地址：/applivein/getpushaddress?PUSHADDRESS
+#define kUrlGetPushAddress [NSString stringWithFormat:@"/applivein/getpushaddress?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"PUSHADDRESS"]]
 //152.获得所有正在推流的地址(所有正在直播的地址)
 //参数：PARENT_ID
-//请求地址：/livein/getpushlist?PUSHLIST
-#define kUrlGetPushList [NSString stringWithFormat:@"/livein/getpushlist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"PUSHLIST"]]
+//请求地址：/applivein/getpushlist?PUSHLIST
+#define kUrlGetPushList [NSString stringWithFormat:@"/applivein/getpushlist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"PUSHLIST"]]
 //153.用户看直播接口(获取一个拉流地址)
-//请求地址：/livein/getpulladdress?PULLADDRESS  参数：STREAMNAME(每个主播单独的地址)
-#define kUrlGetPullAddress [NSString stringWithFormat:@"/livein/getpulladdress?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"PULLADDRESS"]]
+//请求地址：/applivein/getpulladdress?PULLADDRESS  参数：STREAMNAME(每个主播单独的地址)
+#define kUrlGetPullAddress [NSString stringWithFormat:@"/applivein/getpulladdress?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"PULLADDRESS"]]
 
-//153.直播分类接口(获取一个拉流地址)
+//154.直播分类接口(获取一个拉流地址)
 //参数：  PARENT_ID
-//请求地址：/livein/getlivetypelist?LIVETYPE
-#define kUrlGetLiveTypeList [NSString stringWithFormat:@"/livein/getlivetypelist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"LIVETYPE"]]
+//请求地址：/applivein/getlivetypelist?LIVETYPE
+#define kUrlGetLiveTypeList [NSString stringWithFormat:@"/applivein/getlivetypelist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"LIVETYPE"]]
 
-//153. 附近直播
+//155. 附近直播
 //参数:HONOURUSER_ID 当前登录用户id
-//请求地址：/livein/getnearbypushlist?PUSHNEARLIST
-#define kUrlGetNearbyPushList [NSString stringWithFormat:@"/livein/getnearbypushlist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"PUSHNEARLIST"]]
+//请求地址：/applivein/getnearbypushlist?PUSHNEARLIST
+#define kUrlGetNearbyPushList [NSString stringWithFormat:@"/applivein/getnearbypushlist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"PUSHNEARLIST"]]
 
 
-//155.直播中筛选直播
+//156.直播中筛选直播
 //参数:SEX 性别（全部，男，女），LIVE_START 活跃时间（0，15，2，1，7）
-//地址: http://192.168.1.107:8081/ZSHINTER/livein/getscreenlist?SCREENLIST
-#define kUrlGetScreenList [NSString stringWithFormat:@"/livein/getscreenlist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SCREENLIST"]]
+//地址: /applivein/getscreenlist?SCREENLIST
+#define kUrlGetScreenList [NSString stringWithFormat:@"/applivein/getscreenlist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SCREENLIST"]]
+
+//157.直播模块中模糊查询用户接口
+//参数:NICKNAME  模糊查询关键字
+//地址:/applivein/getuserlist?USERLIST
+#define kUrlGetUserList [NSString stringWithFormat:@"/applivein/getuserlist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"USERLIST"]]
+
+//************************
 
 //151.音乐中心-首页：歌手推荐和广告
 //参数：  无

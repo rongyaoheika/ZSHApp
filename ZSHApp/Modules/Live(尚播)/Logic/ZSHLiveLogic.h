@@ -56,4 +56,8 @@
 - (void)requestkUrlGetLiveTypeListWithDic:(NSDictionary *)dic success:(void (^)(id response))success;
 //附近-筛选直播
 - (void)requestScreenListWithDic:(NSDictionary *)dic success:(void (^)(id response))success;
+
+//直播搜索
+- (void)requestLiveSearhWithDic:(NSDictionary *)dic success:(void (^)(id response))success;
+
 @end

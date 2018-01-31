@@ -24,7 +24,6 @@
 @property (nonatomic, strong)ZSHLiveLogic             *liveLogic;
 @property (nonatomic, strong)NSArray                  *liveListArr;
 
-
 @end
 
 static NSString * const cellIdentifier = @"cellID";
@@ -60,6 +59,7 @@ static NSString * const ZSHNearHeadViewID = @"ZSHNearHeadView";
     [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.mas_equalTo(self.view).insets(UIEdgeInsetsMake(0, 0, KBottomTabH , 0));
     }];
+    
 }
 
 - (void)requestData{
@@ -214,6 +214,7 @@ static NSString * const ZSHNearHeadViewID = @"ZSHNearHeadView";
 - (void)collectionHeaderRereshing {
     [self requestData];
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

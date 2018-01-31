@@ -196,5 +196,15 @@
     }];
 }
 
+//直播搜索
+- (void)requestLiveSearhWithDic:(NSDictionary *)dic success:(void (^)(id response))success{
+    [PPNetworkHelper POST:kUrlGetUserList parameters:dic success:^(id responseObject) {
+        RLog(@"附近筛选直播%@",responseObject);
+        success(responseObject);
+    } failure:^(NSError *error) {
+        RLog(@"附近筛选直播失败%@", error);
+    }];
+}
+
 
 @end

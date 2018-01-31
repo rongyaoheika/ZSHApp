@@ -5,7 +5,6 @@
 //
 
 #import "PYSearchViewController.h"
-//#import "PYSearchSuggestionViewController.h"
 #import "ZSHRecommendView.h"
 
 #define PYSEARCH_MARGIN 10

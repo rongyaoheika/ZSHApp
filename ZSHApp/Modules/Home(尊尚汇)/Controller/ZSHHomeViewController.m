@@ -32,6 +32,7 @@
 #import "ZSHGuideView.h"
 #import "ZSHMusicMainViewController.h"
 
+
 static NSString *Identify_HeadCell = @"headCell";
 static NSString *Identify_NoticeCell = @"noticeCell";
 static NSString *Identify_ServiceCell = @"serviceCell";
@@ -59,6 +60,7 @@ static NSString *Identify_MusicCell = @"musicCell";
 
 @property (nonatomic, strong) NSArray                *hotSearchArr;
 @property (nonatomic, strong) NSArray                *recommendImageArr;
+
 
 @end
 
@@ -514,17 +516,17 @@ static NSString *Identify_MusicCell = @"musicCell";
         for (NSDictionary *dic in response[@"pd"]) {
             [hotSearchMArr addObject:dic[@"NAME"]];
         }
-        
+
         for (NSDictionary *dic in response[@"showimgs"]) {
             [recommendImageMArr addObject:dic[@"SHOWIMAGES"]];
         }
-        
+
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             PYSearchViewController *searchViewController = [PYSearchViewController searchViewControllerWithHotSearches:hotSearchMArr searchBarPlaceholder:NSLocalizedString(@"Search", @"搜索") recommendArr:recommendImageMArr didSearchBlock:^(PYSearchViewController *searchViewController, UISearchBar *searchBar, NSString *searchText) {
                 ZSHGoodsTitleContentViewController *goodContentVC = [[ZSHGoodsTitleContentViewController alloc]initWithParamDic:@{@"searchText":searchText,KFromClassType:@(FromSearchResultVCTOGoodsTitleVC)}];
                 [weakself.navigationController pushViewController:goodContentVC animated:YES];
             }];
-            
+
             searchViewController.showRecommendView = YES;
             searchViewController.hotSearchStyle = PYHotSearchStyleARCBorderTag;
             searchViewController.searchHistoryStyle = PYSearchHistoryStyleARCBorderTag;
@@ -532,8 +534,8 @@ static NSString *Identify_MusicCell = @"musicCell";
             searchViewController.delegate = self;
             [self.navigationController pushViewController:searchViewController animated:YES];
         });
-        
-        
+
+
     }];
 }
 

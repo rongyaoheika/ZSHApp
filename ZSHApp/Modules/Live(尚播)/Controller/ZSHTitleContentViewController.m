@@ -24,7 +24,7 @@
 #import "ZSHToplineTopView.h"
 #import "ZSHWeiboWriteController.h"
 #import "ZSHHomeLogic.h"
-
+#import "ZSHGoodsTitleContentViewController.h"
 @interface ZSHTitleContentViewController ()<UISearchBarDelegate,PYSearchViewControllerDelegate>
 
 @property (nonatomic, strong) LXScrollContentView *contentView;
@@ -453,8 +453,22 @@
 
 //尊购
 - (void)searchAction {
+    NSDictionary *paramDic = [[NSDictionary alloc]init];
+    switch (kFromClassTypeValue) {
+        case FromBuyVCToTitleContentVC:{
+            paramDic = @{@"PARENT_ID":@(2)};
+             break;
+        }
+        case FromLiveTabBarVCToTitleContentVC:{
+            paramDic = @{@"PARENT_ID":@(4)};
+            break;
+        }
+            
+        default:
+            break;
+    }
+    
     ZSHHomeLogic *homeLogic = [[ZSHHomeLogic alloc]init];
-    NSDictionary *paramDic = @{@"PARENT_ID":@(2)};
     NSMutableArray *hotSearchMArr = [[NSMutableArray alloc]init];
     NSMutableArray *recommendImageMArr = [[NSMutableArray alloc]init];
     [homeLogic loadSearchListWithDic:paramDic success:^(id response) {
@@ -466,9 +480,11 @@
             [recommendImageMArr addObject:dic[@"SHOWIMAGES"]];
         }
         
+        kWeakSelf(self);
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             PYSearchViewController *searchViewController = [PYSearchViewController searchViewControllerWithHotSearches:hotSearchMArr searchBarPlaceholder:NSLocalizedString(@"Search", @"搜索") recommendArr:recommendImageMArr didSearchBlock:^(PYSearchViewController *searchViewController, UISearchBar *searchBar, NSString *searchText) {
-
+                ZSHGoodsTitleContentViewController *goodContentVC = [[ZSHGoodsTitleContentViewController alloc]initWithParamDic:@{@"searchText":searchText,KFromClassType:@(FromSearchResultVCTOGoodsTitleVC)}];
+                [weakself.navigationController pushViewController:goodContentVC animated:YES];
             }];
             
             searchViewController.showRecommendView = YES;

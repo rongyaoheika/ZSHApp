@@ -26,6 +26,7 @@
 #import "ZSHFinishShowViewController.h"
 
 #import "ZSHShareView.h"
+#import "ZSHLiveGiftView.h"
 
 #define viewWidth kRealValue(58)
 #define viewHeight viewWidth/4*3
@@ -86,6 +87,7 @@
 //更多功能
 @property (nonatomic, strong)  ZSHLiveMoreView          *moreView;
 @property (nonatomic, assign)  BOOL                     isLocate;
+@property (nonatomic, strong)  ZSHLiveGiftView          *giftView;
 
 //美颜设置功能
 @property (nonatomic, strong)  ZSHBeautyView            *beautyView;
@@ -772,6 +774,14 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
    
 }
 
+//测试礼物
+- (void)giftViewAction:(UIButton *)btn{
+    if (![self viewWithTag:20]) {
+         [self addSubview:self.giftView];
+         [ZSHBaseFunction showPopView:self.giftView];
+    }
+   
+}
 
 - (void)musicButtonAction:(UIButton *)sender {
     
@@ -1334,6 +1344,14 @@ static CGFloat lastPinchDistance = 0;
     return _shareView;
 }
 
+- (ZSHLiveGiftView *)giftView{
+    if (!_giftView) {
+        _giftView = [[ZSHLiveGiftView alloc]initWithFrame:CGRectMake(0, KScreenHeight, KScreenHeight, kRealValue(290))];
+        _giftView.tag = 20;
+    }
+    return _giftView;
+}
+
 #pragma mark - Event
 - (void)thirdLogin:(UIButton *)send{
     [_shareBtnArr enumerateObjectsUsingBlock:^(UIButton *btn , NSUInteger idx, BOOL * _Nonnull stop) {
@@ -1409,7 +1427,14 @@ static CGFloat lastPinchDistance = 0;
                 }];
                 break;
             }
-                
+            case 4:{//测试礼物系统
+
+                [ZSHBaseFunction dismissPopView:weakself.moreView block:^{
+                    weakself.isMoreViewShow = NO;
+                    [weakself giftViewAction:btn];
+                }];
+                break;
+            }
             default:
                 break;
         }
