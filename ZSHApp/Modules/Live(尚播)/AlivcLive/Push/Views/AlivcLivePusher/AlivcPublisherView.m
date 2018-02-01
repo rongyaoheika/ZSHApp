@@ -927,6 +927,9 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     } else if ([self viewWithTag:100]) {
         [ZSHBaseFunction dismissPopView:self.shareView block:nil];
         
+    } else if ([self viewWithTag:20]) {//礼物
+        [ZSHBaseFunction dismissPopView:self.giftView block:nil];
+        
     } else {
         
         CGPoint point = [gesture locationInView:self];

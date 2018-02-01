@@ -528,9 +528,9 @@ static NSString *Identify_MusicCell = @"musicCell";
             }];
 
             searchViewController.showRecommendView = YES;
-            searchViewController.hotSearchStyle = PYHotSearchStyleARCBorderTag;
-            searchViewController.searchHistoryStyle = PYSearchHistoryStyleARCBorderTag;
-            searchViewController.searchBarBackgroundColor = KZSHColor1A1A1A;
+//            searchViewController.hotSearchStyle = PYHotSearchStyleARCBorderTag;
+//            searchViewController.searchHistoryStyle = PYSearchHistoryStyleARCBorderTag;
+//            searchViewController.searchBarBackgroundColor = KZSHColor1A1A1A;
             searchViewController.delegate = self;
             [self.navigationController pushViewController:searchViewController animated:YES];
         });

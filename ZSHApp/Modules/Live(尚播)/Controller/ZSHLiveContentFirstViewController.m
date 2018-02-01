@@ -63,25 +63,22 @@ static NSString * const ZSHNearHeadViewID = @"ZSHNearHeadView";
 }
 
 - (void)requestData{
-    if (self.liveListArr.count||!self.liveListArr) {
-        switch (kFromClassTypeValue) {
-            case FromLiveRecommendVCToLiveContentFirstVC:{
-                [self requestRecommendLiveListWithParamDic:nil];
-                
-                break;
-            }
-            case FromLiveNearVCToLiveContentFirstVC:{
-                [self requestNearLiveList];
-                break;
-            }
-            case FromLiveClassifyVCToLiveContentFirstVC:{
-                [self requestRecommendLiveListWithParamDic:self.paramDic];
-                break;
-            }
-            default:
-                break;
+    switch (kFromClassTypeValue) {
+        case FromLiveRecommendVCToLiveContentFirstVC:{
+            [self requestRecommendLiveListWithParamDic:nil];
+            
+            break;
         }
-        
+        case FromLiveNearVCToLiveContentFirstVC:{
+            [self requestNearLiveList];
+            break;
+        }
+        case FromLiveClassifyVCToLiveContentFirstVC:{
+            [self requestRecommendLiveListWithParamDic:self.paramDic];
+            break;
+        }
+        default:
+            break;
     }
 }
 
@@ -212,6 +209,7 @@ static NSString * const ZSHNearHeadViewID = @"ZSHNearHeadView";
 }
 
 - (void)collectionHeaderRereshing {
+    
     [self requestData];
 }
 

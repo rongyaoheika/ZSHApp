@@ -44,7 +44,9 @@
 #elif TestSever
 
 /**测试服务器*/
-#define kUrlRoot                    @"http://192.168.1.125:8081/ZSHINTER/"   // 振华
+//#define kUrlRoot                    @"http://192.168.1.125:8081/ZSHINTER/"   // 振华
+
+#define kUrlRoot                    @"http://192.168.1.112:8081/ZSHINTER/"     // 张凌兵
 
 #elif ProductSever
 
@@ -797,6 +799,10 @@
 //地址:/applivein/getuserlist?USERLIST
 #define kUrlGetUserList [NSString stringWithFormat:@"/applivein/getuserlist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"USERLIST"]]
 
+//158.直播中送礼物接口
+//参数:HONOURUSER_ID 当前账户id ,REHONOURUSER_ID 被赠送人id, BLACKPRICE 赠送礼物总价值
+//地址:/applivein/gifttouser?GIFT
+#define kUrlGiftToUser [NSString stringWithFormat:@"/applivein/gifttouser?GIFT?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"USERLIST"]]
 //************************
 
 //151.音乐中心-首页：歌手推荐和广告

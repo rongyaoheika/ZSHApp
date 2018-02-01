@@ -9,7 +9,7 @@
 #define PYSEARCH_DEPRECATED(instead) NS_DEPRECATED(2_0, 2_0, 2_0, 2_0, instead)
 #define PYSEARCH_SEARCH_HISTORY_CACHE_PATH [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"PYSearchhistories.plist"] // the path of search record cached
 
-@class PYSearchViewController, PYSearchSuggestionViewController;
+@class PYSearchViewController;
 
 typedef void(^PYDidSearchBlock)(PYSearchViewController *searchViewController, UISearchBar *searchBar, NSString *searchText);
 
@@ -196,16 +196,6 @@ didSelectSearchSuggestionAtIndex:(NSInteger)index
 @property (nonatomic, weak) id<PYSearchViewControllerDataSource> dataSource;
 
 /**
- Ranking the background color of the corresponding hexadecimal string (eg: @"#ffcc99") array (just four colors) when `hotSearchStyle` is `PYHotSearchStyleRankTag`.
- */
-@property (nonatomic, strong) NSArray<NSString *> *rankTagBackgroundColorHexStrings;
-
-/**
- The pool of color which are use in colorful tag when `hotSearchStyle` is `PYHotSearchStyleColorfulTag`.
- */
-@property (nonatomic, strong) NSMutableArray<UIColor *> *colorPol;
-
-/**
  Whether swap the popular search and search history location, default is NO.
  
  Note: It is‘t effective when `searchHistoryStyle` is `PYSearchHistoryStyleCell`.
@@ -299,47 +289,11 @@ didSelectSearchSuggestionAtIndex:(NSInteger)index
  */
 @property (nonatomic, assign) PYSearchResultShowMode searchResultShowMode;
 
-/**
- The search bar
- */
-//@property (nonatomic, weak) UISearchBar *searchBar;
-
-/**
- The text field of search bar
- */
-//@property (nonatomic, weak) UITextField *searchTextField;
-
-/**
- The background color of search bar.
- */
-@property (nonatomic, strong) UIColor *searchBarBackgroundColor;
-
-/**
- The barButtonItem of cancel
- */
-//@property (nonatomic, weak) UIBarButtonItem *cancelButton;
-
-/**
- The search suggestion view
- */
-@property (nonatomic, weak, readonly) UITableView *searchSuggestionView;
 
 /**
  The block which invoked when search begain.
  */
 @property (nonatomic, copy) PYDidSearchBlock didSearchBlock;
-
-/**
- The element of search suggestions
- 
- Note: it is't effective when `searchSuggestionHidden` is NO or cell of suggestion view is custom.
- */
-//@property (nonatomic, copy) NSArray<NSString *> *searchSuggestions;
-
-/**
- Whether hidden search suggstion view, default is NO.
- */
-//@property (nonatomic, assign) BOOL searchSuggestionHidden;
 
 /**
  The view controller of search result.
@@ -367,16 +321,17 @@ didSelectSearchSuggestionAtIndex:(NSInteger)index
 
  @param hotSearches     popular searchs
  @param placeholder     placeholder of search bar
+ @param recommendArr    recommend data
  @return new instance of `PYSearchViewController` class
  */
-+ (instancetype)searchViewControllerWithHotSearches:(NSArray<NSString *> *)hotSearches recommendArr:(NSArray *)recommendArr
-                               searchBarPlaceholder:(NSString *)placeholder;
++ (instancetype)searchViewControllerWithHotSearches:(NSArray<NSString *> *)hotSearches searchBarPlaceholder:(NSString *)placeholder recommendArr:(NSArray *)recommendArr;
 
 /**
  Creates an instance of searchViewContoller with popular searches, search bar's placeholder and the block which invoked when search begain.
 
  @param hotSearches     popular searchs
  @param placeholder     placeholder of search bar
+ @param recommendArr    recommend data
  @param block           block which invoked when search begain
  @return new instance of `PYSearchViewController` class
  

@@ -453,14 +453,17 @@
 
 //尊购
 - (void)searchAction {
+    BOOL showRecommendView = NO;
     NSDictionary *paramDic = [[NSDictionary alloc]init];
     switch (kFromClassTypeValue) {
         case FromBuyVCToTitleContentVC:{
             paramDic = @{@"PARENT_ID":@(2)};
+            showRecommendView = YES;
              break;
         }
         case FromLiveTabBarVCToTitleContentVC:{
             paramDic = @{@"PARENT_ID":@(4)};
+            showRecommendView = NO;
             break;
         }
             
@@ -487,10 +490,10 @@
                 [weakself.navigationController pushViewController:goodContentVC animated:YES];
             }];
             
-            searchViewController.showRecommendView = YES;
-            searchViewController.hotSearchStyle = PYHotSearchStyleARCBorderTag;
-            searchViewController.searchHistoryStyle = PYSearchHistoryStyleARCBorderTag;
-            searchViewController.searchBarBackgroundColor = KZSHColor1A1A1A;
+            searchViewController.showRecommendView = showRecommendView;
+//            searchViewController.hotSearchStyle = PYHotSearchStyleARCBorderTag;
+//            searchViewController.searchHistoryStyle = PYSearchHistoryStyleARCBorderTag;
+//            searchViewController.searchBarBackgroundColor = KZSHColor1A1A1A;
             searchViewController.delegate = self;
             [self.navigationController pushViewController:searchViewController animated:YES];
         });

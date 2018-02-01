@@ -871,7 +871,7 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
     cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHSearchLiveThirdCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHSearchLiveThirdCellID];
         cell.separatorInset = UIEdgeInsetsMake(0, 0, 0, MAXFLOAT);
-        _activeTime = @"2";
+        _activeTime = @"0";
         cell.btnClickBlock = ^(NSString *activeTime) {
             _activeTime = activeTime;
         };
