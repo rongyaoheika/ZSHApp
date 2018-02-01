@@ -11,6 +11,7 @@
 #import "ZSHWeiboViewController.h"
 #import "ZSHVideoViewController.h"
 #import "ZSHPersonalDetailViewController.h"
+#import "ZSHWeiboWriteController.h"
 
 @interface ZSHLivePopView ()
 
@@ -55,11 +56,11 @@
 - (void)clickButton:(NSInteger)index {
 
     NSArray *VCS = @[@"ZSHWeiboWriteController",@"AlivcLivePusherViewController",@"ZSHVideoRecViewController"];
-    NSArray *fromclassTypes = @[@(FromTabbarToWeiboVC),@"", @(FromTabbarToPersonalDetailVC)];
+    NSArray *fromclassTypes = @[@(FromWeiboVCToZSHWeiboWriteVC),@"", @(FromTabbarToPersonalDetailVC)];
     
     Class className = NSClassFromString(VCS[index-1]);
     if (index != 2) {
-         RootViewController *vc =  [[className alloc] initWithParamDic:@{KFromClassType:fromclassTypes[index-1]}];
+        RootViewController *vc =  [[className alloc] initWithParamDic:@{KFromClassType:fromclassTypes[index-1]}];
         [ZSHBaseUIControl setAnimationWithHidden:YES view:self.superview completedBlock:^{
             [[kAppDelegate getCurrentUIVC].navigationController pushViewController:vc animated:YES];
         }];

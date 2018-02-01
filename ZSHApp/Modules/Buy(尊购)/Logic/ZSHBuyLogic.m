@@ -238,5 +238,14 @@
         RLog(@"请求失败");
     }];
 }
+// 根据规格展示商品
+- (void)requestGetProbyStandard:(NSDictionary *)dic success:(void (^)(id response))success {
+    [PPNetworkHelper POST:kUrlGetProbyStandard parameters:dic success:^(id responseObject) {
+        success(responseObject);
+    } failure:^(NSError *error) {
+        RLog(@"请求失败");
+    }];
+}
+
 
 @end

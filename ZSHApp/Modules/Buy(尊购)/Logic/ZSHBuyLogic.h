@@ -67,4 +67,6 @@
 
 // 获得尊购首页专区列表
 - (void)requestGetFectureList:(NSDictionary *)dic success:(void (^)(id response))success;
+// 根据规格展示商品
+- (void)requestGetProbyStandard:(NSDictionary *)dic success:(void (^)(id response))success;
 @end

@@ -297,7 +297,6 @@
         }
         NSDictionary *titleTextAttributes = [tzBarItem titleTextAttributesForState:UIControlStateNormal];
         [BarItem setTitleTextAttributes:titleTextAttributes forState:UIControlStateNormal];
-        
     }
     return _imagePickerVc;
 }

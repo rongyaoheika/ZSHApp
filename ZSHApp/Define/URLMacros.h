@@ -24,8 +24,12 @@
 
 #ifdef DEBUG
 
-#define DevelopSever    1
-#define TestSever       0
+
+
+#define DevelopSever    0
+#define TestSever       1
+#define TestSever1      0
+
 #define ProductSever    0
 
 #else
@@ -47,6 +51,10 @@
 //#define kUrlRoot                    @"http://192.168.1.125:8081/ZSHINTER/"   // 振华
 
 #define kUrlRoot                    @"http://192.168.1.112:8081/ZSHINTER/"     // 张凌兵
+
+#elif TestSever1
+
+#define kUrlRoot                    @"http://192.168.1.112:8081/ZSHINTER/"   // 凌兵
 
 #elif ProductSever
 
@@ -891,9 +899,20 @@
 //参数： 无
 //请求地址：/appshipin/getfecturelist?FECTURELIST(混淆码)
 #define kUrlGetFectureList [NSString stringWithFormat:@"/appshipin/getfecturelist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"FECTURELIST"]]
-
-
-
+//161.根据规格展示商品
+//http://localhost:8081/ZSHINTER//product/getprobystandard?GETPROBYSTANDARD&PRODUCT_ID=388354150699630592
+#define kUrlGetProbyStandard [NSString stringWithFormat:@"/product/getprobystandard?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"GETPROBYSTANDARD"]]
+//添加商品到购物车
+//加密参数:ADDCART
+//URL:/appcartin/addcart
+//参数:
+//STANDARD_ID:   商品规格id;
+//HONOURUSER_ID:用户id;
+//UANTITY:数量
+//返回参数:
+//创建成功返回:{"result":"01"}
+//若购物车已存在该商品则返回:{"result":"已添加到购物车,数量+1"}
+//#define kUrlAddCart [NSString stringWithFormat:@"/appcartin/addcart?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"ADDCART"]]
 
 
 #endif /* URLMacros_h */

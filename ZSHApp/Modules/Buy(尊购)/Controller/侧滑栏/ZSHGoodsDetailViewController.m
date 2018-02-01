@@ -43,14 +43,14 @@
 static NSString *ZSHDetailShufflingHeadViewID = @"ZSHDetailShufflingHeadView";
 
 //cell
-static NSString *ZSHDetailGoodReferralCellID = @"ZSHDetailGoodReferralCell";
-static NSString *ZSHDetailGoodBottomCellID = @"ZSHDetailGoodBottomCellID";
-static NSString *ZSHGoodsDetailColorCellID = @"ZSHGoodsDetailColorCell";
-static NSString *ZSHGoodsDetailCountCellID = @"ZSHGoodsDetailCountCell";
+static NSString *ZSHDetailGoodReferralCellID    = @"ZSHDetailGoodReferralCell";
+static NSString *ZSHDetailGoodBottomCellID      = @"ZSHDetailGoodBottomCellID";
+static NSString *ZSHGoodsDetailColorCellID      = @"ZSHGoodsDetailColorCell";
+static NSString *ZSHGoodsDetailCountCellID      = @"ZSHGoodsDetailCountCell";
+static NSString *ZSHGoodsChartCellID            = @"ZSHGoodsChartCell";
+static NSString *ZSHGoodsDetailSubCellID        = @"ZSHGoodsDetailSubCell";
+static NSString *ZSHGoodsDetailCommentCellID    = @"ZSHGoodsDetailCommentCell";
 
-static NSString *ZSHGoodsChartCellID = @"ZSHGoodsChartCell";
-static NSString *ZSHGoodsDetailSubCellID = @"ZSHGoodsDetailSubCell";
-static NSString *ZSHGoodsDetailCommentCellID = @"ZSHGoodsDetailCommentCell";
 
 @implementation ZSHGoodsDetailViewController
 
@@ -345,6 +345,10 @@ static NSString *ZSHGoodsDetailCommentCellID = @"ZSHGoodsDetailCommentCell";
         weakself.commentArr = weakself.buyLogic.goodCommentModelArr;
         [weakself.collectionView reloadData];
     }];
+    
+//    [_buyLogic requestGetProbyStandard:@{@"PRODUCT_ID":_goodModel.PRODUCT_ID } success:^(id response) {
+//        
+//    }];
 }
 
 
@@ -388,7 +392,6 @@ static NSString *ZSHGoodsDetailCommentCellID = @"ZSHGoodsDetailCommentCell";
             self.titleView.selectedIndex = 2;
         }
     }
-    
 }
 
 @end
