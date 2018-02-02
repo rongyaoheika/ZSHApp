@@ -43,7 +43,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     
     [self loadLocalData];
     [self createUI];
-
+    
 }
 
 - (void)createUI{
@@ -66,7 +66,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 - (void)loadLocalData{
     _btnArr = [[NSMutableArray alloc]init];
     _btnTitleArr = @[@"常规",@"轻奢",@"豪华"];
-    _scrollContentArr = @[@(1),@(1),@(1)];
+    _scrollContentArr = @[@(2),@(1),@(1)];
     _midScrollView = 0;
     _subScrollIndex = 0;
 }
@@ -119,7 +119,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     
 }
 
-//具体礼物ScrollView
+//具体礼物ScrollView index：礼物类型（常规，轻奢，豪华） count：scrollview.contentSize
 - (UIScrollView *)createScrollViewWithIndex:(NSInteger)index Count:(NSInteger)count{
     UIScrollView *giftSV = [[UIScrollView alloc]initWithFrame:CGRectMake(index*KScreenWidth, 0, KScreenWidth, kRealValue(190))];
     giftSV.tag = index+20;
@@ -131,39 +131,58 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     
     NSArray *btnDicArr = @[
                            @[//常规
-                               @[
-                                   @{@"btnNormalImage":@"gift_image_0",@"btnTitle":@"心",@"coinTile":@"1黑咖币"},
-                                   @{@"btnNormalImage":@"gift_image_1",@"btnTitle":@"星星",@"coinTile":@"1黑咖币"},
-                                   @{@"btnNormalImage":@"gift_image_2",@"btnTitle":@"棒棒糖",@"coinTile":@"1黑咖币"},
-                                   @{@"btnNormalImage":@"gift_image_3",@"btnTitle":@"棒棒糖",@"coinTile":@"1黑咖币"},
-                                   @{@"btnNormalImage":@"gift_image_4",@"btnTitle":@"红包",@"coinTile":@"6黑咖币"},
+                               @[//常规第一栏
+                                   @[
+                                       @{@"btnNormalImage":@"gift_image_0",@"btnTitle":@"心",@"coinTile":@"1黑咖币"},
+                                       @{@"btnNormalImage":@"gift_image_1",@"btnTitle":@"星星",@"coinTile":@"1黑咖币"},
+                                       @{@"btnNormalImage":@"gift_image_2",@"btnTitle":@"棒棒糖",@"coinTile":@"1黑咖币"},
+                                       @{@"btnNormalImage":@"gift_image_3",@"btnTitle":@"棒棒糖",@"coinTile":@"1黑咖币"},
+                                       @{@"btnNormalImage":@"gift_image_4",@"btnTitle":@"红包",@"coinTile":@"6黑咖币"},
+                                       ],
+                                   
+                                   @[
+                                       @{@"btnNormalImage":@"gift_image_5",@"btnTitle":@"奖杯",@"coinTile":@"10黑咖币"},
+                                       @{@"btnNormalImage":@"gift_image_6",@"btnTitle":@"冰淇淋",@"coinTile":@"18黑咖币"},
+                                       @{@"btnNormalImage":@"gift_image_7",@"btnTitle":@"奶酪",@"coinTile":@"28黑咖币"},
+                                       @{@"btnNormalImage":@"gift_image_8",@"btnTitle":@"小蛋糕",@"coinTile":@"68黑咖币"},
+                                       @{@"btnNormalImage":@"gift_image_9",@"btnTitle":@"皇冠",@"coinTile":@"188黑咖币"},
+                                       ],
                                    ],
-                               
-                               @[
-                                   @{@"btnNormalImage":@"gift_image_5",@"btnTitle":@"奖杯",@"coinTile":@"10黑咖币"},
-                                   @{@"btnNormalImage":@"gift_image_6",@"btnTitle":@"冰淇淋",@"coinTile":@"18黑咖币"},
-                                   @{@"btnNormalImage":@"gift_image_7",@"btnTitle":@"奶酪",@"coinTile":@"28黑咖币"},
-                                   @{@"btnNormalImage":@"gift_image_8",@"btnTitle":@"小蛋糕",@"coinTile":@"68黑咖币"},
-                                   @{@"btnNormalImage":@"gift_image_9",@"btnTitle":@"皇冠",@"coinTile":@"188黑咖币"},
-                                   ],
+                               @[//常规第二栏
+                                   @[
+                                       @{@"btnNormalImage":@"gift_image_10",@"btnTitle":@"蓝色妖姬",@"coinTile":@"1黑咖币"},
+                                       @{@"btnNormalImage":@"gift_image_11",@"btnTitle":@"小熊",@"coinTile":@"1黑咖币"},
+                                       @{@"btnNormalImage":@"gift_image_12",@"btnTitle":@"炸弹",@"coinTile":@"1黑咖币"},
+                                       @{@"btnNormalImage":@"gift_image_13",@"btnTitle":@"口红",@"coinTile":@"1黑咖币"},
+                                       @{@"btnNormalImage":@"gift_image_14",@"btnTitle":@"么么哒",@"coinTile":@"1黑咖币"},
+                                       ],
+                                   
+                                   @[
+                                       @{@"btnNormalImage":@"gift_image_15",@"btnTitle":@"炮竹",@"coinTile":@"18黑咖币"},
+                                       @{@"btnNormalImage":@"gift_image_16",@"btnTitle":@"巧克力",@"coinTile":@"68黑咖币"},
+                                       @{@"btnNormalImage":@"gift_image_17",@"btnTitle":@"包包",@"coinTile":@"188黑咖币"},
+                                       @{@"btnNormalImage":@"gift_image_18",@"btnTitle":@"蓝钻石",@"coinTile":@"288黑咖币"},
+                                       @{@"btnNormalImage":@"gift_image_19",@"btnTitle":@"皮卡丘",@"coinTile":@"288黑咖币"},
+                                       ],
+                                   ]
                                
                                ],
                            
                            @[//轻奢
                                @[
-                                   @{@"btnNormalImage":@"gift_image_10",@"btnTitle":@"蓝色妖姬",@"coinTile":@"1黑咖币"},
-                                   @{@"btnNormalImage":@"gift_image_11",@"btnTitle":@"小熊",@"coinTile":@"1黑咖币"},
-                                   @{@"btnNormalImage":@"gift_image_12",@"btnTitle":@"炸弹",@"coinTile":@"1黑咖币"},
-                                   @{@"btnNormalImage":@"gift_image_13",@"btnTitle":@"口红",@"coinTile":@"1黑咖币"},
-                                   @{@"btnNormalImage":@"gift_image_14",@"btnTitle":@"么么哒",@"coinTile":@"1黑咖币"},
+                                   @{@"btnNormalImage":@"gift_image_30",@"btnTitle":@"包-1",@"coinTile":@"100黑咖币"},
+                                   @{@"btnNormalImage":@"gift_image_31",@"btnTitle":@"包-2",@"coinTile":@"200黑咖币"},
+                                   @{@"btnNormalImage":@"gift_image_32",@"btnTitle":@"包-3",@"coinTile":@"300黑咖币"},
+                                   @{@"btnNormalImage":@"gift_image_33",@"btnTitle":@"包-4",@"coinTile":@"400黑咖币"},
+                                   @{@"btnNormalImage":@"gift_image_34",@"btnTitle":@"包-5",@"coinTile":@"500黑咖币"},
                                    ],
                                
                                @[
-                                   @{@"btnNormalImage":@"gift_image_15",@"btnTitle":@"炮竹",@"coinTile":@"18黑咖币"},
-                                   @{@"btnNormalImage":@"gift_image_16",@"btnTitle":@"巧克力",@"coinTile":@"68黑咖币"},
-                                   @{@"btnNormalImage":@"gift_image_17",@"btnTitle":@"包包",@"coinTile":@"188黑咖币"},
-                                   @{@"btnNormalImage":@"gift_image_18",@"btnTitle":@"蓝钻石",@"coinTile":@"288黑咖币"},
-                                   @{@"btnNormalImage":@"gift_image_19",@"btnTitle":@"皮卡丘",@"coinTile":@"288黑咖币"},
+                                   @{@"btnNormalImage":@"gift_image_35",@"btnTitle":@"包-6",@"coinTile":@"600黑咖币"},
+                                   @{@"btnNormalImage":@"gift_image_36",@"btnTitle":@"包-7",@"coinTile":@"700黑咖币"},
+                                   @{@"btnNormalImage":@"gift_image_37",@"btnTitle":@"包-8",@"coinTile":@"800黑咖币"},
+                                   @{@"btnNormalImage":@"gift_image_38",@"btnTitle":@"包-9",@"coinTile":@"900黑咖币"},
+                                   @{@"btnNormalImage":@"gift_image_39",@"btnTitle":@"包-10",@"coinTile":@"1000黑咖币"},
                                    ],
                                
                                ],
@@ -193,14 +212,21 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     CGFloat viewH = kRealValue(190)/2;
     
     for (int contentCount = 0; contentCount<count; contentCount++) {//contentSize
-    
+        
         for (int i = 0; i<2; i++) {//2行
             for (int j = 0; j <5; j++) {//5列
                 UIView *btnView = [[UIView alloc]initWithFrame:CGRectMake(kScreenWidth*contentCount + j*viewW, i*viewH, viewW, viewH)];
                 [giftSV addSubview:btnView];
                 
+                NSDictionary *giftDic = nil;
+                if (count>1) {
+                    giftDic = btnDicArr[index][contentCount][i][j];
+                }else {
+                    giftDic = btnDicArr[index][i][j];
+                }
+                
                 //图片
-                UIImageView *giftIV = [[UIImageView alloc]initWithImage:[UIImage imageNamed:btnDicArr[index][i][j][@"btnNormalImage"]]];
+                UIImageView *giftIV = [[UIImageView alloc]initWithImage:[UIImage imageNamed:giftDic[@"btnNormalImage"]]];
                 [btnView addSubview:giftIV];
                 [giftIV mas_makeConstraints:^(MASConstraintMaker *make) {
                     make.size.mas_equalTo(CGSizeMake(kRealValue(45), kRealValue(45)));
@@ -210,7 +236,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
                 
                 
                 //文字
-                NSDictionary *giftLBDic = @{@"text":btnDicArr[index][i][j][@"btnTitle"],@"font":kPingFangRegular(12),@"textAlignment":@(NSTextAlignmentCenter)};
+                NSDictionary *giftLBDic = @{@"text":giftDic[@"btnTitle"],@"font":kPingFangRegular(12),@"textAlignment":@(NSTextAlignmentCenter)};
                 UILabel *giftLB = [ZSHBaseUIControl createLabelWithParamDic:giftLBDic];
                 [btnView addSubview:giftLB];
                 [giftLB mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -221,7 +247,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
                 }];
                 
                 //消费
-                NSDictionary *coinLBDic = @{@"text":btnDicArr[index][i][j][@"coinTile"],@"font":kPingFangRegular(10),@"textAlignment":@(NSTextAlignmentCenter)};
+                NSDictionary *coinLBDic = @{@"text":giftDic[@"coinTile"],@"font":kPingFangRegular(10),@"textAlignment":@(NSTextAlignmentCenter)};
                 UILabel *coinLB = [ZSHBaseUIControl createLabelWithParamDic:coinLBDic];
                 [btnView addSubview:coinLB];
                 [coinLB mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -309,7 +335,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
             [ZSHBaseFunction showPopView:self.subTab frameY:kScreenHeight - kRealValue(50) - kRealValue(250)];
             [self initViewModel];
         }
-       
+        
     } else {
         [ZSHBaseFunction dismissPopView:self.subTab block:nil];
     }
@@ -342,9 +368,9 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 
 - (ZSHBaseTableViewSectionModel*)storeListSection {
     NSArray *dicArr = @[@{@"leftTitle":@"1314",@"rightTitle":@"一生一世"},@{@"leftTitle":@"520",@"rightTitle":@"我爱你"},
-  @{@"leftTitle":@"188",@"rightTitle":@"要抱抱"},@{@"leftTitle":@"66",@"rightTitle":@"一切顺利"},
-  @{@"leftTitle":@"30",@"rightTitle":@"想你"},@{@"leftTitle":@"10",@"rightTitle":@"十全十美"},
-  @{@"leftTitle":@"1",@"rightTitle":@"一心一意"},@{@"midTitle":@"其他数量"}];
+                        @{@"leftTitle":@"188",@"rightTitle":@"要抱抱"},@{@"leftTitle":@"66",@"rightTitle":@"一切顺利"},
+                        @{@"leftTitle":@"30",@"rightTitle":@"想你"},@{@"leftTitle":@"10",@"rightTitle":@"十全十美"},
+                        @{@"leftTitle":@"1",@"rightTitle":@"一心一意"},@{@"midTitle":@"其他数量"}];
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     for (int i = 0; i < dicArr.count; i++) {
         ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
@@ -364,7 +390,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
                 return cell;
             };
         }
-       
+        
         
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
             
@@ -388,25 +414,25 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 }
 #pragma mark 处理scrollView翻页效果
 - (void)dealPageEnableWithScrollView:(UIScrollView *)scrollView{
-//     NSInteger midScrollViewIndex = (NSInteger)(fabs((scrollView.contentOffset.x/KScreenWidth)));
-//    RLog(@"scrollView 的tag == %ld  page==%ld   contentoffset==%f",scrollView.tag,midScrollViewIndex,scrollView.contentOffset.x);
+    //     NSInteger midScrollViewIndex = (NSInteger)(fabs((scrollView.contentOffset.x/KScreenWidth)));
+    //    RLog(@"scrollView 的tag == %ld  page==%ld   contentoffset==%f",scrollView.tag,midScrollViewIndex,scrollView.contentOffset.x);
     if (scrollView.tag == 10) {//外层scrollview
         NSInteger midScrollViewIndex = (NSInteger)(fabs((scrollView.contentOffset.x/KScreenWidth)));
         [self selectedByIndex:midScrollViewIndex+1];
         self.pageControl.numberOfPages = [_scrollContentArr[midScrollViewIndex]integerValue];
-       
+        
         UIScrollView *subScrollView = [self.midScrollView viewWithTag:midScrollViewIndex + 20];
         NSInteger subScrollIndex = (NSInteger)(fabs((subScrollView.contentOffset.x/KScreenWidth)));
         self.pageControl.currentPage = subScrollIndex;
         self.pageControl.hidden = self.pageControl.numberOfPages<=1?YES:NO;
-
+        
     } else {//内层scrollview
         
         NSInteger subScrollIndex = (NSInteger)(fabs((scrollView.contentOffset.x/KScreenWidth)));
         self.pageControl.currentPage = subScrollIndex;
         [scrollView setContentOffset:CGPointMake(KScreenWidth * subScrollIndex,0)];
     }
-
+    
     
 }
 
