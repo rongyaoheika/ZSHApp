@@ -8,7 +8,6 @@
 
 #import "ZSHLivePersonInfoView.h"
 #import "ZSHTitleContentViewController.h"
-#import "ZSHPersonalCenterViewController.h"
 
 @implementation ZSHLivePersonInfoView
 
@@ -118,13 +117,8 @@
 }
 
 - (void)headTapBtnAction {
-    
     [ZSHBaseUIControl setAnimationWithHidden:YES view:self.superview completedBlock:^{
-        if (self.headTapBlock) {
-            self.headTapBlock();
-        }
-//        ZSHPersonalCenterViewController *vc = [[ZSHPersonalCenterViewController alloc] init];
-//        [[kAppDelegate getCurrentUIVC].navigationController pushViewController:vc animated:YES];
+        [[NSNotificationCenter defaultCenter]postNotificationName:KPushLivePersonInfoVC object:nil];
     }];
 }
 

@@ -136,10 +136,10 @@ static NSString * const ZSHNearHeadViewID = @"ZSHNearHeadView";
 //    [self.navigationController pushViewController:demoTwo animated:YES];
     
     
-    AliyunPlaySDKDemoFullScreenScrollViewController *demoThree = [[AliyunPlaySDKDemoFullScreenScrollViewController alloc] init];
+    AliyunPlaySDKDemoFullScreenScrollViewController *livePlayVC = [[AliyunPlaySDKDemoFullScreenScrollViewController alloc] init];
     ZSHLiveListModel *model = self.liveListArr[indexPath.item];
-    demoThree.publishUrl = model.PublishUrl;
-    [self presentViewController:demoThree animated:YES completion:nil];
+    livePlayVC.publishUrl = model.PublishUrl;
+    [self.navigationController pushViewController:livePlayVC animated:YES];
     
     
 }

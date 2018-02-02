@@ -11,56 +11,53 @@
 #import "AliyunPlaySDKDemoFullScreenScrollCollectionViewCell.h"
 #import "ZSHAudienceLivePopView.h"
 #import "ZSHLiveLogic.h"
-#define SCREEN_WIDTH  [UIScreen mainScreen].bounds.size.width
-#define SCREEN_HEIGHT  [UIScreen mainScreen].bounds.size.height
+#import "ZSHPersonalCenterViewController.h"
 
 @interface AliyunPlaySDKDemoFullScreenScrollViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UIScrollViewDelegate>
 
-@property (nonatomic, strong) UICollectionView           *collectionView;
 @property (nonatomic, strong) ZSHAudienceLivePopView     *audienceView;
 
 @end
 
 @implementation AliyunPlaySDKDemoFullScreenScrollViewController
 static NSString *cellId = @"customCell";
-#pragma mark - naviBar
-- (void)naviBar{
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Back", nil) style:UIBarButtonItemStylePlain target:self action:@selector(leftBarButtonItemCliceked:)];
-}
-
-- (void)leftBarButtonItemCliceked:(UIBarButtonItem*)sender{
-    //释放播放器
-    NSArray *ary = [self.collectionView visibleCells];
-    for (AliyunPlaySDKDemoFullScreenScrollCollectionViewCell *cell in ary) {
-        [cell releasePlayer];
-    }
-    [self.navigationController popViewControllerAnimated:YES];
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.edgesForExtendedLayout = UIRectEdgeNone;
-    [self naviBar];
-    UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-    layout.itemSize =  CGSizeMake(SCREEN_WIDTH, SCREEN_HEIGHT);
+    
+    self.isHidenNaviBar = YES;
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(pushLivePersonInfoVCAction) name:KPushLivePersonInfoVC object:nil];
+    
+    UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout *)self.collectionView.collectionViewLayout;
+    layout.itemSize =  CGSizeMake(KScreenWidth, KScreenHeight);
     layout.minimumInteritemSpacing=0;
     layout.minimumLineSpacing = 0;
     layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-    self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT) collectionViewLayout:layout];
+    
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
-    self.collectionView.backgroundColor = [UIColor grayColor];
     self.collectionView.pagingEnabled = YES;
     self.collectionView.showsHorizontalScrollIndicator = YES;
     [self.view addSubview:self.collectionView];
+    [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.mas_equalTo(self.view).insets(UIEdgeInsetsMake(0, 0, KBottomHeight, 0));
+    }];
     
     [self.view addSubview:self.audienceView];
     kWeakSelf(self);
     self.audienceView.dissmissViewBlock = ^(UIButton *btn) {
-        [weakself dismissViewControllerAnimated:YES completion:nil];
+        NSArray *ary = [weakself.collectionView visibleCells];
+        for (AliyunPlaySDKDemoFullScreenScrollCollectionViewCell *cell in ary) {
+            [cell releasePlayer];
+        }
+        [weakself.navigationController popViewControllerAnimated:YES];
     };
     
-    // Do any additional setup after loading the view.
+}
+
+- (void)pushLivePersonInfoVCAction{
+    ZSHPersonalCenterViewController *vc = [[ZSHPersonalCenterViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{

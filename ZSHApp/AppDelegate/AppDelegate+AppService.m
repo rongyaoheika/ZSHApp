@@ -16,7 +16,7 @@
 #import "ZSHGuideViewController.h"
 #import "ZegoAVKitManager.h"
 #import "ZSHHomeLogic.h"
-//#import "ZSHBaseFunction.h"
+#import "ZSHTitleContentViewController.h"
 #import "HCLocationManager.h"
 @implementation AppDelegate (AppService)
 
@@ -291,7 +291,9 @@
         if ([nav.viewControllers.lastObject isKindOfClass:[ZSHLiveTabBarController class]]) {
             ZSHLiveTabBarController *liveTabVC = (ZSHLiveTabBarController *)nav.viewControllers.lastObject;
              RootNavigationController *liveTabNav = [liveTabVC selectedViewController];
-             return liveTabNav.viewControllers.lastObject;
+             ZSHTitleContentViewController *liveContentVC = liveTabNav.viewControllers.lastObject;
+             RootViewController *liveVC = liveContentVC.vcs[liveContentVC.vcIndex];
+             return liveVC;
         } else {
              return nav.viewControllers.lastObject;
         }

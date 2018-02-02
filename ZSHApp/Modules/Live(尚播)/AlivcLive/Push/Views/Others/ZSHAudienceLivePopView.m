@@ -10,6 +10,7 @@
 #import "ZSHBottomBlurPopView.h"
 #import "ZSHLiveGiftView.h"
 #import "ZSHShareView.h"
+#import "ZSHLiveLogic.h"
 @interface ZSHAudienceLivePopView ()
 
 @property (nonatomic, strong) ZSHBottomBlurPopView           *bottomBlurPopView;
@@ -19,6 +20,7 @@
 @property (nonatomic, strong) UIView                         *bottomView;
 @property (nonatomic, strong) ZSHLiveGiftView                *giftView;
 @property (nonatomic, strong) ZSHShareView                   *shareView;
+@property (nonatomic, strong) ZSHLiveLogic                   *liveLogic;
 @end
 
 static NSString *ZSHBaseCellID = @"ZSHBaseCell";
@@ -26,6 +28,8 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 @implementation ZSHAudienceLivePopView
 
 - (void)setup{
+    _liveLogic = [[ZSHLiveLogic alloc]init];
+    
     [self setupLiveTopViews];
     [self setupLiveChatTabView];
     [self setupLiveBottomViews];
@@ -224,13 +228,22 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 }
 
 - (void)personInfo {
-    NSDictionary *nextParamDic = @{KFromClassType:@(ZSHFromPersonInfoVCToBottomBlurPopView)};
-    ZSHBottomBlurPopView *bottomBlurPopView = [[ZSHBottomBlurPopView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight) paramDic:nextParamDic];
-    bottomBlurPopView.blurRadius = 20;
-    bottomBlurPopView.dynamic = NO;
-    bottomBlurPopView.tintColor = KClearColor;
-    [ZSHBaseUIControl setAnimationWithHidden:NO view:bottomBlurPopView completedBlock:nil];
+    NSDictionary *paramDic = @{@"HONOURUSER_ID":REHONOURUSER_IDValue,@"REHONOURUSER_ID":HONOURUSER_IDValue};
+    [_liveLogic requestLivePithyDataWithDic:paramDic success:^(id response) {
+        RLog(@"获取的个人资料==%@",response);
+        
+        NSDictionary *nextParamDic = @{KFromClassType:@(ZSHFromPersonInfoVCToBottomBlurPopView),@"pd":response[@"pd"]};
+        ZSHBottomBlurPopView *bottomBlurPopView = [[ZSHBottomBlurPopView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight) paramDic:nextParamDic];
+        bottomBlurPopView.blurRadius = 20;
+        bottomBlurPopView.dynamic = NO;
+        bottomBlurPopView.tintColor = KClearColor;
+        [ZSHBaseUIControl setAnimationWithHidden:NO view:bottomBlurPopView completedBlock:nil];
+    }];
+    
+   
 }
+
+
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
     UITouch *touch = [touches anyObject];

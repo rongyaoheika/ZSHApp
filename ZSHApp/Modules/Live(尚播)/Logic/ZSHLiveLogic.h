@@ -61,4 +61,6 @@
 - (void)requestLiveSearhWithDic:(NSDictionary *)dic success:(void (^)(id response))success;
 //直播用户资料
 - (void)requestLiveUserDataWithDic:(NSDictionary *)dic success:(void (^)(id response))success;
+//直播页面点击头像显示的简洁个人资料
+- (void)requestLivePithyDataWithDic:(NSDictionary *)dic success:(void (^)(id response))success;
 @end

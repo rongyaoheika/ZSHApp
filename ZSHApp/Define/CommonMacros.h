@@ -41,4 +41,5 @@
 //跳转直播预览页
 #define KPresentPreviewVC                   @"KPresentPreviewVC"
 #define KPresentFinishShowVC                @"KPresentFinishShowVC"
+#define KPushLivePersonInfoVC               @"KPushLivePersonInfoVC"
 #endif /* CommonMacros_h */

@@ -31,7 +31,7 @@
 @property (nonatomic, strong) LXScollTitleView    *titleView;
 @property (nonatomic, strong) UIImage             *titleBtnImage;
 @property (nonatomic, strong) NSArray             *titleArr;
-@property (nonatomic, strong) NSMutableArray      *vcs;
+
 
 @property (nonatomic, assign) CGFloat                  titleWidth;
 @property (nonatomic, assign) CGFloat                  indicatorHeight;
@@ -79,6 +79,7 @@
 }
 
 - (void)loadData{
+    self.vcIndex = 0;
     self.indicatorHeight = 0.0;
    
     switch (kFromClassTypeValue) {
@@ -302,6 +303,7 @@
         __weak typeof(self) weakSelf = self;
         _titleView.selectedBlock = ^(NSInteger index){
             __weak typeof(self) strongSelf = weakSelf;
+            strongSelf.vcIndex = index;
             strongSelf.contentView.currentIndex = index;
             if (kFromClassTypeValue == FromHotelVCToTitleContentVC||kFromClassTypeValue == FromBarVCToTitleContentVC||kFromClassTypeValue == FromFoodVCToTitleContentVC|| kFromClassTypeValue ==FromKTVVCToTitleContentVC ) {
                 [weakself titleViewSelectChangeWithIndex:index];
