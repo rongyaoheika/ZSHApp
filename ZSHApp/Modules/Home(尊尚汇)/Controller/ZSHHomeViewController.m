@@ -59,6 +59,7 @@ static NSString *Identify_MusicCell = @"musicCell";
 @property (nonatomic, strong) NSArray                *hotSearchArr;
 @property (nonatomic, strong) NSArray                *recommendImageArr;
 
+@property (nonatomic, strong) PYSearchViewController *searchViewController;
 
 @end
 
@@ -82,11 +83,9 @@ static NSString *Identify_MusicCell = @"musicCell";
                         @"ZSHTitleContentViewController",
                         @"ZSHAirPlaneViewController",
                         @"ZSHAirPlaneViewController",
-                        
                         @"ZSHTitleContentViewController",     //马术
                         @"ZSHTitleContentViewController",     //游艇
                         @"ZSHTitleContentViewController",     //豪车
-                        
                         @"ZSHMoreSubscribeViewController"];   //更多
     
     self.paramArr = @[
@@ -512,19 +511,21 @@ static NSString *Identify_MusicCell = @"musicCell";
         }
 
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            PYSearchViewController *searchViewController = [PYSearchViewController searchViewControllerWithHotSearches:hotSearchMArr searchBarPlaceholder:NSLocalizedString(@"Search", @"搜索") recommendArr:recommendImageMArr didSearchBlock:^(PYSearchViewController *searchViewController, UISearchBar *searchBar, NSString *searchText) {
-                ZSHGoodsTitleContentViewController *goodContentVC = [[ZSHGoodsTitleContentViewController alloc]initWithParamDic:@{@"searchText":searchText,KFromClassType:@(FromSearchResultVCTOGoodsTitleVC)}];
-                [weakself.navigationController pushViewController:goodContentVC animated:YES];
+            _searchViewController = [PYSearchViewController searchViewControllerWithHotSearches:hotSearchMArr searchBarPlaceholder:NSLocalizedString(@"Search", @"搜索") recommendArr:recommendImageMArr didSearchBlock:^(PYSearchViewController *searchViewController, UISearchBar *searchBar, NSString *searchText) {
+//                ZSHGoodsTitleContentViewController *goodContentVC = [[ZSHGoodsTitleContentViewController alloc]initWithParamDic:@{@"searchText":searchText,KFromClassType:@(FromSearchResultVCTOGoodsTitleVC)}];
+//                [weakself.navigationController pushViewController:goodContentVC animated:YES];
             }];
-
-            searchViewController.showRecommendView = YES;
-            searchViewController.delegate = self;
-            [self.navigationController pushViewController:searchViewController animated:YES];
+            _searchViewController.searchResultShowMode = PYSearchResultShowModeEmbed;
+            _searchViewController.showSearchResultWhenSearchTextChanged = YES;
+            _searchViewController.showRecommendView = YES;
+            _searchViewController.delegate = weakself;
+            [self.navigationController pushViewController:_searchViewController animated:YES];
         });
 
 
     }];
 }
+
 
 #pragma getter
 - (ZSHBottomBlurPopView *)bottomBlurPopView{

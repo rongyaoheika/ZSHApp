@@ -6,6 +6,7 @@
 
 #import "PYSearchViewController.h"
 #import "ZSHRecommendView.h"
+#import "ZSHLiveLogic.h"
 
 #define PYSEARCH_MARGIN 10
 #define PYRectangleTagMaxCol 3
@@ -69,6 +70,14 @@
  */
 @property (nonatomic, strong) ZSHRecommendView    *recommendView;
 
+//是否为搜索界面
+@property (nonatomic, assign) BOOL isSearch;
+
+// search 数据源
+@property (nonatomic, strong) NSArray *searchDataArr;
+
+// search tableview
+@property (nonatomic, strong) UITableView *searchTableView;
 
 
 @end
@@ -264,6 +273,15 @@
     self.tableView.tableFooterView = self.recommendView;
     
     self.hotSearches = nil;
+    
+    
+    _searchTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, KNavigationBarHeight, KScreenWidth, KScreenHeight-KNavigationBarHeight) style:UITableViewStyleGrouped];
+    _searchTableView.delegate = self;
+    _searchTableView.dataSource = self;
+    _searchTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    _searchTableView.backgroundColor = KBlackColor;
+    _searchTableView.hidden = true;
+    [self.view addSubview:_searchTableView];
 }
 
 #pragma action
@@ -580,6 +598,13 @@
 
 - (void)handleSearchResultShow
 {
+    if (_isSearch) {
+        _searchTableView.hidden = false;
+        [_searchTableView reloadData];
+    } else {
+        _searchTableView.hidden = true;
+    }
+    
     switch (self.searchResultShowMode) {
         case PYSearchResultShowModePush:
             self.searchResultController.view.hidden = NO;
@@ -593,7 +618,6 @@
                 self.searchResultController.view.zsh_y = NO == self.navigationController.navigationBar.translucent ? 0 : CGRectGetMaxY(self.navigationController.navigationBar.frame);
                 self.searchResultController.view.zsh_height = self.view.zsh_height - self.searchResultController.view.zsh_y;
             } else {
-                RLog(@"PYSearchDebug： searchResultController cannot be nil when searchResultShowMode is PYSearchResultShowModeEmbed.");
             }
             break;
         case PYSearchResultShowModeCustom:
@@ -614,10 +638,16 @@
     }
     if (self.didSearchBlock) self.didSearchBlock(self, searchBar, searchBar.text);
     [self saveSearchCacheAndRefreshView];
+    [self requestData:searchBar.text];
 }
+
+
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
+    _isSearch = 0 != searchText.length;
+    
+    _searchDataArr = nil;
     if (PYSearchResultShowModeEmbed == self.searchResultShowMode && self.showSearchResultWhenSearchTextChanged) {
         [self handleSearchResultShow];
         self.searchResultController.view.hidden = 0 == searchText.length;
@@ -628,9 +658,11 @@
 
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
 {
+ 
     if (PYSearchResultShowModeEmbed == self.searchResultShowMode) {
         self.searchResultController.view.hidden = 0 == searchBar.text.length || !self.showSearchResultWhenSearchBarRefocused;
     }
+    _isSearch = 0 != searchBar.text.length;
     return YES;
 }
 
@@ -649,39 +681,50 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 //    self.tableView.tableFooterView.hidden = 0 == self.searchHistories.count || !self.showSearchHistory;
-    self.tableView.tableFooterView.hidden = NO;
-    return self.showSearchHistory && PYSearchHistoryStyleCell == self.searchHistoryStyle ? self.searchHistories.count : 0;
+    if (tableView == _searchTableView) {
+        return _searchDataArr.count;
+    } else {
+        self.tableView.tableFooterView.hidden = NO;
+        return self.showSearchHistory && PYSearchHistoryStyleCell == self.searchHistoryStyle ? self.searchHistories.count : 0;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *cellID = @"PYSearchHistoryCellID";
-    
-    ZSHBaseCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
-    if (!cell) {
-        cell = [[ZSHBaseCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
-
-        UIButton *closetButton = [[UIButton alloc] init];
-        closetButton.zsh_size = CGSizeMake(cell.zsh_height, cell.zsh_height);
-        [closetButton setImage:[UIImage imageNamed:@"live_close"] forState:UIControlStateNormal];
-        UIImageView *closeView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"live_close"]];
-        [closetButton addTarget:self action:@selector(closeDidClick:) forControlEvents:UIControlEventTouchUpInside];
-        closeView.contentMode = UIViewContentModeCenter;
-        cell.accessoryView = closetButton;
-        UIImageView *line = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"cell-content-line"]];
-        line.zsh_height = 0.5;
-        line.alpha = 0.7;
-        line.zsh_x = PYSEARCH_MARGIN;
-        line.zsh_y = 43;
-        line.zsh_width = tableView.zsh_width;
-        line.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-        [cell.contentView addSubview:line];
+    if (tableView == _searchTableView) {
+        ZSHBaseCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PYSearchSuggestCellID"];
+        if (!cell) {
+            cell = [[ZSHBaseCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"PYSearchSuggestCellID"];
+        }
+        cell.textLabel.text = _searchDataArr[indexPath.row][@"NICKNAME"];
+        return cell;
+    } else {
+        static NSString *cellID = @"PYSearchHistoryCellID";
+        ZSHBaseCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
+        if (!cell) {
+            cell = [[ZSHBaseCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
+            
+            UIButton *closetButton = [[UIButton alloc] init];
+            closetButton.zsh_size = CGSizeMake(cell.zsh_height, cell.zsh_height);
+            [closetButton setImage:[UIImage imageNamed:@"live_close"] forState:UIControlStateNormal];
+            UIImageView *closeView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"live_close"]];
+            [closetButton addTarget:self action:@selector(closeDidClick:) forControlEvents:UIControlEventTouchUpInside];
+            closeView.contentMode = UIViewContentModeCenter;
+            cell.accessoryView = closetButton;
+            UIImageView *line = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"cell-content-line"]];
+            line.zsh_height = 0.5;
+            line.alpha = 0.7;
+            line.zsh_x = PYSEARCH_MARGIN;
+            line.zsh_y = 43;
+            line.zsh_width = tableView.zsh_width;
+            line.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+            [cell.contentView addSubview:line];
+        }
+        
+        cell.imageView.image = [UIImage imageNamed:@"search_history"];
+        cell.textLabel.text = self.searchHistories[indexPath.row];
+        return cell;
     }
-    
-    cell.imageView.image = [UIImage imageNamed:@"search_history"];
-    cell.textLabel.text = self.searchHistories[indexPath.row];
-    
-    return cell;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
@@ -720,5 +763,16 @@
         [self.searchView.searchBar resignFirstResponder];
     }
 }
+
+- (void)requestData:(NSString *)searchText {
+    kWeakSelf(self);
+    ZSHLiveLogic *liveLogic = [[ZSHLiveLogic alloc] init];
+    [liveLogic requestLiveSearhWithDic:@{@"NICKNAME":searchText} success:^(id response) {
+        weakself.searchDataArr = response[@"pd"];
+        if(weakself.searchDataArr.count)
+            [weakself.searchTableView reloadData];
+    }];
+}
+
 
 @end

@@ -27,10 +27,9 @@
 
 
 #define DevelopSever    0
-#define TestSever       1
+#define TestSever       0
 #define TestSever1      0
-
-#define ProductSever    0
+#define ProductSever    1
 
 #else
 
@@ -913,6 +912,10 @@
 //创建成功返回:{"result":"01"}
 //若购物车已存在该商品则返回:{"result":"已添加到购物车,数量+1"}
 //#define kUrlAddCart [NSString stringWithFormat:@"/appcartin/addcart?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"ADDCART"]]
+
+
+
+
 
 
 #endif /* URLMacros_h */

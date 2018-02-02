@@ -45,4 +45,6 @@
 
 //传递经纬度
 - (void)locateDic:(NSDictionary *)dic success:(void (^)(id response))success;
+
+
 @end
