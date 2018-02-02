@@ -11,6 +11,8 @@
 #import "ZSHMineLogic.h"
 #import "ZSHUploadIDCardController.h"
 #import "ZSHCreateStoreGuideView.h"
+#import "ZSHPickView.h"
+
 
 @interface ZSHMultiInfoViewController ()
 
@@ -34,10 +36,11 @@
 @property (nonatomic, copy) NSString *text6;
 
 @property (nonatomic, strong) ZSHCreateStoreGuideView   *guideView;
-
+@property (nonatomic, strong) ZSHPickView               *pickView;
+@property (nonatomic, copy)   NSString                  *addr;  // 门店地址
 @end
 
-static NSString *ZSHBaseCellID = @"ZSHBaseCell";
+
 @implementation ZSHMultiInfoViewController
 
 - (void)viewDidLoad {
@@ -125,6 +128,11 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
             self.placeHolderArr = @[@"若有分店，请具体到分店名", @"请选择", @"请输入", @"填写座机/手机，座机需加区号"];
         }
          self.textFieldTypeArr = @[@(ZSHTextFieldViewUser), @(ZSHTextFieldViewUser), @(ZSHTextFieldViewUser), @(ZSHTextFieldViewUser)];
+
+//        self.titleArr = @[@"门店名称", @"门店地址", @"详细地址", @"门店电话"];
+//        self.textFieldTypeArr = @[@(ZSHTextFieldViewUser), @(ZSHTextFieldViewNone), @(ZSHTextFieldViewUser), @(ZSHTextFieldViewUser)];
+//        self.placeHolderArr = @[@"若有分店，请具体到分店名", @"", @"请输入", @"填写座机/手机，座机需加区号"];
+
     }else if (kFromClassTypeValue ==  FromVerifyVCToMultiInfoVC) {
         // 提交审核
         self.titleArr = @[@"上传身份证", @"经营者姓名", @"身份证号", @"店铺照片", @"营业执照",
@@ -166,7 +174,6 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     [self.tableView setSeparatorColor:KZSHColor1D1D1D];
     [self.tableView setSeparatorInset:UIEdgeInsetsMake(0, 0, 0, 0)];
     
-    [self.tableView registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHBaseCellID];
     [self.tableView reloadData];
     
    
@@ -203,16 +210,25 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
         [sectionModel.cellModelArray addObject:cellModel];
         cellModel.height = kRealValue(44);
         cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
-            ZSHBaseCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHBaseCellID forIndexPath:indexPath];
+            ZSHBaseCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellId"];
+            if (!cell) {
+                cell = [[ZSHBaseCell alloc] initWithStyle:UITableViewCellStyleValue2
+                                          reuseIdentifier:@"cellId"];
+            }
             if (kFromClassTypeValue ==  FromCreateStoreVCToMultiInfoVC) {
                 if (indexPath.row == 1) {
                     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                    
+                    if (weakself.addr) {
+                        cell.detailTextLabel.text = weakself.addr;
+                    }
                 }
             } else if (kFromClassTypeValue ==  FromVerifyVCToMultiInfoVC) {
                 if (indexPath.row == 0 || indexPath.row == 3 || indexPath.row == 4) {
                     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
                 }
             }
+
             NSDictionary *paramDic = @{@"leftTitle":self.titleArr[indexPath.row],@"placeholder":self.placeHolderArr[indexPath.row],@"textFieldType":self.textFieldTypeArr[indexPath.row],KFromClassType:@(self.toViewType)};
             ZSHTextFieldCellView *textFieldView = [[ZSHTextFieldCellView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth-10, kRealValue(44)) paramDic:paramDic];
             textFieldView.tag = 2+indexPath.row;
@@ -235,14 +251,26 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
                     }
                 }
             };
+            
             [cell.contentView addSubview:textFieldView];
+            
+            if (kFromClassTypeValue ==  FromCreateStoreVCToMultiInfoVC) {
+                if (indexPath.row == 1) {
+                }
+            }
+            
             return cell;
         };
         
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
             if (kFromClassTypeValue ==  FromCreateStoreVCToMultiInfoVC) {
-                if (indexPath.row == 1) {
-                    
+                if (indexPath.row == 1) {// 地区选择
+                    weakself.pickView = [weakself createPickViewWithType:WindowRegion];
+                    weakself.pickView.saveChangeBlock = ^(NSString *text, NSInteger index) {
+                        weakself.addr = text;
+                        [tableView reloadData];
+                    };
+                    [weakself.pickView show:WindowRegion];
                 }
             } else if (kFromClassTypeValue ==  FromVerifyVCToMultiInfoVC) {
                 if (indexPath.row == 0 ) { // 上传身份证
@@ -253,6 +281,43 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
         };
     }
     return sectionModel;
+}
+#pragma pickView
+- (ZSHPickView *)createPickViewWithType:(NSUInteger)type{
+    
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"area.plist" ofType:@""];
+    
+    NSArray *areaArr = [NSArray arrayWithContentsOfFile:path];
+    NSMutableArray *provinces = [NSMutableArray array];
+    for (NSDictionary *dic in areaArr) {
+        [provinces addObject:dic[@"state"]];
+    }
+    
+    NSMutableArray *citys = [NSMutableArray array];
+    NSMutableArray *districts = [NSMutableArray array];
+    for (NSDictionary *dic in areaArr) {
+        if ([dic[@"state"] isEqualToString:@"北京"]) {
+            for (NSDictionary *city in dic[@"cities"]) {
+                [citys addObject:city[@"city"]];
+                if ([city[@"city"] isEqualToString:citys[0]]) {
+                    if (city[@"areas"]) {
+                        districts = city[@"areas"];
+                    }
+                }
+            }
+            break;
+        }
+        
+    }
+    
+    
+    NSMutableArray *regionArr = [NSMutableArray arrayWithObjects:provinces, citys, districts, nil];
+    NSDictionary *nextParamDic = @{@"type":@(type),@"midTitle":@"城市区域选择",@"dataArr":regionArr};
+    
+    _pickView = [[ZSHPickView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight) paramDic:nextParamDic];
+    _pickView.controller = self;
+    
+    return _pickView;
 }
 
 #pragma action
