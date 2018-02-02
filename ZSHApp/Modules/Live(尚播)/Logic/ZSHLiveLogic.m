@@ -206,6 +206,16 @@
     }];
 }
 
+//直播送礼物
+- (void)requesGiftToUserWithDic:(NSDictionary *)dic success:(void (^)(id response))success{
+    [PPNetworkHelper POST:kUrlGiftToUser parameters:dic success:^(id responseObject) {
+        RLog(@"直播送礼物数据%@",responseObject);
+        success(responseObject);
+    } failure:^(NSError *error) {
+        RLog(@"直播送礼物数据失败%@", error);
+    }];
+}
+
 //直播用户资料
 - (void)requestLiveUserDataWithDic:(NSDictionary *)dic success:(void (^)(id response))success{
     [PPNetworkHelper POST:kUrlGetLiveUserData parameters:dic success:^(id responseObject) {

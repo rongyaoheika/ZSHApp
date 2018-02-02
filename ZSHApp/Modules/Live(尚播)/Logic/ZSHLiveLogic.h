@@ -59,6 +59,8 @@
 
 //直播搜索
 - (void)requestLiveSearhWithDic:(NSDictionary *)dic success:(void (^)(id response))success;
+//直播送礼物
+- (void)requesGiftToUserWithDic:(NSDictionary *)dic success:(void (^)(id response))success;
 //直播用户资料
 - (void)requestLiveUserDataWithDic:(NSDictionary *)dic success:(void (^)(id response))success;
 //直播页面点击头像显示的简洁个人资料

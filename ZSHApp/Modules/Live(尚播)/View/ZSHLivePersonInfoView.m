@@ -19,11 +19,20 @@
 - (void)drawRect:(CGRect)rect {
     
     //
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"room_image_2"]];
-    imageView.tag= 10;
-    [self addSubview:imageView];
-    [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
+    UIImageView *headIV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"room_image_2"]];
+    [headIV sd_setImageWithURL:[NSURL URLWithString:self.paramDic[@"PORTRAIT"]]];
+    headIV.tag = 10;
+    [self addSubview:headIV];
+    [headIV mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.top.right.bottom.mas_equalTo(self);
+    }];
+    
+    UIView *bottomMaskView = [[UIView alloc]init];
+    bottomMaskView.backgroundColor = [UIColor colorWithWhite:1 alpha:0.8];
+    [headIV addSubview:bottomMaskView];
+    [bottomMaskView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.bottom.mas_equalTo(headIV);
+        make.height.mas_equalTo(kRealValue(135));
     }];
    
     
@@ -35,11 +44,13 @@
         make.top.left.right.mas_equalTo(self);
         make.size.mas_equalTo(CGSizeMake(kRealValue(260), kRealValue(183)));
     }];
+  
     
     //
     NSDictionary *followNumLabelDic = @{@"text":@"36",@"font":kPingFangRegular(20),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentCenter)};
     UILabel *followNumLabel = [ZSHBaseUIControl createLabelWithParamDic:followNumLabelDic];
      ;
+    followNumLabel.text = [self.paramDic[@"focus"] stringValue];
     [self addSubview:followNumLabel];
     [followNumLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self).offset(kRealValue(195.5));
@@ -58,7 +69,7 @@
     }];
     
     //
-    NSDictionary *followerNumLabelDic = @{@"text":@"7690",@"font":kPingFangRegular(20),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentCenter)};
+    NSDictionary *followerNumLabelDic = @{@"text": [self.paramDic[@"fans"] stringValue],@"font":kPingFangRegular(20),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentCenter)};
     UILabel *followerNumLabel = [ZSHBaseUIControl createLabelWithParamDic:followerNumLabelDic];
     [self addSubview:followerNumLabel];
     [followerNumLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -66,6 +77,8 @@
         make.centerX.mas_equalTo(self);
         make.size.mas_equalTo(CGSizeMake(kRealValue(80), kRealValue(29)));
     }];
+    
+    
     
     //
     NSDictionary *followerLabelDic = @{@"text":@"粉丝",@"font":kPingFangRegular(11),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentCenter)};
@@ -78,7 +91,7 @@
     }];
     
     //
-    NSDictionary *recentNumLabelDic = @{@"text":@"52",@"font":kPingFangRegular(20),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentCenter)};
+    NSDictionary *recentNumLabelDic = @{@"text": [self.paramDic[@"dynamic"] stringValue],@"font":kPingFangRegular(20),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentCenter)};
     UILabel *recentNumLabel = [ZSHBaseUIControl createLabelWithParamDic:recentNumLabelDic];
     [self addSubview:recentNumLabel];
     [recentNumLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -86,7 +99,7 @@
         make.right.mas_equalTo(self).offset(-kRealValue(42));
         make.size.mas_equalTo(CGSizeMake(kRealValue(25), kRealValue(28)));
     }];
-    
+  
     
     //
     NSDictionary *recentLabelDic = @{@"text":@"动态",@"font":kPingFangRegular(11),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentCenter)};
@@ -97,11 +110,12 @@
         make.centerX.mas_equalTo(recentNumLabel);
         make.size.mas_equalTo(CGSizeMake(kRealValue(23), kRealValue(12)));
     }];
-    
+   
     
     //
     NSDictionary *addFriendBtnDic = @{@"title":@"",@"titleColor":KZSHColorFF2068,@"font":kPingFangMedium(17),@"backgroundColor":KZSHColorFF2068};
     UIButton *addFriendBtn = [ZSHBaseUIControl createBtnWithParamDic:addFriendBtnDic];
+    addFriendBtn.selected = [self.paramDic[@"isfriend"] boolValue];
     addFriendBtn.layer.cornerRadius = 15.0;
     addFriendBtn.layer.masksToBounds = true;
     [addFriendBtn setImage:[UIImage imageNamed:@"room_unfollow"] forState:UIControlStateNormal];
@@ -127,16 +141,15 @@
     
     kWeakSelf(self);
     if (_addFriendBtn.selected) {
-        [_togetherLogic requestDelFriendWithReHonouruserID:@"382890302907613184" success:^(id response) {
+        [_togetherLogic requestDelFriendWithReHonouruserID:self.paramDic[@"HONOURUSER_ID"] success:^(id response) {
             weakself.addFriendBtn.selected = false;
         }];
     } else {
-        [_togetherLogic requestAddFriendWithReHonouruserID:@"382890302907613184" success:^(id response) {
+        [_togetherLogic requestAddFriendWithReHonouruserID:self.paramDic[@"HONOURUSER_ID"] success:^(id response) {
             weakself.addFriendBtn.selected = true;
         }];
     }
     
 }
-
 
 @end

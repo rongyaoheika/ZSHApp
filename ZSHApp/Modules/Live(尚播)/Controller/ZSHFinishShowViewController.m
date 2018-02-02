@@ -137,7 +137,7 @@
     [anchorView addSubview:closeBtn];
     [closeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.mas_equalTo(anchorView);
-        make.width.and.height.mas_equalTo(kRealValue(44));
+        make.width.and.height.mas_equalTo(kRealValue(35));
         make.centerY.mas_equalTo(anchorView);
     }];
     
@@ -148,7 +148,7 @@
         headImageView.layer.cornerRadius = kRealValue(35)/2;
         [anchorView addSubview:headImageView];
         [headImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.right.mas_equalTo(closeBtn.mas_left).offset(- (kRealValue(20) + i*(spacing+kRealValue(35))));
+            make.right.mas_equalTo(closeBtn.mas_left).offset(- (kRealValue(10) + i*(spacing+kRealValue(35))));
             make.centerY.mas_equalTo(anchorView);
             make.width.and.height.mas_equalTo(kRealValue(35));
         }];

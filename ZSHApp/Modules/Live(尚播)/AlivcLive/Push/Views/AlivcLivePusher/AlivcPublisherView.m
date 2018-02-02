@@ -283,12 +283,12 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     
     
     UIButton *closeBtn = [[UIButton alloc]init];
-    [closeBtn setBackgroundImage:[UIImage imageNamed:@"live_close"] forState:UIControlStateNormal];
+    [closeBtn setImage:[UIImage imageNamed:@"live_close"] forState:UIControlStateNormal];
     [closeBtn addTarget:self action:@selector(backButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.topView addSubview:closeBtn];
     [closeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.mas_equalTo(self.topView);
-        make.width.and.height.mas_equalTo(kRealValue(44));
+        make.width.and.height.mas_equalTo(kRealValue(35));
         make.centerY.mas_equalTo(self.topView);
     }];
     
@@ -299,7 +299,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
         headImageView.layer.cornerRadius = kRealValue(35)/2;
         [self.topView addSubview:headImageView];
         [headImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.right.mas_equalTo(closeBtn.mas_left).offset(- (kRealValue(20) + i*(spacing+kRealValue(35))));
+            make.right.mas_equalTo(closeBtn.mas_left).offset(-i*(spacing+kRealValue(35)));
             make.centerY.mas_equalTo(self.topView);
             make.width.and.height.mas_equalTo(kRealValue(35));
         }];

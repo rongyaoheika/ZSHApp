@@ -87,7 +87,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     [self.topView addSubview:closeBtn];
     [closeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.mas_equalTo(self.topView);
-        make.width.and.height.mas_equalTo(kRealValue(44));
+        make.width.and.height.mas_equalTo(kRealValue(35));
         make.centerY.mas_equalTo(self.topView);
     }];
     
@@ -98,7 +98,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
         headImageView.layer.cornerRadius = kRealValue(35)/2;
         [self.topView addSubview:headImageView];
         [headImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.right.mas_equalTo(closeBtn.mas_left).offset(- (kRealValue(20) + i*(spacing+kRealValue(35))));
+            make.right.mas_equalTo(closeBtn.mas_left).offset(- (kRealValue(10) + i*(spacing+kRealValue(35))));
             make.centerY.mas_equalTo(self.topView);
             make.width.and.height.mas_equalTo(kRealValue(35));
         }];
@@ -232,18 +232,14 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     [_liveLogic requestLivePithyDataWithDic:paramDic success:^(id response) {
         RLog(@"获取的个人资料==%@",response);
         
-        NSDictionary *nextParamDic = @{KFromClassType:@(ZSHFromPersonInfoVCToBottomBlurPopView),@"pd":response[@"pd"]};
+        NSDictionary *nextParamDic = @{KFromClassType:@(ZSHFromPersonInfoVCToBottomBlurPopView),@"userInfo":response[@"pd"]};
         ZSHBottomBlurPopView *bottomBlurPopView = [[ZSHBottomBlurPopView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight) paramDic:nextParamDic];
         bottomBlurPopView.blurRadius = 20;
         bottomBlurPopView.dynamic = NO;
         bottomBlurPopView.tintColor = KClearColor;
         [ZSHBaseUIControl setAnimationWithHidden:NO view:bottomBlurPopView completedBlock:nil];
     }];
-    
-   
 }
-
-
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
     UITouch *touch = [touches anyObject];

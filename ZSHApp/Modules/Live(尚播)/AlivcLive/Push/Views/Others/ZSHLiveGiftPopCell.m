@@ -41,8 +41,15 @@
 
 - (void)updateCellWithParamDic:(NSDictionary *)dic{
     
-    _leftLB.text = dic[@"leftTitle"];
-    _rightLB.text = dic[@"rightTitle"];
+    if (dic[@"midTitle"]) {
+        _leftLB.text = dic[@"midTitle"];
+        [_leftLB mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.edges.mas_equalTo(self);
+        }];
+    } else {
+        _leftLB.text = dic[@"leftTitle"];
+        _rightLB.text = dic[@"rightTitle"];
+    }
     
 }
 

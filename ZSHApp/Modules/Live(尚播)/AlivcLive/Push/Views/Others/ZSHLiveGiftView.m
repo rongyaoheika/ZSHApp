@@ -8,18 +8,21 @@
 
 #import "ZSHLiveGiftView.h"
 #import "ZSHLiveGiftPopCell.h"
-@interface ZSHLiveGiftView ()<UIScrollViewDelegate>
+#import "ZSHLiveLogic.h"
+
+@interface ZSHLiveGiftView ()<UIScrollViewDelegate,UIAlertViewDelegate>
 
 //大背景view
 @property (nonatomic, strong) UIView            *giftBgView;
 @property (nonatomic, strong) UIView            *headView;
+
+//中间
 @property (nonatomic, strong) UIScrollView      *midScrollView;
+@property (nonatomic, strong) NSMutableArray    *giftBtnArr;
 
 @property (nonatomic, strong) NSArray           *btnTitleArr;
-@property (nonatomic, strong) NSMutableArray    *btnArr;
+@property (nonatomic, strong) NSMutableArray    *typeBtnArr;
 @property (nonatomic, strong) NSArray           *scrollContentArr;
-@property (nonatomic, assign) NSInteger         midScrollIndex;
-@property (nonatomic, assign) NSInteger         subScrollIndex;
 
 //底部
 @property (nonatomic, strong) UIView            *footView;
@@ -33,10 +36,12 @@
 //弹出礼物小框
 @property (nonatomic, strong) UITableView               *subTab;
 @property (nonatomic, strong) ZSHBaseTableViewModel     *tableViewModel;
-@end
+@property (nonatomic, strong) ZSHLiveLogic              *liveLogic;
+@property (nonatomic, strong) NSString                  *giftNum;
 
+@end
+static NSInteger giftBtnTag = 0;
 static NSString *ZSHLiveGiftPopCellID = @"ZSHLiveGiftPopCell";
-static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 @implementation ZSHLiveGiftView
 
 - (void)setup{
@@ -64,11 +69,12 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 }
 
 - (void)loadLocalData{
-    _btnArr = [[NSMutableArray alloc]init];
+    _liveLogic = [[ZSHLiveLogic alloc]init];
+    _typeBtnArr = [[NSMutableArray alloc]init];
+    _giftBtnArr = [[NSMutableArray alloc]init];
     _btnTitleArr = @[@"常规",@"轻奢",@"豪华"];
     _scrollContentArr = @[@(2),@(1),@(1)];
-    _midScrollView = 0;
-    _subScrollIndex = 0;
+    
 }
 
 - (void)createHeadView{
@@ -83,9 +89,9 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
         [liveTypeBtn addTarget:self action:@selector(liveTypeBtnAction:) forControlEvents:UIControlEventTouchUpInside];
         liveTypeBtn.tag = i+1;
         [_headView addSubview:liveTypeBtn];
-        [_btnArr addObject:liveTypeBtn];
+        [_typeBtnArr addObject:liveTypeBtn];
     }
-    [self selectedByIndex:1];
+    [self selectedGiftTypeByIndex:1 isClick:YES];
 }
 
 //礼物UI
@@ -119,10 +125,10 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     
 }
 
-//具体礼物ScrollView index：礼物类型（常规，轻奢，豪华） count：scrollview.contentSize
+//具体礼物ScrollView index：礼物类型（常规0，轻奢1，豪华2） count：scrollview.contentSize
 - (UIScrollView *)createScrollViewWithIndex:(NSInteger)index Count:(NSInteger)count{
     UIScrollView *giftSV = [[UIScrollView alloc]initWithFrame:CGRectMake(index*KScreenWidth, 0, KScreenWidth, kRealValue(190))];
-    giftSV.tag = index+20;
+    giftSV.tag = index+600;
     giftSV.contentSize = CGSizeMake(count*KScreenWidth, 0);
     giftSV.showsVerticalScrollIndicator = NO;
     giftSV.showsHorizontalScrollIndicator = NO;
@@ -210,13 +216,15 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     
     CGFloat viewW = KScreenWidth/5;
     CGFloat viewH = kRealValue(190)/2;
-    
     for (int contentCount = 0; contentCount<count; contentCount++) {//contentSize
         
         for (int i = 0; i<2; i++) {//2行
-            for (int j = 0; j <5; j++) {//5列
-                UIView *btnView = [[UIView alloc]initWithFrame:CGRectMake(kScreenWidth*contentCount + j*viewW, i*viewH, viewW, viewH)];
+            for (int j = 0; j<5; j++) {//5列
+                UIButton *btnView = [[UIButton alloc]initWithFrame:CGRectMake(kScreenWidth*contentCount + j*viewW, i*viewH, viewW, viewH)];
+                [btnView addTarget:self action:@selector(gitBtnAction:) forControlEvents:UIControlEventTouchUpInside];
+                btnView.tag = giftBtnTag++;
                 [giftSV addSubview:btnView];
+                [_giftBtnArr addObject:btnView];
                 
                 NSDictionary *giftDic = nil;
                 if (count>1) {
@@ -227,6 +235,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
                 
                 //图片
                 UIImageView *giftIV = [[UIImageView alloc]initWithImage:[UIImage imageNamed:giftDic[@"btnNormalImage"]]];
+                giftIV.tag = 120;
                 [btnView addSubview:giftIV];
                 [giftIV mas_makeConstraints:^(MASConstraintMaker *make) {
                     make.size.mas_equalTo(CGSizeMake(kRealValue(45), kRealValue(45)));
@@ -238,6 +247,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
                 //文字
                 NSDictionary *giftLBDic = @{@"text":giftDic[@"btnTitle"],@"font":kPingFangRegular(12),@"textAlignment":@(NSTextAlignmentCenter)};
                 UILabel *giftLB = [ZSHBaseUIControl createLabelWithParamDic:giftLBDic];
+                giftLB.tag = 121;
                 [btnView addSubview:giftLB];
                 [giftLB mas_makeConstraints:^(MASConstraintMaker *make) {
                     make.width.mas_equalTo(btnView);
@@ -249,6 +259,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
                 //消费
                 NSDictionary *coinLBDic = @{@"text":giftDic[@"coinTile"],@"font":kPingFangRegular(10),@"textAlignment":@(NSTextAlignmentCenter)};
                 UILabel *coinLB = [ZSHBaseUIControl createLabelWithParamDic:coinLBDic];
+                coinLB.tag = 123;
                 [btnView addSubview:coinLB];
                 [coinLB mas_makeConstraints:^(MASConstraintMaker *make) {
                     make.width.mas_equalTo(btnView);
@@ -271,7 +282,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 - (UIScrollView *)midScrollView{
     if (!_midScrollView) {
         _midScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, kRealValue(50), KScreenWidth, kRealValue(190))];
-        _midScrollView.tag = 10;
+        _midScrollView.tag = 500;
         _midScrollView.contentSize = CGSizeMake(_btnTitleArr.count*KScreenWidth, 0);
         _midScrollView.showsVerticalScrollIndicator = NO;
         _midScrollView.showsHorizontalScrollIndicator = NO;
@@ -314,28 +325,29 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     [_giftRightBtn setTitle:@"发送" forState:UIControlStateNormal];
     [_giftRightBtn layoutButtonWithEdgeInsetsStyle:XYButtonEdgeInsetsStyleRight imageTitleSpace:kRealValue(15)];
     [_giftBtnView addSubview:_giftRightBtn];
-    
-    
-    
+
     return _giftBtnView;
 }
 
 #pragma action
+
+- (void)gitBtnAction:(UIButton *)btn{
+    UILabel *coinLB = [btn viewWithTag:123];
+    _giftNum =  [NSString stringWithFormat:@"%ld",[self getGiftNumWith:coinLB.text]];
+    [self selectedGiftBtnByIndex:btn.tag];
+}
+
 - (void)liveTypeBtnAction:(UIButton *)btn{
-    [self selectedByIndex:btn.tag];
+    [self selectedGiftTypeByIndex:btn.tag isClick:YES];
     
 }
 
 - (void)giftLeftBtnAction:(UIButton *)btn{
     RLog(@"点击左侧按钮");
-    btn.selected = !btn.selected;
-    if (btn.selected) {
-        if (![self viewWithTag:150]) {
-            [self addSubview:self.subTab];
-            [ZSHBaseFunction showPopView:self.subTab frameY:kScreenHeight - kRealValue(50) - kRealValue(250)];
-            [self initViewModel];
-        }
-        
+    if (![self viewWithTag:150]) {
+        [self addSubview:self.subTab];
+        [ZSHBaseFunction showPopView:self.subTab frameY:kScreenHeight - kRealValue(50) - kRealValue(250)];
+        [self initViewModel];
     } else {
         [ZSHBaseFunction dismissPopView:self.subTab block:nil];
     }
@@ -354,7 +366,6 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
         _subTab.tag = 150;
         _subTab.frame = CGRectMake(KScreenWidth - kRealValue(160), kScreenHeight, kRealValue(130), kRealValue(248));
         [_subTab registerClass:[ZSHLiveGiftPopCell class] forCellReuseIdentifier:ZSHLiveGiftPopCellID];
-        [_subTab registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHBaseCellID];
     }
     return _subTab;
 }
@@ -376,24 +387,20 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
         ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
         cellModel.height = kRealValue(30);
         [sectionModel.cellModelArray addObject:cellModel];
-        if (i != dicArr.count - 1) {
-            cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
-                ZSHLiveGiftPopCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHLiveGiftPopCellID forIndexPath:indexPath];
-                [cell updateCellWithParamDic:dicArr[i]];
-                return cell;
-            };
-        } else {
-            cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
-                ZSHBaseCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHBaseCellID forIndexPath:indexPath];
-                cell.textLabel.text = dicArr[i][@"midTitle"];
-                cell.textLabel.textColor = KZSHColorF29E19;
-                return cell;
-            };
-        }
         
-        
+        cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
+            ZSHLiveGiftPopCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHLiveGiftPopCellID forIndexPath:indexPath];
+            [cell updateCellWithParamDic:dicArr[i]];
+            return cell;
+        };
+
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
-            
+            if (indexPath.row != dicArr.count-1) {
+                 _giftNum = dicArr[i][@"leftTitle"];
+                [_giftLeftBtn setTitle:_giftNum forState:UIControlStateNormal];
+            }
+           
+            [ZSHBaseFunction dismissPopView:self.subTab block:nil];
         };
     }
     
@@ -401,7 +408,41 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 }
 
 - (void)giftRightBtnAction:(UIButton *)btn{
+   
     RLog(@"点击右侧发送按钮");
+    NSDictionary *paramDic = @{@"HONOURUSER_ID":HONOURUSER_IDValue,@"REHONOURUSER_ID":REHONOURUSER_IDValue,@"BLACKPRICE":_giftNum};
+    [_liveLogic requesGiftToUserWithDic:paramDic success:^(id response) {
+        RLog(@"发送礼物成功");
+        if ([response[@"result"]isEqualToString:@"07"]) {
+            UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"余额不足" message:@"当前余额不足，充值才可以继续送礼，是否去充值" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+            alertView.tag = 10;
+            [alertView show];
+        }
+    }];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    switch (alertView.tag) {
+        case 10:{//充值
+            if (buttonIndex == 1) {
+                RLog(@"点击确定充值");
+            }
+            break;
+        }
+        
+            
+        default:
+            break;
+    }
+    
+}
+
+- (NSInteger)getGiftNumWith:(NSString *)str{
+    NSScanner *scanner = [NSScanner scannerWithString:str];
+    [scanner scanUpToCharactersFromSet:[NSCharacterSet decimalDigitCharacterSet] intoString:nil];
+    int number;
+    [scanner scanInt:&number];
+    return number;
 }
 
 #pragma mark <UIScrollViewDelegate>
@@ -416,12 +457,12 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 - (void)dealPageEnableWithScrollView:(UIScrollView *)scrollView{
     //     NSInteger midScrollViewIndex = (NSInteger)(fabs((scrollView.contentOffset.x/KScreenWidth)));
     //    RLog(@"scrollView 的tag == %ld  page==%ld   contentoffset==%f",scrollView.tag,midScrollViewIndex,scrollView.contentOffset.x);
-    if (scrollView.tag == 10) {//外层scrollview
+    if (scrollView.tag == 500) {//外层scrollview
         NSInteger midScrollViewIndex = (NSInteger)(fabs((scrollView.contentOffset.x/KScreenWidth)));
-        [self selectedByIndex:midScrollViewIndex+1];
+        [self selectedGiftTypeByIndex:midScrollViewIndex+1 isClick:NO];
         self.pageControl.numberOfPages = [_scrollContentArr[midScrollViewIndex]integerValue];
         
-        UIScrollView *subScrollView = [self.midScrollView viewWithTag:midScrollViewIndex + 20];
+        UIScrollView *subScrollView = [self.midScrollView viewWithTag:midScrollViewIndex + 600];
         NSInteger subScrollIndex = (NSInteger)(fabs((subScrollView.contentOffset.x/KScreenWidth)));
         self.pageControl.currentPage = subScrollIndex;
         self.pageControl.hidden = self.pageControl.numberOfPages<=1?YES:NO;
@@ -436,8 +477,9 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     
 }
 
-- (void)selectedByIndex:(NSUInteger)index {
-    [_btnArr enumerateObjectsUsingBlock:^(UIButton *btn , NSUInteger idx, BOOL * _Nonnull stop) {
+//点击常规，轻奢，豪华(1,2,3)
+- (void)selectedGiftTypeByIndex:(NSUInteger)index isClick:(BOOL)isClick{
+    [_typeBtnArr enumerateObjectsUsingBlock:^(UIButton *btn , NSUInteger idx, BOOL * _Nonnull stop) {
         if (btn.tag == index) {
             btn.selected = YES;
             btn.titleLabel.font = kPingFangMedium(15);
@@ -447,14 +489,36 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
         }
     }];
     
+    if (!isClick) return;
+    
     //外层scrollview
     self.pageControl.numberOfPages = [_scrollContentArr[index-1]integerValue];
     [_midScrollView setContentOffset:CGPointMake((index-1)*kScreenWidth, 0)];
     self.pageControl.hidden = self.pageControl.numberOfPages<=1?YES:NO;
     
     //内层scrollview
-    UIScrollView *subScrollView = [self.midScrollView viewWithTag:(index-1) + 20];
+    UIScrollView *subScrollView = [self.midScrollView viewWithTag:(index-1) + 600];
     [subScrollView setContentOffset:CGPointMake(0, 0)];//默认第0组
+}
+
+- (void)setScrollViewOffset{
+    
+}
+
+//点击某个礼物
+- (void)selectedGiftBtnByIndex:(NSUInteger)index{
+    [_giftBtnArr enumerateObjectsUsingBlock:^(UIButton *btn , NSUInteger idx, BOOL * _Nonnull stop) {
+        if (btn.tag == index) {
+            btn.selected = YES;
+            btn.layer.borderColor = KZSHColorF29E19.CGColor;
+            btn.layer.borderWidth = 1.0;
+    
+        } else {
+            btn.selected = NO;
+            btn.layer.borderWidth = 0;
+ 
+        }
+    }];
 }
 
 //弹框消失
