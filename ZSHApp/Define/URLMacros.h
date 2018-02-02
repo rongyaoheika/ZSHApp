@@ -802,7 +802,12 @@
 //158.直播中送礼物接口
 //参数:HONOURUSER_ID 当前账户id ,REHONOURUSER_ID 被赠送人id, BLACKPRICE 赠送礼物总价值
 //地址:/applivein/gifttouser?GIFT
-#define kUrlGiftToUser [NSString stringWithFormat:@"/applivein/gifttouser?GIFT?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"USERLIST"]]
+#define kUrlGiftToUser [NSString stringWithFormat:@"/applivein/gifttouser?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"GIFT"]]
+
+//158.直播中用户资料
+//参数:HONOURUSER_ID 当前账户id
+//地址:/applivein/getuserdata
+#define kUrlGetLiveUserData [NSString stringWithFormat:@"/applivein/getuserdata?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"USERDATA"]]
 //************************
 
 //151.音乐中心-首页：歌手推荐和广告

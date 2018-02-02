@@ -14,5 +14,6 @@
 
 @property (nonatomic, strong) ZSHTogetherLogic    *togetherLogic;
 @property (nonatomic, strong) UIButton            *addFriendBtn;
+@property (nonatomic, copy)   void(^headTapBlock)();
 
 @end

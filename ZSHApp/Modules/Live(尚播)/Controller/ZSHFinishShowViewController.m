@@ -136,7 +136,7 @@
     [closeBtn addTarget:self action:@selector(closeLiveRoom) forControlEvents:UIControlEventTouchUpInside];
     [anchorView addSubview:closeBtn];
     [closeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.mas_equalTo(anchorView).offset(-kRealValue(18));
+        make.right.mas_equalTo(anchorView);
         make.width.and.height.mas_equalTo(kRealValue(44));
         make.centerY.mas_equalTo(anchorView);
     }];
@@ -211,6 +211,15 @@
     }
 }
 
+//点击主播头像
+- (void)personInfo {
+    NSDictionary *nextParamDic = @{KFromClassType:@(ZSHFromPersonInfoVCToBottomBlurPopView)};
+    ZSHBottomBlurPopView *bottomBlurPopView = [[ZSHBottomBlurPopView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight) paramDic:nextParamDic];
+    bottomBlurPopView.blurRadius = 20;
+    bottomBlurPopView.dynamic = NO;
+    bottomBlurPopView.tintColor = KClearColor;
+    [ZSHBaseUIControl setAnimationWithHidden:NO view:bottomBlurPopView completedBlock:nil];
+}
 
 - (ZSHBottomBlurPopView *)bottomBlurPopView{
     if (!_bottomBlurPopView) {

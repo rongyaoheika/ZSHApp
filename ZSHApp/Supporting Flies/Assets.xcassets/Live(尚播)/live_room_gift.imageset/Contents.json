@@ -2,17 +2,16 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "live_room_gift.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "live_room_gift@2x.png",
+      "filename" : "room_icon_5@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "live_room_gift@3x.png",
+      "filename" : "room_icon_5@3x.png",
       "scale" : "3x"
     }
   ],

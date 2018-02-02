@@ -195,6 +195,12 @@ static NSString * const ZSHNearHeadViewID = @"ZSHNearHeadView";
         _liveListArr = [ZSHLiveListModel mj_objectArrayWithKeyValuesArray:response[@"pd"][@"PUSHONLINE"][@"OnlineInfo"][@"LiveStreamOnlineInfo"]];
         [weakself.collectionView reloadData];
     }];
+    
+    [_liveLogic requestLiveUserDataWithDic:paramDic success:^(id response) {
+        [weakself endCollectionViewRefresh];
+        
+        RLog(@"用户资料==%@",response);
+    }];
 }
 
 //附近筛选

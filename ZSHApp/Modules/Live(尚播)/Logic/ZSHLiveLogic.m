@@ -206,5 +206,14 @@
     }];
 }
 
+//直播用户资料
+- (void)requestLiveUserDataWithDic:(NSDictionary *)dic success:(void (^)(id response))success{
+    [PPNetworkHelper POST:kUrlGetLiveUserData parameters:dic success:^(id responseObject) {
+        RLog(@"直播用户资料%@",responseObject);
+        success(responseObject);
+    } failure:^(NSError *error) {
+        RLog(@"直播用户资料失败%@", error);
+    }];
+}
 
 @end

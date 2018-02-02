@@ -85,7 +85,7 @@
     nextBtn.layer.cornerRadius = 2.5;
     [_popView addSubview:nextBtn];
     [nextBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.mas_equalTo(_popView).offset(-kRealValue(20));
+        make.bottom.mas_equalTo(_popView).offset(-kRealValue(15));
         make.size.mas_equalTo(CGSizeMake(120, 30));
         make.centerX.mas_equalTo(_popView);
     }];
@@ -94,7 +94,7 @@
     //page
     [_popView addSubview:self.pageControl];
     [self.pageControl mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.mas_equalTo(nextBtn.mas_top).offset(kRealValue(10));
+        make.bottom.mas_equalTo(nextBtn.mas_top).offset(-kRealValue(10));
         make.centerX.mas_equalTo(_popView);
         make.width.mas_equalTo(_popView);
     }];
@@ -128,14 +128,8 @@
 #pragma mark 处理scrollView翻页效果
 - (void)dealPageEnableWithScrollView:(UIScrollView *)scrollView{
     NSInteger page = (NSInteger)(fabs((scrollView.contentOffset.x/contentW))+0.5);
+    [self setTitleWithPage:page];
     
-    if (page == 2) {
-        [self.nextBtn setTitle:@"我知道了" forState:UIControlStateNormal];
-        self.titleLB.text = @"资质审核";
-    } else {
-        [self.nextBtn setTitle:@"下一步" forState:UIControlStateNormal];
-        self.titleLB.text = @"创建门店";
-    }
     self.pageControl.currentPage = page;
     [UIView animateWithDuration:0.5 animations:^{
         [scrollView setContentOffset:CGPointMake(contentW * page,0)];
@@ -149,11 +143,23 @@
     NSInteger page = self.pageControl.currentPage;
     NSInteger nextPage = page+1;
     RLog(@"self.pageControl.currentPage == %ld",page);
+   
     if (nextPage >= 3) {
-        return;
+        [self closePopview];
     } else {
         [self.titleScrollView setContentOffset:CGPointMake(contentW * nextPage,0)];
         self.pageControl.currentPage = nextPage;
+    }
+     [self setTitleWithPage:nextPage];
+}
+
+- (void)setTitleWithPage:(NSInteger)page{
+    if (page == 2) {
+        [self.nextBtn setTitle:@"我知道了" forState:UIControlStateNormal];
+        self.titleLB.text = @"资质审核";
+    } else {
+        [self.nextBtn setTitle:@"下一步" forState:UIControlStateNormal];
+        self.titleLB.text = @"创建门店";
     }
 }
 

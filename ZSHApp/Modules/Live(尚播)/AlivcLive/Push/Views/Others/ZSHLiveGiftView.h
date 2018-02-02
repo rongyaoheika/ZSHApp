@@ -10,4 +10,6 @@
 
 @interface ZSHLiveGiftView : ZSHBaseView
 
+- (void)showGiftPopView;
+
 @end

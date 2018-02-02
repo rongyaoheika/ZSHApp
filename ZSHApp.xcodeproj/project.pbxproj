@@ -104,6 +104,7 @@
 		04A9FE9B2015CA900099D467 /* ZSHAudienceLivePopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A9FE9A2015CA900099D467 /* ZSHAudienceLivePopView.m */; };
 		04BAD7BD2005C0DB00950195 /* ZSHMagazineListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04BAD7BC2005C0DB00950195 /* ZSHMagazineListViewController.m */; };
 		04BAD7C12005EEB100950195 /* ZSHMagazineListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04BAD7C02005EEB100950195 /* ZSHMagazineListCell.m */; };
+		04C2B00020231ADA00208D21 /* ZSHLiveGiftPopCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C2AFFF20231ADA00208D21 /* ZSHLiveGiftPopCell.m */; };
 		04CC219E1FFF79B200921863 /* ZSHMagazineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CC219D1FFF79B200921863 /* ZSHMagazineViewController.m */; };
 		04CC545E201EBBAF00917089 /* ZSHCountdowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CC545D201EBBAF00917089 /* ZSHCountdowView.m */; };
 		04DD819E2018AEEB00B1E3CE /* ZSHCustomSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DD819D2018AEEB00B1E3CE /* ZSHCustomSlider.m */; };
@@ -781,6 +782,8 @@
 		04BAD7BC2005C0DB00950195 /* ZSHMagazineListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHMagazineListViewController.m; sourceTree = "<group>"; };
 		04BAD7BF2005EEB100950195 /* ZSHMagazineListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHMagazineListCell.h; sourceTree = "<group>"; };
 		04BAD7C02005EEB100950195 /* ZSHMagazineListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHMagazineListCell.m; sourceTree = "<group>"; };
+		04C2AFFE20231ADA00208D21 /* ZSHLiveGiftPopCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHLiveGiftPopCell.h; sourceTree = "<group>"; };
+		04C2AFFF20231ADA00208D21 /* ZSHLiveGiftPopCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHLiveGiftPopCell.m; sourceTree = "<group>"; };
 		04CC219C1FFF79B200921863 /* ZSHMagazineViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHMagazineViewController.h; sourceTree = "<group>"; };
 		04CC219D1FFF79B200921863 /* ZSHMagazineViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHMagazineViewController.m; sourceTree = "<group>"; };
 		04CC545C201EBBAF00917089 /* ZSHCountdowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHCountdowView.h; sourceTree = "<group>"; };
@@ -1964,6 +1967,8 @@
 				04A9FE9A2015CA900099D467 /* ZSHAudienceLivePopView.m */,
 				047BC20D20216376007F4055 /* ZSHLiveGiftView.h */,
 				047BC20E20216376007F4055 /* ZSHLiveGiftView.m */,
+				04C2AFFE20231ADA00208D21 /* ZSHLiveGiftPopCell.h */,
+				04C2AFFF20231ADA00208D21 /* ZSHLiveGiftPopCell.m */,
 			);
 			path = Others;
 			sourceTree = "<group>";
@@ -5211,6 +5216,7 @@
 				FE3E009D1FDA7C5800A0F7CA /* ZSHRankModel.m in Sources */,
 				FEF415F71FAAF3E000137F0A /* ZSHTicketPlaceCell.m in Sources */,
 				FE5538171F47049D00803128 /* TabBarItem.m in Sources */,
+				04C2B00020231ADA00208D21 /* ZSHLiveGiftPopCell.m in Sources */,
 				FEBD7CB21FA74BBF00CE2BA6 /* ZSHGoodsDetailModel.m in Sources */,
 				FE5538651F47049D00803128 /* OpenUDID.m in Sources */,
 				181AD3251FCD45000015D004 /* ZSHBuyOrderModel.m in Sources */,

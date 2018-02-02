@@ -9,6 +9,7 @@
 #import "ZSHAudienceLivePopView.h"
 #import "ZSHBottomBlurPopView.h"
 #import "ZSHLiveGiftView.h"
+#import "ZSHShareView.h"
 @interface ZSHAudienceLivePopView ()
 
 @property (nonatomic, strong) ZSHBottomBlurPopView           *bottomBlurPopView;
@@ -17,7 +18,7 @@
 @property (nonatomic, strong) UITableView                    *subTab;
 @property (nonatomic, strong) UIView                         *bottomView;
 @property (nonatomic, strong) ZSHLiveGiftView                *giftView;
-
+@property (nonatomic, strong) ZSHShareView                   *shareView;
 @end
 
 static NSString *ZSHBaseCellID = @"ZSHBaseCell";
@@ -81,8 +82,8 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     [closeBtn addTarget:self action:@selector(backButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.topView addSubview:closeBtn];
     [closeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.mas_equalTo(self.topView).offset(-kRealValue(18));
-        make.width.and.height.mas_equalTo(kRealValue(25));
+        make.right.mas_equalTo(self.topView);
+        make.width.and.height.mas_equalTo(kRealValue(44));
         make.centerY.mas_equalTo(self.topView);
     }];
     
@@ -181,10 +182,10 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     switch (btn.tag - 11179) {
         case 0:{
             kWeakSelf(self);
-            [ZSHBaseFunction dismissPopView:self.bottomBlurPopView block:^{
+            if (![self viewWithTag:20]) {
                 [weakself addSubview:self.giftView];
-                [ZSHBaseFunction showPopView:self.giftView];
-            }];
+                [self.giftView showGiftPopView];
+            }
             break;
         }
             
@@ -194,8 +195,8 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
         }
         case 2:{//分享
             if (![self viewWithTag:100]) {
-                [self addSubview:self.bottomBlurPopView];
-                [ZSHBaseFunction showPopView:self.bottomBlurPopView];
+                [self addSubview:self.shareView];
+                [ZSHBaseFunction showPopView:self.shareView frameY:0];
             }
             
         }
@@ -206,7 +207,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 
 - (ZSHLiveGiftView *)giftView{
     if (!_giftView) {
-        _giftView = [[ZSHLiveGiftView alloc]initWithFrame:CGRectMake(0, KScreenHeight, KScreenHeight, kRealValue(290))];
+        _giftView = [[ZSHLiveGiftView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight)];
         _giftView.tag = 20;
     }
     return _giftView;
@@ -214,20 +215,13 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 
 
 //直播action
-- (ZSHBottomBlurPopView *)bottomBlurPopView{
-    if (!_bottomBlurPopView) {
-        _bottomBlurPopView = [[ZSHBottomBlurPopView alloc]initWithFrame:kAppDelegate.window.bounds paramDic:@{KFromClassType:@(ZSHFromShareVCToToBottomBlurPopView)}];
-        _bottomBlurPopView.tag = 100;
-        _bottomBlurPopView.blurRadius = 20;
-        _bottomBlurPopView.dynamic = NO;
-        _bottomBlurPopView.tintColor = KClearColor;
-        _bottomBlurPopView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.6];
-        [_bottomBlurPopView setBlurEnabled:NO];
+- (ZSHShareView *)shareView{
+    if (!_shareView) {
+        _shareView = [[ZSHShareView alloc]initWithFrame:CGRectMake(0, KScreenHeight, kScreenWidth, kRealValue(185))];
+        _shareView.tag = 100;
     }
-    return _bottomBlurPopView;
+    return _shareView;
 }
-
-
 
 - (void)personInfo {
     NSDictionary *nextParamDic = @{KFromClassType:@(ZSHFromPersonInfoVCToBottomBlurPopView)};
@@ -236,6 +230,16 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     bottomBlurPopView.dynamic = NO;
     bottomBlurPopView.tintColor = KClearColor;
     [ZSHBaseUIControl setAnimationWithHidden:NO view:bottomBlurPopView completedBlock:nil];
+}
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    UITouch *touch = [touches anyObject];
+    if (touch.view.tag != 20 && [self viewWithTag:20]) {
+        [ZSHBaseFunction dismissPopView:self.giftView block:nil];
+    }
+    if (touch.view.tag != 100 && [self viewWithTag:100]) {
+         [ZSHBaseFunction dismissPopView:self.shareView block:nil];
+    }
 }
 
 - (void)backButtonAction:(UIButton *)btn{

@@ -59,5 +59,6 @@
 
 //直播搜索
 - (void)requestLiveSearhWithDic:(NSDictionary *)dic success:(void (^)(id response))success;
-
+//直播用户资料
+- (void)requestLiveUserDataWithDic:(NSDictionary *)dic success:(void (^)(id response))success;
 @end

@@ -26,7 +26,6 @@
 #import "ZSHFinishShowViewController.h"
 
 #import "ZSHShareView.h"
-#import "ZSHLiveGiftView.h"
 
 #define viewWidth kRealValue(58)
 #define viewHeight viewWidth/4*3
@@ -87,7 +86,6 @@
 //更多功能
 @property (nonatomic, strong)  ZSHLiveMoreView          *moreView;
 @property (nonatomic, assign)  BOOL                     isLocate;
-@property (nonatomic, strong)  ZSHLiveGiftView          *giftView;
 
 //美颜设置功能
 @property (nonatomic, strong)  ZSHBeautyView            *beautyView;
@@ -289,8 +287,8 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     [closeBtn addTarget:self action:@selector(backButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.topView addSubview:closeBtn];
     [closeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.mas_equalTo(self.topView).offset(-kRealValue(18));
-        make.width.and.height.mas_equalTo(kRealValue(13.7));
+        make.right.mas_equalTo(self.topView);
+        make.width.and.height.mas_equalTo(kRealValue(44));
         make.centerY.mas_equalTo(self.topView);
     }];
     
@@ -774,15 +772,6 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
    
 }
 
-//测试礼物
-- (void)giftViewAction:(UIButton *)btn{
-    if (![self viewWithTag:20]) {
-         [self addSubview:self.giftView];
-         [ZSHBaseFunction showPopView:self.giftView];
-    }
-   
-}
-
 - (void)musicButtonAction:(UIButton *)sender {
     
     if (!self.musicSettingView) {
@@ -926,9 +915,6 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
         
     } else if ([self viewWithTag:100]) {
         [ZSHBaseFunction dismissPopView:self.shareView block:nil];
-        
-    } else if ([self viewWithTag:20]) {//礼物
-        [ZSHBaseFunction dismissPopView:self.giftView block:nil];
         
     } else {
         
@@ -1347,14 +1333,6 @@ static CGFloat lastPinchDistance = 0;
     return _shareView;
 }
 
-- (ZSHLiveGiftView *)giftView{
-    if (!_giftView) {
-        _giftView = [[ZSHLiveGiftView alloc]initWithFrame:CGRectMake(0, KScreenHeight, KScreenHeight, kRealValue(290))];
-        _giftView.tag = 20;
-    }
-    return _giftView;
-}
-
 #pragma mark - Event
 - (void)thirdLogin:(UIButton *)send{
     [_shareBtnArr enumerateObjectsUsingBlock:^(UIButton *btn , NSUInteger idx, BOOL * _Nonnull stop) {
@@ -1379,7 +1357,7 @@ static CGFloat lastPinchDistance = 0;
         case 1:{//分享
             if (![self viewWithTag:100]) {
                 [self addSubview:self.shareView];
-                [ZSHBaseFunction showPopView:self.shareView];
+                [ZSHBaseFunction showPopView:self.shareView frameY:0];
             }
             
             break;
@@ -1394,7 +1372,7 @@ static CGFloat lastPinchDistance = 0;
     kWeakSelf(self);
     [self addSubview:self.moreView];
     self.isMoreViewShow = YES;
-    [ZSHBaseFunction showPopView:self.moreView];
+    [ZSHBaseFunction showPopView:self.moreView frameY:0];
     
     self.moreView.btnClickBlock = ^(UIButton *btn) {
         switch (btn.tag) {
@@ -1422,7 +1400,7 @@ static CGFloat lastPinchDistance = 0;
                     
                     [weakself addSubview:weakself.beautyView];
                     weakself.isBeautyViewShow = YES;
-                    [ZSHBaseFunction showPopView:weakself.beautyView];
+                    [ZSHBaseFunction showPopView:weakself.beautyView frameY:0];
                     
                     weakself.beautyView.btnClickBlock = ^(UIButton *btn) {
                         [weakself beautyBtnSetAction:btn];
@@ -1430,14 +1408,7 @@ static CGFloat lastPinchDistance = 0;
                 }];
                 break;
             }
-            case 4:{//测试礼物系统
 
-                [ZSHBaseFunction dismissPopView:weakself.moreView block:^{
-                    weakself.isMoreViewShow = NO;
-                    [weakself giftViewAction:btn];
-                }];
-                break;
-            }
             default:
                 break;
         }

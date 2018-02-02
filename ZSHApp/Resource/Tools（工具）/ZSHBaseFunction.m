@@ -59,10 +59,15 @@
 }
 
 //底部弹出view
-+ (void)showPopView:(UIView *)customView{
++ (void)showPopView:(UIView *)customView frameY:(CGFloat)frameY{
     [UIView animateWithDuration:0.5 animations:^{
         CGRect customViewFrame = customView.frame;
-        customViewFrame.origin.y = KScreenHeight - customViewFrame.size.height;
+        if (frameY>0) {
+            customViewFrame.origin.y = frameY;
+        } else {
+            customViewFrame.origin.y = KScreenHeight - customViewFrame.size.height;
+        }
+       
         customView.frame = customViewFrame;
     } completion:nil];
 }
