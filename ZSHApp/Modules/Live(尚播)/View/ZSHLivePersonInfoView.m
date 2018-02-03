@@ -50,7 +50,7 @@
     NSDictionary *followNumLabelDic = @{@"text":@"36",@"font":kPingFangRegular(20),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentCenter)};
     UILabel *followNumLabel = [ZSHBaseUIControl createLabelWithParamDic:followNumLabelDic];
      ;
-    followNumLabel.text = [self.paramDic[@"focus"] stringValue];
+    followNumLabel.text = [self.paramDic[@"FOCUSCOUNT"] stringValue];
     [self addSubview:followNumLabel];
     [followNumLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self).offset(kRealValue(195.5));
@@ -69,7 +69,7 @@
     }];
     
     //
-    NSDictionary *followerNumLabelDic = @{@"text": [self.paramDic[@"fans"] stringValue],@"font":kPingFangRegular(20),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentCenter)};
+    NSDictionary *followerNumLabelDic = @{@"text": [self.paramDic[@"FANSCOUNT"] stringValue],@"font":kPingFangRegular(20),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentCenter)};
     UILabel *followerNumLabel = [ZSHBaseUIControl createLabelWithParamDic:followerNumLabelDic];
     [self addSubview:followerNumLabel];
     [followerNumLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -78,8 +78,7 @@
         make.size.mas_equalTo(CGSizeMake(kRealValue(80), kRealValue(29)));
     }];
     
-    
-    
+
     //
     NSDictionary *followerLabelDic = @{@"text":@"粉丝",@"font":kPingFangRegular(11),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentCenter)};
     UILabel *followerLabel = [ZSHBaseUIControl createLabelWithParamDic:followerLabelDic];
@@ -91,7 +90,7 @@
     }];
     
     //
-    NSDictionary *recentNumLabelDic = @{@"text": [self.paramDic[@"dynamic"] stringValue],@"font":kPingFangRegular(20),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentCenter)};
+    NSDictionary *recentNumLabelDic = @{@"text": [self.paramDic[@"DYNAMIC"] stringValue],@"font":kPingFangRegular(20),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentCenter)};
     UILabel *recentNumLabel = [ZSHBaseUIControl createLabelWithParamDic:recentNumLabelDic];
     [self addSubview:recentNumLabel];
     [recentNumLabel mas_makeConstraints:^(MASConstraintMaker *make) {

@@ -127,7 +127,12 @@
 
 - (void)updateCellWithModel:(ZSHWeiBoCellModel *)model{
     //子控件数据的更新
-    self.avatarImageView.image = [UIImage imageNamed:@"list_user_1"];
+    if (!model.PORTRAIT) {
+        self.avatarImageView.image = [UIImage imageNamed:@"list_user_1"];
+    } else {
+         [self.avatarImageView sd_setImageWithURL:[NSURL URLWithString:model.PORTRAIT]];
+    }
+    self.nameLabel.text = model.NICKNAME?model.NICKNAME:@"姜小白";
     self.dateLabel.text = model.PUBLISHTIME;
     
     if (![model.CONTENT isEqualToString:@""] && model.CONTENT != nil) {
@@ -150,8 +155,8 @@
     }
     [_itemsArray removeAllObjects];
     
-    if (![model.SHOWIMAGES isEqualToString:@""]) {
-        NSArray *urlArr = [model.SHOWIMAGES componentsSeparatedByString:@","];
+    if ([model.SHOWIMAGES count]) {
+        NSArray *urlArr = model.SHOWIMAGES;
         for (int i = 0; i<urlArr.count; i++) {
             UIImageView *imageView = [[UIImageView alloc] init];
             imageView.userInteractionEnabled = YES;
@@ -195,8 +200,8 @@
     
     model.hight =  67.5 + detailLabelHeight;
 
-    if (![model.SHOWIMAGES isEqualToString:@""]) {
-        NSArray *urlArr = [model.SHOWIMAGES componentsSeparatedByString:@","];
+    if ([model.SHOWIMAGES count]) {
+        NSArray *urlArr = model.SHOWIMAGES; 
         return 67.5 + detailLabelHeight + 10.0+100*(urlArr.count/4+1)+15+22;
     } else {
         return 67.5 + detailLabelHeight + 10.0+15+22;

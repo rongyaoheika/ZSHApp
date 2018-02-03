@@ -60,6 +60,15 @@ static NSString * const ZSHNearHeadViewID = @"ZSHNearHeadView";
         make.edges.mas_equalTo(self.view).insets(UIEdgeInsetsMake(0, 0, KBottomTabH , 0));
     }];
     
+    [self.collectionView addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(collectionViewAction:)]];
+    
+}
+
+//测试
+- (void)collectionViewAction:(UIGestureRecognizer *)gesture{
+    AliyunPlaySDKDemoFullScreenScrollViewController *livePlayVC = [[AliyunPlaySDKDemoFullScreenScrollViewController alloc] init];
+    livePlayVC.publishUrl = AlivcPullURL;
+    [self.navigationController pushViewController:livePlayVC animated:YES];
 }
 
 - (void)requestData{

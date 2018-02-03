@@ -112,4 +112,16 @@
     [[kAppDelegate getCurrentUIVC].navigationController pushViewController:vc animated:YES];
 }
 
+- (void)updateViewWithParamDic:(NSDictionary *)paramDic{
+
+    UILabel *followValueLB = [_followBtn viewWithTag:21];
+    followValueLB.text = [paramDic[@"FOCUSCOUNT"]stringValue];
+    
+    UILabel *coinValueLB = [_coinBtn viewWithTag:21];
+    coinValueLB.text = [paramDic[@"BLACKCOIN"]stringValue];
+    
+    UILabel *followerLB = [_followerBtn viewWithTag:21];
+    followerLB.text = [paramDic[@"FANSCOUNT"]stringValue];
+}
+
 @end

@@ -291,9 +291,7 @@
         if ([nav.viewControllers.lastObject isKindOfClass:[ZSHLiveTabBarController class]]) {
             ZSHLiveTabBarController *liveTabVC = (ZSHLiveTabBarController *)nav.viewControllers.lastObject;
              RootNavigationController *liveTabNav = [liveTabVC selectedViewController];
-             ZSHTitleContentViewController *liveContentVC = liveTabNav.viewControllers.lastObject;
-             RootViewController *liveVC = liveContentVC.vcs[liveContentVC.vcIndex];
-             return liveVC;
+             return liveTabNav.viewControllers.lastObject;
         } else {
              return nav.viewControllers.lastObject;
         }

@@ -766,35 +766,34 @@
 #define kUrlAddSelfMediaad [NSString stringWithFormat:@"/appdiscoverin/addselfmediaad.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SELFMEDIAADD"]]
 
 //**********直播**************
-//151.主播开播接口(获取一个推流地址)
+//151.主播开播接口(获取一个推流地址)(完成)
 //参数：LIVE_TITLE  HONOURUSER_ID
 //请求地址：/applivein/getpushaddress?PUSHADDRESS
 #define kUrlGetPushAddress [NSString stringWithFormat:@"/applivein/getpushaddress?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"PUSHADDRESS"]]
-//152.获得所有正在推流的地址(所有正在直播的地址)
+//152.获得所有正在推流的地址(所有正在直播的地址)(完成)
 //参数：PARENT_ID
 //请求地址：/applivein/getpushlist?PUSHLIST
 #define kUrlGetPushList [NSString stringWithFormat:@"/applivein/getpushlist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"PUSHLIST"]]
-//153.用户看直播接口(获取一个拉流地址)
+//153.用户看直播接口(获取一个拉流地址)(完成)
 //请求地址：/applivein/getpulladdress?PULLADDRESS  参数：STREAMNAME(每个主播单独的地址)
 #define kUrlGetPullAddress [NSString stringWithFormat:@"/applivein/getpulladdress?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"PULLADDRESS"]]
 
-//154.经纬度
+//154.经纬度(完成)
 //参数：USERLONGITUDE 经度，USERLATITUDE 纬度，HONOURUSER_ID 用户id
 //请求地址：apphomein/updtrapeze?TRAPEZE(混淆码)
 #define kUrlUpdtrapeze [NSString stringWithFormat:@"apphomein/updtrapeze?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"TRAPEZE"]]
 
-//154.直播分类接口(获取一个拉流地址)
+//154.直播分类接口(获取一个拉流地址)(完成)
 //参数：  PARENT_ID
 //请求地址：/applivein/getlivetypelist?LIVETYPE
 #define kUrlGetLiveTypeList [NSString stringWithFormat:@"/applivein/getlivetypelist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"LIVETYPE"]]
 
-//156. 附近直播
+//156. 附近直播(完成)
 //参数:HONOURUSER_ID 当前登录用户id
 //请求地址：/applivein/getnearbypushlist?PUSHNEARLIST
 #define kUrlGetNearbyPushList [NSString stringWithFormat:@"/applivein/getnearbypushlist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"PUSHNEARLIST"]]
 
-
-//157.直播中筛选直播
+//157.直播中筛选直播(完成)
 //参数:SEX 性别（全部，男，女），LIVE_START 活跃时间（0，15，2，1，7）
 //地址: /applivein/getscreenlist?SCREENLIST
 #define kUrlGetScreenList [NSString stringWithFormat:@"/applivein/getscreenlist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SCREENLIST"]]
@@ -804,42 +803,42 @@
 //地址:/applivein/getuserlist?USERLIST
 #define kUrlGetUserList [NSString stringWithFormat:@"/applivein/getuserlist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"USERLIST"]]
 
-//159.直播中送礼物接口
+//159.直播中送礼物接口(完成)
 //参数:HONOURUSER_ID 当前账户id ,REHONOURUSER_ID 被赠送人id, BLACKPRICE 赠送礼物总价值
 //地址:/applivein/gifttouser?GIFT
 #define kUrlGiftToUser [NSString stringWithFormat:@"/applivein/gifttouser?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"GIFT"]]
 
-//160.直播个人资料上部分个人资料
+//160.直播个人资料上部分个人资料(完成)
 //参数:HONOURUSER_ID 查看的账户id
 //地址:/applivein/getuserdata
 #define kUrlGetLiveUserData [NSString stringWithFormat:@"/applivein/getuserdata?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"USERDATA"]]
 
-//161.直播个人资料中黑微博页面
-//参数:HONOURUSER_ID 查看的账户id
-//地址:/applivein/getweibouser?WEIBOUSER
-#define kUrlGetWeiboUser [NSString stringWithFormat:@"/applivein/getweibouser?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"WEIBOUSER"]]
-
-//162.直播个人资料下部分资料
+//161.直播个人资料下部分资料(完成)
 //参数:HONOURUSER_ID 查看的账户id
 //地址:/applivein/getdowndata?DOWNDATA
 #define kUrlGetDownData [NSString stringWithFormat:@"/applivein/getdowndata?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"DOWNDATA"]]
 
-//163.直播页面点击头像显示的简洁个人资料
+//162.直播个人资料中黑微博页面（完成）
+//参数:HONOURUSER_ID 查看的账户id
+//地址:/applivein/getweibouser?WEIBOUSER
+#define kUrlGetWeiboUser [NSString stringWithFormat:@"/applivein/getweibouser?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"WEIBOUSER"]]
+
+//163.直播页面点击头像显示的简洁个人资料(完成)
 //参数:HONOURUSER_ID 查看的账户id  REHONOURUSER_ID 当前登录账户id
 //地址:/applivein/getpithydata?PITHYDATA
 #define kUrlGetPithyData [NSString stringWithFormat:@"/applivein/getpithydata?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"PITHYDATA"]]
 
-//164.获取‘我的’页面资料
+//164.获取‘我的’页面资料(完成)
 //参数:HONOURUSER_ID 当前登录账户id
 //地址:/applivein/getminedata?MINEDATA
-#define kUrlGetMineData [NSString stringWithFormat:@"/applivein/getpithydata?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"MINEDATA"]]
+#define kUrlGetMineData [NSString stringWithFormat:@"/applivein/getminedata?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"MINEDATA"]]
 
-//165.获取‘我的’页面粉丝列表
+//165.获取‘我的’页面粉丝列表（完成）
 //参数:HONOURUSER_ID 查看的账户id
-//地址:http://192.168.1.107:8081/ZSHINTER/applivein/getfanslist?FANSLIST
+//地址:/applivein/getfanslist?FANSLIST
 #define kUrlGetFansList [NSString stringWithFormat:@"/applivein/getfanslist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"FANSLIST"]]
 
-//166.获取‘我的’页面关注列表
+//166.获取‘我的’页面关注列表(完成)
 //参数:HONOURUSER_ID 查看的账户id
 //地址:/applivein/getfocuslist?FOCUSLIST
 #define kUrlGetFocusList [NSString stringWithFormat:@"/applivein/getfocuslist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"FOCUSLIST"]]

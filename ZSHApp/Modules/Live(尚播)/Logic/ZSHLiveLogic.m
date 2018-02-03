@@ -11,7 +11,7 @@
 
 
 @implementation ZSHLiveLogic
-
+//老接口
 // 关注
 - (void)requestFriendList:(void (^)(id response))success {
     kWeakSelf(self);
@@ -233,6 +233,72 @@
         success(responseObject);
     } failure:^(NSError *error) {
         RLog(@"直播用户简介资料失败%@", error);
+    }];
+}
+
+//直播个人资料上部分个人资料
+- (void)requestLiveUserTopDataWithDic:(NSDictionary *)dic success:(void (^)(id response))success{
+    [PPNetworkHelper POST:kUrlGetLiveUserData parameters:dic success:^(id responseObject) {
+        RLog(@"直播用户简介资料%@",responseObject);
+        success(responseObject[@"pd"]);
+    } failure:^(NSError *error) {
+        RLog(@"直播用户简介资料失败%@", error);
+    }];
+}
+
+//直播个人资料下部分个人资料
+- (void)requestLiveUserDownDataWithDic:(NSDictionary *)dic success:(void (^)(id response))success{
+    [PPNetworkHelper POST:kUrlGetDownData parameters:dic success:^(id responseObject) {
+        RLog(@"直播用户简介资料%@",responseObject);
+        success(responseObject[@"pd"]);
+    } failure:^(NSError *error) {
+        RLog(@"直播用户简介资料失败%@", error);
+    }];
+}
+
+//直播-我的资料
+- (void)requestLiveMineDataWithDic:(NSDictionary *)dic success:(void (^)(id response))success{
+    [PPNetworkHelper POST:kUrlGetMineData parameters:dic success:^(id responseObject) {
+        RLog(@"直播用户简介资料%@",responseObject);
+        success(responseObject[@"pd"]);
+    } failure:^(NSError *error) {
+        RLog(@"直播用户简介资料失败%@", error);
+    }];
+}
+
+//直播-微博数据
+- (void)requestLiveWeiboDataWithDic:(NSDictionary *)dic success:(void (^)(id response))success{
+    [PPNetworkHelper POST:kUrlGetWeiboUser parameters:dic success:^(id responseObject) {
+        RLog(@"直播-黑微博数据%@",responseObject);
+
+        NSArray *weiboCellModelArr = [ZSHWeiBoCellModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"]];
+        success(weiboCellModelArr);
+    } failure:^(NSError *error) {
+        RLog(@"直播-黑微博数据失败%@", error);
+    }];
+}
+//泓磊：直播-我的-关注，粉丝接口
+// 关注
+- (void)requestFocusList:(void (^)(id response))success {
+    kWeakSelf(self);
+    [PPNetworkHelper POST:kUrlGetFocusList parameters:@{@"HONOURUSER_ID":HONOURUSER_IDValue} success:^(id responseObject) {
+        weakself.friendListModelArr = [ZSHFriendListModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"]];
+        RLog(@"%@",responseObject);
+        success(nil);
+    } failure:^(NSError *error) {
+        RLog(@"%@", error);
+    }];
+}
+
+// 粉丝
+- (void)requestFansList:(void (^)(id response))success {
+    kWeakSelf(self);
+    [PPNetworkHelper POST:kUrlGetFansList parameters:@{@"HONOURUSER_ID":HONOURUSER_IDValue} success:^(id responseObject) {
+        weakself.friendListModelArr = [ZSHFriendListModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"]];
+        RLog(@"%@",responseObject);
+        success(nil);
+    } failure:^(NSError *error) {
+        RLog(@"%@", error);
     }];
 }
 

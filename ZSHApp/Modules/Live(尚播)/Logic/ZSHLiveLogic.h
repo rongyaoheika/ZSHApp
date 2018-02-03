@@ -65,4 +65,17 @@
 - (void)requestLiveUserDataWithDic:(NSDictionary *)dic success:(void (^)(id response))success;
 //直播页面点击头像显示的简洁个人资料
 - (void)requestLivePithyDataWithDic:(NSDictionary *)dic success:(void (^)(id response))success;
+//直播个人资料上部分个人资料
+- (void)requestLiveUserTopDataWithDic:(NSDictionary *)dic success:(void (^)(id response))success;
+//直播个人资料下部分个人资料
+- (void)requestLiveUserDownDataWithDic:(NSDictionary *)dic success:(void (^)(id response))success;
+//直播-我的资料
+- (void)requestLiveMineDataWithDic:(NSDictionary *)dic success:(void (^)(id response))success;
+//直播-黑微博数据
+- (void)requestLiveWeiboDataWithDic:(NSDictionary *)dic success:(void (^)(id response))success;
+//泓磊：直播-我的-关注，粉丝接口
+// 关注
+- (void)requestFocusList:(void (^)(id response))success;
+// 粉丝
+- (void)requestFansList:(void (^)(id response))success;
 @end

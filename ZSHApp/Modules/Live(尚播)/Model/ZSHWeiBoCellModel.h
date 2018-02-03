@@ -10,28 +10,18 @@
 
 @interface ZSHWeiBoCellModel : ZSHBaseModel
 
-@property (nonatomic, copy)  NSString *avatarPicture;
-@property (nonatomic, copy)  NSString *name;
-@property (nonatomic, copy)  NSString *detailText;
-@property (nonatomic, copy)  NSString *detailPicture;
-
-
-@property (nonatomic, copy) NSString *dotAgreeCount;
+@property (nonatomic, copy) NSString *NICKNAME;
+@property (nonatomic, copy) NSString *STATUS;
+@property (nonatomic, copy) NSString *PORTRAIT;
+@property (nonatomic, copy) NSString *AGREECOUNT;
 @property (nonatomic, copy) NSString *CIRCLE_ID;
 @property (nonatomic, copy) NSString *HONOURUSER_ID;
 @property (nonatomic, copy) NSString *CONTENT;
 @property (nonatomic, copy) NSString *PUBLISHTIME;
-@property (nonatomic, copy) NSString *SHOWIMAGES;
-@property (nonatomic, copy) NSString *commentCount;
+@property (nonatomic, copy) NSArray  *SHOWIMAGES;
+@property (nonatomic, copy) NSString *COMMENTCOUNT;
 @property (nonatomic, assign) CGFloat hight;// 图片开始的高度
 
-//子控件的可变frame（根据内容显示不同，frame变化）
-//@property (nonatomic,assign)  CGRect  avatarFrame;
-//@property (nonatomic,assign)  CGRect  nameLabelFrame;
-//@property (nonatomic,assign)  CGRect  vipFrame;
-//@property (nonatomic,assign)  CGRect  detailLabelFrame;
-//@property (nonatomic,assign)  CGRect  detailPictureFrame;
-//@property (nonatomic,assign)  CGFloat rowHeight;
 
 +(instancetype)modelWithDict:(NSDictionary *)dict;
 -(void)updateRowHeight;

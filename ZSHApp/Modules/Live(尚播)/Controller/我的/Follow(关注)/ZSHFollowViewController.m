@@ -92,11 +92,18 @@ static NSString *ZSHLiveFollowCellID = @"ZSHLiveFollowCellID";
 - (void)requestData {
     kWeakSelf(self);
     if ([self.paramDic[@"follow"] isEqualToString:@"0"]) {// 关注
-        [_liveLogic requestFriendList:^(id response) {
-            [weakself initViewModel];
+//        [_liveLogic requestFriendList:^(id response) {
+//            [weakself initViewModel];
+//        }];
+        
+        [_liveLogic requestFocusList:^(id response) {
+             [weakself initViewModel];
         }];
     } else {// 粉丝
-        [_liveLogic requestReFriendList:^(id response) {
+//        [_liveLogic requestReFriendList:^(id response) {
+//            [weakself initViewModel];
+//        }];
+        [_liveLogic requestFansList:^(id response) {
             [weakself initViewModel];
         }];
     }
