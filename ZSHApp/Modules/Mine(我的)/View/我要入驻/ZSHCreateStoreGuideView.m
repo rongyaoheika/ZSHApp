@@ -39,7 +39,8 @@
     }];
     
     //创建门店
-    NSDictionary *titleLBDic = @{@"text":@"创建门店",@"font":kPingFangMedium(20),@"textAlignment":@(NSTextAlignmentCenter)};
+    NSString *title = [self.paramDic[@"row"]integerValue]>1?@"创建企业":@"创建门店";
+    NSDictionary *titleLBDic = @{@"text":title,@"font":kPingFangMedium(20),@"textAlignment":@(NSTextAlignmentCenter)};
     UILabel *titleLB = [ZSHBaseUIControl createLabelWithParamDic:titleLBDic];
     [_popView addSubview:titleLB];
     [titleLB mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -58,12 +59,21 @@
         make.top.mas_equalTo(titleLB.mas_bottom).offset(kRealValue(30));
         make.left.mas_equalTo(_popView);
     }];
+    NSArray *contentArr = [NSArray new];
+    if ([self.paramDic[@"row"]integerValue] >1) {//企业
+        contentArr = @[
+                       @[@"1、 填写企业名称",@"2、填写企业详细地址",@"3、填写企业电话"],
+                       @[@"1、 填写联系人及联系方式",@"2、上传联系人身份证件",@"3、上传企业信息及企业照片"],
+                       @[@"提交资质后3-5个工作日审核完成",@"",@""]
+                       ];
+    } else {
+        contentArr = @[
+                       @[@"1、 填写门店名称",@"2、填写门店详细地址",@"3、填写门店电话"],
+                       @[@"1、 填写联系人及联系方式",@"2、上传联系人身份证件",@"3、上传店铺信息及店铺照片"],
+                       @[@"提交资质后3-5个工作日审核完成",@"",@""]
+                       ];
+    }
     
-    NSArray *contentArr = @[
-  @[@"1、 填写门店名称",@"2、填写门店详细地址",@"3、填写门店电话"],
-  @[@"1、 填写联系人及联系方式",@"2、上传联系人身份证件",@"3、上传店铺照片及店铺照片"],
-  @[@"提交资质后3-5个工作日审核完成",@"",@""]
-  ];
     
     NSDictionary *titleLabelDic = @{@"text":@"",@"font":kPingFangRegular(12)};
     for (int i = 0; i<3; i++) {

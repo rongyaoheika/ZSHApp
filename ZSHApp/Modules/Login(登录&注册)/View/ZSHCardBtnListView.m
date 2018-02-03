@@ -17,7 +17,7 @@
 @interface ZSHCardBtnListView ()
 
 @property (nonatomic, strong) NSMutableArray   *btnArr;
-@property (nonatomic, assign) NSInteger        row;
+//@property (nonatomic, assign) NSInteger        row;
 @property (nonatomic, assign) NSInteger        column;
 @property (nonatomic, assign) UIButton         *lastBtn;
 @property (nonatomic, assign) NSInteger        selectIndex;
@@ -30,8 +30,14 @@
     _btnArr = [[NSMutableArray alloc]init];
     
     NSArray *titleListArr = self.paramDic[@"titleArr"];
-    _row = ceil(titleListArr.count/3.0);
-    _column = 3;
+//    if (titleListArr.count%4) {
+//        _row = ceil(titleListArr.count/2.0);
+//        _column = 2;
+//    } else {
+//        _row = ceil(titleListArr.count/3.0);
+//        _column = 3;
+//    }
+    
    
     for (int i = 0; i<titleListArr.count; i++) {
         NSDictionary *cardTypeBtnDic = @{@"title":titleListArr[i],@"font":kPingFangLight(15), @"selectedTitleColor":KZSHColorF29E19};
@@ -53,13 +59,21 @@
 
 -  (void)layoutSubviews{
     [super layoutSubviews];
-
+    
+    CGFloat leftMargin = KLeftMargin;
     int i = 0;
+    if ([self.paramDic[@"titleArr"] count] ==4) {//一排两个按钮
+        _column = 2;
+        leftMargin = (KScreenWidth - midXSpace - _column*btnW)/_column;
+    } else {
+        _column = 3;
+        leftMargin = KLeftMargin;
+    }
     for (UIButton *btn in _btnArr) {
         [btn mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.mas_equalTo(self).offset(KLeftMargin + (i%3)*(btnW+midXSpace));
+            make.left.mas_equalTo(self).offset(leftMargin + (i%_column)*(btnW+midXSpace));
             make.size.mas_equalTo(CGSizeMake(btnW, btnH));
-            make.top.mas_equalTo(self).offset(kRealValue(10) + (i/3)*(btnH+midYSpace));
+            make.top.mas_equalTo(self).offset(kRealValue(10) + (i/_column)*(btnH+midYSpace));
         }];
         i++;
     }

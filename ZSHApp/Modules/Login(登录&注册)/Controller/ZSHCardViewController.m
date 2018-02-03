@@ -134,11 +134,11 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
             
         case 1:{
             if ([_selectedArr[indexPath.section]boolValue]) {
-                switch (_cardBtnTag) {
-                    case 4:
+                switch (_cardBtnTag) {//删减
+                    case 2:
                         return kRealValue(175);
                         break;
-                    case 5:
+                    case 3:
                         return kRealValue(90);
                         break;
                         
@@ -238,7 +238,8 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
     kWeakSelf(self);
     switch (section) {
         case 1:{
-            NSArray *titleArr = @[@"至尊会籍卡",@"荣耀会籍卡",@"名人联名卡",@"经典会籍卡",@"12星座卡",@"周易五行卡"];
+//            NSArray *titleArr = @[@"至尊会籍卡",@"荣耀会籍卡",@"名人联名卡",@"经典会籍卡",@"12星座卡",@"周易五行卡"];
+            NSArray *titleArr = @[@"荣耀黑卡",@"名人联名卡",@"12星座卡",@"周易五行卡"];
             NSDictionary *paramDic = @{@"titleArr":titleArr,@"normalImage":@"card_normal",@"selectedImage":@"card_press"};
             ZSHCardBtnListView *listView = [[ZSHCardBtnListView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kRealValue(90)) paramDic:paramDic];
             listView.tag = 2;
@@ -335,10 +336,10 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
             if ([_selectedArr[indexPath.section]boolValue])  {
                 NSArray *titleArr = nil;
                 NSDictionary *nextParamDic = nil;
-                if (_cardBtnTag == 4) {
+                if (_cardBtnTag == 2) {
                     titleArr = @[@"白羊座",@"金牛座",@"双子座",@"巨蟹座",@"狮子座",@"处女座",@"天秤座",@"天蝎座",@"射手座",@"摩羯座",@"水瓶座",@"双鱼座"];
                     nextParamDic = @{@"titleArr":titleArr,@"normalImage":@"card_normal",@"selectedImage":@"card_layer_press",@"tag":@(2)};
-                } else if (_cardBtnTag == 5){
+                } else if (_cardBtnTag == 3){
                     titleArr = @[@"金",@"木",@"水",@"火",@"土"];
                     nextParamDic = @{@"titleArr":titleArr,@"normalImage":@"card_normal",@"selectedImage":@"card_layer_press",@"tag":@(3)};
                 }

@@ -117,9 +117,14 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
         self.toViewType = FromSetPasswordToMultiInfoVC;
     }else if (kFromClassTypeValue ==  FromCreateStoreVCToMultiInfoVC) {
         // 创建门店
-        self.titleArr = @[@"门店名称", @"门店地址", @"详细地址", @"门店电话"];
-        self.textFieldTypeArr = @[@(ZSHTextFieldViewUser), @(ZSHTextFieldViewUser), @(ZSHTextFieldViewUser), @(ZSHTextFieldViewUser)];
-        self.placeHolderArr = @[@"若有分店，请具体到分店名", @"请选择", @"请输入", @"填写座机/手机，座机需加区号"];
+        if ([self.paramDic[@"row"]integerValue]>1) {
+            self.titleArr = @[@"企业名称", @"企业地址", @"详细地址", @"企业电话"];
+            self.placeHolderArr = @[@"若有下属企业，请具体到具体企业名", @"请选择", @"请输入", @"填写座机/手机，座机需加区号"];
+        } else {
+            self.titleArr = @[@"门店名称", @"门店地址", @"详细地址", @"门店电话"];
+            self.placeHolderArr = @[@"若有分店，请具体到分店名", @"请选择", @"请输入", @"填写座机/手机，座机需加区号"];
+        }
+         self.textFieldTypeArr = @[@(ZSHTextFieldViewUser), @(ZSHTextFieldViewUser), @(ZSHTextFieldViewUser), @(ZSHTextFieldViewUser)];
     }else if (kFromClassTypeValue ==  FromVerifyVCToMultiInfoVC) {
         // 提交审核
         self.titleArr = @[@"上传身份证", @"经营者姓名", @"身份证号", @"店铺照片", @"营业执照",
@@ -364,7 +369,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 
 - (ZSHCreateStoreGuideView *)guideView{
     if (!_guideView) {
-        _guideView = [[ZSHCreateStoreGuideView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight)];
+        _guideView = [[ZSHCreateStoreGuideView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight) paramDic:@{@"row":self.paramDic[@"row"]}];
         _guideView.tag = 3;
         
         
