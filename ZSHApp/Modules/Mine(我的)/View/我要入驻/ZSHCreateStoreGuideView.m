@@ -39,7 +39,7 @@
     }];
     
     //创建门店
-    NSString *title = [self.paramDic[@"row"]integerValue]>1?@"创建企业":@"创建门店";
+    NSString *title = [self.paramDic[@"row"]integerValue]>1?@"企业创建":@"门店创建";
     NSDictionary *titleLBDic = @{@"text":title,@"font":kPingFangMedium(20),@"textAlignment":@(NSTextAlignmentCenter)};
     UILabel *titleLB = [ZSHBaseUIControl createLabelWithParamDic:titleLBDic];
     [_popView addSubview:titleLB];

@@ -98,7 +98,7 @@
         make.top.mas_equalTo(_hotelAddressLabel);
         make.right.mas_equalTo(self).offset(-KLeftMargin);
         make.height.mas_equalTo(_hotelAddressLabel);
-        make.width.mas_equalTo(kRealValue(50));
+        make.width.mas_equalTo(kRealValue(100));
     }];
     
     [_starView mas_makeConstraints:^(MASConstraintMaker *make) {

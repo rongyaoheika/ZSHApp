@@ -315,14 +315,24 @@ static NSString *ZSHLiveGiftPopCellID = @"ZSHLiveGiftPopCell";
     
     _giftLeftBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, kRealValue(50), kRealValue(30))];
     [_giftLeftBtn addTarget:self action:@selector(giftLeftBtnAction:) forControlEvents:UIControlEventTouchUpInside];
-    [_giftLeftBtn setTitle:@"1" forState:UIControlStateNormal];
-    [_giftLeftBtn setImage:[UIImage imageNamed:@"gift_more"] forState:UIControlStateNormal];
-    [_giftLeftBtn layoutButtonWithEdgeInsetsStyle:XYButtonEdgeInsetsStyleRight imageTitleSpace:kRealValue(15)];
+    UIImageView *rightIV = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"gift_more"]];
+    rightIV.contentMode = UIViewContentModeScaleAspectFit;
+    rightIV.frame = CGRectMake(kRealValue(40), 0, kRealValue(5), kRealValue(30));
+    [_giftLeftBtn addSubview:rightIV];
+    
+    NSDictionary *titleLabelDic = @{@"text":@"1",@"font":kPingFangRegular(14),@"textColor":KWhiteColor};
+    UILabel *btnLabel = [ZSHBaseUIControl createLabelWithParamDic:titleLabelDic];
+    btnLabel.frame = CGRectMake(5, 0, kRealValue(35), kRealValue(30));
+    btnLabel.tag = 301;
+    [_giftLeftBtn addSubview:btnLabel];
+    
+
     [_giftBtnView addSubview:_giftLeftBtn];
     
     _giftRightBtn = [[UIButton alloc]initWithFrame:CGRectMake(kRealValue(55), 0, kRealValue(50), kRealValue(30))];
     [_giftRightBtn addTarget:self action:@selector(giftRightBtnAction:) forControlEvents:UIControlEventTouchUpInside];
     [_giftRightBtn setTitle:@"发送" forState:UIControlStateNormal];
+    _giftRightBtn.titleLabel.font = kPingFangRegular(14);
     [_giftRightBtn layoutButtonWithEdgeInsetsStyle:XYButtonEdgeInsetsStyleRight imageTitleSpace:kRealValue(15)];
     [_giftBtnView addSubview:_giftRightBtn];
 
@@ -397,7 +407,9 @@ static NSString *ZSHLiveGiftPopCellID = @"ZSHLiveGiftPopCell";
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
             if (indexPath.row != dicArr.count-1) {
                  _giftNum = dicArr[i][@"leftTitle"];
-                [_giftLeftBtn setTitle:_giftNum forState:UIControlStateNormal];
+                UILabel *giftLeftBtnLabel = [_giftLeftBtn viewWithTag:301];
+                giftLeftBtnLabel.text = _giftNum;
+//                [_giftLeftBtn setTitle:_giftNum forState:UIControlStateNormal];
             }
            
             [ZSHBaseFunction dismissPopView:self.subTab block:nil];

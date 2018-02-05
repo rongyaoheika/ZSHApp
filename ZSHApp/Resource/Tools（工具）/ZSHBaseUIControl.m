@@ -106,8 +106,9 @@
     }];
     
     NSString *btnTitle = paramDic[@"btnTitle"]?paramDic[@"btnTitle"]:@"换一批";
-    NSDictionary *btnDic = @{@"title":btnTitle,@"selectedTitleColor":KZSHColorF29E19,@"font":kPingFangMedium(15)};
-    
+    UIFont *font = paramDic[@"font"]?paramDic[@"font"]:kPingFangMedium(15);
+    CGFloat rightValue = [paramDic[@"btnRightValue"]integerValue]?[paramDic[@"btnRightValue"]integerValue]:KLeftMargin;
+    NSDictionary *btnDic = @{@"title":btnTitle,@"selectedTitleColor":KZSHColorF29E19,@"font":font};
     UIButton *refreshBtn = [ZSHBaseUIControl createBtnWithParamDic:btnDic];
     if (paramDic[@"btnImage"]) {
         [refreshBtn setImage:[UIImage imageNamed:paramDic[@"btnImage"]] forState:UIControlStateNormal];
@@ -120,13 +121,8 @@
         make.centerY.mas_equalTo(headView);
         make.width.mas_equalTo(kRealValue(50));
         make.height.mas_equalTo(headView);
-        if ([paramDic[@"btnRightValue"]integerValue]) {
-            make.right.mas_equalTo(headView).offset([paramDic[@"btnRightValue"]integerValue]);
-        } else {
-            make.right.mas_equalTo(headView).offset(-KLeftMargin);
-        }
+        make.right.mas_equalTo(headView).offset(-rightValue);
     }];
-    
     return headView;
 }
 
