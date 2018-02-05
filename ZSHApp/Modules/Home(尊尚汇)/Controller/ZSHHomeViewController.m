@@ -32,7 +32,6 @@
 #import "ZSHGuideView.h"
 #import "ZSHMusicMainViewController.h"
 
-
 static NSString *Identify_HeadCell = @"headCell";
 static NSString *Identify_NoticeCell = @"noticeCell";
 static NSString *Identify_ServiceCell = @"serviceCell";
@@ -40,8 +39,7 @@ static NSString *Identify_PlayCell = @"playCell";
 static NSString *Identify_MagazineCell = @"magazineCell";
 static NSString *Identify_MusicCell = @"musicCell";
 
-@interface ZSHHomeViewController ()<UISearchBarDelegate,GYZChooseCityDelegate,PYSearchViewControllerDelegate>
-
+@interface ZSHHomeViewController ()<UISearchBarDelegate,GYZChooseCityDelegate,PYSearchViewControllerDelegate,HCLocationManagerDelegate>
 
 @property (nonatomic, strong) NSArray                *pushVCsArr;
 @property (nonatomic, strong) NSArray                *paramArr;
@@ -69,21 +67,12 @@ static NSString *Identify_MusicCell = @"musicCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(locateSuccess:) name:KLocateNoti object:nil];
     [self createUI];
     [self loadData];
 }
 
-- (void)locateSuccess:(NSNotification  *)noti{
-    NSString *cityName = noti.object[@"cityName"];
-    [self.leftBtn setTitle:cityName forState:UIControlStateNormal];
-    NSDictionary *paramic= @{@"USERLONGITUDE":noti.object[@"latitude"],@"USERLATITUDE":noti.object[@"longitude"],@"HONOURUSER_ID":HONOURUSER_IDValue,};
-    [_homeLogic locateDic:paramic success:^(id response) {
-        RLog(@"传递经纬度成功");
-    }];
-}
-
 - (void)loadData{
+    [self startLocateWithDelegate:self];
      _homeLogic = [[ZSHHomeLogic alloc]init];
     //加载网络数据
     [self requestData];
@@ -604,6 +593,20 @@ static NSString *Identify_MusicCell = @"musicCell";
     }];
 }
 
+#pragma mark - <HCLocationManagerDelegate>
+- (void)loationMangerSuccessLocationWithCity:(NSString *)city{
+    RLog(@"city = %@",city);
+    [self.leftBtn setTitle:city forState:UIControlStateNormal];
+    
+}
+
+- (void)loationMangerSuccessLocationWithLatitude:(CLLocationDegrees)latitude longitude:(CLLocationDegrees)longitude{
+    RLog(@"latitude = %f , longitude = %f",latitude,longitude);
+    NSDictionary *paramic= @{@"USERLONGITUDE":@(latitude),@"USERLATITUDE":@(longitude),@"HONOURUSER_ID":HONOURUSER_IDValue,};
+    [_homeLogic locateDic:paramic success:^(id response) {
+        RLog(@"传递经纬度成功");
+    }];
+}
 
 
 - (void)didReceiveMemoryWarning {

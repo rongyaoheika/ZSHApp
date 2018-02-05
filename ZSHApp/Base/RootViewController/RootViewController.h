@@ -130,8 +130,8 @@ typedef void(^ZSHBottomBtnViewBtnBlock)(NSInteger);
 - (void)endCollectionViewRefresh;
 - (void)collectionHeaderRereshing;
 - (void)collectionFooterRereshing;
-
 //定位
-- (void)startLocate;
+- (void)startLocateWithDelegate:(id)delegate;
+
 
 @end

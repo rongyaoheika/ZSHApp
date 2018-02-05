@@ -49,6 +49,7 @@
 #import <NSObject+YYModel.h>
 #import <MJExtension.h>
 #import "IQKeyboardManager.h"
+#import "HCLocationManager.h"
 
 #endif /* PrefixHeader_pch */
 #endif // OC的头文件

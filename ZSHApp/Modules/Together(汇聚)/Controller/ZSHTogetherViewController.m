@@ -19,7 +19,7 @@
 #import "GYZChooseCityController.h"
 static NSString *cellIdentifier = @"listCell";
 
-@interface ZSHTogetherViewController ()<UISearchBarDelegate,PYSearchViewControllerDelegate,GYZChooseCityDelegate>
+@interface ZSHTogetherViewController ()<UISearchBarDelegate,PYSearchViewControllerDelegate,GYZChooseCityDelegate,HCLocationManagerDelegate>
 
 
 @property (nonatomic, strong) NSArray               *pushVCsArr;
@@ -31,19 +31,13 @@ static NSString *cellIdentifier = @"listCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(locateSuccess:) name:KLocateNoti object:nil];
+
     [self loadData];
     [self createUI];
 }
 
-- (void)locateSuccess:(NSNotification  *)noti{
-    NSString *cityName = noti.object[@"cityName"];
-    [self.leftBtn setTitle:cityName forState:UIControlStateNormal];
-}
-
-
 - (void)loadData{
+    [self startLocateWithDelegate:self];
     self.pushVCsArr = @[@"ZSHEntertainmentViewController",@"ZSHEntertainmentViewController",@"ZSHEntertainmentViewController",@"ZSHEntertainmentViewController",@"ZSHEntertainmentViewController",@"ZSHEntertainmentViewController"];
     _togetherLogic = [[ZSHTogetherLogic alloc] init];
     [self initViewModel];
@@ -182,6 +176,12 @@ static NSString *cellIdentifier = @"listCell";
     [_togetherLogic requestAdvertiseListWithAdPosition:@"0" success:^(id response) {
         
     }];
+}
+
+#pragma mark - <HCLocationManagerDelegate>
+- (void)loationMangerSuccessLocationWithCity:(NSString *)city{
+    RLog(@"city = %@",city);
+    [self.leftBtn setTitle:city forState:UIControlStateNormal];
 }
 
 @end

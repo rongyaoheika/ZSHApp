@@ -12,15 +12,11 @@
 #import "UIImage+BlurGlass.h"
 #import "PYSearchViewController.h"
 #import "ZSHBaseTableView.h"
-#import "HCLocationManager.h"
 
-@interface RootViewController ()<HCLocationManagerDelegate>
+@interface RootViewController ()
 
 @property (nonatomic, strong) UIImageView        *noDataView;
 @property (nonatomic, weak)   UITextField        *searchTextField;
-@property (nonatomic, assign) BOOL               isLocate;
-@property (nonatomic, assign) CLLocationDegrees  latitude;
-@property (nonatomic, assign) CLLocationDegrees  longitude;
 
 @end
 
@@ -48,7 +44,6 @@
     UIImageView *image = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"home_bg"]];
     image.frame = self.view.bounds;
     [self.view insertSubview:image atIndex:0];
-    [self startLocate];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -420,32 +415,10 @@
 }
 
 //定位
-- (void)startLocate{
-    if (!self.isLocate) {
+- (void)startLocateWithDelegate:(id)delegate{
         HCLocationManager *locationManager = [HCLocationManager sharedManager];
-        locationManager.delegate = self;
+        locationManager.delegate = delegate;
         [locationManager startLocate];
-    }
-
-}
-
-#pragma mark - <HCLocationManagerDelegate>
-- (void)loationMangerSuccessLocationWithCity:(NSString *)city{
-    RLog(@"city = %@",city);
-    self.isLocate = YES;
-    [[NSNotificationCenter defaultCenter]postNotificationName:KLocateNoti object:@{@"cityName":city,@"latitude":@(self.latitude),@"longitude":@(self.longitude)}];
-
-}
-- (void)loationMangerSuccessLocationWithLatitude:(CLLocationDegrees)latitude longitude:(CLLocationDegrees)longitude{
-    RLog(@"latitude = %f , longitude = %f",latitude,longitude);
-    self.latitude = latitude;
-    self.longitude = longitude;
-}
-- (void)loationMangerFaildWithError:(NSError *)error{
-    RLog(@"%@",error);
-    if (error.code ==kCLErrorDenied) {
-        // 提示用户出错原因，可按住Option键点击 KCLErrorDenied的查看更多出错信息，可打印error.code值查找原因所在
-    }
 }
 
 @end
