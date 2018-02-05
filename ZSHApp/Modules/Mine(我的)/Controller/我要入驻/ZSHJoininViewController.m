@@ -52,7 +52,7 @@ static NSString * ZSHJoininCellID = @"ZSHJoininCellID";
 - (ZSHBaseTableViewSectionModel*)storeListSection {
     kWeakSelf(self);
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
-    NSArray *title = @[@"美食商家入驻", @"酒店商家入驻", @"马术商家入驻", @"游艇商家入驻", @"豪车商家入驻", @"高尔夫商家入驻", @"飞机商家入驻", @"高端品鉴商家入驻", @"娱乐商家入驻", @"金融机构入驻", @"自媒体入驻", @"音乐入驻"];
+    NSArray *title = @[@"美食商家", @"酒店商家", @"马术商家", @"游艇商家", @"豪车商家", @"高尔夫商家", @"飞机商家", @"高端品鉴商家", @"娱乐商家", @"金融机构", @"自媒体", @"音乐"];
     NSMutableArray *dataArr = [NSMutableArray array];
     for (int i = 0; i < title.count; i++) {
         [dataArr addObject:@{@"image": NSStringFormat(@"join%d",i), @"title": title[i]}];
