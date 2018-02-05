@@ -11,6 +11,8 @@
 		041853302005ED97000E0D09 /* ZSHLeftFindViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0418532F2005ED97000E0D09 /* ZSHLeftFindViewController.m */; };
 		041853332005FB3D000E0D09 /* ZSHToplineTopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 041853322005FB3D000E0D09 /* ZSHToplineTopView.m */; };
 		042DC4992004D12A00AF2995 /* ZSHRecommendView.m in Sources */ = {isa = PBXBuildFile; fileRef = 042DC4982004D12A00AF2995 /* ZSHRecommendView.m */; };
+		042E091420285FB40037BB4B /* ZSHEntryLogic.m in Sources */ = {isa = PBXBuildFile; fileRef = 042E091320285FB40037BB4B /* ZSHEntryLogic.m */; };
+		042E0917202861EF0037BB4B /* ZSHMultiInfoViewController+method.m in Sources */ = {isa = PBXBuildFile; fileRef = 042E0916202861EF0037BB4B /* ZSHMultiInfoViewController+method.m */; };
 		04315E821FF5E9ED006C6BC8 /* ZSHWeiboTopicModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04315E811FF5E9ED006C6BC8 /* ZSHWeiboTopicModel.m */; };
 		04315E851FF61175006C6BC8 /* UIImage+String.m in Sources */ = {isa = PBXBuildFile; fileRef = 04315E841FF61175006C6BC8 /* UIImage+String.m */; };
 		043587591FF2564F00969DD7 /* ZSHGoodsCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 043587581FF2564F00969DD7 /* ZSHGoodsCollectionViewCell.m */; };
@@ -629,6 +631,10 @@
 		041853322005FB3D000E0D09 /* ZSHToplineTopView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHToplineTopView.m; sourceTree = "<group>"; };
 		042DC4972004D12A00AF2995 /* ZSHRecommendView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHRecommendView.h; sourceTree = "<group>"; };
 		042DC4982004D12A00AF2995 /* ZSHRecommendView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHRecommendView.m; sourceTree = "<group>"; };
+		042E091220285FB30037BB4B /* ZSHEntryLogic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHEntryLogic.h; sourceTree = "<group>"; };
+		042E091320285FB40037BB4B /* ZSHEntryLogic.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHEntryLogic.m; sourceTree = "<group>"; };
+		042E0915202861EF0037BB4B /* ZSHMultiInfoViewController+method.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ZSHMultiInfoViewController+method.h"; sourceTree = "<group>"; };
+		042E0916202861EF0037BB4B /* ZSHMultiInfoViewController+method.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "ZSHMultiInfoViewController+method.m"; sourceTree = "<group>"; };
 		04315E801FF5E9ED006C6BC8 /* ZSHWeiboTopicModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHWeiboTopicModel.h; sourceTree = "<group>"; };
 		04315E811FF5E9ED006C6BC8 /* ZSHWeiboTopicModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHWeiboTopicModel.m; sourceTree = "<group>"; };
 		04315E831FF61175006C6BC8 /* UIImage+String.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+String.h"; sourceTree = "<group>"; };
@@ -3211,6 +3217,8 @@
 			children = (
 				181AD3121FCCF1EE0015D004 /* ZSHMineLogic.h */,
 				181AD3131FCCF1EE0015D004 /* ZSHMineLogic.m */,
+				042E091220285FB30037BB4B /* ZSHEntryLogic.h */,
+				042E091320285FB40037BB4B /* ZSHEntryLogic.m */,
 			);
 			path = Logic;
 			sourceTree = "<group>";
@@ -4184,6 +4192,8 @@
 			children = (
 				FE443FDD1FB04FF100B7F7A5 /* ZSHMultiInfoViewController.h */,
 				FE443FDE1FB04FF100B7F7A5 /* ZSHMultiInfoViewController.m */,
+				042E0915202861EF0037BB4B /* ZSHMultiInfoViewController+method.h */,
+				042E0916202861EF0037BB4B /* ZSHMultiInfoViewController+method.m */,
 				FE8FD0851FADF4FD005F1184 /* ZSHSettingViewController.h */,
 				FE8FD0861FADF4FD005F1184 /* ZSHSettingViewController.m */,
 				FE8FD0881FADFF17005F1184 /* ZSHUserInfoViewController.h */,
@@ -5070,6 +5080,7 @@
 				FEA018CB1FCBF4C700989FB2 /* ZSHShopCommentLogic.m in Sources */,
 				FEF416061FAB74DF00137F0A /* ZSHAirTicketDetailHeadView.m in Sources */,
 				FE4DB1E11F99965D008E12E9 /* ZSHGoodsTypeViewController.m in Sources */,
+				042E091420285FB40037BB4B /* ZSHEntryLogic.m in Sources */,
 				FEF415FA1FAB5A5F00137F0A /* ZSHMoreTicketViewController.m in Sources */,
 				FEA1059A1F9B5CEF008652D6 /* ZSHSpeedy.m in Sources */,
 				FEA105641F9B2008008652D6 /* ZSHGoodsViewController.m in Sources */,
@@ -5470,6 +5481,7 @@
 				FEF415F31FAAEDBA00137F0A /* ZSHAirPlaneViewController.m in Sources */,
 				FE5538161F47049D00803128 /* TabBarBadge.m in Sources */,
 				FE5538191F47049D00803128 /* NJKWebViewProgressView.m in Sources */,
+				042E0917202861EF0037BB4B /* ZSHMultiInfoViewController+method.m in Sources */,
 				1846BB451FE3B282001B264B /* BEMAverageLine.m in Sources */,
 				FE5538121F47049D00803128 /* RootNavigationController.m in Sources */,
 				FE291EE91F8CCC5900D4BBE7 /* ZSHMineViewController.m in Sources */,

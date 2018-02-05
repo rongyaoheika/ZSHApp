@@ -70,8 +70,7 @@
 - (void)loadBarListDataWithParamDic:(NSDictionary *)paramDic success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail{
     [PPNetworkHelper POST:kUrlSBar parameters:paramDic success:^(id responseObject) {
         RLog(@"酒吧列表数据==%@",responseObject)
-        NSArray *barListDicArr = responseObject[@"pd"];
-        success(barListDicArr);
+        success(responseObject);
     } failure:^(NSError *error) {
         RLog(@"请求失败");
     }];

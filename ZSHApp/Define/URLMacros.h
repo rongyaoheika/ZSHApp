@@ -31,6 +31,7 @@
 #define TestSever1      0
 #define ProductSever    0
 
+
 #else
 
 #define ProductSever    1
@@ -898,6 +899,7 @@
 //参数： 无
 //请求地址：/appshipin/getfecturelist?FECTURELIST(混淆码)
 #define kUrlGetFectureList [NSString stringWithFormat:@"/appshipin/getfecturelist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"FECTURELIST"]]
+
 //161.根据规格展示商品
 //http://localhost:8081/ZSHINTER//product/getprobystandard?GETPROBYSTANDARD&PRODUCT_ID=388354150699630592
 #define kUrlGetProbyStandard [NSString stringWithFormat:@"/product/getprobystandard?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"GETPROBYSTANDARD"]]
@@ -912,7 +914,9 @@
 //创建成功返回:{"result":"01"}
 //若购物车已存在该商品则返回:{"result":"已添加到购物车,数量+1"}
 //#define kUrlAddCart [NSString stringWithFormat:@"/appcartin/addcart?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"ADDCART"]]
-//176.商家提交入驻信息
+
+
+//161.app端商家提交入驻信息
 //参数： CATEGORY_ID店铺分类/    APPLYFOR_NAME门店名称（若有分店具体到分店名）/    APPLYFOR_PROVINCE门店所在省/
 //APPLYFOR_CITY门店所在市区/  APPLYFOR_ADDRESS门店所在详细地址/    APPLYFOR_LONGITUDE 商铺经度/    APPLYFOR_LATITUDE商铺纬度/
 //APPLYFOR_TEL门店电话/    APPLYFOR_IDCARD经营者身份证号/   APPLYFOR_CHARTERNUM营业执照注册号/  APPLYFOR_CHARTERNAME营业执照名称/
@@ -922,6 +926,9 @@
 #define kUrlGetProbyStandard [NSString stringWithFormat:@"/product/getprobystandard?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"GETPROBYSTANDARD"]]
 
 
-
+//176.商家提交入驻信息
+//APPLYFOR_IDCARDIMAGE 经营者身份照片地址 /   APPLYFOR_IMAGES  实体店铺照片地址/   APPLYFOR_CHARTERIMAGE 店铺营业执照图片地址/
+//请求地址：/business/appbusinessin?APPBUSINESSIN(混淆码)
+#define kUrlAppBusinessIn [NSString stringWithFormat:@"/business/appbusinessin?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"APPBUSINESSIN"]]
 
 #endif /* URLMacros_h */

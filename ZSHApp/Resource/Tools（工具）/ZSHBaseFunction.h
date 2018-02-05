@@ -17,5 +17,10 @@
 + (NSString *)getFKEYWithCommand:(NSString *)cmd;
 + (void)showPopView:(UIView *)customView frameY:(CGFloat)frameY;
 + (void)dismissPopView:(UIView *)customView block:(void(^)())completion;
-
+//手机号判断
++ (BOOL) validateMobile:(NSString *)mobile;
+//身份证号判断
++ (BOOL) validateIdentityCard: (NSString *)identityCard;
+//键盘设置
++ (void)initKeyboard;
 @end

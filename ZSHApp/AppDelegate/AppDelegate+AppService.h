@@ -45,7 +45,5 @@
 -(UIViewController*) getCurrentVC;
 
 -(UIViewController*) getCurrentUIVC;
-
-- (void)openLocate;
  
 @end

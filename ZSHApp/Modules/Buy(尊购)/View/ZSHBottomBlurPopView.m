@@ -87,6 +87,9 @@
 @property (nonatomic, copy) NSString               *gender;     //性别
 @property (nonatomic, copy) NSString               *activeTime; //活跃时间
 
+//键盘处理
+@property (nonatomic, assign) BOOL                  isKeyboardEdit;
+
 @end
 
 static NSString *ZSHHeadCellID = @"ZSHHeadCell";
@@ -119,13 +122,15 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
     self = [super initWithFrame:frame];
     if (self) {
         _paramDic = paramDic;
-    
+       
         [self loadData];
         [self createUI];
        
     }
     return self;
 }
+
+
 
 - (void)loadData{
     if (kFromClassTypeValue == ZSHFromHotelVCToBottomBlurPopView) {

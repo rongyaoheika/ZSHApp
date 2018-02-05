@@ -65,13 +65,7 @@
 }
 
 - (void)initKeyboard{
-    
-    //启用自动键盘处理事件
-    [IQKeyboardManager sharedManager].enable = YES;
-    //点击背景收起键盘
-    [IQKeyboardManager sharedManager].shouldResignOnTouchOutside = YES;
-    //隐藏键盘上的工具条
-    [IQKeyboardManager sharedManager].enableAutoToolbar = NO;
+    [ZSHBaseFunction initKeyboard];
 }
 
 #pragma mark ————— 初始化用户系统 —————
@@ -324,8 +318,5 @@
     [ZegoAVKitManager api];
 }
 
-- (void)openLocate{
-    [[HCLocationManager sharedManager]startLocate];
-}
 
 @end

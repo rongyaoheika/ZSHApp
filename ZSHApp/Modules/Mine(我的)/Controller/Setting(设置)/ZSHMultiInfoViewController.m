@@ -12,9 +12,9 @@
 #import "ZSHUploadIDCardController.h"
 #import "ZSHCreateStoreGuideView.h"
 #import "ZSHPickView.h"
+#import "ZSHMultiInfoViewController+method.h"
 
-
-@interface ZSHMultiInfoViewController ()
+@interface ZSHMultiInfoViewController ()<UIAlertViewDelegate>
 
 @property (nonatomic, assign) ZSHToTextFieldCellView   toViewType;
 @property (nonatomic, strong) UIButton           *agreeButton;
@@ -28,12 +28,6 @@
 @property (nonatomic, strong) ZSHMineLogic       *mineLogic;
 @property (nonatomic, copy)   NSString           *changedData;
 
-@property (nonatomic, copy) NSString *text1;    // 第一行的内容
-@property (nonatomic, copy) NSString *text2;    // 第二行的内容
-@property (nonatomic, copy) NSString *text3;
-@property (nonatomic, copy) NSString *text4;
-@property (nonatomic, copy) NSString *text5;
-@property (nonatomic, copy) NSString *text6;
 
 @property (nonatomic, strong) ZSHCreateStoreGuideView   *guideView;
 @property (nonatomic, strong) ZSHPickView               *pickView;
@@ -68,6 +62,7 @@
 
 - (void)loadData{
     _mineLogic = [[ZSHMineLogic alloc] init];
+    _entryLogic = [[ZSHEntryLogic alloc]init];
     if (kFromClassTypeValue == FromAccountVCToMultiInfoVC) {
         //密码-找回登录密码
         self.titleArr = @[@"当前帐号",@"身份证号",@"手机号",@"验证码"];
@@ -276,6 +271,30 @@
                 }
             }
 
+            NSDictionary *paramDic = @{@"leftTitle":self.titleArr[indexPath.row],@"placeholder":self.placeHolderArr[indexPath.row],@"textFieldType":self.textFieldTypeArr[indexPath.row],KFromClassType:@(self.toViewType)};
+            ZSHTextFieldCellView *textFieldView = [[ZSHTextFieldCellView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth-10, kRealValue(44)) paramDic:paramDic];
+            textFieldView.userInteractionEnabled = YES;
+            textFieldView.tag = 2+indexPath.row;
+            textFieldView.textFieldChanged = ^(NSString *str, NSInteger index) {
+                if (kFromClassTypeValue == FromUserInfoNickNameVCToMultiInfoVC || kFromClassTypeValue == FromUserInfoResumeVCToMultiInfoVC){
+                    weakself.changedData = str;
+                } else {
+                    if (index == 2) {
+                        weakself.text1 = str;
+                    } else if (index == 3) {
+                        weakself.text2 = str;
+                    } else if (index == 4) {
+                        weakself.text3 = str;
+                    } else if (index == 5) {
+                        weakself.text4 = str;
+                    } else if (index == 6) {
+                        weakself.text5 = str;
+                    } else if (index == 7) {
+                        weakself.text6 = str;
+                    }
+                }
+            };
+            [cell.contentView addSubview:textFieldView];
             return cell;
         };
         
@@ -375,87 +394,109 @@
 
 - (void)nextBtnAction{
     kWeakSelf(self);
-    if (kFromClassTypeValue == FromUserPasswordVCToMultiInfoVC) {
-        if ([_text2 isEqualToString:_text3]) {
-            [_mineLogic requestUserUpdPasswordWithDic:@{@"HONOURUSER_ID":HONOURUSER_IDValue, @"PASSWORD":[ZSHBaseFunction md5StringFromString:_text2], @"OLDPASSWORD":[ZSHBaseFunction md5StringFromString:_text1]} success:^(id response) {
-                NSString *message = @"";
-                if ([response[@"result"] isEqualToString:@"01"]) {// 成功
-                    message = @"修改成功";
-                } else if ([response[@"result"] isEqualToString:@"06"]) { // 失败
-                    message = @"原密码错误";
-                }
-                UIAlertController *ac = [UIAlertController alertControllerWithTitle:@"提示" message:message preferredStyle:UIAlertControllerStyleAlert];
+    switch (kFromClassTypeValue) {
+        case FromUserPasswordVCToMultiInfoVC:{
+            if ([_text2 isEqualToString:_text3]) {
+                [_mineLogic requestUserUpdPasswordWithDic:@{@"HONOURUSER_ID":HONOURUSER_IDValue, @"PASSWORD":[ZSHBaseFunction md5StringFromString:_text2], @"OLDPASSWORD":[ZSHBaseFunction md5StringFromString:_text1]} success:^(id response) {
+                    NSString *message = @"";
+                    if ([response[@"result"] isEqualToString:@"01"]) {// 成功
+                        message = @"修改成功";
+                    } else if ([response[@"result"] isEqualToString:@"06"]) { // 失败
+                        message = @"原密码错误";
+                    }
+                    UIAlertController *ac = [UIAlertController alertControllerWithTitle:@"提示" message:message preferredStyle:UIAlertControllerStyleAlert];
+                    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleCancel handler:nil];
+                    [ac addAction:cancelAction];
+                    [weakself presentViewController:ac animated:YES completion:nil];
+                }];
+            } else {
+                UIAlertController *ac = [UIAlertController alertControllerWithTitle:@"提示" message:@"两次输入密码不一致" preferredStyle:UIAlertControllerStyleAlert];
                 UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleCancel handler:nil];
                 [ac addAction:cancelAction];
                 [weakself presentViewController:ac animated:YES completion:nil];
-            }];
-        } else {
-            UIAlertController *ac = [UIAlertController alertControllerWithTitle:@"提示" message:@"两次输入密码不一致" preferredStyle:UIAlertControllerStyleAlert];
-            UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleCancel handler:nil];
-            [ac addAction:cancelAction];
-            [weakself presentViewController:ac animated:YES completion:nil];
+            }
+            break;
         }
-    } else if(kFromClassTypeValue == FromAccountVCToMultiInfoVC) {
-        NSDictionary *dic = nil;
-        
+        case FromAccountVCToMultiInfoVC:{
+            NSDictionary *dic = nil;
+            
 #ifdef DEBUG
-        dic = @{@"CARDNO":@"10",@"PHONE":@"13512345678",@"USERIDCARD":@"123456"};
+            dic = @{@"CARDNO":@"10",@"PHONE":@"13512345678",@"USERIDCARD":@"123456"};
 #else
-        dic = @{@"CARDNO":_text1,@"PHONE":_text3,@"USERIDCARD":_text2};
+            dic = @{@"CARDNO":_text1,@"PHONE":_text3,@"USERIDCARD":_text2};
 #endif
-        
-        [_mineLogic requestForgetUser:dic success:^(id response) {
-            ZSHMultiInfoViewController *multiInfoVC = [[ZSHMultiInfoViewController alloc] initWithParamDic:@{KFromClassType:@(FromSetPasswordToMultiInfoVC),@"title":@"重置密码", @"bottomBtnTitle":@"完成",@"HONOURUSER_ID":response[@"pd"][@"HONOURUSER_ID"]}];
-            [weakself.navigationController pushViewController:multiInfoVC animated:YES];
-        }];
-    } else if (kFromClassTypeValue == FromSetPasswordToMultiInfoVC) {
-        if ([_text1 isEqualToString:_text2]) {
-            [_mineLogic requestUserUpdPasswordWithDic:@{@"HONOURUSER_ID":self.paramDic[@"HONOURUSER_ID"], @"PASSWORD":[ZSHBaseFunction md5StringFromString:_text2], @"OLDPASSWORD":@""} success:^(id response) {
+            
+            [_mineLogic requestForgetUser:dic success:^(id response) {
+                ZSHMultiInfoViewController *multiInfoVC = [[ZSHMultiInfoViewController alloc] initWithParamDic:@{KFromClassType:@(FromSetPasswordToMultiInfoVC),@"title":@"重置密码", @"bottomBtnTitle":@"完成",@"HONOURUSER_ID":response[@"pd"][@"HONOURUSER_ID"]}];
+                [weakself.navigationController pushViewController:multiInfoVC animated:YES];
+            }];
+            break;
+        }
+        case FromSetPasswordToMultiInfoVC:{
+            if ([_text1 isEqualToString:_text2]) {
+                [_mineLogic requestUserUpdPasswordWithDic:@{@"HONOURUSER_ID":self.paramDic[@"HONOURUSER_ID"], @"PASSWORD":[ZSHBaseFunction md5StringFromString:_text2], @"OLDPASSWORD":@""} success:^(id response) {
+                    NSString *message = @"";
+                    if ([response[@"result"] isEqualToString:@"01"]) {// 成功
+                        message = @"修改成功";
+                    } else {
+                        message = @"修改失败";
+                    }
+                    UIAlertController *ac = [UIAlertController alertControllerWithTitle:@"提示" message:message preferredStyle:UIAlertControllerStyleAlert];
+                    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                        [weakself.navigationController popToViewController:[weakself.navigationController.viewControllers objectAtIndex:1] animated:true];
+                    }];
+                    [ac addAction:cancelAction];
+                    [weakself presentViewController:ac animated:YES completion:nil];
+                }];
+            } else {
+                UIAlertController *ac = [UIAlertController alertControllerWithTitle:@"提示" message:@"两次输入密码不一致" preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleCancel handler:nil];
+                [ac addAction:cancelAction];
+                [weakself presentViewController:ac animated:YES completion:nil];
+            }
+            break;
+        }
+        case FromUserInfoPhoneVCToMultiInfoVC:{
+            [_mineLogic requestUserPhone:@{@"HONOURUSER_ID":HONOURUSER_IDValue, @"PHONE":_text2} success:^(id response) {
                 NSString *message = @"";
                 if ([response[@"result"] isEqualToString:@"01"]) {// 成功
+                    if (weakself.saveBlock) {
+                        weakself.saveBlock(weakself.text2, weakself.index);
+                    }
                     message = @"修改成功";
                 } else {
                     message = @"修改失败";
                 }
                 UIAlertController *ac = [UIAlertController alertControllerWithTitle:@"提示" message:message preferredStyle:UIAlertControllerStyleAlert];
                 UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-                    [weakself.navigationController popToViewController:[weakself.navigationController.viewControllers objectAtIndex:1] animated:true];
+                    [weakself.navigationController popViewControllerAnimated:true];
                 }];
                 [ac addAction:cancelAction];
                 [weakself presentViewController:ac animated:YES completion:nil];
             }];
-        } else {
-            UIAlertController *ac = [UIAlertController alertControllerWithTitle:@"提示" message:@"两次输入密码不一致" preferredStyle:UIAlertControllerStyleAlert];
-            UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleCancel handler:nil];
-            [ac addAction:cancelAction];
-            [weakself presentViewController:ac animated:YES completion:nil];
+            break;
         }
-    } else if (kFromClassTypeValue == FromUserInfoPhoneVCToMultiInfoVC) {
-        [_mineLogic requestUserPhone:@{@"HONOURUSER_ID":HONOURUSER_IDValue, @"PHONE":_text2} success:^(id response) {
-            NSString *message = @"";
-            if ([response[@"result"] isEqualToString:@"01"]) {// 成功
-                if (weakself.saveBlock) {
-                    weakself.saveBlock(weakself.text2, weakself.index);
-                }
-                message = @"修改成功";
-            } else {
-                message = @"修改失败";
-            }
-            UIAlertController *ac = [UIAlertController alertControllerWithTitle:@"提示" message:message preferredStyle:UIAlertControllerStyleAlert];
-            UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-                [weakself.navigationController popViewControllerAnimated:true];
-            }];
-            [ac addAction:cancelAction];
-            [weakself presentViewController:ac animated:YES completion:nil];
-        }];
-    } else if (kFromClassTypeValue == FromCreateStoreVCToMultiInfoVC) {//创建门店
-        ZSHMultiInfoViewController *multiInfoVC = [[ZSHMultiInfoViewController alloc] initWithParamDic:@{KFromClassType:@(FromVerifyVCToMultiInfoVC),@"title":@"提交资质", @"bottomBtnTitle":@"提交审核"}];
-        [self.navigationController pushViewController:multiInfoVC animated:YES];
-    } else if (kFromClassTypeValue ==  FromWeMediaVCToMultiInfoVC) { // 自媒体入驻
-        ZSHMultiInfoViewController *multiInfoVC = [[ZSHMultiInfoViewController alloc] initWithParamDic:@{KFromClassType:@(FromWeMediaVerifyVCToMultiInfoVC),@"title":@"提交资质", @"bottomBtnTitle":@"提交审核"}];
-        [self.navigationController pushViewController:multiInfoVC animated:YES];
+         case FromCreateStoreVCToMultiInfoVC:{//创建门店
+             if ([self createStoreAction]) {
+                 ZSHMultiInfoViewController *multiInfoVC = [[ZSHMultiInfoViewController alloc] initWithParamDic:@{KFromClassType:@(FromVerifyVCToMultiInfoVC),@"title":@"提交资质", @"bottomBtnTitle":@"提交审核"}];
+                 [self.navigationController pushViewController:multiInfoVC animated:YES];
+             }
+
+             break;
+         }
+        case FromWeMediaVCToMultiInfoVC:{//提交审核
+            ZSHMultiInfoViewController *multiInfoVC = [[ZSHMultiInfoViewController alloc] initWithParamDic:@{KFromClassType:@(FromWeMediaVerifyVCToMultiInfoVC),@"title":@"提交资质", @"bottomBtnTitle":@"提交审核"}];
+            [self.navigationController pushViewController:multiInfoVC animated:YES];
+            break;
+        }
+        default:
+            break;
     }
+    
+    
 }
+
+
 
 - (ZSHCreateStoreGuideView *)guideView{
     if (!_guideView) {
@@ -466,6 +507,8 @@
     }
     return _guideView;
 }
+
+#pragma action
 
 
 - (void)didReceiveMemoryWarning {
