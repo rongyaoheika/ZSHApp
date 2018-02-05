@@ -76,10 +76,10 @@ static NSString * ZSHJoininCellID = @"ZSHJoininCellID";
             [weakself.navigationController pushViewController:multiInfoVC animated:YES];
 
             if (indexPath.row == 11) { // 自媒体
-                ZSHMultiInfoViewController *multiInfoVC = [[ZSHMultiInfoViewController alloc] initWithParamDic:@{KFromClassType:@(FromWeMediaVCToMultiInfoVC),@"title":@"自媒体入驻", @"bottomBtnTitle":@"确认创建",@"showGuide":@(YES), @"CATEGORY_ID":title[indexPath.row]}];
-                [weakself.navigationController pushViewController:multiInfoVC animated:YES];
+                ZSHMultiInfoViewController *multiInfoVC = [[ZSHMultiInfoViewController alloc] initWithParamDic:@{KFromClassType:@(FromWeMediaVCToMultiInfoVC),@"title":@"自媒体入驻", @"bottomBtnTitle":@"确认创建",@"showGuide":@(YES)}];
+                [weakself.navigationController pushViewController:multiInfoVC animated:YES];//, @"CATEGORY_ID":title[indexPath.row]
             } else {
-                ZSHMultiInfoViewController *multiInfoVC = [[ZSHMultiInfoViewController alloc] initWithParamDic:@{KFromClassType:@(FromCreateStoreVCToMultiInfoVC),@"title":@"创建门店", @"bottomBtnTitle":@"确认创建",@"showGuide":@(YES), @"CATEGORY_ID":title[indexPath.row]}];
+                ZSHMultiInfoViewController *multiInfoVC = [[ZSHMultiInfoViewController alloc] initWithParamDic:@{KFromClassType:@(FromCreateStoreVCToMultiInfoVC),@"title":@"创建门店", @"bottomBtnTitle":@"确认创建",@"showGuide":@(YES)}]; // , @"CATEGORY_ID":title[indexPath.row]
                 [weakself.navigationController pushViewController:multiInfoVC animated:YES];
             }
 
