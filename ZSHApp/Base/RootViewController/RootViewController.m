@@ -38,7 +38,6 @@
 
     //是否显示返回按钮
     self.isShowLiftBack = YES;
-    self.isLocate = NO;
     self.StatusBarStyle = UIStatusBarStyleLightContent;
     self.tableViewModel = [[ZSHBaseTableViewModel alloc] init];
     UIImageView *image = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"home_bg"]];
