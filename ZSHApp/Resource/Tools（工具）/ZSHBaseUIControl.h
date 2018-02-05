@@ -112,7 +112,9 @@ typedef NS_ENUM(NSInteger,ZSHToMultiInfoVC){
     FromUserPasswordVCToMultiInfoVC,                //账号与安全 - 登录密码
     FromSetPasswordToMultiInfoVC,                   //重置密码
     FromCreateStoreVCToMultiInfoVC,                 //创建门店
-    FromVerifyVCToMultiInfoVC,                      //提交审核
+    FromVerifyVCToMultiInfoVC,                      //门店-提交审核
+    FromWeMediaVCToMultiInfoVC,                     //自媒体入驻
+    FromWeMediaVerifyVCToMultiInfoVC,               //自媒体-提交资质
     FromNoneToMultiInfoVC
 };
 

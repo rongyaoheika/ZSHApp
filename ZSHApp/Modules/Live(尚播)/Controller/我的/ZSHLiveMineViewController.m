@@ -39,8 +39,9 @@ static NSString *bottomCellIdentifier   = @"LiveListCell";
     [self requestData];
     self.titleArr = @[@"贡献榜",@"等级",@"任务中心",@"签到",@"设置"];
     self.imageArr = @[@"live_mine_icon_1",@"live_mine_icon_2",@"live_mine_icon_3",@"live_mine_icon_4",@"live_mine_icon_5"];
-    self.pushVCS = @[@"ZSHTitleContentViewController",@"ZSHTitleContentViewController",@"ZSHLiveTaskCenterViewController",@"",@"ZSHNotificationViewController"];
-    
+
+    self.pushVCS = @[@"ZSHTitleContentViewController",@"ZSHTitleContentViewController",@"ZSHLiveTaskCenterViewController",@"ZSHLiveSignViewController",@"ZSHNotificationViewController"];
+  
     self.paramArr = @[
                       @{KFromClassType:@(FromContributionListVCToTitleContentVC), @"title":@"贡献榜"},
                       @{KFromClassType:@(FromMineLevelVCToTitleContentVC), @"title":@"我的等级"},
@@ -143,7 +144,8 @@ static NSString *bottomCellIdentifier   = @"LiveListCell";
     return sectionModel;
 }
 
-- (void)backAction{
+- (void)backAction {
+    
     [[kAppDelegate getCurrentUIVC].navigationController popToRootViewControllerAnimated:NO];
     AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     RXLSideSlipViewController *RXL= (RXLSideSlipViewController *)delegate.window.rootViewController;

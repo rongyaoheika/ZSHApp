@@ -18,6 +18,9 @@
 #import "ZSHHomeLogic.h"
 #import "ZSHTitleContentViewController.h"
 #import "HCLocationManager.h"
+#import "ZSHLiveMineViewController.h"
+
+
 @implementation AppDelegate (AppService)
 
 
@@ -290,8 +293,15 @@
         RootNavigationController *nav = [tabVC selectedViewController];
         if ([nav.viewControllers.lastObject isKindOfClass:[ZSHLiveTabBarController class]]) {
             ZSHLiveTabBarController *liveTabVC = (ZSHLiveTabBarController *)nav.viewControllers.lastObject;
-             RootNavigationController *liveTabNav = [liveTabVC selectedViewController];
-             return liveTabNav.viewControllers.lastObject;
+            RootNavigationController *liveTabNav = [liveTabVC selectedViewController];
+            if ([liveTabNav.viewControllers.lastObject isKindOfClass:[ZSHLiveMineViewController class]]) {
+                ZSHLiveMineViewController *liveMinVC = liveTabNav.viewControllers.lastObject;
+                return liveMinVC;
+            } else {
+                ZSHTitleContentViewController *liveContentVC = liveTabNav.viewControllers.lastObject;
+                RootViewController *liveVC = liveContentVC.vcs[liveContentVC.vcIndex];
+                return liveVC;
+            }
         } else {
              return nav.viewControllers.lastObject;
         }
@@ -300,14 +310,13 @@
     if ([superVC isKindOfClass:[UITabBarController class]]) {
         UIViewController  *tabSelectVC = ((UITabBarController*)superVC).selectedViewController;
         if ([tabSelectVC isKindOfClass:[UINavigationController class]]) {
-            
             return ((UINavigationController*)tabSelectVC).viewControllers.lastObject;
         }
         return tabSelectVC;
     } else if ([superVC isKindOfClass:[UINavigationController class]]) {
             
             return ((UINavigationController*)superVC).viewControllers.lastObject;
-        }
+    }
     return superVC;
 }
 

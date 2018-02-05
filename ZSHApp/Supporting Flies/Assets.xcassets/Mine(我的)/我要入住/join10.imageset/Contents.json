@@ -6,12 +6,20 @@
     },
     {
       "idiom" : "universal",
+<<<<<<< HEAD
       "filename" : "settled_icon_11@2x.png",
+=======
+      "filename" : "settled_icon_10@2x.png",
+>>>>>>> 直播签到UI
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
+<<<<<<< HEAD
       "filename" : "settled_icon_11@3x.png",
+=======
+      "filename" : "settled_icon_10@3x.png",
+>>>>>>> 直播签到UI
       "scale" : "3x"
     }
   ],

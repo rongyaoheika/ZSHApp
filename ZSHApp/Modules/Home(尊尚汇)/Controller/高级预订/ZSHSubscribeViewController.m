@@ -182,25 +182,28 @@
         make.size.mas_equalTo(CGSizeMake(kRealValue(375), kRealValue(240)));
     }];
     
+    //self.dataArr[4],
+    NSDictionary *subTitleDic = @{@"text":@"", @"font":kPingFangRegular(12),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentLeft)};
+    _subTitleLabel = [ZSHBaseUIControl createLabelWithParamDic:subTitleDic];
+    _subTitleLabel.numberOfLines = 0;
+    [_scrollView addSubview:_subTitleLabel];
+    [_subTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(_middleImageView).offset(kRealValue(260));
+        make.centerX.mas_equalTo(_scrollView);
+        make.size.mas_equalTo(CGSizeMake(kRealValue(345), kRealValue(51)));
+    }];
+    
+    
     _bottomImageView = [[UIImageView alloc] init];
 //    _bottomImageView.image = [UIImage imageNamed:self.dataArr[3]];
     [_scrollView addSubview:_bottomImageView];
     [_bottomImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(_middleImageView).offset(kRealValue(250));
+        make.top.mas_equalTo(_subTitleLabel).offset(kRealValue(60));
         make.centerX.mas_equalTo(_scrollView);
         make.size.mas_equalTo(CGSizeMake(kRealValue(375), kRealValue(240)));
     }];
     
-    //self.dataArr[4],
-    NSDictionary *subTitleDic = @{@"text":@"", @"font":kPingFangMedium(15),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentCenter)};
-    _subTitleLabel = [ZSHBaseUIControl createLabelWithParamDic:subTitleDic];
-    [_scrollView addSubview:_subTitleLabel];
-    [_subTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(_bottomImageView).offset(kRealValue(260));
-        make.centerX.mas_equalTo(_scrollView);
-        make.size.mas_equalTo(CGSizeMake(KScreenWidth, kRealValue(16)));
-    }];
-    
+
     NSDictionary *contentLabelDic = @{@"text":@"", @"font":kPingFangRegular(12),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentLeft)};
     _contentLabel = [ZSHBaseUIControl createLabelWithParamDic:contentLabelDic];
     _contentLabel.numberOfLines = 0;
@@ -214,7 +217,7 @@
     _contentLabel.attributedText = [[NSAttributedString alloc] initWithString:@"aa" attributes:dic];
     [_scrollView addSubview:_contentLabel];
     [_contentLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(_subTitleLabel).offset(kRealValue(31));
+        make.top.mas_equalTo(_bottomImageView).offset(kRealValue(250));
         make.centerX.mas_equalTo(_scrollView);
         make.size.mas_equalTo(CGSizeMake(kRealValue(346), kRealValue(54)));
     }];

@@ -643,8 +643,7 @@
 
 
 
-- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
-{
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
     _isSearch = 0 != searchText.length;
     
     _searchDataArr = nil;

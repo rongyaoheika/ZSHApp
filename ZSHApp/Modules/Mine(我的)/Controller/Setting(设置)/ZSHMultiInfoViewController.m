@@ -61,8 +61,9 @@
 
 - (void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
-    
-    self.paramDic = nil;
+    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:self.paramDic];
+    [dic setObject:@(0) forKey:@"showGuide"];
+    self.paramDic = dic;
 }
 
 - (void)loadData{
@@ -141,6 +142,14 @@
     @(ZSHTextFieldSelect), @(ZSHTextFieldViewUser), @(ZSHTextFieldViewUser), @(ZSHTextFieldSelect),@(ZSHTextFieldSelect),
     @(ZSHTextFieldViewUser), @(ZSHTextFieldViewUser), @(ZSHTextFieldViewUser),@(ZSHTextFieldViewUser), @(ZSHTextFieldViewCaptcha)];
         self.placeHolderArr = @[@"本人身份证照片", @"须与身份证姓名一致", @"请输入经营者身份证号码", @"请上传实体店铺照片",@"请上传营业执照照片", @"注册号或同一社会信用代码", @"营业执照名称这一行的内容", @"营业执照上法人或经营者姓名",@"用本人身份证办理的手机号", @"输入验证码"];
+    } else if (kFromClassTypeValue ==  FromWeMediaVCToMultiInfoVC) { // 自媒体入驻
+        self.titleArr = @[@"自媒体名称", @"地址信息", @"详细地址"];
+        self.textFieldTypeArr = @[@(ZSHTextFieldViewUser), @(ZSHTextFieldSelect), @(ZSHTextFieldViewUser)];
+        self.placeHolderArr = @[@"填写后不能更改", @"请选择", @"请输入"];
+    } else if (kFromClassTypeValue ==  FromWeMediaVerifyVCToMultiInfoVC) { //
+        self.titleArr = @[@"自媒体头像", @"姓名", @"身份证号", @"身份证照片", @"邮箱", @"经营者手机", @"验证码"];
+        self.textFieldTypeArr = @[@(ZSHTextFieldViewNone), @(ZSHTextFieldViewUser), @(ZSHTextFieldViewUser), @(ZSHTextFieldSelect), @(ZSHTextFieldViewUser), @(ZSHTextFieldViewUser), @(ZSHTextFieldViewCaptcha)];
+        self.placeHolderArr = @[@"", @"须与身份证姓名一致", @"请输入经营者身份证号码", @"营业执照上法人或经营者姓名", @"请输入您的联系邮箱", @"用本人身份证办理的手机号", @"输入验证码"];
     }
     [self initViewModel];
 }
@@ -158,7 +167,7 @@
         [self.bottomBtn setTitle:self.paramDic[@"bottomBtnTitle"] forState:UIControlStateNormal];
         [self.bottomBtn addTarget:self action:@selector(nextBtnAction) forControlEvents:UIControlEventTouchUpInside];
         
-    } else if (kFromClassTypeValue == FromUserPasswordVCToMultiInfoVC || kFromClassTypeValue == FromAccountVCToMultiInfoVC || kFromClassTypeValue == FromSetPasswordToMultiInfoVC || kFromClassTypeValue == FromCreateStoreVCToMultiInfoVC | kFromClassTypeValue == FromVerifyVCToMultiInfoVC) {
+    } else if (kFromClassTypeValue == FromUserPasswordVCToMultiInfoVC || kFromClassTypeValue == FromAccountVCToMultiInfoVC || kFromClassTypeValue == FromSetPasswordToMultiInfoVC || kFromClassTypeValue == FromCreateStoreVCToMultiInfoVC | kFromClassTypeValue == FromVerifyVCToMultiInfoVC ||kFromClassTypeValue ==  FromWeMediaVCToMultiInfoVC || kFromClassTypeValue ==  FromWeMediaVerifyVCToMultiInfoVC) {
         
         [self.view addSubview:self.bottomBtn];
         [self.bottomBtn setTitle:self.paramDic[@"bottomBtnTitle"] forState:UIControlStateNormal];
@@ -175,8 +184,6 @@
     [self.tableView setSeparatorInset:UIEdgeInsetsMake(0, 0, 0, 0)];
     
     [self.tableView reloadData];
-    
-   
 }
 
 - (UIView *)createTableHeadView {
@@ -215,12 +222,52 @@
                 cell = [[ZSHBaseCell alloc] initWithStyle:UITableViewCellStyleValue2
                                           reuseIdentifier:@"cellId"];
             }
-            if (kFromClassTypeValue ==  FromCreateStoreVCToMultiInfoVC) {
+            
+            if (![cell.contentView viewWithTag:2+indexPath.row]) {
+                NSDictionary *paramDic = @{@"leftTitle":self.titleArr[indexPath.row],@"placeholder":self.placeHolderArr[indexPath.row],@"textFieldType":self.textFieldTypeArr[indexPath.row],KFromClassType:@(self.toViewType)};
+                ZSHTextFieldCellView *textFieldView = [[ZSHTextFieldCellView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth-10, kRealValue(44)) paramDic:paramDic];
+                textFieldView.tag = 2+indexPath.row;
+                textFieldView.textFieldChanged = ^(NSString *str, NSInteger index) {
+                    if (kFromClassTypeValue == FromUserInfoNickNameVCToMultiInfoVC || kFromClassTypeValue == FromUserInfoResumeVCToMultiInfoVC){
+                        weakself.changedData = str;
+                    } else {
+                        if (index == 2) {
+                            weakself.text1 = str;
+                        } else if (index == 3) {
+                            weakself.text2 = str;
+                        } else if (index == 4) {
+                            weakself.text3 = str;
+                        } else if (index == 5) {
+                            weakself.text4 = str;
+                        } else if (index == 6) {
+                            weakself.text5 = str;
+                        } else if (index == 7) {
+                            weakself.text6 = str;
+                        }
+                    }
+                };
+                [cell.contentView addSubview:textFieldView];
+            }
+            
+            if (kFromClassTypeValue ==  FromWeMediaVerifyVCToMultiInfoVC) {
+                if (indexPath.row == 0) {
+                    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                    UIImageView *headImageView = [[UIImageView alloc] initWithFrame:CGRectMake(292, 8, 30, 30)];
+                    headImageView.layer.cornerRadius = headImageView.frame.size.width/2;
+                    headImageView.layer.masksToBounds = true;
+                    [headImageView sd_setImageWithURL:[NSURL URLWithString:curUser.PORTRAIT]];
+                    [cell addSubview:headImageView];
+                } else if(indexPath.row == 3) {
+                    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                }
+            }
+            else if (kFromClassTypeValue ==  FromCreateStoreVCToMultiInfoVC || kFromClassTypeValue ==  FromWeMediaVCToMultiInfoVC) {
                 if (indexPath.row == 1) {
                     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-                    
+
                     if (weakself.addr) {
-                        cell.detailTextLabel.text = weakself.addr;
+                        ZSHTextFieldCellView *textFieldView  = [cell.contentView viewWithTag:2+indexPath.row];
+                        textFieldView.textField.text = weakself.addr;
                     }
                 }
             } else if (kFromClassTypeValue ==  FromVerifyVCToMultiInfoVC) {
@@ -229,41 +276,11 @@
                 }
             }
 
-            NSDictionary *paramDic = @{@"leftTitle":self.titleArr[indexPath.row],@"placeholder":self.placeHolderArr[indexPath.row],@"textFieldType":self.textFieldTypeArr[indexPath.row],KFromClassType:@(self.toViewType)};
-            ZSHTextFieldCellView *textFieldView = [[ZSHTextFieldCellView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth-10, kRealValue(44)) paramDic:paramDic];
-            textFieldView.tag = 2+indexPath.row;
-            textFieldView.textFieldChanged = ^(NSString *str, NSInteger index) {
-                if (kFromClassTypeValue == FromUserInfoNickNameVCToMultiInfoVC || kFromClassTypeValue == FromUserInfoResumeVCToMultiInfoVC){
-                    weakself.changedData = str;
-                } else {
-                    if (index == 2) {
-                        weakself.text1 = str;
-                    } else if (index == 3) {
-                        weakself.text2 = str;
-                    } else if (index == 4) {
-                        weakself.text3 = str;
-                    } else if (index == 5) {
-                        weakself.text4 = str;
-                    } else if (index == 6) {
-                        weakself.text5 = str;
-                    } else if (index == 7) {
-                        weakself.text6 = str;
-                    }
-                }
-            };
-            
-            [cell.contentView addSubview:textFieldView];
-            
-            if (kFromClassTypeValue ==  FromCreateStoreVCToMultiInfoVC) {
-                if (indexPath.row == 1) {
-                }
-            }
-            
             return cell;
         };
         
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
-            if (kFromClassTypeValue ==  FromCreateStoreVCToMultiInfoVC) {
+            if (kFromClassTypeValue ==  FromCreateStoreVCToMultiInfoVC || kFromClassTypeValue ==  FromWeMediaVCToMultiInfoVC) {
                 if (indexPath.row == 1) {// 地区选择
                     weakself.pickView = [weakself createPickViewWithType:WindowRegion];
                     weakself.pickView.saveChangeBlock = ^(NSString *text, NSInteger index) {
@@ -274,6 +291,11 @@
                 }
             } else if (kFromClassTypeValue ==  FromVerifyVCToMultiInfoVC) {
                 if (indexPath.row == 0 ) { // 上传身份证
+                    ZSHUploadIDCardController *uploadIDCardVC = [[ZSHUploadIDCardController alloc] init];
+                    [self.navigationController pushViewController:uploadIDCardVC animated:true];
+                }
+            } else if (kFromClassTypeValue ==  FromWeMediaVerifyVCToMultiInfoVC) {
+                if (indexPath.row == 3) { 
                     ZSHUploadIDCardController *uploadIDCardVC = [[ZSHUploadIDCardController alloc] init];
                     [self.navigationController pushViewController:uploadIDCardVC animated:true];
                 }
@@ -428,6 +450,9 @@
         }];
     } else if (kFromClassTypeValue == FromCreateStoreVCToMultiInfoVC) {//创建门店
         ZSHMultiInfoViewController *multiInfoVC = [[ZSHMultiInfoViewController alloc] initWithParamDic:@{KFromClassType:@(FromVerifyVCToMultiInfoVC),@"title":@"提交资质", @"bottomBtnTitle":@"提交审核"}];
+        [self.navigationController pushViewController:multiInfoVC animated:YES];
+    } else if (kFromClassTypeValue ==  FromWeMediaVCToMultiInfoVC) { // 自媒体入驻
+        ZSHMultiInfoViewController *multiInfoVC = [[ZSHMultiInfoViewController alloc] initWithParamDic:@{KFromClassType:@(FromWeMediaVerifyVCToMultiInfoVC),@"title":@"提交资质", @"bottomBtnTitle":@"提交审核"}];
         [self.navigationController pushViewController:multiInfoVC animated:YES];
     }
 }

@@ -27,9 +27,9 @@
 
 
 #define DevelopSever    0
-#define TestSever       0
+#define TestSever       1
 #define TestSever1      0
-#define ProductSever    1
+#define ProductSever    0
 
 #else
 
@@ -47,9 +47,9 @@
 #elif TestSever
 
 /**测试服务器*/
-//#define kUrlRoot                    @"http://192.168.1.125:8081/ZSHINTER/"   // 振华
+#define kUrlRoot                    @"http://192.168.1.125:8081/ZSHINTER/"   // 振华
 
-#define kUrlRoot                    @"http://192.168.1.112:8081/ZSHINTER/"     // 张凌兵
+//#define kUrlRoot                    @"http://192.168.1.112:8081/ZSHINTER/"     // 张凌兵
 
 #elif TestSever1
 
@@ -912,8 +912,14 @@
 //创建成功返回:{"result":"01"}
 //若购物车已存在该商品则返回:{"result":"已添加到购物车,数量+1"}
 //#define kUrlAddCart [NSString stringWithFormat:@"/appcartin/addcart?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"ADDCART"]]
-
-
+//176.商家提交入驻信息
+//参数： CATEGORY_ID店铺分类/    APPLYFOR_NAME门店名称（若有分店具体到分店名）/    APPLYFOR_PROVINCE门店所在省/
+//APPLYFOR_CITY门店所在市区/  APPLYFOR_ADDRESS门店所在详细地址/    APPLYFOR_LONGITUDE 商铺经度/    APPLYFOR_LATITUDE商铺纬度/
+//APPLYFOR_TEL门店电话/    APPLYFOR_IDCARD经营者身份证号/   APPLYFOR_CHARTERNUM营业执照注册号/  APPLYFOR_CHARTERNAME营业执照名称/
+//APPLYFOR_LEGALPERSON法人姓名/   APPLYFOR_PHONE经营者手机号/  APPLYFOR_PRICE门店人均价格/    HONOURUSER_ID申请店铺用户id/
+//BRAND_ID  一级分类id / BRANDICON_ID二级分类id
+//请求地址：/business/applybusiness?APPLYBUSINESS(混淆码)
+#define kUrlGetProbyStandard [NSString stringWithFormat:@"/product/getprobystandard?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"GETPROBYSTANDARD"]]
 
 
 

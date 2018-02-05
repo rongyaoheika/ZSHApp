@@ -84,6 +84,7 @@
 		04647D022017068800A21600 /* ZSHLiveMoreView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04647D012017068800A21600 /* ZSHLiveMoreView.m */; };
 		04647D052017602000A21600 /* ZSHBeautyView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04647D042017602000A21600 /* ZSHBeautyView.m */; };
 		047BC20F20216376007F4055 /* ZSHLiveGiftView.m in Sources */ = {isa = PBXBuildFile; fileRef = 047BC20E20216376007F4055 /* ZSHLiveGiftView.m */; };
+		04936D972027FCBF00E069BE /* ZSHLiveSignViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04936D962027FCBF00E069BE /* ZSHLiveSignViewController.m */; };
 		049823B520074D9C0080626D /* ZSHCabinetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 049823B420074D9C0080626D /* ZSHCabinetViewController.m */; };
 		049823B920074F180080626D /* ZSHCabinetCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 049823B820074F180080626D /* ZSHCabinetCollectionCell.m */; };
 		049823BC20074F640080626D /* ZSHCabinetReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 049823BB20074F640080626D /* ZSHCabinetReusableView.m */; };
@@ -743,6 +744,8 @@
 		04647D042017602000A21600 /* ZSHBeautyView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHBeautyView.m; sourceTree = "<group>"; };
 		047BC20D20216376007F4055 /* ZSHLiveGiftView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHLiveGiftView.h; sourceTree = "<group>"; };
 		047BC20E20216376007F4055 /* ZSHLiveGiftView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHLiveGiftView.m; sourceTree = "<group>"; };
+		04936D952027FCBF00E069BE /* ZSHLiveSignViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHLiveSignViewController.h; sourceTree = "<group>"; };
+		04936D962027FCBF00E069BE /* ZSHLiveSignViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHLiveSignViewController.m; sourceTree = "<group>"; };
 		049823B320074D9C0080626D /* ZSHCabinetViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHCabinetViewController.h; sourceTree = "<group>"; };
 		049823B420074D9C0080626D /* ZSHCabinetViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHCabinetViewController.m; sourceTree = "<group>"; };
 		049823B720074F180080626D /* ZSHCabinetCollectionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHCabinetCollectionCell.h; sourceTree = "<group>"; };
@@ -1991,6 +1994,15 @@
 			path = "分享赚钱";
 			sourceTree = "<group>";
 		};
+		04936D942027FB8E00E069BE /* 签到 */ = {
+			isa = PBXGroup;
+			children = (
+				04936D952027FCBF00E069BE /* ZSHLiveSignViewController.h */,
+				04936D962027FCBF00E069BE /* ZSHLiveSignViewController.m */,
+			);
+			name = "签到";
+			sourceTree = "<group>";
+		};
 		049823B2200748640080626D /* 专柜店 */ = {
 			isa = PBXGroup;
 			children = (
@@ -2336,6 +2348,7 @@
 		182287171FB4555700CA5B10 /* 我的 */ = {
 			isa = PBXGroup;
 			children = (
+				04936D942027FB8E00E069BE /* 签到 */,
 				1869C93B1FD94F97002F2E37 /* 微博 */,
 				185DE2F41FBFC2D200720CAF /* 小视频录制 */,
 				185DDCCD1FBEDB47004D4688 /* 分享 */,
@@ -5295,6 +5308,7 @@
 				FE55381B1F47049D00803128 /* RxWebViewController.m in Sources */,
 				FE0ED7E21FC2CC46008299C5 /* ZSHCityView.m in Sources */,
 				FE1377931F977628003C8DFB /* ZSHManageAddressViewController.m in Sources */,
+				04936D972027FCBF00E069BE /* ZSHLiveSignViewController.m in Sources */,
 				04A6904020084EA800C583E6 /* ZSHPrivilegeCell.m in Sources */,
 				FE3005F71FC6779100A801C9 /* CWStarRateView.m in Sources */,
 				FE24DA701FD95FD100965DC8 /* ZSHPlayListViewController.m in Sources */,
