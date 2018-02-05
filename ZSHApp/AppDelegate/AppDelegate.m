@@ -45,8 +45,6 @@
     //初始化即构科技
 //    [self initZego];
     
-    [self openLocate];
-
     return YES;
     
 }

@@ -24,9 +24,9 @@
 
 #ifdef DEBUG
 
-#define DevelopSever    1
+#define DevelopSever    0
 #define TestSever       0
-#define ProductSever    0
+#define ProductSever    1
 
 #else
 
@@ -892,8 +892,13 @@
 //请求地址：/appshipin/getfecturelist?FECTURELIST(混淆码)
 #define kUrlGetFectureList [NSString stringWithFormat:@"/appshipin/getfecturelist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"FECTURELIST"]]
 
-
-
-
+//161.app端商家提交入驻信息
+//参数： CATEGORY_ID店铺分类/    APPLYFOR_NAME门店名称（若有分店具体到分店名）/    APPLYFOR_PROVINCE门店所在省/
+//APPLYFOR_CITY门店所在市区/  APPLYFOR_ADDRESS门店所在详细地址/    APPLYFOR_LONGITUDE 商铺经度/    APPLYFOR_LATITUDE商铺纬度/
+//APPLYFOR_TEL门店电话/    APPLYFOR_IDCARD经营者身份证号/   APPLYFOR_CHARTERNUM营业执照注册号/  APPLYFOR_CHARTERNAME营业执照名称/
+//APPLYFOR_LEGALPERSON法人姓名/   APPLYFOR_PHONE经营者手机号/  APPLYFOR_PRICE门店人均价格/    HONOURUSER_ID申请店铺用户id/
+//APPLYFOR_IDCARDIMAGE 经营者身份照片地址 /   APPLYFOR_IMAGES  实体店铺照片地址/   APPLYFOR_CHARTERIMAGE 店铺营业执照图片地址/
+//请求地址：/business/appbusinessin?APPBUSINESSIN(混淆码)
+#define kUrlAppBusinessIn [NSString stringWithFormat:@"/business/appbusinessin?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"APPBUSINESSIN"]]
 
 #endif /* URLMacros_h */

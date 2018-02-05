@@ -284,7 +284,7 @@ static NSString *ZSHHotelListCellID = @"ZSHHotelListCell";
             NSString *liveInfoStr = [NSString stringWithFormat:@"%@-%@",paramDic[@"KTVDETBEGIN"],paramDic[@"KTVDETEND"]];
             NSDictionary *nextParamDic = @{KFromClassType:@(ZSHConfirmOrderToBottomBlurPopView),@"shopType":@(ZSHKTVShopType), @"deviceDic":weakself.KTVDetailParamDic,@"listDic":paramDic,@"liveInfoStr":liveInfoStr};
             weakself.bottomBlurPopView = [weakself createBottomBlurPopViewWithParamDic:nextParamDic];
-            [kAppDelegate.window addSubview:weakself.bottomBlurPopView];
+             [weakself.view addSubview:weakself.bottomBlurPopView];
         };
     }
     return sectionModel;
