@@ -47,7 +47,7 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    if (kFromClassTypeValue == FromCreateStoreVCToMultiInfoVC && [self.paramDic[@"showGuide"]integerValue] ) {
+    if ((kFromClassTypeValue == FromCreateStoreVCToMultiInfoVC || kFromClassTypeValue == FromWeMediaVCToMultiInfoVC) && [self.paramDic[@"showGuide"]integerValue] ) {
         //创建门店引导
         [ZSHBaseUIControl setAnimationWithHidden:NO view:self.guideView completedBlock:nil];
     }
@@ -123,7 +123,7 @@
             self.titleArr = @[@"门店名称", @"门店地址", @"详细地址", @"门店电话"];
             self.placeHolderArr = @[@"若有分店，请具体到分店名", @"请选择", @"请输入", @"填写座机/手机，座机需加区号"];
         }
-         self.textFieldTypeArr = @[@(ZSHTextFieldViewUser), @(ZSHTextFieldViewUser), @(ZSHTextFieldViewUser), @(ZSHTextFieldViewUser)];
+         self.textFieldTypeArr = @[@(ZSHTextFieldViewUser), @(ZSHTextFieldSelect), @(ZSHTextFieldViewUser), @(ZSHTextFieldViewUser)];
 
 //        self.titleArr = @[@"门店名称", @"门店地址", @"详细地址", @"门店电话"];
 //        self.textFieldTypeArr = @[@(ZSHTextFieldViewUser), @(ZSHTextFieldViewNone), @(ZSHTextFieldViewUser), @(ZSHTextFieldViewUser)];
@@ -263,6 +263,7 @@
                     if (weakself.addr) {
                         ZSHTextFieldCellView *textFieldView  = [cell.contentView viewWithTag:2+indexPath.row];
                         textFieldView.textField.text = weakself.addr;
+                        _text2 = weakself.addr;
                     }
                 }
             } else if (kFromClassTypeValue ==  FromVerifyVCToMultiInfoVC) {
@@ -271,30 +272,7 @@
                 }
             }
 
-            NSDictionary *paramDic = @{@"leftTitle":self.titleArr[indexPath.row],@"placeholder":self.placeHolderArr[indexPath.row],@"textFieldType":self.textFieldTypeArr[indexPath.row],KFromClassType:@(self.toViewType)};
-            ZSHTextFieldCellView *textFieldView = [[ZSHTextFieldCellView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth-10, kRealValue(44)) paramDic:paramDic];
-            textFieldView.userInteractionEnabled = YES;
-            textFieldView.tag = 2+indexPath.row;
-            textFieldView.textFieldChanged = ^(NSString *str, NSInteger index) {
-                if (kFromClassTypeValue == FromUserInfoNickNameVCToMultiInfoVC || kFromClassTypeValue == FromUserInfoResumeVCToMultiInfoVC){
-                    weakself.changedData = str;
-                } else {
-                    if (index == 2) {
-                        weakself.text1 = str;
-                    } else if (index == 3) {
-                        weakself.text2 = str;
-                    } else if (index == 4) {
-                        weakself.text3 = str;
-                    } else if (index == 5) {
-                        weakself.text4 = str;
-                    } else if (index == 6) {
-                        weakself.text5 = str;
-                    } else if (index == 7) {
-                        weakself.text6 = str;
-                    }
-                }
-            };
-            [cell.contentView addSubview:textFieldView];
+        
             return cell;
         };
         
@@ -481,7 +459,6 @@
                  ZSHMultiInfoViewController *multiInfoVC = [[ZSHMultiInfoViewController alloc] initWithParamDic:@{KFromClassType:@(FromVerifyVCToMultiInfoVC),@"title":@"提交资质", @"bottomBtnTitle":@"提交审核"}];
                  [self.navigationController pushViewController:multiInfoVC animated:YES];
              }
-
              break;
          }
         case FromWeMediaVCToMultiInfoVC:{//提交审核

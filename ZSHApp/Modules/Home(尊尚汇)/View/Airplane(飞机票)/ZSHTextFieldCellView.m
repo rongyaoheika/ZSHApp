@@ -42,7 +42,7 @@
     if ([self.paramDic[@"textFieldType"] integerValue] != ZSHTextFieldViewNone) {
             [self.textField mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.left.mas_equalTo(self.leftLabel.mas_right);
-                make.right.mas_equalTo(self).offset(-50);
+                make.right.mas_equalTo(self).offset(-40);
                 make.top.mas_equalTo(self);
                 make.bottom.mas_equalTo(self);
             }];
@@ -51,6 +51,7 @@
     if ([self.paramDic[@"textFieldType"] integerValue] == ZSHTextFieldSelect) {
         self.textField.enabled = false;
         self.textField.text = self.paramDic[@"text"];
+        self.textField.userInteractionEnabled = true;
     }
     
     if ([self.paramDic[@"textFieldType"]integerValue] == ZSHTextFieldViewCaptcha) {
