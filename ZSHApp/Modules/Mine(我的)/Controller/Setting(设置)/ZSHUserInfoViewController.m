@@ -73,7 +73,11 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
                         @{KFromClassType:@(FromUserInfoPhoneVCToMultiInfoVC),@"title":@"更改手机号码",@"bottomBtnTitle":@"提交"},
                         @{KFromClassType:@(FromUserInfoQQVCToMultiInfoVC),@"title":@"绑定QQ帐号",@"rightNaviTitle":@"授权"},
                         @{},@{},@{}]];
+    
     _mineLogic = [[ZSHMineLogic alloc] init];
+    _selectedPhotos = [NSMutableArray array];
+    _selectedAssets = [NSMutableArray array];
+    
     [self initViewModel];
     [self requestData];
 }
@@ -294,6 +298,32 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     [sheet showInView:self.view];
 }
 
+
+- (UIImagePickerController *)imagePickerVc {
+    if (_imagePickerVc == nil) {
+        _imagePickerVc = [[UIImagePickerController alloc] init];
+        _imagePickerVc.delegate = self;
+        // set appearance / 改变相册选择页的导航栏外观
+        if (iOS7Later) {
+            _imagePickerVc.navigationBar.barTintColor = self.navigationController.navigationBar.barTintColor;
+        }
+        _imagePickerVc.navigationBar.tintColor = self.navigationController.navigationBar.tintColor;
+        UIBarButtonItem *tzBarItem, *BarItem;
+        if (iOS9Later) {
+            tzBarItem = [UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[TZImagePickerController class]]];
+            BarItem = [UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UIImagePickerController class]]];
+        } else {
+            tzBarItem = [UIBarButtonItem appearanceWhenContainedIn:[TZImagePickerController class], nil];
+            BarItem = [UIBarButtonItem appearanceWhenContainedIn:[UIImagePickerController class], nil];
+        }
+        NSDictionary *titleTextAttributes = [tzBarItem titleTextAttributesForState:UIControlStateNormal];
+        [BarItem setTitleTextAttributes:titleTextAttributes forState:UIControlStateNormal];
+        
+    }
+    return _imagePickerVc;
+}
+
+
 #pragma mark - UIActionSheetDelegate
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 0) { // take photo / 去拍照
@@ -459,6 +489,59 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     }
 }
 
+- (void)imagePickerController:(UIImagePickerController*)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    [picker dismissViewControllerAnimated:YES completion:nil];
+    NSString *type = [info objectForKey:UIImagePickerControllerMediaType];
+    if ([type isEqualToString:@"public.image"]) {
+        TZImagePickerController *tzImagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:1 delegate:self];
+        tzImagePickerVc.sortAscendingByModificationDate = true;
+        [tzImagePickerVc showProgressHUD];
+        UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
+        
+        // save photo and get asset / 保存图片，获取到asset
+        [[TZImageManager manager] savePhotoWithImage:image location:nil completion:^(NSError *error){
+            if (error) {
+                [tzImagePickerVc hideProgressHUD];
+                NSLog(@"图片保存失败 %@",error);
+            } else {
+                [[TZImageManager manager] getCameraRollAlbum:NO allowPickingImage:YES completion:^(TZAlbumModel *model) {
+                    [[TZImageManager manager] getAssetsFromFetchResult:model.result allowPickingVideo:NO allowPickingImage:YES completion:^(NSArray<TZAssetModel *> *models) {
+                        [tzImagePickerVc hideProgressHUD];
+                        TZAssetModel *assetModel = [models firstObject];
+                        if (tzImagePickerVc.sortAscendingByModificationDate) {
+                            assetModel = [models lastObject];
+                        }
+//                        if (self.allowCropSwitch.isOn) { // 允许裁剪,去裁剪
+//                            TZImagePickerController *imagePicker = [[TZImagePickerController alloc] initCropTypeWithAsset:assetModel.asset photo:image completion:^(UIImage *cropImage, id asset) {
+//                                [self refreshCollectionViewWithAddedAsset:asset image:cropImage];
+//                            }];
+//                            imagePicker.needCircleCrop = self.needCircleCropSwitch.isOn;
+//                            imagePicker.circleCropRadius = 100;
+//                            [self presentViewController:imagePicker animated:YES completion:nil];
+//                        } else {
+                            [self refreshCollectionViewWithAddedAsset:assetModel.asset image:image];
+//                        }
+                    }];
+                }];
+            }
+        }];
+    }
+}
+
+- (void)refreshCollectionViewWithAddedAsset:(id)asset image:(UIImage *)image {
+    [_selectedAssets addObject:asset];
+    [_selectedPhotos addObject:image];
+//    [_collectionView reloadData];
+    
+    if ([asset isKindOfClass:[PHAsset class]]) {
+        PHAsset *phAsset = asset;
+        NSLog(@"location:%@",phAsset.location);
+    }
+    self.headImage = [_selectedPhotos firstObject];
+    [self initViewModel];
+    [self.mineLogic uploadImage:@[[_selectedPhotos firstObject]] name:@[@"showfile"] success:^(id response) {
+    }];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
