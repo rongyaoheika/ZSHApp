@@ -39,9 +39,7 @@
     //酒店地址
     NSDictionary *hotelAddressLabelDic = @{@"text":@"昌平区回龙观镇科星西路47号",@"font": kPingFangRegular(11)};
     _hotelAddressLabel = [ZSHBaseUIControl createLabelWithParamDic:hotelAddressLabelDic];
-    _hotelAddressLabel.numberOfLines = 0;
-    
-   
+    _hotelAddressLabel.numberOfLines = 2;
     [self.contentView addSubview:_hotelAddressLabel];
     
     //酒店距离
@@ -126,7 +124,7 @@
 
 - (void)updateCellWithParamDic:(NSDictionary *)dic{
     [_hotelmageView sd_setImageWithURL:[NSURL URLWithString:dic[@"SHOWIMAGES"]]];
-    _distanceLabel.text = [NSString stringWithFormat:@"%.1f公里",[dic[@"distance"]floatValue] ];
+    _distanceLabel.text = [NSString stringWithFormat:@"%ld公里",[dic[@"distance"]integerValue] ];
     
     if (_shopType == ZSHHotelShopType) {//酒店详情
         _hotelDescLabel.text = dic[@"HOTELNAMES"];
@@ -169,6 +167,7 @@
     NSMutableAttributedString *setString = [[NSMutableAttributedString alloc] initWithString:detailStr];
     [setString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, [detailStr length])];
     [_hotelAddressLabel setAttributedText:setString];
+    _hotelAddressLabel.lineBreakMode = NSLineBreakByTruncatingTail;
 }
 
 - (CGFloat)rowHeightWithCellModel:(ZSHHotelModel *)model{
