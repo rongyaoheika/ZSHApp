@@ -12,6 +12,7 @@
 @interface ZSHUploadIDCardController ()<UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 @property (nonatomic, strong) UIImageView *positiveIV;
 @property (nonatomic, strong) UIImageView *negativeIV;
+@property (nonatomic, strong) UIImageView *thirdIV;
 @property (nonatomic, assign) NSInteger   currentSelect;
 
 @end
@@ -24,34 +25,79 @@
 }
 
 - (void)createUI{
-    self.title = @"身份证";
     
-    _positiveIV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"uploadID1"]];
-    _positiveIV.userInteractionEnabled = true;
-    _positiveIV.tag = 18011910;
-    UITapGestureRecognizer *tapGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(ClickControlAction)];
-    [_positiveIV addGestureRecognizer:tapGR];
-    [self.view addSubview:_positiveIV];
-    [_positiveIV mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.view).offset(KNavigationBarHeight+25);
-        make.centerX.mas_equalTo(self.view);
-        make.size.mas_equalTo(CGSizeMake(kRealValue(250), 158));
-    }];
-    
-    _negativeIV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"uploadID2"]];
-    _negativeIV.userInteractionEnabled = true;
-    _negativeIV.tag = 1801191001;
-    UITapGestureRecognizer *tapGR2 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(ClickControlAction2)];
-    [_negativeIV addGestureRecognizer:tapGR2];
-    [self.view addSubview:_negativeIV];
-    [_negativeIV mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(_positiveIV.mas_bottom).offset(21);
-        make.centerX.mas_equalTo(self.view);
-        make.size.mas_equalTo(CGSizeMake(kRealValue(250), 158));
-    }];
+    if (kFromClassTypeValue == FromIDCardVCToUploadPhotoVC) {
+        self.title = @"身份证";
+        [self positiveIV:@"uploadID1"];
+        [self negativeIV:@"uploadID2"];
+    } else if (kFromClassTypeValue == FromStoreVCToUploadPhotoVC){
+        self.title = @"店铺照片";
+        [self positiveIV:@"store1"];
+        [self negativeIV:@"store2"];
+        [self thirdIV:@"store3"];
+    } else if (kFromClassTypeValue == FromLicenseVCToUploadPhotoVC){
+        self.title = @"执照照片";
+        [self positiveIV:@"lisence"];
+    }
+}
+
+- (UIImageView *)positiveIV:(NSString *)name {
+    if (!_positiveIV) {
+        _positiveIV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:name]];
+        _positiveIV.tag = 18011910;
+        _positiveIV.userInteractionEnabled = true;
+        UITapGestureRecognizer *tapGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(ClickControlAction)];
+        [_positiveIV addGestureRecognizer:tapGR];
+        [self.view addSubview:_positiveIV];
+        [_positiveIV mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.mas_equalTo(self.view).offset(KNavigationBarHeight+25);
+            make.centerX.mas_equalTo(self.view);
+            make.size.mas_equalTo(CGSizeMake(kRealValue(250), 158));
+        }];
+    }
+    return _positiveIV;
+}
+
+- (UIImageView *)negativeIV:(NSString *)name {
+    if (!_negativeIV) {
+        _negativeIV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:name]];
+        _negativeIV.tag = 1801191001;
+        _negativeIV.userInteractionEnabled = true;
+        UITapGestureRecognizer *tapGR2 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(ClickControlAction2)];
+        [_negativeIV addGestureRecognizer:tapGR2];
+        [self.view addSubview:_negativeIV];
+        [_negativeIV mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.mas_equalTo(_positiveIV.mas_bottom).offset(21);
+            make.centerX.mas_equalTo(self.view);
+            make.size.mas_equalTo(CGSizeMake(kRealValue(250), 158));
+        }];
+    }
+    return _negativeIV;
+}
+
+- (UIImageView *)thirdIV:(NSString *)name {
+    if (!_thirdIV) {
+        _thirdIV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:name]];
+        _thirdIV.tag = 180206104;
+        _thirdIV.userInteractionEnabled = true;
+        UITapGestureRecognizer *tapGR3 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(ClickControlAction3)];
+        [_thirdIV addGestureRecognizer:tapGR3];
+        [self.view addSubview:_thirdIV];
+        [_thirdIV mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.mas_equalTo(_negativeIV.mas_bottom).offset(21);
+            make.centerX.mas_equalTo(self.view);
+            make.size.mas_equalTo(CGSizeMake(kRealValue(250), 158));
+        }];
+    }
+    return _thirdIV;
 }
 
 
+
+
+- (void)ClickControlAction3 {
+    _currentSelect = 3;
+}
 
 - (void)ClickControlAction {
     _currentSelect = 0;

@@ -287,13 +287,19 @@
                     [weakself.pickView show:WindowRegion];
                 }
             } else if (kFromClassTypeValue ==  FromVerifyVCToMultiInfoVC) {
-                if (indexPath.row == 0 ) { // 上传身份证
-                    ZSHUploadIDCardController *uploadIDCardVC = [[ZSHUploadIDCardController alloc] init];
+                if (indexPath.row == 0 ) { 
+                    ZSHUploadIDCardController *uploadIDCardVC = [[ZSHUploadIDCardController alloc] initWithParamDic:@{KFromClassType:@(FromIDCardVCToUploadPhotoVC)}];
+                    [self.navigationController pushViewController:uploadIDCardVC animated:true];
+                } else if (indexPath.row == 3) {
+                    ZSHUploadIDCardController *uploadIDCardVC = [[ZSHUploadIDCardController alloc] initWithParamDic:@{KFromClassType:@(FromStoreVCToUploadPhotoVC)}];
+                    [self.navigationController pushViewController:uploadIDCardVC animated:true];
+                } else if (indexPath.row == 4) {
+                    ZSHUploadIDCardController *uploadIDCardVC = [[ZSHUploadIDCardController alloc] initWithParamDic:@{KFromClassType:@(FromLicenseVCToUploadPhotoVC)}];
                     [self.navigationController pushViewController:uploadIDCardVC animated:true];
                 }
             } else if (kFromClassTypeValue ==  FromWeMediaVerifyVCToMultiInfoVC) {
                 if (indexPath.row == 3) { 
-                    ZSHUploadIDCardController *uploadIDCardVC = [[ZSHUploadIDCardController alloc] init];
+                    ZSHUploadIDCardController *uploadIDCardVC = [[ZSHUploadIDCardController alloc] initWithParamDic:@{KFromClassType:@(FromIDCardVCToUploadPhotoVC)}];
                     [self.navigationController pushViewController:uploadIDCardVC animated:true];
                 }
             }

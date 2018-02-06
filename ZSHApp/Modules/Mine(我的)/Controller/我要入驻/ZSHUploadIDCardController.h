@@ -8,10 +8,10 @@
 
 #import "RootViewController.h"
 
-typedef NS_ENUM (NSInteger,ZSHToUploadIDCardVC) {
-    FromCreateStoreVCToLiveContentFirstVC,             // 门店创建提交
-    FromWeMediaVerifyVCToLiveContentFirstVC,           // 自媒体提交
-    FromActivityCenterVCToLiveContentFirstVC
+typedef NS_ENUM (NSInteger,ZSHToUploadPhotoVC) {
+    FromIDCardVCToUploadPhotoVC,                   // 身份证
+    FromStoreVCToUploadPhotoVC,                    // 店铺
+    FromLicenseVCToUploadPhotoVC                   // 营业执照
 };
 
 
