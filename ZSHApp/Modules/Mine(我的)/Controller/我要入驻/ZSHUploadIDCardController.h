@@ -18,4 +18,6 @@ typedef NS_ENUM (NSInteger,ZSHToUploadPhotoVC) {
 
 @interface ZSHUploadIDCardController : RootViewController
 
+@property (nonatomic, copy) void(^viewWillDisAppearBlock)(BOOL isFinished);
+
 @end

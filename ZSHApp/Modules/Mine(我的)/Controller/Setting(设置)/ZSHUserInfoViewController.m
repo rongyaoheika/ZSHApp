@@ -160,7 +160,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
             } else if (indexPath.row == 6) { // 地区选择
                 weakself.pickView = [weakself createPickViewWithType:WindowRegion];
                 weakself.pickView.tag = 6;
-                weakself.pickView.saveChangeBlock = ^(NSString *text, NSInteger index) {
+                weakself.pickView.saveChangeBlock = ^(NSString *text, NSInteger index,NSDictionary *dic) {
                     weakself.changedData = text;
                     weakself.changedDataIndex = index;
                     [weakself requestAddress];

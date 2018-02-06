@@ -112,7 +112,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
                 NSDictionary *nextParamDic = @{@"midTitle":@"类型",@"dataArr":self.typeArr};
                 weakself.pickView = [weakself createPickViewWithParamDic:nextParamDic];
                 [weakself.pickView show:WindowDefault];
-                weakself.pickView.saveChangeBlock = ^(NSString *text, NSInteger tag) {
+                weakself.pickView.saveChangeBlock = ^(NSString *text, NSInteger tag, NSDictionary *dic) {
                     _togetherLogic.enterDisModel.CONVERGESORT_ID = text;
                     weakself.detailTitleArr[indexPath.row] = text;
                     [weakself.tableView reloadData];
@@ -121,7 +121,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
                 NSDictionary *nextParamDic = @{@"type":@(WindowBirthDay),@"midTitle":@"生日"};
                 weakself.pickView = [weakself createPickViewWithParamDic:nextParamDic];
                 weakself.pickView.tag = indexPath.row;
-                weakself.pickView.saveChangeBlock = ^(NSString *text,NSInteger tag) {
+                weakself.pickView.saveChangeBlock = ^(NSString *text,NSInteger tag,NSDictionary *dic) {
                     if (tag == 0) {
                         _togetherLogic.enterDisModel.STARTTIME = text;
                         
@@ -142,7 +142,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
                 NSDictionary *nextParamDic = @{@"type":@(WindowPrice),@"midTitle":@"期望价格",@"dataArr":priceArr};
                 weakself.pickView = [weakself createPickViewWithParamDic:nextParamDic];
                 [weakself.pickView show:WindowPrice];
-                weakself.pickView.saveChangeBlock= ^(NSString *text,NSInteger tag) {
+                weakself.pickView.saveChangeBlock= ^(NSString *text,NSInteger tag, NSDictionary *dic) {
                     NSArray *arr = [text componentsSeparatedByString:@"-"];
                     if ([arr[0] floatValue] < [arr[1] floatValue]) {
                         _togetherLogic.enterDisModel.PRICEMIN = arr[0];
@@ -159,7 +159,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
                 NSDictionary *nextParamDic = @{@"type":@(WindowTogether),@"midTitle":@"方式选择",@"dataArr":togetherArr};
                 weakself.pickView = [weakself createPickViewWithParamDic:nextParamDic];
                 [weakself.pickView show:WindowTogether];
-                weakself.pickView.saveChangeBlock = ^(NSString *text, NSInteger tag) {
+                weakself.pickView.saveChangeBlock = ^(NSString *text, NSInteger tag,NSDictionary *dic) {
                     _togetherLogic.enterDisModel.CONVERGETYPE = text;
                     weakself.detailTitleArr[indexPath.row] = text;
                     [weakself.tableView reloadData];
@@ -169,7 +169,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
                 NSDictionary *nextParamDic = @{@"type":@(WindowTogether),@"midTitle":@"人数要求",@"dataArr":togetherArr};
                 weakself.pickView = [weakself createPickViewWithParamDic:nextParamDic];
                 [weakself.pickView show:WindowTogether];
-                weakself.pickView.saveChangeBlock = ^(NSString *text, NSInteger tag) {
+                weakself.pickView.saveChangeBlock = ^(NSString *text, NSInteger tag,NSDictionary *dic) {
                     _togetherLogic.enterDisModel.CONVERGEPER = text;
                     weakself.detailTitleArr[indexPath.row] = text;
                     [weakself.tableView reloadData];
@@ -179,7 +179,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
                 NSDictionary *nextParamDic = @{@"type":@(WindowTogether),@"midTitle":@"性别要求",@"dataArr":togetherArr};
                 weakself.pickView = [weakself createPickViewWithParamDic:nextParamDic];
                 [weakself.pickView show:WindowTogether];
-                weakself.pickView.saveChangeBlock = ^(NSString *text, NSInteger tag) {
+                weakself.pickView.saveChangeBlock = ^(NSString *text, NSInteger tag,NSDictionary *dic) {
                     _togetherLogic.enterDisModel.CONVERGESEX = text;
                     weakself.detailTitleArr[indexPath.row] = @(tag);
                     [weakself.tableView reloadData];

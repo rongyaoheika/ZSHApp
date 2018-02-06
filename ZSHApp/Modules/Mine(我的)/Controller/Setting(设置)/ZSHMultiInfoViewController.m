@@ -31,7 +31,10 @@
 
 @property (nonatomic, strong) ZSHCreateStoreGuideView   *guideView;
 @property (nonatomic, strong) ZSHPickView               *pickView;
-@property (nonatomic, copy)   NSString                  *addr;  // 门店地址
+@property (nonatomic, copy)   NSString                  *addr;          // 门店地址
+@property (nonatomic, copy)   NSString                  *provinceStr;   // 门店所在省
+@property (nonatomic, copy)   NSString                  *cityStr;       // 门店所在区
+@property (nonatomic, copy)   NSString                  *districtStr;   // 门店所在县
 @end
 
 
@@ -123,19 +126,15 @@
             self.titleArr = @[@"门店名称", @"门店地址", @"详细地址", @"门店电话"];
             self.placeHolderArr = @[@"若有分店，请具体到分店名", @"请选择", @"请输入", @"填写座机/手机，座机需加区号"];
         }
-         self.textFieldTypeArr = @[@(ZSHTextFieldViewUser), @(ZSHTextFieldSelect), @(ZSHTextFieldViewUser), @(ZSHTextFieldViewUser)];
-
-//        self.titleArr = @[@"门店名称", @"门店地址", @"详细地址", @"门店电话"];
-//        self.textFieldTypeArr = @[@(ZSHTextFieldViewUser), @(ZSHTextFieldViewNone), @(ZSHTextFieldViewUser), @(ZSHTextFieldViewUser)];
-//        self.placeHolderArr = @[@"若有分店，请具体到分店名", @"", @"请输入", @"填写座机/手机，座机需加区号"];
+         self.textFieldTypeArr = @[@(ZSHTextFieldViewUser), @(ZSHTextFieldSelect), @(ZSHTextFieldViewUser), @(ZSHTextFieldViewPhone)];
 
     }else if (kFromClassTypeValue ==  FromVerifyVCToMultiInfoVC) {
         // 提交审核
         self.titleArr = @[@"上传身份证", @"经营者姓名", @"身份证号", @"店铺照片", @"营业执照",
-                          @"注册号", @"执照名称", @"法人姓名",@"经营者手机", @"经营者手机"];
+                          @"注册号", @"执照名称", @"法人姓名",@"经营者手机", @"验证码"];
         self.textFieldTypeArr = @[
     @(ZSHTextFieldSelect), @(ZSHTextFieldViewUser), @(ZSHTextFieldViewUser), @(ZSHTextFieldSelect),@(ZSHTextFieldSelect),
-    @(ZSHTextFieldViewUser), @(ZSHTextFieldViewUser), @(ZSHTextFieldViewUser),@(ZSHTextFieldViewUser), @(ZSHTextFieldViewCaptcha)];
+    @(ZSHTextFieldViewUser), @(ZSHTextFieldViewUser), @(ZSHTextFieldViewUser),@(ZSHTextFieldViewPhone), @(ZSHTextFieldViewCaptcha)];
         self.placeHolderArr = @[@"本人身份证照片", @"须与身份证姓名一致", @"请输入经营者身份证号码", @"请上传实体店铺照片",@"请上传营业执照照片", @"注册号或同一社会信用代码", @"营业执照名称这一行的内容", @"营业执照上法人或经营者姓名",@"用本人身份证办理的手机号", @"输入验证码"];
     } else if (kFromClassTypeValue ==  FromWeMediaVCToMultiInfoVC) { // 自媒体入驻
         self.titleArr = @[@"自媒体名称", @"地址信息", @"详细地址"];
@@ -143,7 +142,7 @@
         self.placeHolderArr = @[@"填写后不能更改", @"请选择", @"请输入"];
     } else if (kFromClassTypeValue ==  FromWeMediaVerifyVCToMultiInfoVC) { //
         self.titleArr = @[@"自媒体头像", @"姓名", @"身份证号", @"身份证照片", @"邮箱", @"经营者手机", @"验证码"];
-        self.textFieldTypeArr = @[@(ZSHTextFieldViewNone), @(ZSHTextFieldViewUser), @(ZSHTextFieldViewUser), @(ZSHTextFieldSelect), @(ZSHTextFieldViewUser), @(ZSHTextFieldViewUser), @(ZSHTextFieldViewCaptcha)];
+        self.textFieldTypeArr = @[@(ZSHTextFieldViewNone), @(ZSHTextFieldViewUser), @(ZSHTextFieldViewUser), @(ZSHTextFieldSelect), @(ZSHTextFieldViewUser), @(ZSHTextFieldViewPhone), @(ZSHTextFieldViewCaptcha)];
         self.placeHolderArr = @[@"", @"须与身份证姓名一致", @"请输入经营者身份证号码", @"营业执照上法人或经营者姓名", @"请输入您的联系邮箱", @"用本人身份证办理的手机号", @"输入验证码"];
     }
     [self initViewModel];
@@ -225,6 +224,20 @@
                 textFieldView.textFieldChanged = ^(NSString *str, NSInteger index) {
                     if (kFromClassTypeValue == FromUserInfoNickNameVCToMultiInfoVC || kFromClassTypeValue == FromUserInfoResumeVCToMultiInfoVC){
                         weakself.changedData = str;
+                    } else if(kFromClassTypeValue == FromVerifyVCToMultiInfoVC){
+                        if (index == 3) {
+                            weakself.text1 = str;
+                        } else if (index == 4) {
+                            weakself.text2 = str;
+                        } else if (index == 7) {
+                            weakself.text3 = str;
+                        } else if (index == 8) {
+                            weakself.text4 = str;
+                        } else if (index == 9) {
+                            weakself.text5 = str;
+                        } else if (index == 10) {
+                            weakself.text6 = str;
+                        }
                     } else {
                         if (index == 2) {
                             weakself.text1 = str;
@@ -255,8 +268,7 @@
                 } else if(indexPath.row == 3) {
                     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
                 }
-            }
-            else if (kFromClassTypeValue ==  FromCreateStoreVCToMultiInfoVC || kFromClassTypeValue ==  FromWeMediaVCToMultiInfoVC) {
+            } else if (kFromClassTypeValue ==  FromCreateStoreVCToMultiInfoVC || kFromClassTypeValue ==  FromWeMediaVCToMultiInfoVC) {
                 if (indexPath.row == 1) {
                     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 
@@ -280,23 +292,46 @@
             if (kFromClassTypeValue ==  FromCreateStoreVCToMultiInfoVC || kFromClassTypeValue ==  FromWeMediaVCToMultiInfoVC) {
                 if (indexPath.row == 1) {// 地区选择
                     weakself.pickView = [weakself createPickViewWithType:WindowRegion];
-                    weakself.pickView.saveChangeBlock = ^(NSString *text, NSInteger index) {
+                    weakself.pickView.saveChangeBlock = ^(NSString *text, NSInteger index, NSDictionary *dic) {
                         weakself.addr = text;
+                        weakself.provinceStr = dic[@"provinceStr"];
+                        weakself.cityStr = dic[@"cityStr"];
+                        weakself.districtStr = dic[@"districtStr"];
                         [tableView reloadData];
                     };
                     [weakself.pickView show:WindowRegion];
                 }
             } else if (kFromClassTypeValue ==  FromVerifyVCToMultiInfoVC) {
-                if (indexPath.row == 0 ) { 
-                    ZSHUploadIDCardController *uploadIDCardVC = [[ZSHUploadIDCardController alloc] initWithParamDic:@{KFromClassType:@(FromIDCardVCToUploadPhotoVC)}];
+                ZSHBaseCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+                ZSHTextFieldCellView *textFieldView  = [cell.contentView viewWithTag:2+indexPath.row];
+                ZSHUploadIDCardController *uploadIDCardVC = nil;
+                if (indexPath.row == 0 ) { //身份证图片
+                    uploadIDCardVC = [[ZSHUploadIDCardController alloc] initWithParamDic:@{KFromClassType:@(FromIDCardVCToUploadPhotoVC)}];
                     [self.navigationController pushViewController:uploadIDCardVC animated:true];
-                } else if (indexPath.row == 3) {
-                    ZSHUploadIDCardController *uploadIDCardVC = [[ZSHUploadIDCardController alloc] initWithParamDic:@{KFromClassType:@(FromStoreVCToUploadPhotoVC)}];
+                    uploadIDCardVC.viewWillDisAppearBlock = ^(BOOL isFinished) {
+                        textFieldView.textField.text = isFinished?@"待审核":@"待完善";
+                        _imageText1 = textFieldView.textField.text;
+                    };
+                    
+                } else if (indexPath.row == 3) {//店铺图片
+                    uploadIDCardVC = [[ZSHUploadIDCardController alloc] initWithParamDic:@{KFromClassType:@(FromStoreVCToUploadPhotoVC)}];
                     [self.navigationController pushViewController:uploadIDCardVC animated:true];
-                } else if (indexPath.row == 4) {
-                    ZSHUploadIDCardController *uploadIDCardVC = [[ZSHUploadIDCardController alloc] initWithParamDic:@{KFromClassType:@(FromLicenseVCToUploadPhotoVC)}];
+                    uploadIDCardVC.viewWillDisAppearBlock = ^(BOOL isFinished) {
+                        textFieldView.textField.text = isFinished?@"待审核":@"待完善";
+                        _imageText2 = textFieldView.textField.text;
+                    };
+                    
+                } else if (indexPath.row == 4) {//营业执照图片
+                    uploadIDCardVC = [[ZSHUploadIDCardController alloc] initWithParamDic:@{KFromClassType:@(FromLicenseVCToUploadPhotoVC)}];
                     [self.navigationController pushViewController:uploadIDCardVC animated:true];
+                    uploadIDCardVC.viewWillDisAppearBlock = ^(BOOL isFinished) {
+                        textFieldView.textField.text = isFinished?@"待审核":@"待完善";
+                        _imageText3 = textFieldView.textField.text;
+                    };
                 }
+                
+        
+                
             } else if (kFromClassTypeValue ==  FromWeMediaVerifyVCToMultiInfoVC) {
                 if (indexPath.row == 3) { 
                     ZSHUploadIDCardController *uploadIDCardVC = [[ZSHUploadIDCardController alloc] initWithParamDic:@{KFromClassType:@(FromIDCardVCToUploadPhotoVC)}];
@@ -460,13 +495,35 @@
             }];
             break;
         }
-         case FromCreateStoreVCToMultiInfoVC:{//创建门店
+         case FromCreateStoreVCToMultiInfoVC:{//确认创建
              if ([self createStoreAction]) {
-                 ZSHMultiInfoViewController *multiInfoVC = [[ZSHMultiInfoViewController alloc] initWithParamDic:@{KFromClassType:@(FromVerifyVCToMultiInfoVC),@"title":@"提交资质", @"bottomBtnTitle":@"提交审核"}];
+                 NSDictionary *paramDic = @{KFromClassType:@(FromVerifyVCToMultiInfoVC),@"title":@"提交资质",
+                                            @"bottomBtnTitle":@"提交审核",@"categoryId":self.paramDic[@"categoryId"],                                      @"storeName":self.text1,@"provinceName":self.provinceStr,@"cityName":self.cityStr,@"districtName":self.districtStr,@"detailAddress":self.text3,@"phoneStr":self.text4
+                                            };
+                 ZSHMultiInfoViewController *multiInfoVC = [[ZSHMultiInfoViewController alloc] initWithParamDic:paramDic];
                  [self.navigationController pushViewController:multiInfoVC animated:YES];
              }
              break;
          }
+        case FromVerifyVCToMultiInfoVC:{//门店提交审核
+            if ([self submitCheckAction]) {
+                NSDictionary *paramDic = @{@"CATEGORY_ID":self.paramDic[@"categoryId"],@"APPLYFOR_NAME":self.paramDic[@"storeName"],
+                                           @"APPLYFOR_PROVINCE":self.paramDic[@"provinceName"],@"APPLYFOR_CITY":self.paramDic[@"cityName"],
+                                           @"APPLYFOR_PROVINCE":self.paramDic[@"provinceName"],@"APPLYFOR_CITY":self.paramDic[@"cityName"],
+                                           @"APPLY_COUNTY":self.paramDic[@"districtName"],@"APPLYFOR_ADDRESS":self.paramDic[@"detailAddress"],
+                                           @"APPLYFOR_LONGITUDE":self.paramDic[@"districtName"],@"APPLYFOR_LATITUDE":self.paramDic[@"detailAddress"],
+                                           @"APPLYFOR_TEL":self.paramDic[@"phoneStr"], @"APPLYFOR_PRICE":@"99",
+                                           @"APPLY_OPERRATE":self.text1,@"APPLYFOR_IDCARD":self.text2,
+                                           @"APPLYFOR_CHARTERNUM":self.text3,@"APPLYFOR_CHARTERNAME":self.text4,
+                                           @"APPLYFOR_LEGALPERSON":self.text5,@"APPLYFOR_PHONE":self.text6,
+                                           @"HONOURUSER_ID":HONOURUSER_IDValue,@"APPLYFOR_IDCARDIMAGE":@"99",
+                                           @"APPLYFOR_IMAGES":HONOURUSER_IDValue,@"APPLYFOR_CHARTERIMAGE":@"99"
+                                           };
+                [self submitActionWithDic:paramDic];
+            }
+            
+            break;
+        }
         case FromWeMediaVCToMultiInfoVC:{//提交审核
             ZSHMultiInfoViewController *multiInfoVC = [[ZSHMultiInfoViewController alloc] initWithParamDic:@{KFromClassType:@(FromWeMediaVerifyVCToMultiInfoVC),@"title":@"提交资质", @"bottomBtnTitle":@"提交审核"}];
             [self.navigationController pushViewController:multiInfoVC animated:YES];
@@ -485,13 +542,9 @@
     if (!_guideView) {
         _guideView = [[ZSHCreateStoreGuideView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight) paramDic:@{@"row":self.paramDic[@"row"]}];
         _guideView.tag = 3;
-        
-        
     }
     return _guideView;
 }
-
-#pragma action
 
 
 - (void)didReceiveMemoryWarning {

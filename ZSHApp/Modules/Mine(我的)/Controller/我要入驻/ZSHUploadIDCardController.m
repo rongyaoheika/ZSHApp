@@ -15,12 +15,19 @@
 @property (nonatomic, strong) UIImageView *thirdIV;
 @property (nonatomic, assign) NSInteger   currentSelect;
 
+@property (nonatomic, assign) BOOL   isFinished;
+@property (nonatomic, assign) BOOL   hasImage1;
+@property (nonatomic, assign) BOOL   hasImage2;
+@property (nonatomic, assign) BOOL   hasImage3;
+
 @end
 
 @implementation ZSHUploadIDCardController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    _isFinished = _hasImage1 = _hasImage2 = _hasImage3 = NO;
     [self createUI];
 }
 
@@ -97,6 +104,7 @@
 
 - (void)ClickControlAction3 {
     _currentSelect = 3;
+    [self takePhoto];
 }
 
 - (void)ClickControlAction {
@@ -188,8 +196,15 @@
         if (_currentSelect == 0) {
             
             _positiveIV.image = theImage;
-        } else {
+            _hasImage1 = YES;
+        } else if (_currentSelect == 1) {
+            
             _negativeIV.image = theImage;
+            _hasImage2 = YES;
+        }  else if (_currentSelect == 3) {
+            
+            _thirdIV.image = theImage;
+            _hasImage3 = YES;
         }
     }
     [picker  dismissViewControllerAnimated:YES completion:nil];
@@ -200,5 +215,30 @@
     [picker  dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    
+    switch (kFromClassTypeValue) {
+        case FromIDCardVCToUploadPhotoVC:{
+            self.isFinished = _hasImage1&&_hasImage2;
+            break;
+        }
+        case FromStoreVCToUploadPhotoVC:{
+            self.isFinished = _hasImage1&&_hasImage2&&_hasImage3;
+            break;
+        }
+        case FromLicenseVCToUploadPhotoVC:{
+            self.isFinished = _hasImage1;
+            break;
+        }
+            
+        default:
+            break;
+    }
+    
+    if (self.viewWillDisAppearBlock) {
+        self.viewWillDisAppearBlock(self.isFinished);
+    }
+}
 
 @end

@@ -122,7 +122,7 @@
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
             if (indexPath.row == 2 ) {
                 weakself.pickView = [weakself createPickViewWithType:WindowRegion];
-                weakself.pickView.saveChangeBlock = ^(NSString *text, NSInteger index) {
+                weakself.pickView.saveChangeBlock = ^(NSString *text, NSInteger index,NSDictionary *dic) {
                     _mineLogic.addNewAddr.PROVINCE = text;
                     [tableView reloadData];
                 };

@@ -78,4 +78,6 @@
 - (void)requestFocusList:(void (^)(id response))success;
 // 粉丝
 - (void)requestFansList:(void (^)(id response))success;
+// 贡献榜
+- (void)requestRankWithDic:(NSDictionary *)dic success:(void (^)(id response))success;
 @end

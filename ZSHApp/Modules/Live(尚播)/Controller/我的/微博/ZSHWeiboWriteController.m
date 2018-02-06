@@ -95,7 +95,7 @@
             NSDictionary *nextParamDic = @{@"type":@(WindowDefault),@"midTitle":@"选择",@"dataArr":@[@"精选", @"数码", @"亲子", @"时尚", @"美食"]};
             weakself.pickView = [[ZSHPickView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight) paramDic:nextParamDic];
             [weakself.pickView show:WindowDefault];
-            weakself.pickView.saveChangeBlock = ^(NSString *rowTitle, NSInteger tag) {
+            weakself.pickView.saveChangeBlock = ^(NSString *rowTitle, NSInteger tag,NSDictionary *dic) {
                 weakself.titleTextView.xx_placeholder = rowTitle;
                 
             };

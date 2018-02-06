@@ -11,7 +11,8 @@
 @interface ZSHMultiInfoViewController (method)
 //创建门店前校验
 - (BOOL)createStoreAction;
-
+//提交审核前校验
+- (BOOL)submitCheckAction;
 //提交审核
-- (void)submitActionWith:(NSDictionary *)paramDic;
+- (void)submitActionWithDic:(NSDictionary *)paramDic;
 @end

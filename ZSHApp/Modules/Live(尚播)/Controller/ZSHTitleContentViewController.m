@@ -169,6 +169,7 @@
                                 @"ZSHLiveDayListViewController",
                                 @"ZSHLiveDayListViewController"];
 //            self.contentVCS = @[@"ZSHLiveDayListViewController", @"ZSHLiveWeekListViewController", @"ZSHLiveMonthListViewController", @"ZSHLiveTotalListViewController"];
+             self.paramArr = @[@{@"TYPE":@"DATE"},@{@"TYPE":@"WEEK"},@{@"TYPE":@"MONTH"},@{@"TYPE":@"ALL"}];
         }
             break;
         case FromPeronalCenterVCToTitleContentVC:{
@@ -434,7 +435,7 @@
     NSDictionary *nextParamDic = @{@"type":@(WindowDefault),@"midTitle":paramArr[index][@"midTitle"],@"dataArr":paramArr[index][@"shopSortArr"]};
     weakself.pickView = [weakself createPickViewWithParamDic:nextParamDic];
     [weakself.pickView show:WindowDefault];
-    weakself.pickView.saveChangeBlock = ^(NSString *rowTitle, NSInteger tag) {
+    weakself.pickView.saveChangeBlock = ^(NSString *rowTitle, NSInteger tag,NSDictionary *dic) {
         [[NSNotificationCenter defaultCenter] postNotificationName:KUpdateDataWithSort object:@{@"row":@(tag),@"midTitle":paramArr[index][@"midTitle"],@"rowTitle":rowTitle,KFromClassType:@(kFromClassTypeValue)}];
     };
     
@@ -493,9 +494,6 @@
             }];
             
             searchViewController.showRecommendView = showRecommendView;
-//            searchViewController.hotSearchStyle = PYHotSearchStyleARCBorderTag;
-//            searchViewController.searchHistoryStyle = PYSearchHistoryStyleARCBorderTag;
-//            searchViewController.searchBarBackgroundColor = KZSHColor1A1A1A;
             searchViewController.delegate = self;
             [self.navigationController pushViewController:searchViewController animated:YES];
         });

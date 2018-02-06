@@ -302,7 +302,7 @@ static NSString *const ZSHBrandSortCellID = @"ZSHBrandSortCell";
             NSDictionary *nextParamDic = @{@"type":@(WindowDefault),@"midTitle":@"筛选",@"dataArr":arr};
             _pickView = [[ZSHPickView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight) paramDic:nextParamDic];
             [_pickView show:WindowDefault];
-            _pickView.saveChangeBlock = ^(NSString *rowTitle, NSInteger tag) {
+            _pickView.saveChangeBlock = ^(NSString *rowTitle, NSInteger tag,NSDictionary *dic) {
                 [weakself refreshBrandIconListWithBrandID:weakself.filters[tag][@"BRANDICON_ID"]];
             };
             break;

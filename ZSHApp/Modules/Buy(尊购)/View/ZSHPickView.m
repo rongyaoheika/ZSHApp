@@ -64,8 +64,6 @@ NSInteger yearSatrt = 1900;
 
 - (void)createData{
     self.selectedRow = -1;
-//    self.titleArr = @[@"生日",@"性别",@"城市区域选择",@"年份",@"优惠券选择",@"时间选择",@"方式选择"
-//                      @"物流公司选择"];
     self.regionWidthArr = @[@(KScreenWidth * 0.25),@(KScreenWidth * 0.5),@(KScreenWidth * 0.25)];
    
     // 年月日
@@ -344,7 +342,7 @@ NSInteger yearSatrt = 1900;
             NSInteger day = [_pickerView selectedRowInComponent:2];
             NSString *dateStr = [NSString stringWithFormat:@"%zd-%zd-%zd ",yearSatrt + year,month+1,day+1];
             if (self.saveChangeBlock) {
-                self.saveChangeBlock(dateStr,self.tag);
+                self.saveChangeBlock(dateStr,self.tag,nil);
             }
             break;
         }
@@ -354,7 +352,7 @@ NSInteger yearSatrt = 1900;
             NSInteger priceMax = [_pickerView selectedRowInComponent:1];
             NSString *priceStr = [NSString stringWithFormat:@"%zd-%zd", priceMin*100,priceMax*100];
             if (self.saveChangeBlock) {
-                self.saveChangeBlock(priceStr,self.tag);
+                self.saveChangeBlock(priceStr,self.tag,nil);
             }
         }
             break;
@@ -368,13 +366,22 @@ NSInteger yearSatrt = 1900;
             NSInteger district = [_pickerView selectedRowInComponent:2];
 
             NSString *addrStr = nil;
+            NSString *provinceStr = nil;
+            NSString *cityStr = nil;
+            NSString *districtStr = nil;
             if ([_dataArr[2] count]) {
                 addrStr = [NSString stringWithFormat:@"%@%@%@", _dataArr[0][province],_dataArr[1][city],_dataArr[2][district]];
-            }else {
+                provinceStr = _dataArr[0][province];
+                cityStr = _dataArr[1][city];
+                districtStr = _dataArr[2][district];
+            } else {
                 addrStr = [NSString stringWithFormat:@"%@%@", _dataArr[0][province],_dataArr[1][city]];
+                provinceStr = _dataArr[0][province];
+                cityStr = _dataArr[1][city];
+                districtStr = @"";
             }
             if (self.saveChangeBlock) {
-                self.saveChangeBlock(addrStr, self.tag);
+                self.saveChangeBlock(addrStr, self.tag,@{@"provinceStr":provinceStr,@"cityStr":cityStr,@"districtStr":districtStr});
             }
             break;
         }
@@ -384,7 +391,7 @@ NSInteger yearSatrt = 1900;
             NSString *dateStr = [NSString stringWithFormat:@"%02ld/%ld",(long)month,(long)(yearSatrt + year)];
             RLog(@"保存区域数据%ld%ld",(long)year,(long)month);
             if (self.saveChangeBlock) {
-                self.saveChangeBlock(dateStr,self.tag);
+                self.saveChangeBlock(dateStr,self.tag,nil);
             }
             break;
         }
@@ -392,7 +399,7 @@ NSInteger yearSatrt = 1900;
             NSInteger index = [_pickerView selectedRowInComponent:0];
             NSString *dateStr = [NSString stringWithFormat:@"%@",_dataArr[index]];
             if (self.saveChangeBlock) {
-                self.saveChangeBlock(dateStr,index);
+                self.saveChangeBlock(dateStr,index,nil);
             }
             break;
         }
@@ -400,7 +407,7 @@ NSInteger yearSatrt = 1900;
             NSInteger index = [_pickerView selectedRowInComponent:0];
             NSString *dateStr = [NSString stringWithFormat:@"%@",_dataArr[index]];
             if (self.saveChangeBlock) {
-                self.saveChangeBlock(dateStr,index);
+                self.saveChangeBlock(dateStr,index,nil);
             }
             
             

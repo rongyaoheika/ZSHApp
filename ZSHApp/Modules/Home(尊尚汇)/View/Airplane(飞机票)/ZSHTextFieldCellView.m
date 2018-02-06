@@ -54,6 +54,10 @@
         self.textField.userInteractionEnabled = true;
     }
     
+    if ([self.paramDic[@"textFieldType"] integerValue] == ZSHTextFieldViewPhone) {
+        self.textField.keyboardType = UIKeyboardTypePhonePad;
+    }
+    
     if ([self.paramDic[@"textFieldType"]integerValue] == ZSHTextFieldViewCaptcha) {
         [self.getCaptchaBtn mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerY.mas_equalTo(self);

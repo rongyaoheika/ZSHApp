@@ -302,4 +302,15 @@
     }];
 }
 
+// 贡献榜
+- (void)requestRankWithDic:(NSDictionary *)dic success:(void (^)(id response))success {
+    [PPNetworkHelper POST:kUrlGetRankList parameters:dic success:^(id responseObject) {
+//        weakself.friendListModelArr = [ZSHFriendListModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"]];
+        RLog(@"贡献榜==%@",responseObject);
+        success(responseObject);
+    } failure:^(NSError *error) {
+        RLog(@"%@", error);
+    }];
+}
+
 @end

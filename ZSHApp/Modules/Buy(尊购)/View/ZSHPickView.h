@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "ZSHManageAddressViewController.h"
 
-typedef void(^SaveChangeBlock)(NSString *, NSInteger);
+typedef void(^SaveChangeBlock)(NSString *str, NSInteger tag, NSDictionary *moreDic);
 
 @interface ZSHPickView : UIWindow
 
