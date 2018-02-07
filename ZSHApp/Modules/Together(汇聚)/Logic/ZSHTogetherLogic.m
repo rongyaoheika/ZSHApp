@@ -66,7 +66,7 @@
 
 // 发布聚会
 - (void)requestAddDetailParty:(NSDictionary *)dic images:(NSArray *)images fileNames:(NSArray *)fileNmaes  success:(void(^)(id response))success {
-    [PPNetworkHelper uploadImagesWithURL:kUrlAddDetailParty parameters:dic name:@"fileList" images:images fileNames:fileNmaes imageScale:1.0 imageType:nil progress:^(NSProgress *progress) {
+    [PPNetworkHelper uploadImagesWithURL:kUrlAddDetailParty parameters:dic names:@[@"fileList"] images:images fileNames:fileNmaes imageScale:1.0 imageType:nil progress:^(NSProgress *progress) {
         
     } success:^(id responseObject) {
         success(responseObject);

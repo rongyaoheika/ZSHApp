@@ -267,7 +267,7 @@ static AFHTTPSessionManager *_sessionManager;
 #pragma mark - 上传多张图片
 + (NSURLSessionTask *)uploadImagesWithURL:(NSString *)URL
                                parameters:(id)parameters
-                                     name:(NSString *)name
+                                     names:(NSArray<NSString *> *)names
                                    images:(NSArray<UIImage *> *)images
                                 fileNames:(NSArray<NSString *> *)fileNames
                                imageScale:(CGFloat)imageScale
@@ -289,7 +289,7 @@ static AFHTTPSessionManager *_sessionManager;
             NSString *imageFileName = NSStringFormat(@"%@%ld.%@",str,i,imageType?:@"jpg");
             
             [formData appendPartWithFileData:imageData
-                                        name:name
+                                        name:names[i]
                                     fileName:fileNames[i] //? NSStringFormat(@"%@.%@",fileNames[i],imageType?:@"jpg") : imageFileName
                                     mimeType:NSStringFormat(@"image/%@",imageType ?: @"jpg")];
         }

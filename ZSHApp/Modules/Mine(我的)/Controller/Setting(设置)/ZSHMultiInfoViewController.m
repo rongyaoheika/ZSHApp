@@ -35,6 +35,16 @@
 @property (nonatomic, copy)   NSString                  *provinceStr;   // 门店所在省
 @property (nonatomic, copy)   NSString                  *cityStr;       // 门店所在区
 @property (nonatomic, copy)   NSString                  *districtStr;   // 门店所在县
+
+//上传图片（1，2，3）
+@property (nonatomic, strong) NSMutableArray       *imagMArr;
+@property (nonatomic, strong) NSMutableArray       *fileNameMArr;
+
+//图片data数组
+@property (nonatomic, strong) NSArray       *idImgDataArr;
+@property (nonatomic, strong) NSArray       *storeImgDataArr;
+@property (nonatomic, strong) NSArray       *licenseImgDataArr;
+
 @end
 
 
@@ -64,6 +74,8 @@
 }
 
 - (void)loadData{
+    _imagMArr = [[NSMutableArray alloc]init];
+    _fileNameMArr = [[NSMutableArray alloc]init];
     _mineLogic = [[ZSHMineLogic alloc] init];
     _entryLogic = [[ZSHEntryLogic alloc]init];
     if (kFromClassTypeValue == FromAccountVCToMultiInfoVC) {
@@ -306,32 +318,52 @@
                 ZSHTextFieldCellView *textFieldView  = [cell.contentView viewWithTag:2+indexPath.row];
                 ZSHUploadIDCardController *uploadIDCardVC = nil;
                 if (indexPath.row == 0 ) { //身份证图片
-                    uploadIDCardVC = [[ZSHUploadIDCardController alloc] initWithParamDic:@{KFromClassType:@(FromIDCardVCToUploadPhotoVC)}];
+                    uploadIDCardVC = [[ZSHUploadIDCardController alloc] initWithParamDic:@{KFromClassType:@(FromIDCardVCToUploadPhotoVC),@"imgPath":@"id"}];
                     [self.navigationController pushViewController:uploadIDCardVC animated:true];
-                    uploadIDCardVC.viewWillDisAppearBlock = ^(BOOL isFinished) {
+                    uploadIDCardVC.viewWillDisAppearBlock = ^(BOOL isFinished,UIImage *positiveImg, UIImage *negativeImg, UIImage *thirdImg,NSString *positiveImgPath,NSString *negativeImgPath,NSString *thirdImgPath) {
                         textFieldView.textField.text = isFinished?@"待审核":@"待完善";
                         _imageText1 = textFieldView.textField.text;
+                        if (isFinished) {
+                            [_imagMArr addObject:positiveImg];
+                            [_imagMArr addObject:negativeImg];
+                            [_fileNameMArr addObject:positiveImgPath];
+                            [_fileNameMArr addObject:negativeImgPath];
+                        }
+                        
                     };
                     
                 } else if (indexPath.row == 3) {//店铺图片
-                    uploadIDCardVC = [[ZSHUploadIDCardController alloc] initWithParamDic:@{KFromClassType:@(FromStoreVCToUploadPhotoVC)}];
+                    uploadIDCardVC = [[ZSHUploadIDCardController alloc] initWithParamDic:@{KFromClassType:@(FromStoreVCToUploadPhotoVC),@"imgPath":@"store"}];
                     [self.navigationController pushViewController:uploadIDCardVC animated:true];
-                    uploadIDCardVC.viewWillDisAppearBlock = ^(BOOL isFinished) {
+                    uploadIDCardVC.viewWillDisAppearBlock = ^(BOOL isFinished,UIImage *positiveImg, UIImage *negativeImg, UIImage *thirdImg,NSString *positiveImgPath,NSString *negativeImgPath,NSString *thirdImgPath) {
                         textFieldView.textField.text = isFinished?@"待审核":@"待完善";
                         _imageText2 = textFieldView.textField.text;
+                        if (isFinished) {
+                            [_imagMArr addObject:positiveImg];
+                            [_imagMArr addObject:negativeImg];
+                            [_imagMArr addObject:thirdImg];
+                            
+                            [_fileNameMArr addObject:positiveImgPath];
+                            [_fileNameMArr addObject:negativeImgPath];
+                            [_fileNameMArr addObject:thirdImgPath];
+                        }
+                        
                     };
                     
                 } else if (indexPath.row == 4) {//营业执照图片
-                    uploadIDCardVC = [[ZSHUploadIDCardController alloc] initWithParamDic:@{KFromClassType:@(FromLicenseVCToUploadPhotoVC)}];
+                    uploadIDCardVC = [[ZSHUploadIDCardController alloc] initWithParamDic:@{KFromClassType:@(FromLicenseVCToUploadPhotoVC),@"imgPath":@"license"}];
                     [self.navigationController pushViewController:uploadIDCardVC animated:true];
-                    uploadIDCardVC.viewWillDisAppearBlock = ^(BOOL isFinished) {
+                    uploadIDCardVC.viewWillDisAppearBlock = ^(BOOL isFinished,UIImage *positiveImg, UIImage *negativeImg, UIImage *thirdImg,NSString *positiveImgPath,NSString *negativeImgPath,NSString *thirdImgPath) {
                         textFieldView.textField.text = isFinished?@"待审核":@"待完善";
                         _imageText3 = textFieldView.textField.text;
+                        if (isFinished) {
+                            [_imagMArr addObject:positiveImg];
+                            [_fileNameMArr addObject:positiveImgPath];
+                        }
+                        
                     };
                 }
-                
-        
-                
+
             } else if (kFromClassTypeValue ==  FromWeMediaVerifyVCToMultiInfoVC) {
                 if (indexPath.row == 3) { 
                     ZSHUploadIDCardController *uploadIDCardVC = [[ZSHUploadIDCardController alloc] initWithParamDic:@{KFromClassType:@(FromIDCardVCToUploadPhotoVC)}];
@@ -344,7 +376,6 @@
 }
 #pragma pickView
 - (ZSHPickView *)createPickViewWithType:(NSUInteger)type{
-    
     NSString *path = [[NSBundle mainBundle] pathForResource:@"area.plist" ofType:@""];
     
     NSArray *areaArr = [NSArray arrayWithContentsOfFile:path];
@@ -498,7 +529,7 @@
          case FromCreateStoreVCToMultiInfoVC:{//确认创建
              if ([self createStoreAction]) {
                  NSDictionary *paramDic = @{KFromClassType:@(FromVerifyVCToMultiInfoVC),@"title":@"提交资质",
-                                            @"bottomBtnTitle":@"提交审核",@"categoryId":self.paramDic[@"categoryId"],                                      @"storeName":self.text1,@"provinceName":self.provinceStr,@"cityName":self.cityStr,@"districtName":self.districtStr,@"detailAddress":self.text3,@"phoneStr":self.text4
+                                            @"bottomBtnTitle":@"提交审核",@"categoryId":self.paramDic[@"categoryId"],                                      @"storeName":self.text1,@"provinceName":self.provinceStr,@"cityName":self.cityStr,@"districtName":self.districtStr?self.districtStr:@"",@"address":self.text2,@"detailAddress":self.text3,@"phoneStr":self.text4,
                                             };
                  ZSHMultiInfoViewController *multiInfoVC = [[ZSHMultiInfoViewController alloc] initWithParamDic:paramDic];
                  [self.navigationController pushViewController:multiInfoVC animated:YES];
@@ -507,19 +538,24 @@
          }
         case FromVerifyVCToMultiInfoVC:{//门店提交审核
             if ([self submitCheckAction]) {
-                NSDictionary *paramDic = @{@"CATEGORY_ID":self.paramDic[@"categoryId"],@"APPLYFOR_NAME":self.paramDic[@"storeName"],
-                                           @"APPLYFOR_PROVINCE":self.paramDic[@"provinceName"],@"APPLYFOR_CITY":self.paramDic[@"cityName"],
-                                           @"APPLYFOR_PROVINCE":self.paramDic[@"provinceName"],@"APPLYFOR_CITY":self.paramDic[@"cityName"],
-                                           @"APPLY_COUNTY":self.paramDic[@"districtName"],@"APPLYFOR_ADDRESS":self.paramDic[@"detailAddress"],
-                                           @"APPLYFOR_LONGITUDE":self.paramDic[@"districtName"],@"APPLYFOR_LATITUDE":self.paramDic[@"detailAddress"],
-                                           @"APPLYFOR_TEL":self.paramDic[@"phoneStr"], @"APPLYFOR_PRICE":@"99",
-                                           @"APPLY_OPERRATE":self.text1,@"APPLYFOR_IDCARD":self.text2,
-                                           @"APPLYFOR_CHARTERNUM":self.text3,@"APPLYFOR_CHARTERNAME":self.text4,
-                                           @"APPLYFOR_LEGALPERSON":self.text5,@"APPLYFOR_PHONE":self.text6,
-                                           @"HONOURUSER_ID":HONOURUSER_IDValue,@"APPLYFOR_IDCARDIMAGE":@"99",
-                                           @"APPLYFOR_IMAGES":HONOURUSER_IDValue,@"APPLYFOR_CHARTERIMAGE":@"99"
-                                           };
-                [self submitActionWithDic:paramDic];
+                HCLocationManager *locationManager = [HCLocationManager sharedManager];
+                [locationManager getLatiAndLongiWithCity:self.paramDic[@"address"] compelete:^(CLLocationDegrees latitude, CLLocationDegrees longitude) {
+                    NSDictionary *paramDic = @{@"CATEGORY_ID":self.paramDic[@"categoryId"],@"APPLYFOR_NAME":self.paramDic[@"storeName"],
+                                               @"APPLYFOR_PROVINCE":self.paramDic[@"provinceName"],@"APPLYFOR_CITY":self.paramDic[@"cityName"],
+                                               @"APPLY_COUNTY":self.paramDic[@"districtName"],@"APPLYFOR_ADDRESS":self.paramDic[@"detailAddress"],
+                                               @"APPLYFOR_LONGITUDE":@(longitude),@"APPLYFOR_LATITUDE":@(latitude),
+                                               @"APPLYFOR_TEL":self.paramDic[@"phoneStr"], @"APPLYFOR_PRICE":@"99",
+                                               @"APPLY_OPERRATE":self.text1,@"APPLYFOR_IDCARD":self.text2,
+                                               @"APPLYFOR_CHARTERNUM":self.text3,@"APPLYFOR_CHARTERNAME":self.text4,
+                                               @"APPLYFOR_LEGALPERSON":self.text5,@"APPLYFOR_PHONE":self.text6,
+                                               @"HONOURUSER_ID":HONOURUSER_IDValue
+                                               };
+                [self submitActionWithDic:paramDic names:@[@"APPLYFOR_IDCARDIMAGE",@"APPLYFOR_IMAGES",@"APPLYFOR_CHARTERIMAGE"] images:_imagMArr fileNames:_fileNameMArr];
+                }];
+                
+                
+                
+               
             }
             
             break;

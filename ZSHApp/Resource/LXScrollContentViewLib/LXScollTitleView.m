@@ -52,6 +52,7 @@
     self.scrollView.showsHorizontalScrollIndicator = NO;
     self.scrollView.showsVerticalScrollIndicator = NO;
     [self addSubview:self.scrollView];
+    
     self.selectionIndicator = [[UIView alloc] initWithFrame:CGRectZero];
     [self.scrollView addSubview:self.selectionIndicator];
 }
@@ -69,7 +70,6 @@
         [btn setTitle:title forState:UIControlStateNormal];
         [btn setTitleColor:self.normalColor forState:UIControlStateNormal];
         [btn setTitleColor:self.selectedColor forState:UIControlStateSelected];
-        
         
         [btn setBackgroundImage:self.normalBgImage?self.normalBgImage:self.normalBgImageArr[i] forState:UIControlStateNormal];
         [btn setBackgroundImage:self.selectedBgImage?self.selectedBgImage:self.selectedBgImageArr[i] forState:UIControlStateSelected];
@@ -105,9 +105,9 @@
 
 - (void)layoutSubviews{
     [super layoutSubviews];
-    
     self.scrollView.frame = self.bounds;
-    self.scrollView.contentSize = CGSizeMake(self.titleButtons.count * self.titleWidth, self.frame.size.height);
+    
+    self.scrollView.contentSize = CGSizeEqualToSize(self.svContentSize,CGSizeZero)?CGSizeMake((self.titleButtons.count+1) * self.titleWidth, self.frame.size.height):self.svContentSize;
     NSInteger i = 0;
     for (UIButton *btn in self.titleButtons) {
         btn.frame = CGRectMake(self.titleWidth * i++, 0, self.titleWidth, self.frame.size.height);
@@ -198,6 +198,10 @@
 - (void)setIndicatorWidth:(CGFloat)indicatorWidth{
     _indicatorWidth = indicatorWidth;
     
+}
+
+- (void)setSvContentSize:(CGSize)svContentSize{
+    _svContentSize = svContentSize;
 }
 
 @end

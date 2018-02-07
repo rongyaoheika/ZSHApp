@@ -14,5 +14,5 @@
 //提交审核前校验
 - (BOOL)submitCheckAction;
 //提交审核
-- (void)submitActionWithDic:(NSDictionary *)paramDic;
+- (void)submitActionWithDic:(NSDictionary *)paramDic names:(NSArray<NSString *>*)names images:(NSArray<UIImage*>*)images fileNames:(NSArray<NSString *>*)fileNames;
 @end

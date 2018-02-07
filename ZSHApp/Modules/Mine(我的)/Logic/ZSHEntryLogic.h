@@ -11,6 +11,6 @@
 @interface ZSHEntryLogic : ZSHBaseLogic
 
 //商家入驻
-- (void)loadBusinessInDataWith:(NSDictionary *)dic success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail;
+- (void)loadBusinessInDataWith:(NSDictionary *)dic names:(NSArray *)names images:(NSArray<UIImage *> *)images fileNames:(NSArray<NSString *> *)fileNames success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail;
 
 @end

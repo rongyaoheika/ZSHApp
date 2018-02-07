@@ -32,7 +32,7 @@
 @property (nonatomic, strong) UIImage             *titleBtnImage;
 @property (nonatomic, strong) NSArray             *titleArr;
 
-
+@property (nonatomic, assign) CGSize                   svContentSize;
 @property (nonatomic, assign) CGFloat                  titleWidth;
 @property (nonatomic, assign) CGFloat                  indicatorHeight;
 @property (nonatomic, assign) XYButtonEdgeInsetsStyle  imageStyle;
@@ -94,16 +94,23 @@
             break;
         case FromFindVCToTitleContentVC:{
             [self createFindNaviUI];
-            self.titleArr = @[@"精选",@"数码",@"亲子",@"时尚",@"美食"];
-            self.contentVCS = @[@"ZSHFindViewController",@"ZSHFindViewController",@"ZSHFindViewController",@"ZSHFindViewController",@"ZSHFindViewController"];
+          
+            self.titleArr = @[@"精选",@"数码",@"亲子",@"时尚",@"科技",@"美食"];
+            self.titleWidth = KScreenWidth/(self.titleArr.count);
+            self.svContentSize = CGSizeMake((self.titleArr.count+1)*self.titleWidth, 0);
+            self.contentVCS = @[@"ZSHFindViewController",@"ZSHFindViewController",@"ZSHFindViewController",@"ZSHFindViewController",@"ZSHFindViewController",@"ZSHFindViewController"];
             NSString *shopId  = self.paramDic[@"shopId"]?self.paramDic[@"shopId"]:@"";
             self.paramArr = @[@{@"CAIDAN_ID":@"387563351791632384",@"shopId":shopId},
                               @{@"CAIDAN_ID":@"387563399975796736",@"shopId":shopId},
                               @{@"CAIDAN_ID":@"387563457622310912",@"shopId":shopId},
                               @{@"CAIDAN_ID":@"387563486307155968",@"shopId":shopId},
+                              @{@"CAIDAN_ID":@"387563486307155968",@"shopId":shopId},
                               @{@"CAIDAN_ID":@"387563525268045824",@"shopId":shopId}];
-        }
+            return;
+            
             break;
+        }
+           
         case FromAllOrderVCToTitleContentVC:{
 //            self.titleArr = @[@"全部",@"待付款",@"待收货",@"待评价",@"退款售后"];
             self.titleArr = self.paramDic[@"titleArr"];
@@ -234,6 +241,7 @@
         }
             break;
     }
+    self.svContentSize = CGSizeZero;
     self.titleWidth = KScreenWidth/(self.titleArr.count);
 }
 
@@ -285,8 +293,26 @@
     self.title = self.paramDic[@"title"];
     [self.view addSubview:self.titleView];
     [self.view addSubview:self.contentView];
+    if (kFromClassTypeValue == FromFindVCToTitleContentVC) {
+        self.titleView.scrollView.contentSize = CGSizeMake(KScreenWidth+kRealValue(40), 0);
+        [self addOtherUI];
+    }
     
     [self reloadListData];
+}
+
+- (void)addOtherUI{
+    UIButton *moreBtn = [[UIButton alloc]init];
+    [moreBtn setImage:[UIImage imageNamed:@"topline_menu"] forState:UIControlStateNormal];
+    [moreBtn addTarget:self action:@selector(topLineMenuAction:) forControlEvents:UIControlEventTouchUpInside];
+    [self.titleView addSubview:moreBtn];
+    [moreBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.mas_equalTo(self.titleView);
+        make.right.mas_equalTo(self.titleView);
+        make.size.mas_equalTo(CGSizeMake(kRealValue(44), kRealValue(44)));
+    }];
+    
+    
 }
 
 - (LXScollTitleView *)titleView{
@@ -301,6 +327,7 @@
         _titleView.selectedColor = KZSHColor929292;
         _titleView.normalColor = KZSHColor929292;
         _titleView.indicatorHeight = self.indicatorHeight;
+        _titleView.svContentSize = self.svContentSize;
         __weak typeof(self) weakSelf = self;
         _titleView.selectedBlock = ^(NSInteger index){
             __weak typeof(self) strongSelf = weakSelf;
@@ -512,6 +539,7 @@
     
 }
 
+/**********************头条*********************/
 //头条-发布
 - (void)distributeAction{
     RLog(@"发布");
@@ -533,6 +561,10 @@
             self.toplineTopView = nil;
         } completion:nil];
     }
+}
+
+- (void)topLineMenuAction:(UIButton *)btn{
+    
 }
 
 - (ZSHToplineTopView *)toplineTopView{
