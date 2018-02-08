@@ -240,7 +240,7 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
         case 1:{
 //            NSArray *titleArr = @[@"至尊会籍卡",@"荣耀会籍卡",@"名人联名卡",@"经典会籍卡",@"12星座卡",@"周易五行卡"];
             NSArray *titleArr = @[@"荣耀黑卡",@"名人联名卡",@"12星座卡",@"周易五行卡"];
-            NSDictionary *paramDic = @{@"titleArr":titleArr,@"normalImage":@"card_normal",@"selectedImage":@"card_press"};
+            NSDictionary *paramDic = @{@"titleArr":titleArr,@"normalImage":@"card_long_normal",@"selectedImage":@"card_long_press"};
             ZSHCardBtnListView *listView = [[ZSHCardBtnListView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kRealValue(90)) paramDic:paramDic];
             listView.tag = 2;
             
@@ -338,15 +338,19 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
                 NSDictionary *nextParamDic = nil;
                 if (_cardBtnTag == 2) {
                     titleArr = @[@"白羊座",@"金牛座",@"双子座",@"巨蟹座",@"狮子座",@"处女座",@"天秤座",@"天蝎座",@"射手座",@"摩羯座",@"水瓶座",@"双鱼座"];
-                    nextParamDic = @{@"titleArr":titleArr,@"normalImage":@"card_normal",@"selectedImage":@"card_layer_press",@"tag":@(2)};
+                    nextParamDic = @{@"titleArr":titleArr,@"normalColor":KZSHColor929292,@"selectedColor":KZSHColor1A1A1A,@"tag":@(2)};
+                   
                 } else if (_cardBtnTag == 3){
                     titleArr = @[@"金",@"木",@"水",@"火",@"土"];
-                    nextParamDic = @{@"titleArr":titleArr,@"normalImage":@"card_normal",@"selectedImage":@"card_layer_press",@"tag":@(3)};
+                    nextParamDic = @{@"titleArr":titleArr,@"normalColor":KZSHColor929292,@"selectedColor":KZSHColor1A1A1A,@"tag":@(3)};
                 }
                 
                 ZSHBaseCell *cell = [[ZSHBaseCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@""];
                 ZSHCardBtnListView *listView = [[ZSHCardBtnListView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth,0) paramDic:nextParamDic];
                 [cell.contentView addSubview:listView];
+                [listView mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.edges.mas_equalTo(cell.contentView);
+                }];
                 listView.btnClickBlock = ^(UIButton *btn) {
                     [weakself requestDetailData:btn.tag-1];
                 };
@@ -434,9 +438,9 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
 
 
 - (void)requestData:(NSInteger)index {
-    NSArray *type = @[@"390181853778149376", @"390200265979646133", @"390201795059646464", @"390201950420860928"];
+    NSArray *type = @[@"390200265979646133", @"390201795059646464"];
     NSString *cardTypeID = nil;
-    if (index<4) {
+    if (index<2) {
         cardTypeID = type[index];
     } else {
         _typeID = index;
@@ -457,7 +461,7 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
     NSArray *fiveLine = @[@"390202180738482176", @"390202468161552384", @"390202526550458368", @"390202622746820608", @"390202686642847744"];
     
     NSString *cardTypeID = nil;
-    if (_typeID ==4) { // 星座
+    if (_typeID == 2) { // 星座
         cardTypeID = constellation[index];
     }  else {
         cardTypeID = fiveLine[index];

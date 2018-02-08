@@ -7,6 +7,7 @@
 //
 
 #import "ZSHBaseView.h"
+
 typedef void (^ClickSameBtnBlock)(BOOL openBtnList);
 
 @interface ZSHCardBtnListView : ZSHBaseView

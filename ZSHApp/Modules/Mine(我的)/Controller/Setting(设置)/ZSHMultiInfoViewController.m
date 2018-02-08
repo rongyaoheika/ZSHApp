@@ -324,10 +324,10 @@
                         textFieldView.textField.text = isFinished?@"待审核":@"待完善";
                         _imageText1 = textFieldView.textField.text;
                         if (isFinished) {
-                            if ( [_imagMArr count]>0) {//防止键盘弹出多次点入
+                            if ( [_imagMArr count]>0) {//防止键盘弹出顺序错乱多次点入
                                 [_imagMArr removeObjectAtIndex:0];
                             }
-                            if ( [_fileNameMArr count]>0) {//防止多次点入
+                            if ( [_fileNameMArr count]>0) {
                                 [_fileNameMArr removeObjectAtIndex:0];
                             }
                            
