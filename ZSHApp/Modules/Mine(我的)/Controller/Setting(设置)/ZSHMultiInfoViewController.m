@@ -324,10 +324,19 @@
                         textFieldView.textField.text = isFinished?@"待审核":@"待完善";
                         _imageText1 = textFieldView.textField.text;
                         if (isFinished) {
-                            [_imagMArr addObject:positiveImg];
-                            [_imagMArr addObject:negativeImg];
-                            [_fileNameMArr addObject:positiveImgPath];
-                            [_fileNameMArr addObject:negativeImgPath];
+                            if ( [_imagMArr count]>0) {//防止键盘弹出多次点入
+                                [_imagMArr removeObjectAtIndex:0];
+                            }
+                            if ( [_fileNameMArr count]>0) {//防止多次点入
+                                [_fileNameMArr removeObjectAtIndex:0];
+                            }
+                           
+                            NSArray *idImgMArr = @[positiveImg,negativeImg];
+                            [_imagMArr addObject:idImgMArr];
+                           
+                            NSArray *idImgPathArr = @[positiveImgPath,negativeImgPath];
+                            [_fileNameMArr addObject:idImgPathArr];
+                            
                         }
                         
                     };
@@ -339,13 +348,18 @@
                         textFieldView.textField.text = isFinished?@"待审核":@"待完善";
                         _imageText2 = textFieldView.textField.text;
                         if (isFinished) {
-                            [_imagMArr addObject:positiveImg];
-                            [_imagMArr addObject:negativeImg];
-                            [_imagMArr addObject:thirdImg];
+
+                            if ( [_imagMArr count]>1) {
+                                [_imagMArr removeObjectAtIndex:1];
+                            }
+                            if ( [_fileNameMArr count]>1) {
+                                [_fileNameMArr removeObjectAtIndex:1];
+                            }
+                            NSArray *storeImgArr = @[positiveImg,negativeImg,thirdImg];
+                            [_imagMArr addObject:storeImgArr];
                             
-                            [_fileNameMArr addObject:positiveImgPath];
-                            [_fileNameMArr addObject:negativeImgPath];
-                            [_fileNameMArr addObject:thirdImgPath];
+                            NSArray *storeImgPathArr = @[positiveImgPath,negativeImgPath,thirdImgPath];
+                            [_fileNameMArr addObject:storeImgPathArr];
                         }
                         
                     };
@@ -357,8 +371,18 @@
                         textFieldView.textField.text = isFinished?@"待审核":@"待完善";
                         _imageText3 = textFieldView.textField.text;
                         if (isFinished) {
-                            [_imagMArr addObject:positiveImg];
-                            [_fileNameMArr addObject:positiveImgPath];
+                            if ( [_imagMArr count]>2) {
+                                [_imagMArr removeObjectAtIndex:2];
+                            }
+                            if ( [_fileNameMArr count]>2) {
+                                [_fileNameMArr removeObjectAtIndex:2];
+                            }
+
+                            NSArray *lisenceImgArr = @[positiveImg];
+                            [_imagMArr addObject:lisenceImgArr];
+                            
+                            NSArray *lisenceImgPathArr = @[positiveImgPath];
+                            [_fileNameMArr addObject:lisenceImgPathArr];
                         }
                         
                     };
@@ -552,9 +576,6 @@
                                                };
                 [self submitActionWithDic:paramDic names:@[@"APPLYFOR_IDCARDIMAGE",@"APPLYFOR_IMAGES",@"APPLYFOR_CHARTERIMAGE"] images:_imagMArr fileNames:_fileNameMArr];
                 }];
-                
-                
-                
                
             }
             

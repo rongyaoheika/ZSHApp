@@ -55,7 +55,7 @@
 }
 
 //提交审核
-- (void)submitActionWithDic:(NSDictionary *)paramDic names:(NSArray<NSString *>*)names images:(NSArray<UIImage*>*)images fileNames:(NSArray<NSString *>*)fileNames{
+- (void)submitActionWithDic:(NSDictionary *)paramDic names:(NSArray *)names images:(NSArray *)images fileNames:(NSArray *)fileNames{
     [self.entryLogic loadBusinessInDataWith:paramDic names:names images:images fileNames:fileNames success:^(id responseObject) {
         RLog(@"提交审核结果%@",responseObject);
     } fail:nil];

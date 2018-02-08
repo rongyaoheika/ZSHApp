@@ -268,8 +268,8 @@ static AFHTTPSessionManager *_sessionManager;
 + (NSURLSessionTask *)uploadImagesWithURL:(NSString *)URL
                                parameters:(id)parameters
                                      names:(NSArray<NSString *> *)names
-                                   images:(NSArray<UIImage *> *)images
-                                fileNames:(NSArray<NSString *> *)fileNames
+                                   images:(NSArray *)images
+                                fileNames:(NSArray *)fileNames
                                imageScale:(CGFloat)imageScale
                                 imageType:(NSString *)imageType
                                  progress:(PPHttpProgress)progress
@@ -279,19 +279,41 @@ static AFHTTPSessionManager *_sessionManager;
     NSURLSessionTask *sessionTask = [_sessionManager POST:requestUrl parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         
         for (NSUInteger i = 0; i < images.count; i++) {
-            // 图片经过等比压缩后得到的二进制文件
-            NSData *imageData = UIImageJPEGRepresentation(images[i], imageScale ?: 1.f);
-            // 默认图片的文件名, 若fileNames为nil就使用
             
-            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-            formatter.dateFormat = @"yyyyMMddHHmmss";
-            NSString *str = [formatter stringFromDate:[NSDate date]];
-            NSString *imageFileName = NSStringFormat(@"%@%ld.%@",str,i,imageType?:@"jpg");
+            if ([images[i]isKindOfClass:[NSArray class]] && [fileNames[i]isKindOfClass:[NSArray class]]) {//多个表单
+                [self setRequestSerializer:PPRequestSerializerJSON];
+                for (NSUInteger j = 0; j< [images[i] count]; j++) {
+                    // 图片经过等比压缩后得到的二进制文件
+                    NSData *imageData = UIImageJPEGRepresentation(images[i][j], imageScale ?: 1.f);
+                    
+                    // 默认图片的文件名, 若fileNames为nil就使用
+                    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+                    formatter.dateFormat = @"yyyyMMddHHmmss";
+                    NSString *str = [formatter stringFromDate:[NSDate date]];
+                    NSString *imageFileName = NSStringFormat(@"%@%ld.%@",str,i,imageType?:@"jpg");
+                    
+                    [formData appendPartWithFileData:imageData
+                                                name:names[i]
+                                            fileName:fileNames[i][j] //? NSStringFormat(@"%@.%@",fileNames[i],imageType?:@"jpg") : imageFileName
+                                            mimeType:NSStringFormat(@"image/%@",imageType ?: @"jpg")];
+                }
+            } else {
+                // 图片经过等比压缩后得到的二进制文件
+                NSData *imageData = UIImageJPEGRepresentation(images[i], imageScale ?: 1.f);
+                
+                // 默认图片的文件名, 若fileNames为nil就使用
+                NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+                formatter.dateFormat = @"yyyyMMddHHmmss";
+                NSString *str = [formatter stringFromDate:[NSDate date]];
+                NSString *imageFileName = NSStringFormat(@"%@%ld.%@",str,i,imageType?:@"jpg");
+                
+                [formData appendPartWithFileData:imageData
+                                            name:names[i]
+                                        fileName:fileNames[i] //? NSStringFormat(@"%@.%@",fileNames[i],imageType?:@"jpg") : imageFileName
+                                        mimeType:NSStringFormat(@"image/%@",imageType ?: @"jpg")];
+            }
             
-            [formData appendPartWithFileData:imageData
-                                        name:names[i]
-                                    fileName:fileNames[i] //? NSStringFormat(@"%@.%@",fileNames[i],imageType?:@"jpg") : imageFileName
-                                    mimeType:NSStringFormat(@"image/%@",imageType ?: @"jpg")];
+           
         }
         
     } progress:^(NSProgress * _Nonnull uploadProgress) {
