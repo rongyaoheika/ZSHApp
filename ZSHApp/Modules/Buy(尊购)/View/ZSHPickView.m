@@ -421,35 +421,40 @@ NSInteger yearSatrt = 1900;
 - (void)refreshCityAndDistrict {
     
     NSInteger index = [_pickerView selectedRowInComponent:0];
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"area.plist" ofType:@""];
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"citys.plist" ofType:@""];
     
-    NSArray *areaArr = [NSArray arrayWithContentsOfFile:path];
-    NSMutableArray *provinces = _dataArr[0];
+//    NSArray *areaArr = [NSArray arrayWithContentsOfFile:path];
+//    NSMutableArray *provinces = _dataArr[0];
+////    for (NSDictionary *dic in areaArr) {
+////        [provinces addObject:dic[@"state"]];
+////    }
+//
+//    NSMutableArray *citys = [NSMutableArray array];
 //    for (NSDictionary *dic in areaArr) {
-//        [provinces addObject:dic[@"state"]];
+//        if ([dic[@"state"] isEqualToString:provinces[index]]) {
+//            for (NSDictionary *city in dic[@"cities"]) {
+//                [citys addObject:city[@"city"]];
+//                if ([city[@"city"] isEqualToString:citys[0]]) {
+//                    if ([city[@"areas"] count]) {
+//                        _dataArr[2] = city[@"areas"];
+//                        [_pickerView reloadComponent:2];
+//                    } else {
+//                        _dataArr[2] = @[@""];
+//                        [_pickerView reloadComponent:2];
+//                    }
+//                }
+//            }
+//            _dataArr[1] = [citys copy];
+//            [_pickerView reloadComponent:1];
+//            break;
+//        }
+//
 //    }
+//
     
-    NSMutableArray *citys = [NSMutableArray array];
-    for (NSDictionary *dic in areaArr) {
-        if ([dic[@"state"] isEqualToString:provinces[index]]) {
-            for (NSDictionary *city in dic[@"cities"]) {
-                [citys addObject:city[@"city"]];
-                if ([city[@"city"] isEqualToString:citys[0]]) {
-                    if ([city[@"areas"] count]) {
-                        _dataArr[2] = city[@"areas"];
-                        [_pickerView reloadComponent:2];
-                    } else {
-                        _dataArr[2] = @[@""];
-                        [_pickerView reloadComponent:2];
-                    }
-                }
-            }
-            _dataArr[1] = [citys copy];
-            [_pickerView reloadComponent:1];
-            break;
-        }
-        
-    }
+    NSDictionary *cityDic = [NSDictionary dictionaryWithContentsOfFile:path];
+    NSMutableArray *provinces = [cityDic allKeys];
+    
     
 }
 

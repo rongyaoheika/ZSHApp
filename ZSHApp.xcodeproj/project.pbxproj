@@ -83,6 +83,9 @@
 		043F2E5D200E1F3600CE18DE /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 043F2E5C200E1F3600CE18DE /* Info.plist */; };
 		044A2F462004BBF100B05CE7 /* ZSHMakeMoneyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 044A2F452004BBF000B05CE7 /* ZSHMakeMoneyViewController.m */; };
 		0450A60D20036BC100D7B2D4 /* ZSHHomeSubListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0450A60C20036BC100D7B2D4 /* ZSHHomeSubListCell.m */; };
+		0453B0B5202C427A00791A75 /* ChannelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0453B0B4202C427A00791A75 /* ChannelCell.m */; };
+		0453B0B9202C42B200791A75 /* Channel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0453B0B8202C42B200791A75 /* Channel.m */; };
+		0453B0BC202C48ED00791A75 /* ZSHTopLineMoreTypeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0453B0BB202C48ED00791A75 /* ZSHTopLineMoreTypeViewController.m */; };
 		04647D022017068800A21600 /* ZSHLiveMoreView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04647D012017068800A21600 /* ZSHLiveMoreView.m */; };
 		04647D052017602000A21600 /* ZSHBeautyView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04647D042017602000A21600 /* ZSHBeautyView.m */; };
 		047BC20F20216376007F4055 /* ZSHLiveGiftView.m in Sources */ = {isa = PBXBuildFile; fileRef = 047BC20E20216376007F4055 /* ZSHLiveGiftView.m */; };
@@ -744,6 +747,12 @@
 		044A2F452004BBF000B05CE7 /* ZSHMakeMoneyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHMakeMoneyViewController.m; sourceTree = "<group>"; };
 		0450A60B20036BC100D7B2D4 /* ZSHHomeSubListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHHomeSubListCell.h; sourceTree = "<group>"; };
 		0450A60C20036BC100D7B2D4 /* ZSHHomeSubListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHHomeSubListCell.m; sourceTree = "<group>"; };
+		0453B0B3202C427A00791A75 /* ChannelCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChannelCell.h; sourceTree = "<group>"; };
+		0453B0B4202C427A00791A75 /* ChannelCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChannelCell.m; sourceTree = "<group>"; };
+		0453B0B7202C42B200791A75 /* Channel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Channel.h; sourceTree = "<group>"; };
+		0453B0B8202C42B200791A75 /* Channel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Channel.m; sourceTree = "<group>"; };
+		0453B0BA202C48ED00791A75 /* ZSHTopLineMoreTypeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHTopLineMoreTypeViewController.h; sourceTree = "<group>"; };
+		0453B0BB202C48ED00791A75 /* ZSHTopLineMoreTypeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHTopLineMoreTypeViewController.m; sourceTree = "<group>"; };
 		04647D002017068800A21600 /* ZSHLiveMoreView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHLiveMoreView.h; sourceTree = "<group>"; };
 		04647D012017068800A21600 /* ZSHLiveMoreView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHLiveMoreView.m; sourceTree = "<group>"; };
 		04647D032017602000A21600 /* ZSHBeautyView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHBeautyView.h; sourceTree = "<group>"; };
@@ -2000,6 +2009,15 @@
 			path = "分享赚钱";
 			sourceTree = "<group>";
 		};
+		0453B0B6202C42B200791A75 /* 头条 */ = {
+			isa = PBXGroup;
+			children = (
+				0453B0B7202C42B200791A75 /* Channel.h */,
+				0453B0B8202C42B200791A75 /* Channel.m */,
+			);
+			path = "头条";
+			sourceTree = "<group>";
+		};
 		04936D942027FB8E00E069BE /* 签到 */ = {
 			isa = PBXGroup;
 			children = (
@@ -2470,6 +2488,8 @@
 			children = (
 				183C65741FC037B60081DCFF /* ZSHToplineViewController.h */,
 				183C65751FC037B60081DCFF /* ZSHToplineViewController.m */,
+				0453B0BA202C48ED00791A75 /* ZSHTopLineMoreTypeViewController.h */,
+				0453B0BB202C48ED00791A75 /* ZSHTopLineMoreTypeViewController.m */,
 			);
 			name = "头条";
 			sourceTree = "<group>";
@@ -2477,6 +2497,8 @@
 		183C65771FC03B230081DCFF /* 头条 */ = {
 			isa = PBXGroup;
 			children = (
+				0453B0B3202C427A00791A75 /* ChannelCell.h */,
+				0453B0B4202C427A00791A75 /* ChannelCell.m */,
 				183C65781FC03B400081DCFF /* ZSHToplineCell.h */,
 				183C65791FC03B400081DCFF /* ZSHToplineCell.m */,
 				041853312005FB3D000E0D09 /* ZSHToplineTopView.h */,
@@ -3045,6 +3067,7 @@
 		FE291EAF1F8CAEDC00D4BBE7 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				0453B0B6202C42B200791A75 /* 头条 */,
 				183218061FD69A3F00320022 /* 火车票 */,
 				FEA018CC1FCBF64000989FB2 /* Comment(评论) */,
 				FE9E6D711FC4274300F7AD95 /* Home */,
@@ -5152,6 +5175,7 @@
 				043F2E16200DFF3500CE18DE /* AliyunPlaySDKDemoFullScreenScrollViewController.m in Sources */,
 				FE7F00171F9203430006E9A3 /* ZSHBaseTableViewSectionModel.m in Sources */,
 				182F57911FDB91390085BFC6 /* KNPhotoBrowerCell.m in Sources */,
+				0453B0B5202C427A00791A75 /* ChannelCell.m in Sources */,
 				FEA483A91F91B96000219CFE /* RXLSideSlipViewController.h in Sources */,
 				043F2E1D200DFF3500CE18DE /* AlivcCopyrightInfoViewController.m in Sources */,
 				18F902491FB6CF270044967F /* ZSHFollowViewController.m in Sources */,
@@ -5284,6 +5308,7 @@
 				FE55385B1F47049D00803128 /* AdPageView.m in Sources */,
 				04ED27382009AAC7000B1541 /* ZSHUploadIDCardController.m in Sources */,
 				FEBD7CBE1FA7608200CE2BA6 /* ZSHFoodModel.m in Sources */,
+				0453B0BC202C48ED00791A75 /* ZSHTopLineMoreTypeViewController.m in Sources */,
 				049823B920074F180080626D /* ZSHCabinetCollectionCell.m in Sources */,
 				180C95CE1F57E10200CE570C /* UIImage+BlurGlass.m in Sources */,
 				FEA1056A1F9B208A008652D6 /* ZSHClassMainModel.m in Sources */,
@@ -5423,6 +5448,7 @@
 				183218091FD69A5300320022 /* ZSHTrainModel.m in Sources */,
 				FE5538831F470BAF00803128 /* UserManager.m in Sources */,
 				043F2E15200DFF3500CE18DE /* AliyunPlaySDKDemoFullScreenScrollCollectionViewCell.m in Sources */,
+				0453B0B9202C42B200791A75 /* Channel.m in Sources */,
 				FEBD7C901FA6C47300CE2BA6 /* ZSHHotelListCell.m in Sources */,
 				FE24DA641FD942EC00965DC8 /* ZSHRadioModel.m in Sources */,
 				049823C720078E470080626D /* ZSHFlagshipCell.m in Sources */,
