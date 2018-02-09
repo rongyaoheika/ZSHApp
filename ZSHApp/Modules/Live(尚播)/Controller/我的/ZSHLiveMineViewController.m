@@ -53,6 +53,11 @@ static NSString *bottomCellIdentifier   = @"LiveListCell";
     [self initViewModel];
 }
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self requestData];
+}
+
 - (void)requestData{
     kWeakSelf(self);
     [_liveLogic requestLiveMineDataWithDic:@{@"HONOURUSER_ID":HONOURUSER_IDValue} success:^(id response) {
@@ -153,5 +158,7 @@ static NSString *bottomCellIdentifier   = @"LiveListCell";
     tab.tabBar.hidden = NO;
     tab.selectedIndex = 0;
 }
+
+
 
 @end

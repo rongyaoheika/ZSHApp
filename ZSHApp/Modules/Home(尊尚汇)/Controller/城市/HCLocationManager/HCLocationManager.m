@@ -134,5 +134,24 @@
     }
 }
 
+- (void)getLatiAndLongiWithCity:(NSString *)city compelete:(void(^)(CLLocationDegrees aLatitude,CLLocationDegrees aLongitude))compelete{
+    NSString *oreillyAddress = city;
+    CLGeocoder *myGeocoder = [[CLGeocoder alloc] init];
+    [myGeocoder geocodeAddressString:oreillyAddress completionHandler:^(NSArray *placemarks, NSError *error) {
+        if ([placemarks count] > 0 && error == nil) {
+            NSLog(@"Found %lu placemark(s).", (unsigned long)[placemarks count]);
+            CLPlacemark *firstPlacemark = [placemarks objectAtIndex:0];
+            NSLog(@"Longitude = %f", firstPlacemark.location.coordinate.longitude);
+            NSLog(@"Latitude = %f", firstPlacemark.location.coordinate.latitude);
+            compelete(firstPlacemark.location.coordinate.latitude,firstPlacemark.location.coordinate.longitude);
+        }
+        else if ([placemarks count] == 0 && error == nil) {
+            NSLog(@"Found no placemarks.");
+        } else if (error != nil) {
+            NSLog(@"An error occurred = %@", error);
+        }
+        
+    }];
+}
 
 @end

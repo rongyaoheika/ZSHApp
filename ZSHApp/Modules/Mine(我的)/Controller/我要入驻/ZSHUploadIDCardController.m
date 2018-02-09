@@ -9,16 +9,23 @@
 #import "ZSHUploadIDCardController.h"
 #import <MobileCoreServices/MobileCoreServices.h>
 
-@interface ZSHUploadIDCardController ()<UINavigationControllerDelegate, UIImagePickerControllerDelegate>
-@property (nonatomic, strong) UIImageView *positiveIV;
-@property (nonatomic, strong) UIImageView *negativeIV;
-@property (nonatomic, strong) UIImageView *thirdIV;
-@property (nonatomic, assign) NSInteger   currentSelect;
+@interface ZSHUploadIDCardController ()<UINavigationControllerDelegate, UIImagePickerControllerDelegate,UIActionSheetDelegate>
+@property (nonatomic, strong) UIImageView       *positiveIV;
+@property (nonatomic, strong) UIImageView       *negativeIV;
+@property (nonatomic, strong) UIImageView       *thirdIV;
+@property (nonatomic, assign) NSInteger         currentSelect;
+@property (nonatomic, strong) NSMutableArray    *imageMArr;
 
 @property (nonatomic, assign) BOOL   isFinished;
-@property (nonatomic, assign) BOOL   hasImage1;
-@property (nonatomic, assign) BOOL   hasImage2;
-@property (nonatomic, assign) BOOL   hasImage3;
+@property (nonatomic, assign) BOOL   isShow;
+
+@property (nonatomic, strong) NSString      *imagHeadPath;
+@property (nonatomic, strong) NSString      *positiveImagPath;
+@property (nonatomic, strong) NSString      *negativeImagPath;
+@property (nonatomic, strong) NSString      *thirdImagPath;
+@property (nonatomic, strong) UIImage       *positiveImg;
+@property (nonatomic, strong) UIImage       *negativeImg;
+@property (nonatomic, strong) UIImage       *thirdImg;
 
 @end
 
@@ -27,8 +34,48 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    _isFinished = _hasImage1 = _hasImage2 = _hasImage3 = NO;
+    _isFinished = NO;
+    _imageMArr = [[NSMutableArray alloc]init];
+    [self loadData];
     [self createUI];
+    
+}
+
+- (void)loadData{
+    _imagHeadPath = self.paramDic[@"imgPath"];
+    _positiveImagPath = [NSString stringWithFormat:@"%@positiveImg.jpg",_imagHeadPath];
+    _negativeImagPath = [NSString stringWithFormat:@"%@negativeImg.jpg",_imagHeadPath];
+    _thirdImagPath = [NSString stringWithFormat:@"%@thirdImg.jpg",_imagHeadPath];
+}
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    
+    _positiveImg = [[UIImage alloc]initWithContentsOfFile:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"/Documents/%@",_positiveImagPath]]];
+    _negativeImg = [[UIImage alloc]initWithContentsOfFile:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"/Documents/%@",_negativeImagPath]]];
+    _thirdImg = [[UIImage alloc]initWithContentsOfFile:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"/Documents/%@",_thirdImagPath]]];
+    
+    switch (kFromClassTypeValue) {
+        case FromIDCardVCToUploadPhotoVC:{
+            _positiveIV.image = _positiveImg?_positiveImg:[UIImage imageNamed:@"uploadID1"];;
+            _negativeIV.image = _negativeImg?_negativeImg:[UIImage imageNamed:@"uploadID2"];
+            break;
+        }
+        case FromStoreVCToUploadPhotoVC:{
+            _positiveIV.image = _positiveImg?_positiveImg:[UIImage imageNamed:@"store1"];
+            _negativeIV.image = _negativeImg?_negativeImg:[UIImage imageNamed:@"store2"];
+            _thirdIV.image = _thirdImg?_thirdImg:[UIImage imageNamed:@"store3"];
+            break;
+        }
+        case FromLicenseVCToUploadPhotoVC:{
+            _positiveIV.image = _positiveImg?_positiveImg:[UIImage imageNamed:@"lisence"];
+            break;
+        }
+            
+        default:
+            break;
+    }
+
 }
 
 - (void)createUI{
@@ -99,146 +146,152 @@
     return _thirdIV;
 }
 
-
-
-
 - (void)ClickControlAction3 {
     _currentSelect = 3;
-    [self takePhoto];
+    [self doChoose];
 }
 
 - (void)ClickControlAction {
     _currentSelect = 0;
-    [self takePhoto];
+    [self doChoose];
 }
 
 - (void)ClickControlAction2 {
     _currentSelect = 1;
-    [self takePhoto];
-}
-
-// 判断有摄像头，并且支持拍照功能
-- (void)takePhoto {
-    if ([self isCameraAvailable] && [self doesCameraSupportTakingPhotos]){
-        // 初始化图片选择控制器
-        UIImagePickerController *controller = [[UIImagePickerController alloc] init];
-        /*设置媒体来源，即调用出来的UIImagePickerController所显示出来的界面，有一下三种来源
-         typedef NS_ENUM(NSInteger, UIImagePickerControllerSourceType) {
-         UIImagePickerControllerSourceTypePhotoLibrary,
-         UIImagePickerControllerSourceTypeCamera,
-         UIImagePickerControllerSourceTypeSavedPhotosAlbum
-         };分别表示：图片列表，摄像头，相机相册*/
-        [controller setSourceType:UIImagePickerControllerSourceTypeCamera];
-        // 设置所支持的媒体功能，即只能拍照，或则只能录像，或者两者都可以
-        NSString *requiredMediaType = ( NSString *)kUTTypeImage;
-        NSArray *arrMediaTypes=[NSArray arrayWithObjects:requiredMediaType,nil];
-        [controller setMediaTypes:arrMediaTypes];
-        // 设置录制视频的质量
-        [controller setVideoQuality:UIImagePickerControllerQualityTypeHigh];
-        //设置最长摄像时间
-        [controller setVideoMaximumDuration:10.f];
-        // 设置是否可以管理已经存在的图片或者视频
-        [controller setAllowsEditing:YES];
-        // 设置代理
-        [controller setDelegate:self];
-        [self presentViewController:controller animated:YES completion:nil];
-    }else {
-        UIAlertController *ac = [UIAlertController alertControllerWithTitle:@"提示" message:@"请打开系统相机权限" preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleCancel handler:nil];
-        [ac addAction:cancelAction];
-        [self presentViewController:ac animated:YES completion:nil];
-    }
-}
-
-// 判断是否支持某种多媒体类型：拍照，视频,
-- (BOOL)cameraSupportsMedia:(NSString*)paramMediaType sourceType:(UIImagePickerControllerSourceType)paramSourceType{
-    __block BOOL result=NO;
-    if ([paramMediaType length]==0) {
-        NSLog(@"Media type is empty.");
-        return NO;
-    }
-    NSArray*availableMediaTypes=[UIImagePickerController availableMediaTypesForSourceType:paramSourceType];
-    [availableMediaTypes enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        NSString *mediaType = (NSString *)obj;
-        if ([mediaType isEqualToString:paramMediaType]){
-            result = YES;
-            *stop= YES;
-        }
-    }];
-    return result;
+    [self doChoose];
 }
 
 
-- (BOOL)doesCameraSupportTakingPhotos{
-    return [self cameraSupportsMedia:( NSString *)kUTTypeImage sourceType:UIImagePickerControllerSourceTypeCamera];
-}
+- (void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:animated];
 
-- (BOOL)isCameraAvailable{
-    return [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera];
-}
-
-// 当得到照片或者视频后，调用该方法
--(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
-    NSLog(@"Picker returned successfully.");
-    NSLog(@"%@", info);
-    NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
-    // 判断获取类型：图片
-    if ([mediaType isEqualToString:( NSString *)kUTTypeImage]){
-        UIImage *theImage = nil;
-        // 判断，图片是否允许修改
-        if ([picker allowsEditing]){
-            //获取用户编辑之后的图像
-            theImage = [info objectForKey:UIImagePickerControllerEditedImage];
-        } else {
-            // 照片的原数据
-            theImage = [info objectForKey:UIImagePickerControllerOriginalImage];
-        }
-        if (_currentSelect == 0) {
-            
-            _positiveIV.image = theImage;
-            _hasImage1 = YES;
-        } else if (_currentSelect == 1) {
-            
-            _negativeIV.image = theImage;
-            _hasImage2 = YES;
-        }  else if (_currentSelect == 3) {
-            
-            _thirdIV.image = theImage;
-            _hasImage3 = YES;
-        }
-    }
-    [picker  dismissViewControllerAnimated:YES completion:nil];
-}
-// 当用户取消时，调用该方法
-- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker{
-    
-    [picker  dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (void)viewWillDisappear:(BOOL)animated{
-    [super viewWillDisappear:animated];
-    
     switch (kFromClassTypeValue) {
         case FromIDCardVCToUploadPhotoVC:{
-            self.isFinished = _hasImage1&&_hasImage2;
+            self.isFinished = _positiveImg&&_negativeImg;
+            
             break;
         }
         case FromStoreVCToUploadPhotoVC:{
-            self.isFinished = _hasImage1&&_hasImage2&&_hasImage3;
+            self.isFinished = _positiveImg&&_negativeImg&&_thirdImg;
             break;
         }
         case FromLicenseVCToUploadPhotoVC:{
-            self.isFinished = _hasImage1;
+            self.isFinished = _positiveImg;
+            break;
+        }
+
+        default:
+            break;
+    }
+    
+    //    //将图片变为Base64格式，可以将数据通过接口传给后台
+    //    NSData *data = UIImageJPEGRepresentation(saveImage, 1.0f);
+    //    NSString *baseString = [data base64Encoding];
+
+    if ((self.viewWillDisAppearBlock) && (kFromClassTypeValue<3)) {
+        self.viewWillDisAppearBlock(self.isFinished,_positiveImg,_negativeImg,_thirdImg,_positiveImagPath,_negativeImagPath,_thirdImagPath);
+    }
+}
+
+//新功能写入
+- (void)doChoose {
+    UIActionSheet *sheet;
+    //检查是否有摄像头功能
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        
+        sheet = [[UIActionSheet alloc]
+                 initWithTitle:nil
+                 delegate:self
+                 cancelButtonTitle:@"取消"
+                 destructiveButtonTitle:nil
+                 otherButtonTitles:@"拍照",@"从相册选择", nil];
+    } else {
+        sheet = [[UIActionSheet alloc]
+                 initWithTitle:nil
+                 delegate:self
+                 cancelButtonTitle:@"取消"
+                 destructiveButtonTitle:nil
+                 otherButtonTitles:@"从相册选择", nil];
+    }
+    sheet.tag=255;
+    [sheet showInView:self.view];
+}
+
+//代理方法，启用拍照或使用相册功能
+-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (actionSheet.tag == 255) {
+        NSUInteger sourceType = 0;
+        if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+            if (buttonIndex == actionSheet.cancelButtonIndex) return;
+           
+            switch (buttonIndex) {
+                case 0:
+                    sourceType = UIImagePickerControllerSourceTypeCamera;
+                    break;
+                case 1:
+                    sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+                    break;
+                default:
+                    break;
+            }
+        } else {
+           if (buttonIndex == actionSheet.cancelButtonIndex) return;
+            sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
+        }
+        
+        UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
+        
+        imagePickerController.delegate = self;
+        
+        imagePickerController.allowsEditing = YES;
+        
+        imagePickerController.sourceType = sourceType;
+        
+        [self presentViewController:imagePickerController animated:YES completion:^{}];
+    }
+}
+
+//返回的图片数据
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info
+{
+    //返回到主界面中
+    [picker dismissViewControllerAnimated:YES completion:^{}];
+    
+    //获取返回的图片
+    UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
+    
+    //压缩图片
+    NSData *imageData = UIImageJPEGRepresentation(image, 0.5);
+   
+    //沙盒，准备保存的图片地址和图片名称
+    NSString *fullPath = nil;
+    switch (_currentSelect) {//第几张图片
+        case 0:{
+            fullPath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"/Documents/%@",_positiveImagPath]];
+            break;
+        }
+        case 1:{
+            fullPath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"/Documents/%@",_negativeImagPath]];
+            break;
+        }
+        case 3:{
+            fullPath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"/Documents/%@",_thirdImagPath]];
             break;
         }
             
         default:
             break;
     }
-    
-    if (self.viewWillDisAppearBlock) {
-        self.viewWillDisAppearBlock(self.isFinished);
-    }
+
+    //将图片写入文件中
+    [imageData writeToFile:fullPath atomically:NO];
 }
+//关闭拍照窗口
+-(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    [self dismissViewControllerAnimated:YES completion:^{}];
+}
+
 
 @end

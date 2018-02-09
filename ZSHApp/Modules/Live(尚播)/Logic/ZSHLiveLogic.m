@@ -38,7 +38,7 @@
 
 // 发布内容到我的圈子
 - (void)requestAddCircle:(NSDictionary *)dic images:(NSArray *)images fileNames:(NSArray *)fileNmaes success:(void (^)(id response))success {
-    [PPNetworkHelper uploadImagesWithURL:kUrlAddCircle parameters:dic name:@"fileList" images:images fileNames:fileNmaes imageScale:1.0 imageType:nil progress:^(NSProgress *progress) {
+    [PPNetworkHelper uploadImagesWithURL:kUrlAddCircle parameters:dic names:@[@"fileList"] images:images fileNames:fileNmaes imageScale:1.0 imageType:nil progress:^(NSProgress *progress) {
         
     } success:^(id responseObject) {
         success(responseObject);
@@ -62,7 +62,7 @@
 
 // 商家发布自媒体广告流
 - (void)requestAddSelfMediaAD:(NSDictionary *)dic images:(NSArray *)images fileNames:(NSArray *)fileNmaes success:(void (^)(id response))success {
-    [PPNetworkHelper uploadImagesWithURL:kUrlAddSelfMediaad parameters:dic name:@"fileList" images:images fileNames:fileNmaes imageScale:1.0 imageType:nil progress:^(NSProgress *progress) {
+    [PPNetworkHelper uploadImagesWithURL:kUrlAddSelfMediaad parameters:dic names:@[@"fileList"] images:images fileNames:fileNmaes imageScale:1.0 imageType:nil progress:^(NSProgress *progress) {
         
     } success:^(id responseObject) {
         success(responseObject);

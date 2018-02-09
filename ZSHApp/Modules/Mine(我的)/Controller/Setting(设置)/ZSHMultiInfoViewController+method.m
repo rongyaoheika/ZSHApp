@@ -34,7 +34,7 @@
         [promptAlert show];
         return NO;
     } else {
-     if (![ZSHBaseFunction validateIdentityCard:self.text1]) {
+     if (![ZSHBaseFunction validateIdentityCard:self.text2]) {
         //身份证号校验
         UIAlertView *phoneAlert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"身份证号格式错误" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
         [phoneAlert show];
@@ -48,14 +48,15 @@
         //手机号码校验
         UIAlertView *imagAlert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"图片上传不全" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
         [imagAlert show];
+        return NO;
     }
     }
     return YES;
 }
 
 //提交审核
-- (void)submitActionWithDic:(NSDictionary *)paramDic{
-    [self.entryLogic loadBusinessInDataWith:paramDic success:^(id responseObject) {
+- (void)submitActionWithDic:(NSDictionary *)paramDic names:(NSArray *)names images:(NSArray *)images fileNames:(NSArray *)fileNames{
+    [self.entryLogic loadBusinessInDataWith:paramDic names:names images:images fileNames:fileNames success:^(id responseObject) {
         RLog(@"提交审核结果%@",responseObject);
     } fail:nil];
 }

@@ -18,10 +18,11 @@ typedef void(^BMPageTitleViewSelectedBlock)(NSInteger index);
 
 @interface LXScollTitleView : UIView
 
-
 @property (nonatomic, strong) UIScrollView        *scrollView;
-
 @property (nonatomic, strong) NSMutableArray      *titleButtons;
+
+//scrollView.contentSize
+@property (nonatomic, assign) CGSize  svContentSize;
 /**
  文字未选中颜色，默认black
  */

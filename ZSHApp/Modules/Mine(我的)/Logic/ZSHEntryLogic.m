@@ -11,12 +11,15 @@
 @implementation ZSHEntryLogic
 
 //商家入驻
-- (void)loadBusinessInDataWith:(NSDictionary *)dic success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail{
-    [PPNetworkHelper POST:kUrlAppBusinessIn parameters:dic success:^(id responseObject) {
-        RLog(@"商家入驻信息%@",responseObject);
+- (void)loadBusinessInDataWith:(NSDictionary *)dic names:(NSArray *)names images:(NSArray<UIImage *> *)images fileNames:(NSArray<NSString *> *)fileNames success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail{
+    RLog(@"请求参数==%@",dic);
+    [PPNetworkHelper setRequestSerializer:PPRequestSerializerJSON];
+    [PPNetworkHelper uploadImagesWithURL:kUrlAppBusinessIn parameters:dic names:names images:images fileNames:fileNames imageScale:1.0 imageType:nil progress:^(NSProgress *progress) {
+        
+    } success:^(id responseObject) {
         success(responseObject);
     } failure:^(NSError *error) {
-        RLog(@"商家入驻失败");
+        
     }];
 }
 

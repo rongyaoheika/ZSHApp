@@ -24,6 +24,8 @@
 @property (nonatomic, strong)ZSHLiveLogic             *liveLogic;
 @property (nonatomic, strong)NSArray                  *liveListArr;
 
+//本地数据
+@property (nonatomic, strong)NSMutableArray           *dataArr;
 @end
 
 static NSString * const cellIdentifier = @"cellID";
@@ -40,6 +42,15 @@ static NSString * const ZSHNearHeadViewID = @"ZSHNearHeadView";
 }
 
 - (void)loadData{
+    NSArray *baseDataArr = @[
+                             @{@"liveName":@"夏天在我手中",@"imageName":@"live_image_1", @"loveCount":@"33"},
+                             @{@"liveName":@"忘记时间的钟",@"imageName":@"live_image_2", @"loveCount":@"43"},
+                             @{@"liveName":@"流沙",@"imageName":@"live_image_3", @"loveCount":@"33"},
+                             @{@"liveName":@"夏天",@"imageName":@"live_image_4", @"loveCount":@"44"},
+                             @{@"liveName":@"绅士",@"imageName":@"live_image_5", @"loveCount":@"63"},
+                             @{@"liveName":@"拉流",@"imageName":@"live_image_6", @"loveCount":@"40"}];
+    self.dataArr = [ZSHLiveListModel mj_objectArrayWithKeyValuesArray:baseDataArr];
+    
     _liveLogic = [[ZSHLiveLogic alloc]init];
     
     self.waterLayout = [[ZSHCustomWaterFlowLayout alloc]init];
