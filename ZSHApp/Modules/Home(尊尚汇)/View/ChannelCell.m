@@ -8,12 +8,7 @@
 
 #import "ChannelCell.h"
 
-@interface ChannelCell (){
-    
-}
-
-
-
+@interface ChannelCell ()
 @end
 
 @implementation ChannelCell
@@ -48,17 +43,17 @@
 }
 
 -(void)setModel:(Channel *)model{
-    
     _model = model;
     
     if (model.tagType == MyChannel) {
-        if ([model.title containsString:@"＋"]) {
-            model.title = [model.title substringFromIndex:1];
-        }
+//        if ([model.title containsString:@"＋"]) {
+//            model.title = [model.title substringFromIndex:1];
+//        }
         if (model.editable) {
         }else{
             model.editable = YES;
         }
+        
         if (model.resident) {
             _delBtn.hidden = YES;
         }else{
@@ -72,10 +67,10 @@
             _title.textColor = [UIColor colorWithRed:0.36 green:0.36 blue:0.36 alpha:1.0];
         }
         
-    }else if (model.tagType == RecommandChannel){
-        if (![model.title containsString:@"＋"]) {
-            model.title = [@"＋" stringByAppendingString:model.title];
-        }
+    } else if (model.tagType == RecommandChannel){
+//        if (![model.title containsString:@"＋"]) {
+//            model.title = [@"＋" stringByAppendingString:model.title];
+//        }
         if (model.editable) {
             model.editable = NO;
         }else{
@@ -97,7 +92,5 @@
     
     [_delegate deleteCell:sender];
 }
-
-
 
 @end

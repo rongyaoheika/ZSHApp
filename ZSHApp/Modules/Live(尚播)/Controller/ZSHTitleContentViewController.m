@@ -26,12 +26,9 @@
 #import "ZSHHomeLogic.h"
 #import "ZSHGoodsTitleContentViewController.h"
 #import "ZSHTopLineMoreTypeViewController.h"
-@interface ZSHTitleContentViewController ()<UISearchBarDelegate,PYSearchViewControllerDelegate>{
-    
-    __block NSMutableArray *_myTags;
-    __block NSMutableArray *_recommandTags;
-    
-}
+#import "ZSHBuyLogic.h"
+
+@interface ZSHTitleContentViewController ()<UISearchBarDelegate,PYSearchViewControllerDelegate>
 
 @property (nonatomic, strong) LXScrollContentView *contentView;
 @property (nonatomic, strong) LXScollTitleView    *titleView;
@@ -53,7 +50,10 @@
 @property (nonatomic, strong) ZSHPickView          *pickView;
 @property (nonatomic, strong) ZSHTicketPlaceCell   *ticketView;
 
+@property (nonatomic, strong) ZSHBuyLogic          *buyLogic;
 @property (nonatomic, strong) ZSHToplineTopView    *toplineTopView;
+@property (nonatomic, strong) NSMutableArray       *myTags;
+@property (nonatomic, strong) NSMutableArray       *recommandTags;
 @property (strong, nonatomic) UILabel *tagLabel;
 
 @end
@@ -82,10 +82,12 @@
     [super viewDidLoad];
     
     [self loadData];
-    [self createUI];
 }
 
 - (void)loadData{
+    self.myTags = [[NSMutableArray alloc]init];
+    self.recommandTags = [[NSMutableArray alloc]init];
+    self.buyLogic = [[ZSHBuyLogic alloc]init];
     self.vcIndex = 0;
     self.indicatorHeight = 0.0;
    
@@ -101,20 +103,8 @@
             break;
         case FromFindVCToTitleContentVC:{
             [self createFindNaviUI];
-          
-            self.titleArr = @[@"精选",@"数码",@"亲子",@"时尚",@"科技",@"美食"];
-            self.titleWidth = KScreenWidth/(self.titleArr.count);
-            self.svContentSize = CGSizeMake((self.titleArr.count+1)*self.titleWidth, 0);
-            self.contentVCS = @[@"ZSHFindViewController",@"ZSHFindViewController",@"ZSHFindViewController",@"ZSHFindViewController",@"ZSHFindViewController",@"ZSHFindViewController"];
-            NSString *shopId  = self.paramDic[@"shopId"]?self.paramDic[@"shopId"]:@"";
-            self.paramArr = @[@{@"CAIDAN_ID":@"387563351791632384",@"shopId":shopId},
-                              @{@"CAIDAN_ID":@"387563399975796736",@"shopId":shopId},
-                              @{@"CAIDAN_ID":@"387563457622310912",@"shopId":shopId},
-                              @{@"CAIDAN_ID":@"387563486307155968",@"shopId":shopId},
-                              @{@"CAIDAN_ID":@"387563486307155968",@"shopId":shopId},
-                              @{@"CAIDAN_ID":@"387563525268045824",@"shopId":shopId}];
+            [self requestTopLineMenuData];
             return;
-            
             break;
         }
            
@@ -250,6 +240,7 @@
     }
     self.svContentSize = CGSizeZero;
     self.titleWidth = KScreenWidth/(self.titleArr.count);
+    [self createUI];
 }
 
 - (void)createFindNaviUI{
@@ -372,7 +363,8 @@
     RootViewController *vc = nil;
 
     if (kFromClassTypeValue == FromAllOrderVCToTitleContentVC) {
-        for (int i = 0;i< [self.paramDic[@"titleArr"] count]; i++) {
+   
+        for (int i = 0;i< [(NSArray *)self.paramDic[@"titleArr"] count]; i++) {
             NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:self.paramDic];
             [dic setValue:self.paramDic[@"ORDERSTATUS"][i] forKey:@"ORDERSTATUS"];
             Class className = NSClassFromString(self.paramDic[@"contentVCS"][i]);
@@ -571,12 +563,8 @@
 }
 
 - (void)topLineMenuAction:(UIButton *)btn{
-    
-    NSMutableArray *myTags = @[@"关注",@"推荐",@"热点",@"北京",@"视频",@"社会",@"图片",@"娱乐",@"问答",@"科技",@"汽车",@"财经",@"军事",@"体育",@"段子",@"国际",@"趣图",@"健康",@"特卖",@"房产",@"美食"].mutableCopy;
-    NSMutableArray *recommandTags = @[@"小说",@"时尚",@"历史",@"育儿",@"直播",@"搞笑",@"数码",@"养生",@"电影",@"手机",@"旅游",@"宠物",@"情感",@"家居",@"教育",@"三农"].mutableCopy;
-   
-    //秀出来选择框
-    ZSHTopLineMoreTypeViewController *topLineMoreVC = [[ZSHTopLineMoreTypeViewController alloc]initWithParamDic:@{@"myChannels":myTags,@"recommandChannels":recommandTags}];
+
+    ZSHTopLineMoreTypeViewController *topLineMoreVC = [[ZSHTopLineMoreTypeViewController alloc]initWithParamDic:@{@"myChannels":self.myTags,@"recommandChannels":self.recommandTags}];
     [self presentViewController:topLineMoreVC animated:YES completion:^{}];
     
     //所有的已选的tags
@@ -608,6 +596,36 @@
         _toplineTopView.tag = 18011506;
     }
     return _toplineTopView;
+}
+
+#pragma requestData
+- (void)requestTopLineMenuData{
+    kWeakSelf(self);
+    [_buyLogic requestCaidanWithDic:@{@"HONOURUSER_ID":HONOURUSER_IDValue} success:^(id response) {
+        RLog(@"头条数据== %@",response);
+        
+        NSString *shopId  = self.paramDic[@"shopId"]?self.paramDic[@"shopId"]:@"";
+        NSMutableArray *titleMArr = [[NSMutableArray alloc]init];
+        NSMutableArray *paramMArr = [[NSMutableArray alloc]init];
+        NSMutableArray *contentVCSMArr = [[NSMutableArray alloc]init];
+        for (NSDictionary *dic in response[@"topline"]) {
+            [titleMArr addObject:dic[@"NAME"]];
+            [paramMArr addObject:@{@"CAIDAN_ID":dic[@"CAIDAN_ID"],@"shopId":shopId}];
+            [contentVCSMArr addObject:@"ZSHFindViewController"];
+        }
+       
+        for (NSDictionary *dic in response[@"recomList"]) {
+            [weakself.recommandTags addObject:dic[@"NAME"]];
+        }
+        weakself.myTags = titleMArr;
+        weakself.titleArr = titleMArr;
+        weakself.paramArr = paramMArr;
+        weakself.contentVCS = contentVCSMArr;
+        weakself.titleWidth = kRealValue(60);
+        weakself.svContentSize = CGSizeMake((self.titleArr.count+1)*self.titleWidth, 0);
+        [weakself createUI];
+       
+    }];
 }
 
 - (void)didReceiveMemoryWarning {

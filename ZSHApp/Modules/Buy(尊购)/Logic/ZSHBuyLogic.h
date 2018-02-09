@@ -58,7 +58,7 @@
 // 购物车删除
 - (void)requestShoppingCartDelWithDic:(NSDictionary *)dic success:(void (^)(id response))success;
 // 获取发现中所有的菜单项
-- (void)requestCaidan:(void (^)(id response))success;
+- (void)requestCaidanWithDic:(NSDictionary *)dic success:(void (^)(id response))success;
 // 获取发现中所有的菜单项
 - (void)requestCaidanWithID:(NSString *)caidanID success:(void (^)(id response))success;
 // 给商品添加用户评价

@@ -8,11 +8,11 @@
 
 #import "ZSHTopLineMoreTypeViewController.h"
 
-@interface ZSHTopLineMoreTypeViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,ChannelCellDeleteDelegate>{
-    NSMutableArray *_myTags;
-    NSMutableArray *_recommandTags;
-    BOOL _onEdit;
-}
+@interface ZSHTopLineMoreTypeViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,ChannelCellDeleteDelegate>
+
+@property (nonatomic, strong) NSMutableArray *myTags;
+@property (nonatomic, strong) NSMutableArray *recommandTags;
+@property (nonatomic, assign) BOOL           onEdit;
 
 @end
 
@@ -75,12 +75,27 @@
 
 
 - (void)setupViews{
+
+    NSDictionary *titleLabelDic = @{@"text":@"所有频道",@"font":kPingFangMedium(17),@"textAlignment":@(NSTextAlignmentCenter)};
+    UILabel *titleLB = [ZSHBaseUIControl createLabelWithParamDic:titleLabelDic];
+    [self.view addSubview:titleLB];
+    [titleLB mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.mas_equalTo(kRealValue(100));
+        make.height.mas_equalTo(kRealValue(20));
+        make.centerX.mas_equalTo(self.view);
+        make.top.mas_equalTo(kRealValue(33.5));
+    }];
     
     UIButton *exit = [[UIButton alloc]initWithFrame:CGRectMake(KScreenWidth - kRealValue(44) - KLeftMargin, 30, kRealValue(44), kRealValue(44))];
     [self.view addSubview:exit];
     [exit setImage:[UIImage imageNamed:@"live_close"] forState:UIControlStateNormal];
     exit.imageView.contentMode = UIViewContentModeScaleAspectFit;
     [exit addTarget:self action:@selector(returnLast) forControlEvents:UIControlEventTouchUpInside];
+    [exit mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.mas_equalTo(self.view).offset(-KLeftMargin);
+        make.size.mas_equalTo(CGSizeMake(kRealValue(44), kRealValue(44)));
+        make.centerY.mas_equalTo(titleLB);
+    }];
     
     [self.view addSubview:self.collectionView];
     [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {

@@ -107,7 +107,7 @@
     [super layoutSubviews];
     self.scrollView.frame = self.bounds;
     
-    self.scrollView.contentSize = CGSizeEqualToSize(self.svContentSize,CGSizeZero)?CGSizeMake((self.titleButtons.count+1) * self.titleWidth, self.frame.size.height):self.svContentSize;
+    self.scrollView.contentSize = CGSizeEqualToSize(self.svContentSize,CGSizeZero)?CGSizeMake(self.titleButtons.count * self.titleWidth, self.frame.size.height):self.svContentSize;
     NSInteger i = 0;
     for (UIButton *btn in self.titleButtons) {
         btn.frame = CGRectMake(self.titleWidth * i++, 0, self.titleWidth, self.frame.size.height);
