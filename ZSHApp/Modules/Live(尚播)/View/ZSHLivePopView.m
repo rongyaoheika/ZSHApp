@@ -12,7 +12,7 @@
 #import "ZSHVideoViewController.h"
 #import "ZSHPersonalDetailViewController.h"
 #import "ZSHWeiboWriteController.h"
-
+#import "ZSHLiveContentFirstViewController.h"
 @interface ZSHLivePopView ()
 
 @property (nonatomic, assign) BOOL              ISShowMenuButton;
@@ -54,9 +54,9 @@
 
 #pragma getter
 - (void)clickButton:(NSInteger)index {
-
-    NSArray *VCS = @[@"ZSHWeiboWriteController",@"AlivcLivePusherViewController",@"ZSHVideoRecViewController"];
-    NSArray *fromclassTypes = @[@(FromWeiboVCToZSHWeiboWriteVC),@"", @(FromTabbarToPersonalDetailVC)];
+//ZSHVideoRecViewController
+    NSArray *VCS = @[@"ZSHWeiboWriteController",@"AlivcLivePusherViewController",@"ZSHLiveContentFirstViewController"];
+    NSArray *fromclassTypes = @[@(FromWeiboVCToZSHWeiboWriteVC),@"", @(4)];
     
     Class className = NSClassFromString(VCS[index-1]);
     if (index != 2) {
@@ -68,7 +68,7 @@
         [ZSHBaseUIControl setAnimationWithHidden:YES view:self.superview completedBlock:^{
             [[NSNotificationCenter defaultCenter] postNotificationName:KPresentPreviewVC object:nil];
         }];
-        
+
     }
 
 }

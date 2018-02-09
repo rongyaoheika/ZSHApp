@@ -68,7 +68,13 @@ static NSString * const ZSHNearHeadViewID = @"ZSHNearHeadView";
     
     [self.view addSubview:self.collectionView];
     [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.mas_equalTo(self.view).insets(UIEdgeInsetsMake(0, 0, KBottomTabH , 0));
+        if (kFromClassTypeValue!=4) {
+             make.edges.mas_equalTo(self.view).insets(UIEdgeInsetsMake(0, 0, KBottomTabH , 0));
+        } else {
+             self.title = @"小视频";
+             make.edges.mas_equalTo(self.view).insets(UIEdgeInsetsMake(KNavigationBarHeight, 0, KBottomHeight , 0));
+        }
+       
     }];
     
 //    [self.collectionView addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(collectionViewAction:)]];
@@ -84,6 +90,7 @@ static NSString * const ZSHNearHeadViewID = @"ZSHNearHeadView";
 
 - (void)requestData{
     switch (kFromClassTypeValue) {
+        case FromOtherVCToLiveContentFirstVC:
         case FromLiveRecommendVCToLiveContentFirstVC:{
             [self requestRecommendLiveListWithParamDic:nil];
             
@@ -97,6 +104,7 @@ static NSString * const ZSHNearHeadViewID = @"ZSHNearHeadView";
             [self requestRecommendLiveListWithParamDic:self.paramDic];
             break;
         }
+            
         default:
             break;
     }

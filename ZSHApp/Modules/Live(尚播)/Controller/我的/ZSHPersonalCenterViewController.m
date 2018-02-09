@@ -48,6 +48,7 @@
 //    self.titleWidthArr = @[@(kRealValue(75)),@(KScreenWidth - kRealValue(150)), @(kRealValue(75))];
     self.contentVCS = @[@"ZSHWeiboViewController",@"ZSHVideoViewController",@"ZSHPersonalDetailViewController"];
     self.paramArr = @[@{KFromClassType:@(FromPersonalVCToWeiboVC)},@{KFromClassType:@(FromPersonalVCToVideoVC)},@{KFromClassType:@(FromPersonalVCToPersonalDetailVC)}];
+   
 }
 
 - (void)requestData{

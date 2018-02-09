@@ -12,7 +12,8 @@ typedef NS_ENUM (NSInteger,ZSHToLiveContentFirstVC) {
     FromLiveRecommendVCToLiveContentFirstVC,         //尚播 - 推荐
     FromLiveNearVCToLiveContentFirstVC,              //尚播 - 附近
     FromLiveClassifyVCToLiveContentFirstVC,          //尚播 - 分类
-    FromActivityCenterVCToLiveContentFirstVC
+    FromActivityCenterVCToLiveContentFirstVC,
+    FromOtherVCToLiveContentFirstVC                  //尚播 - 其他
 };
 
 @interface ZSHLiveContentFirstViewController : RootViewController
