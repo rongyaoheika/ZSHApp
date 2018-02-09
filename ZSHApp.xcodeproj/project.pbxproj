@@ -93,6 +93,7 @@
 		049823BF20076BCD0080626D /* ZSHCabinetHeadReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 049823BE20076BCD0080626D /* ZSHCabinetHeadReusableView.m */; };
 		049823C320078D590080626D /* ZSHFlagshipViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 049823C220078D590080626D /* ZSHFlagshipViewController.m */; };
 		049823C720078E470080626D /* ZSHFlagshipCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 049823C620078E470080626D /* ZSHFlagshipCell.m */; };
+		049A6568202C2D8000EF1145 /* ZSHMineCouponViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 049A6567202C2D8000EF1145 /* ZSHMineCouponViewController.m */; };
 		04A69033200845FE00C583E6 /* ZSHFashionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A69032200845FE00C583E6 /* ZSHFashionCell.m */; };
 		04A690362008461500C583E6 /* ZSHFashionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A690352008461500C583E6 /* ZSHFashionViewController.m */; };
 		04A69039200847E900C583E6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04A69038200847E700C583E6 /* Assets.xcassets */; };
@@ -764,6 +765,8 @@
 		049823C220078D590080626D /* ZSHFlagshipViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHFlagshipViewController.m; sourceTree = "<group>"; };
 		049823C520078E470080626D /* ZSHFlagshipCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHFlagshipCell.h; sourceTree = "<group>"; };
 		049823C620078E470080626D /* ZSHFlagshipCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHFlagshipCell.m; sourceTree = "<group>"; };
+		049A6566202C2D8000EF1145 /* ZSHMineCouponViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHMineCouponViewController.h; sourceTree = "<group>"; };
+		049A6567202C2D8000EF1145 /* ZSHMineCouponViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHMineCouponViewController.m; sourceTree = "<group>"; };
 		04A69031200845FE00C583E6 /* ZSHFashionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHFashionCell.h; sourceTree = "<group>"; };
 		04A69032200845FE00C583E6 /* ZSHFashionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHFashionCell.m; sourceTree = "<group>"; };
 		04A690342008461500C583E6 /* ZSHFashionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHFashionViewController.h; sourceTree = "<group>"; };
@@ -3206,6 +3209,8 @@
 				18155C011FB402E90060BD9D /* Comment(发表评价) */,
 				FE291EE71F8CCC5900D4BBE7 /* ZSHMineViewController.h */,
 				FE291EE81F8CCC5900D4BBE7 /* ZSHMineViewController.m */,
+				049A6566202C2D8000EF1145 /* ZSHMineCouponViewController.h */,
+				049A6567202C2D8000EF1145 /* ZSHMineCouponViewController.m */,
 				FEDF29251FB6D1C100CD5756 /* ZSHCoinViewController.h */,
 				FEDF29261FB6D1C100CD5756 /* ZSHCoinViewController.m */,
 			);
@@ -5449,6 +5454,7 @@
 				043587591FF2564F00969DD7 /* ZSHGoodsCollectionViewCell.m in Sources */,
 				1813E2671FBD2A0800624405 /* ZSHTrainSearchResultController.m in Sources */,
 				04A6FCCB2007152700DDE79E /* ZSHMusicMainViewController.m in Sources */,
+				049A6568202C2D8000EF1145 /* ZSHMineCouponViewController.m in Sources */,
 				FE5538801F470BAF00803128 /* ShareManager.m in Sources */,
 				FEBD7C931FA6CC1900CE2BA6 /* ZSHHotelPayViewController.m in Sources */,
 				182F57951FDB91390085BFC6 /* KNToast.m in Sources */,

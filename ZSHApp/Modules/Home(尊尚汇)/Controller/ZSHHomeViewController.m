@@ -39,6 +39,8 @@ static NSString *Identify_PlayCell = @"playCell";
 static NSString *Identify_MagazineCell = @"magazineCell";
 static NSString *Identify_MusicCell = @"musicCell";
 
+
+
 @interface ZSHHomeViewController ()<UISearchBarDelegate,GYZChooseCityDelegate,PYSearchViewControllerDelegate,HCLocationManagerDelegate>
 
 @property (nonatomic, strong) NSArray                *pushVCsArr;
@@ -60,6 +62,8 @@ static NSString *Identify_MusicCell = @"musicCell";
 @property (nonatomic, strong) NSArray                *recommendImageArr;
 
 @property (nonatomic, strong) PYSearchViewController *searchViewController;
+
+
 
 @end
 

@@ -24,10 +24,10 @@
 
 #ifdef DEBUG
 
-#define DevelopSever    1
+#define DevelopSever    0
 #define TestSever       0
 #define TestSever1      0
-#define ProductSever    0
+#define ProductSever    1
 
 #else
 
@@ -921,11 +921,17 @@
 //请求地址：/business/applybusiness?APPLYBUSINESS(混淆码)
 #define kUrlAppBusinessIn [NSString stringWithFormat:@"/business/appbusinessin?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"APPBUSINESSIN"]]
 
-
 //176.商家提交入驻信息
 //APPLYFOR_IDCARDIMAGE 经营者身份照片地址 /   APPLYFOR_IMAGES  实体店铺照片地址/   APPLYFOR_CHARTERIMAGE 店铺营业执照图片地址/
 //请求地址：/business/appbusinessin?APPBUSINESSIN(混淆码)
 #define kUrlGetProbyStandard [NSString stringWithFormat:@"/product/getprobystandard?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"GETPROBYSTANDARD"]]
+//207.修改用户订阅的头条的菜单
+//参数：  HONOURUSER_ID用户的id  /        DISCOVERVIDEO_IDS   我的菜单id(以逗号拼接成字符串)     /
+//请求地址：/appdiscoverin/updtopline?UPDTOPLINE(混淆码)
+#define kUrlUpdTopLine [NSString stringWithFormat:@"/product/getprobystandard?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"GETPROBYSTANDARD"]]
+
 
 
 #endif /* URLMacros_h */
+
+

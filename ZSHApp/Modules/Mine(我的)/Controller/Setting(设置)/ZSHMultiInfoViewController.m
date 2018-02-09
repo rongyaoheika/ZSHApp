@@ -344,33 +344,24 @@
 }
 #pragma pickView
 - (ZSHPickView *)createPickViewWithType:(NSUInteger)type{
-    
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"area.plist" ofType:@""];
-    
-    NSArray *areaArr = [NSArray arrayWithContentsOfFile:path];
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"citys.plist" ofType:@""];
+    NSDictionary *areaDic = [NSDictionary dictionaryWithContentsOfFile:path];
+
     NSMutableArray *provinces = [NSMutableArray array];
-    for (NSDictionary *dic in areaArr) {
-        [provinces addObject:dic[@"state"]];
-    }
-    
     NSMutableArray *citys = [NSMutableArray array];
     NSMutableArray *districts = [NSMutableArray array];
-    for (NSDictionary *dic in areaArr) {
-        if ([dic[@"state"] isEqualToString:@"北京"]) {
-            for (NSDictionary *city in dic[@"cities"]) {
-                [citys addObject:city[@"city"]];
-                if ([city[@"city"] isEqualToString:citys[0]]) {
-                    if (city[@"areas"]) {
-                        districts = city[@"areas"];
-                    }
-                }
-            }
-            break;
-        }
-        
-    }
     
+    [areaDic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+        [provinces addObject:key];
+    }];
     
+    [[areaDic objectForKey:provinces[0]][0] enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+        [citys addObject:key];
+    }];
+    
+    NSDictionary *arr = [areaDic objectForKey:provinces[0]][0];
+    districts = [arr objectForKey:citys[0]];
+
     NSMutableArray *regionArr = [NSMutableArray arrayWithObjects:provinces, citys, districts, nil];
     NSDictionary *nextParamDic = @{@"type":@(type),@"midTitle":@"城市区域选择",@"dataArr":regionArr};
     

@@ -68,6 +68,7 @@ static NSString *ZSHGoodsListViewID = @"ZSHGoodsListView";
     [self.tableViewModel.sectionModelArray removeAllObjects];
     [self.tableViewModel.sectionModelArray addObject:[self storeListSection]];
     [self.tableView reloadData];
+    
 }
 
 //list

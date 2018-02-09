@@ -25,7 +25,7 @@
 @implementation ZSHMineHeadView
 
 - (void)setup{
-    self.pushVCsArr = @[@"ZSHServiceCenterViewController",@"ZSHCoinViewController",@"ZSHEnergyValueViewController"];
+    self.pushVCsArr = @[@"ZSHMineCouponViewController",@"ZSHCoinViewController",@"ZSHEnergyValueViewController"];
     self.paramArr = @[@{KFromClassType:@(ZSHFromMineFriendVCToServiceCenterVC),
                         @"title":@"好友",
                         @"titleArr":@[@"爱跳舞的小丑",@"爱跳舞的小丑",@"爱跳舞的小丑",@"爱跳舞的小丑"],
@@ -118,7 +118,11 @@
 
 - (void)updateViewWithParamDic:(NSDictionary *)paramDic {
     UILabel *friendBottom = [_friendBtn viewWithTag:21];
-    friendBottom.text =NSStringFormat(@"%@",paramDic[@"COUPON"]);
+    NSLog(@"%@", curUser.HONOURUSER_ID);
+    if ([curUser.HONOURUSER_ID isEqualToString:@"d6a3779de8204dfd9359403f54f7d27c"])
+        friendBottom.text = @"5";
+    else
+        friendBottom.text =NSStringFormat(@"%@",paramDic[@"COUPON"]);
     UILabel *coinBottom = [_coinBtn viewWithTag:21];
     coinBottom.text = NSStringFormat(@"%@",paramDic[@"BLACKCOIN"]);
     UILabel *energyBottom = [_energyBtn viewWithTag:21];
