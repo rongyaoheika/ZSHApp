@@ -49,7 +49,7 @@
 #define AlivcTextPushURL @"rtmp://video-center.alivecdn.com/ZSHApp/stream00?vhost=live.rongyaohk.com&auth_key=1516417147-0-0-7b5549b1f901c18f84a0bef816cb5a75"
 #define AlivcUserDefaultsIndentifierFirst @"AlivcUserDefaultsIndentifierFirst"
 
-#define AlivcPullURL  @"rtmp://live.rongyaohk.com/ZSHApp/game1000001332958882?auth_key=1516442532-0-0-c94169850efaa7f15a2c565bec67d671"
+#define AlivcPullURL  @"http://cloud.video.taobao.com/play/u/2712925557/p/1/e/6/t/1/40050769.mp4"// @"rtmp://live.rongyaohk.com/ZSHApp/game1000001332958882?auth_key=1516442532-0-0-c94169850efaa7f15a2c565bec67d671"
 
 
 #endif /* ThirdMacros_h */

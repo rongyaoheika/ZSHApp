@@ -601,6 +601,7 @@
 #pragma requestData
 - (void)requestTopLineMenuData{
     kWeakSelf(self);
+    RLog(@"用户id=%@",HONOURUSER_IDValue);
     [_buyLogic requestCaidanWithDic:@{@"HONOURUSER_ID":HONOURUSER_IDValue} success:^(id response) {
         RLog(@"头条数据== %@",response);
         

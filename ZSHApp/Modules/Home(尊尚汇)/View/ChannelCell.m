@@ -31,10 +31,12 @@
         _delBtn = [[UIButton alloc]init];
         [_delBtn setImage:[UIImage imageNamed:@"topline_close"] forState:UIControlStateNormal];
         [_delBtn addTarget:self action:@selector(delete:) forControlEvents:UIControlEventTouchUpInside];
+        _delBtn.contentMode = UIViewContentModeScaleAspectFit;
+        [_delBtn setImageEdgeInsets:UIEdgeInsetsMake(0, -(frame.size.width-kRealValue(20)), 0, 0)];
         [self.contentView addSubview:_delBtn];
         [_delBtn mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerY.mas_equalTo(self);
-            make.size.mas_equalTo(CGSizeMake(kRealValue(20), kRealValue(20)));
+            make.size.mas_equalTo(CGSizeMake(frame.size.width, frame.size.height));
             make.left.mas_equalTo(self);
         }];
         
@@ -61,11 +63,11 @@
         }
         
         //选择出来的tag高亮显示
-        if (model.selected) {
-            _title.textColor = [UIColor colorWithRed:0.5 green:0.26 blue:0.27 alpha:1.0];
-        }else{
-            _title.textColor = [UIColor colorWithRed:0.36 green:0.36 blue:0.36 alpha:1.0];
-        }
+//        if (model.selected) {
+//            _title.textColor = [UIColor colorWithRed:0.5 green:0.26 blue:0.27 alpha:1.0];
+//        }else{
+//            _title.textColor = [UIColor colorWithRed:0.36 green:0.36 blue:0.36 alpha:1.0];
+//        }
         
     } else if (model.tagType == RecommandChannel){
 //        if (![model.title containsString:@"＋"]) {

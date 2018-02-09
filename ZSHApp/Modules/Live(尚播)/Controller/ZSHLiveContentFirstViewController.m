@@ -25,7 +25,7 @@
 @property (nonatomic, strong)NSArray                  *liveListArr;
 
 //本地数据
-@property (nonatomic, strong)NSMutableArray           *dataArr;
+@property (nonatomic, strong)NSMutableArray           *localDataArr;
 @end
 
 static NSString * const cellIdentifier = @"cellID";
@@ -43,13 +43,13 @@ static NSString * const ZSHNearHeadViewID = @"ZSHNearHeadView";
 
 - (void)loadData{
     NSArray *baseDataArr = @[
-                             @{@"liveName":@"夏天在我手中",@"imageName":@"live_image_1", @"loveCount":@"33"},
-                             @{@"liveName":@"忘记时间的钟",@"imageName":@"live_image_2", @"loveCount":@"43"},
-                             @{@"liveName":@"流沙",@"imageName":@"live_image_3", @"loveCount":@"33"},
-                             @{@"liveName":@"夏天",@"imageName":@"live_image_4", @"loveCount":@"44"},
-                             @{@"liveName":@"绅士",@"imageName":@"live_image_5", @"loveCount":@"63"},
-                             @{@"liveName":@"拉流",@"imageName":@"live_image_6", @"loveCount":@"40"}];
-    self.dataArr = [ZSHLiveListModel mj_objectArrayWithKeyValuesArray:baseDataArr];
+                             @{@"LiveTitle":@"夏天在我手中",@"LiveCover":@"live_image_1", @"UserNumber":@"33",@"PublishUrl":AlivcPullURL},
+                             @{@"LiveTitle":@"忘记时间的钟",@"LiveCover":@"live_image_2", @"UserNumber":@"43",@"PublishUrl":AlivcPullURL},
+                             @{@"LiveTitle":@"流沙",@"LiveCover":@"live_image_3", @"UserNumber":@"33",@"PublishUrl":AlivcPullURL},
+                             @{@"LiveTitle":@"夏天",@"LiveCover":@"live_image_4", @"UserNumber":@"44",@"PublishUrl":AlivcPullURL},
+                             @{@"LiveTitle":@"绅士",@"LiveCover":@"live_image_5", @"UserNumber":@"63",@"PublishUrl":AlivcPullURL},
+                             @{@"LiveTitle":@"拉流",@"LiveCover":@"live_image_6", @"UserNumber":@"40",@"PublishUrl":AlivcPullURL}];
+    self.localDataArr = [ZSHLiveListModel mj_objectArrayWithKeyValuesArray:baseDataArr];
     
     _liveLogic = [[ZSHLiveLogic alloc]init];
     
@@ -71,7 +71,7 @@ static NSString * const ZSHNearHeadViewID = @"ZSHNearHeadView";
         make.edges.mas_equalTo(self.view).insets(UIEdgeInsetsMake(0, 0, KBottomTabH , 0));
     }];
     
-    [self.collectionView addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(collectionViewAction:)]];
+//    [self.collectionView addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(collectionViewAction:)]];
     
 }
 
@@ -201,6 +201,9 @@ static NSString * const ZSHNearHeadViewID = @"ZSHNearHeadView";
     [_liveLogic requestRecommendPushAddressListWithDic:dic success:^(id response) {
         [weakself endCollectionViewRefresh];
         _liveListArr = [ZSHLiveListModel mj_objectArrayWithKeyValuesArray:response[@"pd"][@"PUSHONLINE"][@"OnlineInfo"][@"LiveStreamOnlineInfo"]];
+        if (_liveListArr.count==0) {
+            _liveListArr = weakself.localDataArr;
+        }
         [weakself.collectionView reloadData];
     }];
 }
@@ -213,14 +216,12 @@ static NSString * const ZSHNearHeadViewID = @"ZSHNearHeadView";
     [_liveLogic requestNearPushAddressListWithDic:paramDic success:^(id response) {
         [weakself endCollectionViewRefresh];
         _liveListArr = [ZSHLiveListModel mj_objectArrayWithKeyValuesArray:response[@"pd"][@"PUSHONLINE"][@"OnlineInfo"][@"LiveStreamOnlineInfo"]];
+        if (_liveListArr.count==0) {
+            _liveListArr = weakself.localDataArr;
+        }
         [weakself.collectionView reloadData];
     }];
     
-    [_liveLogic requestLiveUserDataWithDic:paramDic success:^(id response) {
-        [weakself endCollectionViewRefresh];
-        
-        RLog(@"用户资料==%@",response);
-    }];
 }
 
 //附近筛选
@@ -230,6 +231,9 @@ static NSString * const ZSHNearHeadViewID = @"ZSHNearHeadView";
         [weakself endCollectionViewRefresh];
         _liveListArr = [ZSHLiveListModel mj_objectArrayWithKeyValuesArray:response[@"pd"][@"PUSHONLINE"][@"OnlineInfo"][@"LiveStreamOnlineInfo"]];
         [weakself.collectionView reloadData];
+        if (_liveListArr.count==0) {
+            _liveListArr = weakself.localDataArr;
+        }
     }];
     
 }

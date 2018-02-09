@@ -33,7 +33,6 @@
     
     _beautySettingView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, kRealValue(150))];
     _beautySettingView.backgroundColor = KZSHColorRGBA(1, 1, 1, 0.3);
-    //    _beautyView.hidden = YES;
     [self addSubview:_beautySettingView];
     [self setupBeautySettingViews];
     

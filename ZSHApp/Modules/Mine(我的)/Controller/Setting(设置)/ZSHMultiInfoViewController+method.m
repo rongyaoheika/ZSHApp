@@ -58,6 +58,10 @@
 - (void)submitActionWithDic:(NSDictionary *)paramDic names:(NSArray *)names images:(NSArray *)images fileNames:(NSArray *)fileNames{
     [self.entryLogic loadBusinessInDataWith:paramDic names:names images:images fileNames:fileNames success:^(id responseObject) {
         RLog(@"提交审核结果%@",responseObject);
+        if ([responseObject[@"result"]isEqualToString:@"01"]) {
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"提交审核成功" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            [alert show];
+        }
     } fail:nil];
 }
 @end

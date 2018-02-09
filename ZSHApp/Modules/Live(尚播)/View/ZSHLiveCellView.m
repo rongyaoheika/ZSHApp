@@ -81,7 +81,11 @@
 - (void)updateCellWithModel:(ZSHLiveListModel *)model{
 
     [self.loveBtn setTitle:[NSString stringWithFormat:@"%ld",[model.UserNumber integerValue]]  forState:UIControlStateNormal];
-    [self.bgImage sd_setImageWithURL:[NSURL URLWithString:model.LiveCover]];
+    if ([model.LiveCover containsString:@"http"]) {
+        [self.bgImage sd_setImageWithURL:[NSURL URLWithString:model.LiveCover]];
+    } else {
+        [self.bgImage setImage:[UIImage imageNamed:model.LiveCover]];
+    }
     self.nameLabel.text = model.LiveTitle;
     
 }

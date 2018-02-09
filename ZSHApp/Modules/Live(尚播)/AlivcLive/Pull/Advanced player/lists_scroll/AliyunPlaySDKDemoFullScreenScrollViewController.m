@@ -53,6 +53,13 @@ static NSString *cellId = @"customCell";
         [weakself.navigationController popViewControllerAnimated:YES];
     };
     
+    if(!self.publishUrl){
+        UIImageView *image = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"live_room_bg"]];
+        image.backgroundColor = [UIColor redColor];
+        image.frame = self.view.bounds;
+        [self.audienceView insertSubview:image atIndex:0];
+    }
+    
 }
 
 - (void)pushLivePersonInfoVCAction{

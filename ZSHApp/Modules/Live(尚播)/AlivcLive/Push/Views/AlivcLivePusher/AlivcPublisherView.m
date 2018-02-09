@@ -1320,7 +1320,7 @@ static CGFloat lastPinchDistance = 0;
 
 - (ZSHBeautyView *)beautyView{
     if (!_beautyView) {
-        _beautyView = [[ZSHBeautyView alloc]initWithFrame:CGRectMake(0, KScreenHeight, kScreenWidth, KScreenHeight*0.4) paramDic:@{@"config":self.config}];
+        _beautyView = [[ZSHBeautyView alloc]initWithFrame:CGRectMake(0, KScreenHeight, kScreenWidth, KScreenHeight*0.4+KBottomHeight) paramDic:@{@"config":self.config}];
     }
     return _beautyView;
 }
