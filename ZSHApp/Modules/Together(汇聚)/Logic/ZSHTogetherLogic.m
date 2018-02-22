@@ -8,7 +8,6 @@
 
 #import "ZSHTogetherLogic.h"
 
-
 @implementation ZSHTogetherLogic
 - (instancetype)init {
     if (self == [super init]) {
@@ -34,7 +33,20 @@
     kWeakSelf(self);
     [PPNetworkHelper POST:kUrlGetPartyList parameters:dic success:^(id responseObject) {
         weakself.entertainModelArr = [ZSHEntertainmentModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"]];
-        success(nil);
+        NSArray *arr = [ZSHADVERTISEMENTModel mj_objectArrayWithKeyValuesArray:responseObject[@"ad"]];
+        success(arr);
+    } failure:^(NSError *error) {
+        RLog(@"请求失败");
+    }];
+}
+
+// 获得指定某个类型下汇聚下所有聚会列表 (我发布,我参与)
+- (void)requestSinglePartyListWithDic:(NSDictionary *)dic success:(void(^)(id response))success {
+    kWeakSelf(self);
+    [PPNetworkHelper POST:kUrlGetPartyList parameters:dic success:^(id responseObject) {
+        weakself.entertainModelArr = [ZSHEntertainmentModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"]];
+        NSArray *arr = [ZSHADVERTISEMENTModel mj_objectArrayWithKeyValuesArray:responseObject[@"ad"]];
+        success(arr);
     } failure:^(NSError *error) {
         RLog(@"请求失败");
     }];
@@ -54,7 +66,7 @@
 
 // 发布聚会
 - (void)requestAddDetailParty:(NSDictionary *)dic images:(NSArray *)images fileNames:(NSArray *)fileNmaes  success:(void(^)(id response))success {
-    [PPNetworkHelper uploadImagesWithURL:kUrlAddDetailParty parameters:dic name:@"fileList" images:images fileNames:fileNmaes imageScale:1.0 imageType:nil progress:^(NSProgress *progress) {
+    [PPNetworkHelper uploadImagesWithURL:kUrlAddDetailParty parameters:dic names:@[@"fileList"] images:images fileNames:fileNmaes imageScale:1.0 imageType:nil progress:^(NSProgress *progress) {
         
     } success:^(id responseObject) {
         success(responseObject);
@@ -98,6 +110,33 @@
         //responseObject[@"pd"];
         success(nil);
         
+    } failure:^(NSError *error) {
+        RLog(@"%@", error);
+    }];
+}
+
+// 根据广告栏位置查询广告
+- (void)requestAdvertiseListWithAdPosition:(NSString *)AD_POSITION success:(void (^)(id response))success {
+    [PPNetworkHelper POST:kUrlAdvertiseList parameters:@{@"AD_POSITION":AD_POSITION} success:^(id responseObject) {
+        success(responseObject);
+    } failure:^(NSError *error) {
+        RLog(@"%@", error);
+    }];
+}
+
+
+// 修改点击广告的次数
+- (void)requestEditClickCountWithADVERTISEMENT_ID:(NSString *)ADVERTISEMENT_ID success:(void (^)(id response))success {
+    [PPNetworkHelper POST:kUrlEditClickCount parameters:@{@"CLICK_COUNT":@"1", @"ADVERTISEMENT_ID":ADVERTISEMENT_ID} success:^(id responseObject) {
+        success(responseObject);
+    } failure:^(NSError *error) {
+        RLog(@"%@", error);
+    }];
+}
+
+- (void)requestTogetherDataTypeWithACONVERGE_ID:(NSString *)CONVERGE_ID success:(void (^)(id response))success{
+    [PPNetworkHelper POST:kUrlGetConvergesort parameters:@{@"CONVERGE_ID":CONVERGE_ID} success:^(id responseObject) {
+        success(responseObject[@"pd"]);
     } failure:^(NSError *error) {
         RLog(@"%@", error);
     }];

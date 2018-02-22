@@ -19,6 +19,8 @@
 #import <TZVideoPlayerController.h>
 #import "XXTextView.h"
 #import "ZSHLiveLogic.h"
+#import "ZSHTopicViewController.h"
+#import "ZSHPickView.h"
 
 @interface ZSHWeiboWriteController ()<TZImagePickerControllerDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 {
@@ -33,7 +35,11 @@
 @property (strong, nonatomic) UICollectionViewFlowLayout     *layout;
 
 @property (nonatomic, strong) ZSHLiveLogic *liveLogic;
-@property (nonatomic, strong) XXTextView *contentTextView;
+@property (nonatomic, strong) XXTextView   *titleTextView;
+@property (nonatomic, strong) XXTextView   *contentTextView;
+@property (nonatomic, copy)   NSString     *topic;
+@property (nonatomic, copy)   NSString     *topicID;
+@property (nonatomic, strong) ZSHPickView  *pickView;
 
 @end
 
@@ -41,6 +47,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
     [self loadData];
     [self createUI];
 }
@@ -49,56 +56,183 @@
     _liveLogic = [[ZSHLiveLogic alloc] init];
     _selectedPhotos = [NSMutableArray array];
     _selectedAssets = [NSMutableArray array];
+    _topic = @"";
+    _topicID = @"";
 }
 
 - (void)createUI {
     self.title = @"发微博";
     [self addNavigationItemWithTitles:@[@"取消"] isLeft:true target:self action:@selector(cancelAction) tags:@[@(1)]];
     [self addNavigationItemWithTitles:@[@"去发布"] isLeft:NO target:self action:@selector(distributeAction) tags:@[@(2)]];
+
+
+    _titleTextView = [[XXTextView alloc] init];
+    _titleTextView.backgroundColor = KZSHColor181818;
+    _titleTextView.textColor = [UIColor whiteColor];
+    _titleTextView.textContainerInset = UIEdgeInsetsMake(10, 10, 10, 10);
+    _titleTextView.font = [UIFont systemFontOfSize:15];
+    _titleTextView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
+    if (kFromClassTypeValue == FromWordVCToZSHWeiboWriteVC || kFromClassTypeValue == FromPhotoVCToZSHWeiboWriteVC || kFromClassTypeValue == FromVideoVCToZSHWeiboWriteVC) {
+        _titleTextView.xx_placeholder = @"精选";
+    } else {
+        _titleTextView.xx_placeholder = @"标题";
+    }
+    _titleTextView.xx_placeholderFont = [UIFont systemFontOfSize:15];
+    _titleTextView.xx_placeholderColor = KZSHColor454545;
+    [self.view addSubview:_titleTextView];
+    [_titleTextView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(self.view).offset(kRealValue(79));
+        make.left.mas_equalTo(self.view).offset(kRealValue(15));
+        make.right.mas_equalTo(self.view).offset(kRealValue(-15));
+        make.height.mas_equalTo(kRealValue(43.5));
+    }];
+    
+    
+    kWeakSelf(self);
+    __weak typeof(_titleTextView)weakTitleTextView = _titleTextView;
+    _titleTextView.beginEdit = ^{
+        if (kFromClassTypeValue == FromWordVCToZSHWeiboWriteVC || kFromClassTypeValue == FromPhotoVCToZSHWeiboWriteVC || kFromClassTypeValue == FromVideoVCToZSHWeiboWriteVC) {
+            NSDictionary *nextParamDic = @{@"type":@(WindowDefault),@"midTitle":@"选择",@"dataArr":@[@"精选", @"数码", @"亲子", @"时尚", @"美食"]};
+            weakself.pickView = [[ZSHPickView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight) paramDic:nextParamDic];
+            [weakself.pickView show:WindowDefault];
+            weakself.pickView.saveChangeBlock = ^(NSString *rowTitle, NSInteger tag,NSDictionary *dic) {
+                weakself.titleTextView.xx_placeholder = rowTitle;
+                
+            };
+            [weakTitleTextView endEditing:true];
+            [weakTitleTextView resignFirstResponder];
+        } else {
+            ZSHTopicViewController *topicVC = [[ZSHTopicViewController alloc]initWithParamDic:@{KFromClassType:@(FromWeiboVCToTopicVC)}];
+            [weakself.navigationController pushViewController:topicVC animated:YES];
+            topicVC.didSelectRow = ^(NSString *topicTitle, NSString *topicID) {
+                weakTitleTextView.text = NSStringFormat(@"#%@#", topicTitle);
+                weakself.title = topicTitle;
+                weakself.topicID = topicID;
+                weakself.topic = topicTitle;
+            };
+        }
+    };
     
     XXTextView *contentTextView = [[XXTextView alloc] init];
     contentTextView.backgroundColor = KZSHColor181818;
     contentTextView.textColor = [UIColor whiteColor];
     contentTextView.font = [UIFont systemFontOfSize:15];
+    contentTextView.textContainerInset = UIEdgeInsetsMake(10, 10, 10, 10);
     contentTextView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
     contentTextView.keyboardAppearance = UIKeyboardAppearanceDark;
     contentTextView.xx_placeholder = @"请输入内容";
     contentTextView.xx_placeholderFont = [UIFont systemFontOfSize:15];
     contentTextView.xx_placeholderColor = KZSHColor454545;
     [self.view addSubview:contentTextView];
-    [contentTextView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.view).offset(kRealValue(KLeftMargin+KNavigationBarHeight));
-        make.left.mas_equalTo(self.view).offset(kRealValue(KLeftMargin));
-        make.size.mas_equalTo(CGSizeMake(KScreenWidth-30, kRealValue(177)));
+    [contentTextView mas_makeConstraints:^(MASConstraintMaker *make) {        
+        make.top.mas_equalTo(self.view).offset(kRealValue(123));
+        make.left.mas_equalTo(self.view).offset(kRealValue(15));
+        make.right.mas_equalTo(self.view).offset(kRealValue(-15));
+        make.height.mas_equalTo(kRealValue(144));
     }];
     self.contentTextView = contentTextView;
     
-    UILabel *noticeLabel = [ZSHBaseUIControl createLabelWithParamDic:@{@"text":@"最多支持4张图片上传，点击删除图片",@"font":kPingFangRegular(11),@"textColor":KZSHColor454545,@"textAlignment":@(NSTextAlignmentLeft)}];
-    [self.view addSubview:noticeLabel];
-    [noticeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.view).offset(kRealValue(278.5));
-        make.left.mas_equalTo(self.view).offset(kRealValue(25));
-        make.size.mas_equalTo(CGSizeMake(kRealValue(200), kRealValue(15)));
-    }];
     
-    [self configCollectionView];
-    
+    if (kFromClassTypeValue == FromWordVCToZSHWeiboWriteVC) {
+        
+    } else if (kFromClassTypeValue == FromVideoVCToZSHWeiboWriteVC) {
+        UILabel *noticeLabel = [ZSHBaseUIControl createLabelWithParamDic:@{@"text":@"最多支持1个视频上传，点击删除视频",@"font":kPingFangRegular(11),@"textColor":KZSHColor454545,@"textAlignment":@(NSTextAlignmentLeft)}];
+        [self.view addSubview:noticeLabel];
+        [noticeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.mas_equalTo(self.view).offset(kRealValue(278.5));
+            make.left.mas_equalTo(self.view).offset(kRealValue(25));
+            make.size.mas_equalTo(CGSizeMake(kRealValue(200), kRealValue(15)));
+        }];
+        
+        [self configCollectionView];
+    } else {
+        UILabel *noticeLabel = [ZSHBaseUIControl createLabelWithParamDic:@{@"text":@"最多支持4张图片上传，点击删除图片",@"font":kPingFangRegular(11),@"textColor":KZSHColor454545,@"textAlignment":@(NSTextAlignmentLeft)}];
+        [self.view addSubview:noticeLabel];
+        [noticeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.mas_equalTo(self.view).offset(kRealValue(278.5));
+            make.left.mas_equalTo(self.view).offset(kRealValue(25));
+            make.size.mas_equalTo(CGSizeMake(kRealValue(200), kRealValue(15)));
+        }];
+        
+        [self configCollectionView];
+    }
 }
+
+
+-(ZSHPickView *)createPickViewWithParamDic:(NSDictionary *)paramDic{
+    ZSHPickView *pickView = [[ZSHPickView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight) paramDic:paramDic];
+    pickView.controller = self;
+    return pickView;
+}
+
 - (void)toolButtonAction:(UIBarButtonItem *)btn {
     
 }
 
 
 - (void)distributeAction {
+    kWeakSelf(self);
     if (_contentTextView.text.length) {
         NSMutableArray *fileNames = [NSMutableArray arrayWithCapacity:_selectedAssets.count];
         for (PHAsset *asset in _selectedAssets) {
             [fileNames addObject:[asset valueForKey:@"filename"]];
         }
         
-        [_liveLogic requestAddCircle:@{@"HONOURUSER_ID":HONOURUSER_IDValue, @"CONTENT":_contentTextView.text} images:_selectedPhotos fileNames:fileNames success:^(id response) {
+        if (kFromClassTypeValue == FromWordVCToZSHWeiboWriteVC) {
+
+        } else if (kFromClassTypeValue == FromPhotoVCToZSHWeiboWriteVC) {
+            NSString *DIS_TYPE = @"";
+            if (_selectedPhotos.count == 0) {
+                DIS_TYPE = @"2002";
+            } else if (_selectedPhotos.count == 1){
+                DIS_TYPE = @"2003";
+            } else if (_selectedPhotos.count > 1){
+                DIS_TYPE = @"2004";
+            }
             
-        }];
+            [_liveLogic requestAddSelfMediaAD:@{@"HONOURUSER_ID":HONOURUSER_IDValue, @"TITLE":_contentTextView.text, @"DIS_TYPE":DIS_TYPE, @"CAIDAN_ID":self.paramDic[@"CAIDAN_ID"]} images:_selectedPhotos fileNames:fileNames success:^(id response) {
+                UIAlertController *ac = [UIAlertController alertControllerWithTitle:@"提示" message:@"发布成功" preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                    [weakself.navigationController popViewControllerAnimated:true];
+                }];
+                [ac addAction:cancelAction];
+                [weakself presentViewController:ac animated:YES completion:nil];
+            }];
+        } else if (kFromClassTypeValue == FromVideoVCToZSHWeiboWriteVC) {
+            [[TZImageManager manager] getVideoOutputPathWithAsset:_selectedAssets.firstObject presetName:AVAssetExportPreset640x480 success:^(NSString *outputPath) {
+                NSLog(@"视频导出到本地完成,沙盒路径为:%@",outputPath);
+                [weakself.liveLogic requestUpVideoWithDic:@{@"DIS_TYPE": @"2001", @"TITLE ":_contentTextView.text, @"HONOURUSER_ID":HONOURUSER_IDValue, @"CAIDAN_ID":self.paramDic[@"CAIDAN_ID"]} withFilePath:outputPath thumb:_selectedPhotos.firstObject success:^(id response) {
+                    UIAlertController *ac = [UIAlertController alertControllerWithTitle:@"提示" message:@"发布成功" preferredStyle:UIAlertControllerStyleAlert];
+                    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                        [weakself.navigationController popViewControllerAnimated:true];
+                    }];
+                    [ac addAction:cancelAction];
+                    [weakself presentViewController:ac animated:YES completion:nil];
+                }];
+                // Export completed, send video here, send by outputPath or NSData
+                // 导出完成，在这里写上传代码，通过路径或者通过NSData上传
+            } failure:^(NSString *errorMessage, NSError *error) {
+                NSLog(@"视频导出失败:%@,error:%@",errorMessage, error);
+            }];
+            
+        } else {
+            [_liveLogic requestAddCircle:@{@"HONOURUSER_ID":HONOURUSER_IDValue, @"CONTENT":_contentTextView.text, @"TOPIC_ID":_topicID, @"TITLE":_topic} images:_selectedPhotos fileNames:fileNames success:^(id response) {
+                UIAlertController *ac = [UIAlertController alertControllerWithTitle:@"提示" message:@"发布成功" preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                    [weakself.navigationController popViewControllerAnimated:true];
+                }];
+                [ac addAction:cancelAction];
+                [weakself presentViewController:ac animated:YES completion:nil];
+            }];
+        }
+        
+
+        
+        if ([_topicID isEqualToString:@""] && ![_topic isEqualToString:@""]) {
+            [_liveLogic requestAddTopicWithDic:@{@"HONOURUSER_ID":HONOURUSER_IDValue,@"TITLE":_topic} success:^(id response) {
+                
+            }];
+        }
     }
 }
 
@@ -124,15 +258,19 @@
 
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
-    NSInteger contentSizeH = 298.5;
     
-    _margin = 4;
-    _itemWH = (self.view.tz_width-30 - 2 * _margin - 4) / 4 - _margin;
-    _layout.itemSize = CGSizeMake(_itemWH, _itemWH);
-    _layout.minimumInteritemSpacing = _margin;
-    _layout.minimumLineSpacing = _margin;
-    [self.collectionView setCollectionViewLayout:_layout];
-    self.collectionView.frame = CGRectMake(15, contentSizeH, self.view.tz_width-30, self.view.tz_height - contentSizeH);
+    if (kFromClassTypeValue == FromWordVCToZSHWeiboWriteVC) {
+        
+    } else {
+        NSInteger contentSizeH = 298.5;
+        _margin = 4;
+        _itemWH = (self.view.tz_width-30 - 2 * _margin - 4) / 4 - _margin;
+        _layout.itemSize = CGSizeMake(_itemWH, _itemWH);
+        _layout.minimumInteritemSpacing = _margin;
+        _layout.minimumLineSpacing = _margin;
+        [self.collectionView setCollectionViewLayout:_layout];
+        self.collectionView.frame = CGRectMake(15, contentSizeH, self.view.tz_width-30, self.view.tz_height - contentSizeH);
+    }
 }
 
 - (void)initViewModel {
@@ -159,7 +297,6 @@
         }
         NSDictionary *titleTextAttributes = [tzBarItem titleTextAttributesForState:UIControlStateNormal];
         [BarItem setTitleTextAttributes:titleTextAttributes forState:UIControlStateNormal];
-        
     }
     return _imagePickerVc;
 }
@@ -270,8 +407,14 @@
 #pragma mark - TZImagePickerController
 
 - (void)pushTZImagePickerController {
+    NSInteger maxImagesCount = 0;
+    if (kFromClassTypeValue == FromVideoVCToZSHWeiboWriteVC) {
+        maxImagesCount = 1;
+    } else {
+        maxImagesCount = 4;
+    }
     
-    TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:4 columnNumber:4 delegate:self pushPhotoPickerVc:YES];
+    TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:maxImagesCount columnNumber:4 delegate:self pushPhotoPickerVc:YES];
     // imagePickerVc.navigationBar.translucent = NO;
     
 #pragma mark - 五类个性化设置，这些参数都可以不传，此时会走默认设置
@@ -294,11 +437,20 @@
     
     // 3. Set allow picking video & photo & originalPhoto or not
     // 3. 设置是否可以选择视频/图片/原图
-    imagePickerVc.allowPickingVideo = false;
-    imagePickerVc.allowPickingImage = true;
-    imagePickerVc.allowPickingOriginalPhoto = false;
-    imagePickerVc.allowPickingGif = false;
-    imagePickerVc.allowPickingMultipleVideo = false; // 是否可以多选视频
+    if (kFromClassTypeValue == FromVideoVCToZSHWeiboWriteVC) { // 视频
+        imagePickerVc.allowPickingVideo = true;
+        imagePickerVc.allowPickingImage = false;
+        imagePickerVc.allowPickingOriginalPhoto = false;
+        imagePickerVc.allowPickingGif = false;
+        imagePickerVc.allowPickingMultipleVideo = true; // 是否可以多选视频
+    } else {
+        imagePickerVc.allowPickingVideo = false;
+        imagePickerVc.allowPickingImage = true;
+        imagePickerVc.allowPickingOriginalPhoto = false;
+        imagePickerVc.allowPickingGif = false;
+        imagePickerVc.allowPickingMultipleVideo = false; // 是否可以多选视频
+    }
+
     
     // 4. 照片排列按修改时间升序
     imagePickerVc.sortAscendingByModificationDate = YES;
@@ -311,7 +463,7 @@
     
     /// 5. Single selection mode, valid when maxImagesCount = 1
     /// 5. 单选模式,maxImagesCount为1时才生效
-    imagePickerVc.showSelectBtn = NO;
+    imagePickerVc.showSelectBtn = true;
     imagePickerVc.allowCrop = NO;
     imagePickerVc.needCircleCrop = NO;
     // 设置竖屏下的裁剪尺寸
@@ -342,9 +494,9 @@
     
     // You can get the photos by block, the same as by delegate.
     // 你可以通过block或者代理，来得到用户选择的照片.
-    [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL isSelectOriginalPhoto) {
-        
-    }];
+//    [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL isSelectOriginalPhoto) {
+//
+//    }];
     
     [self presentViewController:imagePickerVc animated:YES completion:nil];
 }
@@ -523,13 +675,13 @@
     _selectedPhotos = [NSMutableArray arrayWithArray:@[coverImage]];
     _selectedAssets = [NSMutableArray arrayWithArray:@[asset]];
     // open this code to send video / 打开这段代码发送视频
-    [[TZImageManager manager] getVideoOutputPathWithAsset:asset presetName:AVAssetExportPreset640x480 success:^(NSString *outputPath) {
-        NSLog(@"视频导出到本地完成,沙盒路径为:%@",outputPath);
-        // Export completed, send video here, send by outputPath or NSData
-        // 导出完成，在这里写上传代码，通过路径或者通过NSData上传
-    } failure:^(NSString *errorMessage, NSError *error) {
-        NSLog(@"视频导出失败:%@,error:%@",errorMessage, error);
-    }];
+//    [[TZImageManager manager] getVideoOutputPathWithAsset:asset presetName:AVAssetExportPreset640x480 success:^(NSString *outputPath) {
+//        NSLog(@"视频导出到本地完成,沙盒路径为:%@",outputPath);
+//        // Export completed, send video here, send by outputPath or NSData
+//        // 导出完成，在这里写上传代码，通过路径或者通过NSData上传
+//    } failure:^(NSString *errorMessage, NSError *error) {
+//        NSLog(@"视频导出失败:%@,error:%@",errorMessage, error);
+//    }];
     [self.collectionView reloadData];
     // self.collectionView.contentSize = CGSizeMake(0, ((_selectedPhotos.count + 2) / 3 ) * (_margin + _itemWH));
 }

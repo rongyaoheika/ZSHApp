@@ -32,31 +32,42 @@
     _liveLogic = [[ZSHLiveLogic alloc] init];
     
     [self initViewModel];
-    [self requestData];
+    if (kFromClassTypeValue == FromPersonalVCToWeiboVC) {
+        [self requestLiveWeiboData];
+    } else {
+         [self requestData];
+    }
+   
 }
 
 - (void)createUI{
     self.title = @"黑微博";
     
     [self.view addSubview:self.tableView];
-    if (kFromClassTypeValue == FromPersonalVCToWeiboVC) {
-        [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+    switch (kFromClassTypeValue) {
+        case FromTabbarToWeiboVC:
+        case FromSelectToWeiboVC:{
+            [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.edges.mas_equalTo(self.view).insets(UIEdgeInsetsMake(KNavigationBarHeight, 0, 0, 0));
+            }];
+            break;
+        }
+        case FromMineVCToWeiboVC:{
+            self.title = @"圈子中心";
+            [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.edges.mas_equalTo(self.view).insets(UIEdgeInsetsMake(KNavigationBarHeight, 0, 0, 0));
+            }];
+            break;
+        }
+            
+        default:{
+            [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.edges.mas_equalTo(self.view);
-        }];
-    } else if (kFromClassTypeValue == FromTabbarToWeiboVC ||kFromClassTypeValue == FromSelectToWeiboVC) {
-        [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.mas_equalTo(self.view).insets(UIEdgeInsetsMake(KNavigationBarHeight, 0, 0, 0));
-        }];
-    } else if (kFromClassTypeValue == FromMineVCToWeiboVC) {
-        self.title = @"圈子中心";
-        [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.mas_equalTo(self.view).insets(UIEdgeInsetsMake(KNavigationBarHeight, 0, 0, 0));
-        }];
-    } else {
-        [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.mas_equalTo(self.view);
-        }];
+            }];
+        }
+            break;
     }
+
     self.tableView.delegate = self.tableViewModel;
     self.tableView.dataSource = self.tableViewModel;
     [self.tableView registerClass:[ZSHWeiBoCell class] forCellReuseIdentifier:NSStringFromClass([ZSHWeiBoCell class])];
@@ -99,6 +110,15 @@
     [_liveLogic requestCircleList:^(id response) {
         weakself.dataArr = response;
         [weakself initViewModel];
+    }];
+}
+
+- (void)requestLiveWeiboData{
+    kWeakSelf(self);
+    [_liveLogic requestLiveWeiboDataWithDic:@{@"HONOURUSER_ID":HONOURUSER_IDValue} success:^(id response) {
+        
+         weakself.dataArr = response;
+         [weakself initViewModel];
     }];
 }
 

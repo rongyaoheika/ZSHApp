@@ -43,14 +43,14 @@
 static NSString *ZSHDetailShufflingHeadViewID = @"ZSHDetailShufflingHeadView";
 
 //cell
-static NSString *ZSHDetailGoodReferralCellID = @"ZSHDetailGoodReferralCell";
-static NSString *ZSHDetailGoodBottomCellID = @"ZSHDetailGoodBottomCellID";
-static NSString *ZSHGoodsDetailColorCellID = @"ZSHGoodsDetailColorCell";
-static NSString *ZSHGoodsDetailCountCellID = @"ZSHGoodsDetailCountCell";
+static NSString *ZSHDetailGoodReferralCellID    = @"ZSHDetailGoodReferralCell";
+static NSString *ZSHDetailGoodBottomCellID      = @"ZSHDetailGoodBottomCellID";
+static NSString *ZSHGoodsDetailColorCellID      = @"ZSHGoodsDetailColorCell";
+static NSString *ZSHGoodsDetailCountCellID      = @"ZSHGoodsDetailCountCell";
+static NSString *ZSHGoodsChartCellID            = @"ZSHGoodsChartCell";
+static NSString *ZSHGoodsDetailSubCellID        = @"ZSHGoodsDetailSubCell";
+static NSString *ZSHGoodsDetailCommentCellID    = @"ZSHGoodsDetailCommentCell";
 
-static NSString *ZSHGoodsChartCellID = @"ZSHGoodsChartCell";
-static NSString *ZSHGoodsDetailSubCellID = @"ZSHGoodsDetailSubCell";
-static NSString *ZSHGoodsDetailCommentCellID = @"ZSHGoodsDetailCommentCell";
 
 @implementation ZSHGoodsDetailViewController
 
@@ -345,12 +345,16 @@ static NSString *ZSHGoodsDetailCommentCellID = @"ZSHGoodsDetailCommentCell";
         weakself.commentArr = weakself.buyLogic.goodCommentModelArr;
         [weakself.collectionView reloadData];
     }];
+    
+//    [_buyLogic requestGetProbyStandard:@{@"PRODUCT_ID":_goodModel.PRODUCT_ID } success:^(id response) {
+//        
+//    }];
 }
 
 
 - (void)addCart {
     if (_count<1) _count = 1;
-    [_buyLogic requestShoppingCartAddWithDic:@{@"PRODUCT_ID":_buyLogic.goodDetailModel.PRODUCT_ID, @"HONOURUSER_ID":HONOURUSER_IDValue, @"PRODUCTCOUNT":@(_count)} success:^(id response) {
+    [_buyLogic requestShoppingCartAddWithDic:@{@"PRODUCT_ID":_buyLogic.goodDetailModel.PRODUCT_ID, @"HONOURUSER_ID":HONOURUSER_IDValue, @"QUANTITY":@(_count)} success:^(id response) {
         UIAlertController *ac = [UIAlertController alertControllerWithTitle:@"提示" message:@"添加成功" preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleCancel handler:nil];
         [ac addAction:cancelAction];
@@ -374,8 +378,6 @@ static NSString *ZSHGoodsDetailCommentCellID = @"ZSHGoodsDetailCommentCell";
     CGFloat alpha = 1 - (offsetToShow - scrollView.contentOffset.y) / offsetToShow;
     self.titleView.alpha = alpha;
     
-    RLog(@"alpha== %f",alpha);
-    
     if (scrollView.contentOffset.y >= 200 && scrollView.contentOffset.y <= 400) {
         if ( self.titleView.selectedIndex != 0) {
              self.titleView.selectedIndex = 0;
@@ -390,7 +392,6 @@ static NSString *ZSHGoodsDetailCommentCellID = @"ZSHGoodsDetailCommentCell";
             self.titleView.selectedIndex = 2;
         }
     }
-    
 }
 
 @end

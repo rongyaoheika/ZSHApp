@@ -15,6 +15,7 @@
 @interface ZSHBlackCardPhoneNumView ()<UIScrollViewDelegate>
 
 @property (nonatomic, strong) NSArray                   *titleArr;
+@property (nonatomic, strong) UIImageView               *bgIV;
 @property (nonatomic, strong) LXScollTitleView          *titleView;
 @property (nonatomic, strong) UIScrollView              *blackCardScrollView;
 
@@ -29,7 +30,11 @@
 - (void)setup{
     _titleArr = @[@"300元",@"600元",@"1000元",@"5000元",@"10000元"];
     [self addSubview:self.titleView];
+    
+    _bgIV = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"seg_five_bg_normal"]];
+    [_titleView addSubview:_bgIV];
     [self.titleView reloadViewWithTitles:_titleArr];
+    self.titleView.selectedIndex = 0;
     
     [self addSubview:self.blackCardScrollView];
     for (int i = 0; i<_titleArr.count; i++) {
@@ -37,11 +42,23 @@
         [self.blackCardScrollView addSubview:listView];
     }
     
+   
+    
+//     [self requestData];
+}
+
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    
     [_titleView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self);
         make.width.mas_equalTo(kRealValue(298));
         make.left.mas_equalTo((KScreenWidth- kRealValue(298))/2);
         make.height.mas_equalTo(kRealValue(30));
+    }];
+    [_bgIV mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.mas_equalTo(_titleView);
     }];
     
     int i = 0;
@@ -54,12 +71,6 @@
         i++;
     }
     
-//     [self requestData];
-}
-
-
-- (void)updateConstraints {
-    [super updateConstraints];
     NSInteger count = _titleArr.count;
     CGFloat viewHeight = CGRectGetHeight(self.frame);
     _blackCardScrollView.contentSize = CGSizeMake(count*KScreenWidth, viewHeight- kRealValue(33));
@@ -107,22 +118,27 @@
 - (LXScollTitleView *)titleView{
     if (!_titleView) {
         _titleView = [[LXScollTitleView alloc] initWithFrame:CGRectMake(0, 0, kRealValue(298), kRealValue(30))];
-        _titleView.selectedBgImage = [UIImage imageNamed:@"seg_five_bg_press"];
         _titleView.normalTitleFont = kPingFangRegular(11);
         _titleView.selectedTitleFont = kPingFangRegular(11);
         _titleView.selectedColor = KZSHColorF29E19;
         _titleView.normalColor = KZSHColor929292;
+        _titleView.selectedBorderColor = KZSHColorF29E19;
+        _titleView.normalBorderColor = KClearColor;
         _titleView.indicatorHeight = 0;
         __weak typeof(self) weakSelf = self;
         _titleView.selectedBlock = ^(NSInteger index){
             __weak typeof(self) strongSelf = weakSelf;
-            [strongSelf.blackCardScrollView setContentOffset:CGPointMake(index * KScreenWidth, 0) animated:YES];
-            
+            strongSelf.selectIndex = index;
         };
-        _titleView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"seg_five_bg_normal"] ];
         _titleView.titleWidth = kRealValue(60);
     }
     return _titleView;
+}
+
+- (void)setSelectIndex:(NSInteger)selectIndex{
+    _selectIndex = selectIndex;
+    [self.blackCardScrollView setContentOffset:CGPointMake(_selectIndex * KScreenWidth, 0) animated:YES];
+    
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
@@ -136,7 +152,6 @@
 }
 
 - (void)requestData {
-    //（1 自选号码库 2 贵宾号码库 3 金钻号码库 4荣耀号码库 5 超级黑卡靓号号码库）
     kWeakSelf(self);
     [_loginLogic requestCardNumWithDic:@{@"CARDTYPE_ID":self.paramDic[@"type"]} success:^(id response) {
         weakself.cardNumArr = [ZSHCardNumModel mj_objectArrayWithKeyValuesArray:response[@"pd"]];

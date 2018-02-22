@@ -120,7 +120,7 @@
 
 // 上传头像
 - (void)uploadImage:(NSArray *)imageArr name:(NSArray *)nameArr success:(void (^)(id response))success {
-    [PPNetworkHelper uploadImagesWithURL:kUrlUp parameters:@{@"HONOURUSER_ID":HONOURUSER_IDValue} name:@"showfile" images:imageArr fileNames:@[@"headImage.jpg"] imageScale:1.0 imageType:@"image/jpeg" progress:^(NSProgress *progress) {
+    [PPNetworkHelper uploadImagesWithURL:kUrlUp parameters:@{@"HONOURUSER_ID":HONOURUSER_IDValue} names:@[@"showfile"] images:imageArr fileNames:@[@"headImage.jpg"] imageScale:1.0 imageType:@"image/jpeg" progress:^(NSProgress *progress) {
         
     } success:^(id responseObject) {
         success(responseObject);
@@ -186,7 +186,7 @@
         RLog(@"请求失败");
     }];
 }
-// 获取我的优惠券，黑咖币，能量值
+// 获取我的优惠券，黑卡币，能量值
 - (void)requestCouBlackEnergy:(void (^)(id response))success {
     [PPNetworkHelper POST:kUrlGetMyCouBlackEnergy parameters:@{@"HONOURUSER_ID":HONOURUSER_IDValue} success:^(id responseObject) {
         success(responseObject);
@@ -213,4 +213,27 @@
         RLog(@"请求失败");
     }];
 }
+
+
+// 修改用户手机号码
+- (void)requestUserPhone:(NSDictionary *)dic success:(void (^)(id response))success {
+    [PPNetworkHelper POST:kUrlUpdUserphone parameters:dic success:^(id responseObject) {
+        success(responseObject);
+    } failure:^(NSError *error) {
+        RLog(@"请求失败");
+    }];
+}
+
+
+// 根据店铺获取优惠券列表
+- (void)requestCouponList:(NSDictionary *)dic success:(void (^)(id response))success {
+    [PPNetworkHelper POST:kUrlCouponList parameters:dic success:^(id responseObject) {
+        success(responseObject);
+    } failure:^(NSError *error) {
+        RLog(@"请求失败");
+    }];
+}
+
+
+
 @end

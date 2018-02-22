@@ -35,9 +35,9 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 }
 
 - (void)createUI{
-    self.title = @"黑咖币";
+    self.title = @"黑卡币";
     
-    NSDictionary *nextParamDic = @{@"headKeyTitle":@"黑咖币余额",@"headValueTitle":@"500.00"};
+    NSDictionary *nextParamDic = @{@"headKeyTitle":@"黑卡币余额",@"headValueTitle":@"500.00"};
     self.headerView = [[ZSHQuotaHeadView alloc]initWithFrame:CGRectZero paramDic:nextParamDic];
     [self.view addSubview:self.headerView];
     [self.headerView mas_makeConstraints:^(MASConstraintMaker *make) {

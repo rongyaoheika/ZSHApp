@@ -43,18 +43,24 @@ static NSString *bottomCellIdentifier   = @"listCell";
 - (void)loadData{
     self.titleArr = @[@"会员中心",@"管家中心",@"圈子中心",
                       @"活动中心",@"购物中心",@"客服中心",
-                      @"钱包中心",@"游戏中心",@"订单中心",@"设置"];
-    self.imageArr = @[@"mine_icon_1",@"mine_icon_2",@"mine_icon_3",@"mine_icon_4",@"mine_icon_5",@"mine_icon_6",@"mine_icon_7",@"mine_icon_8",@"mine_icon_10",@"mine_icon_9"];
+                      @"钱包中心",@"游戏中心",@"订单中心",
+                      @"音乐中心",@"我要入驻",@"设置"];
+    self.imageArr = @[@"mine_icon_1",@"mine_icon_2",@"mine_icon_3",
+                      @"mine_icon_4",@"mine_icon_5",@"mine_icon_6",
+                      @"mine_icon_7",@"mine_icon_8",@"mine_icon_10",
+                      @"mine_icon_11",@"mine_icon_12",@"mine_icon_9"];
     self.pushVCS = @[
   @"ZSHMemberCenterViewController",@"",@"ZSHWeiboViewController",
   @"ZSHTitleContentViewController",@"",@"ZSHServiceCenterViewController",
-  @"ZSHWalletCenterViewController",@"ZSHGameCenterViewController", @"ZSHGoodsMineViewController",@"ZSHSettingViewController"];
+  @"ZSHWalletCenterViewController",@"ZSHGameCenterViewController", @"ZSHGoodsMineViewController",
+  @"ZSHMusicMainViewController",@"ZSHJoininViewController", @"ZSHSettingViewController"];
     self.paramArr = @[@{},@{},@{KFromClassType:@(FromMineVCToWeiboVC)},
   @{KFromClassType:@(FromActivityCenterVCToTitleContentVC),@"title":@"活动中心"},@{},
   @{KFromClassType:@(ZSHFromMineServiceVCToServiceCenterVC),@"title":@"客服中心",
    @"titleArr":@[@"客服1",@"客服2",@"客服3",@"客服4"],
    @"imageArr":@[@"mine_service",@"mine_service",@"mine_service",@"mine_service"]},
-  @{},@{},@{},@{}];
+                      @{},@{},
+                      @{},@{},@{},@{}];
     
     [self initViewModel];
     _mineLogic = [[ZSHMineLogic alloc] init];
@@ -64,7 +70,7 @@ static NSString *bottomCellIdentifier   = @"listCell";
 - (void)createUI{
     self.title = @"我的";
     
-    self.tableView.frame = CGRectMake(0, KNavigationBarHeight, KScreenWidth, KScreenHeight-KNavigationBarHeight-KBottomNavH);
+    self.tableView.frame = CGRectMake(0, KNavigationBarHeight, KScreenWidth, KScreenHeight-KNavigationBarHeight-KBottomTabH);
     [self.view addSubview:self.tableView];
     self.tableView.delegate = self.tableViewModel;
     self.tableView.dataSource = self.tableViewModel;
@@ -129,6 +135,16 @@ static NSString *bottomCellIdentifier   = @"listCell";
             ZSHBaseCell *cell = [tableView dequeueReusableCellWithIdentifier:bottomCellIdentifier];
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             cell.imageView.image = [UIImage imageNamed:weakself.imageArr[indexPath.row]];
+            if (indexPath.row == 10) {
+                //调整image的大小
+                CGSize size = CGSizeMake(19, 19);
+                cell.imageView.size = size;
+                UIGraphicsBeginImageContextWithOptions(size, NO,0.0);
+                CGRect imageRect=CGRectMake(0.0, 0.0, size.width, size.height);
+                [cell.imageView.image drawInRect:imageRect];
+                cell.imageView.image = UIGraphicsGetImageFromCurrentImageContext();
+                UIGraphicsEndImageContext();
+            }
             cell.textLabel.text = weakself.titleArr[indexPath.row];
             return cell;
         };
@@ -139,7 +155,6 @@ static NSString *bottomCellIdentifier   = @"listCell";
             [weakself.navigationController pushViewController:vc animated:YES];
         };
     }
-    
     return sectionModel;
 }
 

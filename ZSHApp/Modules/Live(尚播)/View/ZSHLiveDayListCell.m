@@ -94,9 +94,13 @@
         self.championImageView.image = [[UIImage alloc] init];
     }
     self.rankLable.text = [NSString stringWithFormat:@"%ld", [dic[@"index"] integerValue] + 1];
-    self.headImageView.image = [UIImage imageNamed:dic[@"imageName"]];
-    self.nicknameLabel.text = dic[@"nickname"];
-    self.valueLabel.text = [NSString stringWithFormat:@"贡献值：%@", dic[@"value"]];
+//    self.headImageView.image = [UIImage imageNamed:dic[@"imageName"]];
+//    self.nicknameLabel.text = dic[@"nickname"];
+//    self.valueLabel.text = [NSString stringWithFormat:@"贡献值：%@", dic[@"value"]];
+//     self.paramDic = dic;
+    [self.headImageView sd_setImageWithURL:[NSURL URLWithString:dic[@"PORTRAIT"]]];
+    self.nicknameLabel.text = dic[@"NICKNAME"];
+    self.valueLabel.text = [NSString stringWithFormat:@"贡献值：%@", dic[@"PKPARA"]];
     self.paramDic = dic;
     [self layoutIfNeeded];
     

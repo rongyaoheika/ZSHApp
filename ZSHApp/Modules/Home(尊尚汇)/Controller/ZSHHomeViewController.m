@@ -26,8 +26,11 @@
 #import "ZSHKTVDetailViewController.h"
 #import "PYSearchViewController.h"
 #import "ZSHGoodsTitleContentViewController.h"
-
 #import "GYZChooseCityController.h"
+#import "ZSHFindViewController.h"
+#import "ZSHMagazineViewController.h"
+#import "ZSHGuideView.h"
+#import "ZSHMusicMainViewController.h"
 
 static NSString *Identify_HeadCell = @"headCell";
 static NSString *Identify_NoticeCell = @"noticeCell";
@@ -36,8 +39,9 @@ static NSString *Identify_PlayCell = @"playCell";
 static NSString *Identify_MagazineCell = @"magazineCell";
 static NSString *Identify_MusicCell = @"musicCell";
 
-@interface ZSHHomeViewController ()<UISearchBarDelegate,GYZChooseCityDelegate>
 
+
+@interface ZSHHomeViewController ()<UISearchBarDelegate,GYZChooseCityDelegate,PYSearchViewControllerDelegate,HCLocationManagerDelegate>
 
 @property (nonatomic, strong) NSArray                *pushVCsArr;
 @property (nonatomic, strong) NSArray                *paramArr;
@@ -53,6 +57,14 @@ static NSString *Identify_MusicCell = @"musicCell";
 
 @property (nonatomic, strong) NSArray                *musicPushVCsArr;
 @property (nonatomic, strong) NSArray                *musicParamArr;
+
+@property (nonatomic, strong) NSArray                *hotSearchArr;
+@property (nonatomic, strong) NSArray                *recommendImageArr;
+
+@property (nonatomic, strong) PYSearchViewController *searchViewController;
+
+
+
 @end
 
 @implementation ZSHHomeViewController
@@ -65,6 +77,8 @@ static NSString *Identify_MusicCell = @"musicCell";
 }
 
 - (void)loadData{
+    [self startLocateWithDelegate:self];
+     _homeLogic = [[ZSHHomeLogic alloc]init];
     //加载网络数据
     [self requestData];
     
@@ -73,11 +87,9 @@ static NSString *Identify_MusicCell = @"musicCell";
                         @"ZSHTitleContentViewController",
                         @"ZSHAirPlaneViewController",
                         @"ZSHAirPlaneViewController",
-                        
                         @"ZSHTitleContentViewController",     //马术
                         @"ZSHTitleContentViewController",     //游艇
                         @"ZSHTitleContentViewController",     //豪车
-                        
                         @"ZSHMoreSubscribeViewController"];   //更多
     
     self.paramArr = @[
@@ -112,7 +124,14 @@ static NSString *Identify_MusicCell = @"musicCell";
 
 - (void)requestData{
     kWeakSelf(self);
-    _homeLogic = [[ZSHHomeLogic alloc]init];
+   
+    
+    if (kIsIphoneX && kiOS11Later) {
+        if (@available(ios 11.0, *)) {
+            [self prefersHomeIndicatorAutoHidden];
+        }
+    }
+   
     
     [_homeLogic loadNewsCellDataSuccess:^(id responseObject) {
         NSIndexSet *indexSet = [[NSIndexSet alloc]initWithIndex:1];
@@ -158,7 +177,8 @@ static NSString *Identify_MusicCell = @"musicCell";
 }
 
 - (void)createUI{
-    [self addNavigationItemWithImageName:@"nav_home_more" title:@"三亚" locate:XYButtonEdgeInsetsStyleRight isLeft:YES target:self action:@selector(locateBtnAction) tag:10];
+    [self hasUpdateVersion];
+    [self addNavigationItemWithImageName:@"nav_home_more" title:@"三亚市" locate:XYButtonEdgeInsetsStyleRight isLeft:YES target:self action:@selector(locateBtnAction) tag:10];
     [self addNavigationItemWithImageName:@"nav_home_menu" isLeft:NO target:self action:@selector(menuBtntClick:) tag:11];
     
     UIButton *searchBtn = [ZSHBaseUIControl createBtnWithParamDic:@{@"title":@"搜索",@"font":kPingFangRegular(14),@"withImage":@(YES),@"normalImage":@"nav_home_search"}];
@@ -175,17 +195,15 @@ static NSString *Identify_MusicCell = @"musicCell";
 //    self.navigationItem.titleView = self.searchView;
 //    self.searchView.searchBar.delegate = self;
 
-    self.tableView.frame = CGRectMake(0, KNavigationBarHeight + kRealValue(25), KScreenWidth, KScreenHeight-KNavigationBarHeight- kRealValue(25) - KBottomNavH);
+    self.tableView.frame = CGRectMake(0, KNavigationBarHeight + kRealValue(25), KScreenWidth, KScreenHeight-KNavigationBarHeight- kRealValue(25) - KBottomTabH);
     [self.view addSubview:self.tableView];
     self.tableView.delegate = self.tableViewModel;
     self.tableView.dataSource = self.tableViewModel;
     
 	[self.tableView registerClass:[ZSHHomeHeadView class] forCellReuseIdentifier:Identify_HeadCell];
-
-//	[self.tableView registerClass:[ZSHBaseTitleButtonCell class] forCellReuseIdentifier:Identify_NoticeCell];
+    [self.tableView registerClass:[ZSHBaseTitleButtonCell class] forCellReuseIdentifier:Identify_NoticeCell];
     [self.tableView registerClass:[ZSHBaseTitleButtonCell class] forCellReuseIdentifier:Identify_ServiceCell];
-
-	[self.tableView registerClass:[ZSHNoticeViewCell class] forCellReuseIdentifier:Identify_PlayCell];
+	[self.tableView registerClass:[ZSHBaseCell class] forCellReuseIdentifier:Identify_PlayCell];
     [self.tableView registerClass:[ZSHBaseTitleButtonCell class] forCellReuseIdentifier:Identify_MagazineCell];
     [self.tableView registerClass:[ZSHBaseTitleButtonCell class] forCellReuseIdentifier:Identify_MusicCell];
     
@@ -238,9 +256,9 @@ static NSString *Identify_MusicCell = @"musicCell";
     cellView.dataArr = mTitleArr;
    
     cellView.itemClickBlock = ^(NSInteger index) {
-        NSDictionary *nextParamDic = @{@"shopId":_homeLogic.newsArr[index][@"NEWS_ID"]};
-        ZSHToplineViewController *toplineVC = [[ZSHToplineViewController alloc] initWithParamDic:nextParamDic];
-        [weakself.navigationController pushViewController:toplineVC animated:YES];
+        NSDictionary *nextParamDic = @{KFromClassType:@(FromFindVCToTitleContentVC),@"title":@"头条",@"shopId":_homeLogic.newsArr[index][@"NEWS_ID"]};
+        ZSHTitleContentViewController *titleContentVC = [[ZSHTitleContentViewController alloc]initWithParamDic:nextParamDic];
+        [weakself.navigationController pushViewController:titleContentVC animated:YES];
     };
     sectionModel.headerView = cellView;
     
@@ -248,28 +266,28 @@ static NSString *Identify_MusicCell = @"musicCell";
     [sectionModel.cellModelArray addObject:cellModel];
     cellModel.height = kRealValue(135);
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
-//        ZSHBaseTitleButtonCell *cell = [tableView dequeueReusableCellWithIdentifier:Identify_NoticeCell forIndexPath:indexPath];
-        ZSHBaseTitleButtonCell *cell = [tableView dequeueReusableCellWithIdentifier:Identify_NoticeCell];
-        if (!cell) {
-            cell = [[ZSHBaseTitleButtonCell alloc] init];
-            cell.itemClickBlock = ^(NSInteger tag) {
-                NSDictionary *subDic = _homeLogic.noticeArr[tag];
-                if (tag < weakself.noticePushVCsArr.count) {
-                    NSDictionary *nextParamDic = @{@"shopId":subDic[@"SORT_ID"]};
-                    Class className = NSClassFromString(weakself.noticePushVCsArr[tag]);
-                    RootViewController *vc = [[className alloc]initWithParamDic:nextParamDic];
-                    [weakself.navigationController pushViewController:vc animated:YES];
-                } else {//游艇(4)
-                    NSDictionary *nextParamDic = @{KFromClassType:@(ZSHShipType),@"shopId":subDic[@"SORT_ID"]};
-                    ZSHSubscribeViewController *subScribeVC = [[ZSHSubscribeViewController alloc]initWithParamDic:nextParamDic];
-                    [weakself.navigationController pushViewController:subScribeVC animated:YES];
-                    
-                }
-                
-            };
-        }
-    
-        
+        ZSHBaseTitleButtonCell *cell = [tableView dequeueReusableCellWithIdentifier:Identify_NoticeCell forIndexPath:indexPath];
+        cell.itemClickBlock = ^(NSInteger tag) {
+            NSDictionary *subDic = _homeLogic.noticeArr[tag];
+            NSInteger index = 0;
+            if ([subDic[@"SHOPTYPE"]isEqualToString:@"酒吧"]) {
+                index = 0;
+            } else if([subDic[@"SHOPTYPE"]isEqualToString:@"美食"]){
+                index = 1;
+            }  else if([subDic[@"SHOPTYPE"]isEqualToString:@"KTV"]){
+                index = 2;
+            } else if([subDic[@"SHOPTYPE"]isEqualToString:@"酒店"]){
+                index = 3;
+            }
+           
+            NSDictionary *nextParamDic = @{@"shopId":subDic[@"SORT_ID"]};
+            Class className = NSClassFromString(weakself.noticePushVCsArr[index]);
+            RootViewController *vc = [[className alloc]initWithParamDic:nextParamDic];
+            [weakself.navigationController pushViewController:vc animated:YES];
+           
+            
+        };
+
         if(_homeLogic.noticeArr){
             [cell updateCellWithDataArr:_homeLogic.noticeArr paramDic:@{KFromClassType:@(FromHomeNoticeVCToNoticeView)}];
         }
@@ -278,6 +296,7 @@ static NSString *Identify_MusicCell = @"musicCell";
     };
     
     cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
+        
     };
     return sectionModel;
 }
@@ -287,7 +306,10 @@ static NSString *Identify_MusicCell = @"musicCell";
     kWeakSelf(self);
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     sectionModel.headerHeight = kRealValue(55);
-    sectionModel.headerView = [self createHeaderiewWithTitle:@"荣耀服务"];
+    
+    NSDictionary *headTitleParamDic = @{@"text":@"荣耀服务",@"font":kPingFangMedium(15)};
+    sectionModel.headerView = [ZSHBaseUIControl createTabHeadLabelViewWithParamDic:headTitleParamDic];
+    
     ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
     [sectionModel.cellModelArray addObject:cellModel];
     cellModel.height = kRealValue(100);
@@ -295,7 +317,7 @@ static NSString *Identify_MusicCell = @"musicCell";
         ZSHBaseTitleButtonCell *cell = [tableView dequeueReusableCellWithIdentifier:Identify_ServiceCell forIndexPath:indexPath];
         cell.itemClickBlock = ^(NSInteger tag) {//荣耀服务详情
             NSDictionary *subDic = _homeLogic.serviceArr[tag];
-            NSDictionary *nextParamDic = @{KFromClassType:@(ZSHServiceType),@"shopId":subDic[@"SERVER_ID"]};
+            NSDictionary *nextParamDic = @{KFromClassType:@(ZSHServiceType),@"shopId":subDic[@"SERVER_ID"], @"SHOPTYPE":subDic[@"SHOPTYPE"]};
             ZSHSubscribeViewController *subScribeVC = [[ZSHSubscribeViewController alloc]initWithParamDic:nextParamDic];
             [weakself.navigationController pushViewController:subScribeVC animated:YES];
         };
@@ -318,23 +340,29 @@ static NSString *Identify_MusicCell = @"musicCell";
 - (ZSHBaseTableViewSectionModel*)storePlaySection {
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     sectionModel.headerHeight = kRealValue(55);
-    sectionModel.headerView = [self createHeaderiewWithTitle:@"汇聚玩趴"];
+    
+    NSDictionary *headTitleParamDic = @{@"text":@"汇聚玩趴",@"font":kPingFangMedium(15)};
+    sectionModel.headerView = [ZSHBaseUIControl createTabHeadLabelViewWithParamDic:headTitleParamDic];
     
     ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
     [sectionModel.cellModelArray addObject:cellModel];
     cellModel.height = kRealValue(95);
     __block  CGFloat cellHeight = cellModel.height;
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
-        ZSHBaseCell *cell = [[ZSHBaseCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:Identify_PlayCell];
-        [tableView dequeueReusableCellWithIdentifier:Identify_PlayCell forIndexPath:indexPath];
-        if (![cell.contentView viewWithTag:2]) {
-            UIImageView *imageView = [[UIImageView alloc]init];
-            [imageView sd_setImageWithURL:[NSURL URLWithString:_homeLogic.partyDic[@"PARTYIMG"]]];
-            
-            
-            imageView.tag = 2;
-            imageView.frame = CGRectMake(15, 0, KScreenWidth-30, cellHeight);
-            [cell.contentView addSubview:imageView];
+        ZSHBaseCell *cell = [tableView dequeueReusableCellWithIdentifier:Identify_PlayCell forIndexPath:indexPath];
+        if (![cell viewWithTag:2]) {
+            NSDictionary *nextParamDic = @{KFromClassType:@(FromBuyVCToGuideView),@"pageViewHeight":@(cellHeight),@"min_scale":@(0.6),@"withRatio":@(1.8),@"infinite":@(false)};
+            ZSHGuideView *guideView = [[ZSHGuideView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, cellHeight) paramDic:nextParamDic];
+            guideView.tag = 2;
+            [cell addSubview:guideView];
+        }
+        if (_homeLogic.partyArr.count) {
+            ZSHGuideView *guideView = [cell viewWithTag:2];
+            NSMutableArray *imageArr = [[NSMutableArray alloc] init];
+            for (NSDictionary *dic  in _homeLogic.partyArr) {
+                [imageArr addObject:dic[@"PARTYIMG"]];
+            }
+            [guideView updateViewWithParamDic:@{@"dataArr":imageArr}];
         }
         return cell;
     };
@@ -347,14 +375,30 @@ static NSString *Identify_MusicCell = @"musicCell";
 
 //荣耀杂志
 - (ZSHBaseTableViewSectionModel*)storeMagazineSection {
+    kWeakSelf(self);
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     sectionModel.headerHeight = kRealValue(55);
-    sectionModel.headerView = [self createHeaderiewWithTitle:@"荣耀杂志"];
+    
+    NSDictionary *headTitleParamDic = @{@"text":@"荣耀杂志",@"font":kPingFangMedium(15),@"btnTitle":@"更多",@"btnImage":@"mine_next",@"btnRightValue":@(5),@"font":kPingFangRegular(11),@"btnImageOffset":@(5)};
+    sectionModel.headerView = [ZSHBaseUIControl createTabHeadLabelViewWithParamDic:headTitleParamDic];
+    UIButton *btn = [sectionModel.headerView viewWithTag:2];
+    [btn layoutButtonWithEdgeInsetsStyle:XYButtonEdgeInsetsStyleRight imageTitleSpace:5];
+    btn.hidden = NO;
+    [btn addTapBlock:^(UIButton *btn) {
+        // 荣耀杂志
+        ZSHTitleContentViewController *magazineVC = [[ZSHTitleContentViewController alloc] initWithParamDic:@{KFromClassType:@(FromMagazineVCToTitleContentVC),@"title":@"荣耀杂志"}];
+        [weakself.navigationController pushViewController:magazineVC animated:YES];
+    }];
+    
     ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
     [sectionModel.cellModelArray addObject:cellModel];
     cellModel.height = kRealValue(120);
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHBaseTitleButtonCell *cell = [tableView dequeueReusableCellWithIdentifier:Identify_MagazineCell forIndexPath:indexPath];
+        cell.itemClickBlock = ^(NSInteger tag) {
+            ZSHMagazineViewController *magazineVC = [[ZSHMagazineViewController alloc] initWithParamDic:@{@"magazine":weakself.homeLogic.magzineArr[tag]}];
+            [weakself.navigationController pushViewController:magazineVC animated:YES];
+        };
         if(_homeLogic.magzineArr){
             [cell updateCellWithDataArr:_homeLogic.magzineArr paramDic:@{KFromClassType:@(FromHomeMagazineVCToNoticeView)}];
         }
@@ -372,7 +416,16 @@ static NSString *Identify_MusicCell = @"musicCell";
     kWeakSelf(self);
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     sectionModel.headerHeight = kRealValue(55);
-    sectionModel.headerView = [self createHeaderiewWithTitle:@"荣耀音乐"];
+    
+    NSDictionary *headTitleParamDic = @{@"text":@"荣耀音乐",@"font":kPingFangMedium(15),@"btnTitle":@"",@"btnImage":@"mine_next",@"btnRightValue":@(5)};
+    sectionModel.headerView = [ZSHBaseUIControl createTabHeadLabelViewWithParamDic:headTitleParamDic];
+    UIButton *btn = [sectionModel.headerView viewWithTag:2];
+    btn.hidden = NO;
+    [btn addTapBlock:^(UIButton *btn) {
+        ZSHMusicMainViewController *musicMainVC = [[ZSHMusicMainViewController alloc]init];
+        [weakself.navigationController pushViewController:musicMainVC animated:YES];
+    }];
+
     sectionModel.footerHeight = kRealValue(37);
     sectionModel.footerView = nil;
     ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
@@ -391,28 +444,10 @@ static NSString *Identify_MusicCell = @"musicCell";
         }
         return cell;
     };
-   
     
     cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
-       
     };
     return sectionModel;
-}
-
-
-#pragma getter
-- (UIView *)createHeaderiewWithTitle:(NSString *)title{
-    UIView *headView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, kRealValue(55))];
-    NSDictionary *headLabellDic = @{@"text":title, @"font":kPingFangMedium(15),@"textAlignment":@(NSTextAlignmentLeft)};
-    UILabel *headLabel = [ZSHBaseUIControl createLabelWithParamDic:headLabellDic];
-    [headView addSubview:headLabel];
-    [headLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(headView).offset(kRealValue(13));
-        make.bottom.mas_equalTo(headView).offset(-kRealValue(18));
-        make.width.mas_equalTo(KScreenWidth -2*kRealValue(13));
-        make.height.mas_equalTo(kRealValue(15));
-    }];
-    return headView;
 }
 
 #pragma mark - UISearchBar Delegate
@@ -438,41 +473,11 @@ static NSString *Identify_MusicCell = @"musicCell";
     [self.view endEditing:YES];
 }
 
-#pragma action
-- (void)searchAction {
-    // 1. Create an Array of popular search
-    NSArray *hotSeaches = @[@"阿哲", @"散打哥", @"天佑", @"赵小磊", @"赵雷", @"陈山", @"PHP", @"C#", @"Perl", @"Go", @"JavaScript", @"R", @"Ruby", @"MATLAB"];
-    // 2. Create a search view controller
-    kWeakSelf(self);
-    PYSearchViewController *searchViewController = [PYSearchViewController searchViewControllerWithHotSearches:hotSeaches searchBarPlaceholder:NSLocalizedString(@"PYExampleSearchPlaceholderText", @"搜索编程语言") didSearchBlock:^(PYSearchViewController *searchViewController, UISearchBar *searchBar, NSString *searchText) {
-        // Called when search begain.
-        // eg：Push to a temp view conroller
-        ZSHGoodsTitleContentViewController *goodContentVC = [[ZSHGoodsTitleContentViewController alloc]initWithParamDic:@{@"searchText":searchText,KFromClassType:@(FromSearchResultVCTOGoodsTitleVC)}];
-        [weakself.navigationController pushViewController:goodContentVC animated:YES];
-    }];
-    // 3. Set style for popular search and search history
-    searchViewController.hotSearchStyle = PYHotSearchStyleARCBorderTag;
-    searchViewController.searchHistoryStyle = PYSearchHistoryStyleARCBorderTag;
-    searchViewController.searchBarBackgroundColor = KZSHColor1A1A1A;
-    
-    // 4. Set delegate
-    searchViewController.delegate = self;
-    // 5. Present a navigation controller
-    //    RootNavigationController *nav = [[RootNavigationController alloc] initWithRootViewController:searchViewController];
-    //    [self presentViewController:nav animated:YES completion:nil];
-    [self.navigationController pushViewController:searchViewController animated:YES];
-}
 
-
-- (void)menuBtntClick:(UIButton *)menuBtn{
+- (void)menuBtntClick:(UIButton *)menuBtn {
     kWeakSelf(self);
-    NSDictionary *nextParamDic = @{KFromClassType:@(ZSHFromHomeMenuVCToBottomBlurPopView)};
-    ZSHBottomBlurPopView *bottomBlurPopView = [[ZSHBottomBlurPopView alloc]initWithFrame:CGRectMake(0, KNavigationBarHeight, KScreenWidth, KScreenHeight - KNavigationBarHeight) paramDic:nextParamDic];
-    bottomBlurPopView.blurRadius = 20;
-    bottomBlurPopView.dynamic = NO;
-    bottomBlurPopView.tintColor = KClearColor;
-    [ZSHBaseUIControl setAnimationWithHidden:NO view:bottomBlurPopView completedBlock:nil];
-    bottomBlurPopView.dissmissViewBlock = ^(UIView *blurView, NSIndexPath *indexpath) {
+    [ZSHBaseUIControl setAnimationWithHidden:NO view:self.bottomBlurPopView completedBlock:nil];
+    self.bottomBlurPopView.dissmissViewBlock = ^(UIView *blurView, NSIndexPath *indexpath) {
         [ZSHBaseUIControl setAnimationWithHidden:YES view:blurView completedBlock:^{
             if (indexpath) {//跳转到对应控制器
                 Class className = NSClassFromString(weakself.menuPushVCsArr[indexpath.row]);
@@ -484,30 +489,58 @@ static NSString *Identify_MusicCell = @"musicCell";
     };
 }
 
-- (void)locateBtnAction{
-    
-//    ZSHCityViewController *cityVC = [[ZSHCityViewController alloc]init];
-//    [self.navigationController pushViewController:cityVC animated:YES];
+- (void)locateBtnAction {
 
-    
     GYZChooseCityController *cityVC = [[GYZChooseCityController alloc]init];
     [cityVC setDelegate:self];
-//    cityVC.locationCityID = @"1400010000";
-//    cityVC.commonCitys = [[NSMutableArray alloc] initWithArray: @[@"1400010000", @"100010000"]];        // 最近访问城市，如果不设置，将自动管理
+    cityVC.commonCitys = [[NSMutableArray alloc] initWithArray: @[@"1400010000", @"100010000"]];        // 最近访问城市，如果不设置，将自动管理
     cityVC.hotCitys = @[@"100010000", @"200010000", @"300210000", @"600010000", @"300110000"];
     [self.navigationController pushViewController:cityVC animated:YES];
 }
 
+#pragma action
+- (void)searchAction {
+    kWeakSelf(self);
+    _homeLogic = [[ZSHHomeLogic alloc]init];
+    NSDictionary *paramDic = @{@"PARENT_ID":@(1)};
+    NSMutableArray *hotSearchMArr = [[NSMutableArray alloc]init];
+    NSMutableArray *recommendImageMArr = [[NSMutableArray alloc]init];
+    [_homeLogic loadSearchListWithDic:paramDic success:^(id response) {
+        for (NSDictionary *dic in response[@"pd"]) {
+            [hotSearchMArr addObject:dic[@"NAME"]];
+        }
+
+        for (NSDictionary *dic in response[@"showimgs"]) {
+            [recommendImageMArr addObject:dic[@"SHOWIMAGES"]];
+        }
+
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            _searchViewController = [PYSearchViewController searchViewControllerWithHotSearches:hotSearchMArr searchBarPlaceholder:NSLocalizedString(@"Search", @"搜索") recommendArr:recommendImageMArr didSearchBlock:^(PYSearchViewController *searchViewController, UISearchBar *searchBar, NSString *searchText) {
+//                ZSHGoodsTitleContentViewController *goodContentVC = [[ZSHGoodsTitleContentViewController alloc]initWithParamDic:@{@"searchText":searchText,KFromClassType:@(FromSearchResultVCTOGoodsTitleVC)}];
+//                [weakself.navigationController pushViewController:goodContentVC animated:YES];
+            }];
+            _searchViewController.searchResultShowMode = PYSearchResultShowModeEmbed;
+            _searchViewController.showSearchResultWhenSearchTextChanged = YES;
+            _searchViewController.showRecommendView = YES;
+            _searchViewController.delegate = weakself;
+            [self.navigationController pushViewController:_searchViewController animated:YES];
+        });
+
+
+    }];
+}
 
 
 #pragma getter
-- (ZSHBottomBlurPopView *)createBottomBlurPopViewWith:(ZSHFromVCToBottomBlurPopView)fromClassType{
-    NSDictionary *nextParamDic = @{KFromClassType:@(fromClassType)};
-    ZSHBottomBlurPopView *bottomBlurPopView = [[ZSHBottomBlurPopView alloc]initWithFrame:kAppDelegate.window.bounds paramDic:nextParamDic];
-    bottomBlurPopView.blurRadius = 20;
-    bottomBlurPopView.dynamic = NO;
-    bottomBlurPopView.tintColor = KClearColor;
-    return bottomBlurPopView;
+- (ZSHBottomBlurPopView *)bottomBlurPopView{
+    if (!_bottomBlurPopView) {
+         NSDictionary *nextParamDic = @{KFromClassType:@(ZSHFromHomeMenuVCToBottomBlurPopView)};
+        _bottomBlurPopView = [[ZSHBottomBlurPopView alloc]initWithFrame:CGRectMake(0, KNavigationBarHeight, KScreenWidth, KScreenHeight - KNavigationBarHeight) paramDic:nextParamDic];
+        _bottomBlurPopView.blurRadius = 20;
+        _bottomBlurPopView.dynamic = NO;
+        _bottomBlurPopView.tintColor = KClearColor;
+    }
+    return _bottomBlurPopView;
 }
 
 #pragma mark ————— 下拉刷新 —————
@@ -523,7 +556,11 @@ static NSString *Identify_MusicCell = @"musicCell";
 #pragma mark - GYZCityPickerDelegate
 - (void) cityPickerController:(GYZChooseCityController *)chooseCityController didSelectCity:(GYZCity *)city
 {
-     [self addNavigationItemWithImageName:@"nav_home_more" title:city.cityName locate:XYButtonEdgeInsetsStyleRight isLeft:YES target:self action:@selector(locateBtnAction) tag:10];
+    [self.leftBtn setTitle:city.cityName forState:UIControlStateNormal];
+    
+    CGSize detailLabelSize = [city.cityName boundingRectWithSize:CGSizeMake(MAXFLOAT, 44) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12]} context:nil].size;
+    [self.leftBtn sizeThatFits:detailLabelSize];
+//    [self.leftBtn layoutButtonWithEdgeInsetsStyle:XYButtonEdgeInsetsStyleRight imageTitleSpace:kRealValue(self.leftBtn.titleLabel.frame.size.width/2-15)];
     [chooseCityController.navigationController popViewControllerAnimated:YES];
 }
 
@@ -531,6 +568,51 @@ static NSString *Identify_MusicCell = @"musicCell";
 {
      [chooseCityController.navigationController popViewControllerAnimated:YES];
 }
+
+- (BOOL)prefersHomeIndicatorAutoHidden
+{
+    return YES;
+}
+
+- (void)hasUpdateVersion{
+    kWeakSelf(self);
+    NSDictionary *infoDic=[[NSBundle mainBundle] infoDictionary];
+    NSString *currentBulidVersion=infoDic[@"CFBundleVersion"];
+    
+    ZSHHomeLogic *homeLogic = [[ZSHHomeLogic alloc]init];
+    NSDictionary *paramDic = @{@"_api_key":kPGYApiKey,@"appKey":kPGYAppKey};
+    [homeLogic loadUpdateWithDic:paramDic success:^(id response) {
+        RLog(@"更新信息");
+        if ([currentBulidVersion integerValue]<[response[@"data"][@"buildVersionNo"]integerValue]) {
+            UIAlertController *ac = [UIAlertController alertControllerWithTitle:@"版本有更新" message:@"检测到新版本,是否更新?"  preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+            [ac addAction:cancelAction];
+            UIAlertAction *doneAction = [UIAlertAction actionWithTitle:@"更新" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                NSURL *url = [NSURL URLWithString:response[@"data"][@"buildShortcutUrl"]];
+                [[UIApplication sharedApplication] openURL:url];
+            }];
+            [ac addAction:doneAction];
+            [weakself presentViewController:ac animated:YES completion:nil];
+            
+        }
+    }];
+}
+
+#pragma mark - <HCLocationManagerDelegate>
+- (void)loationMangerSuccessLocationWithCity:(NSString *)city{
+    RLog(@"city = %@",city);
+    [self.leftBtn setTitle:city forState:UIControlStateNormal];
+    
+}
+
+- (void)loationMangerSuccessLocationWithLatitude:(CLLocationDegrees)latitude longitude:(CLLocationDegrees)longitude{
+    RLog(@"latitude = %f , longitude = %f",latitude,longitude);
+    NSDictionary *paramic= @{@"USERLONGITUDE":@(latitude),@"USERLATITUDE":@(longitude),@"HONOURUSER_ID":HONOURUSER_IDValue,};
+    [_homeLogic locateDic:paramic success:^(id response) {
+        RLog(@"传递经纬度成功");
+    }];
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

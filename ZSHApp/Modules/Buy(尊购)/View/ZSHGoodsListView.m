@@ -10,7 +10,6 @@
 
 @interface ZSHGoodsListView()
 
-//@property (nonatomic, strong)  NSDictionary     *paramDic;
 @property (nonatomic, strong)  UIView           *containImageView;
 @property (nonatomic, strong)  UIImageView      *goodsImageView;
 @property (nonatomic, strong)  UIView           *detailView;
@@ -40,7 +39,8 @@
 
     NSDictionary *enterBtnParamDic = @{@"title":@"ENTER",@"titleColor":KZSHColor929292,@"font":kPingFangLight(12),@"backgroundColor":KClearColor};
     _enterBtn = [ZSHBaseUIControl createBtnWithParamDic:enterBtnParamDic];
-     [ZSHSpeedy zsh_chageControlCircularWith:_enterBtn AndSetCornerRadius:0 SetBorderWidth:0.5 SetBorderColor:KZSHColor979797 canMasksToBounds:YES];
+    _enterBtn.layer.borderWidth = 0.5;
+    _enterBtn.layer.borderColor = KZSHColor979797.CGColor;
     [_detailView addSubview:_enterBtn];
 
 }
@@ -59,10 +59,9 @@
     [_goodsImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.mas_equalTo(_containImageView);
         make.centerY.mas_equalTo(_containImageView);
-        make.width.mas_equalTo(KScreenWidth/2);
-        make.height.mas_equalTo(_containImageView);
+        make.size.mas_offset(CGSizeMake(100, 100));
     }];
-    
+
     [_detailView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self).offset(kScreenWidth/2);
         make.width.mas_equalTo(kScreenWidth/2);
@@ -101,34 +100,11 @@
     }
 }
 
+
 - (void)updateCellWithParamDic:(NSDictionary *)dic{
     self.paramDic = dic;
-    UIImage *image =  [UIImage imageNamed:dic[@"goodsImageName"]];
-    _goodsImageView.image = image;
-    _nameLabel.text = dic[@"goodsName"];
-    
-    [_goodsImageView mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.mas_equalTo(_containImageView);
-        make.centerY.mas_equalTo(_containImageView);
-        make.size.mas_equalTo(image.size);
-    }];
-    
-//    if ([dic[@"row"]integerValue]%2) {//奇数
-//        [_containImageView mas_remakeConstraints:^(MASConstraintMaker *make) {
-//            make.left.mas_equalTo(self).offset(kScreenWidth/2);
-//            make.width.mas_equalTo(kScreenWidth/2);
-//            make.height.mas_equalTo(self);
-//            make.top.mas_equalTo(self);
-//        }];
-//        
-//        [_detailView mas_remakeConstraints:^(MASConstraintMaker *make) {
-//            make.left.mas_equalTo(self);
-//            make.width.mas_equalTo(kScreenWidth/2);
-//            make.height.mas_equalTo(self);
-//            make.top.mas_equalTo(self);
-//        }];
-//    }
-    
+    [_goodsImageView sd_setImageWithURL:[NSURL URLWithString:dic[@"SHOWIMG"]]];
+    _nameLabel.text = dic[@"BRANDBANE"];
 }
 
 @end

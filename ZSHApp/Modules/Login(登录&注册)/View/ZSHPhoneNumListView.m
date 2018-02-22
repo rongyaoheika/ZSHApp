@@ -67,7 +67,10 @@
 - (void)phoneNumBtnAction:(UIButton *)btn{
     [self selectedByIndex:btn.tag];
     if (self.btnClickBlock) {
-        self.btnClickBlock(btn);
+        self.btnClickBlock(btn);   
+    }
+    if (self.tapBlock) {
+        self.tapBlock(self.paramDic[@"type"], btn.tag);
     }
 }
 

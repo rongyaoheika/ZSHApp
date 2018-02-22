@@ -27,10 +27,11 @@
     [self.scrollView removeAllSubviews];
     
     ZSHButtonView *lastBtnView = nil;
-    NSDictionary *titleLabelDic = @{@"text":@"2.4.6.8娱乐吧",@"font":kPingFangRegular(12),@"textAlignment":@(NSTextAlignmentCenter)};
+    NSDictionary *titleLabelDic = @{@"text":@"2.4.6.8娱乐吧",@"font":kPingFangRegular(12),@"textAlignment":@(NSTextAlignmentCenter),KFromClassType:@([paramDic[KFromClassType]integerValue])};
     int i = 0;
     for (NSDictionary *subParamDic in dataArr) {
         ZSHButtonView *btnView = [[ZSHButtonView alloc]initWithFrame:CGRectZero paramDic:titleLabelDic];
+        btnView.label.textAlignment = NSTextAlignmentLeft;
         btnView.tag = i++;
         [btnView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(btnViewAction:)]];
         if ([paramDic[KFromClassType]integerValue] == FromHomeNoticeVCToNoticeView) {
@@ -53,14 +54,41 @@
             }];
         } else if ([paramDic[KFromClassType]integerValue] == FromHomeMagazineVCToNoticeView) {
             btnView.showLabel = NO;
-            [btnView.imageView sd_setImageWithURL:[NSURL URLWithString:subParamDic[@"ICONIMGS"]]];
+            [btnView.imageView sd_setImageWithURL:[NSURL URLWithString:subParamDic[@"SHOWIMG"]]];
             [btnView mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.width.mas_equalTo(kRealValue(95));
             }];
+        } else if ([paramDic[KFromClassType]integerValue] == FromMusicMenuToNoticeView) {
+            btnView.label.text = subParamDic[@"imageTitle"];
+            if ([subParamDic[@"imageName"] containsString:@"http"]) {
+                [btnView.imageView sd_setImageWithURL:[NSURL URLWithString:subParamDic[@"imageName"]]];
+            } else {
+                [btnView.imageView setImage:[UIImage imageNamed:subParamDic[@"imageName"]]];
+            }
+            [btnView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.width.mas_equalTo(kRealValue(120));
+            }];
+        } else if ([paramDic[KFromClassType]integerValue] == FromMusicLibraryToNoticeView) {
+            btnView.showLabel = NO;
+            if ([subParamDic[@"imageName"] containsString:@"http"]) {
+                [btnView.imageView sd_setImageWithURL:[NSURL URLWithString:subParamDic[@"imageName"]]];
+            } else {
+                [btnView.imageView setImage:[UIImage imageNamed:subParamDic[@"imageName"]]];
+            }
+            btnView.label.text = subParamDic[@"imageTitle"];
+            [btnView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.width.mas_equalTo(kRealValue(120));
+            }];
+        } else if ([paramDic[KFromClassType]integerValue] == FromMusicRankToNoticeView) {
+            btnView.showLabel = NO;
+            [btnView.imageView setImage:[UIImage imageNamed:subParamDic[@"imageName"]]];
+            [btnView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.width.mas_equalTo(kRealValue(110));
+            }];
         }
-        
+
         [_scrollView addSubview:btnView];
-        
+
         [btnView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.mas_equalTo(self);
             make.bottom.mas_equalTo(self);

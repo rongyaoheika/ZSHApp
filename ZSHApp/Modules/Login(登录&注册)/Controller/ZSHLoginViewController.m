@@ -13,7 +13,7 @@
 #import "ZSHCardViewController.h"
 #import "UserInfo.h"
 #import "ZSHMultiInfoViewController.h"
-
+#import "ZSHLoginLogic.h"
 @interface ZSHLoginViewController ()
 
 @property (nonatomic, strong) ZSHTextFieldCellView  *userView;
@@ -29,7 +29,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
+
     [self createUI];
 }
 
@@ -43,7 +43,7 @@
     logoView.image = [UIImage imageNamed:@"login_icon"];
     [self.view addSubview:logoView];
     [logoView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.view).offset(kRealValue(129));
+        make.top.mas_equalTo(self.view).offset(KTopHeight(129));
         make.centerX.mas_equalTo(self.view);
         make.size.mas_equalTo(CGSizeMake(kRealValue(89.5),kRealValue(83)));
     }];
@@ -122,9 +122,11 @@
 
 #pragma action
 - (void)login {
+   
+    
     if (_userView.textField.text.length && _pwdView.textField.text.length) {
         RLog(@"username;%@:password%@", _userView.textField.text,_pwdView.textField.text);
-        [userManager login:kUserLoginTypePwd params:@{@"CARDNO":_userView.textField.text,@"PASSWORD":_pwdView.textField.text} completion:^(BOOL success, NSString *des) {
+        [userManager login:kUserLoginTypePwd params:@{@"CARDNO":_userView.textField.text,@"PASSWORD":[ZSHBaseFunction md5StringFromString: _pwdView.textField.text]} completion:^(BOOL success, NSString *des) {
             if (success) {
                 [self skipAction];
             } else {

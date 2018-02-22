@@ -33,7 +33,8 @@
 @property (nonatomic, strong) ZSHMineLogic            *mineLogic;
 @property (nonatomic, strong) UIImage                 *headImage;
 @property (nonatomic, copy)   NSString                *changedData;
-@property (nonatomic, assign) NSInteger               changedDataIndex;
+@property (nonatomic, assign) NSInteger               changedDataIndex; // 第一组
+@property (nonatomic, assign) NSInteger               changedSecIndex;
 @property (nonatomic, strong) ZSHPickView             *pickView;
 @property (nonatomic, strong) ZSHUserInfoModel        *model;
 
@@ -51,6 +52,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 }
 
 - (void)loadData{
+    _changedSecIndex = -1;
     self.titleArr = @[@[@"头像",@"昵称",@"姓名",@"性别",@"生日",@"卡号",@"地区",@"个性签名"],
                       @[@"身份证号",@"手机号",@"QQ号码",@"微信",@"新浪微博",@"支付宝"]
                       ];
@@ -71,7 +73,11 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
                         @{KFromClassType:@(FromUserInfoPhoneVCToMultiInfoVC),@"title":@"更改手机号码",@"bottomBtnTitle":@"提交"},
                         @{KFromClassType:@(FromUserInfoQQVCToMultiInfoVC),@"title":@"绑定QQ帐号",@"rightNaviTitle":@"授权"},
                         @{},@{},@{}]];
+    
     _mineLogic = [[ZSHMineLogic alloc] init];
+    _selectedPhotos = [NSMutableArray array];
+    _selectedAssets = [NSMutableArray array];
+    
     [self initViewModel];
     [self requestData];
 }
@@ -133,6 +139,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
             } else {
                 if (indexPath.row  == weakself.changedDataIndex) {
                     [cellView updateRightText:weakself.changedData];
+                    weakself.changedSecIndex = 0;
                 }
             }
             return cell;
@@ -153,7 +160,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
             } else if (indexPath.row == 6) { // 地区选择
                 weakself.pickView = [weakself createPickViewWithType:WindowRegion];
                 weakself.pickView.tag = 6;
-                weakself.pickView.saveChangeBlock = ^(NSString *text, NSInteger index) {
+                weakself.pickView.saveChangeBlock = ^(NSString *text, NSInteger index,NSDictionary *dic) {
                     weakself.changedData = text;
                     weakself.changedDataIndex = index;
                     [weakself requestAddress];
@@ -184,7 +191,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
         cellModel.height = kRealValue(43);
         cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
             ZSHBaseCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHBaseCellID forIndexPath:indexPath];
-            if (indexPath.row > 1) {
+            if (indexPath.row > 0) {
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             }
             if (![cell.contentView viewWithTag:2]) {
@@ -198,13 +205,26 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
             }
             ZSHSimpleCellView *cellView = [cell.contentView viewWithTag:2];
             [cellView updateView2WithModel:weakself.model index:indexPath.row];
+            
+            if (indexPath.row  == weakself.changedSecIndex) {
+                [cellView updateRightText:weakself.changedData];
+                weakself.changedSecIndex = -1;
+            }
             return cell;
         };
         
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
-          
             Class className = NSClassFromString(self.pushVCsArr[1][indexPath.row]);
             RootViewController *vc = [[className alloc]initWithParamDic:weakself.paramArr[1][indexPath.row]];
+            if (indexPath.row==1) {
+                ZSHMultiInfoViewController *multiInfoVC = (ZSHMultiInfoViewController *)vc;
+                multiInfoVC.index = indexPath.row;
+                multiInfoVC.saveBlock = ^(id str, NSInteger index) {
+                    weakself.changedData = str;
+                    weakself.changedSecIndex = index;
+                    [weakself.tableView reloadRow:index inSection:1 withRowAnimation:UITableViewRowAnimationNone];
+                };
+            }
             [weakself.navigationController pushViewController:vc animated:YES];
         };
     }
@@ -277,6 +297,32 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"拍照",@"去相册选择", nil];
     [sheet showInView:self.view];
 }
+
+
+- (UIImagePickerController *)imagePickerVc {
+    if (_imagePickerVc == nil) {
+        _imagePickerVc = [[UIImagePickerController alloc] init];
+        _imagePickerVc.delegate = self;
+        // set appearance / 改变相册选择页的导航栏外观
+        if (iOS7Later) {
+            _imagePickerVc.navigationBar.barTintColor = self.navigationController.navigationBar.barTintColor;
+        }
+        _imagePickerVc.navigationBar.tintColor = self.navigationController.navigationBar.tintColor;
+        UIBarButtonItem *tzBarItem, *BarItem;
+        if (iOS9Later) {
+            tzBarItem = [UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[TZImagePickerController class]]];
+            BarItem = [UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UIImagePickerController class]]];
+        } else {
+            tzBarItem = [UIBarButtonItem appearanceWhenContainedIn:[TZImagePickerController class], nil];
+            BarItem = [UIBarButtonItem appearanceWhenContainedIn:[UIImagePickerController class], nil];
+        }
+        NSDictionary *titleTextAttributes = [tzBarItem titleTextAttributesForState:UIControlStateNormal];
+        [BarItem setTitleTextAttributes:titleTextAttributes forState:UIControlStateNormal];
+        
+    }
+    return _imagePickerVc;
+}
+
 
 #pragma mark - UIActionSheetDelegate
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
@@ -443,6 +489,59 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     }
 }
 
+- (void)imagePickerController:(UIImagePickerController*)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    [picker dismissViewControllerAnimated:YES completion:nil];
+    NSString *type = [info objectForKey:UIImagePickerControllerMediaType];
+    if ([type isEqualToString:@"public.image"]) {
+        TZImagePickerController *tzImagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:1 delegate:self];
+        tzImagePickerVc.sortAscendingByModificationDate = true;
+        [tzImagePickerVc showProgressHUD];
+        UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
+        
+        // save photo and get asset / 保存图片，获取到asset
+        [[TZImageManager manager] savePhotoWithImage:image location:nil completion:^(NSError *error){
+            if (error) {
+                [tzImagePickerVc hideProgressHUD];
+                NSLog(@"图片保存失败 %@",error);
+            } else {
+                [[TZImageManager manager] getCameraRollAlbum:NO allowPickingImage:YES completion:^(TZAlbumModel *model) {
+                    [[TZImageManager manager] getAssetsFromFetchResult:model.result allowPickingVideo:NO allowPickingImage:YES completion:^(NSArray<TZAssetModel *> *models) {
+                        [tzImagePickerVc hideProgressHUD];
+                        TZAssetModel *assetModel = [models firstObject];
+                        if (tzImagePickerVc.sortAscendingByModificationDate) {
+                            assetModel = [models lastObject];
+                        }
+//                        if (self.allowCropSwitch.isOn) { // 允许裁剪,去裁剪
+//                            TZImagePickerController *imagePicker = [[TZImagePickerController alloc] initCropTypeWithAsset:assetModel.asset photo:image completion:^(UIImage *cropImage, id asset) {
+//                                [self refreshCollectionViewWithAddedAsset:asset image:cropImage];
+//                            }];
+//                            imagePicker.needCircleCrop = self.needCircleCropSwitch.isOn;
+//                            imagePicker.circleCropRadius = 100;
+//                            [self presentViewController:imagePicker animated:YES completion:nil];
+//                        } else {
+                            [self refreshCollectionViewWithAddedAsset:assetModel.asset image:image];
+//                        }
+                    }];
+                }];
+            }
+        }];
+    }
+}
+
+- (void)refreshCollectionViewWithAddedAsset:(id)asset image:(UIImage *)image {
+    [_selectedAssets addObject:asset];
+    [_selectedPhotos addObject:image];
+//    [_collectionView reloadData];
+    
+    if ([asset isKindOfClass:[PHAsset class]]) {
+        PHAsset *phAsset = asset;
+        NSLog(@"location:%@",phAsset.location);
+    }
+    self.headImage = [_selectedPhotos firstObject];
+    [self initViewModel];
+    [self.mineLogic uploadImage:@[[_selectedPhotos firstObject]] name:@[@"showfile"] success:^(id response) {
+    }];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

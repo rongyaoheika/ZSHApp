@@ -8,9 +8,11 @@
 
 #import "ZSHBaseView.h"
 
+typedef void (^ClickSameBtnBlock)(BOOL openBtnList);
+
 @interface ZSHCardBtnListView : ZSHBaseView
 
-- (void)selectedByIndex:(NSUInteger)index;
+@property (nonatomic, copy) ClickSameBtnBlock   clickSameBtn;
 
 @end
 

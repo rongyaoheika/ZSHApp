@@ -51,12 +51,11 @@
      _midView = [[ZSHGuideView alloc]initWithFrame:CGRectZero paramDic:nextParamDic];
     [self.view addSubview:_midView];
     [_midView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.view).offset(kRealValue(71.5));
-//        make.centerY.mas_equalTo(self.view);
+        make.top.mas_equalTo(self.view).offset(KTopHeight(71.5));
         make.centerX.mas_equalTo(self.view);
         make.width.mas_equalTo(self.view);
         make.bottom.mas_equalTo(self.view).offset(-kRealValue(105));
-    }];
+    }];    
     
     kWeakSelf(self);
     NSDictionary *applyBtnDic = @{KFromClassType:@(FromGuideVCToGuideView),@"title":@"在线申请",@"titleColor":KWhiteColor,@"font":kPingFangRegular(12)};
@@ -93,6 +92,27 @@
         make.width.mas_equalTo(_applyBtn);
         make.height.mas_equalTo(_applyBtn);
     }];
+    
+    NSDictionary *chNameDic = @{@"text":@"荣耀黑卡",@"font":kPingFangMedium(15),@"textAlignment":@(NSTextAlignmentCenter)};
+    UILabel *chName = [ZSHBaseUIControl createLabelWithParamDic:chNameDic];
+    [self.view addSubview:chName];
+    [chName mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.mas_equalTo(_applyBtn.mas_top).offset(-kRealValue(100));
+        make.centerX.mas_equalTo(self.view);
+        make.height.mas_equalTo(kRealValue(30));
+        make.width.mas_equalTo(self.view);
+    }];
+    
+    NSDictionary *enNameDic = @{@"text":@"Honour Centurion Card",@"font":kPingFangMedium(15),@"textAlignment":@(NSTextAlignmentCenter)};
+    UILabel *enName = [ZSHBaseUIControl createLabelWithParamDic:enNameDic];
+    [self.view addSubview:enName];
+    [enName mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(chName.mas_bottom);
+        make.centerX.mas_equalTo(self.view);
+        make.height.mas_equalTo(kRealValue(30));
+        make.width.mas_equalTo(self.view);
+    }];
+    
 }
 
 - (void)didReceiveMemoryWarning {

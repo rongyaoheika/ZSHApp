@@ -5,13 +5,14 @@
 //
 
 #import "PYSearchViewController.h"
-#import "PYSearchSuggestionViewController.h"
+#import "ZSHRecommendView.h"
+#import "ZSHLiveLogic.h"
 
 #define PYSEARCH_MARGIN 10
 #define PYRectangleTagMaxCol 3
 #define PYSEARCH_COLORPolRandomColor self.colorPol[arc4random_uniform((uint32_t)self.colorPol.count)]
 
-@interface PYSearchViewController () <UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource, PYSearchSuggestionViewDataSource>
+@interface PYSearchViewController () <UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource>
 
 /**
  The header view of search view
@@ -24,9 +25,19 @@
 @property (nonatomic, weak) UIView *hotSearchView;
 
 /**
+ The content view of popular search tags
+ */
+@property (nonatomic, weak) UIView *hotSearchTagsContentView;
+
+/**
  The view of search history
  */
 @property (nonatomic, weak) UIView *searchHistoryView;
+
+/**
+ The content view of search history tags.
+ */
+@property (nonatomic, weak) UIView *searchHistoryTagsContentView;
 
 /**
  The records of search
@@ -43,40 +54,6 @@
  */
 @property (nonatomic, assign) CGFloat keyboardHeight;
 
-/**
- The search suggestion view contoller
- */
-@property (nonatomic, weak) PYSearchSuggestionViewController *searchSuggestionVC;
-
-/**
- The content view of popular search tags
- */
-@property (nonatomic, weak) UIView *hotSearchTagsContentView;
-
-/**
- The tags of rank
- */
-@property (nonatomic, copy) NSArray<UILabel *> *rankTags;
-
-/**
- The text labels of rank
- */
-@property (nonatomic, copy) NSArray<UILabel *> *rankTextLabels;
-
-/**
- The view of rank which contain tag and text label.
- */
-@property (nonatomic, copy) NSArray<UIView *> *rankViews;
-
-/**
- The content view of search history tags.
- */
-@property (nonatomic, weak) UIView *searchHistoryTagsContentView;
-
-/**
- The base table view  of search view controller
- */
-@property (nonatomic, strong) UITableView *baseSearchTableView;
 
 /**
  Whether did press suggestion cell
@@ -88,14 +65,26 @@
  */
 @property (nonatomic, assign) UIDeviceOrientation currentOrientation;
 
+/**
+ 为您推荐
+ */
+@property (nonatomic, strong) ZSHRecommendView    *recommendView;
+
+//是否为搜索界面
+@property (nonatomic, assign) BOOL isSearch;
+
+// search 数据源
+@property (nonatomic, strong) NSArray *searchDataArr;
+
+// search tableview
+@property (nonatomic, strong) UITableView *searchTableView;
+
+
 @end
 
 @implementation PYSearchViewController
 
-- (void)createUI{
-    
-}
-
+/*******************系统初始化方法********************/
 - (instancetype)init
 {
     if (self = [super init]) {
@@ -104,16 +93,9 @@
     return self;
 }
 
-- (void)awakeFromNib
-{
-    [super awakeFromNib];
-    [self setup];
-}
-
 - (void)viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];
-
     if (self.currentOrientation != [[UIDevice currentDevice] orientation]) { // orientation changed, reload layout
         self.hotSearches = self.hotSearches;
         self.searchHistories = self.searchHistories;
@@ -127,17 +109,9 @@
     [self.searchView.searchBar becomeFirstResponder];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    self.baseSearchTableView.frame = CGRectMake(0, KNavigationBarHeight, KScreenWidth, KScreenHeight - KNavigationBarHeight);
-}
-
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    
-//    [self.searchBar resignFirstResponder];
     [self.searchView.searchBar resignFirstResponder];
 }
 
@@ -146,81 +120,24 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-+ (instancetype)searchViewControllerWithHotSearches:(NSArray<NSString *> *)hotSearches searchBarPlaceholder:(NSString *)placeholder
++ (instancetype)searchViewControllerWithHotSearches:(NSArray<NSString *> *)hotSearches searchBarPlaceholder:(NSString *)placeholder recommendArr:(NSArray *)recommendArr
 {
     PYSearchViewController *searchVC = [[PYSearchViewController alloc] init];
     searchVC.hotSearches = hotSearches;
-//    searchVC.searchBar.placeholder = placeholder;
-    
     searchVC.searchView.searchBar.placeholder = placeholder;
+    searchVC.recommendArr = recommendArr;
     return searchVC;
 }
 
-+ (instancetype)searchViewControllerWithHotSearches:(NSArray<NSString *> *)hotSearches searchBarPlaceholder:(NSString *)placeholder didSearchBlock:(PYDidSearchBlock)block
++ (instancetype)searchViewControllerWithHotSearches:(NSArray<NSString *> *)hotSearches searchBarPlaceholder:(NSString *)placeholder recommendArr:(NSArray *)recommendArr didSearchBlock:(PYDidSearchBlock)block
 {
-    PYSearchViewController *searchVC = [self searchViewControllerWithHotSearches:hotSearches searchBarPlaceholder:placeholder];
+    PYSearchViewController *searchVC = [self searchViewControllerWithHotSearches:hotSearches searchBarPlaceholder:placeholder recommendArr:recommendArr];
     searchVC.didSearchBlock = [block copy];
     return searchVC;
 }
+/******************************/
 
 #pragma mark - Lazy
-- (UITableView *)baseSearchTableView
-{
-    if (!_baseSearchTableView) {
-        UITableView *baseSearchTableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
-        baseSearchTableView.backgroundColor = [UIColor clearColor];
-        baseSearchTableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        if ([baseSearchTableView respondsToSelector:@selector(setCellLayoutMarginsFollowReadableWidth:)]) { // For the adapter iPad
-            baseSearchTableView.cellLayoutMarginsFollowReadableWidth = NO;
-        }
-        baseSearchTableView.delegate = self;
-        baseSearchTableView.dataSource = self;
-        [self.view addSubview:baseSearchTableView];
-        _baseSearchTableView = baseSearchTableView;
-    }
-    return _baseSearchTableView;
-}
-
-- (PYSearchSuggestionViewController *)searchSuggestionVC
-{
-    if (!_searchSuggestionVC) {
-        PYSearchSuggestionViewController *searchSuggestionVC = [[PYSearchSuggestionViewController alloc] initWithStyle:UITableViewStyleGrouped];
-        __weak typeof(self) _weakSelf = self;
-        searchSuggestionVC.didSelectCellBlock = ^(UITableViewCell *didSelectCell) {
-            __strong typeof(_weakSelf) _swSelf = _weakSelf;
-//            _swSelf.searchBar.text = didSelectCell.textLabel.text;
-            
-            _swSelf.searchView.searchBar.text = didSelectCell.textLabel.text;
-            NSIndexPath *indexPath = [_swSelf.searchSuggestionVC.tableView indexPathForCell:didSelectCell];
-            
-            if ([_swSelf.delegate respondsToSelector:@selector(searchViewController:didSelectSearchSuggestionAtIndexPath:searchBar:)]) {
-//                [_swSelf.delegate searchViewController:_swSelf didSelectSearchSuggestionAtIndexPath:indexPath searchBar:_swSelf.searchBar];
-                [_swSelf.delegate searchViewController:_swSelf didSelectSearchSuggestionAtIndexPath:indexPath searchBar:_swSelf.searchView.searchBar];
-                [_swSelf saveSearchCacheAndRefreshView];
-            } else if ([_swSelf.delegate respondsToSelector:@selector(searchViewController:didSelectSearchSuggestionAtIndex:searchText:)]) {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-//                [_swSelf.delegate searchViewController:_swSelf didSelectSearchSuggestionAtIndex:indexPath.row searchText:_swSelf.searchBar.text];
-                 [_swSelf.delegate searchViewController:_swSelf didSelectSearchSuggestionAtIndex:indexPath.row searchText:_swSelf.searchView.searchBar.text];
-#pragma clang diagnostic pop
-                [_swSelf saveSearchCacheAndRefreshView];
-            } else {
-//                [_swSelf searchBarSearchButtonClicked:_swSelf.searchBar];
-                 [_swSelf searchBarSearchButtonClicked:_swSelf.searchView.searchBar];
-            }
-        };
-        searchSuggestionVC.view.frame = CGRectMake(0, CGRectGetMaxY(self.navigationController.navigationBar.frame), KScreenWidth, KScreenHeight);
-        searchSuggestionVC.view.backgroundColor = self.baseSearchTableView.backgroundColor;
-        searchSuggestionVC.view.hidden = YES;
-        _searchSuggestionView = (UITableView *)searchSuggestionVC.view;
-        searchSuggestionVC.dataSource = self;
-        [self.view addSubview:searchSuggestionVC.view];
-        [self addChildViewController:searchSuggestionVC];
-        _searchSuggestionVC = searchSuggestionVC;
-    }
-    return _searchSuggestionVC;
-}
-
 - (UIButton *)emptyButton
 {
     if (!_emptyButton) {
@@ -240,29 +157,15 @@
     return _emptyButton;
 }
 
-- (UIView *)searchHistoryTagsContentView
-{
-    if (!_searchHistoryTagsContentView) {
-        UIView *searchHistoryTagsContentView = [[UIView alloc] init];
-        searchHistoryTagsContentView.zsh_width = self.searchHistoryView.zsh_width;
-        searchHistoryTagsContentView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-        searchHistoryTagsContentView.zsh_y = CGRectGetMaxY(self.hotSearchTagsContentView.frame) + PYSEARCH_MARGIN;
-        [self.searchHistoryView addSubview:searchHistoryTagsContentView];
-        _searchHistoryTagsContentView = searchHistoryTagsContentView;
+- (ZSHRecommendView *)recommendView{
+    if (!_recommendView) {
+        _recommendView = [[ZSHRecommendView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, KScreenHeight*0.7)];
     }
-    return _searchHistoryTagsContentView;
+    return _recommendView;
 }
 
-- (UILabel *)searchHistoryHeader
-{
-    if (!_searchHistoryHeader) {
-        UILabel *titleLabel = [self setupTitleLabel:@"搜索历史"];
-        [self.searchHistoryView addSubview:titleLabel];
-        _searchHistoryHeader = titleLabel;
-    }
-    return _searchHistoryHeader;
-}
-
+/**********搜索历史********************/
+//搜索历史：背景view
 - (UIView *)searchHistoryView
 {
     if (!_searchHistoryView) {
@@ -277,6 +180,32 @@
     return _searchHistoryView;
 }
 
+//搜索历史：头部标题
+- (UILabel *)searchHistoryHeader
+{
+    if (!_searchHistoryHeader) {
+        UILabel *titleLabel = [self setupTitleLabel:@"搜索历史"];
+        [self.searchHistoryView addSubview:titleLabel];
+        _searchHistoryHeader = titleLabel;
+    }
+    return _searchHistoryHeader;
+}
+
+//搜索历史：tag内容UI
+- (UIView *)searchHistoryTagsContentView
+{
+    if (!_searchHistoryTagsContentView) {
+        UIView *searchHistoryTagsContentView = [[UIView alloc] init];
+        searchHistoryTagsContentView.zsh_width = self.searchHistoryView.zsh_width;
+        searchHistoryTagsContentView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        searchHistoryTagsContentView.zsh_y = CGRectGetMaxY(self.hotSearchTagsContentView.frame) + PYSEARCH_MARGIN;
+        [self.searchHistoryView addSubview:searchHistoryTagsContentView];
+        _searchHistoryTagsContentView = searchHistoryTagsContentView;
+    }
+    return _searchHistoryTagsContentView;
+}
+
+//搜索历史：tag内容数据
 - (NSMutableArray *)searchHistories
 {
     if (!_searchHistories) {
@@ -285,40 +214,26 @@
     return _searchHistories;
 }
 
-- (NSMutableArray *)colorPol
-{
-    if (!_colorPol) {
-        NSArray *colorStrPol = @[@"009999", @"0099cc", @"0099ff", @"00cc99", @"00cccc", @"336699", @"3366cc", @"3366ff", @"339966", @"666666", @"666699", @"6666cc", @"6666ff", @"996666", @"996699", @"999900", @"999933", @"99cc00", @"99cc33", @"660066", @"669933", @"990066", @"cc9900", @"cc6600" , @"cc3300", @"cc3366", @"cc6666", @"cc6699", @"cc0066", @"cc0033", @"ffcc00", @"ffcc33", @"ff9900", @"ff9933", @"ff6600", @"ff6633", @"ff6666", @"ff6699", @"ff3366", @"ff3333"];
-        NSMutableArray *colorPolM = [NSMutableArray array];
-        for (NSString *colorStr in colorStrPol) {
-            UIColor *color = [UIColor colorWithHexString:colorStr];
-            [colorPolM addObject:color];
-        }
-        _colorPol = colorPolM;
-    }
-    return _colorPol;
-}
-
-- (UIBarButtonItem *)cancelButton
-{
-    return self.navigationItem.rightBarButtonItem;
-}
-
+/**********UI初始化********************/
 - (void)setup
 {
-    self.baseSearchTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.tableView.frame = CGRectMake(0, KNavigationBarHeight, KScreenWidth, KScreenHeight - KNavigationBarHeight - KBottomHeight);
+    [self.view addSubview:self.tableView];
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    
     self.navigationItem.titleView = self.searchView;
     self.searchView.searchBar.delegate = self;
     [self addNavigationItemWithTitles:@[@"取消"] isLeft:NO target:self action:@selector(cancelDidClick) tags:@[@(1)]];
     
      [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
+    
     /**
      * Initialize settings
      */
-    self.hotSearchStyle = PYHotSearchStyleDefault;
-    self.searchHistoryStyle = PYHotSearchStyleDefault;
+    self.hotSearchStyle = PYHotSearchStyleARCBorderTag;
+    self.searchHistoryStyle = PYSearchHistoryStyleARCBorderTag;
     self.searchResultShowMode = PYSearchResultShowModeDefault;
-    self.searchSuggestionHidden = NO;
     self.searchHistoriesCachePath = PYSEARCH_SEARCH_HISTORY_CACHE_PATH;
     self.searchHistoriesCount = 20;
     self.showSearchHistory = YES;
@@ -351,185 +266,49 @@
     [headerView addSubview:hotSearchView];
     self.hotSearchTagsContentView = hotSearchTagsContentView;
     
-    self.baseSearchTableView.tableHeaderView = headerView;
+    self.tableView.tableHeaderView = headerView;
     
     UIView *footerView = [[UIView alloc] init];
     footerView.zsh_width = KScreenWidth;
-    
-    UILabel *emptySearchHistoryLabel = [[UILabel alloc] init];
-    emptySearchHistoryLabel.textColor = [UIColor darkGrayColor];
-    emptySearchHistoryLabel.font = [UIFont systemFontOfSize:13];
-    emptySearchHistoryLabel.userInteractionEnabled = YES;
-    emptySearchHistoryLabel.text = @"清空搜索历史";
-    emptySearchHistoryLabel.textAlignment = NSTextAlignmentCenter;
-    emptySearchHistoryLabel.zsh_height = 49;
-    [emptySearchHistoryLabel addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(emptySearchHistoryDidClick)]];
-    emptySearchHistoryLabel.zsh_width = footerView.zsh_width;
-    emptySearchHistoryLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-    self.emptySearchHistoryLabel = emptySearchHistoryLabel;
-    [footerView addSubview:emptySearchHistoryLabel];
-    footerView.zsh_height = emptySearchHistoryLabel.zsh_height;
-    self.baseSearchTableView.tableFooterView = footerView;
+    self.tableView.tableFooterView = self.recommendView;
     
     self.hotSearches = nil;
+    
+    
+    _searchTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, KNavigationBarHeight, KScreenWidth, KScreenHeight-KNavigationBarHeight) style:UITableViewStyleGrouped];
+    _searchTableView.delegate = self;
+    _searchTableView.dataSource = self;
+    _searchTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    _searchTableView.backgroundColor = KBlackColor;
+    _searchTableView.hidden = true;
+    [self.view addSubview:_searchTableView];
 }
 
+#pragma action
+//tableview 头部标题
 - (UILabel *)setupTitleLabel:(NSString *)title
 {
-    UILabel *titleLabel = [[UILabel alloc] init];
-    titleLabel.text = title;
-    titleLabel.font = kPingFangMedium(15);
+    NSDictionary *titleLBDic = @{@"text":title,@"font":kPingFangMedium(15)};
+    UILabel *titleLabel = [ZSHBaseUIControl createLabelWithParamDic:titleLBDic];
     titleLabel.tag = 1;
-    titleLabel.textColor = KZSHColor929292;
     [titleLabel sizeToFit];
     titleLabel.zsh_x = 0;
     titleLabel.zsh_y = 0;
     return titleLabel;
 }
 
-- (void)setupHotSearchRectangleTags
+//tags标题
+- (UILabel *)labelWithTitle:(NSString *)title
 {
-    UIView *contentView = self.hotSearchTagsContentView;
-    contentView.zsh_width = KScreenWidth;
-    contentView.zsh_x = -PYSEARCH_MARGIN * 1.5;
-    contentView.zsh_y += 2;
-    contentView.backgroundColor = [UIColor whiteColor];
-    self.baseSearchTableView.backgroundColor = KClearColor;
-    // remove all subviews in hotSearchTagsContentView
-    [self.hotSearchTagsContentView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
-  
-    CGFloat rectangleTagH = 40;
-    for (int i = 0; i < self.hotSearches.count; i++) {
-        UILabel *rectangleTagLabel = [[UILabel alloc] init];
-        rectangleTagLabel.userInteractionEnabled = YES;
-        rectangleTagLabel.font = [UIFont systemFontOfSize:14];
-        rectangleTagLabel.textColor = KZSHColor929292;
-        rectangleTagLabel.backgroundColor = [UIColor clearColor];
-        rectangleTagLabel.text = self.hotSearches[i];
-        rectangleTagLabel.zsh_width = contentView.zsh_width / PYRectangleTagMaxCol;
-        rectangleTagLabel.zsh_height = rectangleTagH;
-        rectangleTagLabel.textAlignment = NSTextAlignmentCenter;
-        [rectangleTagLabel addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tagDidCLick:)]];
-        rectangleTagLabel.zsh_x = rectangleTagLabel.zsh_width * (i % PYRectangleTagMaxCol);
-        rectangleTagLabel.zsh_y = rectangleTagLabel.zsh_height * (i / PYRectangleTagMaxCol);
-        [contentView addSubview:rectangleTagLabel];
-    }
-    contentView.zsh_height = CGRectGetMaxY(contentView.subviews.lastObject.frame);
-    
-    self.hotSearchView.zsh_height = CGRectGetMaxY(contentView.frame) + PYSEARCH_MARGIN * 2;
-    self.baseSearchTableView.tableHeaderView.zsh_height = self.headerView.zsh_height = MAX(CGRectGetMaxY(self.hotSearchView.frame), CGRectGetMaxY(self.searchHistoryView.frame));
-    
-    for (int i = 0; i < PYRectangleTagMaxCol - 1; i++) {
-        UIImageView *verticalLine = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"cell-content-line-vertical"]];
-        verticalLine.zsh_height = contentView.zsh_height;
-        verticalLine.alpha = 0.7;
-        verticalLine.zsh_x = contentView.zsh_width / PYRectangleTagMaxCol * (i + 1);
-        verticalLine.zsh_width = 0.5;
-        [contentView addSubview:verticalLine];
-    }
-    
-    for (int i = 0; i < ceil(((double)self.hotSearches.count / PYRectangleTagMaxCol)) - 1; i++) {
-        UIImageView *verticalLine = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"cell-content-line"]];
-        verticalLine.zsh_height = 0.5;
-        verticalLine.alpha = 0.7;
-        verticalLine.zsh_y = rectangleTagH * (i + 1);
-        verticalLine.zsh_width = contentView.zsh_width;
-        [contentView addSubview:verticalLine];
-    }
-    [self layoutForDemand];
-    // Note：When the operating system for the iOS 9.x series tableHeaderView height settings are invalid, you need to reset the tableHeaderView
-    [self.baseSearchTableView setTableHeaderView:self.baseSearchTableView.tableHeaderView];
-}
-
-- (void)setupHotSearchRankTags
-{
-    UIView *contentView = self.hotSearchTagsContentView;
-    [self.hotSearchTagsContentView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    
-    NSMutableArray *rankTextLabelsM = [NSMutableArray array];
-    NSMutableArray *rankTagM = [NSMutableArray array];
-    NSMutableArray *rankViewM = [NSMutableArray array];
-    for (int i = 0; i < self.hotSearches.count; i++) {
-        UIView *rankView = [[UIView alloc] init];
-        rankView.zsh_height = 40;
-        rankView.zsh_width = (self.baseSearchTableView.zsh_width - PYSEARCH_MARGIN * 3) * 0.5;
-        rankView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-        [contentView addSubview:rankView];
-        // rank tag
-        UILabel *rankTag = [[UILabel alloc] init];
-        rankTag.textAlignment = NSTextAlignmentCenter;
-        rankTag.font = [UIFont systemFontOfSize:10];
-        rankTag.layer.cornerRadius = 3;
-        rankTag.clipsToBounds = YES;
-        rankTag.text = [NSString stringWithFormat:@"%d", i + 1];
-        [rankTag sizeToFit];
-        rankTag.zsh_width = rankTag.zsh_height += PYSEARCH_MARGIN * 0.5;
-        rankTag.zsh_y = (rankView.zsh_height - rankTag.zsh_height) * 0.5;
-        [rankView addSubview:rankTag];
-        [rankTagM addObject:rankTag];
-        // rank text
-        UILabel *rankTextLabel = [[UILabel alloc] init];
-        rankTextLabel.text = self.hotSearches[i];
-        rankTextLabel.userInteractionEnabled = YES;
-        [rankTextLabel addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tagDidCLick:)]];
-        rankTextLabel.textAlignment = NSTextAlignmentLeft;
-        rankTextLabel.backgroundColor = [UIColor clearColor];
-        rankTextLabel.textColor = KZSHColor929292;
-        rankTextLabel.font = [UIFont systemFontOfSize:14];
-        rankTextLabel.zsh_x = CGRectGetMaxX(rankTag.frame) + PYSEARCH_MARGIN;
-        rankTextLabel.zsh_width = (self.baseSearchTableView.zsh_width - PYSEARCH_MARGIN * 3) * 0.5 - rankTextLabel.zsh_x;
-        rankTextLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-        rankTextLabel.zsh_height = rankView.zsh_height;
-        [rankTextLabelsM addObject:rankTextLabel];
-        [rankView addSubview:rankTextLabel];
-        
-        UIImageView *line = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"cell-content-line"]];
-        line.zsh_height = 0.5;
-        line.alpha = 0.7;
-        line.zsh_x = -KScreenWidth * 0.5;
-        line.zsh_y = rankView.zsh_height - 1;
-        line.zsh_width = self.baseSearchTableView.zsh_width;
-        line.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-        [rankView addSubview:line];
-        [rankViewM addObject:rankView];
-        
-        // set tag's background color and text color
-        switch (i) {
-            case 0: // NO.1
-                rankTag.backgroundColor = [UIColor colorWithHexString:self.rankTagBackgroundColorHexStrings[0]];
-                rankTag.textColor = [UIColor whiteColor];
-                break;
-            case 1: // NO.2
-                rankTag.backgroundColor = [UIColor colorWithHexString:self.rankTagBackgroundColorHexStrings[1]];
-                rankTag.textColor = [UIColor whiteColor];
-                break;
-            case 2: // NO.3
-                rankTag.backgroundColor = [UIColor colorWithHexString:self.rankTagBackgroundColorHexStrings[2]];
-                rankTag.textColor = [UIColor whiteColor];
-                break;
-            default: // Other
-                rankTag.backgroundColor = [UIColor colorWithHexString:self.rankTagBackgroundColorHexStrings[3]];
-                rankTag.textColor = KZSHColor929292;
-                break;
-        }
-    }
-    self.rankTextLabels = rankTextLabelsM;
-    self.rankTags = rankTagM;
-    self.rankViews = rankViewM;
-    
-    for (int i = 0; i < self.rankViews.count; i++) { // default is two column
-        UIView *rankView = self.rankViews[i];
-        rankView.zsh_x = (PYSEARCH_MARGIN + rankView.zsh_width) * (i % 2);
-        rankView.zsh_y = rankView.zsh_height * (i / 2);
-    }
-    
-    contentView.zsh_height = CGRectGetMaxY(self.rankViews.lastObject.frame);
-    self.hotSearchView.zsh_height = CGRectGetMaxY(contentView.frame) + PYSEARCH_MARGIN * 2;
-    self.baseSearchTableView.tableHeaderView.zsh_height = self.headerView.zsh_height = MAX(CGRectGetMaxY(self.hotSearchView.frame), CGRectGetMaxY(self.searchHistoryView.frame));
-    [self layoutForDemand];
-    
-    // Note：When the operating system for the iOS 9.x series tableHeaderView height settings are invalid, you need to reset the tableHeaderView
-    [self.baseSearchTableView setTableHeaderView:self.baseSearchTableView.tableHeaderView];
+    NSDictionary *labelDic = @{@"text":title,@"font":kPingFangLight(14),@"textAlignment":@(NSTextAlignmentCenter)};
+    UILabel *label = [ZSHBaseUIControl createLabelWithParamDic:labelDic];
+    label.userInteractionEnabled = YES;
+    label.layer.cornerRadius = 3;
+    label.clipsToBounds = YES;
+    [label sizeToFit];
+    label.zsh_width += 20;
+    label.zsh_height += 14;
+    return label;
 }
 
 - (void)setupHotSearchNormalTags
@@ -540,7 +319,7 @@
 
 - (void)setupSearchHistoryTags
 {
-    self.baseSearchTableView.tableFooterView = nil;
+    self.tableView.tableFooterView = self.showRecommendView ? self.recommendView:nil;
     self.searchHistoryTagsContentView.zsh_y = PYSEARCH_MARGIN;
     self.emptyButton.zsh_y = self.searchHistoryHeader.zsh_y - PYSEARCH_MARGIN * 0.5;
     self.searchHistoryTagsContentView.zsh_y = CGRectGetMaxY(self.emptyButton.frame) + PYSEARCH_MARGIN;
@@ -587,11 +366,11 @@
     }
     
     [self layoutForDemand];
-    self.baseSearchTableView.tableHeaderView.zsh_height = self.headerView.zsh_height = MAX(CGRectGetMaxY(self.hotSearchView.frame), CGRectGetMaxY(self.searchHistoryView.frame));
-    self.baseSearchTableView.tableHeaderView.hidden = NO;
+    self.tableView.tableHeaderView.zsh_height = self.headerView.zsh_height = MAX(CGRectGetMaxY(self.hotSearchView.frame), CGRectGetMaxY(self.searchHistoryView.frame));
+    self.tableView.tableHeaderView.hidden = NO;
     
     // Note：When the operating system for the iOS 9.x series tableHeaderView height settings are invalid, you need to reset the tableHeaderView
-    [self.baseSearchTableView setTableHeaderView:self.baseSearchTableView.tableHeaderView];
+    [self.tableView setTableHeaderView:self.tableView.tableHeaderView];
     return [tagsM copy];
 }
 
@@ -626,7 +405,7 @@
     _searchHistoryTitle = [searchHistoryTitle copy];
     
     if (PYSearchHistoryStyleCell == self.searchHistoryStyle) {
-        [self.baseSearchTableView reloadData];
+        [self.tableView reloadData];
     } else {
         self.searchHistoryHeader.text = _searchHistoryTitle;
     }
@@ -635,10 +414,6 @@
 - (void)setShowSearchResultWhenSearchTextChanged:(BOOL)showSearchResultWhenSearchTextChanged
 {
     _showSearchResultWhenSearchTextChanged = showSearchResultWhenSearchTextChanged;
-    
-    if (YES == _showSearchResultWhenSearchTextChanged) {
-        self.searchSuggestionHidden = YES;
-    }
 }
 
 - (void)setShowHotSearch:(BOOL)showHotSearch
@@ -657,18 +432,13 @@
     [self setSearchHistoryStyle:self.searchHistoryStyle];
 }
 
-- (void)setCancelButton:(UIBarButtonItem *)cancelButton
-{
-    self.navigationItem.rightBarButtonItem = cancelButton;
-}
-
 - (void)setSearchHistoriesCachePath:(NSString *)searchHistoriesCachePath
 {
     _searchHistoriesCachePath = [searchHistoriesCachePath copy];
     
     self.searchHistories = nil;
     if (PYSearchHistoryStyleCell == self.searchHistoryStyle) {
-        [self.baseSearchTableView reloadData];
+        [self.tableView reloadData];
     } else {
         [self setSearchHistoryStyle:self.searchHistoryStyle];
     }
@@ -683,67 +453,24 @@
     _hotSearchTags = hotSearchTags;
 }
 
-- (void)setSearchBarBackgroundColor:(UIColor *)searchBarBackgroundColor
-{
-    _searchBarBackgroundColor = searchBarBackgroundColor;
-//    _searchTextField.backgroundColor = searchBarBackgroundColor;
-    self.searchView.searchTextField.backgroundColor = searchBarBackgroundColor;
-}
-
-- (void)setSearchSuggestions:(NSArray<NSString *> *)searchSuggestions
-{
-    if ([self.dataSource respondsToSelector:@selector(searchSuggestionView:cellForRowAtIndexPath:)]) {
-        // set searchSuggestion is nil when cell of suggestion view is custom.
-        _searchSuggestions = nil;
-        return;
-    }
-    
-    _searchSuggestions = [searchSuggestions copy];
-    self.searchSuggestionVC.searchSuggestions = [searchSuggestions copy];
-    
-    self.baseSearchTableView.hidden = !self.searchSuggestionHidden && [self.searchSuggestionVC.tableView numberOfRowsInSection:0];
-    self.searchSuggestionVC.view.hidden = self.searchSuggestionHidden || ![self.searchSuggestionVC.tableView numberOfRowsInSection:0];
-}
-
-- (void)setRankTagBackgroundColorHexStrings:(NSArray<NSString *> *)rankTagBackgroundColorHexStrings
-{
-    if (rankTagBackgroundColorHexStrings.count < 4) {
-        NSArray *colorStrings = @[@"#f14230", @"#ff8000", @"#ffcc01", @"#ebebeb"];
-        _rankTagBackgroundColorHexStrings = colorStrings;
-    } else {
-        _rankTagBackgroundColorHexStrings = @[rankTagBackgroundColorHexStrings[0], rankTagBackgroundColorHexStrings[1], rankTagBackgroundColorHexStrings[2], rankTagBackgroundColorHexStrings[3]];
-    }
-    
-    self.hotSearches = self.hotSearches;
-}
-
 - (void)setHotSearches:(NSArray *)hotSearches
 {
     _hotSearches = hotSearches;
-    if (0 == hotSearches.count || !self.showHotSearch) {
+    if (hotSearches.count == 0 || !self.showHotSearch) {
         self.hotSearchHeader.hidden = YES;
         self.hotSearchTagsContentView.hidden = YES;
         if (PYSearchHistoryStyleCell == self.searchHistoryStyle) {
-            UIView *tableHeaderView = self.baseSearchTableView.tableHeaderView;
+            UIView *tableHeaderView = self.tableView.tableHeaderView;
             tableHeaderView.zsh_height = PYSEARCH_MARGIN * 1.5;
-            [self.baseSearchTableView setTableHeaderView:tableHeaderView];
+            [self.tableView setTableHeaderView:tableHeaderView];
         }
         return;
     };
     
-    self.baseSearchTableView.tableHeaderView.hidden = NO;
+    self.tableView.tableHeaderView.hidden = NO;
     self.hotSearchHeader.hidden = NO;
     self.hotSearchTagsContentView.hidden = NO;
-    if (PYHotSearchStyleDefault == self.hotSearchStyle
-        || PYHotSearchStyleColorfulTag == self.hotSearchStyle
-        || PYHotSearchStyleBorderTag == self.hotSearchStyle
-        || PYHotSearchStyleARCBorderTag == self.hotSearchStyle) {
-        [self setupHotSearchNormalTags];
-    } else if (PYHotSearchStyleRankTag == self.hotSearchStyle) {
-        [self setupHotSearchRankTags];
-    } else if (PYHotSearchStyleRectangleTag == self.hotSearchStyle) {
-        [self setupHotSearchRectangleTags];
-    }
+    [self setupHotSearchNormalTags];
     [self setSearchHistoryStyle:self.searchHistoryStyle];
 }
 
@@ -764,79 +491,33 @@
     self.searchHistoryView.hidden = NO;
     self.emptyButton.hidden = NO;
     [self setupSearchHistoryTags];
-    
-    switch (searchHistoryStyle) {
-        case PYSearchHistoryStyleColorfulTag:
-            for (UILabel *tag in self.searchHistoryTags) {
-                tag.textColor = [UIColor whiteColor];
-                tag.layer.borderColor = nil;
-                tag.layer.borderWidth = 0.0;
-                tag.backgroundColor = PYSEARCH_COLORPolRandomColor;
-            }
-            break;
-        case PYSearchHistoryStyleBorderTag:
-            for (UILabel *tag in self.searchHistoryTags) {
-                tag.backgroundColor = [UIColor clearColor];
-                tag.layer.borderColor = KZSHColor929292.CGColor;
-                tag.layer.borderWidth = 0.3;
-            }
-            break;
-        case PYSearchHistoryStyleARCBorderTag:
-            for (UILabel *tag in self.searchHistoryTags) {
-                tag.backgroundColor = [UIColor clearColor];
-                tag.layer.borderColor = KZSHColor929292.CGColor;
-                tag.layer.borderWidth = 0.3;
-                tag.layer.cornerRadius = tag.zsh_height * 0.3;
-            }
-            break;
-        default:
-            break;
+    for (UILabel *tag in self.searchHistoryTags) {
+        tag.backgroundColor = [UIColor clearColor];
+        tag.layer.borderColor = KZSHColor929292.CGColor;
+        tag.layer.borderWidth = 0.3;
+        tag.layer.cornerRadius = tag.zsh_height * 0.3;
     }
 }
 
 - (void)setHotSearchStyle:(PYHotSearchStyle)hotSearchStyle
 {
     _hotSearchStyle = hotSearchStyle;
-    
-    switch (hotSearchStyle) {
-        case PYHotSearchStyleColorfulTag:
-            for (UILabel *tag in self.hotSearchTags) {
-                tag.textColor = [UIColor whiteColor];
-                tag.layer.borderColor = nil;
-                tag.layer.borderWidth = 0.0;
-                tag.backgroundColor = PYSEARCH_COLORPolRandomColor;
-            }
-            break;
-        case PYHotSearchStyleBorderTag:
-            for (UILabel *tag in self.hotSearchTags) {
-                tag.backgroundColor = [UIColor clearColor];
-                tag.layer.borderColor = KZSHColor929292.CGColor;
-                tag.layer.borderWidth = 0.3;
-            }
-            break;
-        case PYHotSearchStyleARCBorderTag:
-            for (UILabel *tag in self.hotSearchTags) {
-                tag.backgroundColor = [UIColor clearColor];
-                tag.layer.borderColor = KZSHColor929292.CGColor;
-                tag.layer.borderWidth = 0.5;
-                tag.layer.cornerRadius = tag.zsh_height * 0.3;
-            }
-            break;
-        case PYHotSearchStyleRectangleTag:
-            self.hotSearches = self.hotSearches;
-            break;
-        case PYHotSearchStyleRankTag:
-            self.rankTagBackgroundColorHexStrings = nil;
-            break;
-            
-        default:
-            break;
+    //PYHotSearchStyleARCBorderTag
+    for (UILabel *tag in self.hotSearchTags) {
+        tag.backgroundColor = [UIColor clearColor];
+        tag.layer.borderColor = KZSHColor929292.CGColor;
+        tag.layer.borderWidth = 0.5;
+        tag.layer.cornerRadius = tag.zsh_height * 0.3;
     }
+}
+
+- (void)setRecommendArr:(NSArray *)recommendArr{
+    _recommendArr = recommendArr;
+    [self.recommendView updateViewWithParamDic:@{@"imageArr":_recommendArr}];
 }
 
 - (void)cancelDidClick
 {
-    
     [self.searchView.searchBar resignFirstResponder];
     if ([self.delegate respondsToSelector:@selector(didClickCancel:)]) {
         [self.delegate didClickCancel:self];
@@ -850,8 +531,6 @@
     NSDictionary *info = noti.userInfo;
     self.keyboardHeight = [info[UIKeyboardFrameEndUserInfoKey] CGRectValue].size.height;
     self.keyboardShowing = YES;
-    // Adjust the content inset of suggestion view
-    self.searchSuggestionVC.tableView.contentInset = UIEdgeInsetsMake(-30, 0, self.keyboardHeight + 30, 0);
 }
 
 
@@ -859,14 +538,12 @@
 {
     [self.searchHistories removeAllObjects];
     [NSKeyedArchiver archiveRootObject:self.searchHistories toFile:self.searchHistoriesCachePath];
-    if (PYSearchHistoryStyleCell == self.searchHistoryStyle) {
-        [self.baseSearchTableView reloadData];
-    } else {
-        self.searchHistoryStyle = self.searchHistoryStyle;
-    }
+    self.searchHistoryStyle = self.searchHistoryStyle;
     if (YES == self.swapHotSeachWithSearchHistory) {
         self.hotSearches = self.hotSearches;
     }
+    
+     [self.tableView reloadData];
 }
 
 - (void)tagDidCLick:(UITapGestureRecognizer *)gr
@@ -892,23 +569,6 @@
     }
 }
 
-- (UILabel *)labelWithTitle:(NSString *)title
-{
-    UILabel *label = [[UILabel alloc] init];
-    label.userInteractionEnabled = YES;
-    label.font = kPingFangLight(14);
-    label.text = title;
-    label.textColor = KZSHColor929292;
-    label.backgroundColor = KClearColor;
-    label.layer.cornerRadius = 3;
-    label.clipsToBounds = YES;
-    label.textAlignment = NSTextAlignmentCenter;
-    [label sizeToFit];
-    label.zsh_width += 20;
-    label.zsh_height += 14;
-    return label;
-}
-
 - (void)saveSearchCacheAndRefreshView
 {
     UISearchBar *searchBar = self.searchView.searchBar;
@@ -927,7 +587,7 @@
         [NSKeyedArchiver archiveRootObject:self.searchHistories toFile:self.searchHistoriesCachePath];
         
         if (PYSearchHistoryStyleCell == self.searchHistoryStyle) {
-            [self.baseSearchTableView reloadData];
+            [self.tableView reloadData];
         } else {
             self.searchHistoryStyle = self.searchHistoryStyle;
         }
@@ -938,6 +598,13 @@
 
 - (void)handleSearchResultShow
 {
+    if (_isSearch) {
+        _searchTableView.hidden = false;
+        [_searchTableView reloadData];
+    } else {
+        _searchTableView.hidden = true;
+    }
+    
     switch (self.searchResultShowMode) {
         case PYSearchResultShowModePush:
             self.searchResultController.view.hidden = NO;
@@ -950,9 +617,7 @@
                 self.searchResultController.view.hidden = NO;
                 self.searchResultController.view.zsh_y = NO == self.navigationController.navigationBar.translucent ? 0 : CGRectGetMaxY(self.navigationController.navigationBar.frame);
                 self.searchResultController.view.zsh_height = self.view.zsh_height - self.searchResultController.view.zsh_y;
-                self.searchSuggestionVC.view.hidden = YES;
             } else {
-                RLog(@"PYSearchDebug： searchResultController cannot be nil when searchResultShowMode is PYSearchResultShowModeEmbed.");
             }
             break;
         case PYSearchResultShowModeCustom:
@@ -961,42 +626,6 @@
         default:
             break;
     }
-}
-
-#pragma mark - PYSearchSuggestionViewDataSource
-- (NSInteger)numberOfSectionsInSearchSuggestionView:(UITableView *)searchSuggestionView
-{
-    if ([self.dataSource respondsToSelector:@selector(numberOfSectionsInSearchSuggestionView:)]) {
-        return [self.dataSource numberOfSectionsInSearchSuggestionView:searchSuggestionView];
-    }
-    return 1;
-}
-
-- (NSInteger)searchSuggestionView:(UITableView *)searchSuggestionView numberOfRowsInSection:(NSInteger)section
-{
-    if ([self.dataSource respondsToSelector:@selector(searchSuggestionView:numberOfRowsInSection:)]) {
-        NSInteger numberOfRow = [self.dataSource searchSuggestionView:searchSuggestionView numberOfRowsInSection:section];
-         searchSuggestionView.hidden = self.searchSuggestionHidden || !self.searchView.searchBar.text.length || 0 == numberOfRow;
-        self.baseSearchTableView.hidden = !searchSuggestionView.hidden;
-        return numberOfRow;
-    }
-    return self.searchSuggestions.count;
-}
-
-- (UITableViewCell *)searchSuggestionView:(UITableView *)searchSuggestionView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if ([self.dataSource respondsToSelector:@selector(searchSuggestionView:cellForRowAtIndexPath:)]) {
-        return [self.dataSource searchSuggestionView:searchSuggestionView cellForRowAtIndexPath:indexPath];
-    }
-    return nil;
-}
-
-- (CGFloat)searchSuggestionView:(UITableView *)searchSuggestionView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if ([self.dataSource respondsToSelector:@selector(searchSuggestionView:heightForRowAtIndexPath:)]) {
-        return [self.dataSource searchSuggestionView:searchSuggestionView heightForRowAtIndexPath:indexPath];
-    }
-    return 44.0;
 }
 
 #pragma mark - UISearchBarDelegate
@@ -1009,38 +638,30 @@
     }
     if (self.didSearchBlock) self.didSearchBlock(self, searchBar, searchBar.text);
     [self saveSearchCacheAndRefreshView];
+    [self requestData:searchBar.text];
 }
 
-- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
-{
+
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+    _isSearch = 0 != searchText.length;
+    
+    _searchDataArr = nil;
     if (PYSearchResultShowModeEmbed == self.searchResultShowMode && self.showSearchResultWhenSearchTextChanged) {
         [self handleSearchResultShow];
         self.searchResultController.view.hidden = 0 == searchText.length;
     } else if (self.searchResultController) {
         self.searchResultController.view.hidden = YES;
     }
-    self.baseSearchTableView.hidden = searchText.length && !self.searchSuggestionHidden && [self.searchSuggestionVC.tableView numberOfRowsInSection:0];
-    self.searchSuggestionVC.view.hidden = self.searchSuggestionHidden || !searchText.length || ![self.searchSuggestionVC.tableView numberOfRowsInSection:0];
-    if (self.searchSuggestionVC.view.hidden) {
-        self.searchSuggestions = nil;
-    }
-    [self.view bringSubviewToFront:self.searchSuggestionVC.view];
-    if ([self.delegate respondsToSelector:@selector(searchViewController:searchTextDidChange:searchText:)]) {
-        [self.delegate searchViewController:self searchTextDidChange:searchBar searchText:searchText];
-    }
 }
 
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
 {
+ 
     if (PYSearchResultShowModeEmbed == self.searchResultShowMode) {
         self.searchResultController.view.hidden = 0 == searchBar.text.length || !self.showSearchResultWhenSearchBarRefocused;
-        self.searchSuggestionVC.view.hidden = self.searchSuggestionHidden || !searchBar.text.length || ![self.searchSuggestionVC.tableView numberOfRowsInSection:0];
-        if (self.searchSuggestionVC.view.hidden) {
-            self.searchSuggestions = nil;
-        }
-        self.baseSearchTableView.hidden = searchBar.text.length && !self.searchSuggestionHidden && ![self.searchSuggestionVC.tableView numberOfRowsInSection:0];
     }
-    [self setSearchSuggestions:self.searchSuggestions];
+    _isSearch = 0 != searchBar.text.length;
     return YES;
 }
 
@@ -1049,7 +670,7 @@
     UITableViewCell *cell = (UITableViewCell *)sender.superview;
     [self.searchHistories removeObject:cell.textLabel.text];
     [NSKeyedArchiver archiveRootObject:self.searchHistories toFile:self.searchHistoriesCachePath];
-    [self.baseSearchTableView reloadData];
+    [self.tableView reloadData];
 }
 
 #pragma mark - Table view data source
@@ -1058,42 +679,51 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    self.baseSearchTableView.tableFooterView.hidden = 0 == self.searchHistories.count || !self.showSearchHistory;
-    return self.showSearchHistory && PYSearchHistoryStyleCell == self.searchHistoryStyle ? self.searchHistories.count : 0;
+//    self.tableView.tableFooterView.hidden = 0 == self.searchHistories.count || !self.showSearchHistory;
+    if (tableView == _searchTableView) {
+        return _searchDataArr.count;
+    } else {
+        self.tableView.tableFooterView.hidden = NO;
+        return self.showSearchHistory && PYSearchHistoryStyleCell == self.searchHistoryStyle ? self.searchHistories.count : 0;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *cellID = @"PYSearchHistoryCellID";
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
-    if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
-        cell.textLabel.textColor = KZSHColor929292;
-        cell.textLabel.font = [UIFont systemFontOfSize:14];
-        cell.backgroundColor = [UIColor clearColor];
+    if (tableView == _searchTableView) {
+        ZSHBaseCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PYSearchSuggestCellID"];
+        if (!cell) {
+            cell = [[ZSHBaseCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"PYSearchSuggestCellID"];
+        }
+        cell.textLabel.text = _searchDataArr[indexPath.row][@"NICKNAME"];
+        return cell;
+    } else {
+        static NSString *cellID = @"PYSearchHistoryCellID";
+        ZSHBaseCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
+        if (!cell) {
+            cell = [[ZSHBaseCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
+            
+            UIButton *closetButton = [[UIButton alloc] init];
+            closetButton.zsh_size = CGSizeMake(cell.zsh_height, cell.zsh_height);
+            [closetButton setImage:[UIImage imageNamed:@"live_close"] forState:UIControlStateNormal];
+            UIImageView *closeView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"live_close"]];
+            [closetButton addTarget:self action:@selector(closeDidClick:) forControlEvents:UIControlEventTouchUpInside];
+            closeView.contentMode = UIViewContentModeCenter;
+            cell.accessoryView = closetButton;
+            UIImageView *line = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"cell-content-line"]];
+            line.zsh_height = 0.5;
+            line.alpha = 0.7;
+            line.zsh_x = PYSEARCH_MARGIN;
+            line.zsh_y = 43;
+            line.zsh_width = tableView.zsh_width;
+            line.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+            [cell.contentView addSubview:line];
+        }
         
-        UIButton *closetButton = [[UIButton alloc] init];
-        closetButton.zsh_size = CGSizeMake(cell.zsh_height, cell.zsh_height);
-        [closetButton setImage:[UIImage imageNamed:@"live_close"] forState:UIControlStateNormal];
-        UIImageView *closeView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"live_close"]];
-        [closetButton addTarget:self action:@selector(closeDidClick:) forControlEvents:UIControlEventTouchUpInside];
-        closeView.contentMode = UIViewContentModeCenter;
-        cell.accessoryView = closetButton;
-        UIImageView *line = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"cell-content-line"]];
-        line.zsh_height = 0.5;
-        line.alpha = 0.7;
-        line.zsh_x = PYSEARCH_MARGIN;
-        line.zsh_y = 43;
-        line.zsh_width = tableView.zsh_width;
-        line.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-        [cell.contentView addSubview:line];
+        cell.imageView.image = [UIImage imageNamed:@"search_history"];
+        cell.textLabel.text = self.searchHistories[indexPath.row];
+        return cell;
     }
-    
-    cell.imageView.image = [UIImage imageNamed:@"search_history"];
-    cell.textLabel.text = self.searchHistories[indexPath.row];
-    
-    return cell;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
@@ -1114,7 +744,7 @@
 #pragma mark - UITableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    ZSHBaseCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     self.searchView.searchBar.text = cell.textLabel.text;
     if ([self.delegate respondsToSelector:@selector(searchViewController:didSelectSearchHistoryAtIndex:searchText:)]) {
@@ -1129,9 +759,19 @@
 {
     if (self.keyboardShowing) {
         // Adjust the content inset of suggestion view
-        self.searchSuggestionVC.tableView.contentInset = UIEdgeInsetsMake(-30, 0, 30, 0);
         [self.searchView.searchBar resignFirstResponder];
     }
 }
+
+- (void)requestData:(NSString *)searchText {
+    kWeakSelf(self);
+    ZSHLiveLogic *liveLogic = [[ZSHLiveLogic alloc] init];
+    [liveLogic requestLiveSearhWithDic:@{@"NICKNAME":searchText} success:^(id response) {
+        weakself.searchDataArr = response[@"pd"];
+        if(weakself.searchDataArr.count)
+            [weakself.searchTableView reloadData];
+    }];
+}
+
 
 @end

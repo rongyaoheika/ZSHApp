@@ -98,9 +98,9 @@ static NSString *cellIdentifier = @"listCell";
             }
         };
     }
-    
     return sectionModel;
 }
+
 
 #pragma action
 

@@ -145,7 +145,7 @@ static NSString *ZSHEnergyRulesCellID = @"ZSHEnergyRulesCell";
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     sectionModel.headerHeight = kRealValue(70);
     
-    NSDictionary *headLabelDic = @{@"text":@"分值组成",@"font":kPingFangRegular(17),@"textAlignment":@(NSTextAlignmentCenter)};
+    NSDictionary *headLabelDic = @{@"text":@"分值组成",@"font":kPingFangRegular(17)};
     sectionModel.headerView = [ZSHBaseUIControl createTabHeadLabelViewWithParamDic:headLabelDic];
     sectionModel.headerView.frame = CGRectMake(0, 0, KScreenWidth, kRealValue(70));
     for (int i = 0; i<self.scoreSectionArr.count; i++) {

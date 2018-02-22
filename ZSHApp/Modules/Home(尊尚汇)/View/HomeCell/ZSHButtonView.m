@@ -18,16 +18,27 @@
     _imageView.clipsToBounds = YES;
     [self addSubview:_imageView];
     [_imageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.mas_equalTo(self).insets(UIEdgeInsetsMake(0, 0, kRealValue(20), 0));
+        if (kFromClassTypeValue >= FromMusicMenuToNoticeView ) {
+             make.edges.mas_equalTo(self).insets(UIEdgeInsetsMake(0, 0, kRealValue(45), 0));
+        } else {
+            make.edges.mas_equalTo(self).insets(UIEdgeInsetsMake(0, 0, kRealValue(20), 0));
+        }
+        
     }];
     
 
     _label = [ZSHBaseUIControl createLabelWithParamDic:self.paramDic];
+    _label.numberOfLines = 0;
     [self addSubview:_label];
     [_label mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.mas_equalTo(self);
         make.left.and.width.mas_equalTo(self);
-        make.height.mas_equalTo(kRealValue(12));
+        if (kFromClassTypeValue >= FromMusicMenuToNoticeView ) {
+            make.height.mas_equalTo(kRealValue(36));
+        } else {
+            make.height.mas_equalTo(kRealValue(12));
+        }
+                
     }];
 }
 

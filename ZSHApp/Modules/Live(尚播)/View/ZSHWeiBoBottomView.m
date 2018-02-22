@@ -74,9 +74,9 @@
 
 - (void)updateCellWithModel:(ZSHWeiBoCellModel *)model {
     UIButton *btn = [self viewWithTag:1];
-    [btn setTitle:model.dotAgreeCount forState:UIControlStateNormal];
+    [btn setTitle:model.AGREECOUNT forState:UIControlStateNormal];
     UIButton *btn1 = [self viewWithTag:2];
-    [btn1 setTitle:model.commentCount forState:UIControlStateNormal];
+    [btn1 setTitle:model.COMMENTCOUNT forState:UIControlStateNormal];
 //    UIButton *btn2 = [self viewWithTag:3];
 //    [btn2 setTitle:model.commentCount forState:UIControlStateNormal];
     self.weiboCellModel = model;

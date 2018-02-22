@@ -26,6 +26,7 @@
 #define kSysVersion         [[[UIDevice currentDevice] systemVersion] floatValue]
 #ifndef kiOS11Later
 #define kiOS11Later         (kSysVersion >= 11)
+#define kIsIphoneX          (KScreenHeight == 812.0 ?YES:NO)
 #endif
 
 
@@ -33,13 +34,18 @@
 #define KScreenWidth ([[UIScreen mainScreen] bounds].size.width)
 #define KScreenHeight [[UIScreen mainScreen] bounds].size.height
 #define kScreen_Bounds [UIScreen mainScreen].bounds
-#define KBottomNavH  49
-#define KBottomHeight (KScreenHeight == 812.0 ?34 : 0)
-#define KNavigationBarHeight (KScreenHeight == 812.0 ? 88 : 64)
+#define KBottomHeight (kIsIphoneX ?34 : 0)
+#define KBottomNavH    49
+#define KBottomTabH   (kIsIphoneX ? 83 : 49)
+
+
+#define KNavigationBarHeight (kIsIphoneX ? 88 : 64)
 #define KLeftMargin 15
 
 //根据ip6的屏幕来拉伸
 #define kRealValue(with) ((with)*(KScreenWidth/375.0f))
+#define KTopHeight(top)  (kIsIphoneX ? kRealValue(top)+kRealValue(50):kRealValue(top))
+
 
 #define kWRatio (kScreenWidth / 375.0)
 #define kHRatio (kScreenHeight / 667.0)
@@ -127,6 +133,9 @@ shared##className = [[self alloc] init]; \
 return shared##className; \
 }
 
-#define HONOURUSER_IDValue         curUser.HONOURUSER_ID
+#define HONOURUSER_IDValue         curUser.HONOURUSER_ID  //@"388279486010884100"(主播)
+#define REHONOURUSER_IDValue       @"388279486010884100" //(观众)
+
+
 
 #endif /* define_h */

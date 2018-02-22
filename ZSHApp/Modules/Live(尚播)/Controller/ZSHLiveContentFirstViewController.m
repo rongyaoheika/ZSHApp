@@ -11,17 +11,21 @@
 #import "ZSHLiveCellView.h"
 #import "ZSHWeiboViewController.h"
 #import "ZSHLiveListModel.h"
-#import "ZSHLiveRoomViewController.h"
 #import "ZSHNearHeadView.h"
 #import "ZSHBottomBlurPopView.h"
-
+#import "AdvancedPlayerViewController.h"
+#import "AliyunPlaySDKDemoFullScreenScrollViewController.h"
+#import "ZSHLiveLogic.h"
 
 @interface ZSHLiveContentFirstViewController ()< UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,ZSHCustomWaterFlowLayoutDelegate>
 
 @property (nonatomic, strong)ZSHCustomWaterFlowLayout *waterLayout;
 @property (nonatomic, strong)ZSHLiveListModel         *listModel;
-@property (nonatomic, strong)NSMutableArray           *dataArr;
+@property (nonatomic, strong)ZSHLiveLogic             *liveLogic;
+@property (nonatomic, strong)NSArray                  *liveListArr;
 
+//本地数据
+@property (nonatomic, strong)NSMutableArray           *localDataArr;
 @end
 
 static NSString * const cellIdentifier = @"cellID";
@@ -38,23 +42,24 @@ static NSString * const ZSHNearHeadViewID = @"ZSHNearHeadView";
 }
 
 - (void)loadData{
-    
     NSArray *baseDataArr = @[
-                            @{@"liveName":@"夏天在我手中",@"imageName":@"live_image_1", @"loveCount":@"33"},
-                            @{@"liveName":@"忘记时间的钟",@"imageName":@"live_image_2", @"loveCount":@"43"},
-                            @{@"liveName":@"流沙",@"imageName":@"live_image_3", @"loveCount":@"33"},
-                            @{@"liveName":@"夏天",@"imageName":@"live_image_4", @"loveCount":@"44"},
-                            @{@"liveName":@"绅士",@"imageName":@"live_image_5", @"loveCount":@"63"},
-                            @{@"liveName":@"拉流",@"imageName":@"live_image_6", @"loveCount":@"40"}];
-    self.dataArr = [ZSHLiveListModel mj_objectArrayWithKeyValuesArray:baseDataArr];
+                             @{@"LiveTitle":@"夏天在我手中",@"LiveCover":@"live_image_1", @"UserNumber":@"33",@"PublishUrl":AlivcPullURL},
+                             @{@"LiveTitle":@"忘记时间的钟",@"LiveCover":@"live_image_2", @"UserNumber":@"43",@"PublishUrl":AlivcPullURL},
+                             @{@"LiveTitle":@"流沙",@"LiveCover":@"live_image_3", @"UserNumber":@"33",@"PublishUrl":AlivcPullURL},
+                             @{@"LiveTitle":@"夏天",@"LiveCover":@"live_image_4", @"UserNumber":@"44",@"PublishUrl":AlivcPullURL},
+                             @{@"LiveTitle":@"绅士",@"LiveCover":@"live_image_5", @"UserNumber":@"63",@"PublishUrl":AlivcPullURL},
+                             @{@"LiveTitle":@"拉流",@"LiveCover":@"live_image_6", @"UserNumber":@"40",@"PublishUrl":AlivcPullURL}];
+    self.localDataArr = [ZSHLiveListModel mj_objectArrayWithKeyValuesArray:baseDataArr];
+    
+    _liveLogic = [[ZSHLiveLogic alloc]init];
     
     self.waterLayout = [[ZSHCustomWaterFlowLayout alloc]init];
     self.waterLayout.delegate = self;
     if (kFromClassTypeValue == FromLiveNearVCToLiveContentFirstVC) {
-         self.waterLayout.headerReferenceSize = CGSizeMake(KScreenWidth, kRealValue(40));
+          self.waterLayout.headerReferenceSize = CGSizeMake(KScreenWidth, kRealValue(40));
     }
 
-    self.collectionView = [[UICollectionView alloc]initWithFrame:self.view.bounds collectionViewLayout:self.waterLayout];
+    [self.collectionView setCollectionViewLayout:self.waterLayout];
     self.collectionView.dataSource = self;
     self.collectionView.delegate = self;
     
@@ -63,20 +68,66 @@ static NSString * const ZSHNearHeadViewID = @"ZSHNearHeadView";
     
     [self.view addSubview:self.collectionView];
     [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.mas_equalTo(self.view).insets(UIEdgeInsetsMake(0, 0, KBottomNavH , 0));
+        if (kFromClassTypeValue!=4) {
+             make.edges.mas_equalTo(self.view).insets(UIEdgeInsetsMake(0, 0, KBottomTabH , 0));
+        } else {
+             self.title = @"小视频";
+             make.edges.mas_equalTo(self.view).insets(UIEdgeInsetsMake(KNavigationBarHeight, 0, KBottomHeight , 0));
+        }
+       
     }];
+    
+//    [self.collectionView addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(collectionViewAction:)]];
+    
+}
+
+//测试
+- (void)collectionViewAction:(UIGestureRecognizer *)gesture{
+    AliyunPlaySDKDemoFullScreenScrollViewController *livePlayVC = [[AliyunPlaySDKDemoFullScreenScrollViewController alloc] init];
+    livePlayVC.publishUrl = AlivcPullURL;
+    [self.navigationController pushViewController:livePlayVC animated:YES];
+}
+
+- (void)requestData{
+    switch (kFromClassTypeValue) {
+        case FromOtherVCToLiveContentFirstVC:
+        case FromLiveRecommendVCToLiveContentFirstVC:{
+            [self requestRecommendLiveListWithParamDic:nil];
+            
+            break;
+        }
+        case FromLiveNearVCToLiveContentFirstVC:{
+            [self requestNearLiveList];
+            break;
+        }
+        case FromLiveClassifyVCToLiveContentFirstVC:{
+            [self requestRecommendLiveListWithParamDic:self.paramDic];
+            break;
+        }
+            
+        default:
+            break;
+    }
+}
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    
+    [self requestData];
 }
 
 #pragma delegate
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    return 6;
+    
+    return self.liveListArr.count;
+   
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     
     ZSHLiveCellView *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
-    ZSHLiveListModel *model = self.dataArr[indexPath.item];
+    ZSHLiveListModel *model = self.liveListArr[indexPath.item];
     [cell updateCellWithModel:model];
     return cell;
 }
@@ -88,6 +139,9 @@ static NSString * const ZSHNearHeadViewID = @"ZSHNearHeadView";
         ZSHNearHeadView *nearView = [[ZSHNearHeadView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, kRealValue(40))];
         nearView.btnClickBlock = ^(UIButton *searchLiveBtn) {
             ZSHBottomBlurPopView *bottomBlurPopView = [weakself createBottomBlurPopViewWith:ZSHFromLiveNearSearchVCToBottomBlurPopView];
+            bottomBlurPopView.confirmOrderBlock = ^(NSDictionary *paramDic) {
+                [weakself requestNearSearchLiveListWithParamDic:paramDic];
+            };
             [kAppDelegate.window addSubview:bottomBlurPopView];
         };
         [reusableview addSubview:nearView];
@@ -105,15 +159,22 @@ static NSString * const ZSHNearHeadViewID = @"ZSHNearHeadView";
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     
-    ZSHLiveRoomViewController *liveRoomVC = [[ZSHLiveRoomViewController alloc]init];
-    [self.navigationController pushViewController:liveRoomVC animated:YES];
+//    AdvancedPlayerViewController *demoTwo = [[AdvancedPlayerViewController alloc] init];
+//    demoTwo.title = @"高级播放";
+//    [self.navigationController pushViewController:demoTwo animated:YES];
+    
+    
+    AliyunPlaySDKDemoFullScreenScrollViewController *livePlayVC = [[AliyunPlaySDKDemoFullScreenScrollViewController alloc] init];
+    ZSHLiveListModel *model = self.liveListArr[indexPath.item];
+    livePlayVC.publishUrl = model.PublishUrl;
+    [self.navigationController pushViewController:livePlayVC animated:YES];
+    
+    
 }
 
 #pragma WaterFlowLayoutDelegate
 - (CGFloat)heightForItem:(ZSHCustomWaterFlowLayout *)layout heightForItemAtIndex:(NSInteger)index itemWith:(CGFloat)itemWith{
-    ZSHLiveListModel *model = self.dataArr[index];
-    UIImage *image = [UIImage imageNamed:model.imageName];
-    return (image.size.height + kRealValue(22));
+    return (arc4random()%65 + 165 + kRealValue(22));
 }
 
 - (NSInteger)numberOfColums:(ZSHCustomWaterFlowLayout *)layout{
@@ -140,6 +201,56 @@ static NSString * const ZSHNearHeadViewID = @"ZSHNearHeadView";
     [bottomBlurPopView setBlurEnabled:NO];
     return bottomBlurPopView;
 }
+
+//推荐
+- (void)requestRecommendLiveListWithParamDic:(NSDictionary *)dic{
+    kWeakSelf(self);
+
+    [_liveLogic requestRecommendPushAddressListWithDic:dic success:^(id response) {
+        [weakself endCollectionViewRefresh];
+        _liveListArr = [ZSHLiveListModel mj_objectArrayWithKeyValuesArray:response[@"pd"][@"PUSHONLINE"][@"OnlineInfo"][@"LiveStreamOnlineInfo"]];
+        if (_liveListArr.count==0) {
+            _liveListArr = weakself.localDataArr;
+        }
+        [weakself.collectionView reloadData];
+    }];
+}
+
+//附近
+- (void)requestNearLiveList{
+    kWeakSelf(self);
+    
+    NSDictionary *paramDic = @{@"HONOURUSER_ID":HONOURUSER_IDValue};
+    [_liveLogic requestNearPushAddressListWithDic:paramDic success:^(id response) {
+        [weakself endCollectionViewRefresh];
+        _liveListArr = [ZSHLiveListModel mj_objectArrayWithKeyValuesArray:response[@"pd"][@"PUSHONLINE"][@"OnlineInfo"][@"LiveStreamOnlineInfo"]];
+        if (_liveListArr.count==0) {
+            _liveListArr = weakself.localDataArr;
+        }
+        [weakself.collectionView reloadData];
+    }];
+    
+}
+
+//附近筛选
+- (void)requestNearSearchLiveListWithParamDic:(NSDictionary *)paramDic{
+    kWeakSelf(self);
+    [_liveLogic requestScreenListWithDic:paramDic success:^(id response) {
+        [weakself endCollectionViewRefresh];
+        _liveListArr = [ZSHLiveListModel mj_objectArrayWithKeyValuesArray:response[@"pd"][@"PUSHONLINE"][@"OnlineInfo"][@"LiveStreamOnlineInfo"]];
+        [weakself.collectionView reloadData];
+        if (_liveListArr.count==0) {
+            _liveListArr = weakself.localDataArr;
+        }
+    }];
+    
+}
+
+- (void)collectionHeaderRereshing {
+    
+    [self requestData];
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -112,7 +112,7 @@ static NSString *ZSHHotelListCellID = @"ZSHHotelListCell";
     [self.tableViewModel.sectionModelArray addObject:[self storeHeadSection]];
     [self.tableViewModel.sectionModelArray addObject:[self storeSubSection]];
     [self.tableViewModel.sectionModelArray addObject:[self storeSetMenuSection]];
-     [self.tableViewModel.sectionModelArray addObject:[self storeMoreShopSection]];
+    [self.tableViewModel.sectionModelArray addObject:[self storeMoreShopSection]];
     [self.tableView reloadData];
 }
 
@@ -216,7 +216,7 @@ static NSString *ZSHHotelListCellID = @"ZSHHotelListCell";
     kWeakSelf(self);
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     sectionModel.headerHeight = kRealValue(40);
-    NSDictionary *headTitleParamDic = @{@"text":@"套餐",@"font":kPingFangMedium(15),@"textAlignment":@(NSTextAlignmentLeft)};
+    NSDictionary *headTitleParamDic = @{@"text":@"套餐",@"font":kPingFangMedium(15)};
     sectionModel.headerView = [ZSHBaseUIControl createTabHeadLabelViewWithParamDic:headTitleParamDic];
     
     for (int i = 0; i<_foodDetailSetDicArr.count; i++) {
@@ -236,7 +236,8 @@ static NSString *ZSHHotelListCellID = @"ZSHHotelListCell";
             NSDictionary *paramDic = _foodDetailSetDicArr[indexPath.row];
             NSDictionary *nextParamDic = @{KFromClassType:@(ZSHConfirmOrderToBottomBlurPopView),@"shopType":@(ZSHFoodShopType), @"deviceDic":weakself.foodDetailParamDic,@"listDic":paramDic,@"liveInfoStr":@""};
             weakself.bottomBlurPopView = [weakself createBottomBlurPopViewWithParamDic:nextParamDic];
-            [kAppDelegate.window addSubview:weakself.bottomBlurPopView];
+//            [kAppDelegate.window addSubview:weakself.bottomBlurPopView];键盘偏移无效
+            [weakself.view addSubview:weakself.bottomBlurPopView];
         };
     }
     
@@ -247,7 +248,7 @@ static NSString *ZSHHotelListCellID = @"ZSHHotelListCell";
 - (ZSHBaseTableViewSectionModel*)storeMoreShopSection {
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     sectionModel.headerHeight = kRealValue(40);
-    NSDictionary *headTitleParamDic = @{@"text":@"更多商家",@"font":kPingFangMedium(15),@"textAlignment":@(NSTextAlignmentLeft)};
+    NSDictionary *headTitleParamDic = @{@"text":@"更多商家",@"font":kPingFangMedium(15)};
     sectionModel.headerView = [ZSHBaseUIControl createTabHeadLabelViewWithParamDic:headTitleParamDic];
     UIButton *btn = [sectionModel.headerView viewWithTag:2];
     btn.hidden = NO;

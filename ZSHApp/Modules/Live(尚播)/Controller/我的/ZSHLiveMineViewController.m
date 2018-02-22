@@ -10,15 +10,19 @@
 #import "ZSHLiveMineHeadView.h"
 #import "ZSHTitleContentViewController.h"
 #import "ZSHNotificationViewController.h"
+#import "ZSHLiveLogic.h"
 static NSString *headCellIdentifier     = @"LiveHeadCell";
 static NSString *bottomCellIdentifier   = @"LiveListCell";
 
 @interface ZSHLiveMineViewController ()
 
-@property (nonatomic, strong) NSArray   *titleArr;
-@property (nonatomic, strong) NSArray   *imageArr;
-@property (nonatomic, strong) NSArray   *pushVCS;
-@property (nonatomic, strong) NSArray   *paramArr;
+@property (nonatomic, strong) NSArray       *titleArr;
+@property (nonatomic, strong) NSArray       *imageArr;
+@property (nonatomic, strong) NSArray       *pushVCS;
+@property (nonatomic, strong) NSArray       *paramArr;
+
+@property (nonatomic, strong) ZSHLiveLogic  *liveLogic;
+@property (nonatomic, strong) NSDictionary  *topDic;
 
 @end
 
@@ -31,9 +35,12 @@ static NSString *bottomCellIdentifier   = @"LiveListCell";
 }
 
 - (void)loadData{
+    _liveLogic = [[ZSHLiveLogic alloc]init];
+    [self requestData];
     self.titleArr = @[@"贡献榜",@"等级",@"任务中心",@"签到",@"设置"];
     self.imageArr = @[@"live_mine_icon_1",@"live_mine_icon_2",@"live_mine_icon_3",@"live_mine_icon_4",@"live_mine_icon_5"];
-    self.pushVCS = @[@"ZSHTitleContentViewController",@"ZSHTitleContentViewController",@"ZSHLiveTaskCenterViewController",@"",@"ZSHNotificationViewController"];
+
+    self.pushVCS = @[@"ZSHTitleContentViewController",@"ZSHTitleContentViewController",@"ZSHLiveTaskCenterViewController",@"ZSHLiveSignViewController",@"ZSHNotificationViewController"];
   
     self.paramArr = @[
                       @{KFromClassType:@(FromContributionListVCToTitleContentVC), @"title":@"贡献榜"},
@@ -46,12 +53,26 @@ static NSString *bottomCellIdentifier   = @"LiveListCell";
     [self initViewModel];
 }
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self requestData];
+}
+
+- (void)requestData{
+    kWeakSelf(self);
+    [_liveLogic requestLiveMineDataWithDic:@{@"HONOURUSER_ID":HONOURUSER_IDValue} success:^(id response) {
+        _topDic = response;
+        [weakself.tableViewModel.sectionModelArray replaceObjectAtIndex:0 withObject:[self storeHeadSection]];
+        [weakself.tableView reloadData];
+    }];
+}
+
 - (void)createUI{
     self.title = @"我的";
-
+    
     [self addNavigationItemWithImageName:@"nav_back" isLeft:YES target:self action:@selector(backAction) tag:1];
-
-    self.tableView.frame = CGRectMake(0, KNavigationBarHeight, KScreenWidth, KScreenHeight-KNavigationBarHeight-KBottomNavH);
+    
+    self.tableView.frame = CGRectMake(0, KNavigationBarHeight, KScreenWidth, KScreenHeight-KNavigationBarHeight-KBottomTabH);
     [self.view addSubview:self.tableView];
     self.tableView.delegate = self.tableViewModel;
     self.tableView.dataSource = self.tableViewModel;
@@ -62,7 +83,7 @@ static NSString *bottomCellIdentifier   = @"LiveListCell";
     [self.tableView registerClass:[ZSHBaseCell class] forCellReuseIdentifier:bottomCellIdentifier];
     
     [self.tableView reloadData];
-
+    
 }
 
 - (void)initViewModel {
@@ -86,7 +107,10 @@ static NSString *bottomCellIdentifier   = @"LiveListCell";
             cellView.tag = 2;
             [cell.contentView addSubview:cellView];
         }
-        
+        if(_topDic){
+            ZSHLiveMineHeadView *cellView = [cell.contentView viewWithTag:2];
+            [cellView updateViewWithParamDic:_topDic];
+        }
         return cell;
     };
     
@@ -125,7 +149,8 @@ static NSString *bottomCellIdentifier   = @"LiveListCell";
     return sectionModel;
 }
 
-- (void)backAction{
+- (void)backAction {
+    
     [[kAppDelegate getCurrentUIVC].navigationController popToRootViewControllerAnimated:NO];
     AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     RXLSideSlipViewController *RXL= (RXLSideSlipViewController *)delegate.window.rootViewController;
@@ -133,5 +158,7 @@ static NSString *bottomCellIdentifier   = @"LiveListCell";
     tab.tabBar.hidden = NO;
     tab.selectedIndex = 0;
 }
+
+
 
 @end

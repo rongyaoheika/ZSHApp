@@ -17,7 +17,6 @@
 @property (nonatomic, copy) NSString    *SHOPNAMES;       //店铺名字（美食详情名字）
 @property (nonatomic, assign) CGFloat   SHOPEVALUATE;     //星星评价（美食星评4.5）
 @property (nonatomic, assign) NSInteger SHOPEVACOUNT;     //总评价数（美食总评120）
-@property (nonatomic, assign) CGFloat   cellHeight;
 
 @end
 

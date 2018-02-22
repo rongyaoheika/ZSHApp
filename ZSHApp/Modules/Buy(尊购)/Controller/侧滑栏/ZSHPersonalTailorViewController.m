@@ -77,6 +77,7 @@ static NSString *cellIdentifier = @"listCell";
     }
     return sectionModel;
 }
+
 - (void)requestData {
     kWeakSelf(self);
     [_buyLogic requestPersonLists:^(id response) {

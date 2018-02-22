@@ -10,4 +10,6 @@
 
 @interface ZSHBlackCardPhoneNumView : ZSHBaseView
 
+@property (nonatomic, assign) NSInteger           selectIndex;
+
 @end

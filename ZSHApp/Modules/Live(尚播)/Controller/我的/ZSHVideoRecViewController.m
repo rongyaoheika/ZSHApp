@@ -35,7 +35,7 @@
     [closeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.view).offset(kRealValue(22));
         make.left.mas_equalTo(self.view).offset(kRealValue(18));
-        make.width.and.height.mas_equalTo(kRealValue(44));
+        make.width.and.height.mas_equalTo(kRealValue(35));
     }];
     
     UIButton *refreshBtn = [[UIButton alloc]init];

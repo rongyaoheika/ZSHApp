@@ -16,6 +16,11 @@
 #import "ZSHBrandsSortHeadView.h"
 #import "ZSHGoodsTitleContentViewController.h"
 #import "ZSHBuyLogic.h"
+#import "LXScollTitleView.h"
+#import "ZSHGoodsCollectionViewCell.h"
+#import "ZSHPickView.h"
+#import "ZSHGuideView.h"
+#import "ZSHBottomBlurPopView.h"
 
 #define tableViewW  kRealValue(100)
 
@@ -24,10 +29,15 @@
 /* 左边数据 */
 @property (nonatomic, strong) NSMutableArray<ZSHClassMainModel *> *titleArr;
 /* 右边数据 */
-@property (nonatomic, strong) NSMutableArray<ZSHClassSubModel *>  *mainArr;
+@property (nonatomic, strong) NSMutableArray                      *mainArr;
 
 @property (nonatomic, strong) ZSHBuyLogic                         *buyLogic;
 @property (nonatomic, assign) NSInteger                           currentSelectIndex;
+@property (nonatomic, strong) LXScollTitleView                    *titleView;
+@property (nonatomic, assign) NSInteger                           index;
+@property (nonatomic, strong) ZSHPickView                         *pickView;
+@property (nonatomic, strong) ZSHGuideView                        *guideView;
+@property (nonatomic, strong) NSArray                             *filters;
 
 @end
 
@@ -46,9 +56,9 @@ static NSString *const ZSHBrandSortCellID = @"ZSHBrandSortCell";
 }
 
 - (void)loadData{
-    _currentSelectIndex = 0;
-    if ([self.paramDic[@"currentSelectIndex"]integerValue] ) {
-        _currentSelectIndex = [self.paramDic[@"currentSelectIndex"]integerValue];
+    _currentSelectIndex = 5;
+    if ([self.paramDic[@"currentSelectIndex"] integerValue]) {
+        _currentSelectIndex = [self.paramDic[@"currentSelectIndex"] integerValue];
     }
     
     [self requestData];
@@ -71,17 +81,35 @@ static NSString *const ZSHBrandSortCellID = @"ZSHBrandSortCell";
     layout.minimumLineSpacing = 5;          //Y
     layout.minimumInteritemSpacing = 3;     //X
     
-    self.collectionView.frame = CGRectMake(tableViewW, KNavigationBarHeight,kScreenWidth-tableViewW, kScreenHeight - KNavigationBarHeight);
+    
+    [self.view addSubview:self.titleView];
+    NSArray *_titleArr = @[@"综合排序", @"销量优先", @"筛选"];
+    _titleView.titleWidth = (KScreenWidth-tableViewW) /_titleArr.count;
+    [self.titleView reloadViewWithTitles:_titleArr];
+    
+    UIButton *btn = [_titleView.titleButtons lastObject];
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hotel_btn"]];
+    imageView.frame = CGRectMake((_titleView.titleWidth+btn.titleLabel.width)/2, 0, 8, 7);
+    imageView.centerY = btn.centerY;
+    [btn addSubview:imageView];
+    
+    
+    [self.view addSubview:self.guideView];
+    
+    
+    self.collectionView.frame = CGRectMake(tableViewW, KNavigationBarHeight+kRealValue(155),kScreenWidth-tableViewW, kScreenHeight - KNavigationBarHeight-kRealValue(155));
     [self.view addSubview:self.collectionView];
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
-    
     self.collectionView.showsVerticalScrollIndicator = NO;
     self.collectionView.showsHorizontalScrollIndicator = NO;
     self.collectionView.alwaysBounceVertical = YES;
+    self.collectionView.mj_header = nil;
+    self.collectionView.mj_footer = nil;
     
-    [self.collectionView registerClass:[ZSHGoodsSortCell class] forCellWithReuseIdentifier:ZSHGoodsSortCellID];
-    [self.collectionView registerClass:[ZSHBrandSortCell class] forCellWithReuseIdentifier:ZSHBrandSortCellID];
+//    [self.collectionView registerClass:[ZSHGoodsSortCell class] forCellWithReuseIdentifier:ZSHGoodsSortCellID];
+//    [self.collectionView registerClass:[ZSHBrandSortCell class] forCellWithReuseIdentifier:ZSHBrandSortCellID];
+    [self.collectionView registerClass:[ZSHGoodsCollectionViewCell class] forCellWithReuseIdentifier:ZSHGoodsSortCellID];
     
     //注册Header
     [self.collectionView registerClass:[ZSHBrandsSortHeadView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:ZSHBrandsSortHeadViewID];
@@ -91,6 +119,35 @@ static NSString *const ZSHBrandSortCellID = @"ZSHBrandSortCell";
     [self.tableViewModel.sectionModelArray removeAllObjects];
     [self.tableViewModel.sectionModelArray addObject:[self storeListSection]];
     [self.tableView reloadData];
+}
+
+- (ZSHGuideView *)guideView {
+    if(!_guideView) {
+        NSDictionary *nextParamDic = @{KFromClassType:@(FromBuyVCToGuideView),@"pageViewHeight":@(kRealValue(75)),@"min_scale":@(0.6),@"withRatio":@(1.8),@"infinite":@(false), @"dataArr":@[@"hotel_image", @"hotel_image"]};
+        _guideView = [[ZSHGuideView alloc]initWithFrame:CGRectMake(tableViewW, KNavigationBarHeight+kRealValue(70), kRealValue(275), kRealValue(75)) paramDic:nextParamDic];
+    }
+    return _guideView;
+}
+
+
+//getter
+- (LXScollTitleView *)titleView{
+    kWeakSelf(self)
+    if (!_titleView) {
+        _titleView = [[LXScollTitleView alloc] initWithFrame:CGRectMake(tableViewW, KNavigationBarHeight, KScreenWidth-tableViewW, kRealValue(70))];
+        _titleView.normalTitleFont = kPingFangRegular(12);
+        _titleView.selectedTitleFont = kPingFangRegular(14);
+        _titleView.selectedColor = KZSHColor929292;
+        _titleView.normalColor = KZSHColor929292;
+        _titleView.indicatorHeight = 0;
+        _index = _titleView.selectedIndex;
+        _titleView.selectedBlock = ^(NSInteger index){
+            _index = index;
+            [weakself requestConData];
+        };
+        
+    }
+    return _titleView;
 }
 
 #pragma mark - <UITableViewDelegate>
@@ -129,26 +186,9 @@ static NSString *const ZSHBrandSortCellID = @"ZSHBrandSortCell";
 
 #pragma mark - <UICollectionViewDelegate>
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    UICollectionViewCell *gridcell = nil;
-//    if ([_mainArr[_mainArr.count - 1].title isEqualToString:@"热门品牌"]) {
-//        if (indexPath.section == _mainArr.count - 1) {//品牌
-//            ZSHBrandSortCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:ZSHBrandSortCellID forIndexPath:indexPath];
-//            cell.subItem = _mainArr[indexPath.section].goods[indexPath.row];
-//            gridcell = cell;
-//        } else {//商品
-//            ZSHGoodsSortCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:ZSHGoodsSortCellID forIndexPath:indexPath];
-//            cell.subItem = _mainArr[indexPath.section].goods[indexPath.row];
-//            gridcell = cell;
-//        }
-//    } else {//商品
-//        ZSHGoodsSortCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:ZSHGoodsSortCellID forIndexPath:indexPath];
-//        cell.subItem = _mainArr[indexPath.section].goods[indexPath.row];
-//        gridcell = cell;
-//    }
-    ZSHGoodsSortCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:ZSHGoodsSortCellID forIndexPath:indexPath];
-    cell.subItem = _mainArr[indexPath.row];
-    gridcell = cell;
-    return gridcell;
+    ZSHGoodsCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:ZSHGoodsSortCellID forIndexPath:indexPath];
+    [cell updateCellWithParamDic:_mainArr[indexPath.row]];
+    return cell;
 }
 
 //- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
@@ -165,22 +205,13 @@ static NSString *const ZSHBrandSortCellID = @"ZSHBrandSortCell";
 
 #pragma mark - item宽高
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-//    if ([_mainArr[_mainArr.count - 1].title isEqualToString:@"热门品牌"]) {
-//        if (indexPath.section == _mainArr.count - 1) {//品牌
-//            return CGSizeMake((kScreenWidth - tableViewW - 6)/3, 60);
-//        }else{//商品
-//            return CGSizeMake((kScreenWidth - tableViewW - 6)/3, (kScreenWidth - tableViewW - 6)/3 + 20);
-//        }
-//    }else{
-        return CGSizeMake((kScreenWidth - tableViewW - 6)/3, (kScreenWidth - tableViewW - 6)/3 + 20);
-//    }
-//    return CGSizeZero;
+    return CGSizeMake(kScreenWidth-tableViewW, kRealValue(130));
 }
 
-#pragma mark - head宽高
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
-    return CGSizeMake(kScreenWidth, 25);
-}
+//#pragma mark - head宽高
+//- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
+//    return CGSizeMake(kScreenWidth, 25);
+//}
 
 #pragma mark - foot宽高
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section {
@@ -189,7 +220,7 @@ static NSString *const ZSHBrandSortCellID = @"ZSHBrandSortCell";
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     RLog(@"点击了个第%zd分组第%zd个Item",indexPath.section,indexPath.row);
-    ZSHGoodsTitleContentViewController *goodContentVC = [[ZSHGoodsTitleContentViewController alloc]initWithParamDic:@{@"PreBrandID":_mainArr[indexPath.row].BRAND_ID,
+    ZSHGoodsTitleContentViewController *goodContentVC = [[ZSHGoodsTitleContentViewController alloc]initWithParamDic:@{@"PreBrandID":_mainArr[indexPath.row][@"BUSINESS_ID"],
                                 KFromClassType:@(FromGoodsVCToGoodsTitleVC),
                                 @"cellType":@(ZSHCollectionViewCellType)
                                 }];
@@ -198,16 +229,6 @@ static NSString *const ZSHBrandSortCellID = @"ZSHBrandSortCell";
 
 - (void)headerRereshing {
     [self requestData];
-}
-- (void)collectionHeaderRereshing {
-    [self requestBrandIconListWithBrandID:_titleArr[_currentSelectIndex]];
-}
-
-- (void)collectionFooterRereshing {
-    kWeakSelf(self);
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [weakself.collectionView.mj_footer endRefreshing];
-    });
 }
 
 - (void)requestData {
@@ -227,13 +248,84 @@ static NSString *const ZSHBrandSortCellID = @"ZSHBrandSortCell";
 - (void)requestBrandIconListWithBrandID:(ZSHClassMainModel *)model {
     kWeakSelf(self);
     ZSHBuyLogic *logic = [[ZSHBuyLogic alloc] init];
-    [logic requestBrandIconListWithBrandID:model.BRAND_ID success:^(id response) {
-        _mainArr = [ZSHClassSubModel mj_objectArrayWithKeyValuesArray:response[@"pd"]];
+    
+    [logic requestBrandIconListWithDic:@{@"BRAND_ID":model.BRAND_ID} success:^(id response) {
+        _mainArr = response[@"pd"];
+        [weakself updateAd:response[@"adList"]];
+        [weakself updateFilter:response[@"brandIconList"]];
         [weakself.collectionView reloadData];
         [weakself.collectionView.mj_header endRefreshing];
-        
     }];
 }
 
+- (void)refreshBrandIconListWithBrandID:(NSString *)brandID {
+    kWeakSelf(self);
+    ZSHClassMainModel *model = _titleArr[_currentSelectIndex];
+    [_buyLogic requestBrandIconListWithDic:@{@"BRAND_ID":model.BRAND_ID,@"BRANDICON_ID":brandID} success:^(id response) {
+        _mainArr = response[@"pd"];
+        [weakself.collectionView reloadData];
+        [weakself.collectionView.mj_header endRefreshing];
+    }];
+}
+- (void)requestConData {
+    kWeakSelf(self);
+    switch (_index) {
+        case 0:{ // 综合排序
+            [self requestBrandIconListWithBrandID:_titleArr[_currentSelectIndex]];
+            break;
+        }
+        case 1:{ //
+            break;
+        }
+        case 2:{ // 筛选
+//            NSDictionary *nextParamDic = @{KFromClassType:@(ZSHFromGoodsVCToBottomBlurPopView), @"filters":_filters};
+//            ZSHBottomBlurPopView *bottomBlurPopView = [[ZSHBottomBlurPopView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight) paramDic:nextParamDic];
+//            bottomBlurPopView.blurRadius = 20;
+//            bottomBlurPopView.dynamic = NO;
+//            bottomBlurPopView.tintColor = KClearColor;
+//            bottomBlurPopView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.6];
+//            [bottomBlurPopView setBlurEnabled:NO];
+//            [ZSHBaseUIControl setAnimationWithHidden:NO view:bottomBlurPopView completedBlock:nil];
+//            bottomBlurPopView.dissmissViewBlock = ^(UIView *blurView, NSIndexPath *indexpath) {
+//                [ZSHBaseUIControl setAnimationWithHidden:YES view:blurView completedBlock:^{
+//                    if (indexpath) {//跳转到对应控制器
+//
+//                        [weakself refreshBrandIconListWithBrandID:weakself.filters[indexpath.row][@"BRANDICON_ID"]];
+//                    }
+//                    return;
+//                }];
+//            };
+            NSMutableArray *arr = [NSMutableArray array];
+            for (int i = 0; i < _filters.count; i++) {
+                [arr addObject:_filters[i][@"BRANDNAME"]];
+            }
+            NSDictionary *nextParamDic = @{@"type":@(WindowDefault),@"midTitle":@"筛选",@"dataArr":arr};
+            _pickView = [[ZSHPickView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight) paramDic:nextParamDic];
+            [_pickView show:WindowDefault];
+            _pickView.saveChangeBlock = ^(NSString *rowTitle, NSInteger tag,NSDictionary *dic) {
+                [weakself refreshBrandIconListWithBrandID:weakself.filters[tag][@"BRANDICON_ID"]];
+            };
+            break;
+        }
+        default:
+            break;
+    }
+}
+
+- (void)updateAd:(NSArray *)arr {
+    NSMutableArray *dataArr = [NSMutableArray array];
+    for (NSDictionary *dic  in arr) {
+        [dataArr addObject:dic[@"SHOWIMG"]];
+    }
+    [_guideView updateViewWithParamDic:@{@"dataArr":dataArr}];
+}
+
+- (void)updateFilter:(NSArray *)arr {
+    NSMutableArray *dataArr = [NSMutableArray array];
+    for (NSDictionary *dic  in arr) {
+        [dataArr addObject:@{@"BRANDICON_ID":dic[@"BRANDICON_ID"], @"BRANDNAME":dic[@"BRANDNAME"]}];
+    }
+    _filters = dataArr.mutableCopy;
+}
 
 @end

@@ -9,8 +9,11 @@
 #import "ZSHBaseView.h"
 #import "TYCyclePagerView.h"
 
+
+typedef void (^DidSelected) (NSInteger index);
+
 @interface ZSHGuideView : ZSHBaseView
 
-
+@property (nonatomic, copy) DidSelected didSelected;
 
 @end

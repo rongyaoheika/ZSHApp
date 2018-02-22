@@ -15,14 +15,15 @@
 #import "ZSHCityViewController.h"
 #import "PYSearchViewController.h"
 #import "ZSHGoodsTitleContentViewController.h"
-
-
+#import "ZSHHomeLogic.h"
+#import "GYZChooseCityController.h"
 static NSString *cellIdentifier = @"listCell";
 
-@interface ZSHTogetherViewController ()<UISearchBarDelegate>
+@interface ZSHTogetherViewController ()<UISearchBarDelegate,PYSearchViewControllerDelegate,GYZChooseCityDelegate,HCLocationManagerDelegate>
 
-@property (nonatomic, strong) NSArray            *pushVCsArr;
-@property (nonatomic, strong) ZSHTogetherLogic   *togetherLogic;
+
+@property (nonatomic, strong) NSArray               *pushVCsArr;
+@property (nonatomic, strong) ZSHTogetherLogic      *togetherLogic;
 
 @end
 
@@ -30,20 +31,22 @@ static NSString *cellIdentifier = @"listCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
     [self loadData];
     [self createUI];
 }
 
 - (void)loadData{
+    [self startLocateWithDelegate:self];
     self.pushVCsArr = @[@"ZSHEntertainmentViewController",@"ZSHEntertainmentViewController",@"ZSHEntertainmentViewController",@"ZSHEntertainmentViewController",@"ZSHEntertainmentViewController",@"ZSHEntertainmentViewController"];
-
+    _togetherLogic = [[ZSHTogetherLogic alloc] init];
     [self initViewModel];
     [self requestData];
+    [self requestCarouselFigure];
 }
 
 - (void)createUI{
-
+    
     UIButton *searchBtn = [ZSHBaseUIControl createBtnWithParamDic:@{@"title":@"搜索",@"font":kPingFangRegular(14),@"withImage":@(YES),@"normalImage":@"nav_home_search"}];
     searchBtn.frame = CGRectMake(0, 0, kRealValue(270), 30);
     searchBtn.backgroundColor = KZSHColor1A1A1A;
@@ -54,19 +57,17 @@ static NSString *cellIdentifier = @"listCell";
         [weakself searchAction];
     }];
     [self.navigationItem setTitleView:searchBtn];
-//    [self.navigationItem setTitleView:self.searchView];
-//    self.searchView.searchBar.delegate = self;
     
     [self.view addSubview:self.tableView];
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.mas_equalTo(self.view).insets(UIEdgeInsetsMake(KNavigationBarHeight, 0, KBottomNavH, 0));
+        make.edges.mas_equalTo(self.view).insets(UIEdgeInsetsMake(KNavigationBarHeight, 0, KBottomTabH, 0));
     }];
     self.tableView.delegate = self.tableViewModel;
     self.tableView.dataSource = self.tableViewModel;
     [self.tableView registerClass:[ZSHTogetherView class] forCellReuseIdentifier:cellIdentifier];
     [self.tableView reloadData];
     
-    [self addNavigationItemWithImageName:@"nav_home_more" title:@"三亚" locate:XYButtonEdgeInsetsStyleRight isLeft:YES target:self action:@selector(locateBtnAction) tag:10];
+    [self addNavigationItemWithImageName:@"nav_home_more" title:@"三亚市" locate:XYButtonEdgeInsetsStyleRight isLeft:YES target:self action:@selector(locateBtnAction) tag:10];
     
 }
 
@@ -103,41 +104,84 @@ static NSString *cellIdentifier = @"listCell";
     return sectionModel;
 }
 
-- (void)searchAction{
-    // 1. Create an Array of popular search
-    NSArray *hotSeaches = @[@"阿哲", @"散打哥", @"天佑", @"赵小磊", @"赵雷", @"陈山", @"PHP", @"C#", @"Perl", @"Go", @"JavaScript", @"R", @"Ruby", @"MATLAB"];
-    // 2. Create a search view controller
+- (void)searchAction {
     kWeakSelf(self);
-    PYSearchViewController *searchViewController = [PYSearchViewController searchViewControllerWithHotSearches:hotSeaches searchBarPlaceholder:NSLocalizedString(@"PYExampleSearchPlaceholderText", @"搜索编程语言") didSearchBlock:^(PYSearchViewController *searchViewController, UISearchBar *searchBar, NSString *searchText) {
-        // Called when search begain.
-        // eg：Push to a temp view conroller
-        ZSHGoodsTitleContentViewController *goodContentVC = [[ZSHGoodsTitleContentViewController alloc]initWithParamDic:@{@"searchText":searchText,KFromClassType:@(FromSearchResultVCTOGoodsTitleVC)}];
-        [weakself.navigationController pushViewController:goodContentVC animated:YES];
+    ZSHHomeLogic *homeLogic = [[ZSHHomeLogic alloc]init];
+    NSDictionary *paramDic = @{@"PARENT_ID":@(3)};
+    NSMutableArray *hotSearchMArr = [[NSMutableArray alloc]init];
+    NSMutableArray *recommendImageMArr = [[NSMutableArray alloc]init];
+    [homeLogic loadSearchListWithDic:paramDic success:^(id response) {
+        for (NSDictionary *dic in response[@"pd"]) {
+            [hotSearchMArr addObject:dic[@"NAME"]];
+        }
+        
+        for (NSDictionary *dic in response[@"showimgs"]) {
+            [recommendImageMArr addObject:dic[@"SHOWIMAGES"]];
+        }
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            PYSearchViewController *searchViewController = [PYSearchViewController searchViewControllerWithHotSearches:hotSearchMArr searchBarPlaceholder:NSLocalizedString(@"Search", @"搜索") recommendArr:recommendImageMArr didSearchBlock:^(PYSearchViewController *searchViewController, UISearchBar *searchBar, NSString *searchText) {
+                ZSHGoodsTitleContentViewController *goodContentVC = [[ZSHGoodsTitleContentViewController alloc]initWithParamDic:@{@"searchText":searchText,KFromClassType:@(FromSearchResultVCTOGoodsTitleVC)}];
+                [weakself.navigationController pushViewController:goodContentVC animated:YES];
+            }];
+            searchViewController.showRecommendView = YES;
+//            searchViewController.hotSearchStyle = PYHotSearchStyleARCBorderTag;
+//            searchViewController.searchHistoryStyle = PYSearchHistoryStyleARCBorderTag;
+//            searchViewController.searchBarBackgroundColor = KZSHColor1A1A1A;
+            searchViewController.delegate = self;
+            [self.navigationController pushViewController:searchViewController animated:YES];
+        });
+        
+        
     }];
-    // 3. Set style for popular search and search history
-    searchViewController.hotSearchStyle = PYHotSearchStyleARCBorderTag;
-    searchViewController.searchHistoryStyle = PYSearchHistoryStyleARCBorderTag;
-    searchViewController.searchBarBackgroundColor = KZSHColor1A1A1A;
     
-    // 4. Set delegate
-    searchViewController.delegate = self;
-    // 5. Present a navigation controller
-    //    RootNavigationController *nav = [[RootNavigationController alloc] initWithRootViewController:searchViewController];
-    //    [self presentViewController:nav animated:YES completion:nil];
-    [self.navigationController pushViewController:searchViewController animated:YES];
 }
 
 - (void)locateBtnAction{
-    ZSHCityViewController *cityVC = [[ZSHCityViewController alloc]init];
+//    ZSHCityViewController *cityVC = [[ZSHCityViewController alloc]init];
+//    [self.navigationController pushViewController:cityVC animated:YES];
+    
+    GYZChooseCityController *cityVC = [[GYZChooseCityController alloc]init];
+    [cityVC setDelegate:self];
+    cityVC.commonCitys = [[NSMutableArray alloc] initWithArray: @[@"1400010000", @"100010000"]];        // 最近访问城市，如果不设置，将自动管理
+    cityVC.hotCitys = @[@"100010000", @"200010000", @"300210000", @"600010000", @"300110000"];
     [self.navigationController pushViewController:cityVC animated:YES];
+
+}
+
+#pragma mark - GYZCityPickerDelegate
+- (void) cityPickerController:(GYZChooseCityController *)chooseCityController didSelectCity:(GYZCity *)city
+{
+//    [self addNavigationItemWithImageName:@"nav_home_more" title:city.cityName locate:XYButtonEdgeInsetsStyleRight isLeft:YES target:self action:@selector(locateBtnAction) tag:10];
+    [self.leftBtn setTitle:city.cityName forState:UIControlStateNormal];
+    [chooseCityController.navigationController popViewControllerAnimated:YES];
+}
+
+- (void) cityPickerControllerDidCancel:(GYZChooseCityController *)chooseCityController
+{
+    [chooseCityController.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)requestData {
     kWeakSelf(self);
-    _togetherLogic = [[ZSHTogetherLogic alloc] init];
+    
     [_togetherLogic requestConvergeList:^(id response) {
         [weakself initViewModel];
     }];
+}
+
+
+- (void)requestCarouselFigure {
+
+    [_togetherLogic requestAdvertiseListWithAdPosition:@"0" success:^(id response) {
+        
+    }];
+}
+
+#pragma mark - <HCLocationManagerDelegate>
+- (void)loationMangerSuccessLocationWithCity:(NSString *)city{
+    RLog(@"city = %@",city);
+    [self.leftBtn setTitle:city forState:UIControlStateNormal];
 }
 
 @end

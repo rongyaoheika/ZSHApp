@@ -15,6 +15,12 @@
 #import "ZSHLiveTabBarController.h"
 #import "ZSHGuideViewController.h"
 #import "ZegoAVKitManager.h"
+#import "ZSHHomeLogic.h"
+#import "ZSHTitleContentViewController.h"
+#import "HCLocationManager.h"
+#import "ZSHLiveMineViewController.h"
+
+
 @implementation AppDelegate (AppService)
 
 
@@ -53,18 +59,13 @@
         UITableView.appearance.estimatedRowHeight = 0;
         UITableView.appearance.estimatedSectionFooterHeight = 0;
         UITableView.appearance.estimatedSectionHeaderHeight = 0;
+        
     }
 #endif
 }
 
 - (void)initKeyboard{
-    
-    //启用自动键盘处理事件
-    [IQKeyboardManager sharedManager].enable = YES;
-    //点击背景收起键盘
-    [IQKeyboardManager sharedManager].shouldResignOnTouchOutside = YES;
-    //隐藏键盘上的工具条
-    [IQKeyboardManager sharedManager].enableAutoToolbar = NO;
+    [ZSHBaseFunction initKeyboard];
 }
 
 #pragma mark ————— 初始化用户系统 —————
@@ -108,7 +109,7 @@
             ZSHLeftContentViewController *leftVC = [[ZSHLeftContentViewController alloc] init];
             RXLSideSlipViewController *RXL = [[RXLSideSlipViewController alloc] initWithContentViewController:self.mainTabBarVC leftMenuViewController:leftVC rightMenuViewController:nil];
             
-            RXL.menuPreferredStatusBarStyle = 1; // UIStatusBarStyleLightContent
+            RXL.menuPreferredStatusBarStyle = UIStatusBarStyleDefault; // UIStatusBarStyleLightContent
             RXL.contentViewShadowColor = [UIColor blackColor];
             RXL.contentViewShadowOffset = CGSizeMake(0, 0);
             RXL.contentViewShadowOpacity = 0.6;
@@ -118,6 +119,7 @@
             RXL.scaleMenuView = NO;
             RXL.scaleContentView = NO;
             RXL.scaleBackgroundImageView = NO;
+            RXL.panGestureEnabled = false;
         
             CATransition *anima = [CATransition animation];
             anima.type = @"cube";//设置动画的类型
@@ -130,7 +132,6 @@
         }
         
     } else {//登陆失败加载登陆页面控制器
-        
         self.mainTabBarVC = nil;
         self.slipVC = nil;
         RootNavigationController *loginNavi = [[RootNavigationController alloc] initWithRootViewController:[ZSHGuideViewController new]];
@@ -286,8 +287,15 @@
         RootNavigationController *nav = [tabVC selectedViewController];
         if ([nav.viewControllers.lastObject isKindOfClass:[ZSHLiveTabBarController class]]) {
             ZSHLiveTabBarController *liveTabVC = (ZSHLiveTabBarController *)nav.viewControllers.lastObject;
-             RootNavigationController *liveTabNav = [liveTabVC selectedViewController];
-             return liveTabNav.viewControllers.lastObject;
+            RootNavigationController *liveTabNav = [liveTabVC selectedViewController];
+            if ([liveTabNav.viewControllers.lastObject isKindOfClass:[ZSHLiveMineViewController class]]) {
+                ZSHLiveMineViewController *liveMinVC = liveTabNav.viewControllers.lastObject;
+                return liveMinVC;
+            } else {
+                ZSHTitleContentViewController *liveContentVC = liveTabNav.viewControllers.lastObject;
+                RootViewController *liveVC = liveContentVC.vcs[liveContentVC.vcIndex];
+                return liveVC;
+            }
         } else {
              return nav.viewControllers.lastObject;
         }
@@ -296,19 +304,19 @@
     if ([superVC isKindOfClass:[UITabBarController class]]) {
         UIViewController  *tabSelectVC = ((UITabBarController*)superVC).selectedViewController;
         if ([tabSelectVC isKindOfClass:[UINavigationController class]]) {
-            
             return ((UINavigationController*)tabSelectVC).viewControllers.lastObject;
         }
         return tabSelectVC;
     } else if ([superVC isKindOfClass:[UINavigationController class]]) {
             
             return ((UINavigationController*)superVC).viewControllers.lastObject;
-        }
+    }
     return superVC;
 }
 
 - (void)initZego{
     [ZegoAVKitManager api];
 }
+
 
 @end

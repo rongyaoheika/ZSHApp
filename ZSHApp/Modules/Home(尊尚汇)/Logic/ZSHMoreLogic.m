@@ -13,8 +13,7 @@
 - (void)requestHorseListWithParamDic:(NSDictionary *)paramDic success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail{
     [PPNetworkHelper POST:kUrlSHorseList parameters:paramDic success:^(id responseObject) {
         RLog(@"马术列表数据==%@",responseObject)
-        NSArray *horseDicArr = responseObject[@"pd"];
-        success(horseDicArr);
+        success(responseObject);
         
     } failure:^(NSError *error) {
         
@@ -24,9 +23,8 @@
 - (void)requestYachtListWithParamDic:(NSDictionary *)paramDic success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail{
     [PPNetworkHelper POST:kUrlSYachtlist parameters:paramDic success:^(id responseObject) {
         RLog(@"游艇列表数据==%@",responseObject)
-        NSArray *yachtDicArr = responseObject[@"pd"];
-        success(yachtDicArr);
-        
+        success(responseObject);
+
     } failure:^(NSError *error) {
         
     }];
@@ -35,9 +33,7 @@
 - (void)requestGolfListWithParamDic:(NSDictionary *)paramDic success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail{
     [PPNetworkHelper POST:kUrlSGolflist parameters:paramDic success:^(id responseObject) {
         RLog(@"高尔夫列表数据==%@",responseObject)
-        NSArray *golfDicArr = responseObject[@"pd"];
-        success(golfDicArr);
-        
+        success(responseObject);
     } failure:^(NSError *error) {
         
     }];
@@ -46,9 +42,7 @@
 - (void)requestLuxcarListWithParamDic:(NSDictionary *)paramDic success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail{
     [PPNetworkHelper POST:kUrlSLuxcarlist parameters:paramDic success:^(id responseObject) {
         RLog(@"豪车列表数据==%@",responseObject)
-        NSArray *luxcarDicArr = responseObject[@"pd"];
-        success(luxcarDicArr);
-        
+        success(responseObject);
     } failure:^(NSError *error) {
         
     }];

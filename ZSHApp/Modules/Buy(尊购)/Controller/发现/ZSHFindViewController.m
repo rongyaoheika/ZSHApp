@@ -12,9 +12,11 @@
 #import "ADPlayer.h"
 #import "ZSHBuyLogic.h"
 #import "ZSHFindModel.h"
+#import "ZSHToplineViewController.h"
 
 static NSString *Identify_headCell = @"Identify_headCell";
 static NSString *Identify_ArticleCell = @"Identify_ArticleCell";
+static NSString *Identify_threePicsCell = @"Identify_threePicsCell";
 
 
 @interface ZSHFindViewController ()<ADPlayerDelegate>
@@ -63,7 +65,7 @@ static NSString *Identify_ArticleCell = @"Identify_ArticleCell";
     self.tableView.dataSource = self.tableViewModel;
     [self.tableView registerClass:[ZSHFindCell class] forCellReuseIdentifier:Identify_headCell];
     [self.tableView registerClass:[ZSHFindArticleCell class] forCellReuseIdentifier:Identify_ArticleCell];
-    
+    [self.tableView registerClass:[ZSHFindThreePics class] forCellReuseIdentifier:Identify_threePicsCell];
     
 }
 
@@ -82,14 +84,18 @@ static NSString *Identify_ArticleCell = @"Identify_ArticleCell";
         [sectionModel.cellModelArray addObject:cellModel];
         kWeakSelf(self);
         ZSHFindModel *model = _findModelArr[i];
-        if ([model.SHOWVIDEO isEqualToString:@""]) {
-            cellModel.height = 105;
-        } else {
+        if ([model.DIS_TYPE isEqualToString:@"2001"]) { // 视频
             cellModel.height = 195;
+        } else if ([model.DIS_TYPE isEqualToString:@"2002"] || [model.DIS_TYPE isEqualToString:@"2003"]) { // 存文字或单图
+            cellModel.height = 105;
+        } else if ([model.DIS_TYPE isEqualToString:@"2004"]) { // 3图
+            cellModel.height = 125;
+        } else {
+            cellModel.height = 0;
         }
         cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
             ZSHFindModel *model = _findModelArr[indexPath.row];
-            if (![model.SHOWVIDEO isEqualToString:@""]) {
+            if ([model.DIS_TYPE isEqualToString:@"2001"]) {// 视频
                 ZSHFindCell *cell = [tableView dequeueReusableCellWithIdentifier:Identify_headCell];
                 [cell updateCellWithModel:model];
                 cell.playBtn.tag = indexPath.row;
@@ -97,9 +103,16 @@ static NSString *Identify_ArticleCell = @"Identify_ArticleCell";
                     [weakself startPlayVideo:btn];
                 }];
                 return cell;
-            } else {
+            } else if ([model.DIS_TYPE isEqualToString:@"2002"] || [model.DIS_TYPE isEqualToString:@"2003"]) {// 纯文字或单图
                 ZSHFindArticleCell *cell = [tableView dequeueReusableCellWithIdentifier:Identify_ArticleCell];
                 [cell updateCellWithModel:model];
+                return cell;
+            } else if ([model.DIS_TYPE isEqualToString:@"2004"] ) { // 3图
+                ZSHFindThreePics *cell = [tableView dequeueReusableCellWithIdentifier:Identify_threePicsCell];
+                [cell updateCellWithModel:model];
+                return cell;
+            } else {
+                ZSHBaseCell *cell = [[ZSHBaseCell alloc] init];
                 return cell;
             }
         };
@@ -107,6 +120,13 @@ static NSString *Identify_ArticleCell = @"Identify_ArticleCell";
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
             [tableView deselectRowAtIndexPath:indexPath animated:YES];
             RLog(@"点击了该行%ld",(long)indexPath.row);
+            ZSHBaseCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+            if ([cell isKindOfClass:[ZSHFindArticleCell class]]) {
+                NSDictionary *nextParamDic = @{@"shopId":self.paramDic[@"shopId"]};
+                ZSHToplineViewController *toplineVC = [[ZSHToplineViewController alloc] initWithParamDic:nextParamDic];
+                [weakself.navigationController pushViewController:toplineVC animated:YES];
+            }
+            
         };
     }
     return sectionModel;

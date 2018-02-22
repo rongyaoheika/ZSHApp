@@ -14,8 +14,17 @@ PODS:
   - AFNetworking/Serialization (3.1.0)
   - AFNetworking/UIKit (3.1.0):
     - AFNetworking/NSURLSession
+  - AlivcLivePusherWithPlayer (2.3.0):
+    - AlivcLivePusherWithPlayer/AlivcLivePusherWithPlayer (= 2.3.0)
+  - AlivcLivePusherWithPlayer/AlivcLivePusherWithPlayer (2.3.0)
+  - AliyunPlayer_iOS (3.3.0):
+    - AliyunPlayer_iOS/AliyunPlayerSDK (= 3.3.0)
+    - AliyunPlayer_iOS/AliyunVodPlayerSDK (= 3.3.0)
+  - AliyunPlayer_iOS/AliyunPlayerSDK (3.3.0)
+  - AliyunPlayer_iOS/AliyunVodPlayerSDK (3.3.0):
+    - AliyunPlayer_iOS/AliyunPlayerSDK
   - FSCalendar (2.7.9)
-  - IQKeyboardManager (5.0.6)
+  - IQKeyboardManager (5.0.7)
   - Masonry (1.1.0)
   - MBProgressHUD (1.0.0)
   - MJExtension (3.0.13)
@@ -24,13 +33,17 @@ PODS:
   - SDWebImage (3.8.2):
     - SDWebImage/Core (= 3.8.2)
   - SDWebImage/Core (3.8.2)
-  - TZImagePickerController (1.9.6)
+  - TZImagePickerController (1.9.8)
   - YYKit (1.0.9):
     - YYKit/no-arc (= 1.0.9)
   - YYKit/no-arc (1.0.9)
 
 DEPENDENCIES:
   - AFNetworking (~> 3.0)
+  - AlivcLivePusherWithPlayer
+  - AliyunPlayer_iOS
+  - AliyunPlayer_iOS/AliyunPlayerSDK
+  - AliyunPlayer_iOS/AliyunVodPlayerSDK
   - FSCalendar
   - IQKeyboardManager
   - Masonry
@@ -44,17 +57,19 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
+  AlivcLivePusherWithPlayer: b22fe955b1057e19af21b2831ec97c159e4b7db3
+  AliyunPlayer_iOS: fe756e8c9ce19ab809fdaf479326469a3e174ff9
   FSCalendar: a04b09f16f811bc92e82f3cf852a15225233b9d5
-  IQKeyboardManager: 077b7f691dfa9d69db9cff66f2bed68ebfc02d9b
+  IQKeyboardManager: 0bfa4607d39924116b5c0c8b55b5d789288b5cba
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
   MJExtension: 5932755f451458eefa24239358817f8d291240c7
   MJRefresh: 5f8552bc25ca8751c010f621c1098dbdaacbccd6
   NIMSDK: aa7c00ddc66181f75d8d970f7f5ab00ca95dd374
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
-  TZImagePickerController: 276dc7c0cc70da9ee354046474b405d87ef81c89
+  TZImagePickerController: 3b9413ae5d049b1fdc5b0c720ad283f35b679a50
   YYKit: 7cda43304a8dc3696c449041e2cb3107b4e236e7
 
-PODFILE CHECKSUM: d9327f88de7d7af0f51ffe8eafabd6e76caabc71
+PODFILE CHECKSUM: faa659569ff3d49df2f644e466471e2d703b48d5
 
 COCOAPODS: 1.3.1

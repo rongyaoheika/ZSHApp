@@ -33,10 +33,18 @@
 }
 
 
+//// 商品品牌
+//- (void)requestBrandIconListWithBrandID:(NSString *)brandID success:(void (^)(id response))success {
+//
+//    [PPNetworkHelper POST:kUrlShipbusinessList parameters:@{@"BRAND_ID":brandID} success:^(id responseObject) {
+//        success(responseObject);
+//    } failure:^(NSError *error) {
+//        RLog(@"请求失败");
+//    }];
+//}
 // 商品品牌
-- (void)requestBrandIconListWithBrandID:(NSString *)brandID success:(void (^)(id response))success {
-    
-    [PPNetworkHelper POST:kUrlShipBrandIconList parameters:@{@"BRAND_ID":brandID} success:^(id responseObject) {
+- (void)requestBrandIconListWithDic:(NSDictionary *)dic success:(void (^)(id response))success {
+    [PPNetworkHelper POST:kUrlShipbusinessList parameters:dic success:^(id responseObject) {
         success(responseObject);
     } failure:^(NSError *error) {
         RLog(@"请求失败");
@@ -149,7 +157,7 @@
 
 // 加入购物车
 - (void)requestShoppingCartAddWithDic:(NSDictionary *)dic success:(void (^)(id response))success {
-    [PPNetworkHelper POST:kUrlShoppingCartAdd parameters:dic success:^(id responseObject) {
+    [PPNetworkHelper POST:kUrlAddCart parameters:dic success:^(id responseObject) {
         success(responseObject);
     } failure:^(NSError *error) {
         RLog(@"请求失败");
@@ -184,8 +192,8 @@
 
 
 // 获取发现中所有的菜单项
-- (void)requestCaidan:(void (^)(id response))success {
-    [PPNetworkHelper POST:kUrlCaidan parameters:@{} success:^(id responseObject) {
+- (void)requestCaidanWithDic:(NSDictionary *)dic success:(void (^)(id response))success {
+    [PPNetworkHelper POST:kUrlCaidan parameters:dic success:^(id responseObject) {
         success(responseObject);
     } failure:^(NSError *error) {
         RLog(@"请求失败");
@@ -215,6 +223,24 @@
 // 给商品添加用户评价
 - (void)requestProductEvaList:(NSDictionary *)dic success:(void (^)(id response))success {
     [PPNetworkHelper POST:kUrlProductEvaList parameters:dic success:^(id responseObject) {
+        success(responseObject);
+    } failure:^(NSError *error) {
+        RLog(@"请求失败");
+    }];
+}
+
+
+// 获得尊购首页专区列表
+- (void)requestGetFectureList:(NSDictionary *)dic success:(void (^)(id response))success {
+    [PPNetworkHelper POST:kUrlGetFectureList parameters:dic success:^(id responseObject) {
+        success(responseObject);
+    } failure:^(NSError *error) {
+        RLog(@"请求失败");
+    }];
+}
+// 根据规格展示商品
+- (void)requestGetProbyStandard:(NSDictionary *)dic success:(void (^)(id response))success {
+    [PPNetworkHelper POST:kUrlGetProbyStandard parameters:dic success:^(id responseObject) {
         success(responseObject);
     } failure:^(NSError *error) {
         RLog(@"请求失败");

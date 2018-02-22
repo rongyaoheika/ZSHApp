@@ -10,11 +10,10 @@
 #import "RootNavigationController.h"
 #import "TabBarItem.h"
 #import "ZSHHomeViewController.h"
-#import "ZSHBuyViewController.h"
 #import "ZSHTogetherViewController.h"
 #import "ZSHMineViewController.h"
 #import "ZSHLiveTabBarController.h"
-
+#import "ZSHTitleContentViewController.h"
 
 @interface MainTabBarController ()<TabBarDelegate,UITabBarControllerDelegate>
 
@@ -46,6 +45,7 @@
 #pragma mark ————— 初始化TabBar —————
 -(void)setUpTabBar{
     [self.tabBar addSubview:({
+        self.tabBar.barTintColor = KZSHColor0B0B0B;
         TabBar *tabBar = [[TabBar alloc] init];
         tabBar.toTabBarType = FromMainTabVCToTabBar;
         tabBar.backgroundColor = KZSHColor0B0B0B;
@@ -60,9 +60,10 @@
     _VCS = @[].mutableCopy;
     
     ZSHHomeViewController *homeVC = [[ZSHHomeViewController alloc]init];
-    [self setupChildViewController:homeVC title:@"尊尚汇" imageName:@"tab_home_normal" seleceImageName:@"tab_home_press"];
+    [self setupChildViewController:homeVC title:@"RYHK" imageName:@"tab_home_normal" seleceImageName:@"tab_home_press"];
     
-    ZSHBuyViewController *buyVC = [[ZSHBuyViewController alloc]init];
+    NSDictionary *nextParamDic = @{KFromClassType:@(FromBuyVCToTitleContentVC),@"title":@"尊购"};
+    ZSHTitleContentViewController *buyVC = [[ZSHTitleContentViewController alloc]initWithParamDic:nextParamDic];
     [self setupChildViewController:buyVC title:@"尊购" imageName:@"tab_buy_normal" seleceImageName:@"tab_buy_press"];
     
     ZSHLiveTabBarController *liveVC = [[ZSHLiveTabBarController alloc]init];

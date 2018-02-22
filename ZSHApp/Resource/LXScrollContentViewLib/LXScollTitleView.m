@@ -30,10 +30,6 @@
     if (self = [super initWithFrame:frame]) {
         [self initData];
         [self setupUI];
-        
-//        [self.scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
-//            make.edges.mas_equalTo(self);
-//        }];
     }
     return self;
 }
@@ -56,6 +52,7 @@
     self.scrollView.showsHorizontalScrollIndicator = NO;
     self.scrollView.showsVerticalScrollIndicator = NO;
     [self addSubview:self.scrollView];
+    
     self.selectionIndicator = [[UIView alloc] initWithFrame:CGRectZero];
     [self.scrollView addSubview:self.selectionIndicator];
 }
@@ -80,8 +77,7 @@
         //小图片可以
         [btn setImage:self.normalImage?self.normalImage:self.normalImageArr[i] forState:UIControlStateNormal];
         [btn setImage:self.selectedImage?self.selectedImage:self.selectedImageArr[i] forState:UIControlStateSelected];
-        
-        btn.selected = (i == self.selectedIndex);
+
         btn.titleLabel.font = btn.selected?self.selectedTitleFont:self.normalTitleFont;
         btn.tag = 100 + i++;
         [btn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -109,9 +105,9 @@
 
 - (void)layoutSubviews{
     [super layoutSubviews];
-    
     self.scrollView.frame = self.bounds;
-    self.scrollView.contentSize = CGSizeMake(self.titleButtons.count * self.titleWidth, self.frame.size.height);
+    
+    self.scrollView.contentSize = CGSizeEqualToSize(self.svContentSize,CGSizeZero)?CGSizeMake(self.titleButtons.count * self.titleWidth, self.frame.size.height):self.svContentSize;
     NSInteger i = 0;
     for (UIButton *btn in self.titleButtons) {
         btn.frame = CGRectMake(self.titleWidth * i++, 0, self.titleWidth, self.frame.size.height);
@@ -142,21 +138,35 @@
 #pragma mark - setter
 
 - (void)setSelectedIndex:(NSInteger)selectedIndex{
+    
     [self.titleButtons enumerateObjectsUsingBlock:^(UIButton *btn , NSUInteger idx, BOOL * _Nonnull stop) {
         if (btn.tag-100 == selectedIndex) {
             btn.selected = !btn.selected;
             btn.titleLabel.font = self.selectedTitleFont;
+            
+            if (self.selectedBorderColor) {
+                btn.layer.borderWidth = 1.0;
+                btn.layer.borderColor = self.selectedBorderColor.CGColor;
+            }
+            
         } else {
             btn.selected = NO;
             btn.titleLabel.font = self.normalTitleFont;
+            if (self.normalBorderColor) {
+                btn.layer.borderWidth = 0.5;
+                btn.layer.borderColor = self.normalBorderColor.CGColor;
+            }
         }
     }];
     
     if (_selectedIndex == selectedIndex) {
         return;
     }
+    
     _selectedIndex = selectedIndex;
-    [self setSelectedIndicator:YES];
+    if (_indicatorHeight>0) {
+        [self setSelectedIndicator:YES];
+    }
 }
 
 - (void)setNormalColor:(UIColor *)normalColor{
@@ -188,6 +198,10 @@
 - (void)setIndicatorWidth:(CGFloat)indicatorWidth{
     _indicatorWidth = indicatorWidth;
     
+}
+
+- (void)setSvContentSize:(CGSize)svContentSize{
+    _svContentSize = svContentSize;
 }
 
 @end

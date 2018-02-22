@@ -39,7 +39,8 @@
 #import "NSArray+Log.h"
 #import "NSDictionary+Log.h"
 #import "NSDictionary+Safe.h"
-#import "UIImage+ImageEffects.h" 
+#import "UIImage+ImageEffects.h"
+#import "NSString+pinyin.h"
 
 //第三方
 #import <YYKit.h>
@@ -48,6 +49,7 @@
 #import <NSObject+YYModel.h>
 #import <MJExtension.h>
 #import "IQKeyboardManager.h"
+#import "HCLocationManager.h"
 
 #endif /* PrefixHeader_pch */
 #endif // OC的头文件

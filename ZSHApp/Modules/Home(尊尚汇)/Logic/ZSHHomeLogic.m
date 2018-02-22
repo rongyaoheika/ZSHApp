@@ -52,27 +52,14 @@
     kWeakSelf(self);
     [PPNetworkHelper POST:kUrlPartyimg parameters:nil success:^(id responseObject) {
         RLog(@"汇聚玩趴%@",responseObject);
-        weakself.partyDic = responseObject[@"pd"];
+        weakself.partyArr = responseObject[@"pd"];
         success(nil);
-        
     } failure:^(NSError *error) {
         RLog(@"汇聚玩趴数据获取失败");
     }];
 }
 
-- (void)loadPartyCellData{
-    kWeakSelf(self);
-    [PPNetworkHelper POST:kUrlPartyimg parameters:nil success:^(id responseObject) {
-        RLog(@"汇聚玩趴%@",responseObject);
-        weakself.partyDic = responseObject[@"pd"];
-        if (weakself.requestDataCompleted) {
-            weakself.requestDataCompleted(weakself.partyDic);
-        }
-        
-    } failure:^(NSError *error) {
-       
-    }];
-}
+
 
 //更多特权
 - (void)loadMorePrivilege{
@@ -111,5 +98,56 @@
         RLog(@"音乐列表请求失败");
     }];
 }
+
+// 杂志详情
+- (void)loadMagzineOneWithDic:(NSDictionary *)dic success:(void(^)(id response))success {
+    [PPNetworkHelper POST:kUrlMagazineOne parameters:dic success:^(id responseObject) {
+        RLog(@"杂志详情%@",responseObject);
+        success(responseObject);
+    } failure:^(NSError *error) {
+        RLog(@"音乐列表请求失败");
+    }];
+}
+
+//多个页面的搜索推荐
+- (void)loadSearchListWithDic:(NSDictionary *)dic success:(void(^)(id response))success {
+    [PPNetworkHelper POST:kUrlSearchList parameters:dic success:^(id responseObject) {
+        RLog(@"搜索推荐列表%@",responseObject);
+        success(responseObject);
+    } failure:^(NSError *error) {
+        RLog(@"搜索推荐列表请求失败");
+    }];
+}
+
+// 杂志列表
+- (void)loadMagzineListSubMenuWithMenuID:(NSDictionary *)dic success:(void(^)(id response))success {
+    [PPNetworkHelper POST:kUrlGetListSubmenu parameters:dic success:^(id responseObject) {
+        RLog(@"杂志列表%@",responseObject);
+        success(responseObject);
+    } failure:^(NSError *error) {
+        RLog(@"音乐列表请求失败");
+    }];
+}
+
+//蒲公英版本更新
+- (void)loadUpdateWithDic:(NSDictionary *)dic success:(void(^)(id response))success {
+    [PPNetworkHelper POST:@"https://www.pgyer.com/apiv2/app/check" parameters:dic success:^(id responseObject) {
+        RLog(@"版本更新%@",responseObject);
+        success(responseObject);
+    } failure:^(NSError *error) {
+        RLog(@"搜版本更新请求失败");
+    }];
+}
+
+//传递经纬度
+- (void)locateDic:(NSDictionary *)dic success:(void (^)(id response))success{
+    [PPNetworkHelper POST:kUrlUpdtrapeze parameters:dic success:^(id responseObject) {
+        RLog(@"请求成功：%@", responseObject);
+        success(responseObject);
+    } failure:^(NSError *error) {
+        RLog(@"请求失败");
+    }];
+}
+
 
 @end

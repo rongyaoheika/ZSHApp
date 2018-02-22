@@ -25,7 +25,7 @@
         self.detailTextLabel.font = kPingFangRegular(12);
         self.detailTextLabel.textColor = KZSHColor929292;
         self.backgroundColor = KClearColor;
-        
+
         [self setup];
     }
     return self;

@@ -7,6 +7,116 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0418532D2005E688000E0D09 /* ZSHFindTopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0418532C2005E688000E0D09 /* ZSHFindTopView.m */; };
+		041853302005ED97000E0D09 /* ZSHLeftFindViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0418532F2005ED97000E0D09 /* ZSHLeftFindViewController.m */; };
+		041853332005FB3D000E0D09 /* ZSHToplineTopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 041853322005FB3D000E0D09 /* ZSHToplineTopView.m */; };
+		042DC4992004D12A00AF2995 /* ZSHRecommendView.m in Sources */ = {isa = PBXBuildFile; fileRef = 042DC4982004D12A00AF2995 /* ZSHRecommendView.m */; };
+		042E091420285FB40037BB4B /* ZSHEntryLogic.m in Sources */ = {isa = PBXBuildFile; fileRef = 042E091320285FB40037BB4B /* ZSHEntryLogic.m */; };
+		042E0917202861EF0037BB4B /* ZSHMultiInfoViewController+method.m in Sources */ = {isa = PBXBuildFile; fileRef = 042E0916202861EF0037BB4B /* ZSHMultiInfoViewController+method.m */; };
+		04315E821FF5E9ED006C6BC8 /* ZSHWeiboTopicModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04315E811FF5E9ED006C6BC8 /* ZSHWeiboTopicModel.m */; };
+		04315E851FF61175006C6BC8 /* UIImage+String.m in Sources */ = {isa = PBXBuildFile; fileRef = 04315E841FF61175006C6BC8 /* UIImage+String.m */; };
+		043587591FF2564F00969DD7 /* ZSHGoodsCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 043587581FF2564F00969DD7 /* ZSHGoodsCollectionViewCell.m */; };
+		043F2E0D200DFF3500CE18DE /* AdvancedPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 043F2DA4200DFF3500CE18DE /* AdvancedPlayerViewController.m */; };
+		043F2E0E200DFF3500CE18DE /* AliyunPlayMessageShowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 043F2DA7200DFF3500CE18DE /* AliyunPlayMessageShowView.m */; };
+		043F2E0F200DFF3500CE18DE /* AliyunPlaySDKDemoOneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 043F2DA9200DFF3500CE18DE /* AliyunPlaySDKDemoOneViewController.m */; };
+		043F2E10200DFF3500CE18DE /* AddDownloadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 043F2DAC200DFF3500CE18DE /* AddDownloadView.m */; };
+		043F2E11200DFF3500CE18DE /* DownloadListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 043F2DAE200DFF3500CE18DE /* DownloadListTableViewCell.m */; };
+		043F2E12200DFF3500CE18DE /* DownloadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 043F2DB0200DFF3500CE18DE /* DownloadViewController.m */; };
+		043F2E13200DFF3500CE18DE /* AliyunPlaySDKListsAutoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 043F2DB3200DFF3500CE18DE /* AliyunPlaySDKListsAutoViewController.m */; };
+		043F2E14200DFF3500CE18DE /* AliyunPlaySDKListsCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 043F2DB5200DFF3500CE18DE /* AliyunPlaySDKListsCollectionViewCell.m */; };
+		043F2E15200DFF3500CE18DE /* AliyunPlaySDKDemoFullScreenScrollCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 043F2DB8200DFF3500CE18DE /* AliyunPlaySDKDemoFullScreenScrollCollectionViewCell.m */; };
+		043F2E16200DFF3500CE18DE /* AliyunPlaySDKDemoFullScreenScrollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 043F2DBA200DFF3500CE18DE /* AliyunPlaySDKDemoFullScreenScrollViewController.m */; };
+		043F2E17200DFF3500CE18DE /* AlivcLivePushConfigViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 043F2DBF200DFF3500CE18DE /* AlivcLivePushConfigViewController.m */; };
+		043F2E18200DFF3500CE18DE /* AlivcLivePusherViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 043F2DC1200DFF3500CE18DE /* AlivcLivePusherViewController.m */; };
+		043F2E19200DFF3500CE18DE /* AlivcLiveConfigViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 043F2DC4200DFF3500CE18DE /* AlivcLiveConfigViewController.m */; };
+		043F2E1A200DFF3500CE18DE /* AlivcLiveConfigViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 043F2DC5200DFF3500CE18DE /* AlivcLiveConfigViewController.xib */; };
+		043F2E1B200DFF3500CE18DE /* AlivcLiveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 043F2DC7200DFF3500CE18DE /* AlivcLiveViewController.m */; };
+		043F2E1C200DFF3500CE18DE /* AlivcLiveViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 043F2DC8200DFF3500CE18DE /* AlivcLiveViewController.xib */; };
+		043F2E1D200DFF3500CE18DE /* AlivcCopyrightInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 043F2DCB200DFF3500CE18DE /* AlivcCopyrightInfoViewController.m */; };
+		043F2E1E200DFF3500CE18DE /* AlivcNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 043F2DCD200DFF3500CE18DE /* AlivcNavigationController.m */; };
+		043F2E1F200DFF3500CE18DE /* AlivcQRCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 043F2DCF200DFF3500CE18DE /* AlivcQRCodeViewController.m */; };
+		043F2E20200DFF3500CE18DE /* AlivcRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 043F2DD1200DFF3500CE18DE /* AlivcRootViewController.m */; };
+		043F2E21200DFF3500CE18DE /* 版权信息.txt in Resources */ = {isa = PBXBuildFile; fileRef = 043F2DD2200DFF3500CE18DE /* 版权信息.txt */; };
+		043F2E22200DFF3500CE18DE /* AlivcMusicInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 043F2DD5200DFF3500CE18DE /* AlivcMusicInfoModel.m */; };
+		043F2E23200DFF3500CE18DE /* AlivcParamModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 043F2DD7200DFF3500CE18DE /* AlivcParamModel.m */; };
+		043F2E24200DFF3500CE18DE /* back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 043F2DD9200DFF3500CE18DE /* back@2x.png */; };
+		043F2E25200DFF3500CE18DE /* back@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 043F2DDA200DFF3500CE18DE /* back@3x.png */; };
+		043F2E26200DFF3500CE18DE /* camera_flash_close@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 043F2DDB200DFF3500CE18DE /* camera_flash_close@2x.png */; };
+		043F2E27200DFF3500CE18DE /* camera_flash_close@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 043F2DDC200DFF3500CE18DE /* camera_flash_close@3x.png */; };
+		043F2E28200DFF3500CE18DE /* camera_flash_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 043F2DDD200DFF3500CE18DE /* camera_flash_on@2x.png */; };
+		043F2E29200DFF3500CE18DE /* camera_flash_on@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 043F2DDE200DFF3500CE18DE /* camera_flash_on@3x.png */; };
+		043F2E2A200DFF3500CE18DE /* camera_id@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 043F2DDF200DFF3500CE18DE /* camera_id@2x.png */; };
+		043F2E2B200DFF3500CE18DE /* Line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 043F2DE0200DFF3500CE18DE /* Line@2x.png */; };
+		043F2E2C200DFF3500CE18DE /* Line@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 043F2DE1200DFF3500CE18DE /* Line@3x.png */; };
+		043F2E2D200DFF3500CE18DE /* Axol.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 043F2DE3200DFF3500CE18DE /* Axol.mp3 */; };
+		043F2E2E200DFF3500CE18DE /* Pas de Deux.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 043F2DE4200DFF3500CE18DE /* Pas de Deux.mp3 */; };
+		043F2E2F200DFF3500CE18DE /* music_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 043F2DE5200DFF3500CE18DE /* music_button@2x.png */; };
+		043F2E30200DFF3500CE18DE /* music_button@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 043F2DE6200DFF3500CE18DE /* music_button@3x.png */; };
+		043F2E31200DFF3500CE18DE /* music_check@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 043F2DE7200DFF3500CE18DE /* music_check@2x.png */; };
+		043F2E32200DFF3500CE18DE /* music_check@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 043F2DE8200DFF3500CE18DE /* music_check@3x.png */; };
+		043F2E33200DFF3500CE18DE /* music_loop_simple_line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 043F2DE9200DFF3500CE18DE /* music_loop_simple_line@2x.png */; };
+		043F2E34200DFF3500CE18DE /* music_loop_simple_line@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 043F2DEA200DFF3500CE18DE /* music_loop_simple_line@3x.png */; };
+		043F2E35200DFF3500CE18DE /* QR@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 043F2DEB200DFF3500CE18DE /* QR@2x.png */; };
+		043F2E36200DFF3500CE18DE /* QR@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 043F2DEC200DFF3500CE18DE /* QR@3x.png */; };
+		043F2E37200DFF3500CE18DE /* record_beauty@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 043F2DED200DFF3500CE18DE /* record_beauty@2x.png */; };
+		043F2E38200DFF3500CE18DE /* record_beauty@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 043F2DEE200DFF3500CE18DE /* record_beauty@3x.png */; };
+		043F2E39200DFF3500CE18DE /* record_beauty_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 043F2DEF200DFF3500CE18DE /* record_beauty_on@2x.png */; };
+		043F2E3A200DFF3500CE18DE /* record_beauty_on@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 043F2DF0200DFF3500CE18DE /* record_beauty_on@3x.png */; };
+		043F2E3B200DFF3500CE18DE /* volume_off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 043F2DF1200DFF3500CE18DE /* volume_off@2x.png */; };
+		043F2E3C200DFF3500CE18DE /* volume_off@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 043F2DF2200DFF3500CE18DE /* volume_off@3x.png */; };
+		043F2E3D200DFF3500CE18DE /* volume_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 043F2DF3200DFF3500CE18DE /* volume_on@2x.png */; };
+		043F2E3E200DFF3500CE18DE /* volume_on@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 043F2DF4200DFF3500CE18DE /* volume_on@3x.png */; };
+		043F2E3F200DFF3500CE18DE /* watermark.png in Resources */ = {isa = PBXBuildFile; fileRef = 043F2DF5200DFF3500CE18DE /* watermark.png */; };
+		043F2E40200DFF3500CE18DE /* watermark_small.png in Resources */ = {isa = PBXBuildFile; fileRef = 043F2DF6200DFF3500CE18DE /* watermark_small.png */; };
+		043F2E41200DFF3500CE18DE /* AlivcChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = 043F2DFA200DFF3500CE18DE /* AlivcChartView.m */; };
+		043F2E42200DFF3500CE18DE /* AlivcDebugChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = 043F2DFC200DFF3500CE18DE /* AlivcDebugChartView.m */; };
+		043F2E43200DFF3500CE18DE /* AlivcDebugTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 043F2DFE200DFF3500CE18DE /* AlivcDebugTextView.m */; };
+		043F2E44200DFF3500CE18DE /* AlivcMusicSettingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 043F2E00200DFF3500CE18DE /* AlivcMusicSettingView.m */; };
+		043F2E45200DFF3500CE18DE /* AlivcPublisherView.m in Sources */ = {isa = PBXBuildFile; fileRef = 043F2E02200DFF3500CE18DE /* AlivcPublisherView.m */; };
+		043F2E46200DFF3500CE18DE /* AlivcWatermarkSettingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 043F2E05200DFF3500CE18DE /* AlivcWatermarkSettingView.m */; };
+		043F2E47200DFF3500CE18DE /* AlivcGuidePageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 043F2E08200DFF3500CE18DE /* AlivcGuidePageView.m */; };
+		043F2E48200DFF3500CE18DE /* AlivcParamTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 043F2E0A200DFF3500CE18DE /* AlivcParamTableViewCell.m */; };
+		043F2E49200DFF3500CE18DE /* AlivcSweepCodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 043F2E0C200DFF3500CE18DE /* AlivcSweepCodeView.m */; };
+		043F2E4D200E006500CE18DE /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 043F2E4C200E006500CE18DE /* Reachability.m */; };
+		043F2E50200E02B800CE18DE /* AddPlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 043F2E4F200E02B800CE18DE /* AddPlayView.m */; };
+		043F2E58200E0CC700CE18DE /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 043F2E5A200E0CC700CE18DE /* Localizable.strings */; };
+		043F2E5D200E1F3600CE18DE /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 043F2E5C200E1F3600CE18DE /* Info.plist */; };
+		044A2F462004BBF100B05CE7 /* ZSHMakeMoneyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 044A2F452004BBF000B05CE7 /* ZSHMakeMoneyViewController.m */; };
+		0450A60D20036BC100D7B2D4 /* ZSHHomeSubListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0450A60C20036BC100D7B2D4 /* ZSHHomeSubListCell.m */; };
+		0453B0B5202C427A00791A75 /* ChannelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0453B0B4202C427A00791A75 /* ChannelCell.m */; };
+		0453B0B9202C42B200791A75 /* Channel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0453B0B8202C42B200791A75 /* Channel.m */; };
+		0453B0BC202C48ED00791A75 /* ZSHTopLineMoreTypeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0453B0BB202C48ED00791A75 /* ZSHTopLineMoreTypeViewController.m */; };
+		04647D022017068800A21600 /* ZSHLiveMoreView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04647D012017068800A21600 /* ZSHLiveMoreView.m */; };
+		04647D052017602000A21600 /* ZSHBeautyView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04647D042017602000A21600 /* ZSHBeautyView.m */; };
+		047BC20F20216376007F4055 /* ZSHLiveGiftView.m in Sources */ = {isa = PBXBuildFile; fileRef = 047BC20E20216376007F4055 /* ZSHLiveGiftView.m */; };
+		04936D972027FCBF00E069BE /* ZSHLiveSignViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04936D962027FCBF00E069BE /* ZSHLiveSignViewController.m */; };
+		049823B520074D9C0080626D /* ZSHCabinetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 049823B420074D9C0080626D /* ZSHCabinetViewController.m */; };
+		049823B920074F180080626D /* ZSHCabinetCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 049823B820074F180080626D /* ZSHCabinetCollectionCell.m */; };
+		049823BC20074F640080626D /* ZSHCabinetReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 049823BB20074F640080626D /* ZSHCabinetReusableView.m */; };
+		049823BF20076BCD0080626D /* ZSHCabinetHeadReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 049823BE20076BCD0080626D /* ZSHCabinetHeadReusableView.m */; };
+		049823C320078D590080626D /* ZSHFlagshipViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 049823C220078D590080626D /* ZSHFlagshipViewController.m */; };
+		049823C720078E470080626D /* ZSHFlagshipCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 049823C620078E470080626D /* ZSHFlagshipCell.m */; };
+		049A6568202C2D8000EF1145 /* ZSHMineCouponViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 049A6567202C2D8000EF1145 /* ZSHMineCouponViewController.m */; };
+		04A69033200845FE00C583E6 /* ZSHFashionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A69032200845FE00C583E6 /* ZSHFashionCell.m */; };
+		04A690362008461500C583E6 /* ZSHFashionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A690352008461500C583E6 /* ZSHFashionViewController.m */; };
+		04A69039200847E900C583E6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04A69038200847E700C583E6 /* Assets.xcassets */; };
+		04A6903D20084E6800C583E6 /* ZSHPrivilegeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A6903C20084E6800C583E6 /* ZSHPrivilegeController.m */; };
+		04A6904020084EA800C583E6 /* ZSHPrivilegeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A6903F20084EA800C583E6 /* ZSHPrivilegeCell.m */; };
+		04A6904520089F5E00C583E6 /* ZSHJoininViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A6904420089F5E00C583E6 /* ZSHJoininViewController.m */; };
+		04A690492008A01400C583E6 /* ZSHJoininCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A690482008A01400C583E6 /* ZSHJoininCell.m */; };
+		04A6FCCB2007152700DDE79E /* ZSHMusicMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A6FCCA2007152700DDE79E /* ZSHMusicMainViewController.m */; };
+		04A6FCCE200756F800DDE79E /* ZSHRadioScrollCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A6FCCD200756F800DDE79E /* ZSHRadioScrollCell.m */; };
+		04A6FCD120075A2900DDE79E /* ZSHRadioSubView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A6FCD020075A2900DDE79E /* ZSHRadioSubView.m */; };
+		04A9FE98201576D00099D467 /* ZSHCreateStoreGuideView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A9FE97201576D00099D467 /* ZSHCreateStoreGuideView.m */; };
+		04A9FE9B2015CA900099D467 /* ZSHAudienceLivePopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A9FE9A2015CA900099D467 /* ZSHAudienceLivePopView.m */; };
+		04BAD7BD2005C0DB00950195 /* ZSHMagazineListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04BAD7BC2005C0DB00950195 /* ZSHMagazineListViewController.m */; };
+		04BAD7C12005EEB100950195 /* ZSHMagazineListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04BAD7C02005EEB100950195 /* ZSHMagazineListCell.m */; };
+		04C2B00020231ADA00208D21 /* ZSHLiveGiftPopCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C2AFFF20231ADA00208D21 /* ZSHLiveGiftPopCell.m */; };
+		04CC219E1FFF79B200921863 /* ZSHMagazineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CC219D1FFF79B200921863 /* ZSHMagazineViewController.m */; };
+		04CC545E201EBBAF00917089 /* ZSHCountdowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CC545D201EBBAF00917089 /* ZSHCountdowView.m */; };
+		04DD819E2018AEEB00B1E3CE /* ZSHCustomSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DD819D2018AEEB00B1E3CE /* ZSHCustomSlider.m */; };
+		04E2F3C120070E2200F902A4 /* ZSHMagazineReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E2F3C020070E2200F902A4 /* ZSHMagazineReusableView.m */; };
+		04ED27382009AAC7000B1541 /* ZSHUploadIDCardController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04ED27372009AAC7000B1541 /* ZSHUploadIDCardController.m */; };
 		18063C541FC90379000F5A00 /* ZSHPersonalModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 18063C531FC90379000F5A00 /* ZSHPersonalModel.m */; };
 		18063C571FC90951000F5A00 /* ZSHPersonalDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 18063C561FC90951000F5A00 /* ZSHPersonalDetailModel.m */; };
 		18063C5B1FC9140B000F5A00 /* ZSHCollectModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 18063C5A1FC9140B000F5A00 /* ZSHCollectModel.m */; };
@@ -131,7 +241,6 @@
 		185DDCCC1FBE8CE9004D4688 /* ZSHVideoDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 185DDCCB1FBE8CE9004D4688 /* ZSHVideoDetailCell.m */; };
 		185DDCD31FBEDD79004D4688 /* ZSHShareView.m in Sources */ = {isa = PBXBuildFile; fileRef = 185DDCD21FBEDD79004D4688 /* ZSHShareView.m */; };
 		185DE2F71FBFC31800720CAF /* ZSHVideoRecViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 185DE2F61FBFC31800720CAF /* ZSHVideoRecViewController.m */; };
-		185DE2FB1FBFD18D00720CAF /* ZSHBeginShowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 185DE2FA1FBFD18D00720CAF /* ZSHBeginShowViewController.m */; };
 		185DE2FE1FBFDEFB00720CAF /* ZSHFinishShowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 185DE2FD1FBFDEFB00720CAF /* ZSHFinishShowViewController.m */; };
 		185DE3011FC0079B00720CAF /* ZSHFindCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 185DE3001FC0079B00720CAF /* ZSHFindCell.m */; };
 		185DE3041FC0120600720CAF /* ZSHFindArticleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 185DE3031FC0120600720CAF /* ZSHFindArticleCell.m */; };
@@ -243,12 +352,6 @@
 		FE3E00651FDA329900A0F7CA /* ZSHMusicRankCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE3E00641FDA329900A0F7CA /* ZSHMusicRankCell.m */; };
 		FE3E00681FDA6A7300A0F7CA /* ZSHSingerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE3E00671FDA6A7300A0F7CA /* ZSHSingerViewController.m */; };
 		FE3E00891FDA743200A0F7CA /* NSString+time.m in Sources */ = {isa = PBXBuildFile; fileRef = FE3E006E1FDA743200A0F7CA /* NSString+time.m */; };
-		FE3E008C1FDA743200A0F7CA /* MusicPlayer_顺序播放@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE3E00721FDA743200A0F7CA /* MusicPlayer_顺序播放@2x.png */; };
-		FE3E008D1FDA743200A0F7CA /* MusicPlayer_下载@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE3E00731FDA743200A0F7CA /* MusicPlayer_下载@2x.png */; };
-		FE3E008E1FDA743200A0F7CA /* MusicPlayer_随机播放@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE3E00741FDA743200A0F7CA /* MusicPlayer_随机播放@2x.png */; };
-		FE3E008F1FDA743200A0F7CA /* MusicPlayer_后退@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE3E00751FDA743200A0F7CA /* MusicPlayer_后退@2x.png */; };
-		FE3E00921FDA743200A0F7CA /* MusicPlayer_单曲循环@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE3E00781FDA743200A0F7CA /* MusicPlayer_单曲循环@2x.png */; };
-		FE3E00951FDA743200A0F7CA /* 音乐_播放器_默认唱片头像@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE3E007B1FDA743200A0F7CA /* 音乐_播放器_默认唱片头像@2x.png */; };
 		FE3E00961FDA743200A0F7CA /* AudioPlayerController+methods.m in Sources */ = {isa = PBXBuildFile; fileRef = FE3E007D1FDA743200A0F7CA /* AudioPlayerController+methods.m */; };
 		FE3E00971FDA743200A0F7CA /* AudioPlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE3E007E1FDA743200A0F7CA /* AudioPlayerController.m */; };
 		FE3E00981FDA743200A0F7CA /* AudioPlayerController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE3E007F1FDA743200A0F7CA /* AudioPlayerController.xib */; };
@@ -277,7 +380,6 @@
 		FE4E4B281FC000E800E3B2F4 /* ZSHSearchLiveSecondCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE4E4B271FC000E800E3B2F4 /* ZSHSearchLiveSecondCell.m */; };
 		FE4E4B2B1FC005EC00E3B2F4 /* ZSHSearchLiveThirdCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE4E4B2A1FC005EC00E3B2F4 /* ZSHSearchLiveThirdCell.m */; };
 		FE4E4B361FC025C500E3B2F4 /* YHSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = FE4E4B341FC025C500E3B2F4 /* YHSlider.m */; };
-		FE4E4B3C1FC03C1D00E3B2F4 /* PYSearchSuggestionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE4E4B391FC03C1D00E3B2F4 /* PYSearchSuggestionViewController.m */; };
 		FE4E4B3D1FC03C1D00E3B2F4 /* PYSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE4E4B3B1FC03C1D00E3B2F4 /* PYSearchViewController.m */; };
 		FE50245E1F8A2413005F0FF7 /* ZSHBaseLogic.m in Sources */ = {isa = PBXBuildFile; fileRef = FE50245D1F8A2413005F0FF7 /* ZSHBaseLogic.m */; };
 		FE5229851F9050DF00DC2899 /* ZSHLiveCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE5229841F9050DF00DC2899 /* ZSHLiveCellView.m */; };
@@ -303,9 +405,7 @@
 		FE5538321F47049D00803128 /* MBHUD_Success@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE5537B21F47049D00803128 /* MBHUD_Success@3x.png */; };
 		FE5538331F47049D00803128 /* MBHUD_Warn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE5537B31F47049D00803128 /* MBHUD_Warn@2x.png */; };
 		FE5538341F47049D00803128 /* MBHUD_Warn@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE5537B41F47049D00803128 /* MBHUD_Warn@3x.png */; };
-		FE55384F1F47049D00803128 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FE5537D11F47049D00803128 /* Assets.xcassets */; };
 		FE5538501F47049D00803128 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FE5537D21F47049D00803128 /* LaunchScreen.storyboard */; };
-		FE5538511F47049D00803128 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FE5537D41F47049D00803128 /* Info.plist */; };
 		FE5538521F47049D00803128 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FE5537D51F47049D00803128 /* main.m */; };
 		FE55385B1F47049D00803128 /* AdPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE5537EC1F47049D00803128 /* AdPageView.m */; };
 		FE55385C1F47049D00803128 /* AESCipher.m in Sources */ = {isa = PBXBuildFile; fileRef = FE5537EF1F47049D00803128 /* AESCipher.m */; };
@@ -450,7 +550,7 @@
 		FEBD7CAF1FA730F600CE2BA6 /* ZSHGoodsDetailSubCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FEBD7CAE1FA730F600CE2BA6 /* ZSHGoodsDetailSubCell.m */; };
 		FEBD7CB21FA74BBF00CE2BA6 /* ZSHGoodsDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FEBD7CB11FA74BBF00CE2BA6 /* ZSHGoodsDetailModel.m */; };
 		FEBD7CB61FA75F3400CE2BA6 /* ZSHFoodViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEBD7CB51FA75F3400CE2BA6 /* ZSHFoodViewController.m */; };
-		FEBD7CBA1FA75FBC00CE2BA6 /* ZSHFoodCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FEBD7CB91FA75FBC00CE2BA6 /* ZSHFoodCell.m */; };
+		FEBD7CBA1FA75FBC00CE2BA6 /* ZSHLeftFindCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FEBD7CB91FA75FBC00CE2BA6 /* ZSHLeftFindCell.m */; };
 		FEBD7CBE1FA7608200CE2BA6 /* ZSHFoodModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FEBD7CBD1FA7608200CE2BA6 /* ZSHFoodModel.m */; };
 		FEC2739A1F8E1D0C00A0F91A /* MainTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE55374B1F47049D00803128 /* MainTabBarController.m */; };
 		FEC2739B1F8E1D1E00A0F91A /* ZSHHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE2BB0C11F8E168B000D5800 /* ZSHHomeViewController.m */; };
@@ -459,7 +559,11 @@
 		FEC2739E1F8E1D7900A0F91A /* ZSHCycleScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE0C20AD1F8CDCE0001E4D4C /* ZSHCycleScrollView.m */; };
 		FEC273A11F8E1F4A00A0F91A /* ZSHNotCycleScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC2739F1F8E1F4A00A0F91A /* ZSHNotCycleScrollView.m */; };
 		FEC273A71F8E1FD700A0F91A /* ZSHNoticeViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC273A61F8E1FD700A0F91A /* ZSHNoticeViewCell.m */; };
+		FEC2F64D1FF2942100C24067 /* ZSHTopicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC2F64C1FF2942100C24067 /* ZSHTopicViewController.m */; };
 		FEC702B41FB3195000D5BAA1 /* ZSHEntertainmentDisViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC702B31FB3195000D5BAA1 /* ZSHEntertainmentDisViewController.m */; };
+		FED0BB461FF33604004B0783 /* ZSHTopicCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FED0BB451FF33604004B0783 /* ZSHTopicCell.m */; };
+		FED0BB491FF374A8004B0783 /* ZSHTopicModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FED0BB481FF374A8004B0783 /* ZSHTopicModel.m */; };
+		FED0BB4C1FF3763F004B0783 /* NSString+pinyin.m in Sources */ = {isa = PBXBuildFile; fileRef = FED0BB4B1FF3763E004B0783 /* NSString+pinyin.m */; };
 		FED308981FA414D900CD442B /* ZSHHotelDetailDeviceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FED308971FA414D900CD442B /* ZSHHotelDetailDeviceCell.m */; };
 		FED3C85C1FE7D02900E5F458 /* ZSHGoodsDetailCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FED3C85B1FE7D02900E5F458 /* ZSHGoodsDetailCommentCell.m */; };
 		FEDC1D9B1FC5109200AB0D92 /* ZSHButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEDC1D9A1FC5109200AB0D92 /* ZSHButtonView.m */; };
@@ -467,7 +571,6 @@
 		FEDF290C1FB69C2800CD5756 /* ZSHGuideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEDF290B1FB69C2800CD5756 /* ZSHGuideViewController.m */; };
 		FEDF29241FB6CFD300CD5756 /* ZSHQuotaHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEDF29231FB6CFD300CD5756 /* ZSHQuotaHeadView.m */; };
 		FEDF29271FB6D1C100CD5756 /* ZSHCoinViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEDF29261FB6D1C100CD5756 /* ZSHCoinViewController.m */; };
-		FEDF292A1FB6DA3000CD5756 /* ZSHLiveRoomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEDF29291FB6DA3000CD5756 /* ZSHLiveRoomViewController.m */; };
 		FEDF292D1FB6F24A00CD5756 /* ZSHLiveProfitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEDF292C1FB6F24A00CD5756 /* ZSHLiveProfitViewController.m */; };
 		FEE697C01FC566B5002120F0 /* ZSHHomeLogic.m in Sources */ = {isa = PBXBuildFile; fileRef = FEE697BF1FC566B4002120F0 /* ZSHHomeLogic.m */; };
 		FEE6AA331FCDC2E8001B5528 /* ZSHGuideLogic.m in Sources */ = {isa = PBXBuildFile; fileRef = FEE6AA321FCDC2E8001B5528 /* ZSHGuideLogic.m */; };
@@ -524,6 +627,194 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0418532B2005E688000E0D09 /* ZSHFindTopView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHFindTopView.h; sourceTree = "<group>"; };
+		0418532C2005E688000E0D09 /* ZSHFindTopView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHFindTopView.m; sourceTree = "<group>"; };
+		0418532E2005ED97000E0D09 /* ZSHLeftFindViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHLeftFindViewController.h; sourceTree = "<group>"; };
+		0418532F2005ED97000E0D09 /* ZSHLeftFindViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHLeftFindViewController.m; sourceTree = "<group>"; };
+		041853312005FB3D000E0D09 /* ZSHToplineTopView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHToplineTopView.h; sourceTree = "<group>"; };
+		041853322005FB3D000E0D09 /* ZSHToplineTopView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHToplineTopView.m; sourceTree = "<group>"; };
+		042DC4972004D12A00AF2995 /* ZSHRecommendView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHRecommendView.h; sourceTree = "<group>"; };
+		042DC4982004D12A00AF2995 /* ZSHRecommendView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHRecommendView.m; sourceTree = "<group>"; };
+		042E091220285FB30037BB4B /* ZSHEntryLogic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHEntryLogic.h; sourceTree = "<group>"; };
+		042E091320285FB40037BB4B /* ZSHEntryLogic.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHEntryLogic.m; sourceTree = "<group>"; };
+		042E0915202861EF0037BB4B /* ZSHMultiInfoViewController+method.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ZSHMultiInfoViewController+method.h"; sourceTree = "<group>"; };
+		042E0916202861EF0037BB4B /* ZSHMultiInfoViewController+method.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "ZSHMultiInfoViewController+method.m"; sourceTree = "<group>"; };
+		04315E801FF5E9ED006C6BC8 /* ZSHWeiboTopicModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHWeiboTopicModel.h; sourceTree = "<group>"; };
+		04315E811FF5E9ED006C6BC8 /* ZSHWeiboTopicModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHWeiboTopicModel.m; sourceTree = "<group>"; };
+		04315E831FF61175006C6BC8 /* UIImage+String.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+String.h"; sourceTree = "<group>"; };
+		04315E841FF61175006C6BC8 /* UIImage+String.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+String.m"; sourceTree = "<group>"; };
+		043587571FF2564F00969DD7 /* ZSHGoodsCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHGoodsCollectionViewCell.h; sourceTree = "<group>"; };
+		043587581FF2564F00969DD7 /* ZSHGoodsCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHGoodsCollectionViewCell.m; sourceTree = "<group>"; };
+		043F2DA3200DFF3500CE18DE /* AdvancedPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdvancedPlayerViewController.h; sourceTree = "<group>"; };
+		043F2DA4200DFF3500CE18DE /* AdvancedPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdvancedPlayerViewController.m; sourceTree = "<group>"; };
+		043F2DA6200DFF3500CE18DE /* AliyunPlayMessageShowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AliyunPlayMessageShowView.h; sourceTree = "<group>"; };
+		043F2DA7200DFF3500CE18DE /* AliyunPlayMessageShowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AliyunPlayMessageShowView.m; sourceTree = "<group>"; };
+		043F2DA8200DFF3500CE18DE /* AliyunPlaySDKDemoOneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AliyunPlaySDKDemoOneViewController.h; sourceTree = "<group>"; };
+		043F2DA9200DFF3500CE18DE /* AliyunPlaySDKDemoOneViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AliyunPlaySDKDemoOneViewController.m; sourceTree = "<group>"; };
+		043F2DAB200DFF3500CE18DE /* AddDownloadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddDownloadView.h; sourceTree = "<group>"; };
+		043F2DAC200DFF3500CE18DE /* AddDownloadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddDownloadView.m; sourceTree = "<group>"; };
+		043F2DAD200DFF3500CE18DE /* DownloadListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloadListTableViewCell.h; sourceTree = "<group>"; };
+		043F2DAE200DFF3500CE18DE /* DownloadListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DownloadListTableViewCell.m; sourceTree = "<group>"; };
+		043F2DAF200DFF3500CE18DE /* DownloadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloadViewController.h; sourceTree = "<group>"; };
+		043F2DB0200DFF3500CE18DE /* DownloadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DownloadViewController.m; sourceTree = "<group>"; };
+		043F2DB2200DFF3500CE18DE /* AliyunPlaySDKListsAutoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AliyunPlaySDKListsAutoViewController.h; sourceTree = "<group>"; };
+		043F2DB3200DFF3500CE18DE /* AliyunPlaySDKListsAutoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AliyunPlaySDKListsAutoViewController.m; sourceTree = "<group>"; };
+		043F2DB4200DFF3500CE18DE /* AliyunPlaySDKListsCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AliyunPlaySDKListsCollectionViewCell.h; sourceTree = "<group>"; };
+		043F2DB5200DFF3500CE18DE /* AliyunPlaySDKListsCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AliyunPlaySDKListsCollectionViewCell.m; sourceTree = "<group>"; };
+		043F2DB7200DFF3500CE18DE /* AliyunPlaySDKDemoFullScreenScrollCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AliyunPlaySDKDemoFullScreenScrollCollectionViewCell.h; sourceTree = "<group>"; };
+		043F2DB8200DFF3500CE18DE /* AliyunPlaySDKDemoFullScreenScrollCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AliyunPlaySDKDemoFullScreenScrollCollectionViewCell.m; sourceTree = "<group>"; };
+		043F2DB9200DFF3500CE18DE /* AliyunPlaySDKDemoFullScreenScrollViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AliyunPlaySDKDemoFullScreenScrollViewController.h; sourceTree = "<group>"; };
+		043F2DBA200DFF3500CE18DE /* AliyunPlaySDKDemoFullScreenScrollViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AliyunPlaySDKDemoFullScreenScrollViewController.m; sourceTree = "<group>"; };
+		043F2DBE200DFF3500CE18DE /* AlivcLivePushConfigViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlivcLivePushConfigViewController.h; sourceTree = "<group>"; };
+		043F2DBF200DFF3500CE18DE /* AlivcLivePushConfigViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlivcLivePushConfigViewController.m; sourceTree = "<group>"; };
+		043F2DC0200DFF3500CE18DE /* AlivcLivePusherViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlivcLivePusherViewController.h; sourceTree = "<group>"; };
+		043F2DC1200DFF3500CE18DE /* AlivcLivePusherViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlivcLivePusherViewController.m; sourceTree = "<group>"; };
+		043F2DC3200DFF3500CE18DE /* AlivcLiveConfigViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlivcLiveConfigViewController.h; sourceTree = "<group>"; };
+		043F2DC4200DFF3500CE18DE /* AlivcLiveConfigViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlivcLiveConfigViewController.m; sourceTree = "<group>"; };
+		043F2DC5200DFF3500CE18DE /* AlivcLiveConfigViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlivcLiveConfigViewController.xib; sourceTree = "<group>"; };
+		043F2DC6200DFF3500CE18DE /* AlivcLiveViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlivcLiveViewController.h; sourceTree = "<group>"; };
+		043F2DC7200DFF3500CE18DE /* AlivcLiveViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlivcLiveViewController.m; sourceTree = "<group>"; };
+		043F2DC8200DFF3500CE18DE /* AlivcLiveViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlivcLiveViewController.xib; sourceTree = "<group>"; };
+		043F2DCA200DFF3500CE18DE /* AlivcCopyrightInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlivcCopyrightInfoViewController.h; sourceTree = "<group>"; };
+		043F2DCB200DFF3500CE18DE /* AlivcCopyrightInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlivcCopyrightInfoViewController.m; sourceTree = "<group>"; };
+		043F2DCC200DFF3500CE18DE /* AlivcNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlivcNavigationController.h; sourceTree = "<group>"; };
+		043F2DCD200DFF3500CE18DE /* AlivcNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlivcNavigationController.m; sourceTree = "<group>"; };
+		043F2DCE200DFF3500CE18DE /* AlivcQRCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlivcQRCodeViewController.h; sourceTree = "<group>"; };
+		043F2DCF200DFF3500CE18DE /* AlivcQRCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlivcQRCodeViewController.m; sourceTree = "<group>"; };
+		043F2DD0200DFF3500CE18DE /* AlivcRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlivcRootViewController.h; sourceTree = "<group>"; };
+		043F2DD1200DFF3500CE18DE /* AlivcRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlivcRootViewController.m; sourceTree = "<group>"; };
+		043F2DD2200DFF3500CE18DE /* 版权信息.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "版权信息.txt"; sourceTree = "<group>"; };
+		043F2DD4200DFF3500CE18DE /* AlivcMusicInfoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlivcMusicInfoModel.h; sourceTree = "<group>"; };
+		043F2DD5200DFF3500CE18DE /* AlivcMusicInfoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlivcMusicInfoModel.m; sourceTree = "<group>"; };
+		043F2DD6200DFF3500CE18DE /* AlivcParamModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlivcParamModel.h; sourceTree = "<group>"; };
+		043F2DD7200DFF3500CE18DE /* AlivcParamModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlivcParamModel.m; sourceTree = "<group>"; };
+		043F2DD9200DFF3500CE18DE /* back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back@2x.png"; sourceTree = "<group>"; };
+		043F2DDA200DFF3500CE18DE /* back@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back@3x.png"; sourceTree = "<group>"; };
+		043F2DDB200DFF3500CE18DE /* camera_flash_close@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camera_flash_close@2x.png"; sourceTree = "<group>"; };
+		043F2DDC200DFF3500CE18DE /* camera_flash_close@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camera_flash_close@3x.png"; sourceTree = "<group>"; };
+		043F2DDD200DFF3500CE18DE /* camera_flash_on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camera_flash_on@2x.png"; sourceTree = "<group>"; };
+		043F2DDE200DFF3500CE18DE /* camera_flash_on@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camera_flash_on@3x.png"; sourceTree = "<group>"; };
+		043F2DDF200DFF3500CE18DE /* camera_id@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camera_id@2x.png"; sourceTree = "<group>"; };
+		043F2DE0200DFF3500CE18DE /* Line@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Line@2x.png"; sourceTree = "<group>"; };
+		043F2DE1200DFF3500CE18DE /* Line@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Line@3x.png"; sourceTree = "<group>"; };
+		043F2DE3200DFF3500CE18DE /* Axol.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Axol.mp3; sourceTree = "<group>"; };
+		043F2DE4200DFF3500CE18DE /* Pas de Deux.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Pas de Deux.mp3"; sourceTree = "<group>"; };
+		043F2DE5200DFF3500CE18DE /* music_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "music_button@2x.png"; sourceTree = "<group>"; };
+		043F2DE6200DFF3500CE18DE /* music_button@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "music_button@3x.png"; sourceTree = "<group>"; };
+		043F2DE7200DFF3500CE18DE /* music_check@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "music_check@2x.png"; sourceTree = "<group>"; };
+		043F2DE8200DFF3500CE18DE /* music_check@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "music_check@3x.png"; sourceTree = "<group>"; };
+		043F2DE9200DFF3500CE18DE /* music_loop_simple_line@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "music_loop_simple_line@2x.png"; sourceTree = "<group>"; };
+		043F2DEA200DFF3500CE18DE /* music_loop_simple_line@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "music_loop_simple_line@3x.png"; sourceTree = "<group>"; };
+		043F2DEB200DFF3500CE18DE /* QR@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "QR@2x.png"; sourceTree = "<group>"; };
+		043F2DEC200DFF3500CE18DE /* QR@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "QR@3x.png"; sourceTree = "<group>"; };
+		043F2DED200DFF3500CE18DE /* record_beauty@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "record_beauty@2x.png"; sourceTree = "<group>"; };
+		043F2DEE200DFF3500CE18DE /* record_beauty@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "record_beauty@3x.png"; sourceTree = "<group>"; };
+		043F2DEF200DFF3500CE18DE /* record_beauty_on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "record_beauty_on@2x.png"; sourceTree = "<group>"; };
+		043F2DF0200DFF3500CE18DE /* record_beauty_on@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "record_beauty_on@3x.png"; sourceTree = "<group>"; };
+		043F2DF1200DFF3500CE18DE /* volume_off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "volume_off@2x.png"; sourceTree = "<group>"; };
+		043F2DF2200DFF3500CE18DE /* volume_off@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "volume_off@3x.png"; sourceTree = "<group>"; };
+		043F2DF3200DFF3500CE18DE /* volume_on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "volume_on@2x.png"; sourceTree = "<group>"; };
+		043F2DF4200DFF3500CE18DE /* volume_on@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "volume_on@3x.png"; sourceTree = "<group>"; };
+		043F2DF5200DFF3500CE18DE /* watermark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = watermark.png; sourceTree = "<group>"; };
+		043F2DF6200DFF3500CE18DE /* watermark_small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = watermark_small.png; sourceTree = "<group>"; };
+		043F2DF9200DFF3500CE18DE /* AlivcChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlivcChartView.h; sourceTree = "<group>"; };
+		043F2DFA200DFF3500CE18DE /* AlivcChartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlivcChartView.m; sourceTree = "<group>"; };
+		043F2DFB200DFF3500CE18DE /* AlivcDebugChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlivcDebugChartView.h; sourceTree = "<group>"; };
+		043F2DFC200DFF3500CE18DE /* AlivcDebugChartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlivcDebugChartView.m; sourceTree = "<group>"; };
+		043F2DFD200DFF3500CE18DE /* AlivcDebugTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlivcDebugTextView.h; sourceTree = "<group>"; };
+		043F2DFE200DFF3500CE18DE /* AlivcDebugTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlivcDebugTextView.m; sourceTree = "<group>"; };
+		043F2DFF200DFF3500CE18DE /* AlivcMusicSettingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlivcMusicSettingView.h; sourceTree = "<group>"; };
+		043F2E00200DFF3500CE18DE /* AlivcMusicSettingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlivcMusicSettingView.m; sourceTree = "<group>"; };
+		043F2E01200DFF3500CE18DE /* AlivcPublisherView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlivcPublisherView.h; sourceTree = "<group>"; };
+		043F2E02200DFF3500CE18DE /* AlivcPublisherView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlivcPublisherView.m; sourceTree = "<group>"; };
+		043F2E03200DFF3500CE18DE /* AlivcPushViewsProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlivcPushViewsProtocol.h; sourceTree = "<group>"; };
+		043F2E04200DFF3500CE18DE /* AlivcWatermarkSettingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlivcWatermarkSettingView.h; sourceTree = "<group>"; };
+		043F2E05200DFF3500CE18DE /* AlivcWatermarkSettingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlivcWatermarkSettingView.m; sourceTree = "<group>"; };
+		043F2E07200DFF3500CE18DE /* AlivcGuidePageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlivcGuidePageView.h; sourceTree = "<group>"; };
+		043F2E08200DFF3500CE18DE /* AlivcGuidePageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlivcGuidePageView.m; sourceTree = "<group>"; };
+		043F2E09200DFF3500CE18DE /* AlivcParamTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlivcParamTableViewCell.h; sourceTree = "<group>"; };
+		043F2E0A200DFF3500CE18DE /* AlivcParamTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlivcParamTableViewCell.m; sourceTree = "<group>"; };
+		043F2E0B200DFF3500CE18DE /* AlivcSweepCodeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlivcSweepCodeView.h; sourceTree = "<group>"; };
+		043F2E0C200DFF3500CE18DE /* AlivcSweepCodeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlivcSweepCodeView.m; sourceTree = "<group>"; };
+		043F2E4B200E006500CE18DE /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		043F2E4C200E006500CE18DE /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		043F2E4E200E02B800CE18DE /* AddPlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddPlayView.h; sourceTree = "<group>"; };
+		043F2E4F200E02B800CE18DE /* AddPlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddPlayView.m; sourceTree = "<group>"; };
+		043F2E51200E0AAC00CE18DE /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
+		043F2E59200E0CC700CE18DE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		043F2E5B200E0D0800CE18DE /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		043F2E5C200E1F3600CE18DE /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		044A2F442004BBF000B05CE7 /* ZSHMakeMoneyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHMakeMoneyViewController.h; sourceTree = "<group>"; };
+		044A2F452004BBF000B05CE7 /* ZSHMakeMoneyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHMakeMoneyViewController.m; sourceTree = "<group>"; };
+		0450A60B20036BC100D7B2D4 /* ZSHHomeSubListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHHomeSubListCell.h; sourceTree = "<group>"; };
+		0450A60C20036BC100D7B2D4 /* ZSHHomeSubListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHHomeSubListCell.m; sourceTree = "<group>"; };
+		0453B0B3202C427A00791A75 /* ChannelCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChannelCell.h; sourceTree = "<group>"; };
+		0453B0B4202C427A00791A75 /* ChannelCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChannelCell.m; sourceTree = "<group>"; };
+		0453B0B7202C42B200791A75 /* Channel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Channel.h; sourceTree = "<group>"; };
+		0453B0B8202C42B200791A75 /* Channel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Channel.m; sourceTree = "<group>"; };
+		0453B0BA202C48ED00791A75 /* ZSHTopLineMoreTypeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHTopLineMoreTypeViewController.h; sourceTree = "<group>"; };
+		0453B0BB202C48ED00791A75 /* ZSHTopLineMoreTypeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHTopLineMoreTypeViewController.m; sourceTree = "<group>"; };
+		04647D002017068800A21600 /* ZSHLiveMoreView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHLiveMoreView.h; sourceTree = "<group>"; };
+		04647D012017068800A21600 /* ZSHLiveMoreView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHLiveMoreView.m; sourceTree = "<group>"; };
+		04647D032017602000A21600 /* ZSHBeautyView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHBeautyView.h; sourceTree = "<group>"; };
+		04647D042017602000A21600 /* ZSHBeautyView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHBeautyView.m; sourceTree = "<group>"; };
+		047BC20D20216376007F4055 /* ZSHLiveGiftView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHLiveGiftView.h; sourceTree = "<group>"; };
+		047BC20E20216376007F4055 /* ZSHLiveGiftView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHLiveGiftView.m; sourceTree = "<group>"; };
+		04936D952027FCBF00E069BE /* ZSHLiveSignViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHLiveSignViewController.h; sourceTree = "<group>"; };
+		04936D962027FCBF00E069BE /* ZSHLiveSignViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHLiveSignViewController.m; sourceTree = "<group>"; };
+		049823B320074D9C0080626D /* ZSHCabinetViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHCabinetViewController.h; sourceTree = "<group>"; };
+		049823B420074D9C0080626D /* ZSHCabinetViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHCabinetViewController.m; sourceTree = "<group>"; };
+		049823B720074F180080626D /* ZSHCabinetCollectionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHCabinetCollectionCell.h; sourceTree = "<group>"; };
+		049823B820074F180080626D /* ZSHCabinetCollectionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHCabinetCollectionCell.m; sourceTree = "<group>"; };
+		049823BA20074F640080626D /* ZSHCabinetReusableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHCabinetReusableView.h; sourceTree = "<group>"; };
+		049823BB20074F640080626D /* ZSHCabinetReusableView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHCabinetReusableView.m; sourceTree = "<group>"; };
+		049823BD20076BCD0080626D /* ZSHCabinetHeadReusableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHCabinetHeadReusableView.h; sourceTree = "<group>"; };
+		049823BE20076BCD0080626D /* ZSHCabinetHeadReusableView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHCabinetHeadReusableView.m; sourceTree = "<group>"; };
+		049823C120078D590080626D /* ZSHFlagshipViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHFlagshipViewController.h; sourceTree = "<group>"; };
+		049823C220078D590080626D /* ZSHFlagshipViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHFlagshipViewController.m; sourceTree = "<group>"; };
+		049823C520078E470080626D /* ZSHFlagshipCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHFlagshipCell.h; sourceTree = "<group>"; };
+		049823C620078E470080626D /* ZSHFlagshipCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHFlagshipCell.m; sourceTree = "<group>"; };
+		049A6566202C2D8000EF1145 /* ZSHMineCouponViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHMineCouponViewController.h; sourceTree = "<group>"; };
+		049A6567202C2D8000EF1145 /* ZSHMineCouponViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHMineCouponViewController.m; sourceTree = "<group>"; };
+		04A69031200845FE00C583E6 /* ZSHFashionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHFashionCell.h; sourceTree = "<group>"; };
+		04A69032200845FE00C583E6 /* ZSHFashionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHFashionCell.m; sourceTree = "<group>"; };
+		04A690342008461500C583E6 /* ZSHFashionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHFashionViewController.h; sourceTree = "<group>"; };
+		04A690352008461500C583E6 /* ZSHFashionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHFashionViewController.m; sourceTree = "<group>"; };
+		04A69038200847E700C583E6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		04A6903B20084E6800C583E6 /* ZSHPrivilegeController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHPrivilegeController.h; sourceTree = "<group>"; };
+		04A6903C20084E6800C583E6 /* ZSHPrivilegeController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHPrivilegeController.m; sourceTree = "<group>"; };
+		04A6903E20084EA800C583E6 /* ZSHPrivilegeCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHPrivilegeCell.h; sourceTree = "<group>"; };
+		04A6903F20084EA800C583E6 /* ZSHPrivilegeCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHPrivilegeCell.m; sourceTree = "<group>"; };
+		04A6904320089F5E00C583E6 /* ZSHJoininViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHJoininViewController.h; sourceTree = "<group>"; };
+		04A6904420089F5E00C583E6 /* ZSHJoininViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHJoininViewController.m; sourceTree = "<group>"; };
+		04A690472008A01400C583E6 /* ZSHJoininCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHJoininCell.h; sourceTree = "<group>"; };
+		04A690482008A01400C583E6 /* ZSHJoininCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHJoininCell.m; sourceTree = "<group>"; };
+		04A6FCC92007152700DDE79E /* ZSHMusicMainViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHMusicMainViewController.h; sourceTree = "<group>"; };
+		04A6FCCA2007152700DDE79E /* ZSHMusicMainViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHMusicMainViewController.m; sourceTree = "<group>"; };
+		04A6FCCC200756F800DDE79E /* ZSHRadioScrollCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHRadioScrollCell.h; sourceTree = "<group>"; };
+		04A6FCCD200756F800DDE79E /* ZSHRadioScrollCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHRadioScrollCell.m; sourceTree = "<group>"; };
+		04A6FCCF20075A2900DDE79E /* ZSHRadioSubView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHRadioSubView.h; sourceTree = "<group>"; };
+		04A6FCD020075A2900DDE79E /* ZSHRadioSubView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHRadioSubView.m; sourceTree = "<group>"; };
+		04A9FE96201576D00099D467 /* ZSHCreateStoreGuideView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHCreateStoreGuideView.h; sourceTree = "<group>"; };
+		04A9FE97201576D00099D467 /* ZSHCreateStoreGuideView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHCreateStoreGuideView.m; sourceTree = "<group>"; };
+		04A9FE992015CA900099D467 /* ZSHAudienceLivePopView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHAudienceLivePopView.h; sourceTree = "<group>"; };
+		04A9FE9A2015CA900099D467 /* ZSHAudienceLivePopView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHAudienceLivePopView.m; sourceTree = "<group>"; };
+		04BAD7BB2005C0DB00950195 /* ZSHMagazineListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHMagazineListViewController.h; sourceTree = "<group>"; };
+		04BAD7BC2005C0DB00950195 /* ZSHMagazineListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHMagazineListViewController.m; sourceTree = "<group>"; };
+		04BAD7BF2005EEB100950195 /* ZSHMagazineListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHMagazineListCell.h; sourceTree = "<group>"; };
+		04BAD7C02005EEB100950195 /* ZSHMagazineListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHMagazineListCell.m; sourceTree = "<group>"; };
+		04C2AFFE20231ADA00208D21 /* ZSHLiveGiftPopCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHLiveGiftPopCell.h; sourceTree = "<group>"; };
+		04C2AFFF20231ADA00208D21 /* ZSHLiveGiftPopCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHLiveGiftPopCell.m; sourceTree = "<group>"; };
+		04CC219C1FFF79B200921863 /* ZSHMagazineViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHMagazineViewController.h; sourceTree = "<group>"; };
+		04CC219D1FFF79B200921863 /* ZSHMagazineViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHMagazineViewController.m; sourceTree = "<group>"; };
+		04CC545C201EBBAF00917089 /* ZSHCountdowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHCountdowView.h; sourceTree = "<group>"; };
+		04CC545D201EBBAF00917089 /* ZSHCountdowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHCountdowView.m; sourceTree = "<group>"; };
+		04DD819C2018AEEB00B1E3CE /* ZSHCustomSlider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHCustomSlider.h; sourceTree = "<group>"; };
+		04DD819D2018AEEB00B1E3CE /* ZSHCustomSlider.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHCustomSlider.m; sourceTree = "<group>"; };
+		04E2F3BF20070E2200F902A4 /* ZSHMagazineReusableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHMagazineReusableView.h; sourceTree = "<group>"; };
+		04E2F3C020070E2200F902A4 /* ZSHMagazineReusableView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHMagazineReusableView.m; sourceTree = "<group>"; };
+		04ED27362009AAC7000B1541 /* ZSHUploadIDCardController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHUploadIDCardController.h; sourceTree = "<group>"; };
+		04ED27372009AAC7000B1541 /* ZSHUploadIDCardController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHUploadIDCardController.m; sourceTree = "<group>"; };
 		14ED69325E9FD4BDB1CA95F8 /* Pods-ZSHApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZSHApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-ZSHApp/Pods-ZSHApp.release.xcconfig"; sourceTree = "<group>"; };
 		18063C521FC90379000F5A00 /* ZSHPersonalModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHPersonalModel.h; sourceTree = "<group>"; };
 		18063C531FC90379000F5A00 /* ZSHPersonalModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHPersonalModel.m; sourceTree = "<group>"; };
@@ -751,8 +1042,6 @@
 		185DDCD21FBEDD79004D4688 /* ZSHShareView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHShareView.m; sourceTree = "<group>"; };
 		185DE2F51FBFC31800720CAF /* ZSHVideoRecViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHVideoRecViewController.h; sourceTree = "<group>"; };
 		185DE2F61FBFC31800720CAF /* ZSHVideoRecViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHVideoRecViewController.m; sourceTree = "<group>"; };
-		185DE2F91FBFD18D00720CAF /* ZSHBeginShowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHBeginShowViewController.h; sourceTree = "<group>"; };
-		185DE2FA1FBFD18D00720CAF /* ZSHBeginShowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHBeginShowViewController.m; sourceTree = "<group>"; };
 		185DE2FC1FBFDEFB00720CAF /* ZSHFinishShowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHFinishShowViewController.h; sourceTree = "<group>"; };
 		185DE2FD1FBFDEFB00720CAF /* ZSHFinishShowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHFinishShowViewController.m; sourceTree = "<group>"; };
 		185DE2FF1FC0079B00720CAF /* ZSHFindCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSHFindCell.h; path = "ZSHApp/Modules/Live(尚播)/Controller/ZSHFindCell.h"; sourceTree = SOURCE_ROOT; };
@@ -832,7 +1121,6 @@
 		299610101ED84A7100BCED2A /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		299610121ED84A8D00BCED2A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		5F3CF9E14F586BC7355E62B0 /* Pods-ZSHApp.adhoc.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZSHApp.adhoc.xcconfig"; path = "Pods/Target Support Files/Pods-ZSHApp/Pods-ZSHApp.adhoc.xcconfig"; sourceTree = "<group>"; };
-		69E19497903A5F2006FD9EB9 /* Pods-ZSHApp.add hoc.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZSHApp.add hoc.xcconfig"; path = "Pods/Target Support Files/Pods-ZSHApp/Pods-ZSHApp.add hoc.xcconfig"; sourceTree = "<group>"; };
 		9E884624664B432D4FE5044F /* libPods-ZSHApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ZSHApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A51AB222BA7ACF202B5B1330 /* Pods-ZSHApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZSHApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ZSHApp/Pods-ZSHApp.debug.xcconfig"; sourceTree = "<group>"; };
 		BDF03C8635F8B6D048510007 /* libPods-ZSHAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ZSHAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -968,12 +1256,6 @@
 		FE3E00671FDA6A7300A0F7CA /* ZSHSingerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHSingerViewController.m; sourceTree = "<group>"; };
 		FE3E006C1FDA743200A0F7CA /* NSString+time.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+time.h"; sourceTree = "<group>"; };
 		FE3E006E1FDA743200A0F7CA /* NSString+time.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+time.m"; sourceTree = "<group>"; };
-		FE3E00721FDA743200A0F7CA /* MusicPlayer_顺序播放@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MusicPlayer_顺序播放@2x.png"; sourceTree = "<group>"; };
-		FE3E00731FDA743200A0F7CA /* MusicPlayer_下载@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MusicPlayer_下载@2x.png"; sourceTree = "<group>"; };
-		FE3E00741FDA743200A0F7CA /* MusicPlayer_随机播放@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MusicPlayer_随机播放@2x.png"; sourceTree = "<group>"; };
-		FE3E00751FDA743200A0F7CA /* MusicPlayer_后退@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MusicPlayer_后退@2x.png"; sourceTree = "<group>"; };
-		FE3E00781FDA743200A0F7CA /* MusicPlayer_单曲循环@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MusicPlayer_单曲循环@2x.png"; sourceTree = "<group>"; };
-		FE3E007B1FDA743200A0F7CA /* 音乐_播放器_默认唱片头像@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "音乐_播放器_默认唱片头像@2x.png"; sourceTree = "<group>"; };
 		FE3E007D1FDA743200A0F7CA /* AudioPlayerController+methods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AudioPlayerController+methods.m"; sourceTree = "<group>"; };
 		FE3E007E1FDA743200A0F7CA /* AudioPlayerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioPlayerController.m; sourceTree = "<group>"; };
 		FE3E007F1FDA743200A0F7CA /* AudioPlayerController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AudioPlayerController.xib; sourceTree = "<group>"; };
@@ -1029,8 +1311,6 @@
 		FE4E4B2A1FC005EC00E3B2F4 /* ZSHSearchLiveThirdCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHSearchLiveThirdCell.m; sourceTree = "<group>"; };
 		FE4E4B331FC025C500E3B2F4 /* YHSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHSlider.h; sourceTree = "<group>"; };
 		FE4E4B341FC025C500E3B2F4 /* YHSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHSlider.m; sourceTree = "<group>"; };
-		FE4E4B381FC03C1D00E3B2F4 /* PYSearchSuggestionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PYSearchSuggestionViewController.h; sourceTree = "<group>"; };
-		FE4E4B391FC03C1D00E3B2F4 /* PYSearchSuggestionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PYSearchSuggestionViewController.m; sourceTree = "<group>"; };
 		FE4E4B3A1FC03C1D00E3B2F4 /* PYSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PYSearchViewController.h; sourceTree = "<group>"; };
 		FE4E4B3B1FC03C1D00E3B2F4 /* PYSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PYSearchViewController.m; sourceTree = "<group>"; };
 		FE50245C1F8A2413005F0FF7 /* ZSHBaseLogic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHBaseLogic.h; sourceTree = "<group>"; };
@@ -1080,9 +1360,7 @@
 		FE5537B21F47049D00803128 /* MBHUD_Success@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MBHUD_Success@3x.png"; sourceTree = "<group>"; };
 		FE5537B31F47049D00803128 /* MBHUD_Warn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MBHUD_Warn@2x.png"; sourceTree = "<group>"; };
 		FE5537B41F47049D00803128 /* MBHUD_Warn@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MBHUD_Warn@3x.png"; sourceTree = "<group>"; };
-		FE5537D11F47049D00803128 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FE5537D31F47049D00803128 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		FE5537D41F47049D00803128 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FE5537D51F47049D00803128 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		FE5537EB1F47049D00803128 /* AdPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdPageView.h; sourceTree = "<group>"; };
 		FE5537EC1F47049D00803128 /* AdPageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdPageView.m; sourceTree = "<group>"; };
@@ -1342,16 +1620,24 @@
 		FEBD7CB11FA74BBF00CE2BA6 /* ZSHGoodsDetailModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHGoodsDetailModel.m; sourceTree = "<group>"; };
 		FEBD7CB41FA75F3400CE2BA6 /* ZSHFoodViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHFoodViewController.h; sourceTree = "<group>"; };
 		FEBD7CB51FA75F3400CE2BA6 /* ZSHFoodViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHFoodViewController.m; sourceTree = "<group>"; };
-		FEBD7CB81FA75FBC00CE2BA6 /* ZSHFoodCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHFoodCell.h; sourceTree = "<group>"; };
-		FEBD7CB91FA75FBC00CE2BA6 /* ZSHFoodCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHFoodCell.m; sourceTree = "<group>"; };
+		FEBD7CB81FA75FBC00CE2BA6 /* ZSHLeftFindCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHLeftFindCell.h; sourceTree = "<group>"; };
+		FEBD7CB91FA75FBC00CE2BA6 /* ZSHLeftFindCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHLeftFindCell.m; sourceTree = "<group>"; };
 		FEBD7CBC1FA7608200CE2BA6 /* ZSHFoodModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHFoodModel.h; sourceTree = "<group>"; };
 		FEBD7CBD1FA7608200CE2BA6 /* ZSHFoodModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHFoodModel.m; sourceTree = "<group>"; };
 		FEC2739F1F8E1F4A00A0F91A /* ZSHNotCycleScrollView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHNotCycleScrollView.m; sourceTree = "<group>"; };
 		FEC273A01F8E1F4A00A0F91A /* ZSHNotCycleScrollView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHNotCycleScrollView.h; sourceTree = "<group>"; };
 		FEC273A51F8E1FD700A0F91A /* ZSHNoticeViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHNoticeViewCell.h; sourceTree = "<group>"; };
 		FEC273A61F8E1FD700A0F91A /* ZSHNoticeViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHNoticeViewCell.m; sourceTree = "<group>"; };
+		FEC2F64B1FF2942100C24067 /* ZSHTopicViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHTopicViewController.h; sourceTree = "<group>"; };
+		FEC2F64C1FF2942100C24067 /* ZSHTopicViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHTopicViewController.m; sourceTree = "<group>"; };
 		FEC702B21FB3195000D5BAA1 /* ZSHEntertainmentDisViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHEntertainmentDisViewController.h; sourceTree = "<group>"; };
 		FEC702B31FB3195000D5BAA1 /* ZSHEntertainmentDisViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHEntertainmentDisViewController.m; sourceTree = "<group>"; };
+		FED0BB441FF33604004B0783 /* ZSHTopicCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHTopicCell.h; sourceTree = "<group>"; };
+		FED0BB451FF33604004B0783 /* ZSHTopicCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHTopicCell.m; sourceTree = "<group>"; };
+		FED0BB471FF374A8004B0783 /* ZSHTopicModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHTopicModel.h; sourceTree = "<group>"; };
+		FED0BB481FF374A8004B0783 /* ZSHTopicModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHTopicModel.m; sourceTree = "<group>"; };
+		FED0BB4A1FF3763E004B0783 /* NSString+pinyin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+pinyin.h"; sourceTree = "<group>"; };
+		FED0BB4B1FF3763E004B0783 /* NSString+pinyin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+pinyin.m"; sourceTree = "<group>"; };
 		FED308961FA414D900CD442B /* ZSHHotelDetailDeviceCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHHotelDetailDeviceCell.h; sourceTree = "<group>"; };
 		FED308971FA414D900CD442B /* ZSHHotelDetailDeviceCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHHotelDetailDeviceCell.m; sourceTree = "<group>"; };
 		FED3C85A1FE7D02900E5F458 /* ZSHGoodsDetailCommentCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHGoodsDetailCommentCell.h; sourceTree = "<group>"; };
@@ -1366,8 +1652,6 @@
 		FEDF29231FB6CFD300CD5756 /* ZSHQuotaHeadView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHQuotaHeadView.m; sourceTree = "<group>"; };
 		FEDF29251FB6D1C100CD5756 /* ZSHCoinViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHCoinViewController.h; sourceTree = "<group>"; };
 		FEDF29261FB6D1C100CD5756 /* ZSHCoinViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHCoinViewController.m; sourceTree = "<group>"; };
-		FEDF29281FB6DA3000CD5756 /* ZSHLiveRoomViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHLiveRoomViewController.h; sourceTree = "<group>"; };
-		FEDF29291FB6DA3000CD5756 /* ZSHLiveRoomViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHLiveRoomViewController.m; sourceTree = "<group>"; };
 		FEDF292B1FB6F24A00CD5756 /* ZSHLiveProfitViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHLiveProfitViewController.h; sourceTree = "<group>"; };
 		FEDF292C1FB6F24A00CD5756 /* ZSHLiveProfitViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHLiveProfitViewController.m; sourceTree = "<group>"; };
 		FEE697BE1FC566B4002120F0 /* ZSHHomeLogic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSHHomeLogic.h; sourceTree = "<group>"; };
@@ -1464,6 +1748,437 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		043F2DA0200DFF3500CE18DE /* AlivcLive */ = {
+			isa = PBXGroup;
+			children = (
+				043F2DA1200DFF3500CE18DE /* Pull */,
+				043F2DBB200DFF3500CE18DE /* Push */,
+			);
+			path = AlivcLive;
+			sourceTree = "<group>";
+		};
+		043F2DA1200DFF3500CE18DE /* Pull */ = {
+			isa = PBXGroup;
+			children = (
+				043F2E4E200E02B800CE18DE /* AddPlayView.h */,
+				043F2E4F200E02B800CE18DE /* AddPlayView.m */,
+				043F2DA2200DFF3500CE18DE /* Advanced player */,
+			);
+			path = Pull;
+			sourceTree = "<group>";
+		};
+		043F2DA2200DFF3500CE18DE /* Advanced player */ = {
+			isa = PBXGroup;
+			children = (
+				043F2DA3200DFF3500CE18DE /* AdvancedPlayerViewController.h */,
+				043F2DA4200DFF3500CE18DE /* AdvancedPlayerViewController.m */,
+				043F2DA5200DFF3500CE18DE /* base_vod */,
+				043F2DAA200DFF3500CE18DE /* download */,
+				043F2DB1200DFF3500CE18DE /* lists */,
+				043F2DB6200DFF3500CE18DE /* lists_scroll */,
+			);
+			path = "Advanced player";
+			sourceTree = "<group>";
+		};
+		043F2DA5200DFF3500CE18DE /* base_vod */ = {
+			isa = PBXGroup;
+			children = (
+				043F2DA6200DFF3500CE18DE /* AliyunPlayMessageShowView.h */,
+				043F2DA7200DFF3500CE18DE /* AliyunPlayMessageShowView.m */,
+				043F2DA8200DFF3500CE18DE /* AliyunPlaySDKDemoOneViewController.h */,
+				043F2DA9200DFF3500CE18DE /* AliyunPlaySDKDemoOneViewController.m */,
+			);
+			path = base_vod;
+			sourceTree = "<group>";
+		};
+		043F2DAA200DFF3500CE18DE /* download */ = {
+			isa = PBXGroup;
+			children = (
+				043F2DAB200DFF3500CE18DE /* AddDownloadView.h */,
+				043F2DAC200DFF3500CE18DE /* AddDownloadView.m */,
+				043F2DAD200DFF3500CE18DE /* DownloadListTableViewCell.h */,
+				043F2DAE200DFF3500CE18DE /* DownloadListTableViewCell.m */,
+				043F2DAF200DFF3500CE18DE /* DownloadViewController.h */,
+				043F2DB0200DFF3500CE18DE /* DownloadViewController.m */,
+			);
+			path = download;
+			sourceTree = "<group>";
+		};
+		043F2DB1200DFF3500CE18DE /* lists */ = {
+			isa = PBXGroup;
+			children = (
+				043F2DB2200DFF3500CE18DE /* AliyunPlaySDKListsAutoViewController.h */,
+				043F2DB3200DFF3500CE18DE /* AliyunPlaySDKListsAutoViewController.m */,
+				043F2DB4200DFF3500CE18DE /* AliyunPlaySDKListsCollectionViewCell.h */,
+				043F2DB5200DFF3500CE18DE /* AliyunPlaySDKListsCollectionViewCell.m */,
+			);
+			path = lists;
+			sourceTree = "<group>";
+		};
+		043F2DB6200DFF3500CE18DE /* lists_scroll */ = {
+			isa = PBXGroup;
+			children = (
+				043F2DB7200DFF3500CE18DE /* AliyunPlaySDKDemoFullScreenScrollCollectionViewCell.h */,
+				043F2DB8200DFF3500CE18DE /* AliyunPlaySDKDemoFullScreenScrollCollectionViewCell.m */,
+				043F2DB9200DFF3500CE18DE /* AliyunPlaySDKDemoFullScreenScrollViewController.h */,
+				043F2DBA200DFF3500CE18DE /* AliyunPlaySDKDemoFullScreenScrollViewController.m */,
+			);
+			path = lists_scroll;
+			sourceTree = "<group>";
+		};
+		043F2DBB200DFF3500CE18DE /* Push */ = {
+			isa = PBXGroup;
+			children = (
+				043F2DBC200DFF3500CE18DE /* Controllers */,
+				043F2DD3200DFF3500CE18DE /* Models */,
+				043F2DD8200DFF3500CE18DE /* Resources */,
+				043F2DF7200DFF3500CE18DE /* Views */,
+			);
+			path = Push;
+			sourceTree = "<group>";
+		};
+		043F2DBC200DFF3500CE18DE /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				043F2DBD200DFF3500CE18DE /* AlivcLivePusher */,
+				043F2DC2200DFF3500CE18DE /* AlivcLiveSession */,
+				043F2DC9200DFF3500CE18DE /* Others */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		043F2DBD200DFF3500CE18DE /* AlivcLivePusher */ = {
+			isa = PBXGroup;
+			children = (
+				043F2DBE200DFF3500CE18DE /* AlivcLivePushConfigViewController.h */,
+				043F2DBF200DFF3500CE18DE /* AlivcLivePushConfigViewController.m */,
+				043F2DC0200DFF3500CE18DE /* AlivcLivePusherViewController.h */,
+				043F2DC1200DFF3500CE18DE /* AlivcLivePusherViewController.m */,
+			);
+			path = AlivcLivePusher;
+			sourceTree = "<group>";
+		};
+		043F2DC2200DFF3500CE18DE /* AlivcLiveSession */ = {
+			isa = PBXGroup;
+			children = (
+				043F2DC3200DFF3500CE18DE /* AlivcLiveConfigViewController.h */,
+				043F2DC4200DFF3500CE18DE /* AlivcLiveConfigViewController.m */,
+				043F2DC5200DFF3500CE18DE /* AlivcLiveConfigViewController.xib */,
+				043F2DC6200DFF3500CE18DE /* AlivcLiveViewController.h */,
+				043F2DC7200DFF3500CE18DE /* AlivcLiveViewController.m */,
+				043F2DC8200DFF3500CE18DE /* AlivcLiveViewController.xib */,
+			);
+			path = AlivcLiveSession;
+			sourceTree = "<group>";
+		};
+		043F2DC9200DFF3500CE18DE /* Others */ = {
+			isa = PBXGroup;
+			children = (
+				043F2DCA200DFF3500CE18DE /* AlivcCopyrightInfoViewController.h */,
+				043F2DCB200DFF3500CE18DE /* AlivcCopyrightInfoViewController.m */,
+				043F2DCC200DFF3500CE18DE /* AlivcNavigationController.h */,
+				043F2DCD200DFF3500CE18DE /* AlivcNavigationController.m */,
+				043F2DCE200DFF3500CE18DE /* AlivcQRCodeViewController.h */,
+				043F2DCF200DFF3500CE18DE /* AlivcQRCodeViewController.m */,
+				043F2DD0200DFF3500CE18DE /* AlivcRootViewController.h */,
+				043F2DD1200DFF3500CE18DE /* AlivcRootViewController.m */,
+				043F2DD2200DFF3500CE18DE /* 版权信息.txt */,
+			);
+			path = Others;
+			sourceTree = "<group>";
+		};
+		043F2DD3200DFF3500CE18DE /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				043F2DD4200DFF3500CE18DE /* AlivcMusicInfoModel.h */,
+				043F2DD5200DFF3500CE18DE /* AlivcMusicInfoModel.m */,
+				043F2DD6200DFF3500CE18DE /* AlivcParamModel.h */,
+				043F2DD7200DFF3500CE18DE /* AlivcParamModel.m */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		043F2DD8200DFF3500CE18DE /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				043F2DD9200DFF3500CE18DE /* back@2x.png */,
+				043F2DDA200DFF3500CE18DE /* back@3x.png */,
+				043F2DDB200DFF3500CE18DE /* camera_flash_close@2x.png */,
+				043F2DDC200DFF3500CE18DE /* camera_flash_close@3x.png */,
+				043F2DDD200DFF3500CE18DE /* camera_flash_on@2x.png */,
+				043F2DDE200DFF3500CE18DE /* camera_flash_on@3x.png */,
+				043F2DDF200DFF3500CE18DE /* camera_id@2x.png */,
+				043F2DE0200DFF3500CE18DE /* Line@2x.png */,
+				043F2DE1200DFF3500CE18DE /* Line@3x.png */,
+				043F2DE2200DFF3500CE18DE /* music */,
+				043F2DE5200DFF3500CE18DE /* music_button@2x.png */,
+				043F2DE6200DFF3500CE18DE /* music_button@3x.png */,
+				043F2DE7200DFF3500CE18DE /* music_check@2x.png */,
+				043F2DE8200DFF3500CE18DE /* music_check@3x.png */,
+				043F2DE9200DFF3500CE18DE /* music_loop_simple_line@2x.png */,
+				043F2DEA200DFF3500CE18DE /* music_loop_simple_line@3x.png */,
+				043F2DEB200DFF3500CE18DE /* QR@2x.png */,
+				043F2DEC200DFF3500CE18DE /* QR@3x.png */,
+				043F2DED200DFF3500CE18DE /* record_beauty@2x.png */,
+				043F2DEE200DFF3500CE18DE /* record_beauty@3x.png */,
+				043F2DEF200DFF3500CE18DE /* record_beauty_on@2x.png */,
+				043F2DF0200DFF3500CE18DE /* record_beauty_on@3x.png */,
+				043F2DF1200DFF3500CE18DE /* volume_off@2x.png */,
+				043F2DF2200DFF3500CE18DE /* volume_off@3x.png */,
+				043F2DF3200DFF3500CE18DE /* volume_on@2x.png */,
+				043F2DF4200DFF3500CE18DE /* volume_on@3x.png */,
+				043F2DF5200DFF3500CE18DE /* watermark.png */,
+				043F2DF6200DFF3500CE18DE /* watermark_small.png */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		043F2DE2200DFF3500CE18DE /* music */ = {
+			isa = PBXGroup;
+			children = (
+				043F2DE3200DFF3500CE18DE /* Axol.mp3 */,
+				043F2DE4200DFF3500CE18DE /* Pas de Deux.mp3 */,
+			);
+			path = music;
+			sourceTree = "<group>";
+		};
+		043F2DF7200DFF3500CE18DE /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				043F2DF8200DFF3500CE18DE /* AlivcLivePusher */,
+				043F2E06200DFF3500CE18DE /* Others */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		043F2DF8200DFF3500CE18DE /* AlivcLivePusher */ = {
+			isa = PBXGroup;
+			children = (
+				043F2DF9200DFF3500CE18DE /* AlivcChartView.h */,
+				043F2DFA200DFF3500CE18DE /* AlivcChartView.m */,
+				043F2DFB200DFF3500CE18DE /* AlivcDebugChartView.h */,
+				043F2DFC200DFF3500CE18DE /* AlivcDebugChartView.m */,
+				043F2DFD200DFF3500CE18DE /* AlivcDebugTextView.h */,
+				043F2DFE200DFF3500CE18DE /* AlivcDebugTextView.m */,
+				043F2DFF200DFF3500CE18DE /* AlivcMusicSettingView.h */,
+				043F2E00200DFF3500CE18DE /* AlivcMusicSettingView.m */,
+				043F2E01200DFF3500CE18DE /* AlivcPublisherView.h */,
+				043F2E02200DFF3500CE18DE /* AlivcPublisherView.m */,
+				043F2E03200DFF3500CE18DE /* AlivcPushViewsProtocol.h */,
+				043F2E04200DFF3500CE18DE /* AlivcWatermarkSettingView.h */,
+				043F2E05200DFF3500CE18DE /* AlivcWatermarkSettingView.m */,
+				04647D002017068800A21600 /* ZSHLiveMoreView.h */,
+				04647D012017068800A21600 /* ZSHLiveMoreView.m */,
+				04647D032017602000A21600 /* ZSHBeautyView.h */,
+				04647D042017602000A21600 /* ZSHBeautyView.m */,
+			);
+			path = AlivcLivePusher;
+			sourceTree = "<group>";
+		};
+		043F2E06200DFF3500CE18DE /* Others */ = {
+			isa = PBXGroup;
+			children = (
+				043F2E07200DFF3500CE18DE /* AlivcGuidePageView.h */,
+				043F2E08200DFF3500CE18DE /* AlivcGuidePageView.m */,
+				043F2E09200DFF3500CE18DE /* AlivcParamTableViewCell.h */,
+				043F2E0A200DFF3500CE18DE /* AlivcParamTableViewCell.m */,
+				043F2E0B200DFF3500CE18DE /* AlivcSweepCodeView.h */,
+				043F2E0C200DFF3500CE18DE /* AlivcSweepCodeView.m */,
+				04A9FE992015CA900099D467 /* ZSHAudienceLivePopView.h */,
+				04A9FE9A2015CA900099D467 /* ZSHAudienceLivePopView.m */,
+				047BC20D20216376007F4055 /* ZSHLiveGiftView.h */,
+				047BC20E20216376007F4055 /* ZSHLiveGiftView.m */,
+				04C2AFFE20231ADA00208D21 /* ZSHLiveGiftPopCell.h */,
+				04C2AFFF20231ADA00208D21 /* ZSHLiveGiftPopCell.m */,
+			);
+			path = Others;
+			sourceTree = "<group>";
+		};
+		043F2E4A200E006500CE18DE /* Reachability */ = {
+			isa = PBXGroup;
+			children = (
+				043F2E4B200E006500CE18DE /* Reachability.h */,
+				043F2E4C200E006500CE18DE /* Reachability.m */,
+			);
+			path = Reachability;
+			sourceTree = "<group>";
+		};
+		044A2F432004BBF000B05CE7 /* 分享赚钱 */ = {
+			isa = PBXGroup;
+			children = (
+				044A2F442004BBF000B05CE7 /* ZSHMakeMoneyViewController.h */,
+				044A2F452004BBF000B05CE7 /* ZSHMakeMoneyViewController.m */,
+			);
+			path = "分享赚钱";
+			sourceTree = "<group>";
+		};
+		0453B0B6202C42B200791A75 /* 头条 */ = {
+			isa = PBXGroup;
+			children = (
+				0453B0B7202C42B200791A75 /* Channel.h */,
+				0453B0B8202C42B200791A75 /* Channel.m */,
+			);
+			path = "头条";
+			sourceTree = "<group>";
+		};
+		04936D942027FB8E00E069BE /* 签到 */ = {
+			isa = PBXGroup;
+			children = (
+				04936D952027FCBF00E069BE /* ZSHLiveSignViewController.h */,
+				04936D962027FCBF00E069BE /* ZSHLiveSignViewController.m */,
+			);
+			name = "签到";
+			sourceTree = "<group>";
+		};
+		049823B2200748640080626D /* 专柜店 */ = {
+			isa = PBXGroup;
+			children = (
+				049823B320074D9C0080626D /* ZSHCabinetViewController.h */,
+				049823B420074D9C0080626D /* ZSHCabinetViewController.m */,
+			);
+			path = "专柜店";
+			sourceTree = "<group>";
+		};
+		049823B620074E990080626D /* 专柜店 */ = {
+			isa = PBXGroup;
+			children = (
+				049823B720074F180080626D /* ZSHCabinetCollectionCell.h */,
+				049823B820074F180080626D /* ZSHCabinetCollectionCell.m */,
+				049823BD20076BCD0080626D /* ZSHCabinetHeadReusableView.h */,
+				049823BE20076BCD0080626D /* ZSHCabinetHeadReusableView.m */,
+				049823BA20074F640080626D /* ZSHCabinetReusableView.h */,
+				049823BB20074F640080626D /* ZSHCabinetReusableView.m */,
+			);
+			name = "专柜店";
+			sourceTree = "<group>";
+		};
+		049823C020078D110080626D /* 旗舰店 */ = {
+			isa = PBXGroup;
+			children = (
+				049823C120078D590080626D /* ZSHFlagshipViewController.h */,
+				049823C220078D590080626D /* ZSHFlagshipViewController.m */,
+			);
+			path = "旗舰店";
+			sourceTree = "<group>";
+		};
+		049823C420078E210080626D /* 旗舰店 */ = {
+			isa = PBXGroup;
+			children = (
+				049823C520078E470080626D /* ZSHFlagshipCell.h */,
+				049823C620078E470080626D /* ZSHFlagshipCell.m */,
+			);
+			name = "旗舰店";
+			sourceTree = "<group>";
+		};
+		04A69030200845C200C583E6 /* 时尚圈 */ = {
+			isa = PBXGroup;
+			children = (
+				04A690342008461500C583E6 /* ZSHFashionViewController.h */,
+				04A690352008461500C583E6 /* ZSHFashionViewController.m */,
+			);
+			path = "时尚圈";
+			sourceTree = "<group>";
+		};
+		04A690372008461F00C583E6 /* 时尚圈 */ = {
+			isa = PBXGroup;
+			children = (
+				04A69031200845FE00C583E6 /* ZSHFashionCell.h */,
+				04A69032200845FE00C583E6 /* ZSHFashionCell.m */,
+			);
+			path = "时尚圈";
+			sourceTree = "<group>";
+		};
+		04A6903A20084DB400C583E6 /* 会员特权 */ = {
+			isa = PBXGroup;
+			children = (
+				04A6903B20084E6800C583E6 /* ZSHPrivilegeController.h */,
+				04A6903C20084E6800C583E6 /* ZSHPrivilegeController.m */,
+			);
+			path = "会员特权";
+			sourceTree = "<group>";
+		};
+		04A69041200853F600C583E6 /* 会员特权 */ = {
+			isa = PBXGroup;
+			children = (
+				04A6903E20084EA800C583E6 /* ZSHPrivilegeCell.h */,
+				04A6903F20084EA800C583E6 /* ZSHPrivilegeCell.m */,
+			);
+			path = "会员特权";
+			sourceTree = "<group>";
+		};
+		04A6904220089F3100C583E6 /* 我要入驻 */ = {
+			isa = PBXGroup;
+			children = (
+				04A6904320089F5E00C583E6 /* ZSHJoininViewController.h */,
+				04A6904420089F5E00C583E6 /* ZSHJoininViewController.m */,
+				04ED27362009AAC7000B1541 /* ZSHUploadIDCardController.h */,
+				04ED27372009AAC7000B1541 /* ZSHUploadIDCardController.m */,
+			);
+			path = "我要入驻";
+			sourceTree = "<group>";
+		};
+		04A6904620089FDA00C583E6 /* 我要入驻 */ = {
+			isa = PBXGroup;
+			children = (
+				04A690472008A01400C583E6 /* ZSHJoininCell.h */,
+				04A690482008A01400C583E6 /* ZSHJoininCell.m */,
+				04A9FE96201576D00099D467 /* ZSHCreateStoreGuideView.h */,
+				04A9FE97201576D00099D467 /* ZSHCreateStoreGuideView.m */,
+			);
+			path = "我要入驻";
+			sourceTree = "<group>";
+		};
+		04A6FCC72007135700DDE79E /* Music */ = {
+			isa = PBXGroup;
+			children = (
+				04A6FCC92007152700DDE79E /* ZSHMusicMainViewController.h */,
+				04A6FCCA2007152700DDE79E /* ZSHMusicMainViewController.m */,
+			);
+			path = Music;
+			sourceTree = "<group>";
+		};
+		04A6FCC82007138D00DDE79E /* Music */ = {
+			isa = PBXGroup;
+			children = (
+				04A6FCCC200756F800DDE79E /* ZSHRadioScrollCell.h */,
+				04A6FCCD200756F800DDE79E /* ZSHRadioScrollCell.m */,
+				04A6FCCF20075A2900DDE79E /* ZSHRadioSubView.h */,
+				04A6FCD020075A2900DDE79E /* ZSHRadioSubView.m */,
+			);
+			path = Music;
+			sourceTree = "<group>";
+		};
+		04BAD7BE2005EE6000950195 /* 杂志 */ = {
+			isa = PBXGroup;
+			children = (
+				04BAD7BF2005EEB100950195 /* ZSHMagazineListCell.h */,
+				04BAD7C02005EEB100950195 /* ZSHMagazineListCell.m */,
+				04E2F3BF20070E2200F902A4 /* ZSHMagazineReusableView.h */,
+				04E2F3C020070E2200F902A4 /* ZSHMagazineReusableView.m */,
+			);
+			name = "杂志";
+			sourceTree = "<group>";
+		};
+		04CC219B1FFF793800921863 /* 杂志 */ = {
+			isa = PBXGroup;
+			children = (
+				04BAD7BB2005C0DB00950195 /* ZSHMagazineListViewController.h */,
+				04BAD7BC2005C0DB00950195 /* ZSHMagazineListViewController.m */,
+				04CC219C1FFF79B200921863 /* ZSHMagazineViewController.h */,
+				04CC219D1FFF79B200921863 /* ZSHMagazineViewController.m */,
+			);
+			name = "杂志";
+			sourceTree = "<group>";
+		};
+		04CC545B201EBBAF00917089 /* CountdownLabel */ = {
+			isa = PBXGroup;
+			children = (
+				04CC545C201EBBAF00917089 /* ZSHCountdowView.h */,
+				04CC545D201EBBAF00917089 /* ZSHCountdowView.m */,
+			);
+			path = CountdownLabel;
+			sourceTree = "<group>";
+		};
 		18063C511FC9035F000F5A00 /* 私人定制 */ = {
 			isa = PBXGroup;
 			children = (
@@ -1660,6 +2375,7 @@
 		182287171FB4555700CA5B10 /* 我的 */ = {
 			isa = PBXGroup;
 			children = (
+				04936D942027FB8E00E069BE /* 签到 */,
 				1869C93B1FD94F97002F2E37 /* 微博 */,
 				185DE2F41FBFC2D200720CAF /* 小视频录制 */,
 				185DDCCD1FBEDB47004D4688 /* 分享 */,
@@ -1775,6 +2491,8 @@
 			children = (
 				183C65741FC037B60081DCFF /* ZSHToplineViewController.h */,
 				183C65751FC037B60081DCFF /* ZSHToplineViewController.m */,
+				0453B0BA202C48ED00791A75 /* ZSHTopLineMoreTypeViewController.h */,
+				0453B0BB202C48ED00791A75 /* ZSHTopLineMoreTypeViewController.m */,
 			);
 			name = "头条";
 			sourceTree = "<group>";
@@ -1782,8 +2500,12 @@
 		183C65771FC03B230081DCFF /* 头条 */ = {
 			isa = PBXGroup;
 			children = (
+				0453B0B3202C427A00791A75 /* ChannelCell.h */,
+				0453B0B4202C427A00791A75 /* ChannelCell.m */,
 				183C65781FC03B400081DCFF /* ZSHToplineCell.h */,
 				183C65791FC03B400081DCFF /* ZSHToplineCell.m */,
+				041853312005FB3D000E0D09 /* ZSHToplineTopView.h */,
+				041853322005FB3D000E0D09 /* ZSHToplineTopView.m */,
 			);
 			name = "头条";
 			sourceTree = "<group>";
@@ -1945,8 +2667,6 @@
 		185DE2F81FBFD15B00720CAF /* 开启直播 */ = {
 			isa = PBXGroup;
 			children = (
-				185DE2F91FBFD18D00720CAF /* ZSHBeginShowViewController.h */,
-				185DE2FA1FBFD18D00720CAF /* ZSHBeginShowViewController.m */,
 				185DE2FC1FBFDEFB00720CAF /* ZSHFinishShowViewController.h */,
 				185DE2FD1FBFDEFB00720CAF /* ZSHFinishShowViewController.m */,
 			);
@@ -1978,6 +2698,7 @@
 				1869C93D1FD94FBA002F2E37 /* ZSHWeiboViewController.m */,
 				18762B241FE1088300E1857F /* ZSHReviewViewController.h */,
 				18762B251FE1088300E1857F /* ZSHReviewViewController.m */,
+				FE2CD0911F9833DE00E9E519 /* ZSHAddressListCell.h */,
 				18762B271FE108E100E1857F /* ZSHWeiboWriteController.h */,
 				18762B281FE108E100E1857F /* ZSHWeiboWriteController.m */,
 			);
@@ -2102,7 +2823,6 @@
 			children = (
 				A51AB222BA7ACF202B5B1330 /* Pods-ZSHApp.debug.xcconfig */,
 				14ED69325E9FD4BDB1CA95F8 /* Pods-ZSHApp.release.xcconfig */,
-				69E19497903A5F2006FD9EB9 /* Pods-ZSHApp.add hoc.xcconfig */,
 				5F3CF9E14F586BC7355E62B0 /* Pods-ZSHApp.adhoc.xcconfig */,
 			);
 			name = Pods;
@@ -2326,6 +3046,7 @@
 		FE291EAD1F8CAEDC00D4BBE7 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				04CC219B1FFF793800921863 /* 杂志 */,
 				FEC00D211FD28FB00061A705 /* Bar(酒吧) */,
 				FEA018D01FCBFAB600989FB2 /* Comment(评论) */,
 				FE0ED7D81FC2CB34008299C5 /* 城市 */,
@@ -2340,6 +3061,8 @@
 				FE9CC3E01FA0A44200285475 /* Hotel(酒店) */,
 				FE2BB0C01F8E168B000D5800 /* ZSHHomeViewController.h */,
 				FE2BB0C11F8E168B000D5800 /* ZSHHomeViewController.m */,
+				042DC4972004D12A00AF2995 /* ZSHRecommendView.h */,
+				042DC4982004D12A00AF2995 /* ZSHRecommendView.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -2347,6 +3070,7 @@
 		FE291EAF1F8CAEDC00D4BBE7 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				0453B0B6202C42B200791A75 /* 头条 */,
 				183218061FD69A3F00320022 /* 火车票 */,
 				FEA018CC1FCBF64000989FB2 /* Comment(评论) */,
 				FE9E6D711FC4274300F7AD95 /* Home */,
@@ -2360,6 +3084,7 @@
 		FE291EB01F8CAEDC00D4BBE7 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				04BAD7BE2005EE6000950195 /* 杂志 */,
 				FEB099131FD127DD00E8F03D /* More */,
 				FEA018D11FCBFB0000989FB2 /* Comment */,
 				FE9E6D6D1FC4227600F7AD95 /* HomeCell */,
@@ -2389,6 +3114,8 @@
 		FE291EB11F8CAEDC00D4BBE7 /* Live(尚播) */ = {
 			isa = PBXGroup;
 			children = (
+				043F2DA0200DFF3500CE18DE /* AlivcLive */,
+				FE24DA571FD9317900965DC8 /* Music（音乐） */,
 				1869C9301FD8DF66002F2E37 /* Logic */,
 				FE291EB21F8CAEDC00D4BBE7 /* Controller */,
 				FE291EB41F8CAEDC00D4BBE7 /* Model */,
@@ -2404,8 +3131,6 @@
 				182287171FB4555700CA5B10 /* 我的 */,
 				FE1F76201F8F738700C45B83 /* ZSHLiveTabBarController.h */,
 				FE1F76211F8F738700C45B83 /* ZSHLiveTabBarController.m */,
-				FEDF29281FB6DA3000CD5756 /* ZSHLiveRoomViewController.h */,
-				FEDF29291FB6DA3000CD5756 /* ZSHLiveRoomViewController.m */,
 				FE1F76231F8F788100C45B83 /* ZSHTitleContentViewController.h */,
 				FE1F76241F8F788100C45B83 /* ZSHTitleContentViewController.m */,
 				FE1F76261F8F795C00C45B83 /* ZSHCustomWaterFlowLayout.h */,
@@ -2435,6 +3160,8 @@
 				1869C9401FD952C2002F2E37 /* ZSHWeiboListModel.m */,
 				1812E9FE1FDA678C0056C170 /* ZSHCommentListModel.h */,
 				1812E9FF1FDA678C0056C170 /* ZSHCommentListModel.m */,
+				04315E801FF5E9ED006C6BC8 /* ZSHWeiboTopicModel.h */,
+				04315E811FF5E9ED006C6BC8 /* ZSHWeiboTopicModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2454,6 +3181,8 @@
 				1822871C1FB45CE800CA5B10 /* ZSHLiveMineHeadView.m */,
 				185BB9BC1FB5762E007A96FF /* ZSHLiveDayListCell.h */,
 				185BB9BD1FB5762E007A96FF /* ZSHLiveDayListCell.m */,
+				0418532B2005E688000E0D09 /* ZSHFindTopView.h */,
+				0418532C2005E688000E0D09 /* ZSHFindTopView.m */,
 				18F9024A1FB6CFDF0044967F /* ZSHFollowCell.h */,
 				18F9024B1FB6CFDF0044967F /* ZSHFollowCell.m */,
 				18F902511FB6DED20044967F /* ZSHChargeRecCell.h */,
@@ -2486,6 +3215,8 @@
 		FE291EB71F8CAEDC00D4BBE7 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				04A6904220089F3100C583E6 /* 我要入驻 */,
+				04A6FCC72007135700DDE79E /* Music */,
 				1826CDB11FBAFD0B00A0ECE2 /* ApplyService(申请售后) */,
 				FEAE11201FB41967008DCB3E /* Energy(能量值) */,
 				FE4DB1DD1F9993AD008E12E9 /* 积分 */,
@@ -2501,6 +3232,8 @@
 				18155C011FB402E90060BD9D /* Comment(发表评价) */,
 				FE291EE71F8CCC5900D4BBE7 /* ZSHMineViewController.h */,
 				FE291EE81F8CCC5900D4BBE7 /* ZSHMineViewController.m */,
+				049A6566202C2D8000EF1145 /* ZSHMineCouponViewController.h */,
+				049A6567202C2D8000EF1145 /* ZSHMineCouponViewController.m */,
 				FEDF29251FB6D1C100CD5756 /* ZSHCoinViewController.h */,
 				FEDF29261FB6D1C100CD5756 /* ZSHCoinViewController.m */,
 			);
@@ -2512,6 +3245,8 @@
 			children = (
 				181AD3121FCCF1EE0015D004 /* ZSHMineLogic.h */,
 				181AD3131FCCF1EE0015D004 /* ZSHMineLogic.m */,
+				042E091220285FB30037BB4B /* ZSHEntryLogic.h */,
+				042E091320285FB40037BB4B /* ZSHEntryLogic.m */,
 			);
 			path = Logic;
 			sourceTree = "<group>";
@@ -2537,6 +3272,8 @@
 		FE291EBA1F8CAEDC00D4BBE7 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				04A6904620089FDA00C583E6 /* 我要入驻 */,
+				04A6FCC82007138D00DDE79E /* Music */,
 				1824F1D51FCFDA87000D805E /* 订单中心 */,
 				FEDF29211FB6CF9200CD5756 /* Wallet */,
 				FEAE112D1FB4726C008DCB3E /* Energy(能量值) */,
@@ -2571,6 +3308,11 @@
 		FE291EBC1F8CAEDC00D4BBE7 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				04A6903A20084DB400C583E6 /* 会员特权 */,
+				04A69030200845C200C583E6 /* 时尚圈 */,
+				049823C020078D110080626D /* 旗舰店 */,
+				049823B2200748640080626D /* 专柜店 */,
+				044A2F432004BBF000B05CE7 /* 分享赚钱 */,
 				FEA1058D1F9B49B3008652D6 /* 发现 */,
 				FE0F9D8B1F948717004F8D2A /* 购物车 */,
 				18F799DA1FB30AA5004CDB0E /* 私人订制 */,
@@ -2604,6 +3346,10 @@
 		FE291EBF1F8CAEDC00D4BBE7 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				04A69041200853F600C583E6 /* 会员特权 */,
+				04A690372008461F00C583E6 /* 时尚圈 */,
+				049823C420078E210080626D /* 旗舰店 */,
+				049823B620074E990080626D /* 专柜店 */,
 				FE8FD0961FAE0D80005F1184 /* 炫购收藏 */,
 				FE9CC3D61FA06ECF00285475 /* 积分 */,
 				FEA1058E1F9B49DA008652D6 /* 发现 */,
@@ -2612,6 +3358,8 @@
 				FE1377951F977AC3003C8DFB /* ZSHPickView.m */,
 				FE7AF2331FA30A0400E1A648 /* ZSHBottomBlurPopView.h */,
 				FE7AF2341FA30A0400E1A648 /* ZSHBottomBlurPopView.m */,
+				0450A60B20036BC100D7B2D4 /* ZSHHomeSubListCell.h */,
+				0450A60C20036BC100D7B2D4 /* ZSHHomeSubListCell.m */,
 				FE7AF2301FA307F400E1A648 /* ZSHTopLineView.h */,
 				FE7AF2311FA307F400E1A648 /* ZSHTopLineView.m */,
 				FE1F761A1F8F191300C45B83 /* ZSHGoodsListView.h */,
@@ -2624,7 +3372,6 @@
 				FEB3058A1F95F9EB00E4A061 /* ZSHGoodsMineGridCell.m */,
 				FE1377731F972745003C8DFB /* ZSHOrderCell.h */,
 				FE1377741F972745003C8DFB /* ZSHOrderCell.m */,
-				FE2CD0911F9833DE00E9E519 /* ZSHAddressListCell.h */,
 				FE2CD0921F9833DE00E9E519 /* ZSHAddressListCell.m */,
 			);
 			path = View;
@@ -2726,7 +3473,6 @@
 			isa = PBXGroup;
 			children = (
 				FE3E006A1FDA743200A0F7CA /* Tools */,
-				FE3E006F1FDA743200A0F7CA /* Image */,
 				FE3E007C1FDA743200A0F7CA /* Controller */,
 				FE3E00851FDA743200A0F7CA /* View */,
 			);
@@ -2742,19 +3488,6 @@
 				FE3E006E1FDA743200A0F7CA /* NSString+time.m */,
 			);
 			path = Tools;
-			sourceTree = "<group>";
-		};
-		FE3E006F1FDA743200A0F7CA /* Image */ = {
-			isa = PBXGroup;
-			children = (
-				FE3E00721FDA743200A0F7CA /* MusicPlayer_顺序播放@2x.png */,
-				FE3E00731FDA743200A0F7CA /* MusicPlayer_下载@2x.png */,
-				FE3E00741FDA743200A0F7CA /* MusicPlayer_随机播放@2x.png */,
-				FE3E00751FDA743200A0F7CA /* MusicPlayer_后退@2x.png */,
-				FE3E00781FDA743200A0F7CA /* MusicPlayer_单曲循环@2x.png */,
-				FE3E007B1FDA743200A0F7CA /* 音乐_播放器_默认唱片头像@2x.png */,
-			);
-			path = Image;
 			sourceTree = "<group>";
 		};
 		FE3E007C1FDA743200A0F7CA /* Controller */ = {
@@ -2877,6 +3610,8 @@
 				FEBD7C9C1FA70F6500CE2BA6 /* ZSHGoodsChartCell.m */,
 				FEA105711F9B2480008652D6 /* ZSHGoodsSortCell.h */,
 				FEA105721F9B2480008652D6 /* ZSHGoodsSortCell.m */,
+				043587571FF2564F00969DD7 /* ZSHGoodsCollectionViewCell.h */,
+				043587581FF2564F00969DD7 /* ZSHGoodsCollectionViewCell.m */,
 				FE4DB1E31F99970D008E12E9 /* ZSHGoodsCell.h */,
 				FE4DB1E41F99970D008E12E9 /* ZSHGoodsCell.m */,
 				FE7502B51F99D76A002F2708 /* ZSHGoodsSegmentView.h */,
@@ -2973,6 +3708,8 @@
 				FE0ED82A1FC34703008299C5 /* StepSlider.m */,
 				FE4E4B331FC025C500E3B2F4 /* YHSlider.h */,
 				FE4E4B341FC025C500E3B2F4 /* YHSlider.m */,
+				04DD819C2018AEEB00B1E3CE /* ZSHCustomSlider.h */,
+				04DD819D2018AEEB00B1E3CE /* ZSHCustomSlider.m */,
 			);
 			path = Slider;
 			sourceTree = "<group>";
@@ -2980,8 +3717,6 @@
 		FE4E4B371FC03C1D00E3B2F4 /* SearchVC */ = {
 			isa = PBXGroup;
 			children = (
-				FE4E4B381FC03C1D00E3B2F4 /* PYSearchSuggestionViewController.h */,
-				FE4E4B391FC03C1D00E3B2F4 /* PYSearchSuggestionViewController.m */,
 				FE4E4B3A1FC03C1D00E3B2F4 /* PYSearchViewController.h */,
 				FE4E4B3B1FC03C1D00E3B2F4 /* PYSearchViewController.m */,
 			);
@@ -3121,7 +3856,6 @@
 		FE5537741F47049D00803128 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				FE24DA571FD9317900965DC8 /* Music（音乐） */,
 				FE291EAC1F8CAEDC00D4BBE7 /* Home(尊尚汇) */,
 				FE291EBB1F8CAEDC00D4BBE7 /* Buy(尊购) */,
 				FE291EB11F8CAEDC00D4BBE7 /* Live(尚播) */,
@@ -3135,6 +3869,7 @@
 		FE5537AA1F47049D00803128 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				04CC545B201EBBAF00917089 /* CountdownLabel */,
 				1846BB3A1FE3B26B001B264B /* SimpleLineChart */,
 				182F57971FDB949A0085BFC6 /* FLAnimatedImage */,
 				182F57771FDB91390085BFC6 /* KNPhotoBrower */,
@@ -3175,9 +3910,10 @@
 		FE5537D01F47049D00803128 /* Supporting Flies */ = {
 			isa = PBXGroup;
 			children = (
-				FE5537D11F47049D00803128 /* Assets.xcassets */,
+				043F2E5C200E1F3600CE18DE /* Info.plist */,
+				043F2E5A200E0CC700CE18DE /* Localizable.strings */,
+				04A69038200847E700C583E6 /* Assets.xcassets */,
 				FE5537D21F47049D00803128 /* LaunchScreen.storyboard */,
-				FE5537D41F47049D00803128 /* Info.plist */,
 				FE5537D51F47049D00803128 /* main.m */,
 			);
 			path = "Supporting Flies";
@@ -3195,6 +3931,7 @@
 		FE5537E91F47049D00803128 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				043F2E4A200E006500CE18DE /* Reachability */,
 				FE5537EA1F47049D00803128 /* AdPage */,
 				FE5537ED1F47049D00803128 /* AES */,
 				FE5537F31F47049D00803128 /* Category */,
@@ -3228,6 +3965,8 @@
 		FE5537F31F47049D00803128 /* Category */ = {
 			isa = PBXGroup;
 			children = (
+				FED0BB4A1FF3763E004B0783 /* NSString+pinyin.h */,
+				FED0BB4B1FF3763E004B0783 /* NSString+pinyin.m */,
 				FE1783B71FDBD2660074A08A /* UIImage+ImageEffects.h */,
 				FE1783B61FDBD2650074A08A /* UIImage+ImageEffects.m */,
 				FEA105791F9B2738008652D6 /* UIView+ZSHExtension.h */,
@@ -3250,6 +3989,8 @@
 				184313481FD4E9E20046B128 /* NSString+unicode.m */,
 				1869C92D1FD78A37002F2E37 /* NSDictionary+Safe.h */,
 				1869C92E1FD78A37002F2E37 /* NSDictionary+Safe.m */,
+				04315E831FF61175006C6BC8 /* UIImage+String.h */,
+				04315E841FF61175006C6BC8 /* UIImage+String.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -3479,6 +4220,8 @@
 			children = (
 				FE443FDD1FB04FF100B7F7A5 /* ZSHMultiInfoViewController.h */,
 				FE443FDE1FB04FF100B7F7A5 /* ZSHMultiInfoViewController.m */,
+				042E0915202861EF0037BB4B /* ZSHMultiInfoViewController+method.h */,
+				042E0916202861EF0037BB4B /* ZSHMultiInfoViewController+method.m */,
 				FE8FD0851FADF4FD005F1184 /* ZSHSettingViewController.h */,
 				FE8FD0861FADF4FD005F1184 /* ZSHSettingViewController.m */,
 				FE8FD0881FADFF17005F1184 /* ZSHUserInfoViewController.h */,
@@ -3677,6 +4420,8 @@
 			children = (
 				FE2CD0971F984B5500E9E519 /* ZSHFindViewController.h */,
 				FE2CD0981F984B5500E9E519 /* ZSHFindViewController.m */,
+				0418532E2005ED97000E0D09 /* ZSHLeftFindViewController.h */,
+				0418532F2005ED97000E0D09 /* ZSHLeftFindViewController.m */,
 			);
 			path = "发现";
 			sourceTree = "<group>";
@@ -3834,8 +4579,8 @@
 		FEBD7CB71FA75FA200CE2BA6 /* Food(美食) */ = {
 			isa = PBXGroup;
 			children = (
-				FEBD7CB81FA75FBC00CE2BA6 /* ZSHFoodCell.h */,
-				FEBD7CB91FA75FBC00CE2BA6 /* ZSHFoodCell.m */,
+				FEBD7CB81FA75FBC00CE2BA6 /* ZSHLeftFindCell.h */,
+				FEBD7CB91FA75FBC00CE2BA6 /* ZSHLeftFindCell.m */,
 			);
 			path = "Food(美食)";
 			sourceTree = "<group>";
@@ -3910,6 +4655,8 @@
 				FEC702B31FB3195000D5BAA1 /* ZSHEntertainmentDisViewController.m */,
 				18C0F3ED1FB43E9F0074605D /* ZSHDetailDemandViewController.h */,
 				18C0F3EE1FB43E9F0074605D /* ZSHDetailDemandViewController.m */,
+				FEC2F64B1FF2942100C24067 /* ZSHTopicViewController.h */,
+				FEC2F64C1FF2942100C24067 /* ZSHTopicViewController.m */,
 			);
 			path = "Entertainment(吃喝玩乐)";
 			sourceTree = "<group>";
@@ -3927,6 +4674,8 @@
 				FEF2B63F1FACBCE5000AEA6E /* ZSHEntertainmentDetailCell.m */,
 				FEDF28F71FB68C1C00CD5756 /* ZSHAgeView.h */,
 				FEDF28F81FB68C1C00CD5756 /* ZSHAgeView.m */,
+				FED0BB441FF33604004B0783 /* ZSHTopicCell.h */,
+				FED0BB451FF33604004B0783 /* ZSHTopicCell.m */,
 			);
 			path = "Entertainment（吃喝玩乐）";
 			sourceTree = "<group>";
@@ -3938,6 +4687,8 @@
 				FEF2B6391FAC5D39000AEA6E /* ZSHEntertainmentModel.m */,
 				1865D8D41FC7CD5A004170F1 /* ZSHEnterDisModel.h */,
 				1865D8D51FC7CD5A004170F1 /* ZSHEnterDisModel.m */,
+				FED0BB471FF374A8004B0783 /* ZSHTopicModel.h */,
+				FED0BB481FF374A8004B0783 /* ZSHTopicModel.m */,
 			);
 			path = "Entertainment(吃喝玩乐)";
 			sourceTree = "<group>";
@@ -4008,6 +4759,7 @@
 				FCE002867A10AABD9CA626C2 /* [CP] Embed Pods Frameworks */,
 				BAD1716792B72D02CEED4423 /* [CP] Copy Pods Resources */,
 				188662431FE9F42D00EA7FA1 /* CopyFiles */,
+				042DD7272009E84900CF8AFB /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -4066,8 +4818,8 @@
 				TargetAttributes = {
 					296F9EB71ECC64CE0063A255 = {
 						CreatedOnToolsVersion = 8.3.2;
-						DevelopmentTeam = 26ZQGX9T79;
-						ProvisioningStyle = Automatic;
+						DevelopmentTeam = 84479DR68T;
+						ProvisioningStyle = Manual;
 					};
 					296F9ED01ECC64CE0063A255 = {
 						CreatedOnToolsVersion = 8.3.2;
@@ -4090,6 +4842,7 @@
 			knownRegions = (
 				en,
 				Base,
+				"zh-Hans",
 			);
 			mainGroup = 296F9EAF1ECC64CE0063A255;
 			productRefGroup = 296F9EB91ECC64CE0063A255 /* Products */;
@@ -4108,50 +4861,77 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				043F2E25200DFF3500CE18DE /* back@3x.png in Resources */,
 				FE2BC8A01FDEAB7A00E98B2B /* QQLrcCell.xib in Resources */,
+				043F2E3F200DFF3500CE18DE /* watermark.png in Resources */,
 				185C6D751FC2C168004EA461 /* cart_default_bg.png in Resources */,
+				043F2E3E200DFF3500CE18DE /* volume_on@3x.png in Resources */,
+				04A69039200847E900C583E6 /* Assets.xcassets in Resources */,
+				043F2E2C200DFF3500CE18DE /* Line@3x.png in Resources */,
 				FEA1059B1F9B5D06008652D6 /* ZSHSpeedy.h in Resources */,
+				043F2E38200DFF3500CE18DE /* record_beauty@3x.png in Resources */,
+				043F2E1A200DFF3500CE18DE /* AlivcLiveConfigViewController.xib in Resources */,
 				FEA1059C1F9B5D06008652D6 /* ZSHSpeedy.m in Resources */,
 				FEA1058C1F9B43B8008652D6 /* ClassiftyGoods02.plist in Resources */,
+				043F2E28200DFF3500CE18DE /* camera_flash_on@2x.png in Resources */,
 				FE4BC2B21FE21A3100007C4C /* CityData.plist in Resources */,
-				FE3E00921FDA743200A0F7CA /* MusicPlayer_单曲循环@2x.png in Resources */,
 				FEA1058A1F9B438F008652D6 /* ClassiftyGoods03.plist in Resources */,
+				043F2E40200DFF3500CE18DE /* watermark_small.png in Resources */,
 				FEA105841F9B2B4B008652D6 /* ClassiftyGoods01.plist in Resources */,
+				043F2E3A200DFF3500CE18DE /* record_beauty_on@3x.png in Resources */,
 				FEA105851F9B2B4B008652D6 /* ClassifyTitles.plist in Resources */,
+				043F2E34200DFF3500CE18DE /* music_loop_simple_line@3x.png in Resources */,
 				185C6D7E1FC2C2D2004EA461 /* ShopCarNew.plist in Resources */,
 				185C6D711FC2C168004EA461 /* cart_addBtn_highlight@2x.png in Resources */,
 				FE3E00981FDA743200A0F7CA /* AudioPlayerController.xib in Resources */,
 				1843133F1FD4E2F60046B128 /* citys.plist in Resources */,
 				185C6D731FC2C168004EA461 /* cart_cutBtn_highlight@2x.png in Resources */,
+				043F2E21200DFF3500CE18DE /* 版权信息.txt in Resources */,
+				043F2E3B200DFF3500CE18DE /* volume_off@2x.png in Resources */,
+				043F2E58200E0CC700CE18DE /* Localizable.strings in Resources */,
 				FE7502AD1F99CA80002F2708 /* YouLikeGoods.plist in Resources */,
+				043F2E31200DFF3500CE18DE /* music_check@2x.png in Resources */,
+				043F2E35200DFF3500CE18DE /* QR@2x.png in Resources */,
 				FE0F9DC01F94ACD8004F8D2A /* cellData.plist in Resources */,
 				FE5538341F47049D00803128 /* MBHUD_Warn@3x.png in Resources */,
 				1816F5241F566F320060C4BE /* UMSocialSDKPromptResources.bundle in Resources */,
 				FE5538321F47049D00803128 /* MBHUD_Success@3x.png in Resources */,
+				043F2E24200DFF3500CE18DE /* back@2x.png in Resources */,
+				043F2E2F200DFF3500CE18DE /* music_button@2x.png in Resources */,
+				043F2E27200DFF3500CE18DE /* camera_flash_close@3x.png in Resources */,
+				043F2E39200DFF3500CE18DE /* record_beauty_on@2x.png in Resources */,
 				FE55382D1F47049D00803128 /* MBHUD_Error@2x.png in Resources */,
+				043F2E5D200E1F3600CE18DE /* Info.plist in Resources */,
 				FE55382F1F47049D00803128 /* MBHUD_Info@2x.png in Resources */,
 				FE55386B1F4704B800803128 /* Info.plist in Resources */,
 				FE5538301F47049D00803128 /* MBHUD_Info@3x.png in Resources */,
+				043F2E2B200DFF3500CE18DE /* Line@2x.png in Resources */,
+				043F2E33200DFF3500CE18DE /* music_loop_simple_line@2x.png in Resources */,
 				185C6D721FC2C168004EA461 /* cart_addBtn_nomal@2x.png in Resources */,
+				043F2E2A200DFF3500CE18DE /* camera_id@2x.png in Resources */,
+				043F2E3D200DFF3500CE18DE /* volume_on@2x.png in Resources */,
+				043F2E37200DFF3500CE18DE /* record_beauty@2x.png in Resources */,
 				1816F5261F566F320060C4BE /* UMSocialSDKResources.bundle in Resources */,
 				FE5538331F47049D00803128 /* MBHUD_Warn@2x.png in Resources */,
+				043F2E2D200DFF3500CE18DE /* Axol.mp3 in Resources */,
+				043F2E30200DFF3500CE18DE /* music_button@3x.png in Resources */,
 				FE55382E1F47049D00803128 /* MBHUD_Error@3x.png in Resources */,
 				182F578F1FDB91390085BFC6 /* KNPhotoBrower.bundle in Resources */,
 				FE5538311F47049D00803128 /* MBHUD_Success@2x.png in Resources */,
-				FE5538511F47049D00803128 /* Info.plist in Resources */,
-				FE3E008F1FDA743200A0F7CA /* MusicPlayer_后退@2x.png in Resources */,
-				FE3E008E1FDA743200A0F7CA /* MusicPlayer_随机播放@2x.png in Resources */,
-				FE3E008D1FDA743200A0F7CA /* MusicPlayer_下载@2x.png in Resources */,
+				043F2E3C200DFF3500CE18DE /* volume_off@3x.png in Resources */,
+				043F2E29200DFF3500CE18DE /* camera_flash_on@3x.png in Resources */,
 				185C6D771FC2C168004EA461 /* cart_unSelect_btn@2x.png in Resources */,
 				185C6D761FC2C168004EA461 /* cart_selected_btn@2x.png in Resources */,
-				FE3E00951FDA743200A0F7CA /* 音乐_播放器_默认唱片头像@2x.png in Resources */,
+				043F2E36200DFF3500CE18DE /* QR@3x.png in Resources */,
+				043F2E1C200DFF3500CE18DE /* AlivcLiveViewController.xib in Resources */,
 				185C6D701FC2C168004EA461 /* back_button@2x.png in Resources */,
 				FE3E009F1FDA8CD300A0F7CA /* musicPaper.json in Resources */,
 				FE5538501F47049D00803128 /* LaunchScreen.storyboard in Resources */,
+				043F2E32200DFF3500CE18DE /* music_check@3x.png in Resources */,
 				18177E8F1FD29C7500213B3B /* area.plist in Resources */,
-				FE3E008C1FDA743200A0F7CA /* MusicPlayer_顺序播放@2x.png in Resources */,
-				FE55384F1F47049D00803128 /* Assets.xcassets in Resources */,
+				043F2E2E200DFF3500CE18DE /* Pas de Deux.mp3 in Resources */,
 				185C6D741FC2C168004EA461 /* cart_cutBtn_nomal@2x.png in Resources */,
+				043F2E26200DFF3500CE18DE /* camera_flash_close@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4172,6 +4952,20 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		042DD7272009E84900CF8AFB /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [ \"$CONFIGURATION\" != \"Debug\" ]\nthen\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"$INFOPLIST_FILE\")\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"$INFOPLIST_FILE\"\nfi";
+			showEnvVarsInLog = 0;
+		};
 		BAD1716792B72D02CEED4423 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -4179,6 +4973,9 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-ZSHApp/Pods-ZSHApp-resources.sh",
+				"${PODS_ROOT}/AlivcLivePusherWithPlayer/AlivcLibFaceResource.bundle",
+				"${PODS_ROOT}/AliyunPlayer_iOS/AliyunImageSource.bundle",
+				"${PODS_ROOT}/AliyunPlayer_iOS/AliyunLanguageSource.bundle",
 				"${PODS_ROOT}/IQKeyboardManager/IQKeyboardManager/Resources/IQKeyboardManager.bundle",
 				"${PODS_ROOT}/MJRefresh/MJRefresh/MJRefresh.bundle",
 				"${PODS_ROOT}/NIMSDK/NIMAVChat/Resources/NMCVideoFilter.bundle",
@@ -4217,9 +5014,20 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-ZSHApp/Pods-ZSHApp-frameworks.sh",
+				"${PODS_ROOT}/AlivcLivePusherWithPlayer/AlivcLivePusher.framework",
+				"${PODS_ROOT}/AlivcLivePusherWithPlayer/AlivcLibRtmp.framework",
+				"${PODS_ROOT}/AliyunPlayer_iOS/AliyunVodPlayerViewSDK.framework",
+				"${PODS_ROOT}/AliyunPlayer_iOS/AliyunPlayerSDK.framework",
+				"${PODS_ROOT}/AliyunPlayer_iOS/AliyunVodPlayerSDK.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlivcLivePusher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlivcLibRtmp.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AliyunVodPlayerViewSDK.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AliyunPlayerSDK.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AliyunVodPlayerSDK.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -4234,22 +5042,29 @@
 			buildActionMask = 2147483647;
 			files = (
 				18063C5F1FC955D1000F5A00 /* LxGridViewFlowLayout.m in Sources */,
+				043F2E14200DFF3500CE18DE /* AliyunPlaySDKListsCollectionViewCell.m in Sources */,
 				FE3005F31FC65B0400A801C9 /* ZSHFoodLogic.m in Sources */,
 				185BB9AB1FB53BC6007A96FF /* ZSHLiveUserLevelViewController.m in Sources */,
 				FEA018D41FCBFB1700989FB2 /* ZSHShopCommentCell.m in Sources */,
 				182287161FB44FE600CA5B10 /* XXTextView.m in Sources */,
+				04315E851FF61175006C6BC8 /* UIImage+String.m in Sources */,
+				043F2E12200DFF3500CE18DE /* DownloadViewController.m in Sources */,
+				049823BF20076BCD0080626D /* ZSHCabinetHeadReusableView.m in Sources */,
 				1846BB491FE3B282001B264B /* BEMSimpleLineGraphView.m in Sources */,
 				FEBD7C9D1FA70F6500CE2BA6 /* ZSHGoodsChartCell.m in Sources */,
 				FEDF28F91FB68C1C00CD5756 /* ZSHAgeView.m in Sources */,
 				185C6D8D1FC2D98A004EA461 /* LZShopModel.m in Sources */,
 				FE9CC3D11FA031F600285475 /* FXBlurView.h in Sources */,
 				FE9CC3D21FA031F600285475 /* FXBlurView.m in Sources */,
+				FED0BB491FF374A8004B0783 /* ZSHTopicModel.m in Sources */,
 				FE7CA9D51F9D8DAC00A2B15D /* ZSHGoodsDetailShufflingHeadView.h in Sources */,
 				FEE6AA331FCDC2E8001B5528 /* ZSHGuideLogic.m in Sources */,
 				FEA1057B1F9B274E008652D6 /* UIView+ZSHExtension.h in Sources */,
 				185BB9C61FB58DD6007A96FF /* ZSHLiveTaskCenterCell.m in Sources */,
+				04A6FCCE200756F800DDE79E /* ZSHRadioScrollCell.m in Sources */,
 				FE940B001FEB9C6D002D03EB /* ZegoSettings.m in Sources */,
 				185BB9C21FB5860E007A96FF /* ZSHLiveTaskCenterViewController.m in Sources */,
+				04BAD7BD2005C0DB00950195 /* ZSHMagazineListViewController.m in Sources */,
 				FE3E009A1FDA743200A0F7CA /* RotatingView.m in Sources */,
 				FE7502C11F9A11DE002F2708 /* ZSHSearchBarView.m in Sources */,
 				1826CDB41FBAFD3D00A0ECE2 /* ZSHApplyServiceViewController.m in Sources */,
@@ -4260,11 +5075,13 @@
 				FEDF29271FB6D1C100CD5756 /* ZSHCoinViewController.m in Sources */,
 				1843134B1FD4E9E20046B128 /* NSString+unicode.m in Sources */,
 				FE8FD08A1FADFF17005F1184 /* ZSHUserInfoViewController.m in Sources */,
+				047BC20F20216376007F4055 /* ZSHLiveGiftView.m in Sources */,
+				043F2E10200DFF3500CE18DE /* AddDownloadView.m in Sources */,
 				181AD3221FCD33C30015D004 /* ZSHGoodOrderModel.m in Sources */,
 				FE9CC3D51FA05D2200285475 /* ZSHOrderDetailViewController.m in Sources */,
 				182F578E1FDB91390085BFC6 /* KNActionSheetView.m in Sources */,
 				1846BB461FE3B282001B264B /* BEMCircle.m in Sources */,
-				FEBD7CBA1FA75FBC00CE2BA6 /* ZSHFoodCell.m in Sources */,
+				FEBD7CBA1FA75FBC00CE2BA6 /* ZSHLeftFindCell.m in Sources */,
 				FEA105811F9B292B008652D6 /* ZSHBrandsSortHeadView.m in Sources */,
 				FEB099161FD127F300E8F03D /* ZSHMoreListCell.m in Sources */,
 				FEA018BF1FCBB5E800989FB2 /* ZSHFoodDetailViewController.m in Sources */,
@@ -4275,9 +5092,10 @@
 				182F57941FDB91390085BFC6 /* KNProgressHUD.m in Sources */,
 				1822871A1FB4559300CA5B10 /* ZSHLiveMineViewController.m in Sources */,
 				FE2CD0991F984B5500E9E519 /* ZSHFindViewController.m in Sources */,
+				043F2E13200DFF3500CE18DE /* AliyunPlaySDKListsAutoViewController.m in Sources */,
 				FE8FD0921FAE0997005F1184 /* ZSHServiceCenterViewController.m in Sources */,
 				185DE2F71FBFC31800720CAF /* ZSHVideoRecViewController.m in Sources */,
-				185DE2FB1FBFD18D00720CAF /* ZSHBeginShowViewController.m in Sources */,
+				04CC219E1FFF79B200921863 /* ZSHMagazineViewController.m in Sources */,
 				FE24DA731FD9605100965DC8 /* ZSHPlayListHeadView.m in Sources */,
 				FE5ED9A81FA47968003FB2BA /* ZSHHotelCalendarCell.m in Sources */,
 				FEBD7C961FA6CCEC00CE2BA6 /* ZSHHotelPayHeadCell.m in Sources */,
@@ -4290,9 +5108,11 @@
 				FEA018CB1FCBF4C700989FB2 /* ZSHShopCommentLogic.m in Sources */,
 				FEF416061FAB74DF00137F0A /* ZSHAirTicketDetailHeadView.m in Sources */,
 				FE4DB1E11F99965D008E12E9 /* ZSHGoodsTypeViewController.m in Sources */,
+				042E091420285FB40037BB4B /* ZSHEntryLogic.m in Sources */,
 				FEF415FA1FAB5A5F00137F0A /* ZSHMoreTicketViewController.m in Sources */,
 				FEA1059A1F9B5CEF008652D6 /* ZSHSpeedy.m in Sources */,
 				FEA105641F9B2008008652D6 /* ZSHGoodsViewController.m in Sources */,
+				043F2E19200DFF3500CE18DE /* AlivcLiveConfigViewController.m in Sources */,
 				182A70281FE27817000BA79B /* ZSHCardNumModel.m in Sources */,
 				185BB9AE1FB53BF6007A96FF /* ZSHLivePlayerLevelViewController.m in Sources */,
 				FEADBD2F1FBEBBC00065B94B /* ZSHPhoneNumListView.m in Sources */,
@@ -4301,6 +5121,7 @@
 				FE0ED7DE1FC2CB7D008299C5 /* ZSHCityViewController.m in Sources */,
 				1811058E1FBC42600046D229 /* ZSHTrainPassengerCell.m in Sources */,
 				18F9025A1FB6FD890044967F /* ZSHCollectViewController.m in Sources */,
+				043F2E47200DFF3500CE18DE /* AlivcGuidePageView.m in Sources */,
 				184313491FD4E9E20046B128 /* NSArray+Log.m in Sources */,
 				185DE2FE1FBFDEFB00720CAF /* ZSHFinishShowViewController.m in Sources */,
 				FEA30A531F9F236100AB0FFC /* ZSHConfirmOrderViewController.m in Sources */,
@@ -4308,6 +5129,7 @@
 				1811057D1FBC12900046D229 /* ZSHDiscussViewController.m in Sources */,
 				FE9E6D741FC4275A00F7AD95 /* ZSHHomeMainModel.m in Sources */,
 				18F799E11FB313B8004CDB0E /* ZSHTailorDetailViewController.m in Sources */,
+				04A690362008461500C583E6 /* ZSHFashionViewController.m in Sources */,
 				FE24DA6A1FD94DDF00965DC8 /* ZSHMusicLibraryCell.m in Sources */,
 				FE4DB1E51F99970D008E12E9 /* ZSHGoodsCell.m in Sources */,
 				FE4E4B361FC025C500E3B2F4 /* YHSlider.m in Sources */,
@@ -4315,6 +5137,7 @@
 				1813E2761FBD43D700624405 /* ZSHAddPassengerViewController.m in Sources */,
 				181AD31B1FCD30650015D004 /* ZSHGoodsMineViewController.m in Sources */,
 				185B75D81FC51B16008CBD2B /* TYCyclePagerTransformLayout.m in Sources */,
+				043F2E0D200DFF3500CE18DE /* AdvancedPlayerViewController.m in Sources */,
 				FEA105671F9B2051008652D6 /* ZSHClassGoodsModel.m in Sources */,
 				FEA30A591F9F309400AB0FFC /* ZSHGoodsDetailCell.m in Sources */,
 				FEF415FD1FAB5AC700137F0A /* ZSHPlaneTicketListCell.m in Sources */,
@@ -4324,6 +5147,7 @@
 				18063C541FC90379000F5A00 /* ZSHPersonalModel.m in Sources */,
 				FE4BC2B41FE21A3100007C4C /* GYZCity.m in Sources */,
 				181AD31E1FCD31C30015D004 /* ZSHOrderSubViewController.m in Sources */,
+				043F2E1F200DFF3500CE18DE /* AlivcQRCodeViewController.m in Sources */,
 				FE2CD0B61F98F61A00E9E519 /* ZSHIntegralExchangeCell.m in Sources */,
 				FE443FD01FAFF60200B7F7A5 /* ZSHTicketTypeCell.m in Sources */,
 				FE4E4B3D1FC03C1D00E3B2F4 /* PYSearchViewController.m in Sources */,
@@ -4331,7 +5155,6 @@
 				FEA018C81FCBF35500989FB2 /* ZSHShopCommentViewController.m in Sources */,
 				FE6818A11FE0D3DF00AFB511 /* ZSHFootPlayMusicView.m in Sources */,
 				FE8FD0731FADA833005F1184 /* ZSHMemberCenterViewController.m in Sources */,
-				FE4E4B3C1FC03C1D00E3B2F4 /* PYSearchSuggestionViewController.m in Sources */,
 				FE7F00131F9203430006E9A3 /* ZSHBaseTableViewCellModel.m in Sources */,
 				185C6D871FC2D97E004EA461 /* LZTableHeaderView.m in Sources */,
 				FEEF46F51FBAD2C90086A3C4 /* ZSHNearHeadView.m in Sources */,
@@ -4354,12 +5177,16 @@
 				185BB9BE1FB5762E007A96FF /* ZSHLiveDayListCell.m in Sources */,
 				FE4BC2B31FE21A3100007C4C /* GYZCityHeaderView.m in Sources */,
 				FE2CD0A51F98841400E9E519 /* ZSHLuckCardView.m in Sources */,
+				043F2E16200DFF3500CE18DE /* AliyunPlaySDKDemoFullScreenScrollViewController.m in Sources */,
 				FE7F00171F9203430006E9A3 /* ZSHBaseTableViewSectionModel.m in Sources */,
 				182F57911FDB91390085BFC6 /* KNPhotoBrowerCell.m in Sources */,
+				0453B0B5202C427A00791A75 /* ChannelCell.m in Sources */,
 				FEA483A91F91B96000219CFE /* RXLSideSlipViewController.h in Sources */,
+				043F2E1D200DFF3500CE18DE /* AlivcCopyrightInfoViewController.m in Sources */,
 				18F902491FB6CF270044967F /* ZSHFollowViewController.m in Sources */,
 				183C657A1FC03B400081DCFF /* ZSHToplineCell.m in Sources */,
 				1824F1D41FCE8E01000D805E /* ZSHBuySearchModel.m in Sources */,
+				04CC545E201EBBAF00917089 /* ZSHCountdowView.m in Sources */,
 				18F902501FB6DE460044967F /* ZSHChargeRecViewController.m in Sources */,
 				FE7CA9EA1F9DD15300A2B15D /* ZSHLiveListModel.m in Sources */,
 				1869C9331FD8DF7C002F2E37 /* ZSHLiveLogic.m in Sources */,
@@ -4372,9 +5199,12 @@
 				FEA483AC1F91B96000219CFE /* UIViewController+RXLSideMenu.m in Sources */,
 				FE3E00621FDA274300A0F7CA /* ZSHMusicRadioViewController.m in Sources */,
 				FEADBD291FBEBBC00065B94B /* ZSHCardCustomizedSecond.m in Sources */,
+				043F2E1E200DFF3500CE18DE /* AlivcNavigationController.m in Sources */,
 				FE1F76351F8F7E1100C45B83 /* LXScollTitleView.h in Sources */,
 				18063C571FC90951000F5A00 /* ZSHPersonalDetailModel.m in Sources */,
+				04A9FE9B2015CA900099D467 /* ZSHAudienceLivePopView.m in Sources */,
 				FEADBD281FBEBBC00065B94B /* ZSHCardCustomizedFirst.m in Sources */,
+				0418532D2005E688000E0D09 /* ZSHFindTopView.m in Sources */,
 				FE8FD0771FADAA9F005F1184 /* ZSHMemberCenterHeadView.m in Sources */,
 				FE24DA761FD96A0100965DC8 /* ZSHMusicPlayListCell.m in Sources */,
 				FE1F76361F8F7E1100C45B83 /* LXScollTitleView.m in Sources */,
@@ -4389,6 +5219,7 @@
 				FE1F76341F8F7DB600C45B83 /* ZSHLiveContentFirstViewController.h in Sources */,
 				182A70251FE24A0D000BA79B /* ZSHCardImgModel.m in Sources */,
 				FEBD7C991FA6F42900CE2BA6 /* ZSHHotelModel.m in Sources */,
+				042DC4992004D12A00AF2995 /* ZSHRecommendView.m in Sources */,
 				FE8FD0831FADE64A005F1184 /* ZSHWalletCenterViewController.m in Sources */,
 				FEA1056D1F9B20A9008652D6 /* ZSHClassSubModel.m in Sources */,
 				FE2CD0931F9833DE00E9E519 /* ZSHAddressListCell.m in Sources */,
@@ -4398,23 +5229,28 @@
 				185C6D901FC2DA5D004EA461 /* JSNummberCount.m in Sources */,
 				FE7CA9E71F9DC59300A2B15D /* ZSHGoodsDetailCountCell.m in Sources */,
 				FEF2B6361FAC4FE2000AEA6E /* ZSHEntertainmentHeadView.m in Sources */,
+				04A69033200845FE00C583E6 /* ZSHFashionCell.m in Sources */,
 				FEC2739D1F8E1D7900A0F91A /* ZSHCycleScrollView.h in Sources */,
 				FEA30A4D1F9F064900AB0FFC /* ZSHLogisticsDetailCell.m in Sources */,
 				185B75DD1FC51D45008CBD2B /* TYCyclePagerViewCell.m in Sources */,
 				FE4B8D241FA9FEC500DE48A1 /* ZSHKTVListCell.m in Sources */,
+				0450A60D20036BC100D7B2D4 /* ZSHHomeSubListCell.m in Sources */,
 				FE4E4B251FBFDC4E00E3B2F4 /* ZSHSearchLiveFirstCell.m in Sources */,
 				FE24DA671FD949C700965DC8 /* ZSHMusicLibraryViewController.m in Sources */,
 				1824F1D11FCE800F000D805E /* ZSHBuySearchResultViewController.m in Sources */,
 				FEADBD311FBEBBC00065B94B /* ZSHSelectCardNumFirstView.m in Sources */,
 				FE1377961F977AC3003C8DFB /* ZSHPickView.m in Sources */,
 				185DDCCC1FBE8CE9004D4688 /* ZSHVideoDetailCell.m in Sources */,
+				043F2E18200DFF3500CE18DE /* AlivcLivePusherViewController.m in Sources */,
 				18C008291FE7B77B00D81B02 /* ZSHGoodCommentModel.m in Sources */,
+				043F2E22200DFF3500CE18DE /* AlivcMusicInfoModel.m in Sources */,
 				FEDF290C1FB69C2800CD5756 /* ZSHGuideViewController.m in Sources */,
 				FEC2739E1F8E1D7900A0F91A /* ZSHCycleScrollView.m in Sources */,
 				186C8F1C1FD0FEC200B6CDB5 /* ZSHHotelOrderModel.m in Sources */,
 				FE9E6D701FC422AC00F7AD95 /* ZSHBaseTitleButtonCell.m in Sources */,
 				183C65761FC037B60081DCFF /* ZSHToplineViewController.m in Sources */,
 				FEC2739C1F8E1D3E00A0F91A /* ZSHHomeViewController.h in Sources */,
+				044A2F462004BBF100B05CE7 /* ZSHMakeMoneyViewController.m in Sources */,
 				FEC2739B1F8E1D1E00A0F91A /* ZSHHomeViewController.m in Sources */,
 				FEC2739A1F8E1D0C00A0F91A /* MainTabBarController.m in Sources */,
 				FEA483B21F91EC6E00219CFE /* ZSHBuyDetailView.m in Sources */,
@@ -4433,16 +5269,20 @@
 				FE3E009D1FDA7C5800A0F7CA /* ZSHRankModel.m in Sources */,
 				FEF415F71FAAF3E000137F0A /* ZSHTicketPlaceCell.m in Sources */,
 				FE5538171F47049D00803128 /* TabBarItem.m in Sources */,
+				04C2B00020231ADA00208D21 /* ZSHLiveGiftPopCell.m in Sources */,
 				FEBD7CB21FA74BBF00CE2BA6 /* ZSHGoodsDetailModel.m in Sources */,
 				FE5538651F47049D00803128 /* OpenUDID.m in Sources */,
 				181AD3251FCD45000015D004 /* ZSHBuyOrderModel.m in Sources */,
 				1874B9661FB99E9700059184 /* ZSHLivePersonInfoView.m in Sources */,
 				FE2555131FD2AB33002B3786 /* ZSHBarDetailViewController.m in Sources */,
+				04315E821FF5E9ED006C6BC8 /* ZSHWeiboTopicModel.m in Sources */,
 				FE1F761C1F8F191300C45B83 /* ZSHGoodsListView.m in Sources */,
 				FEADBD2A1FBEBBC00065B94B /* ZSHCardCustomizedThird.m in Sources */,
+				FED0BB4C1FF3763F004B0783 /* NSString+pinyin.m in Sources */,
 				FEF416001FAB70EB00137F0A /* ZSHAirTicketDetailViewController.m in Sources */,
-				FEDF292A1FB6DA3000CD5756 /* ZSHLiveRoomViewController.m in Sources */,
+				04DD819E2018AEEB00B1E3CE /* ZSHCustomSlider.m in Sources */,
 				FE4DB1ED1F99998B008E12E9 /* ZSHBaseCollectionViewCell.m in Sources */,
+				FED0BB461FF33604004B0783 /* ZSHTopicCell.m in Sources */,
 				FE3683C01FBC02B300220477 /* ZSHCardViewController.m in Sources */,
 				FEADBD261FBEBBC00065B94B /* ZSHCardBtnListView.m in Sources */,
 				FE50245E1F8A2413005F0FF7 /* ZSHBaseLogic.m in Sources */,
@@ -4464,20 +5304,26 @@
 				FE3E00971FDA743200A0F7CA /* AudioPlayerController.m in Sources */,
 				185DE3081FC01E6000720CAF /* ADPlayer.m in Sources */,
 				FE7527971F7AA48C00858561 /* DSectionIndexView.m in Sources */,
+				043F2E4D200E006500CE18DE /* Reachability.m in Sources */,
 				182F57A01FDB949A0085BFC6 /* FLAnimatedImageView.m in Sources */,
 				FE7527961F7AA48C00858561 /* DSectionIndexItemView.m in Sources */,
 				182F57931FDB91390085BFC6 /* KNPhotoBrowerNumView.m in Sources */,
 				FE5538661F47049D00803128 /* YYFPSLabel.m in Sources */,
 				FE4BC2BA1FE21A6100007C4C /* HCLocationManager.m in Sources */,
 				FE55385B1F47049D00803128 /* AdPageView.m in Sources */,
+				04ED27382009AAC7000B1541 /* ZSHUploadIDCardController.m in Sources */,
 				FEBD7CBE1FA7608200CE2BA6 /* ZSHFoodModel.m in Sources */,
+				0453B0BC202C48ED00791A75 /* ZSHTopLineMoreTypeViewController.m in Sources */,
+				049823B920074F180080626D /* ZSHCabinetCollectionCell.m in Sources */,
 				180C95CE1F57E10200CE570C /* UIImage+BlurGlass.m in Sources */,
 				FEA1056A1F9B208A008652D6 /* ZSHClassMainModel.m in Sources */,
 				FEDF292D1FB6F24A00CD5756 /* ZSHLiveProfitViewController.m in Sources */,
+				043F2E45200DFF3500CE18DE /* AlivcPublisherView.m in Sources */,
 				FEADBD2C1FBEBBC00065B94B /* ZSHCardQuotaView.m in Sources */,
 				FE1F76221F8F738700C45B83 /* ZSHLiveTabBarController.m in Sources */,
 				FEBD7CA31FA716AC00CE2BA6 /* ZSHGoodsCommentCell.m in Sources */,
 				FE291EF31F8CCD2200D4BBE7 /* ZSHLoginViewController.m in Sources */,
+				041853302005ED97000E0D09 /* ZSHLeftFindViewController.m in Sources */,
 				FEF2B63A1FAC5D39000AEA6E /* ZSHEntertainmentModel.m in Sources */,
 				FED308981FA414D900CD442B /* ZSHHotelDetailDeviceCell.m in Sources */,
 				181AD3171FCCF3C30015D004 /* ZSHAddrModel.m in Sources */,
@@ -4495,28 +5341,42 @@
 				1858710F1FBA8903003ECFE3 /* ZSHPersonalCenterViewController.m in Sources */,
 				FE443FDF1FB04FF100B7F7A5 /* ZSHMultiInfoViewController.m in Sources */,
 				1826CDB01FBAE20C00A0ECE2 /* ZSHPersonalDetailViewController.m in Sources */,
+				043F2E49200DFF3500CE18DE /* AlivcSweepCodeView.m in Sources */,
 				FE7AF2321FA307F400E1A648 /* ZSHTopLineView.m in Sources */,
 				1869C92F1FD78A37002F2E37 /* NSDictionary+Safe.m in Sources */,
+				043F2E20200DFF3500CE18DE /* AlivcRootViewController.m in Sources */,
+				04A690492008A01400C583E6 /* ZSHJoininCell.m in Sources */,
 				FE55381B1F47049D00803128 /* RxWebViewController.m in Sources */,
 				FE0ED7E21FC2CC46008299C5 /* ZSHCityView.m in Sources */,
 				FE1377931F977628003C8DFB /* ZSHManageAddressViewController.m in Sources */,
+				04936D972027FCBF00E069BE /* ZSHLiveSignViewController.m in Sources */,
+				04A6904020084EA800C583E6 /* ZSHPrivilegeCell.m in Sources */,
 				FE3005F71FC6779100A801C9 /* CWStarRateView.m in Sources */,
 				FE24DA701FD95FD100965DC8 /* ZSHPlayListViewController.m in Sources */,
 				FE55381A1F47049D00803128 /* RootWebViewController.m in Sources */,
 				FE55380F1F47049D00803128 /* AppDelegate+PushService.m in Sources */,
+				043F2E46200DFF3500CE18DE /* AlivcWatermarkSettingView.m in Sources */,
 				FE5538521F47049D00803128 /* main.m in Sources */,
+				04BAD7C12005EEB100950195 /* ZSHMagazineListCell.m in Sources */,
 				18063C621FC95759000F5A00 /* TZTestCell.m in Sources */,
 				FE3E00891FDA743200A0F7CA /* NSString+time.m in Sources */,
 				182F57A31FDBD2ED0085BFC6 /* ZSHUserInfoModel.m in Sources */,
 				FE8FD07F1FADD306005F1184 /* ZSHGameCenterViewController.m in Sources */,
 				FEF2B6401FACBCE5000AEA6E /* ZSHEntertainmentDetailCell.m in Sources */,
 				FE1F76331F8F7D0500C45B83 /* ZSHLiveContentFirstViewController.m in Sources */,
+				049823C320078D590080626D /* ZSHFlagshipViewController.m in Sources */,
 				FE3E00681FDA6A7300A0F7CA /* ZSHSingerViewController.m in Sources */,
+				043F2E23200DFF3500CE18DE /* AlivcParamModel.m in Sources */,
+				043F2E43200DFF3500CE18DE /* AlivcDebugTextView.m in Sources */,
 				FE5538611F47049D00803128 /* MBProgressHUD+XY.m in Sources */,
+				04A6904520089F5E00C583E6 /* ZSHJoininViewController.m in Sources */,
 				FE2CD0B01F98B6DB00E9E519 /* ZSHIntegalModel.m in Sources */,
 				FE2BB0B81F8E03FB000D5800 /* ZSHHomeHeadView.m in Sources */,
+				043F2E17200DFF3500CE18DE /* AlivcLivePushConfigViewController.m in Sources */,
 				FE1377751F972745003C8DFB /* ZSHOrderCell.m in Sources */,
+				04647D052017602000A21600 /* ZSHBeautyView.m in Sources */,
 				FE55385F1F47049D00803128 /* UICollectionView+IndexPath.m in Sources */,
+				041853332005FB3D000E0D09 /* ZSHToplineTopView.m in Sources */,
 				FE24DA611FD9377300965DC8 /* ZSHMusicLogic.m in Sources */,
 				FEADBD271FBEBBC00065B94B /* ZSHCardCustomizedCell.m in Sources */,
 				1846BB371FE37D9A001B264B /* ZSHFindModel.m in Sources */,
@@ -4529,7 +5389,9 @@
 				FEA30A561F9F2A8700AB0FFC /* ZSHOrderUserInfoCell.m in Sources */,
 				1891C1391FC6D115000AFEFB /* ZSHTogetherModel.m in Sources */,
 				FEA30A5F1F9F494E00AB0FFC /* ZSHNumberCount.m in Sources */,
+				043F2E1B200DFF3500CE18DE /* AlivcLiveViewController.m in Sources */,
 				FE3E005F1FDA269600A0F7CA /* ZSHMusicRankViewController.m in Sources */,
+				049823BC20074F640080626D /* ZSHCabinetReusableView.m in Sources */,
 				18762B291FE108E100E1857F /* ZSHWeiboWriteController.m in Sources */,
 				FE5538821F470BAF00803128 /* UserInfo.m in Sources */,
 				18762B261FE1088300E1857F /* ZSHReviewViewController.m in Sources */,
@@ -4540,9 +5402,11 @@
 				FE7502BD1F9A0671002F2708 /* ZSHPersonalTailorViewController.m in Sources */,
 				1826CDAD1FBAE1F000A0ECE2 /* ZSHVideoViewController.m in Sources */,
 				FE2B2A811FB9FD26001F8A61 /* TLMenuButtonView.m in Sources */,
+				049823B520074D9C0080626D /* ZSHCabinetViewController.m in Sources */,
 				FEA1057A1F9B2738008652D6 /* UIView+ZSHExtension.m in Sources */,
 				18F902451FB68D740044967F /* ZSHSubscribeViewController.m in Sources */,
 				1846BB4C1FE3D191001B264B /* ZSHEnergyValueModel.m in Sources */,
+				04E2F3C120070E2200F902A4 /* ZSHMagazineReusableView.m in Sources */,
 				1813E2731FBD400D00624405 /* ZSHTrainTicketDetailHeadView.m in Sources */,
 				FE2CD0B91F98F9C200E9E519 /* ZSHCouponViewController.m in Sources */,
 				FE55385E1F47049D00803128 /* UIButton+XYButton.m in Sources */,
@@ -4551,9 +5415,13 @@
 				182F57961FDB91390085BFC6 /* UIView+PBExtesion.m in Sources */,
 				1869C93E1FD94FBA002F2E37 /* ZSHWeiboViewController.m in Sources */,
 				FE2BC8A81FDEBF5600E98B2B /* QQLrcDataTool.m in Sources */,
+				043F2E11200DFF3500CE18DE /* DownloadListTableViewCell.m in Sources */,
 				FE2CD09C1F9857A800E9E519 /* ZSHIntegralViewController.m in Sources */,
+				043F2E44200DFF3500CE18DE /* AlivcMusicSettingView.m in Sources */,
 				185C6D8C1FC2D98A004EA461 /* LZGoodsModel.m in Sources */,
+				04647D022017068800A21600 /* ZSHLiveMoreView.m in Sources */,
 				1843134E1FD550F90046B128 /* ZSHRegisterModel.m in Sources */,
+				04A9FE98201576D00099D467 /* ZSHCreateStoreGuideView.m in Sources */,
 				FE1F76251F8F788100C45B83 /* ZSHTitleContentViewController.m in Sources */,
 				18A2C6511F483A66005F394F /* PPNetworkHelper.m in Sources */,
 				182F57921FDB91390085BFC6 /* KNPhotoBrowerImageView.m in Sources */,
@@ -4578,15 +5446,21 @@
 				FE1783B81FDBD2660074A08A /* UIImage+ImageEffects.m in Sources */,
 				FEFDB41A1F7A36D90069F867 /* pinyin.m in Sources */,
 				185B75D91FC51B16008CBD2B /* TYCyclePagerView.m in Sources */,
+				043F2E50200E02B800CE18DE /* AddPlayView.m in Sources */,
 				181105761FBBD69A0046D229 /* UILabel+Spacing.m in Sources */,
 				FE7527B11F7AB9E400858561 /* ZSHBaseView.m in Sources */,
 				FEADBD251FBEBBC00065B94B /* ZSHBlackCardPhoneNumView.m in Sources */,
 				183218091FD69A5300320022 /* ZSHTrainModel.m in Sources */,
 				FE5538831F470BAF00803128 /* UserManager.m in Sources */,
+				043F2E15200DFF3500CE18DE /* AliyunPlaySDKDemoFullScreenScrollCollectionViewCell.m in Sources */,
+				0453B0B9202C42B200791A75 /* Channel.m in Sources */,
 				FEBD7C901FA6C47300CE2BA6 /* ZSHHotelListCell.m in Sources */,
 				FE24DA641FD942EC00965DC8 /* ZSHRadioModel.m in Sources */,
+				049823C720078E470080626D /* ZSHFlagshipCell.m in Sources */,
 				FE7CA9E41F9DBE5100A2B15D /* ZSHGoodsDetailColorCell.m in Sources */,
+				043F2E48200DFF3500CE18DE /* AlivcParamTableViewCell.m in Sources */,
 				18B2DECC1F497B88005A74A7 /* ZSHBaseModel.m in Sources */,
+				FEC2F64D1FF2942100C24067 /* ZSHTopicViewController.m in Sources */,
 				FE04EF091FC831520012C5AC /* ZSHKTVLogic.m in Sources */,
 				FE2CD0B31F98F4B400E9E519 /* ZSHExchangeViewController.m in Sources */,
 				FEFDB4191F7A36D90069F867 /* ChineseString.m in Sources */,
@@ -4594,6 +5468,7 @@
 				FEB0990F1FD1257800E8F03D /* ZSHMoreListViewController.m in Sources */,
 				FEC273A71F8E1FD700A0F91A /* ZSHNoticeViewCell.m in Sources */,
 				FE5CFA411FA1B32500A55644 /* ZSHHotelCell.m in Sources */,
+				043F2E42200DFF3500CE18DE /* AlivcDebugChartView.m in Sources */,
 				FEA018C51FCBE59100989FB2 /* ZSHKTVViewController.m in Sources */,
 				FE4BC2BB1FE21A6100007C4C /* HCCoordinateConvert.m in Sources */,
 				FE1F76281F8F795C00C45B83 /* ZSHCustomWaterFlowLayout.m in Sources */,
@@ -4602,7 +5477,10 @@
 				FE3E00961FDA743200A0F7CA /* AudioPlayerController+methods.m in Sources */,
 				FEDC1D9B1FC5109200AB0D92 /* ZSHButtonView.m in Sources */,
 				FEDF29241FB6CFD300CD5756 /* ZSHQuotaHeadView.m in Sources */,
+				043587591FF2564F00969DD7 /* ZSHGoodsCollectionViewCell.m in Sources */,
 				1813E2671FBD2A0800624405 /* ZSHTrainSearchResultController.m in Sources */,
+				04A6FCCB2007152700DDE79E /* ZSHMusicMainViewController.m in Sources */,
+				049A6568202C2D8000EF1145 /* ZSHMineCouponViewController.m in Sources */,
 				FE5538801F470BAF00803128 /* ShareManager.m in Sources */,
 				FEBD7C931FA6CC1900CE2BA6 /* ZSHHotelPayViewController.m in Sources */,
 				182F57951FDB91390085BFC6 /* KNToast.m in Sources */,
@@ -4615,10 +5493,14 @@
 				18F9025E1FB6FDD90044967F /* ZSHCollectCell.m in Sources */,
 				FE5538181F47049D00803128 /* NJKWebViewProgress.m in Sources */,
 				FE8FD07B1FADBCFF005F1184 /* ZSHActivityViewController.m in Sources */,
+				043F2E0E200DFF3500CE18DE /* AliyunPlayMessageShowView.m in Sources */,
 				FE443FD61FB030C600B7F7A5 /* ZSHAccountViewController.m in Sources */,
+				043F2E0F200DFF3500CE18DE /* AliyunPlaySDKDemoOneViewController.m in Sources */,
 				FE0ED82C1FC34703008299C5 /* StepSlider.m in Sources */,
+				043F2E41200DFF3500CE18DE /* AlivcChartView.m in Sources */,
 				FEAE11261FB41A95008DCB3E /* ZSHWithdrawViewController.m in Sources */,
 				FE5538131F47049D00803128 /* RootViewController.m in Sources */,
+				04A6FCD120075A2900DDE79E /* ZSHRadioSubView.m in Sources */,
 				183218051FD692A800320022 /* ZSHTrainLogic.m in Sources */,
 				FE3E00A21FDAB1E800A0F7CA /* ZSHSingerModel.m in Sources */,
 				FE55385C1F47049D00803128 /* AESCipher.m in Sources */,
@@ -4631,6 +5513,7 @@
 				FEF415F31FAAEDBA00137F0A /* ZSHAirPlaneViewController.m in Sources */,
 				FE5538161F47049D00803128 /* TabBarBadge.m in Sources */,
 				FE5538191F47049D00803128 /* NJKWebViewProgressView.m in Sources */,
+				042E0917202861EF0037BB4B /* ZSHMultiInfoViewController+method.m in Sources */,
 				1846BB451FE3B282001B264B /* BEMAverageLine.m in Sources */,
 				FE5538121F47049D00803128 /* RootNavigationController.m in Sources */,
 				FE291EE91F8CCC5900D4BBE7 /* ZSHMineViewController.m in Sources */,
@@ -4641,6 +5524,7 @@
 				FE2CD0AA1F98AEAC00E9E519 /* ZSHIntegralBillViewController.m in Sources */,
 				18F9024C1FB6CFDF0044967F /* ZSHFollowCell.m in Sources */,
 				182F578D1FDB91390085BFC6 /* KNActionSheet.m in Sources */,
+				04A6903D20084E6800C583E6 /* ZSHPrivilegeController.m in Sources */,
 				FE1F761F1F8F3D4100C45B83 /* ZSHTogetherView.m in Sources */,
 				FE0F9DC31F94DB85004F8D2A /* ZSHWeiBoBottomView.m in Sources */,
 				FE4E4B281FC000E800E3B2F4 /* ZSHSearchLiveSecondCell.m in Sources */,
@@ -4682,10 +5566,20 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		043F2E5A200E0CC700CE18DE /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				043F2E59200E0CC700CE18DE /* en */,
+				043F2E5B200E0D0800CE18DE /* zh-Hans */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		FE5537D21F47049D00803128 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				FE5537D31F47049D00803128 /* Base */,
+				043F2E51200E0AAC00CE18DE /* zh-Hans */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -4697,6 +5591,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -4715,8 +5610,8 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Wang Ruizhen (4RDV246FMT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: pei sun (3PA2XG4XY3)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: pei sun (3PA2XG4XY3)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -4737,7 +5632,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -4747,6 +5642,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -4765,8 +5661,8 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Wang Ruizhen (4RDV246FMT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: pei sun (84479DR68T)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: pei sun (84479DR68T)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -4782,6 +5678,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -4794,10 +5691,10 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: dawei hu (LDTZY7Z3JV)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: pei sun (3PA2XG4XY3)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = 84479DR68T;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4885,11 +5782,11 @@
 					"$(PROJECT_DIR)/ZSHApp/ThridParty/UMSocial/SocialLibraries/Sina",
 					"$(PROJECT_DIR)/ZSHApp/ThridParty/UMSocial/SocialLibraries/UniqueId",
 				);
-				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = com.zoe.TC168;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.combatworld.honourcard;
 				PRODUCT_NAME = "荣耀黑卡";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "f317c350-dd30-4b20-8aa5-8eb9c2c99258";
+				PROVISIONING_PROFILE_SPECIFIER = "dev_profile(0201)";
 				SKIP_INSTALL = NO;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/ZSHApp/Define";
@@ -4903,10 +5800,10 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: dawei hu (26ZQGX9T79)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: pei sun (84479DR68T)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = 84479DR68T;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4995,10 +5892,10 @@
 					"$(PROJECT_DIR)/ZSHApp/ThridParty/UMSocial/SocialLibraries/UniqueId",
 				);
 				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = com.zoe.TC168;
+				PRODUCT_BUNDLE_IDENTIFIER = com.combatworld.honourcard;
 				PRODUCT_NAME = "荣耀黑卡";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "e225c4ed-6ed5-45e8-a746-7fc6b74578ce";
+				PROVISIONING_PROFILE_SPECIFIER = "dis_profile(0201)";
 				SKIP_INSTALL = NO;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/ZSHApp/Define";
@@ -5064,6 +5961,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -5082,8 +5980,8 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Wang Ruizhen (4RDV246FMT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: pei sun (84479DR68T)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: pei sun (84479DR68T)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -5098,6 +5996,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -5110,10 +6009,10 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: dawei hu (26ZQGX9T79)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: pei sun (84479DR68T)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = 84479DR68T;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -5202,10 +6101,10 @@
 					"$(PROJECT_DIR)/ZSHApp/ThridParty/UMSocial/SocialLibraries/UniqueId",
 				);
 				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = com.zoe.TC168;
+				PRODUCT_BUNDLE_IDENTIFIER = com.combatworld.honourcard;
 				PRODUCT_NAME = "荣耀黑卡";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "abad1ea2-4582-4795-bf3c-d732b7c5cbb9";
+				PROVISIONING_PROFILE_SPECIFIER = "Ad_hoc_profile(0201)";
 				SKIP_INSTALL = NO;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/ZSHApp/Define";

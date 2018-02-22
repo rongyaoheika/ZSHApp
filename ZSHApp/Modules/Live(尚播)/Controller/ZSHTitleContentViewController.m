@@ -20,6 +20,13 @@
 #import "ZSHActivityViewController.h"
 #import "PYSearchViewController.h"
 #import "ZSHPickView.h"
+#import "ZSHBottomBlurPopView.h"
+#import "ZSHToplineTopView.h"
+#import "ZSHWeiboWriteController.h"
+#import "ZSHHomeLogic.h"
+#import "ZSHGoodsTitleContentViewController.h"
+#import "ZSHTopLineMoreTypeViewController.h"
+#import "ZSHBuyLogic.h"
 
 @interface ZSHTitleContentViewController ()<UISearchBarDelegate,PYSearchViewControllerDelegate>
 
@@ -27,8 +34,8 @@
 @property (nonatomic, strong) LXScollTitleView    *titleView;
 @property (nonatomic, strong) UIImage             *titleBtnImage;
 @property (nonatomic, strong) NSArray             *titleArr;
-@property (nonatomic, strong) NSMutableArray      *vcs;
 
+@property (nonatomic, assign) CGSize                   svContentSize;
 @property (nonatomic, assign) CGFloat                  titleWidth;
 @property (nonatomic, assign) CGFloat                  indicatorHeight;
 @property (nonatomic, assign) XYButtonEdgeInsetsStyle  imageStyle;
@@ -43,20 +50,47 @@
 @property (nonatomic, strong) ZSHPickView          *pickView;
 @property (nonatomic, strong) ZSHTicketPlaceCell   *ticketView;
 
+@property (nonatomic, strong) ZSHBuyLogic          *buyLogic;
+@property (nonatomic, strong) ZSHToplineTopView    *toplineTopView;
+@property (nonatomic, strong) NSMutableArray       *myTags;
+@property (nonatomic, strong) NSMutableArray       *recommandTags;
+@property (strong, nonatomic) UILabel *tagLabel;
+
 @end
 
 @implementation ZSHTitleContentViewController
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    if (kFromClassTypeValue == FromBuyVCToTitleContentVC) {
+        RXLSideSlipViewController *rxl = (RXLSideSlipViewController *)kRootViewController;
+        rxl.panGestureEnabled = true;
+    }
+    
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    
+    if (kFromClassTypeValue == FromBuyVCToTitleContentVC) {
+        RXLSideSlipViewController *rxl = (RXLSideSlipViewController *)kRootViewController;
+        rxl.panGestureEnabled = false;
+    }
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     [self loadData];
-    [self createUI];
 }
 
 - (void)loadData{
+    self.myTags = [[NSMutableArray alloc]init];
+    self.recommandTags = [[NSMutableArray alloc]init];
+    self.buyLogic = [[ZSHBuyLogic alloc]init];
+    self.vcIndex = 0;
     self.indicatorHeight = 0.0;
-    //
+   
     switch (kFromClassTypeValue) {
         case FromLiveTabBarVCToTitleContentVC:{
             self.titleArr = @[@"推荐",@"附近",@"分类"];
@@ -68,15 +102,12 @@
         }
             break;
         case FromFindVCToTitleContentVC:{
-            self.titleArr = @[@"精选",@"数码",@"亲子",@"时尚",@"美食"];
-            self.contentVCS = @[@"ZSHFindViewController",@"ZSHFindViewController",@"ZSHFindViewController",@"ZSHFindViewController",@"ZSHFindViewController"];
-            self.paramArr = @[@{@"CAIDAN_ID":@"387563351791632384"},
-                              @{@"CAIDAN_ID":@"387563399975796736"},
-                              @{@"CAIDAN_ID":@"387563457622310912"},
-                              @{@"CAIDAN_ID":@"387563486307155968"},
-                              @{@"CAIDAN_ID":@"387563525268045824"}];
-        }
+            [self createFindNaviUI];
+            [self requestTopLineMenuData];
+            return;
             break;
+        }
+           
         case FromAllOrderVCToTitleContentVC:{
 //            self.titleArr = @[@"全部",@"待付款",@"待收货",@"待评价",@"退款售后"];
             self.titleArr = self.paramDic[@"titleArr"];
@@ -142,6 +173,7 @@
                                 @"ZSHLiveDayListViewController",
                                 @"ZSHLiveDayListViewController"];
 //            self.contentVCS = @[@"ZSHLiveDayListViewController", @"ZSHLiveWeekListViewController", @"ZSHLiveMonthListViewController", @"ZSHLiveTotalListViewController"];
+             self.paramArr = @[@{@"TYPE":@"DATE"},@{@"TYPE":@"WEEK"},@{@"TYPE":@"MONTH"},@{@"TYPE":@"ALL"}];
         }
             break;
         case FromPeronalCenterVCToTitleContentVC:{
@@ -164,7 +196,29 @@
             [self createSearchNaviUI];
         }
             break;
-            
+        case FromMagazineVCToTitleContentVC : { //荣耀杂志
+            self.titleArr = @[@"推荐",@"科技", @"吃喝", @"心灵", @"时尚", @"运动", @"摄影"];
+            self.contentVCS = @[@"ZSHMagazineListViewController",
+                                @"ZSHMagazineListViewController",
+                                @"ZSHMagazineListViewController",
+                                @"ZSHMagazineListViewController",
+                                @"ZSHMagazineListViewController",
+                                @"ZSHMagazineListViewController",
+                                @"ZSHMagazineListViewController"];
+//            self.paramArr = @[@{KFromClassType:@(kFromClassTypeValue)},@{KFromClassType:@(kFromClassTypeValue)},@{KFromClassType:@(kFromClassTypeValue)}];
+        }
+        break;
+        case FromBuyVCToTitleContentVC : { //尊购
+            [self createBuyNaviUI];
+            self.titleArr = @[@"首页",@"时尚圈",@"专柜店", @"旗舰店", @"会员特权"];
+            self.contentVCS = @[@"ZSHBuyViewController",
+                                @"ZSHFashionViewController",
+                                @"ZSHCabinetViewController",
+                                @"ZSHFlagshipViewController",
+                                @"ZSHPrivilegeController"
+                                ];
+        }
+            break;
         default:{
             self.titleArr = self.paramDic[@"titleArr"];
             self.titleBtnImage = [UIImage imageNamed:@"hotel_btn"];
@@ -184,7 +238,13 @@
         }
             break;
     }
+    self.svContentSize = CGSizeZero;
     self.titleWidth = KScreenWidth/(self.titleArr.count);
+    [self createUI];
+}
+
+- (void)createFindNaviUI{
+     [self addNavigationItemWithTitles:@[@"发布"] isLeft:NO target:self action:@selector(distributeAction) tags:@[@(2)]];
 }
 
 - (void)createTileViewUI{
@@ -210,20 +270,53 @@
     [self.navigationItem setTitleView:self.ticketView];
 }
 
-- (void)createUI{
-    self.title = self.paramDic[@"title"];
+- (void)createBuyNaviUI{
+    UIButton *searchBtn = [ZSHBaseUIControl createBtnWithParamDic:@{@"title":@"搜索",@"font":kPingFangRegular(14),@"withImage":@(YES),@"normalImage":@"nav_home_search"}];
+    searchBtn.frame = CGRectMake(0, 0, kRealValue(270), 30);
+    searchBtn.backgroundColor = KZSHColor1A1A1A;
+    searchBtn.layer.cornerRadius = 5.0;
+    searchBtn.layer.masksToBounds = YES;
+    kWeakSelf(self);
+    [searchBtn addTapBlock:^(UIButton *btn) {
+        [weakself searchAction];
+    }];
+    [self.navigationItem setTitleView:searchBtn];
     
+    [self addNavigationItemWithImageName:@"nav_buy_mine" isLeft:YES target:self action:@selector(buyMineBtntAction) tag:1];
+    [self addNavigationItemWithImageName:@"nav_buy_scan" isLeft:NO target:self action:@selector(buyScanBtntAction) tag:2];
+}
+
+- (void)createUI{
+    self.extendedLayoutIncludesOpaqueBars = YES;
+    self.title = self.paramDic[@"title"];
     [self.view addSubview:self.titleView];
     [self.view addSubview:self.contentView];
-
+    if (kFromClassTypeValue == FromFindVCToTitleContentVC) {
+        self.titleView.scrollView.contentSize = CGSizeMake(KScreenWidth+kRealValue(40), 0);
+        [self addOtherUI];
+    }
+    
     [self reloadListData];
+}
+
+- (void)addOtherUI{
+    UIButton *moreBtn = [[UIButton alloc]init];
+    [moreBtn setImage:[UIImage imageNamed:@"topline_menu"] forState:UIControlStateNormal];
+    [moreBtn addTarget:self action:@selector(topLineMenuAction:) forControlEvents:UIControlEventTouchUpInside];
+    [self.titleView addSubview:moreBtn];
+    [moreBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.mas_equalTo(self.titleView);
+        make.right.mas_equalTo(self.titleView);
+        make.size.mas_equalTo(CGSizeMake(kRealValue(44), kRealValue(44)));
+    }];
+    
+    
 }
 
 - (LXScollTitleView *)titleView{
     kWeakSelf(self);
     if (!_titleView) {
         _titleView = [[LXScollTitleView alloc] initWithFrame:CGRectMake(0, KNavigationBarHeight, KScreenWidth, kRealValue(35))];
-
         _titleView.normalImage = self.titleBtnImage;
         _titleView.imageStyle = self.imageStyle;
         _titleView.imageTitleSpace = self.imageTitleSpace;
@@ -232,9 +325,11 @@
         _titleView.selectedColor = KZSHColor929292;
         _titleView.normalColor = KZSHColor929292;
         _titleView.indicatorHeight = self.indicatorHeight;
+        _titleView.svContentSize = self.svContentSize;
         __weak typeof(self) weakSelf = self;
         _titleView.selectedBlock = ^(NSInteger index){
             __weak typeof(self) strongSelf = weakSelf;
+            strongSelf.vcIndex = index;
             strongSelf.contentView.currentIndex = index;
             if (kFromClassTypeValue == FromHotelVCToTitleContentVC||kFromClassTypeValue == FromBarVCToTitleContentVC||kFromClassTypeValue == FromFoodVCToTitleContentVC|| kFromClassTypeValue ==FromKTVVCToTitleContentVC ) {
                 [weakself titleViewSelectChangeWithIndex:index];
@@ -265,10 +360,11 @@
     
     [self.titleView reloadViewWithTitles:self.titleArr];
     self.vcs = [[NSMutableArray alloc]init];
-    RootViewController *vc  = nil;
+    RootViewController *vc = nil;
 
     if (kFromClassTypeValue == FromAllOrderVCToTitleContentVC) {
-        for (int i = 0;i< [self.paramDic[@"titleArr"] count]; i++) {
+   
+        for (int i = 0;i< [(NSArray *)self.paramDic[@"titleArr"] count]; i++) {
             NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:self.paramDic];
             [dic setValue:self.paramDic[@"ORDERSTATUS"][i] forKey:@"ORDERSTATUS"];
             Class className = NSClassFromString(self.paramDic[@"contentVCS"][i]);
@@ -314,7 +410,6 @@
 #pragma action
 - (void)titleViewSelectChangeWithIndex:(NSInteger)index{
     kWeakSelf(self);
-    
     //0:排序  1：品牌  2：筛选
     NSArray *paramArr = nil;
     switch (kFromClassTypeValue) {
@@ -329,8 +424,7 @@
         case FromFoodVCToTitleContentVC://美食排序
         case FromKTVVCToTitleContentVC:{//KTV排序
             paramArr = @[@{@"shopSortArr":@[@"推荐",@"距离由近到远",@"评分由高到低",@"价格由高到低",@"价格由低到高"],@"midTitle":@"排序"},
-                         @{@"shopSortArr":@[@"全聚德",@"海底捞",@"眉州小吃",@"呷浦呷哺",@"肯德基",@"必胜客"
-],@"midTitle":@"品牌"},
+                         @{@"shopSortArr":@[@"全聚德",@"海底捞",@"眉州小吃",@"呷浦呷哺",@"肯德基",@"必胜客"],@"midTitle":@"品牌"},
                          @{@"shopSortArr":@[@"甜点饮品",@"火锅",@"自助餐",@"小吃快餐",@"日韩料理",@"西餐",@"烧烤烤肉",@"素食"],@"midTitle":@"筛选"}];
             break;
         }
@@ -341,16 +435,39 @@
             break;
     }
     
+    
+//    NSMutableDictionary *nextParamDic = [[NSMutableDictionary alloc] initWithDictionary:@{KFromClassType:@(ZSHFromFoodVCToBottomBlurPopView)}];
+//    [nextParamDic addEntriesFromDictionary:paramArr[index]];
+//    [nextParamDic setObject:@(index) forKey:@"index"];
+//    [nextParamDic setObject:@(self.contentVCS.count) forKey:@"count"];
+//    ZSHBottomBlurPopView *bottomBlurPopView = [[ZSHBottomBlurPopView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight) paramDic:nextParamDic];
+//    bottomBlurPopView.blurRadius = 20;
+//    bottomBlurPopView.dynamic = NO;
+//    bottomBlurPopView.tintColor = KClearColor;
+//    bottomBlurPopView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.6];
+//    [bottomBlurPopView setBlurEnabled:NO];
+//    [ZSHBaseUIControl setAnimationWithHidden:NO view:bottomBlurPopView completedBlock:nil];
+//    bottomBlurPopView.dissmissViewBlock = ^(UIView *blurView, NSIndexPath *indexpath) {
+//        [ZSHBaseUIControl setAnimationWithHidden:YES view:blurView completedBlock:^{
+//            if (indexpath) {//跳转到对应控制器
+//                //                        Class className = NSClassFromString(weakself.menuPushVCsArr[indexpath.row]);
+//                //                        RootViewController *vc = [[className alloc]initWithParamDic:weakself.menuParamArr[indexpath.row]];
+//                //                        [weakself.navigationController pushViewController:vc animated:YES];
+//            }
+//            return;
+//        }];
+//    };
+    
     NSDictionary *nextParamDic = @{@"type":@(WindowDefault),@"midTitle":paramArr[index][@"midTitle"],@"dataArr":paramArr[index][@"shopSortArr"]};
     weakself.pickView = [weakself createPickViewWithParamDic:nextParamDic];
     [weakself.pickView show:WindowDefault];
-    weakself.pickView.saveChangeBlock = ^(NSString *rowTitle, NSInteger tag) {
+    weakself.pickView.saveChangeBlock = ^(NSString *rowTitle, NSInteger tag,NSDictionary *dic) {
         [[NSNotificationCenter defaultCenter] postNotificationName:KUpdateDataWithSort object:@{@"row":@(tag),@"midTitle":paramArr[index][@"midTitle"],@"rowTitle":rowTitle,KFromClassType:@(kFromClassTypeValue)}];
     };
     
 }
 
-- (void)locateBtnAction{
+- (void)locateBtnAction {
     
 }
 
@@ -363,27 +480,154 @@
     tab.selectedIndex = 0;
 }
 
-- (void)searchAction{
-    // 1. Create an Array of popular search
-    NSArray *hotSeaches = @[@"阿哲", @"散打哥", @"天佑", @"赵小磊", @"赵雷", @"陈山", @"PHP", @"C#", @"Perl", @"Go", @"JavaScript", @"R", @"Ruby", @"MATLAB"];
-    // 2. Create a search view controller
-    PYSearchViewController *searchViewController = [PYSearchViewController searchViewControllerWithHotSearches:hotSeaches searchBarPlaceholder:NSLocalizedString(@"PYExampleSearchPlaceholderText", @"搜索") didSearchBlock:^(PYSearchViewController *searchViewController, UISearchBar *searchBar, NSString *searchText) {
-        // Called when search begain.
-        // eg：Push to a temp view conroller
-    }];
-    // 3. Set style for popular search and search history
-    searchViewController.hotSearchStyle = PYHotSearchStyleARCBorderTag;
-    searchViewController.searchHistoryStyle = PYSearchHistoryStyleARCBorderTag;
-    searchViewController.searchBarBackgroundColor = KZSHColor1A1A1A;
+//尊购
+- (void)searchAction {
+    BOOL showRecommendView = NO;
+    NSDictionary *paramDic = [[NSDictionary alloc]init];
+    switch (kFromClassTypeValue) {
+        case FromBuyVCToTitleContentVC:{
+            paramDic = @{@"PARENT_ID":@(2)};
+            showRecommendView = YES;
+             break;
+        }
+        case FromLiveTabBarVCToTitleContentVC:{
+            paramDic = @{@"PARENT_ID":@(4)};
+            showRecommendView = NO;
+            break;
+        }
+            
+        default:
+            break;
+    }
     
-    // 4. Set delegate
-    searchViewController.delegate = self;
-    // 5. Present a navigation controller
-//    RootNavigationController *nav = [[RootNavigationController alloc] initWithRootViewController:searchViewController];
-//    [self presentViewController:nav animated:YES completion:nil];
-    [self.navigationController pushViewController:searchViewController animated:YES];
+    ZSHHomeLogic *homeLogic = [[ZSHHomeLogic alloc]init];
+    NSMutableArray *hotSearchMArr = [[NSMutableArray alloc]init];
+    NSMutableArray *recommendImageMArr = [[NSMutableArray alloc]init];
+    [homeLogic loadSearchListWithDic:paramDic success:^(id response) {
+        for (NSDictionary *dic in response[@"pd"]) {
+            [hotSearchMArr addObject:dic[@"NAME"]];
+        }
+        
+        for (NSDictionary *dic in response[@"showimgs"]) {
+            [recommendImageMArr addObject:dic[@"SHOWIMAGES"]];
+        }
+        
+        kWeakSelf(self);
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            PYSearchViewController *searchViewController = [PYSearchViewController searchViewControllerWithHotSearches:hotSearchMArr searchBarPlaceholder:NSLocalizedString(@"Search", @"搜索") recommendArr:recommendImageMArr didSearchBlock:^(PYSearchViewController *searchViewController, UISearchBar *searchBar, NSString *searchText) {
+                ZSHGoodsTitleContentViewController *goodContentVC = [[ZSHGoodsTitleContentViewController alloc]initWithParamDic:@{@"searchText":searchText,KFromClassType:@(FromSearchResultVCTOGoodsTitleVC)}];
+                [weakself.navigationController pushViewController:goodContentVC animated:YES];
+            }];
+            
+            searchViewController.showRecommendView = showRecommendView;
+            searchViewController.delegate = self;
+            [self.navigationController pushViewController:searchViewController animated:YES];
+        });
+        
+        
+    }];
+    
 }
 
+- (void)buyMineBtntAction{
+    [self.sideSlipVC presentLeftMenuViewController];
+    
+}
+
+- (void)buyScanBtntAction{
+    
+}
+
+/**********************头条*********************/
+//头条-发布
+- (void)distributeAction{
+    RLog(@"发布");
+    kWeakSelf(self);
+    if (![self.view viewWithTag:18011506]) {
+        [UIView transitionWithView:self.toplineTopView duration:1.0 options:UIViewAnimationOptionCurveEaseIn animations:^ {
+            [self.view addSubview:self.toplineTopView];
+            self.toplineTopView.btnClickBlock = ^(UIButton *btn) {
+                NSArray *values = @[@(FromWordVCToZSHWeiboWriteVC), @(FromPhotoVCToZSHWeiboWriteVC), @(FromVideoVCToZSHWeiboWriteVC)];
+                NSMutableDictionary *mutableDic = [[NSMutableDictionary alloc] initWithDictionary:weakself.paramArr[btn.tag]];
+                [mutableDic addEntriesFromDictionary:@{KFromClassType:values[btn.tag]}];
+                ZSHWeiboWriteController *weiboWriteVC = [[ZSHWeiboWriteController alloc]initWithParamDic:mutableDic];
+                [weakself.navigationController pushViewController:weiboWriteVC animated:YES];
+            };
+        } completion:nil];
+    } else {
+        [UIView transitionWithView:self.toplineTopView duration:1.0 options:UIViewAnimationOptionCurveEaseOut animations:^ {
+            [self.toplineTopView removeFromSuperview];
+            self.toplineTopView = nil;
+        } completion:nil];
+    }
+}
+
+- (void)topLineMenuAction:(UIButton *)btn{
+
+    ZSHTopLineMoreTypeViewController *topLineMoreVC = [[ZSHTopLineMoreTypeViewController alloc]initWithParamDic:@{@"myChannels":self.myTags,@"recommandChannels":self.recommandTags}];
+    [self presentViewController:topLineMoreVC animated:YES completion:^{}];
+    
+    //所有的已选的tags
+    __block  NSMutableString *_str = @"已选：\n".mutableCopy;
+    topLineMoreVC.choosedTags = ^(NSArray *chooseTags, NSArray *recommandTags) {
+        _myTags = @[].mutableCopy;
+        _recommandTags = @[].mutableCopy;
+        for (Channel *mod in recommandTags) {
+            [_recommandTags addObject:mod.title];
+        }
+        for (Channel *mod in chooseTags) {
+            [_myTags addObject:mod.title];
+            [_str appendString:mod.title];
+            [_str appendString:@"、"];
+        }
+        _tagLabel.text = _str;
+    };
+    
+    //单选tag
+    topLineMoreVC.selectedTag = ^(Channel *channel) {
+        [_str appendString:channel.title];
+        _tagLabel.text = _str;
+    };
+}
+
+- (ZSHToplineTopView *)toplineTopView{
+    if (!_toplineTopView) {
+        _toplineTopView = [[ZSHToplineTopView alloc]initWithFrame:CGRectMake(0, KNavigationBarHeight, kScreenWidth, kScreenHeight - KNavigationBarHeight)];
+        _toplineTopView.tag = 18011506;
+    }
+    return _toplineTopView;
+}
+
+#pragma requestData
+- (void)requestTopLineMenuData{
+    kWeakSelf(self);
+    RLog(@"用户id=%@",HONOURUSER_IDValue);
+    [_buyLogic requestCaidanWithDic:@{@"HONOURUSER_ID":HONOURUSER_IDValue} success:^(id response) {
+        RLog(@"头条数据== %@",response);
+        
+        NSString *shopId  = self.paramDic[@"shopId"]?self.paramDic[@"shopId"]:@"";
+        NSMutableArray *titleMArr = [[NSMutableArray alloc]init];
+        NSMutableArray *paramMArr = [[NSMutableArray alloc]init];
+        NSMutableArray *contentVCSMArr = [[NSMutableArray alloc]init];
+        for (NSDictionary *dic in response[@"topline"]) {
+            [titleMArr addObject:dic[@"NAME"]];
+            [paramMArr addObject:@{@"CAIDAN_ID":dic[@"CAIDAN_ID"],@"shopId":shopId}];
+            [contentVCSMArr addObject:@"ZSHFindViewController"];
+        }
+       
+        for (NSDictionary *dic in response[@"recomList"]) {
+            [weakself.recommandTags addObject:dic[@"NAME"]];
+        }
+        weakself.myTags = titleMArr;
+        weakself.titleArr = titleMArr;
+        weakself.paramArr = paramMArr;
+        weakself.contentVCS = contentVCSMArr;
+        weakself.titleWidth = kRealValue(60);
+        weakself.svContentSize = CGSizeMake((self.titleArr.count+1)*self.titleWidth, 0);
+        [weakself createUI];
+       
+    }];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

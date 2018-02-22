@@ -94,7 +94,6 @@ static NSString *ZSHHotelCellID = @"ZSHHotelCell";
         weakself.tableViewModel.sectionModelArray[4] = [weakself storHotelMorShopSection];
         NSIndexSet *indexSet = [[NSIndexSet alloc]initWithIndex:4];
         [weakself updateSectionDatWithSet:indexSet];
-        
     } fail:nil];
 }
 
@@ -108,7 +107,7 @@ static NSString *ZSHHotelCellID = @"ZSHHotelCell";
     self.tableView.delegate = self.tableViewModel;
     self.tableView.dataSource = self.tableViewModel;
     
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     [self.tableView setSeparatorColor:KZSHColor1D1D1D];
     [self.tableView setSeparatorInset:UIEdgeInsetsMake(0, 0, 0, 0)];
     [self.tableView registerClass:[ZSHHotelDetailHeadCell class] forCellReuseIdentifier:ZSHHotelDetailHeadCellID];
@@ -261,7 +260,7 @@ static NSString *ZSHHotelCellID = @"ZSHHotelCell";
     kWeakSelf(self);
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     sectionModel.headerHeight = kRealValue(40);
-    NSDictionary *headTitleParamDic = @{@"text":@"套餐",@"font":kPingFangMedium(15),@"textAlignment":@(NSTextAlignmentLeft)};
+    NSDictionary *headTitleParamDic = @{@"text":@"套餐",@"font":kPingFangMedium(15)};
     sectionModel.headerView = [ZSHBaseUIControl createTabHeadLabelViewWithParamDic:headTitleParamDic];
     
     for (int i = 0; i<_hotelDetailSetDicArr.count; i++) {
@@ -280,7 +279,7 @@ static NSString *ZSHHotelCellID = @"ZSHHotelCell";
             NSDictionary *paramDic = _hotelDetailSetDicArr[indexPath.row];
             NSDictionary *nextParamDic = @{KFromClassType:@(ZSHConfirmOrderToBottomBlurPopView),@"shopType":@(ZSHHotelShopType), @"deviceDic":weakself.hotelDetailParamDic,@"listDic":paramDic,@"liveInfoStr":_liveInfoStr};
             weakself.bottomBlurPopView = [weakself createBottomBlurPopViewWithParamDic:nextParamDic];
-            [kAppDelegate.window addSubview:weakself.bottomBlurPopView];
+            [weakself.view addSubview:weakself.bottomBlurPopView];
         };
     }
     
@@ -291,7 +290,7 @@ static NSString *ZSHHotelCellID = @"ZSHHotelCell";
 - (ZSHBaseTableViewSectionModel*)storHotelMorShopSection{
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     sectionModel.headerHeight = kRealValue(40);
-    NSDictionary *headTitleParamDic = @{@"text":@"更多商家",@"font":kPingFangMedium(15),@"textAlignment":@(NSTextAlignmentLeft)};
+    NSDictionary *headTitleParamDic = @{@"text":@"更多商家",@"font":kPingFangMedium(15)};
     sectionModel.headerView = [ZSHBaseUIControl createTabHeadLabelViewWithParamDic:headTitleParamDic];
     UIButton *btn = [sectionModel.headerView viewWithTag:2];
     btn.hidden = NO;

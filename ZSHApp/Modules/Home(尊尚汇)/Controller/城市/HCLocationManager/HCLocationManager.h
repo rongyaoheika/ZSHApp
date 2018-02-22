@@ -24,7 +24,9 @@
 @property (weak, nonatomic)id<HCLocationManagerDelegate>delegate;
 
 + (HCLocationManager *)sharedManager;
-
+//开始定位
 - (void)startLocate;
+//根据地名获取经纬度
+- (void)getLatiAndLongiWithCity:(NSString *)city compelete:(void(^)(CLLocationDegrees aLatitude,CLLocationDegrees aLongitude))compelete;
 
 @end

@@ -11,7 +11,8 @@
 #import "ZSHWeiboViewController.h"
 #import "ZSHVideoViewController.h"
 #import "ZSHPersonalDetailViewController.h"
-
+#import "ZSHWeiboWriteController.h"
+#import "ZSHLiveContentFirstViewController.h"
 @interface ZSHLivePopView ()
 
 @property (nonatomic, assign) BOOL              ISShowMenuButton;
@@ -53,14 +54,22 @@
 
 #pragma getter
 - (void)clickButton:(NSInteger)index {
-    NSArray *VCS = @[@"ZSHWeiboWriteController",@"ZSHBeginShowViewController",@"ZSHVideoRecViewController"];
-    NSArray *fromclassTypes = @[@(FromTabbarToWeiboVC),@(FromTabbarToVideoVC), @(FromTabbarToPersonalDetailVC)];
+//ZSHVideoRecViewController
+    NSArray *VCS = @[@"ZSHWeiboWriteController",@"AlivcLivePusherViewController",@"ZSHLiveContentFirstViewController"];
+    NSArray *fromclassTypes = @[@(FromWeiboVCToZSHWeiboWriteVC),@"", @(4)];
+    
     Class className = NSClassFromString(VCS[index-1]);
-    RootViewController *vc =  [[className alloc] initWithParamDic:@{KFromClassType:fromclassTypes[index-1]}];
+    if (index != 2) {
+        RootViewController *vc =  [[className alloc] initWithParamDic:@{KFromClassType:fromclassTypes[index-1]}];
+        [ZSHBaseUIControl setAnimationWithHidden:YES view:self.superview completedBlock:^{
+            [[kAppDelegate getCurrentUIVC].navigationController pushViewController:vc animated:YES];
+        }];
+    } else {//跳转直播预览页
+        [ZSHBaseUIControl setAnimationWithHidden:YES view:self.superview completedBlock:^{
+            [[NSNotificationCenter defaultCenter] postNotificationName:KPresentPreviewVC object:nil];
+        }];
 
-    [ZSHBaseUIControl setAnimationWithHidden:YES view:self.superview completedBlock:^{
-        [[kAppDelegate getCurrentUIVC].navigationController pushViewController:vc animated:YES];
-    }];
+    }
 
 }
 
@@ -74,20 +83,7 @@
         }];
     }];
    
-//    if (!_ISShowMenuButton) {
-//        [UIView animateWithDuration:0.2 animations:^{
-////            CGAffineTransform rotate = CGAffineTransformMakeRotation( M_PI / 4 );
-////            [sender setTransform:rotate];
-//        }];
-//        [_tlMenuView showItems];
-//    }else{
-//        [UIView animateWithDuration:0.2 animations:^{
-//            CGAffineTransform rotate = CGAffineTransformMakeRotation( 0 );
-//            [sender setTransform:rotate];
-//        }];
-//        [_tlMenuView dismiss];
-//    }
-//    _ISShowMenuButton = !_ISShowMenuButton;
 }
+
 
 @end

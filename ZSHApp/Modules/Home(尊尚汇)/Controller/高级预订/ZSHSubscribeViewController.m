@@ -114,12 +114,23 @@
             break;
         }
         case ZSHServiceType:{//服务
-            paramDic = @{@"SERVER_ID":self.paramDic[@"shopId"]};
+            paramDic = @{@"SERVER_ID":self.paramDic[@"shopId"], @"SHOPTYPE":self.paramDic[@"SHOPTYPE"]};
             [_moreLogic requestServiceDetailDataWithParamDic:paramDic Success:^(NSArray *dataArr) {
                 _listDataDicArr = dataArr;
-                _imageArr = _listDataDicArr[0][@"HORSEDETIMGS"];
-                _subTitleLabel.text = _listDataDicArr[0][@"HORSEDETINTRO"];
-                [weakself updateUI];
+                if ([paramDic[@"SHOPTYPE"] isEqualToString:@"马术"]) {
+                    _imageArr = _listDataDicArr[0][@"HORSEDETIMGS"];
+                    _subTitleLabel.text = _listDataDicArr[0][@"HORSEDETINTRO"];
+                    [weakself updateUI];
+                } else if([paramDic[@"SHOPTYPE"] isEqualToString:@"飞机"]) {
+                    _imageArr = _listDataDicArr[0][@"PLANEDETIMGS"];
+                    _subTitleLabel.text = _listDataDicArr[0][@"PLANEDETINTRO"];
+                    [weakself updateUI];
+                } else if([paramDic[@"SHOPTYPE"] isEqualToString:@"豪车"]) {
+                    _imageArr = _listDataDicArr[0][@"LUXCARDETIMGS"];
+                    _subTitleLabel.text = _listDataDicArr[0][@"LUXCARDETINTRO"];
+                    [weakself updateUI];
+                } 
+
             } fail:nil];
             
             break;
@@ -171,25 +182,28 @@
         make.size.mas_equalTo(CGSizeMake(kRealValue(375), kRealValue(240)));
     }];
     
+    //self.dataArr[4],
+    NSDictionary *subTitleDic = @{@"text":@"", @"font":kPingFangRegular(12),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentLeft)};
+    _subTitleLabel = [ZSHBaseUIControl createLabelWithParamDic:subTitleDic];
+    _subTitleLabel.numberOfLines = 0;
+    [_scrollView addSubview:_subTitleLabel];
+    [_subTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(_middleImageView).offset(kRealValue(260));
+        make.centerX.mas_equalTo(_scrollView);
+        make.size.mas_equalTo(CGSizeMake(kRealValue(345), kRealValue(51)));
+    }];
+    
+    
     _bottomImageView = [[UIImageView alloc] init];
 //    _bottomImageView.image = [UIImage imageNamed:self.dataArr[3]];
     [_scrollView addSubview:_bottomImageView];
     [_bottomImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(_middleImageView).offset(kRealValue(250));
+        make.top.mas_equalTo(_subTitleLabel).offset(kRealValue(60));
         make.centerX.mas_equalTo(_scrollView);
         make.size.mas_equalTo(CGSizeMake(kRealValue(375), kRealValue(240)));
     }];
     
-    //self.dataArr[4],
-    NSDictionary *subTitleDic = @{@"text":@"", @"font":kPingFangMedium(15),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentCenter)};
-    _subTitleLabel = [ZSHBaseUIControl createLabelWithParamDic:subTitleDic];
-    [_scrollView addSubview:_subTitleLabel];
-    [_subTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(_bottomImageView).offset(kRealValue(260));
-        make.centerX.mas_equalTo(_scrollView);
-        make.size.mas_equalTo(CGSizeMake(KScreenWidth, kRealValue(16)));
-    }];
-    
+
     NSDictionary *contentLabelDic = @{@"text":@"", @"font":kPingFangRegular(12),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentLeft)};
     _contentLabel = [ZSHBaseUIControl createLabelWithParamDic:contentLabelDic];
     _contentLabel.numberOfLines = 0;
@@ -203,7 +217,7 @@
     _contentLabel.attributedText = [[NSAttributedString alloc] initWithString:@"aa" attributes:dic];
     [_scrollView addSubview:_contentLabel];
     [_contentLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(_subTitleLabel).offset(kRealValue(31));
+        make.top.mas_equalTo(_bottomImageView).offset(kRealValue(250));
         make.centerX.mas_equalTo(_scrollView);
         make.size.mas_equalTo(CGSizeMake(kRealValue(346), kRealValue(54)));
     }];
@@ -251,12 +265,13 @@
     _noticeLabel.text = _listDataDicArr[0][@"PDOWNINTROTITLE"];
     _noticeDetailLabel.text = _listDataDicArr[0][@"PDOWNINTROCONTENT"];
     
+    
     NSMutableParagraphStyle  *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
     [paragraphStyle  setLineSpacing:5];
     [paragraphStyle setParagraphSpacing:22];
     NSMutableAttributedString  *setString = [[NSMutableAttributedString alloc] initWithString:_listDataDicArr[0][@"PDOWNINTROCONTENT"]];
     [setString  addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, [_listDataDicArr[0][@"PDOWNINTROCONTENT"] length])];
-    [_noticeDetailLabel  setAttributedText:setString];
+    [_noticeDetailLabel setAttributedText:setString];
     
 }
 

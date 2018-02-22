@@ -10,4 +10,6 @@
 
 @interface ZSHHomeViewController : RootViewController
 
+- (void)hasUpdateVersion;
+
 @end

@@ -8,11 +8,12 @@
 
 #import "ZSHBaseView.h"
 #import "ZSHTogetherLogic.h"
-
+#import "ZSHLiveLogic.h"
 
 @interface ZSHLivePersonInfoView : ZSHBaseView
 
 @property (nonatomic, strong) ZSHTogetherLogic    *togetherLogic;
 @property (nonatomic, strong) UIButton            *addFriendBtn;
+
 
 @end

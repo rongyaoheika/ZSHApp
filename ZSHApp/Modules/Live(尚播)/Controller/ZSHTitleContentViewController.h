@@ -10,4 +10,7 @@
 
 @interface ZSHTitleContentViewController : RootViewController
 
+@property (nonatomic, strong) NSMutableArray      *vcs;
+@property (nonatomic, assign) NSInteger           vcIndex;
+
 @end

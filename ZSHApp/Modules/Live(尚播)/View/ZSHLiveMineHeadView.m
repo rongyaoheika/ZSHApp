@@ -57,8 +57,8 @@
     }];
     self.nameLabel = nameLabel;
     
-    //黑咖币
-    NSDictionary *coinBtnTopDic = @{@"text":@"黑咖币",@"font":kPingFangRegular(14),@"textAlignment":@(NSTextAlignmentCenter),@"height":@(14)};
+    //黑卡币
+    NSDictionary *coinBtnTopDic = @{@"text":@"黑卡币",@"font":kPingFangRegular(14),@"textAlignment":@(NSTextAlignmentCenter),@"height":@(14)};
     NSDictionary *coinBtnBottomDic = @{@"text":@"99",@"font":kPingFangMedium(18),@"textAlignment":@(NSTextAlignmentCenter),@"height":@(14)};
     _coinBtn = [ZSHBaseUIControl createLabelBtnWithTopDic:coinBtnTopDic bottomDic:coinBtnBottomDic];
     _coinBtn.tag = 2;
@@ -110,6 +110,18 @@
     Class className = NSClassFromString(self.pushVCsArr[btn.tag - 1]);
     RootViewController *vc = [[className alloc]initWithParamDic:self.paramArr[btn.tag - 1]];
     [[kAppDelegate getCurrentUIVC].navigationController pushViewController:vc animated:YES];
+}
+
+- (void)updateViewWithParamDic:(NSDictionary *)paramDic{
+
+    UILabel *followValueLB = [_followBtn viewWithTag:21];
+    followValueLB.text = [paramDic[@"FOCUSCOUNT"]stringValue];
+    
+    UILabel *coinValueLB = [_coinBtn viewWithTag:21];
+    coinValueLB.text = [paramDic[@"BLACKCOIN"]stringValue];
+    
+    UILabel *followerLB = [_followerBtn viewWithTag:21];
+    followerLB.text = [paramDic[@"FANSCOUNT"]stringValue];
 }
 
 @end

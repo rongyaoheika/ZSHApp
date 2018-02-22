@@ -35,7 +35,8 @@ static NSString *ZSHBaseBottomListCellID = @"ZSHBaseBottomListCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
+
+    [self createUI];
     [self loadData];
 }
 
@@ -45,36 +46,45 @@ static NSString *ZSHBaseBottomListCellID = @"ZSHBaseBottomListCell";
                       @"发现",
                       @"购物车",
                       @"炫购",
-                      @"私人订制"];
+                      @"私人订制",
+                      @"分享赚钱"];
     self.vcArr = @[
                    @"",
                    @"ZSHGoodsViewController",
-                   @"ZSHTitleContentViewController",
+                   @"ZSHLeftFindViewController",
                    @"LZCartViewController",
                    @"ZSHCollectViewController",
-                   @"ZSHPersonalTailorViewController"];
+                   @"ZSHPersonalTailorViewController",
+                   @"ZSHMakeMoneyViewController"];
     self.paramDicArr = @[@{},
                          @{},
-                         @{KFromClassType:@(FromFindVCToTitleContentVC),@"title":@"发现"},
+                         @{},
+                         @{},
                          @{},
                          @{},
                          @{}];
     
     
+   
+    
+    [self initViewModel];
+   
+}
+
+- (void)createUI{
     self.tableView.frame = CGRectMake(0, KNavigationBarHeight, KScreenWidth, KScreenHeight-KNavigationBarHeight-KBottomNavH);
     [self.view addSubview:self.tableView];
     [self.tableView registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHBaseHeadListCellID];
-     [self.tableView registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHBaseBottomListCellID];
+    [self.tableView registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHBaseBottomListCellID];
     self.tableView.delegate = self.tableViewModel;
     self.tableView.dataSource = self.tableViewModel;
-    
-    [self initViewModel];
-    [self.tableView reloadData];
 }
 
 - (void)initViewModel {
     [self.tableViewModel.sectionModelArray removeAllObjects];
     [self.tableViewModel.sectionModelArray addObject:[self storeListSection]];
+    [self.tableView reloadData];
+    
 }
 
 //head
@@ -136,17 +146,23 @@ static NSString *ZSHBaseBottomListCellID = @"ZSHBaseBottomListCell";
     [headImageView sd_setImageWithURL:[NSURL URLWithString:curUser.PORTRAIT]];
     [headCellView addSubview:headImageView];
     
-    NSDictionary *loginBtnDic = @{@"title":@"请点击登录",@"titleColor":KZSHColor929292,@"font":kPingFangMedium(17),@"backgroundColor":KClearColor};
+    NSDictionary *loginBtnDic = @{@"title":@"",@"titleColor":KZSHColor929292,@"font":kPingFangMedium(17),@"backgroundColor":KClearColor};
     UIButton *loginBtn = [ZSHBaseUIControl createBtnWithParamDic:loginBtnDic];
+    [loginBtn setTitle:curUser.NICKNAME forState:UIControlStateNormal];
     [headCellView addSubview:loginBtn];
     [loginBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(headImageView.mas_bottom).offset(kRealValue(15));
         make.height.mas_equalTo(kRealValue(45));
-        make.left.mas_equalTo(headImageView);
+        make.centerX.mas_equalTo(headImageView);
         make.width.mas_equalTo(kRealValue(90));
     }];
     return headCellView;
 }
+
+- (void)distributeAction{
+    
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

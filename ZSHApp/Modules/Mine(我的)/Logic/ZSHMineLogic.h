@@ -57,11 +57,15 @@
 - (void)requestEnergyValueMonth:(void (^)(id response))success;
 // 获取用户会员中心信息
 - (void)requestGetMemberInfo:(void (^)(id response))success;
-// 获取我的优惠券，黑咖币，能量值
+// 获取我的优惠券，黑卡币，能量值
 - (void)requestCouBlackEnergy:(void (^)(id response))success;
 // 给商品添加用户评价
 - (void)requestSProductAddEva:(NSDictionary *)dic success:(void (^)(id response))success;
 // 找回登录密码 (忘记密码)
 - (void)requestForgetUser:(NSDictionary *)dic success:(void (^)(id response))success;
+// 修改用户手机号码
+- (void)requestUserPhone:(NSDictionary *)dic success:(void (^)(id response))success;
+// 根据店铺获取优惠券列表
+- (void)requestCouponList:(NSDictionary *)dic success:(void (^)(id response))success;
 
 @end

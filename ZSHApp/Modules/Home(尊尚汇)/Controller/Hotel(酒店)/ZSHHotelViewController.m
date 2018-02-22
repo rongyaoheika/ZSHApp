@@ -13,6 +13,7 @@
 #import "ZSHHotelModel.h"
 #import "ZSHHotelLogic.h"
 #import "ZSHPickView.h"
+#import "ZSHGuideView.h"
 
 @interface ZSHHotelViewController ()<UISearchBarDelegate>
 
@@ -20,6 +21,7 @@
 @property (nonatomic, assign) ZSHShopType                shopType;
 @property (nonatomic, strong) NSArray <ZSHHotelModel *>  *hotelModelArr;
 @property (nonatomic, strong) NSArray <NSDictionary *>   *hotelListDicArr;
+@property (nonatomic, strong) ZSHGuideView               *guideView;
 
 @end
 
@@ -55,21 +57,31 @@ static NSString *ZSHHotelCellID = @"ZSHHotelCell";
     _hotelLogic = [[ZSHHotelLogic alloc]init];
     NSDictionary *paramDic = @{@"HONOURUSER_ID":HONOURUSER_IDValue};
     if (kFromClassTypeValue == FromHotelVCToTitleContentVC) {//酒店
-        [_hotelLogic loadHotelListDataWithParamDic:paramDic success:^(NSArray *hotelListDicArr) {
+        [_hotelLogic loadHotelListDataWithParamDic:paramDic success:^(id responseObject) {
             [weakself endrefresh];
             _shopType = ZSHHotelShopType;
-            _hotelListDicArr = hotelListDicArr;
+            _hotelListDicArr = responseObject[@"pd"];
+            [weakself updateAd:responseObject[@"ad"]];
             [weakself initViewModel];
             
         } fail:nil];
     } else if (kFromClassTypeValue == FromBarVCToTitleContentVC){//酒吧
-        [_hotelLogic loadBarListDataWithParamDic:paramDic success:^(NSArray *barListDicArr) {
+        [_hotelLogic loadBarListDataWithParamDic:paramDic success:^(id responseObject) {
             [weakself endrefresh];
             _shopType = ZSHBarShopType;
-            _hotelListDicArr = barListDicArr;
+            _hotelListDicArr = responseObject[@"pd"];
+            [weakself updateAd:responseObject[@"ad"]];
             [weakself initViewModel];
         } fail:nil];
     }
+}
+
+- (void)updateAd:(NSArray *)arr {
+    NSMutableArray *imageArr = [[NSMutableArray alloc] init];
+    for (NSDictionary *dic  in arr) {
+        [imageArr addObject:dic[@"SHOWIMG"]];
+    }
+    [_guideView updateViewWithParamDic:@{@"dataArr":imageArr}];
 }
 
 - (void)endrefresh{
@@ -85,12 +97,10 @@ static NSString *ZSHHotelCellID = @"ZSHHotelCell";
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     [self.tableView setSeparatorColor:KZSHColor1D1D1D];
     [self.tableView setSeparatorInset:UIEdgeInsetsMake(0, 0, 0, 0)];
-    
     self.tableView.delegate = self.tableViewModel;
     self.tableView.dataSource = self.tableViewModel;
-    
     [self.tableView registerClass:[ZSHHotelCell class] forCellReuseIdentifier:ZSHHotelCellID];
-    
+    self.tableView.tableHeaderView = self.guideView;
 }
 
 - (void)initViewModel {
@@ -197,6 +207,13 @@ static NSString *ZSHHotelCellID = @"ZSHHotelCell";
         } fail:nil];
     }
     
+}
+- (ZSHGuideView *)guideView {
+    if(!_guideView) {
+        NSDictionary *nextParamDic = @{KFromClassType:@(FromBuyVCToGuideView),@"pageViewHeight":@(kRealValue(120)),@"min_scale":@(0.6),@"withRatio":@(1.8),@"infinite":@(false)};
+        _guideView = [[ZSHGuideView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, kRealValue(120)) paramDic:nextParamDic];
+    }
+    return _guideView;
 }
 
 

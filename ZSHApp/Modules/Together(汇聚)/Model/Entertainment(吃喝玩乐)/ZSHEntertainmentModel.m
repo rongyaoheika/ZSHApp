@@ -20,6 +20,7 @@
     return _cellHeight;
 }
 
+@end
 
-
+@implementation ZSHADVERTISEMENTModel
 @end

@@ -235,9 +235,9 @@ static NSInteger lz_CartRowHeight = 120;
     
     //当有tabBarController时,在tabBar的上面
     if (_isHasTabBarController == YES) {
-        backgroundView.frame = CGRectMake(0, KScreenHeight - KNavigationBarHeight - KBottomNavH - KBottomHeight, KScreenWidth, KBottomNavH);
+        backgroundView.frame = CGRectMake(0, KScreenHeight - KNavigationBarHeight - KBottomTabH, KScreenWidth, KBottomNavH);
     } else {
-        backgroundView.frame = CGRectMake(0, KScreenHeight -  KBottomNavH - KBottomHeight, KScreenWidth, KBottomNavH);
+        backgroundView.frame = CGRectMake(0, KScreenHeight -  KBottomTabH, KScreenWidth, KBottomNavH);
     }
     
 //    UIView *lineView = [[UIView alloc]init];
@@ -348,9 +348,9 @@ static NSInteger lz_CartRowHeight = 120;
     self.myTableView = table;
     
     if (_isHasTabBarController) {
-        table.frame = CGRectMake(0, 0, KScreenWidth, KScreenHeight - KNavigationBarHeight - KBottomNavH - KBottomHeight);
+        table.frame = CGRectMake(0, 0, KScreenWidth, KScreenHeight - KNavigationBarHeight - KBottomTabH);
     } else {
-        table.frame = CGRectMake(0, 0, KScreenWidth, KScreenHeight - KNavigationBarHeight-KBottomNavH - KBottomHeight);
+        table.frame = CGRectMake(0, 0, KScreenWidth, KScreenHeight - KNavigationBarHeight-KBottomTabH);
     }
     
     [table registerClass:[LZTableHeaderView class] forHeaderFooterViewReuseIdentifier:@"LZHeaderView"];

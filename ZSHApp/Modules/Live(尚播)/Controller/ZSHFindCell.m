@@ -26,7 +26,6 @@
     }];
     
     _picView = [[UIImageView alloc] init];
-    _picView.image = [UIImage imageNamed:@"play_find_2"];
     [self addSubview:_picView];
     [_picView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self).offset(kRealValue(34));
@@ -59,7 +58,7 @@
 
 - (void)updateCellWithModel:(ZSHFindModel *)model {
     _titleLabel.text = model.TITLE;
-    [_picView sd_setImageWithURL:[NSURL URLWithString:model.VIDEOBACKIMAGE]];
+    [_picView sd_setImageWithURL:[NSURL URLWithString:model.VIDEOBACKIMAGE.firstObject]];
     _pageviewLabel.text = NSStringFormat(@"%@人浏览", model.PAGEVIEWS);
     
 }

@@ -10,6 +10,7 @@
 #import "LXScollTitleView.h"
 @interface ZSHCardPayCell ()
 
+@property (nonatomic, strong) UIImageView           *bgIV;
 @property (nonatomic, strong) LXScollTitleView      *titleView;
 @property (nonatomic, strong) UILabel               *promptLabel;
 
@@ -21,6 +22,10 @@
 - (void)setup{
     NSArray *btnTitleArr = @[@"微信",@"支付宝"];
     [self.contentView addSubview:self.titleView];
+    
+    _bgIV = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"seg_two_bg"]];
+    [self.titleView addSubview:_bgIV];
+    
     [self.titleView reloadViewWithTitles:btnTitleArr];
 }
 
@@ -34,9 +39,19 @@
         make.height.mas_equalTo(kRealValue(30));
     }];
     
+    [_bgIV mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.mas_equalTo(_titleView);
+    }];
+    
     int i = 0;
     NSArray *imageArr = @[@"pay_wechat",@"pay_alipay"];
     for (UIButton *btn in _titleView.titleButtons) {
+        [btn mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.mas_equalTo(_titleView).offset(kRealValue(99.5)*i);
+            make.top.mas_equalTo(_titleView);
+            make.size.mas_equalTo(CGSizeMake(kRealValue(100), kRealValue(30)));
+        }];
+        
         [btn setImage:[UIImage imageNamed:imageArr[i]] forState:UIControlStateNormal];
         [btn layoutButtonWithEdgeInsetsStyle:XYButtonEdgeInsetsStyleLeft imageTitleSpace:kRealValue(10)];
          i++;
@@ -58,7 +73,6 @@
 //            __weak typeof(self) strongSelf = weakSelf;
 
         };
-        _titleView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"seg_two_bg"] ];
         _titleView.titleWidth = kRealValue(100);
     }
     return _titleView;

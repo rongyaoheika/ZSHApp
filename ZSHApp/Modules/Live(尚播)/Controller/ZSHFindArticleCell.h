@@ -11,3 +11,6 @@
 @interface ZSHFindArticleCell : ZSHBaseCell
 
 @end
+
+@interface ZSHFindThreePics : ZSHBaseCell
+@end

@@ -64,8 +64,6 @@ NSInteger yearSatrt = 1900;
 
 - (void)createData{
     self.selectedRow = -1;
-//    self.titleArr = @[@"生日",@"性别",@"城市区域选择",@"年份",@"优惠券选择",@"时间选择",@"方式选择"
-//                      @"物流公司选择"];
     self.regionWidthArr = @[@(KScreenWidth * 0.25),@(KScreenWidth * 0.5),@(KScreenWidth * 0.25)];
    
     // 年月日
@@ -309,7 +307,7 @@ NSInteger yearSatrt = 1900;
             break;
         }
         default:{
-             [_pickerView selectRow:1 inComponent:0 animated:NO];
+             [_pickerView selectRow:0 inComponent:0 animated:NO];
             break;
         }
     }
@@ -344,7 +342,7 @@ NSInteger yearSatrt = 1900;
             NSInteger day = [_pickerView selectedRowInComponent:2];
             NSString *dateStr = [NSString stringWithFormat:@"%zd-%zd-%zd ",yearSatrt + year,month+1,day+1];
             if (self.saveChangeBlock) {
-                self.saveChangeBlock(dateStr,self.tag);
+                self.saveChangeBlock(dateStr,self.tag,nil);
             }
             break;
         }
@@ -354,7 +352,7 @@ NSInteger yearSatrt = 1900;
             NSInteger priceMax = [_pickerView selectedRowInComponent:1];
             NSString *priceStr = [NSString stringWithFormat:@"%zd-%zd", priceMin*100,priceMax*100];
             if (self.saveChangeBlock) {
-                self.saveChangeBlock(priceStr,self.tag);
+                self.saveChangeBlock(priceStr,self.tag,nil);
             }
         }
             break;
@@ -368,13 +366,22 @@ NSInteger yearSatrt = 1900;
             NSInteger district = [_pickerView selectedRowInComponent:2];
 
             NSString *addrStr = nil;
+            NSString *provinceStr = nil;
+            NSString *cityStr = nil;
+            NSString *districtStr = nil;
             if ([_dataArr[2] count]) {
                 addrStr = [NSString stringWithFormat:@"%@%@%@", _dataArr[0][province],_dataArr[1][city],_dataArr[2][district]];
-            }else {
+                provinceStr = _dataArr[0][province];
+                cityStr = _dataArr[1][city];
+                districtStr = _dataArr[2][district];
+            } else {
                 addrStr = [NSString stringWithFormat:@"%@%@", _dataArr[0][province],_dataArr[1][city]];
+                provinceStr = _dataArr[0][province];
+                cityStr = _dataArr[1][city];
+                districtStr = @"";
             }
             if (self.saveChangeBlock) {
-                self.saveChangeBlock(addrStr, self.tag);
+                self.saveChangeBlock(addrStr, self.tag,@{@"provinceStr":provinceStr,@"cityStr":cityStr,@"districtStr":districtStr});
             }
             break;
         }
@@ -384,7 +391,7 @@ NSInteger yearSatrt = 1900;
             NSString *dateStr = [NSString stringWithFormat:@"%02ld/%ld",(long)month,(long)(yearSatrt + year)];
             RLog(@"保存区域数据%ld%ld",(long)year,(long)month);
             if (self.saveChangeBlock) {
-                self.saveChangeBlock(dateStr,self.tag);
+                self.saveChangeBlock(dateStr,self.tag,nil);
             }
             break;
         }
@@ -392,7 +399,7 @@ NSInteger yearSatrt = 1900;
             NSInteger index = [_pickerView selectedRowInComponent:0];
             NSString *dateStr = [NSString stringWithFormat:@"%@",_dataArr[index]];
             if (self.saveChangeBlock) {
-                self.saveChangeBlock(dateStr,index);
+                self.saveChangeBlock(dateStr,index,nil);
             }
             break;
         }
@@ -400,7 +407,7 @@ NSInteger yearSatrt = 1900;
             NSInteger index = [_pickerView selectedRowInComponent:0];
             NSString *dateStr = [NSString stringWithFormat:@"%@",_dataArr[index]];
             if (self.saveChangeBlock) {
-                self.saveChangeBlock(dateStr,index);
+                self.saveChangeBlock(dateStr,index,nil);
             }
             
             
@@ -414,35 +421,21 @@ NSInteger yearSatrt = 1900;
 - (void)refreshCityAndDistrict {
     
     NSInteger index = [_pickerView selectedRowInComponent:0];
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"area.plist" ofType:@""];
-    
-    NSArray *areaArr = [NSArray arrayWithContentsOfFile:path];
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"citys.plist" ofType:@""];
+    NSDictionary *areaDic = [NSDictionary dictionaryWithContentsOfFile:path];
+
     NSMutableArray *provinces = _dataArr[0];
-//    for (NSDictionary *dic in areaArr) {
-//        [provinces addObject:dic[@"state"]];
-//    }
     
     NSMutableArray *citys = [NSMutableArray array];
-    for (NSDictionary *dic in areaArr) {
-        if ([dic[@"state"] isEqualToString:provinces[index]]) {
-            for (NSDictionary *city in dic[@"cities"]) {
-                [citys addObject:city[@"city"]];
-                if ([city[@"city"] isEqualToString:citys[0]]) {
-                    if ([city[@"areas"] count]) {
-                        _dataArr[2] = city[@"areas"];
-                        [_pickerView reloadComponent:2];
-                    } else {
-                        _dataArr[2] = @[@""];
-                        [_pickerView reloadComponent:2];
-                    }
-                }
-            }
-            _dataArr[1] = [citys copy];
-            [_pickerView reloadComponent:1];
-            break;
-        }
-        
-    }
+    NSArray *arr = [areaDic objectForKey:provinces[index]];
+    
+    [arr[0] enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+        [citys addObject:key];
+    }];
+    _dataArr[1] = citys;
+    _dataArr[2] = [arr[0] objectForKey:citys[0]];
+    [_pickerView reloadComponent:1];
+    [_pickerView reloadComponent:2];
     
 }
 
@@ -452,27 +445,11 @@ NSInteger yearSatrt = 1900;
     NSInteger index = [_pickerView selectedRowInComponent:0];
     NSInteger index1 = [_pickerView selectedRowInComponent:1];
     
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"area.plist" ofType:@""];
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"citys.plist" ofType:@""];
+    NSDictionary *areaDic = [NSDictionary dictionaryWithContentsOfFile:path];
     
-    NSArray *areaArr = [NSArray arrayWithContentsOfFile:path];
-    NSMutableArray *provinces = _dataArr[0];
-//    for (NSDictionary *dic in areaArr) {
-//        [provinces addObject:dic[@"state"]];
-//    }
-//    
-    for (NSDictionary *dic in areaArr) {
-        if ([dic[@"state"] isEqualToString:provinces[index]]) {
-            for (NSDictionary *city in dic[@"cities"]) {
-                if ([city[@"city"] isEqualToString:_dataArr[1][index1]]) {
-                    _dataArr[2] = city[@"areas"];
-                    [_pickerView reloadComponent:2];
-                    break;
-                }
-            }
-            break;
-        }
-        
-    }
+    _dataArr[2] = [[areaDic objectForKey:_dataArr[0][index]][0] objectForKey:_dataArr[1][index1]];
+    [_pickerView reloadComponent:2];
 }
 
 

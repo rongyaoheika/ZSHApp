@@ -12,10 +12,12 @@
 #import "UIImage+BlurGlass.h"
 #import "PYSearchViewController.h"
 #import "ZSHBaseTableView.h"
+
 @interface RootViewController ()
 
-@property (nonatomic,strong) UIImageView        *noDataView;
-@property (nonatomic, weak)  UITextField        *searchTextField;
+@property (nonatomic, strong) UIImageView        *noDataView;
+@property (nonatomic, weak)   UITextField        *searchTextField;
+
 @end
 
 @implementation RootViewController
@@ -33,7 +35,7 @@
     
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.view.backgroundColor = KClearColor;
-    
+
     //是否显示返回按钮
     self.isShowLiftBack = YES;
     self.StatusBarStyle = UIStatusBarStyleLightContent;
@@ -41,7 +43,6 @@
     UIImageView *image = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"home_bg"]];
     image.frame = self.view.bounds;
     [self.view insertSubview:image atIndex:0];
-    
 }
 
 - (void)viewDidLayoutSubviews {
@@ -180,7 +181,6 @@
         
         //底部刷新
         _collectionView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(collectionFooterRereshing)];
-        
     }
     return _collectionView;
 }
@@ -196,7 +196,7 @@
     if (!_bottomBtn) {
         NSDictionary *bottomBtnDic = @{@"title":@"申请售后",@"titleColor":KZSHColor929292,@"font":kPingFangMedium(17),@"backgroundColor":KZSHColor0B0B0B};
        _bottomBtn = [ZSHBaseUIControl createBtnWithParamDic:bottomBtnDic];
-       _bottomBtn.frame = CGRectMake(0, KScreenHeight - KBottomNavH - KBottomHeight, KScreenWidth, KBottomNavH);
+       _bottomBtn.frame = CGRectMake(0, KScreenHeight - KBottomTabH, KScreenWidth, KBottomNavH);
     }
     return _bottomBtn;
 }
@@ -220,11 +220,11 @@
 }
 
 - (void)collectionHeaderRereshing {
-    
+    [self.collectionView.mj_header endRefreshing];
 }
 
 - (void)collectionFooterRereshing {
-    
+    [self.collectionView.mj_footer endRefreshing];
 }
 
 /**
@@ -256,22 +256,23 @@
 }
 
 - (void)addNavigationItemWithImageName:(NSString *)imageName title:(NSString *)title locate:(XYButtonEdgeInsetsStyle)imageLocate isLeft:(BOOL)isLeft target:(id)target action:(SEL)action tag:(NSInteger)tag {
-    UIButton * btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btn setTitle:title forState:UIControlStateNormal];
-    [btn setTitleColor:KZSHColor929292 forState:UIControlStateNormal];
-    btn.titleLabel.font = kPingFangMedium(14);
-    [btn setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
-    btn.size = CGSizeMake(44, 44);
-    [btn layoutButtonWithEdgeInsetsStyle:imageLocate imageTitleSpace:kRealValue(4)];
-    [btn addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
-    btn.tag = tag;
-    btn.imageView.contentMode = UIViewContentModeScaleAspectFit;
-    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:btn];
+    _leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_leftBtn setTitle:title forState:UIControlStateNormal];
+    [_leftBtn setTitleColor:KZSHColor929292 forState:UIControlStateNormal];
+    _leftBtn.titleLabel.font = kPingFangMedium(12);
+    [_leftBtn setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
+//    _leftBtn.size = CGSizeMake(44, 44);
+    _leftBtn.frame = CGRectMake(0, 0, 44, 44);
+    [_leftBtn.titleLabel setLineBreakMode:NSLineBreakByTruncatingMiddle];
+    [_leftBtn layoutButtonWithEdgeInsetsStyle:imageLocate imageTitleSpace:kRealValue(4)];
+    [_leftBtn addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
+    _leftBtn.tag = tag;
+    _leftBtn.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:_leftBtn];
     UIBarButtonItem *spaceButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
     if (isLeft) {
         spaceButtonItem.width = -15;
         self.navigationItem.leftBarButtonItems = @[spaceButtonItem, item];
-        
     } else {
         spaceButtonItem.width = -15;
         self.navigationItem.rightBarButtonItems = @[spaceButtonItem, item];
@@ -410,6 +411,13 @@
 
 - (void) hideProgress {
     [MBProgressHUD hideHUDForView:self.view animated:YES];
+}
+
+//定位
+- (void)startLocateWithDelegate:(id)delegate{
+        HCLocationManager *locationManager = [HCLocationManager sharedManager];
+        locationManager.delegate = delegate;
+        [locationManager startLocate];
 }
 
 @end

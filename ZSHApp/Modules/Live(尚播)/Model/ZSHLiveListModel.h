@@ -14,5 +14,10 @@
 @property (nonatomic,copy)  NSString *imageName;
 @property (nonatomic,copy)  NSString *loveCount;
 
+@property (nonatomic,copy)  NSString *PublishTime;
+@property (nonatomic,copy)  NSString *PublishUrl;
+@property (nonatomic,copy)  NSString *UserNumber;
+@property (nonatomic,copy)  NSString *LiveCover;
+@property (nonatomic,copy)  NSString *LiveTitle;
 
 @end

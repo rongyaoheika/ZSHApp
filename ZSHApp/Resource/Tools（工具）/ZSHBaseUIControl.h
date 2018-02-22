@@ -37,7 +37,11 @@ typedef NS_ENUM(NSInteger,ZSHToChangePWDView){
     FromKTVRoomTypeVCToNoticeView,      //KTV详情 - 包间类型
     FromMemberCenterVCToNoticeView,     //会员中心 - 类型
     FromEnergyValueVCToNoticeView,      //能量值 - 类型
-    FromNoneVCToChangePWDView
+    FromMusicMenuToNoticeView,          //音乐 - 歌单推荐
+    FromMusicLibraryToNoticeView,       //音乐 - 曲库推荐
+    FromMusicSingerToNoticeView,        //音乐 - 歌手推荐
+    FromMusicRankToNoticeView,          //音乐 - 榜单推荐
+    FromDefaultVCToChangePWDView
 };
 
 typedef NS_ENUM(NSUInteger,ZSHFromVCToHotelDetailVC){//** -> 详情页面
@@ -106,7 +110,11 @@ typedef NS_ENUM(NSInteger,ZSHToMultiInfoVC){
     FromUserInfoQQVCToMultiInfoVC,                  //个人资料 - 绑定QQ帐号
     FromUserInfoResumeVCToMultiInfoVC,              //个人资料 - 个人简介
     FromUserPasswordVCToMultiInfoVC,                //账号与安全 - 登录密码
-    FromSetPasswordTOMultiInfoVC,                   //重置密码
+    FromSetPasswordToMultiInfoVC,                   //重置密码
+    FromCreateStoreVCToMultiInfoVC,                 //创建门店
+    FromVerifyVCToMultiInfoVC,                      //门店-提交审核
+    FromWeMediaVCToMultiInfoVC,                     //自媒体入驻
+    FromWeMediaVerifyVCToMultiInfoVC,               //自媒体-提交资质
     FromNoneToMultiInfoVC
 };
 
@@ -122,6 +130,7 @@ typedef NS_ENUM (NSInteger,ZSHToGuideView) {
     FromHotelDetailVCToGuideView,     //酒店（美食，ktv详情页） - 轮播view
     FromGoodsDetailVCToGuideView,     // 商品详情
     FromBuyVCToGuideView,             // 尊购首页轮播
+    FromTogetherToGuideView,          // 吃喝玩乐轮播
     FromNoneVCToGuideView
 };
 
@@ -145,7 +154,8 @@ typedef NS_ENUM(NSUInteger,ZSHToTitleContentVC){
     FromMineLevelVCToTitleContentVC,         //我的等级（用户等级，主播等级）
     FromContributionListVCToTitleContentVC,  //贡献榜（日榜，周榜，月榜，总榜）
     FromPeronalCenterVCToTitleContentVC,     //个人中心（黑微博，小视频， 资料）
-    
+    FromMagazineVCToTitleContentVC,          //荣耀杂志（推荐，科技，吃喝，心灵， 时尚....）
+    FromBuyVCToTitleContentVC,               //尊购
     FromNoneToTitleContentVC
 };
 
@@ -154,6 +164,7 @@ typedef NS_ENUM(NSInteger, ShowCellType) {
     ZSHPopType,                        // 弹框形式（确认订单弹窗）
     ZSHOtherType,                      // 其他
 };
+
 
 @interface ZSHBaseUIControl : NSObject
 
@@ -164,6 +175,6 @@ typedef NS_ENUM(NSInteger, ShowCellType) {
 + (UIView *)createTabHeadLabelViewWithParamDic:(NSDictionary *)paramDic;
 + (void) setAnimationWithHidden:(BOOL)hidden view:(UIView *)view completedBlock:(RemoveCompletedBlock)completedBlock;
 + (UIView *)createBottomButton:(void (^)(NSInteger ))tapBlock;
-
++ (UIView *)createLineViewWihtFrame:(CGRect)frame color:(UIColor*)lineColor;
 
 @end

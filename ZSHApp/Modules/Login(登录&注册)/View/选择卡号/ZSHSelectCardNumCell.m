@@ -13,11 +13,11 @@
 
 @interface ZSHSelectCardNumCell ()<UIScrollViewDelegate>
 
+@property (nonatomic, strong) UIImageView                   *bgIV;
 @property (nonatomic, strong) LXScollTitleView              *titleView;
-@property (nonatomic, strong) UIScrollView                  *bottomScrollView;
 @property (nonatomic, strong) ZSHSelectCardNumFirstView     *firstView;
 @property (nonatomic, strong) ZSHSelectCardNumSecondView    *secondView;
-@property (nonatomic, assign) NSInteger                     selectIndex;
+@property (nonatomic, strong) UIScrollView                  *bottomScrollView;
 
 @end
 
@@ -26,6 +26,10 @@
 - (void)setup{
     NSArray *btnTitleArr = @[@"随机",@"选号"];
     [self.contentView addSubview:self.titleView];
+    self.titleView.selectedIndex = 0;
+    
+    _bgIV = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"seg_two_bg"]];
+    [self.titleView addSubview:_bgIV];
     [self.titleView reloadViewWithTitles:btnTitleArr];
     
     [self.contentView addSubview:self.bottomScrollView];
@@ -41,12 +45,16 @@
 
 - (void)layoutSubviews{
     [super layoutSubviews];
-    
+
     [_titleView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self).offset(kRealValue(20));
-        make.left.mas_equalTo(self).offset((kScreenWidth-kRealValue(200))/2);
+        make.centerX.mas_equalTo(self);
         make.width.mas_equalTo(kRealValue(200));
         make.height.mas_equalTo(kRealValue(30));
+    }];
+    
+    [_bgIV mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.mas_equalTo(_titleView);
     }];
     
     int i = 0;
@@ -60,31 +68,24 @@
     }
     
     self.bottomScrollView.contentSize = CGSizeMake(2*kScreenWidth, 0);
+    CGFloat scrollViewH = (_selectIndex == 0?kRealValue(120):kRealValue(1200));
     [self.bottomScrollView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self).offset(kRealValue(50));
-        make.left.mas_equalTo(self);
-        make.width.mas_equalTo(kScreenWidth);
-        make.height.mas_equalTo(kRealValue(2150));
-//        if (_selectIndex == 1) {
-//            make.height.mas_equalTo(kRealValue(63));
-//        } else if(_selectIndex == 2) {
-//            make.height.mas_equalTo(kRealValue(2380));
-//        }
+        make.edges.mas_equalTo(self).insets(UIEdgeInsetsMake(kRealValue(50), 0, 0, 0));
+        make.height.mas_equalTo(scrollViewH);
     }];
     
     [_firstView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(_bottomScrollView);
-        make.width.mas_equalTo(kScreenWidth);
-        make.height.mas_equalTo(_bottomScrollView);
-        make.top.mas_equalTo(_bottomScrollView);
+        make.edges.mas_equalTo(_bottomScrollView);
+        make.width.mas_equalTo(KScreenWidth);
     }];
     
     [_secondView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(_bottomScrollView).offset(KScreenWidth);
-        make.width.mas_equalTo(kScreenWidth);
-        make.height.mas_equalTo(_bottomScrollView);
+        make.left.mas_equalTo(_firstView.mas_right);
         make.top.mas_equalTo(_bottomScrollView);
+        make.width.mas_equalTo(KScreenWidth);
+        make.height.mas_equalTo(kRealValue(1200));
     }];
+    
 }
 
 #pragma getter
@@ -103,7 +104,7 @@
 
 - (LXScollTitleView *)titleView{
     if (!_titleView) {
-        _titleView = [[LXScollTitleView alloc] initWithFrame:CGRectMake(0, (kScreenWidth-kRealValue(200))/2, kRealValue(200), kRealValue(30))];
+        _titleView = [[LXScollTitleView alloc] initWithFrame:CGRectMake(0, (kScreenWidth-kRealValue(200))/2, kRealValue(200),kRealValue(30))];
         _titleView.selectedBgImage = [UIImage imageNamed:@"seg_press"];
         _titleView.normalTitleFont = kPingFangLight(15);
         _titleView.selectedTitleFont = kPingFangLight(15);
@@ -112,25 +113,32 @@
         _titleView.indicatorHeight = 0;
         __weak typeof(self) weakSelf = self;
         _titleView.selectedBlock = ^(NSInteger index){
-            __weak typeof(self) strongSelf = weakSelf;
-            [strongSelf.bottomScrollView setContentOffset:CGPointMake(index * KScreenWidth, 0) animated:YES];
+            weakSelf.selectIndex = index;
         };
-        _titleView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"seg_two_bg"] ];
         _titleView.titleWidth = kRealValue(100);
     }
     return _titleView;
 }
 
+- (void)setSelectIndex:(NSInteger)selectIndex{
+    _selectIndex = selectIndex;
+    _titleView.selectedIndex = selectIndex;
+    [self.bottomScrollView setContentOffset:CGPointMake(_selectIndex * KScreenWidth, 0) animated:YES];
+    if (self.cellHeightBlock) {
+        self.cellHeightBlock(_selectIndex);
+    }
+    
+}
 
 #pragma action
 
 -(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
     NSInteger index = scrollView.contentOffset.x/kScreenWidth;
+    _selectIndex = index;
     self.titleView.selectedIndex = index;
-}
-
-- (CGFloat)rowHeightWithCellModel:(ZSHBaseModel *)model{
-    return CGRectGetMaxY(_bottomScrollView.frame);
+    if (self.cellHeightBlock) {
+        self.cellHeightBlock(index);
+    }
 }
 
 @end

@@ -8,11 +8,12 @@
 
 #import "ZSHLiveDayListViewController.h"
 #import "ZSHLiveDayListCell.h"
-
+#import "ZSHLiveLogic.h"
 static NSString *ZSHLiveDayCellID = @"ZSHLiveDayCellID";
 
 @interface ZSHLiveDayListViewController ()
 
+@property (nonatomic, strong)ZSHLiveLogic   *liveLogic;
 @property (nonatomic, strong)NSMutableArray *dataArr;
 
 @end
@@ -21,14 +22,20 @@ static NSString *ZSHLiveDayCellID = @"ZSHLiveDayCellID";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self loadData];
+    
     [self createUI];
+    [self loadData];
 }
 
 - (void)loadData{
+    _liveLogic = [[ZSHLiveLogic alloc]init];
     
-   
     [self initViewModel];
+}
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self requestData];
 }
 
 - (void)createUI{
@@ -42,24 +49,16 @@ static NSString *ZSHLiveDayCellID = @"ZSHLiveDayCellID";
     self.tableView.dataSource = self.tableViewModel;
     
     [self.tableView registerClass:[ZSHLiveDayListCell class] forCellReuseIdentifier:ZSHLiveDayCellID];
-    [self.tableView reloadData];
 }
 
 - (void)initViewModel {
     [self.tableViewModel.sectionModelArray removeAllObjects];
     [self.tableViewModel.sectionModelArray addObject:[self storeListSection]];
+    [self.tableView reloadData];
 }
 
 //list
 - (ZSHBaseTableViewSectionModel*)storeListSection {
-    self.dataArr = @[
-                     @{@"imageName":@"list_user_1",@"nickname":@"忘记时间的钟",@"value":@"250689"},
-                     @{@"imageName":@"list_user_2",@"nickname":@"智",@"value":@"250689"},
-                     @{@"imageName":@"list_user_3",@"nickname":@"行走",@"value":@"250689"},
-                     @{@"imageName":@"list_user_4",@"nickname":@"无名",@"value":@"250689"},
-                     @{@"imageName":@"list_user_5",@"nickname":@"自由自在",@"value":@"250689"}
-                     ];
-    
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     
     for (int i = 0; i < self.dataArr.count; i++) {
@@ -68,7 +67,7 @@ static NSString *ZSHLiveDayCellID = @"ZSHLiveDayCellID";
         cellModel.height = kRealValue(59);
         cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
             ZSHLiveDayListCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHLiveDayCellID forIndexPath:indexPath];
-            NSDictionary *nextParamDic = @{@"imageName":self.dataArr[i][@"imageName"],@"nickname":self.dataArr[i][@"nickname"],@"value":self.dataArr[i][@"value"],@"index":@(i)};
+            NSDictionary *nextParamDic = _dataArr[indexPath.row];
             [cell updateCellWithParamDic:nextParamDic];
             return cell;
         };
@@ -78,6 +77,15 @@ static NSString *ZSHLiveDayCellID = @"ZSHLiveDayCellID";
     }
     
     return sectionModel;
+}
+
+- (void)requestData{
+    kWeakSelf(self);
+    NSDictionary *paramDic = @{@"HONOURUSER_ID":HONOURUSER_IDValue,@"TYPE":self.paramDic[@"TYPE"]};
+    [_liveLogic requestRankWithDic:paramDic success:^(id response) {
+        weakself.dataArr = response[@"pd"];
+        [weakself initViewModel];
+    }];
 }
 
 @end

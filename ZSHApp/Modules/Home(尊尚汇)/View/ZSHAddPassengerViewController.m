@@ -13,7 +13,7 @@ static NSString *ZSHAddPassengerCellID = @"ZSHAddPassengerCellID";
 
 @interface ZSHAddPassengerViewController ()
 
-@property (nonatomic, strong) NSMutableArray *titleArr;
+@property (nonatomic, strong) NSArray *titleArr;
 
 
 @end
@@ -36,93 +36,7 @@ static NSString *ZSHAddPassengerCellID = @"ZSHAddPassengerCellID";
     
     [self addNavigationItemWithTitles:@[@"保存"] isLeft:NO target:self action:@selector(saveAction) tags:@[@(1)]];
     
-     
-//    UILabel *nameLabel = [ZSHBaseUIControl createLabelWithParamDic:@{@"text":@"乘客姓名",@"font":kPingFangRegular(14),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentLeft)}];
-//    [self.view addSubview:nameLabel];
-//    
-//    [nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.left.mas_equalTo(self.view).offset(kRealValue(KLeftMargin));
-//        make.size.mas_equalTo(CGSizeMake(kRealValue(58), kRealValue(15)));
-//    }];
-//    
-//    UITextField *nameTextField = [[UITextField alloc] init];
-//    nameTextField.font = [UIFont systemFontOfSize:14.0];
-//    nameTextField.placeholder = @"必填";
-//    [nameTextField setValue:KZSHColor454545 forKeyPath:@"_placeholderLabel.textColor"];
-//    [self.view addSubview:nameTextField];
-//    [nameTextField mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.mas_equalTo(nameLabel);
-//        make.left.mas_equalTo(nameLabel).offset(kRealValue(19+56));
-//        make.size.mas_equalTo(CGSizeMake(kRealValue(255), kRealValue(15)));
-//    }];
-//    
-//    
-//    UILabel *typeLabel = [ZSHBaseUIControl createLabelWithParamDic:@{@"text":@"乘客类型",@"font":kPingFangRegular(14),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentLeft)}];
-//    [self.view addSubview:typeLabel];
-//    [typeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.mas_equalTo(nameLabel).offset(kRealValue(45));
-//        make.left.mas_equalTo(nameLabel);
-//        make.size.mas_equalTo(CGSizeMake(kRealValue(58), kRealValue(15)));
-//    }];
-//    
-//    NSArray *typenameArr = @[@"成人票", @"学生票", @"儿童票"];
-//    for (int i = 0; i < 3; i++) {
-//        UIButton *btn = [ZSHBaseUIControl createBtnWithParamDic:@{@"title":typenameArr[i],@"font":kPingFangRegular(15)}];
-//        btn.layer.borderWidth = 0.5;
-//        btn.layer.borderColor = KZSHColor929292.CGColor;
-//        [self.view addSubview:btn];
-//        [btn mas_makeConstraints:^(MASConstraintMaker *make) {
-//            make.top.mas_equalTo(self.view).offset(kRealValue(57));
-//            make.left.mas_equalTo(self.view).offset(kRealValue(90+i*80));
-//            make.size.mas_equalTo(CGSizeMake(kRealValue(70), kRealValue(25)));
-//        }];
-//    }
-//    
-//    UILabel *IDTypeLabel = [ZSHBaseUIControl createLabelWithParamDic:@{@"text":@"证件类型",@"font":kPingFangRegular(14),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentLeft)}];
-//    [self.view addSubview:IDTypeLabel];
-//    [IDTypeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.mas_equalTo(typeLabel).offset(kRealValue(45));
-//        make.left.mas_equalTo(typeLabel);
-//        make.size.mas_equalTo(CGSizeMake(kRealValue(58), kRealValue(15)));
-//    }];
-//    
-//    UILabel *IDLabel = [ZSHBaseUIControl createLabelWithParamDic:@{@"text":@"身份证",@"font":kPingFangRegular(14),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentLeft)}];
-//    [self.view addSubview:IDLabel];
-//    [IDLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.mas_equalTo(IDTypeLabel);
-//        make.left.mas_equalTo(IDTypeLabel).offset(kRealValue(90));
-//        make.size.mas_equalTo(CGSizeMake(kRealValue(43), kRealValue(15)));
-//    }];
-//    
-//    
-//    UIButton *IDSelectBtn = [ZSHBaseUIControl createBtnWithParamDic:@{@"withImage":@(YES),@"normalImage":@"mine_next"}];
-//    [self.view addSubview:IDSelectBtn];
-//    [IDSelectBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.mas_equalTo(IDTypeLabel);
-//        make.right.mas_equalTo(self.view).offset(kRealValue(-KLeftMargin));
-//        make.size.mas_equalTo(CGSizeMake(kRealValue(9), kRealValue(14)));
-//    }];
-//    
-//    
-//    UILabel *IDNumLabel = [ZSHBaseUIControl createLabelWithParamDic:@{@"text":@"证件号码",@"font":kPingFangRegular(14),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentLeft)}];
-//    [self.view addSubview:IDNumLabel];
-//    [IDNumLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.mas_equalTo(IDTypeLabel).offset(kRealValue(45));
-//        make.left.mas_equalTo(IDTypeLabel);
-//        make.size.mas_equalTo(CGSizeMake(kRealValue(58), kRealValue(15)));
-//    }];
-//    
-//    
-//    UITextField *IDNumTextField = [[UITextField alloc] init];
-//    IDNumTextField.font = [UIFont systemFontOfSize:14.0];
-//    IDNumTextField.placeholder = @"必填";
-//    [IDNumTextField setValue:KZSHColor454545 forKeyPath:@"_placeholderLabel.textColor"];
-//    [self.view addSubview:IDNumTextField];
-//    [IDNumTextField mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.mas_equalTo(IDNumLabel);
-//        make.left.mas_equalTo(IDNumLabel).offset(kRealValue(19+56));
-//        make.size.mas_equalTo(CGSizeMake(kRealValue(255), kRealValue(15)));
-//    }];
+    
     self.tableView.frame = CGRectMake(0, KNavigationBarHeight, KScreenWidth, KScreenHeight - KNavigationBarHeight);
     [self.view addSubview:self.tableView];
     self.tableView.delegate = self.tableViewModel;

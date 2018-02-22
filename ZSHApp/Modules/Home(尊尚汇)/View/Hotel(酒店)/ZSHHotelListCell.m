@@ -25,8 +25,7 @@
 - (void)setup{
     
     //酒店图片
-    UIImage *image = [UIImage imageNamed:@"hotel_image"];
-    _hotelmageView = [[UIImageView alloc]initWithImage:image];
+    _hotelmageView = [[UIImageView alloc]init];
     [self.contentView addSubview:_hotelmageView];
     
     //酒店名字

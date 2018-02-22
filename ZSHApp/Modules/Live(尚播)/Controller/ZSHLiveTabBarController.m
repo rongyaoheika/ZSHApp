@@ -16,11 +16,26 @@
 #import "RXLSideSlipViewController.h"
 #import "ZSHBottomBlurPopView.h"
 
+#import <AlivcLivePusher/AlivcLivePusherHeader.h>
+#import "AlivcLivePusherViewController.h"
+#import "AlivcLivePushConfigViewController.h"
+#import "ZSHLiveLogic.h"
+#import "ZSHFinishShowViewController.h"
+
+
 @interface ZSHLiveTabBarController ()<TabBarDelegate>
 
 @property (nonatomic, strong) NSMutableArray             *VCS;   //tabbar root VC
 @property (nonatomic, strong) UIView                     *baseView;
 @property (nonatomic, strong) ZSHBottomBlurPopView       *bottomBlurPopView;
+
+
+@property (nonatomic, assign) BOOL isUseAsync; // 是否使用异步接口
+@property (nonatomic, assign) BOOL isUseWatermark; // 是否使用水印
+@property (nonatomic, strong) AlivcLivePushConfig *pushConfig;
+
+//直播UI类型：预览，直播
+@property (nonatomic, strong) ZSHLiveLogic  *liveLogic;
 
 @end
 
@@ -28,18 +43,103 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
     //初始化tabbar
     [self setUpTabBar];
     
     //添加子控制器
     [self setUpAllChildViewController];
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(presentPreViewVC) name:KPresentPreviewVC object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(presentFinishShowVC) name:KPresentFinishShowVC object:nil];
+}
+
+- (void)presentFinishShowVC{
+    ZSHFinishShowViewController *finishShowVC = [[ZSHFinishShowViewController alloc]init];
+    [self presentViewController:finishShowVC animated:NO completion:nil];
+}
+
+- (void)presentPreViewVC{
+//    AlivcLivePushConfigViewController *liveConfigVC = [[AlivcLivePushConfigViewController alloc]init];
+//    [self presentViewController:liveConfigVC animated:YES completion:nil];
+//    return;
+    
+    self.pushConfig = [[AlivcLivePushConfig alloc] init];
+    self.pushConfig.resolution = AlivcLivePushResolution540P;//分辨率：默认为540P，最大支持720P，兼容V1.3.0版1080P
+    
+    self.pushConfig.qualityMode = AlivcLivePushQualityModeResolutionFirst;// 清晰度优先模式
+    self.pushConfig.targetVideoBitrate = 1200; //  目标码率1200Kbps
+    self.pushConfig.minVideoBitrate = 600; //  最小码率400Kbps
+    self.pushConfig.initialVideoBitrate = 1000; //  初始码率900Kbps
+    self.pushConfig.audioBitrate = 64; // 音频码率
+    self.pushConfig.audioSampleRate = AlivcLivePushAudioSampleRate32000; // 音频采样率
+    self.pushConfig.fps = AlivcLivePushFPS20; //建议用户使用20fps
+    self.pushConfig.minFps = AlivcLivePushFPS8;//最小帧率
+    self.pushConfig.videoEncodeGop = AlivcLivePushVideoEncodeGOP_2;//关键帧间隔：默认值为2
+    self.pushConfig.connectRetryInterval = 1000; // 单位为毫秒，重连时长2s
+    self.pushConfig.connectRetryCount = 5; //重连次数
+    self.pushConfig.orientation = AlivcLivePushOrientationPortrait; // 横屏推流
+    self.pushConfig.audioChannel = AlivcLivePushAudioChannel_2;  //双声道
+    self.pushConfig.audioEncoderProfile = AlivcLivePushAudioEncoderProfile_AAC_LC; //音频格式
+    
+    self.pushConfig.pushMirror = false;       // 关闭推流镜像
+    self.pushConfig.previewMirror = false;    // 关闭预览镜像
+    self.pushConfig.audioOnly = false;        // 纯音频
+    self.pushConfig.videoEncoderMode = AlivcLivePushVideoEncoderModeHard; //硬编
+    self.pushConfig.videoOnly = false;        // 纯视频
+    self.pushConfig.autoFocus = YES;          // 自动对焦
+    self.pushConfig.flash = NO;               // 开启闪光灯
+    self.pushConfig.beautyOn = YES;           // 打开美颜
+    self.pushConfig.cameraType = AlivcLivePushCameraTypeBack; //后置摄像头
+    self.isUseAsync = YES;                   // 异步接口
+    self.isUseWatermark = YES;               // 使用水印
+    self.pushConfig.beautyMode = AlivcLivePushBeautyModeProfessional;       //美颜模式：人脸识别专业版本
+    
+    // 美白范围0-100
+    self.pushConfig.beautyWhite = 70;
+    // 磨皮范围0-100
+    self.pushConfig.beautyBuffing = 40;
+    // 红润设置范围0-100
+    self.pushConfig.beautyRuddy = 40;
+    /* 下面接口是人脸识别下的高级美颜参数 */
+    // 腮红设置范围0-100
+    self.pushConfig.beautyCheekPink = 15;
+    // 瘦脸设置范围0-100
+    self.pushConfig.beautyThinFace = 40;
+    // 收下巴设置范围0-100
+    self.pushConfig.beautyShortenFace = 50;
+    // 大眼设置范围0-100
+    self.pushConfig.beautyBigEye = 30;
+    
+//    NSString *watermarkBundlePath01 = [[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"watermark"] ofType:@"png"];
+//    [self.pushConfig addWatermarkWithPath: watermarkBundlePath01
+//                          watermarkCoordX:0.1
+//                          watermarkCoordY:0.1
+//                           watermarkWidth:0.15];
+//
+//    NSString *watermarkBundlePath02 = [[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"watermark"] ofType:@"png"];
+//    [self.pushConfig addWatermarkWithPath: watermarkBundlePath02
+//                          watermarkCoordX:0.1
+//                          watermarkCoordY:0.3
+//                           watermarkWidth:0.15];
+//    NSString *watermarkBundlePath03 = [[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"watermark"] ofType:@"png"];
+//    [self.pushConfig addWatermarkWithPath: watermarkBundlePath03
+//                          watermarkCoordX:0.1
+//                          watermarkCoordY:0.5
+//                           watermarkWidth:0.15];
+    
+    _liveLogic = [[ZSHLiveLogic alloc]init];
+    AlivcLivePusherViewController *publisherVC = [[AlivcLivePusherViewController alloc] init];
+    publisherVC.pushConfig = self.pushConfig;
+    publisherVC.isUseAsyncInterface = YES;
+    [self presentViewController:publisherVC animated:YES completion:nil];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-     self.selectedIndex = 0;
-     self.navigationController.navigationBar.hidden = YES;
+    self.selectedIndex = 0;
+    self.navigationController.navigationBar.hidden = YES;
 }
 
 -(void)viewDidLayoutSubviews{
@@ -50,6 +150,7 @@
 #pragma mark ————— 初始化TabBar —————
 -(void)setUpTabBar{
     [self.tabBar addSubview:({
+        self.tabBar.barTintColor = KZSHColor0B0B0B;
         TabBar *tabBar = [[TabBar alloc] init];
         tabBar.toTabBarType = FromLiveTabVCToTabBar;
         tabBar.backgroundColor = KZSHColor0B0B0B;

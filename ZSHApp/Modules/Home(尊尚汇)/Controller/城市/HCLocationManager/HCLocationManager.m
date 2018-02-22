@@ -56,6 +56,7 @@
     //国内经纬度转换为火星坐标
     currentLocation = [HCCoordinateConvert transformToMars:currentLocation];
     [_locationManager stopUpdatingLocation];
+    
     //获取经纬度
     CLLocationDegrees aLatitude = currentLocation.coordinate.latitude;
     CLLocationDegrees aLongitude = currentLocation.coordinate.longitude;
@@ -74,12 +75,14 @@
             }
             if ([city containsString:@"市辖区"] || [city containsString:@"市"]) {
                 city = [city stringByReplacingOccurrencesOfString:@"市辖区" withString:@""];
-                city = [city stringByReplacingOccurrencesOfString:@"市" withString:@""];
+//                city = [city stringByReplacingOccurrencesOfString:@"市" withString:@""];
             }
             
             if ([_delegate respondsToSelector:@selector(loationMangerSuccessLocationWithCity:)]) {
                 [_delegate loationMangerSuccessLocationWithCity:city];
             }
+            RLog(@"定位成功的城市%@，经度=%lf,纬度 = %lf",city,aLatitude,aLongitude);
+//            [[NSNotificationCenter defaultCenter]postNotificationName:KLocateNoti object:@{@"cityName":city,@"latitude":@(aLatitude),@"longitude":@(aLongitude)}];
         }
     }];
 }
@@ -131,5 +134,24 @@
     }
 }
 
+- (void)getLatiAndLongiWithCity:(NSString *)city compelete:(void(^)(CLLocationDegrees aLatitude,CLLocationDegrees aLongitude))compelete{
+    NSString *oreillyAddress = city;
+    CLGeocoder *myGeocoder = [[CLGeocoder alloc] init];
+    [myGeocoder geocodeAddressString:oreillyAddress completionHandler:^(NSArray *placemarks, NSError *error) {
+        if ([placemarks count] > 0 && error == nil) {
+            NSLog(@"Found %lu placemark(s).", (unsigned long)[placemarks count]);
+            CLPlacemark *firstPlacemark = [placemarks objectAtIndex:0];
+            NSLog(@"Longitude = %f", firstPlacemark.location.coordinate.longitude);
+            NSLog(@"Latitude = %f", firstPlacemark.location.coordinate.latitude);
+            compelete(firstPlacemark.location.coordinate.latitude,firstPlacemark.location.coordinate.longitude);
+        }
+        else if ([placemarks count] == 0 && error == nil) {
+            NSLog(@"Found no placemarks.");
+        } else if (error != nil) {
+            NSLog(@"An error occurred = %@", error);
+        }
+        
+    }];
+}
 
 @end

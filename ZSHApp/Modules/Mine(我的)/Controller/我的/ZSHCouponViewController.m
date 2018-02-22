@@ -8,8 +8,12 @@
 
 #import "ZSHCouponViewController.h"
 #import "ZSHIntegralExchangeCell.h"
+#import "ZSHMineLogic.h"
 
 @interface ZSHCouponViewController ()
+
+@property (nonatomic, strong) ZSHMineLogic            *mineLogic;
+@property (nonatomic, strong) NSArray                 *couponArr;
 
 @end
 
@@ -23,9 +27,10 @@
 }
 
 - (void)loadData{
+    _mineLogic = [[ZSHMineLogic alloc] init];
     
     [self initViewModel];
-    
+    [self requestData];
 }
 
 - (void)createUI{
@@ -36,20 +41,22 @@
     }];
     self.tableView.delegate = self.tableViewModel;
     self.tableView.dataSource = self.tableViewModel;
-    [self.tableView reloadData];
+    
 }
 
 - (void)initViewModel {
     [self.tableViewModel.sectionModelArray removeAllObjects];
     [self.tableViewModel.sectionModelArray addObject:[self storeListSection]];
+    [self.tableView reloadData];
 }
 
 //list
 - (ZSHBaseTableViewSectionModel*)storeListSection {
+    kWeakSelf(self);
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     sectionModel.headerHeight = kRealValue(10);
     
-    for (int i = 0; i < 3; i++) {
+    for (int i = 0; i < _couponArr.count; i++) {
         ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
         cellModel.height = kRealValue(127);
         [sectionModel.cellModelArray addObject:cellModel];
@@ -60,8 +67,10 @@
                 cell = [[ZSHIntegralExchangeCell alloc] initWithStyle:UITableViewCellStyleDefault
                                                       reuseIdentifier:identifier];
             }
-            NSDictionary *nextParamDic= @{KFromClassType:@(FromCouponVCToIntegralExchangeCell)};
-            [cell updateCellWithParamDic:nextParamDic];
+//            NSDictionary *nextParamDic= @{KFromClassType:@(FromCouponVCToIntegralExchangeCell)};
+            NSMutableDictionary *mutDic = [NSMutableDictionary dictionaryWithDictionary:weakself.couponArr[indexPath.row]];
+            [mutDic setObject:@(FromCouponVCToIntegralExchangeCell) forKey:KFromClassType];
+            [cell updateCellWithParamDic:mutDic];
             return cell;
         };
         
@@ -72,6 +81,15 @@
     
     return sectionModel;
 }
+
+- (void)requestData {
+    kWeakSelf(self);
+    [_mineLogic requestCouponList:@{@"BUSINESS_ID":@"system"} success:^(id response) {
+        weakself.couponArr = response[@"pd"];
+        [weakself initViewModel];
+    }];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

@@ -59,15 +59,15 @@
         make.height.mas_equalTo(kRealValue(82.5));
     }];
     
-    int j = 0;
-    for (UIImageView *subImageView in self.detailView.subviews) {
-        [subImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.mas_equalTo(self.detailView);
-            make.left.mas_equalTo(self.titleLabel).offset( (kRealValue(82.5)+kRealValue(5)) *j);
-            make.width.and.height.mas_equalTo(kRealValue(82.5));
-        }];
-        j++;
-    }
+//    int j = 0;
+//    for (UIImageView *subImageView in self.detailView.subviews) {
+//        [subImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.top.mas_equalTo(self.detailView);
+//            make.left.mas_equalTo(self.titleLabel).offset( (kRealValue(82.5)+kRealValue(5)) *j);
+//            make.width.and.height.mas_equalTo(kRealValue(82.5));
+//        }];
+//        j++;
+//    }
     
     int i = 0;
     for (UILabel *label in _labelArr) {
@@ -99,6 +99,11 @@
         UIImageView *detailImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, kRealValue(82.5), kRealValue(82.5))];
         [detailImageView sd_setImageWithURL:[NSURL URLWithString:model.CONVERGEIMGS[i]]];
         [_detailView addSubview:detailImageView];
+        [detailImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.mas_equalTo(self.detailView);
+            make.left.mas_equalTo(self.titleLabel).offset( (kRealValue(82.5)+kRealValue(5)) *i);
+            make.width.and.height.mas_equalTo(kRealValue(82.5));
+        }];
     }
     
     if (model.CONVERGEIMGS.count) {

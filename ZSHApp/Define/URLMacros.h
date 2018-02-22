@@ -9,9 +9,6 @@
 #ifndef URLMacros_h
 #define URLMacros_h
 
-
-//内部版本号 每次发版递增
-#define KVersionCode 1
 /*
  
  将项目中所有的接口写在这里,方便统一管理,降低耦合
@@ -26,6 +23,7 @@
 
 #define DevelopSever    0
 #define TestSever       0
+#define TestSever1      0
 #define ProductSever    1
 
 #else
@@ -38,19 +36,22 @@
 #if DevelopSever
 
 /**开发服务器*/
-
-#define kUrlRoot                  @"http://192.168.1.108:8080/ZSHINTER/"   //洪磊
+#define kUrlRoot                    @"http://192.168.1.107:8081/ZSHINTER/"   // 泓磊
 
 
 #elif TestSever
 
 /**测试服务器*/
-#define kUrlRoot                    @"http://192.168.1.134:8081/ZSHINTER/" //振华
+#define kUrlRoot                    @"http://192.168.1.125:8081/ZSHINTER/"   // 振华
+
+#elif TestSever1
+
+#define kUrlRoot                    @"http://192.168.1.112:8081/ZSHINTER/"   // 凌兵
 
 #elif ProductSever
 
 /**生产服务器（阿里云）*/
-#define kUrlRoot                   @"http://47.104.16.215:8080/ZSHINTER/"
+#define kUrlRoot                    @"http://inter.rongyaohk.com/"
 
 
 #endif
@@ -701,7 +702,7 @@
 //参数：  PRODUCT_ID  商品ID/
 //请求地址：/appshipin/productevalist.do?PRODUCTEVALIST  (混淆码)
 #define kUrlProductEvaList [NSString stringWithFormat:@"/appshipin/sproductaddeva.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"PRODUCTEVALIST"]]
-//135.获取我的优惠券，黑咖币，能量值(完成)
+//135.获取我的优惠券，黑卡币，能量值(完成)
 //参数：  HONOURUSER_ID  用户ID/
 //请求地址：/getmycoublackenergy.do?MYCOUBLACKENERGY  (混淆码)
 #define kUrlGetMyCouBlackEnergy [NSString stringWithFormat:@"/appuserin/getmycoublackenergy.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"MYCOUBLACKENERGY"]]
@@ -710,4 +711,224 @@
 //请求地址：/appuserin/getuserbyforget.do?USERBYFORGET  (混淆码)
 #define kUrlGetUserByForget [NSString stringWithFormat:@"/appuserin/getuserbyforget.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"USERBYFORGET"]]
 
+//137.修改用户手机号码
+//参数：  HONOURUSER_ID  用户ID/     PHONE   手机号/
+//请求地址：/appuserin/upduserphone.do?UPDUSERPHONE  (混淆码)
+#define kUrlUpdUserphone [NSString stringWithFormat:@"/appuserin/upduserphone.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"UPDUSERPHONE"]]
+//138.根据广告栏位置查询广告
+//参数：  AD_POSITION  广告栏位置
+//请求地址：/appadvertismentin/advertiselist.do?ADVERTISEMENTLIST  (混淆码)
+#define kUrlAdvertiseList [NSString stringWithFormat:@"/appadvertismentin/advertiselist.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"ADVERTISEMENTLIST"]]
+//139.修改点击广告的次数
+//参数：  CLICK_COUNT  点击次数   /      ADVERTISEMENT_ID    广告栏的id
+//请求地址：/appadvertismentin/editClickCount.do?EDITCLICKCOUNT  (混淆码)
+#define kUrlEditClickCount [NSString stringWithFormat:@"/appadvertismentin/editClickCount.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"EDITCLICKCOUNT"]]
+
+//140.根据汇聚ID查询分类列表
+//参数：  CONVERGE_ID  所属汇聚的ID
+//请求地址：/appconvergein/getconvergesort.do?GETCONVERGESORT  (混淆码)
+#define kUrlGetConvergesort [NSString stringWithFormat:@"/appconvergein/getconvergesort.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"GETCONVERGESORT"]]
+//141.获取话题列表(含模糊查询)（完成）
+//可选参数：  TITLE  话题
+//请求地址：/appcirclein/gettopiclist.do?TOPICLIST  (混淆码)
+#define kUrlGetTopicList [NSString stringWithFormat:@"/appcirclein/gettopiclist.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"TOPICLIST"]]
+//142.根据话题查询(弃用)
+//参数：  TITLE  话题
+//请求地址：/appcirclein/gettopicbytitle.do?TOPICBYTITLE  (混淆码)
+//143.添加话题 （话题头像名字 showfile）
+//参数：  HONOURUSER_ID  添加话题的用户ID/       TITLE  话题      /
+//请求地址：/appcirclein/addtopic.do?TOPICADD  (混淆码)
+#define kUrlAddTopic [NSString stringWithFormat:@"/appcirclein/addtopic.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"TOPICADD"]]
+//144.通过ID获取杂志详情
+//参数：  MAGAZINE_ID     杂志的ID/       MAGAZINETYPE  杂志的类型      /
+//请求地址：/apphomein/magazineone?MAGAZINEONE  (混淆码)
+#define kUrlMagazineOne [NSString stringWithFormat:@"/apphomein/magazineone?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"MAGAZINEONE"]]
+//146 尊购首页各种专区点击后返回的商家列表（筛选同接口）
+//参数：  参数：BRAND_ID 类型参数id/
+//BRANDICON_ID   商品品牌 ID（筛选用参数）
+//请求地址：/appshipin/shipbusinesslist.do?SHIPPBUSINESS  (混淆码)
+#define kUrlShipbusinessList [NSString stringWithFormat:@"/appshipin/shipbusinesslist.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SHIPPBUSINESS"]]
+//147.显示首页（1）/尊购（2）/汇聚（3）→搜索的字
+//参数：  参数：PARENT_ID 类型参数id/
+//请求地址：/apphomein/searchlist.do?SERRCHLIST  (混淆码)
+#define kUrlSearchList [NSString stringWithFormat:@"/apphomein/searchlist.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SERRCHLIST"]]
+//148.荣耀杂志首页接口
+//参数：  无
+//请求地址：/appmagazinein/getlistsubmenu.do?LISTSUBMENU  (混淆码)
+#define kUrlGetListSubmenu [NSString stringWithFormat:@"/appmagazinein/getlistsubmenu.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"LISTSUBMENU"]]
+//149.商家发布自媒体广告流-单独上传视频
+//参数：  showfile  视频文件名
+//请求地址：/appdiscoverin/upvideo.do?UPVIDEO (混淆码)
+#define kUrlUpVideo [NSString stringWithFormat:@"/appdiscoverin/upvideo.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"UPVIDEO"]]
+//150.商家发布自媒体广告流
+//参数：  TITLE 标题 /     HONOURUSER_ID  用户id     /fileList   上传的图片名
+//请求地址：/appdiscoverin/addselfmediaad.do?SELFMEDIAADD (混淆码)
+#define kUrlAddSelfMediaad [NSString stringWithFormat:@"/appdiscoverin/addselfmediaad.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SELFMEDIAADD"]]
+
+//**********直播**************
+//151.主播开播接口(获取一个推流地址)(完成)
+//参数：LIVE_TITLE  HONOURUSER_ID
+//请求地址：/applivein/getpushaddress?PUSHADDRESS
+#define kUrlGetPushAddress [NSString stringWithFormat:@"/applivein/getpushaddress?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"PUSHADDRESS"]]
+//152.获得所有正在推流的地址(所有正在直播的地址)(完成)
+//参数：PARENT_ID
+//请求地址：/applivein/getpushlist?PUSHLIST
+#define kUrlGetPushList [NSString stringWithFormat:@"/applivein/getpushlist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"PUSHLIST"]]
+//153.用户看直播接口(获取一个拉流地址)(完成)
+//请求地址：/applivein/getpulladdress?PULLADDRESS  参数：STREAMNAME(每个主播单独的地址)
+#define kUrlGetPullAddress [NSString stringWithFormat:@"/applivein/getpulladdress?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"PULLADDRESS"]]
+
+//154.经纬度(完成)
+//参数：USERLONGITUDE 经度，USERLATITUDE 纬度，HONOURUSER_ID 用户id
+//请求地址：apphomein/updtrapeze?TRAPEZE(混淆码)
+#define kUrlUpdtrapeze [NSString stringWithFormat:@"apphomein/updtrapeze?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"TRAPEZE"]]
+
+//154.直播分类接口(获取一个拉流地址)(完成)
+//参数：  PARENT_ID
+//请求地址：/applivein/getlivetypelist?LIVETYPE
+#define kUrlGetLiveTypeList [NSString stringWithFormat:@"/applivein/getlivetypelist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"LIVETYPE"]]
+
+//156. 附近直播(完成)
+//参数:HONOURUSER_ID 当前登录用户id
+//请求地址：/applivein/getnearbypushlist?PUSHNEARLIST
+#define kUrlGetNearbyPushList [NSString stringWithFormat:@"/applivein/getnearbypushlist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"PUSHNEARLIST"]]
+
+//157.直播中筛选直播(完成)
+//参数:SEX 性别（全部，男，女），LIVE_START 活跃时间（0，15，2，1，7）
+//地址: /applivein/getscreenlist?SCREENLIST
+#define kUrlGetScreenList [NSString stringWithFormat:@"/applivein/getscreenlist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SCREENLIST"]]
+
+//158.直播模块中模糊查询用户接口（UI未实现）
+//参数:NICKNAME  模糊查询关键字
+//地址:/applivein/getuserlist?USERLIST
+#define kUrlGetUserList [NSString stringWithFormat:@"/applivein/getuserlist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"USERLIST"]]
+
+//159.直播中送礼物接口(完成)
+//参数:HONOURUSER_ID 当前账户id ,REHONOURUSER_ID 被赠送人id, BLACKPRICE 赠送礼物总价值
+//地址:/applivein/gifttouser?GIFT
+#define kUrlGiftToUser [NSString stringWithFormat:@"/applivein/gifttouser?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"GIFT"]]
+
+//160.直播个人资料上部分个人资料(完成)
+//参数:HONOURUSER_ID 查看的账户id
+//地址:/applivein/getuserdata
+#define kUrlGetLiveUserData [NSString stringWithFormat:@"/applivein/getuserdata?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"USERDATA"]]
+
+//161.直播个人资料下部分资料(完成)
+//参数:HONOURUSER_ID 查看的账户id
+//地址:/applivein/getdowndata?DOWNDATA
+#define kUrlGetDownData [NSString stringWithFormat:@"/applivein/getdowndata?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"DOWNDATA"]]
+
+//162.直播个人资料中黑微博页面（完成）
+//参数:HONOURUSER_ID 查看的账户id
+//地址:/applivein/getweibouser?WEIBOUSER
+#define kUrlGetWeiboUser [NSString stringWithFormat:@"/applivein/getweibouser?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"WEIBOUSER"]]
+
+//163.直播页面点击头像显示的简洁个人资料(完成)
+//参数:HONOURUSER_ID 查看的账户id  REHONOURUSER_ID 当前登录账户id
+//地址:/applivein/getpithydata?PITHYDATA
+#define kUrlGetPithyData [NSString stringWithFormat:@"/applivein/getpithydata?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"PITHYDATA"]]
+
+//164.获取‘我的’页面资料(完成)
+//参数:HONOURUSER_ID 当前登录账户id
+//地址:/applivein/getminedata?MINEDATA
+#define kUrlGetMineData [NSString stringWithFormat:@"/applivein/getminedata?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"MINEDATA"]]
+
+//165.获取‘我的’页面粉丝列表（完成）
+//参数:HONOURUSER_ID 查看的账户id
+//地址:/applivein/getfanslist?FANSLIST
+#define kUrlGetFansList [NSString stringWithFormat:@"/applivein/getfanslist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"FANSLIST"]]
+
+//166.获取‘我的’页面关注列表(完成)
+//参数:HONOURUSER_ID 查看的账户id
+//地址:/applivein/getfocuslist?FOCUSLIST
+#define kUrlGetFocusList [NSString stringWithFormat:@"/applivein/getfocuslist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"FOCUSLIST"]]
+
+//167.获取某个主播的贡献榜
+//参数:HONOURUSER_ID 主播账户id  TYPE 榜类型(DATE日榜,WEEK周榜,MONTH月榜,ALL总榜)
+//地址:/applivein/getrankinglist?RANKING
+#define kUrlGetRankList [NSString stringWithFormat:@"/applivein/getrankinglist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"RANKING"]]
+
+//************************
+
+//151.音乐中心-首页：歌手推荐和广告
+//参数：  无
+//请求地址：/appmusicin/getsongrecommend?SONGRECOMMEND (混淆码)
+#define kUrlGetSongRecommend [NSString stringWithFormat:@"/appmusicin/getsongrecommend?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SONGRECOMMEND"]]
+//152.音乐中心-歌手推荐-获取歌手歌曲列表
+//参数：  singer_id歌手id /
+//offset  偏移量（从0开始）    /
+//请求地址：/appmusicin/getsingersonglist?SINGERSONGLIST (混淆码)
+#define kUrlGetSingerSongList [NSString stringWithFormat:@"/appmusicin/getsingersonglist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SINGERSONGLIST"]]
+//153.音乐中心-电台
+//参数：  无    /
+//请求地址：/appmusicin/getradiostationlist?RADIOSTATIONLIST (混淆码)
+#define kUrlGetRadioStationList [NSString stringWithFormat:@"/appmusicin/getradiostationlist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"RADIOSTATIONLIST"]]
+//154.音乐中心-曲库推荐
+//参数：  无    /
+//请求地址：/appmusicin/getmusiclibrary?MUSICLIBRARY(混淆码)
+#define kUrlGetMusicLibrary [NSString stringWithFormat:@"/appmusicin/getmusiclibrary?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"MUSICLIBRARY"]]
+//155.音乐中心-歌单推荐
+//参数：  无    /
+//请求地址：/appmusicin/getsongsrecommend?SONGRECOMMEND(混淆码)
+#define kUrlGetSongsRecommend [NSString stringWithFormat:@"/appmusicin/getsongsrecommend?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SONGRECOMMEND"]]
+//156.根据店铺获取优惠券列表
+//参数： BUSINESS_ID   店铺id(如果BUSINESS_ID=system则表示官方)    /
+//请求地址：/couponin/couponlist.do?COUPONLIST(混淆码)
+#define kUrlCouponList [NSString stringWithFormat:@"/couponin/couponlist.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"COUPONLIST"]]
+//157.用户领取优惠券
+//参数： BUSINESS_ID   店铺id(如果BUSINESS_ID=system则表示官方)    /
+//HONOURUSER_ID  用户id
+//COUPON_ID    优惠券id
+//请求地址：/couponin/addcoupon.do?ADDCOUPON(混淆码)
+#define kUrlAddCoupon [NSString stringWithFormat:@"/couponin/addcoupon.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"ADDCOUPON"]]
+//158.根据店铺id获取可用的优惠券
+//参数： BUSINESS_ID   店铺id(如果BUSINESS_ID=system则表示官方)    /
+//请求地址：couponin/getcouponsuser?COUPONSUSER(混淆码)
+#define kUrlGetCouponsUser [NSString stringWithFormat:@"couponin/getcouponsuser?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"COUPONSUSER"]]
+//159.添加商品到购物车
+//参数： PRODUCT_ID   商品id
+//HONOURUSER_ID  用户id
+//QUANTITY  商品数量
+//请求地址：appcartin/addcart?ADDCART(混淆码)
+#define kUrlAddCart [NSString stringWithFormat:@"appcartin/addcart?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"ADDCART"]]
+//160.获得尊购首页专区列表
+//参数： 无
+//请求地址：/appshipin/getfecturelist?FECTURELIST(混淆码)
+#define kUrlGetFectureList [NSString stringWithFormat:@"/appshipin/getfecturelist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"FECTURELIST"]]
+
+//161.根据规格展示商品
+//http://localhost:8081/ZSHINTER//product/getprobystandard?GETPROBYSTANDARD&PRODUCT_ID=388354150699630592
+#define kUrlGetProbyStandard [NSString stringWithFormat:@"/product/getprobystandard?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"GETPROBYSTANDARD"]]
+//添加商品到购物车
+//加密参数:ADDCART
+//URL:/appcartin/addcart
+//参数:
+//STANDARD_ID:   商品规格id;
+//HONOURUSER_ID:用户id;
+//UANTITY:数量
+//返回参数:
+//创建成功返回:{"result":"01"}
+//若购物车已存在该商品则返回:{"result":"已添加到购物车,数量+1"}
+//#define kUrlAddCart [NSString stringWithFormat:@"/appcartin/addcart?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"ADDCART"]]
+
+
+//162.app端商家提交入驻信息
+//参数： APPLYFOR_ID   申请id
+//可选参数： CATEGORY_ID店铺分类/    APPLYFOR_NAME门店名称（若有分店具体到分店名）/    APPLYFOR_PROVINCE门店所在省/    APPLYFOR_CITY门店所在市区/  APPLYFOR_ADDRESS门店所在详细地址/    APPLYFOR_LONGITUDE 商铺经度/    APPLYFOR_LATITUDE商铺纬度/    APPLYFOR_TEL门店电话/    APPLYFOR_IDCARD经营者身份证号/   APPLYFOR_CHARTERNUM营业执照注册号/  APPLYFOR_CHARTERNAME营业执照名称/   APPLYFOR_LEGALPERSON法人姓名/   APPLYFOR_PHONE经营者手机号/  APPLYFOR_PRICE门店人均价格/    HONOURUSER_ID申请店铺用户id/  APPLYFOR_IDCARDIMAGE  经营者身份照片地址/    APPLYFOR_IMAGES  实体店铺照片地址/   APPLYFOR_CHARTERIMAGE店铺营业执照图片地址   APPLY_OPERRATE  经营者姓名/    APPLY_COUNTY  区/县 
+//请求地址：/business/applybusiness?APPLYBUSINESS(混淆码)
+#define kUrlAppBusinessIn [NSString stringWithFormat:@"/business/appbusinessin?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"APPBUSINESSIN"]]
+
+//176.商家提交入驻信息
+//APPLYFOR_IDCARDIMAGE 经营者身份照片地址 /   APPLYFOR_IMAGES  实体店铺照片地址/   APPLYFOR_CHARTERIMAGE 店铺营业执照图片地址/
+//请求地址：/business/appbusinessin?APPBUSINESSIN(混淆码)
+#define kUrlGetProbyStandard [NSString stringWithFormat:@"/product/getprobystandard?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"GETPROBYSTANDARD"]]
+//207.修改用户订阅的头条的菜单
+//参数：  HONOURUSER_ID用户的id  /        DISCOVERVIDEO_IDS   我的菜单id(以逗号拼接成字符串)     /
+//请求地址：/appdiscoverin/updtopline?UPDTOPLINE(混淆码)
+#define kUrlUpdTopLine [NSString stringWithFormat:@"/product/getprobystandard?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"GETPROBYSTANDARD"]]
+
+
+
 #endif /* URLMacros_h */
+
+

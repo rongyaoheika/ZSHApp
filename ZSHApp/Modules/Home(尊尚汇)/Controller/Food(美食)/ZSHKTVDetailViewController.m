@@ -264,7 +264,7 @@ static NSString *ZSHHotelListCellID = @"ZSHHotelListCell";
     kWeakSelf(self);
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     sectionModel.headerHeight = kRealValue(40);
-    NSDictionary *headTitleParamDic = @{@"text":@"套餐",@"font":kPingFangMedium(15),@"textAlignment":@(NSTextAlignmentLeft)};
+    NSDictionary *headTitleParamDic = @{@"text":@"套餐",@"font":kPingFangMedium(15)};
     sectionModel.headerView = [ZSHBaseUIControl createTabHeadLabelViewWithParamDic:headTitleParamDic];
     
     for (int i = 0; i<_KTVDetailSetDicArr.count; i++){
@@ -284,7 +284,7 @@ static NSString *ZSHHotelListCellID = @"ZSHHotelListCell";
             NSString *liveInfoStr = [NSString stringWithFormat:@"%@-%@",paramDic[@"KTVDETBEGIN"],paramDic[@"KTVDETEND"]];
             NSDictionary *nextParamDic = @{KFromClassType:@(ZSHConfirmOrderToBottomBlurPopView),@"shopType":@(ZSHKTVShopType), @"deviceDic":weakself.KTVDetailParamDic,@"listDic":paramDic,@"liveInfoStr":liveInfoStr};
             weakself.bottomBlurPopView = [weakself createBottomBlurPopViewWithParamDic:nextParamDic];
-            [kAppDelegate.window addSubview:weakself.bottomBlurPopView];
+             [weakself.view addSubview:weakself.bottomBlurPopView];
         };
     }
     return sectionModel;
@@ -294,7 +294,7 @@ static NSString *ZSHHotelListCellID = @"ZSHHotelListCell";
 - (ZSHBaseTableViewSectionModel*)storKTVMorShopSection{
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     sectionModel.headerHeight = kRealValue(40);
-    NSDictionary *headTitleParamDic = @{@"text":@"更多商家",@"font":kPingFangMedium(15),@"textAlignment":@(NSTextAlignmentLeft)};
+    NSDictionary *headTitleParamDic = @{@"text":@"更多商家",@"font":kPingFangMedium(15)};
     sectionModel.headerView = [ZSHBaseUIControl createTabHeadLabelViewWithParamDic:headTitleParamDic];
     UIButton *btn = [sectionModel.headerView viewWithTag:2];
     btn.hidden = NO;

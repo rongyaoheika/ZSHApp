@@ -57,10 +57,11 @@ NSString *const cityCell = @"CityCell";
 
     self.isSearch = NO;
     [self locationService];
+    
     self.navigationItem.titleView = self.searchView;
     self.searchView.searchBar.delegate = self;
     
-    self.tableView.frame = CGRectMake(0, KNavigationBarHeight, KScreenWidth, KScreenHeight - KNavigationBarHeight);
+    self.tableView.frame = CGRectMake(0, KNavigationBarHeight, KScreenWidth, KScreenHeight - KNavigationBarHeight - KBottomHeight);
     self.tableView.sectionIndexBackgroundColor = KClearColor;
     self.tableView.sectionIndexColor = KZSHColor929292;
     
@@ -71,6 +72,7 @@ NSString *const cityCell = @"CityCell";
     [self.tableView registerClass:[GYZCityGroupCell class] forCellReuseIdentifier:cityGroupCell];
     [self.tableView registerClass:[GYZCityHeaderView class] forHeaderFooterViewReuseIdentifier:cityHeaderView];
 }
+
 -(NSMutableArray *) cityDatas{
     if (_cityDatas == nil) {
         NSArray *array = [NSArray arrayWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"CityData" ofType:@"plist"]];
@@ -418,7 +420,7 @@ NSString *const cityCell = @"CityCell";
 
 #pragma mark - <HCLocationManagerDelegate>
 - (void)loationMangerSuccessLocationWithCity:(NSString *)city{
-    NSLog(@"city = %@",city);
+//    NSLog(@"city = %@",city);
     
     if (self.localCityData.count <= 0) {
         GYZCity *currentCity = [[GYZCity alloc] init];

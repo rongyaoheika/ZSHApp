@@ -180,7 +180,9 @@ static NSString *headerViewIdentifier = @"hederview";
             };
             
         } else if(angle == 0){//收起
-            [ZSHBaseUIControl setAnimationWithHidden:YES view:weakself.topBtnListView completedBlock:nil];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [ZSHBaseUIControl setAnimationWithHidden:YES view:weakself.topBtnListView completedBlock:nil];
+            });
         }
        
     } completion:^(BOOL finished) {
@@ -190,7 +192,7 @@ static NSString *headerViewIdentifier = @"hederview";
 
 #pragma getter
 - (ZSHBottomBlurPopView *)createBottomBlurPopViewWith:(ZSHFromVCToBottomBlurPopView)fromClassType{
-    NSDictionary *nextParamDic = @{KFromClassType:@(fromClassType)};
+    NSDictionary *nextParamDic = @{KFromClassType:@(fromClassType),@"titleArr": @[@"尊购",@"火车票",@"机票",@"酒店",@"KTV",@"美食",@"酒吧",@"电影"]};
     ZSHBottomBlurPopView *bottomBlurPopView = [[ZSHBottomBlurPopView alloc]initWithFrame:CGRectMake(0, KNavigationBarHeight, KScreenWidth, KScreenHeight-KNavigationBarHeight) paramDic:nextParamDic];
     bottomBlurPopView.blurRadius = 20;
     bottomBlurPopView.dynamic = NO;

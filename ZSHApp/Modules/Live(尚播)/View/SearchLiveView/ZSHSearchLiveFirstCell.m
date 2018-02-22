@@ -21,7 +21,7 @@
     
     NSArray *titleArr = @[@"黑微博",@"开播呗",@"小视频"];
     for (int i = 0; i<titleArr.count; i++) {
-        NSDictionary *btnDic = @{@"title":titleArr[i],@"titleColor":KZSHColor333333,@"selectedTitleColor":[UIColor redColor],@"font":kPingFangLight(14)};
+        NSDictionary *btnDic = @{@"title":titleArr[i],@"titleColor":KZSHColor333333,@"selectedTitleColor":KZSHColorF29E19,@"font":kPingFangLight(14)};
         UIButton *btn = [ZSHBaseUIControl createBtnWithParamDic:btnDic];
         btn.tag = i+1;
         [btn addTarget:self action:@selector(btnAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -57,6 +57,7 @@
             btn.selected = NO;
         }
     }];
+    
 }
 
 

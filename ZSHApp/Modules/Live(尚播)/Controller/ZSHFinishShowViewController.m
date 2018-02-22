@@ -7,8 +7,11 @@
 //
 
 #import "ZSHFinishShowViewController.h"
+#import "ZSHBottomBlurPopView.h"
 
 @interface ZSHFinishShowViewController ()
+
+@property (nonatomic, strong)  ZSHBottomBlurPopView     *bottomBlurPopView;
 
 @end
 
@@ -25,11 +28,13 @@
 }
 
 - (void)createUI{
+    self.view.backgroundColor = [UIColor redColor];
     self.isShowLiftBack = false;
     self.isHidenNaviBar = true;
     
     UIButton *listButton = [ZSHBaseUIControl createBtnWithParamDic:@{@"title":@"贡献榜  5678",@"titleColor":KBlackColor,@"font":kPingFangRegular(10),@"backgroundColor":KZSHColorD8D8D8}];
     listButton.layer.cornerRadius = 10;
+    listButton.hidden = YES;
     [self.view addSubview:listButton];
     [listButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.view).offset(kRealValue(72.5));
@@ -41,7 +46,7 @@
     UILabel *finishLabel = [ZSHBaseUIControl createLabelWithParamDic:@{@"text":@"直播结束",@"font":kPingFangRegular(26),@"textColor":KWhiteColor,@"textAlignment":@(NSTextAlignmentCenter)}];
     [self.view addSubview:finishLabel];
     [finishLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.view).offset(kRealValue(180));
+        make.top.mas_equalTo(self.view).offset(kRealValue(200));
         make.centerX.mas_equalTo(self.view);
         make.size.mas_equalTo(CGSizeMake(kRealValue(110), kRealValue(38)));
     }];
@@ -50,30 +55,31 @@
     NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:@"23097人看过"];
     [str addAttributes:@{NSFontAttributeName:kGeorgia(16),
                          NSForegroundColorAttributeName:KZSHColorFF2068} range:NSMakeRange(0, 5)];
-    UILabel *timesLabel = [ZSHBaseUIControl createLabelWithParamDic:@{@"text":@"直播结束",@"font":kPingFangRegular(11),@"textColor":KWhiteColor,@"textAlignment":@(NSTextAlignmentCenter)}];
+    UILabel *timesLabel = [ZSHBaseUIControl createLabelWithParamDic:@{@"text":@"23097人看过",@"font":kPingFangRegular(11),@"textColor":KWhiteColor,@"textAlignment":@(NSTextAlignmentCenter)}];
     [timesLabel setAttributedText:str];
     [self.view addSubview:timesLabel];
     [timesLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.view).offset(kRealValue(223.5));
+        make.top.mas_equalTo(finishLabel.mas_bottom).offset(kRealValue(10));
         make.centerX.mas_equalTo(self.view);
         make.size.mas_equalTo(CGSizeMake(kRealValue(110), kRealValue(19)));
     }];
     
     
     UIButton *backBtn = [ZSHBaseUIControl createBtnWithParamDic:@{@"title":@"返回大厅",@"titleColor":KZSHColorFF2068,@"font":kPingFangRegular(17)}];
+    [backBtn addTarget:self action:@selector(closeLiveRoom) forControlEvents:UIControlEventTouchUpInside];
     backBtn.layer.cornerRadius = 18;
     backBtn.layer.borderColor = KZSHColorFF2068.CGColor;
     backBtn.layer.borderWidth = 1.0;
     [self.view addSubview:backBtn];
     [backBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.view).offset(kRealValue(362));
+        make.top.mas_equalTo(timesLabel.mas_bottom).offset(kRealValue(50));
         make.centerX.mas_equalTo(self.view);
         make.size.mas_equalTo(CGSizeMake(kRealValue(166), kRealValue(36)));
     }];
 
     
-    [self.view addSubview:[self createAnchorView]];
-    [self.view addSubview:[self createFooterView]];
+//    [self.view addSubview:[self createAnchorView]];
+//    [self.view addSubview:[self createFooterView]];
 }
 
 
@@ -130,8 +136,8 @@
     [closeBtn addTarget:self action:@selector(closeLiveRoom) forControlEvents:UIControlEventTouchUpInside];
     [anchorView addSubview:closeBtn];
     [closeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.mas_equalTo(anchorView).offset(-kRealValue(18));
-        make.width.and.height.mas_equalTo(kRealValue(44));
+        make.right.mas_equalTo(anchorView);
+        make.width.and.height.mas_equalTo(kRealValue(35));
         make.centerY.mas_equalTo(anchorView);
     }];
     
@@ -142,7 +148,7 @@
         headImageView.layer.cornerRadius = kRealValue(35)/2;
         [anchorView addSubview:headImageView];
         [headImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.right.mas_equalTo(closeBtn.mas_left).offset(- (kRealValue(20) + i*(spacing+kRealValue(35))));
+            make.right.mas_equalTo(closeBtn.mas_left).offset(- (kRealValue(10) + i*(spacing+kRealValue(35))));
             make.centerY.mas_equalTo(anchorView);
             make.width.and.height.mas_equalTo(kRealValue(35));
         }];
@@ -183,7 +189,50 @@
 }
 
 - (void)closeLiveRoom{
+    [self dismissViewControllerAnimated:NO completion:nil];
     
 }
+
+- (void)btnAction:(UIButton *)btn{
+    switch (btn.tag - 11179) {
+        case 0:
+        case 1:{
+            RLog(@"点击按钮tag==%ld",btn.tag);
+            break;
+        }
+        case 2:{//分享
+            if (![self.view viewWithTag:100]) {
+                 [self.view addSubview:self.bottomBlurPopView];
+            }
+           
+        }
+        default:
+            break;
+    }
+}
+
+//点击主播头像
+- (void)personInfo {
+    NSDictionary *nextParamDic = @{KFromClassType:@(ZSHFromPersonInfoVCToBottomBlurPopView)};
+    ZSHBottomBlurPopView *bottomBlurPopView = [[ZSHBottomBlurPopView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight) paramDic:nextParamDic];
+    bottomBlurPopView.blurRadius = 20;
+    bottomBlurPopView.dynamic = NO;
+    bottomBlurPopView.tintColor = KClearColor;
+    [ZSHBaseUIControl setAnimationWithHidden:NO view:bottomBlurPopView completedBlock:nil];
+}
+
+- (ZSHBottomBlurPopView *)bottomBlurPopView{
+    if (!_bottomBlurPopView) {
+        _bottomBlurPopView = [[ZSHBottomBlurPopView alloc]initWithFrame:kAppDelegate.window.bounds paramDic:@{KFromClassType:@(ZSHFromShareVCToToBottomBlurPopView)}];
+        _bottomBlurPopView.tag = 100;
+        _bottomBlurPopView.blurRadius = 20;
+        _bottomBlurPopView.dynamic = NO;
+        _bottomBlurPopView.tintColor = KClearColor;
+        _bottomBlurPopView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.6];
+        [_bottomBlurPopView setBlurEnabled:NO];
+    }
+    return _bottomBlurPopView;
+}
+
 
 @end
