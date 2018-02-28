@@ -1183,6 +1183,7 @@ static CGFloat lastPinchDistance = 0;
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onAppDidEnterBackGround:) name:UIApplicationDidEnterBackgroundNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textViewDidChangeText:) name:UITextViewTextDidChangeNotification object:self.textView];
 }
 
 - (void)keyboardWillShow:(NSNotification *)sender {
@@ -1468,16 +1469,38 @@ static CGFloat lastPinchDistance = 0;
     
 }
 #pragma mark - <TextViewDelegate>
-- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
 
-    if([text length] == 0) {
-        return YES;
+//监测用户输入文本长度
+- (void)textViewDidChangeText:(NSNotification *)notification
+
+{
+    static int kMaxLength = 15;
+    UITextView *textView = (UITextView *)notification.object;
+    NSString *toBeString = textView.text;
+    NSString *lang = [[UIApplication sharedApplication]textInputMode].primaryLanguage;
+    
+    if ([lang isEqualToString:@"zh-Hans"]) {
+        
+        UITextRange *selectedRange = [textView markedTextRange];
+        UITextPosition *position = [textView positionFromPosition:selectedRange.start offset:0];
+        if (!position) {
+            if (toBeString.length > kMaxLength) {
+                textView.text = [toBeString substringToIndex:kMaxLength];
+            }
+        } else { // 有高亮选择的字符串，则暂不对文字进行统计和限制
+      
+        }
+        
+    } else {
+        // 中文输入法以外的直接对其统计限制即可，不考虑其他语种情况
+        if (toBeString.length > kMaxLength) {            
+            // 截取子串
+            textView.text = [toBeString substringToIndex:kMaxLength];
+            
+        }
     }
-    if([textView.text length] + range.length >= 15) {
-        return NO;
-    }
-    return YES;
 }
+
 
 #pragma mark - <HCLocationManagerDelegate>
 - (void)loationMangerSuccessLocationWithCity:(NSString *)city{
