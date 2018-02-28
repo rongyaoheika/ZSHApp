@@ -11,20 +11,13 @@
 @interface ZSHNotCycleScrollView()
 
 @property (nonatomic, strong) UIScrollView   *scrollView;
-@property (nonatomic, strong) UIView         *selectionIndicator;
 //宽度不一致时，记录前个button的maxX
 @property (nonatomic, strong) UIButton        *temBtn;
-
+//@property (nonatomic, assign) CGFloat         midSpacing;
 @end
 
 #define  midSpacing 7.5
 @implementation ZSHNotCycleScrollView
-
-- (void)awakeFromNib{
-    [super awakeFromNib];
-    [self initData];
-    [self setupUI];
-}
 
 - (instancetype)initWithFrame:(CGRect)frame{
     if (self = [super initWithFrame:frame]) {
@@ -35,6 +28,7 @@
 }
 
 - (void)initData{
+//    self.midSpacing = 7.5;
     self.selectedIndex = 0;
     self.normalColor = [UIColor blackColor];
     self.selectedColor = [UIColor redColor];
@@ -52,9 +46,6 @@
     self.scrollView.showsHorizontalScrollIndicator = NO;
     self.scrollView.showsVerticalScrollIndicator = NO;
     [self addSubview:self.scrollView];
-    self.selectionIndicator = [[UIView alloc] initWithFrame:CGRectZero];
-    self.selectionIndicator.backgroundColor = self.selectedColor;
-    [self.scrollView addSubview:self.selectionIndicator];
 }
 
 - (void)reloadViewWithDataArr:(NSMutableArray *)dataArr{
@@ -128,50 +119,36 @@
     self.temBtn = nil;
     
     self.scrollView.frame = self.bounds;
-    self.scrollView.contentSize = CGSizeMake(self.titleButtons.count * self.itemWidth+2*KLeftMargin + (self.titleButtons.count-1)*midSpacing, self.frame.size.height);
-    NSInteger i = 0;
 
+    NSInteger i = 0;
+    CGFloat contentWidth = 0;
+    CGFloat firstLeftX = 0;
     for (UIButton *btn in self.titleButtons) {
         if (self.fromClassType == FromKTVCalendarVCToNoticeView||self.fromClassType == FromEnergyValueVCToNoticeView) { //KTV日历
-            
              btn.frame = CGRectMake(_itemWidth*i++, 0, _itemWidth, self.frame.size.height);
-            
         } else if (self.fromClassType == FromKTVRoomTypeVCToNoticeView) {//KTV房间型号
-            
+            firstLeftX = KLeftMargin;
             CGSize titleSize = [btn.titleLabel.text sizeWithAttributes:[NSDictionary dictionaryWithObjectsAndKeys:btn.titleLabel.font,NSFontAttributeName,nil]];
             _itemWidth = titleSize.width+kRealValue(5);
-            CGFloat leftX = 0;
+            CGFloat leftX = KLeftMargin;
             if (i!=0) {
-                _temBtn = self.titleButtons[i - 1];
-                leftX = CGRectGetMaxX(_temBtn.frame)+kRealValue(6);
-            } else {
-                leftX = KLeftMargin;
+                _temBtn = self.titleButtons[i-1];
+                 leftX = CGRectGetMaxX(_temBtn.frame)+kRealValue(6);
             }
             btn.frame = CGRectMake(leftX, (CGRectGetHeight(self.frame)-kRealValue(25))/2, _itemWidth, kRealValue(25));
             i++;
         } else {
+            firstLeftX = KLeftMargin;
             btn.frame = CGRectMake(KLeftMargin + (midSpacing + _itemWidth)*i++, 0, _itemWidth, CGRectGetHeight(self.frame));
         }
+        
+        if (i == self.titleButtons.count) {
+            contentWidth = CGRectGetMaxX(btn.frame) + firstLeftX;
+        }
     }
-   
-    [self setSelectedIndicator:NO];
-    [self.scrollView bringSubviewToFront:self.selectionIndicator];
-}
+    
+    self.scrollView.contentSize = CGSizeMake(contentWidth, 0);
 
-- (void)setSelectedIndicator:(BOOL)animated {
-    [UIView animateWithDuration:(animated? 0.02 : 0) delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
-        self.selectionIndicator.frame = CGRectMake(self.selectedIndex * self.itemWidth, self.frame.size.height - self.indicatorHeight, self.itemWidth, self.indicatorHeight);
-    } completion:^(BOOL finished) {
-        [self scrollRectToVisibleCenteredOn:self.selectionIndicator.frame animated:YES];
-    }];
-}
-
-- (void)scrollRectToVisibleCenteredOn:(CGRect)visibleRect animated:(BOOL)animated {
-    CGRect centeredRect = CGRectMake(visibleRect.origin.x + visibleRect.size.width / 2.0 - self.scrollView.frame.size.width / 2.0,
-                                     visibleRect.origin.y + visibleRect.size.height / 2.0 - self.scrollView.frame.size.height / 2.0,
-                                     self.scrollView.frame.size.width,
-                                     self.scrollView.frame.size.height);
-    [self.scrollView scrollRectToVisible:centeredRect animated:animated];
 }
 
 #pragma mark - setter
@@ -181,7 +158,6 @@
         return;
     }
     _selectedIndex = selectedIndex;
-    [self setSelectedIndicator:YES];
 }
 
 - (void)setFromClassType:(ZSHFromVCToHotelDetailVC)fromClassType{

@@ -313,4 +313,24 @@
     }];
 }
 
+//用户点进直播间时请先调用该接口
+- (void)requestNumOfTimesWithDic:(NSDictionary *)dic success:(void (^)(id response))success {
+    [PPNetworkHelper POST:kUrlNumberOfTimes parameters:dic success:^(id responseObject) {
+        RLog(@"点击观看直播返回数据%@",responseObject);
+        success(responseObject);
+    } failure:^(NSError *error) {
+        RLog(@"%@", error);
+    }];
+}
+
+//查看任务中心任务完成情况
+- (void)requestTaskStatusWithDic:(NSDictionary *)dic success:(void (^)(id response))success {
+    [PPNetworkHelper POST:kUrlGetTaskStatus parameters:dic success:^(id responseObject) {
+        RLog(@"查看任务中心任务完成情况%@",responseObject);
+        success(responseObject);
+    } failure:^(NSError *error) {
+        RLog(@"%@", error);
+    }];
+}
+
 @end

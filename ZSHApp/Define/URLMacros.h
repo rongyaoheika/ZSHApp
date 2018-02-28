@@ -848,6 +848,17 @@
 //地址:/applivein/getrankinglist?RANKING
 #define kUrlGetRankList [NSString stringWithFormat:@"/applivein/getrankinglist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"RANKING"]]
 
+//168.用户点进直播间时请先调用该接口
+//地址:http://192.168.1.107:8081/ZSHINTER/applivein/numberoftimes?NUMBER
+//参数:HONOURUSER_ID 登录账户id
+//返回参数:无返回参数
+#define kUrlNumberOfTimes [NSString stringWithFormat:@"/applivein/numberoftimes?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"NUMBER"]]
+
+//169.查看任务中心任务完成情况
+//地址:http://192.168.1.107:8081/ZSHINTER/applivein/gettaskstatus?TASK
+//参数:HONOURUSER_ID 查看账户id
+//返回参数:(0为未完成，1为完成) TASK_PORT 头像任务 TASK_BROWSE 浏览任务  TASK_ATTENTION 关注任务 TASK_GIFT 送礼物任务 TASK_ALL 全部任务
+#define kUrlGetTaskStatus [NSString stringWithFormat:@"/applivein/gettaskstatus?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"TASK"]]
 //************************
 
 //151.音乐中心-首页：歌手推荐和广告

@@ -90,6 +90,7 @@
     self.activityImage.image = [UIImage imageNamed:dic[@"bgImageName"]];
     self.titleLabel.text = dic[@"TitleText"];
     self.contentLabel.text = dic[@"ContentText"];
+    self.finishBtn.titleLabel.text = dic[@"FinishTitle"];
     self.paramDic = dic;
     if (_finishBtn.selected) {
         _finishBtn.layer.borderWidth = 0.5;

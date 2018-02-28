@@ -88,6 +88,7 @@
             NSDictionary *topDic = @{@"text":topTitleArr[i],@"font":kPingFangMedium(12),@"textAlignment":@(NSTextAlignmentCenter),@"height":@(30)};
             NSDictionary *bottomDic = @{@"text":bottomTitleArr[i],@"font":kPingFangMedium(12),@"textAlignment":@(NSTextAlignmentCenter),@"height":@(30)};
             UIButton *calendarBtn = [ZSHBaseUIControl createLabelBtnWithTopDic:topDic bottomDic:bottomDic];
+//            calendarBtn.backgroundColor = [UIColor redColor];
             [_btnArr addObject:calendarBtn];
         }
     } else if ([paramDic[KFromClassType]integerValue]  == FromKTVRoomTypeVCToNoticeView) {
@@ -98,6 +99,7 @@
         for (int i = 0; i<titleArr.count; i++) {
             NSDictionary *roomTypeBtnDic = @{@"title":titleArr[i],@"font":kPingFangRegular(12)};
             UIButton *roomTypeBtn = [ZSHBaseUIControl createBtnWithParamDic:roomTypeBtnDic];
+//            roomTypeBtn.backgroundColor = [UIColor greenColor];
             roomTypeBtn.layer.cornerRadius = kRealValue(2.5);
             roomTypeBtn.layer.borderWidth = 0.5;
             roomTypeBtn.layer.borderColor = KZSHColor929292.CGColor;

@@ -416,8 +416,8 @@ static NSString *Identify_MusicCell = @"musicCell";
     kWeakSelf(self);
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     sectionModel.headerHeight = kRealValue(55);
-    
-    NSDictionary *headTitleParamDic = @{@"text":@"荣耀音乐",@"font":kPingFangMedium(15),@"btnTitle":@"",@"btnImage":@"mine_next",@"btnRightValue":@(5)};
+
+     NSDictionary *headTitleParamDic = @{@"text":@"荣耀音乐",@"font":kPingFangMedium(15),@"btnTitle":@"",@"btnImage":@"mine_next",@"btnRightValue":@(5),@"font":kPingFangRegular(11),@"btnImageOffset":@(kRealValue(35)) };
     sectionModel.headerView = [ZSHBaseUIControl createTabHeadLabelViewWithParamDic:headTitleParamDic];
     UIButton *btn = [sectionModel.headerView viewWithTag:2];
     btn.hidden = NO;
