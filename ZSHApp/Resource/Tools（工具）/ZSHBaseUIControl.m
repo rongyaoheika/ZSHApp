@@ -88,6 +88,7 @@
 + (UIView *)createTabHeadLabelViewWithParamDic:(NSDictionary *)paramDic{
    UIView *headView = [[UIView alloc]initWithFrame:CGRectZero];
     
+    //左侧标题
     UILabel *headLabel = [ZSHBaseUIControl createLabelWithParamDic:paramDic];
     headLabel.tag = 1;
     [headView addSubview:headLabel];
@@ -105,14 +106,17 @@
         make.centerY.mas_equalTo(headView);
     }];
     
+    //右侧箭头按钮
     NSString *btnTitle = paramDic[@"btnTitle"]?paramDic[@"btnTitle"]:@"换一批";
     UIFont *font = paramDic[@"font"]?paramDic[@"font"]:kPingFangMedium(15);
     CGFloat rightValue = [paramDic[@"btnRightValue"]integerValue]?[paramDic[@"btnRightValue"]integerValue]:KLeftMargin;
+    
     NSDictionary *btnDic = @{@"title":btnTitle,@"selectedTitleColor":KZSHColorF29E19,@"font":font};
     UIButton *refreshBtn = [ZSHBaseUIControl createBtnWithParamDic:btnDic];
-    if (paramDic[@"btnImage"]) {
+    if (paramDic[@"btnImage"] ) {
         [refreshBtn setImage:[UIImage imageNamed:paramDic[@"btnImage"]] forState:UIControlStateNormal];
     }
+    
     
     refreshBtn.tag = 2;
     refreshBtn.hidden = YES;
@@ -123,6 +127,8 @@
         make.height.mas_equalTo(headView);
         make.right.mas_equalTo(headView).offset(-rightValue);
     }];
+    CGFloat btnImageOffset = paramDic[@"btnImageOffset"]?[paramDic[@"btnImageOffset"]floatValue]:0;
+    [refreshBtn layoutButtonWithEdgeInsetsStyle:XYButtonEdgeInsetsStyleRight imageTitleSpace:btnImageOffset];
     return headView;
 }
 

@@ -158,7 +158,8 @@ static NSString * const ZSHNearHeadViewID = @"ZSHNearHeadView";
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-    
+    //点击观看直播
+    [self requestNumerOfTimes];
 //    AdvancedPlayerViewController *demoTwo = [[AdvancedPlayerViewController alloc] init];
 //    demoTwo.title = @"高级播放";
 //    [self.navigationController pushViewController:demoTwo animated:YES];
@@ -242,6 +243,18 @@ static NSString * const ZSHNearHeadViewID = @"ZSHNearHeadView";
         if (_liveListArr.count==0) {
             _liveListArr = weakself.localDataArr;
         }
+    }];
+    
+}
+
+//用户点进直播间时请先调用该接口
+- (void)requestNumerOfTimes{
+    kWeakSelf(self);
+    
+    NSDictionary *paramDic = @{@"HONOURUSER_ID":HONOURUSER_IDValue};
+    [_liveLogic requestNearPushAddressListWithDic:paramDic success:^(id response) {
+        [weakself endCollectionViewRefresh];
+        RLog(@"点击某个直播播进入直播间观看");
     }];
     
 }

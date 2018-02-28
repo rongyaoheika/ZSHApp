@@ -80,4 +80,8 @@
 - (void)requestFansList:(void (^)(id response))success;
 // 贡献榜
 - (void)requestRankWithDic:(NSDictionary *)dic success:(void (^)(id response))success;
+//用户点进直播间时请先调用该接口
+- (void)requestNumOfTimesWithDic:(NSDictionary *)dic success:(void (^)(id response))success;
+//查看任务中心任务完成情况
+- (void)requestTaskStatusWithDic:(NSDictionary *)dic success:(void (^)(id response))success;
 @end

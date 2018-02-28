@@ -181,7 +181,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
                 [weakself.pickView show:WindowTogether];
                 weakself.pickView.saveChangeBlock = ^(NSString *text, NSInteger tag,NSDictionary *dic) {
                     _togetherLogic.enterDisModel.CONVERGESEX = text;
-                    weakself.detailTitleArr[indexPath.row] = @(tag);
+                    weakself.detailTitleArr[indexPath.row] = text;
                     [weakself.tableView reloadData];
                 };
             } else if (indexPath.row == 7){//年龄要求

@@ -13,6 +13,7 @@
 #import "ZSHCreateStoreGuideView.h"
 #import "ZSHPickView.h"
 #import "ZSHMultiInfoViewController+method.h"
+static NSString *ListCell = @"listCellId";
 
 @interface ZSHMultiInfoViewController ()<UIAlertViewDelegate>
 
@@ -31,6 +32,8 @@
 
 @property (nonatomic, strong) ZSHCreateStoreGuideView   *guideView;
 @property (nonatomic, strong) ZSHPickView               *pickView;
+@property (nonatomic, strong) ZSHPickView               *storePickView; // 娱乐商家分类
+@property (nonatomic, copy)   NSString                  *funStoreName;  // 娱乐商家名字
 @property (nonatomic, copy)   NSString                  *addr;          // 门店地址
 @property (nonatomic, copy)   NSString                  *provinceStr;   // 门店所在省
 @property (nonatomic, copy)   NSString                  *cityStr;       // 门店所在区
@@ -84,13 +87,13 @@
         self.textFieldTypeArr = @[@(ZSHTextFieldViewPhone),@(ZSHTextFieldViewID),@(ZSHTextFieldViewPhone),@(ZSHTextFieldViewCaptcha)];
         self.placeHolderArr = @[@"",@"",@"",@""];
         self.toViewType = FromMultiInfoAccountVCToTextFieldCellView;
-
+        
     } else if (kFromClassTypeValue == FromChangePwdVCToMultiInfoVC){
         //设置-个人资料-银行卡2
         self.titleArr = @[@"卡类型",@"手机号",@"验证码"];
         self.textFieldTypeArr = @[@(ZSHTextFieldViewUser),@(ZSHTextFieldViewPhone),@(ZSHTextFieldViewCaptcha)];
         self.placeHolderArr = @[@"中国银行储蓄卡",@"6216615002674782",@"688686"];
-
+        
     } else if (kFromClassTypeValue == FromUserInfoPhoneVCToMultiInfoVC){
         //手机-修改手机号
         self.titleArr = @[@"当前手机号",@"新手机号",@"验证码"];
@@ -131,22 +134,31 @@
         self.toViewType = FromSetPasswordToMultiInfoVC;
     }else if (kFromClassTypeValue ==  FromCreateStoreVCToMultiInfoVC) {
         // 创建门店
-        if ([self.paramDic[@"row"]integerValue]>1) {
-            self.titleArr = @[@"企业名称", @"企业地址", @"详细地址", @"企业电话"];
-            self.placeHolderArr = @[@"若有下属企业，请具体到具体企业名", @"请选择", @"请输入", @"填写座机/手机，座机需加区号"];
-        } else {
+        // 美食，酒店（前两行） 称为门店，其他称为企业
+        if ([self.paramDic[@"row"]integerValue]>1) {//企业
+            if ([self.paramDic[@"row"]integerValue] == 9) {//娱乐商家
+                self.titleArr = @[@"门店分类",@"门店名称", @"门店地址", @"详细地址", @"门店电话"];
+                self.placeHolderArr = @[@"门店分类",@"若有分店，请具体到分店名", @"请选择", @"请输入", @"填写座机/手机，座机需加区号"];
+                self.textFieldTypeArr = @[@(ZSHTextFieldSelect),@(ZSHTextFieldViewUser), @(ZSHTextFieldSelect), @(ZSHTextFieldViewUser), @(ZSHTextFieldViewPhone)];
+            } else {
+                self.titleArr = @[@"企业名称", @"企业地址", @"详细地址", @"企业电话"];
+                self.placeHolderArr = @[@"若有下属企业，请具体到具体企业名", @"请选择", @"请输入", @"填写座机/手机，座机需加区号"];
+                self.textFieldTypeArr = @[@(ZSHTextFieldViewUser), @(ZSHTextFieldSelect), @(ZSHTextFieldViewUser), @(ZSHTextFieldViewPhone)];
+            }
+        } else {//门店（美食商家，酒店商家）
             self.titleArr = @[@"门店名称", @"门店地址", @"详细地址", @"门店电话"];
             self.placeHolderArr = @[@"若有分店，请具体到分店名", @"请选择", @"请输入", @"填写座机/手机，座机需加区号"];
+            self.textFieldTypeArr = @[@(ZSHTextFieldViewUser), @(ZSHTextFieldSelect), @(ZSHTextFieldViewUser), @(ZSHTextFieldViewPhone)];
         }
-         self.textFieldTypeArr = @[@(ZSHTextFieldViewUser), @(ZSHTextFieldSelect), @(ZSHTextFieldViewUser), @(ZSHTextFieldViewPhone)];
-
+        
+        
     }else if (kFromClassTypeValue ==  FromVerifyVCToMultiInfoVC) {
         // 提交审核
         self.titleArr = @[@"上传身份证", @"经营者姓名", @"身份证号", @"店铺照片", @"营业执照",
                           @"注册号", @"执照名称", @"法人姓名",@"经营者手机", @"验证码"];
         self.textFieldTypeArr = @[
-    @(ZSHTextFieldSelect), @(ZSHTextFieldViewUser), @(ZSHTextFieldViewUser), @(ZSHTextFieldSelect),@(ZSHTextFieldSelect),
-    @(ZSHTextFieldViewUser), @(ZSHTextFieldViewUser), @(ZSHTextFieldViewUser),@(ZSHTextFieldViewPhone), @(ZSHTextFieldViewCaptcha)];
+                                  @(ZSHTextFieldSelect), @(ZSHTextFieldViewUser), @(ZSHTextFieldViewUser), @(ZSHTextFieldSelect),@(ZSHTextFieldSelect),
+                                  @(ZSHTextFieldViewUser), @(ZSHTextFieldViewUser), @(ZSHTextFieldViewUser),@(ZSHTextFieldViewPhone), @(ZSHTextFieldViewCaptcha)];
         self.placeHolderArr = @[@"本人身份证照片", @"须与身份证姓名一致", @"请输入经营者身份证号码", @"请上传实体店铺照片",@"请上传营业执照照片", @"注册号或同一社会信用代码", @"营业执照名称这一行的内容", @"营业执照上法人或经营者姓名",@"用本人身份证办理的手机号", @"输入验证码"];
     } else if (kFromClassTypeValue ==  FromWeMediaVCToMultiInfoVC) { // 自媒体入驻
         self.titleArr = @[@"自媒体名称", @"地址信息", @"详细地址"];
@@ -157,16 +169,18 @@
         self.textFieldTypeArr = @[@(ZSHTextFieldViewNone), @(ZSHTextFieldViewUser), @(ZSHTextFieldViewUser), @(ZSHTextFieldSelect), @(ZSHTextFieldViewUser), @(ZSHTextFieldViewPhone), @(ZSHTextFieldViewCaptcha)];
         self.placeHolderArr = @[@"", @"须与身份证姓名一致", @"请输入经营者身份证号码", @"营业执照上法人或经营者姓名", @"请输入您的联系邮箱", @"用本人身份证办理的手机号", @"输入验证码"];
     }
+    
+    
     [self initViewModel];
 }
 
 - (void)createUI{
     self.title = self.paramDic[@"title"];
-   
+    
     if (kFromClassTypeValue == FromUserInfoNickNameVCToMultiInfoVC || kFromClassTypeValue == FromUserInfoResumeVCToMultiInfoVC) {//修改昵称
-         [self addNavigationItemWithTitles:@[self.paramDic[@"rightNaviTitle"]] isLeft:NO target:self action:@selector(rightNaviBtnAction:) tags:@[@(kFromClassTypeValue)]];
+        [self addNavigationItemWithTitles:@[self.paramDic[@"rightNaviTitle"]] isLeft:NO target:self action:@selector(rightNaviBtnAction:) tags:@[@(kFromClassTypeValue)]];
     } else if (kFromClassTypeValue == FromUserInfoQQVCToMultiInfoVC){//QQ授权
-       [self addNavigationItemWithTitles:@[self.paramDic[@"rightNaviTitle"]] isLeft:NO target:self action:@selector(rightNaviBtnAction:) tags:@[@(kFromClassTypeValue)]];
+        [self addNavigationItemWithTitles:@[self.paramDic[@"rightNaviTitle"]] isLeft:NO target:self action:@selector(rightNaviBtnAction:) tags:@[@(kFromClassTypeValue)]];
         
     } else if (kFromClassTypeValue == FromUserInfoPhoneVCToMultiInfoVC){//更改手机号
         [self.view addSubview:self.bottomBtn];
@@ -188,6 +202,7 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     [self.tableView setSeparatorColor:KZSHColor1D1D1D];
     [self.tableView setSeparatorInset:UIEdgeInsetsMake(0, 0, 0, 0)];
+    [self.tableView registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ListCell];
     
     [self.tableView reloadData];
 }
@@ -223,11 +238,7 @@
         [sectionModel.cellModelArray addObject:cellModel];
         cellModel.height = kRealValue(44);
         cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
-            ZSHBaseCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellId"];
-            if (!cell) {
-                cell = [[ZSHBaseCell alloc] initWithStyle:UITableViewCellStyleValue2
-                                          reuseIdentifier:@"cellId"];
-            }
+            ZSHBaseCell *cell = [tableView dequeueReusableCellWithIdentifier:ListCell forIndexPath:indexPath];
             
             if (![cell.contentView viewWithTag:2+indexPath.row]) {
                 NSDictionary *paramDic = @{@"leftTitle":self.titleArr[indexPath.row],@"placeholder":self.placeHolderArr[indexPath.row],@"textFieldType":self.textFieldTypeArr[indexPath.row],KFromClassType:@(self.toViewType)};
@@ -249,6 +260,20 @@
                             weakself.text5 = str;
                         } else if (index == 10) {
                             weakself.text6 = str;
+                        }
+                    } else if (kFromClassTypeValue ==  FromCreateStoreVCToMultiInfoVC ){
+                        if ([self.paramDic[@"row"]integerValue] == 9) {//娱乐商家,增加一行“门店分类”
+                            if (index == 3) {//门店名称
+                                weakself.text1 = str;
+                            } else if (index == 4) {
+                                weakself.text2 = str;
+                            } else if (index == 5) {
+                                weakself.text3 = str;
+                            } else if (index == 6) {
+                                weakself.text4 = str;
+                            } else if (index == 7) {
+                                weakself.text5 = str;
+                            }
                         }
                     } else {
                         if (index == 2) {
@@ -281,13 +306,33 @@
                     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
                 }
             } else if (kFromClassTypeValue ==  FromCreateStoreVCToMultiInfoVC || kFromClassTypeValue ==  FromWeMediaVCToMultiInfoVC) {
-                if (indexPath.row == 1) {
-                    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-
-                    if (weakself.addr) {
-                        ZSHTextFieldCellView *textFieldView  = [cell.contentView viewWithTag:2+indexPath.row];
-                        textFieldView.textField.text = weakself.addr;
-                        _text2 = weakself.addr;
+                if ([self.paramDic[@"row"]integerValue] == 9) { // 娱乐商家
+                    if(indexPath.row == 0 ){// 门店分类
+                        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                        if (weakself.funStoreName) {
+                            ZSHTextFieldCellView *textFieldView  = [cell.contentView viewWithTag:2+indexPath.row];
+                            textFieldView.textField.text = weakself.funStoreName;
+                            
+                        }
+                    }
+                    
+                    if(indexPath.row == 2){ //门店地址
+                        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                        if (weakself.addr) {
+                            ZSHTextFieldCellView *textFieldView  = [cell.contentView viewWithTag:2+indexPath.row];
+                            textFieldView.textField.text = weakself.addr;
+                            _text2 = weakself.addr;
+                        }
+                    }
+                } else  {
+                    if(indexPath.row == 1){ //门店地址
+                        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                        
+                        if (weakself.addr) {
+                            ZSHTextFieldCellView *textFieldView  = [cell.contentView viewWithTag:2+indexPath.row];
+                            textFieldView.textField.text = weakself.addr;
+                            _text2 = weakself.addr;
+                        }
                     }
                 }
             } else if (kFromClassTypeValue ==  FromVerifyVCToMultiInfoVC) {
@@ -295,23 +340,31 @@
                     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
                 }
             }
-
-        
+            
+            
             return cell;
         };
         
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
             if (kFromClassTypeValue ==  FromCreateStoreVCToMultiInfoVC || kFromClassTypeValue ==  FromWeMediaVCToMultiInfoVC) {
-                if (indexPath.row == 1) {// 地区选择
-                    weakself.pickView = [weakself createPickViewWithType:WindowRegion];
-                    weakself.pickView.saveChangeBlock = ^(NSString *text, NSInteger index, NSDictionary *dic) {
-                        weakself.addr = text;
-                        weakself.provinceStr = dic[@"provinceStr"];
-                        weakself.cityStr = dic[@"cityStr"];
-                        weakself.districtStr = dic[@"districtStr"];
-                        [tableView reloadData];
-                    };
-                    [weakself.pickView show:WindowRegion];
+                if ([self.paramDic[@"row"]integerValue] == 9) { // 娱乐商家
+                    if(indexPath.row == 0){// 门店分类
+                        NSArray *seatArr = @[@"KTV",@"酒吧",@"夜店"];
+                        NSDictionary *nextParamDic = @{@"type":@(WindowDefault),@"midTitle":@"娱乐商家选择",@"dataArr":seatArr};
+                        weakself.storePickView = [weakself createPickViewWithParamDic:nextParamDic];
+                        [weakself.storePickView show:WindowDefault];
+                        weakself.storePickView.saveChangeBlock = ^(NSString *text, NSInteger index, NSDictionary *dic) {
+                            weakself.funStoreName = text;
+                            [weakself.tableView reloadData];
+                        };
+
+                    } else if (indexPath.row == 2){ //门店地址
+                        [weakself popRegionPickView];
+                    }
+                } else  {
+                    if(indexPath.row == 1){ //门店地址
+                        [weakself popRegionPickView];
+                    }
                 }
             } else if (kFromClassTypeValue ==  FromVerifyVCToMultiInfoVC) {
                 ZSHBaseCell *cell = [tableView cellForRowAtIndexPath:indexPath];
@@ -330,10 +383,10 @@
                             if ( [_fileNameMArr count]>0) {
                                 [_fileNameMArr removeObjectAtIndex:0];
                             }
-                           
+                            
                             NSArray *idImgMArr = @[positiveImg,negativeImg];
                             [_imagMArr addObject:idImgMArr];
-                           
+                            
                             NSArray *idImgPathArr = @[positiveImgPath,negativeImgPath];
                             [_fileNameMArr addObject:idImgPathArr];
                             
@@ -348,7 +401,7 @@
                         textFieldView.textField.text = isFinished?@"待审核":@"待完善";
                         _imageText2 = textFieldView.textField.text;
                         if (isFinished) {
-
+                            
                             if ( [_imagMArr count]>1) {
                                 [_imagMArr removeObjectAtIndex:1];
                             }
@@ -377,7 +430,7 @@
                             if ( [_fileNameMArr count]>2) {
                                 [_fileNameMArr removeObjectAtIndex:2];
                             }
-
+                            
                             NSArray *lisenceImgArr = @[positiveImg];
                             [_imagMArr addObject:lisenceImgArr];
                             
@@ -387,9 +440,9 @@
                         
                     };
                 }
-
+                
             } else if (kFromClassTypeValue ==  FromWeMediaVerifyVCToMultiInfoVC) {
-                if (indexPath.row == 3) { 
+                if (indexPath.row == 3) {
                     ZSHUploadIDCardController *uploadIDCardVC = [[ZSHUploadIDCardController alloc] initWithParamDic:@{KFromClassType:@(FromIDCardVCToUploadPhotoVC)}];
                     [self.navigationController pushViewController:uploadIDCardVC animated:true];
                 }
@@ -402,7 +455,7 @@
 - (ZSHPickView *)createPickViewWithType:(NSUInteger)type{
     NSString *path = [[NSBundle mainBundle] pathForResource:@"citys.plist" ofType:@""];
     NSDictionary *areaDic = [NSDictionary dictionaryWithContentsOfFile:path];
-
+    
     NSMutableArray *provinces = [NSMutableArray array];
     NSMutableArray *citys = [NSMutableArray array];
     NSMutableArray *districts = [NSMutableArray array];
@@ -417,7 +470,7 @@
     
     NSDictionary *arr = [areaDic objectForKey:provinces[0]][0];
     districts = [arr objectForKey:citys[0]];
-
+    
     NSMutableArray *regionArr = [NSMutableArray arrayWithObjects:provinces, citys, districts, nil];
     NSDictionary *nextParamDic = @{@"type":@(type),@"midTitle":@"城市区域选择",@"dataArr":regionArr};
     
@@ -542,21 +595,23 @@
             }];
             break;
         }
-         case FromCreateStoreVCToMultiInfoVC:{//确认创建
-             if ([self createStoreAction]) {
-                 NSDictionary *paramDic = @{KFromClassType:@(FromVerifyVCToMultiInfoVC),@"title":@"提交资质",
-                                            @"bottomBtnTitle":@"提交审核",@"categoryId":self.paramDic[@"categoryId"],                                      @"storeName":self.text1,@"provinceName":self.provinceStr,@"cityName":self.cityStr,@"districtName":self.districtStr?self.districtStr:@"",@"address":self.text2,@"detailAddress":self.text3,@"phoneStr":self.text4,
-                                            };
-                 ZSHMultiInfoViewController *multiInfoVC = [[ZSHMultiInfoViewController alloc] initWithParamDic:paramDic];
-                 [self.navigationController pushViewController:multiInfoVC animated:YES];
-             }
-             break;
-         }
+        case FromCreateStoreVCToMultiInfoVC:{//确认创建
+            if ([self createStoreAction]) {
+                NSString *categoryId = self.funStoreName?self.funStoreName:self.paramDic[@"categoryId"];
+                NSDictionary *paramDic = @{KFromClassType:@(FromVerifyVCToMultiInfoVC),@"title":@"提交资质",
+                                           @"bottomBtnTitle":@"提交审核",@"categoryId":categoryId,                                      @"storeName":self.text1,@"provinceName":self.provinceStr,@"cityName":self.cityStr,@"districtName":self.districtStr?self.districtStr:@"",@"address":self.text2,@"detailAddress":self.text3,@"phoneStr":self.text4,
+                                           };
+                ZSHMultiInfoViewController *multiInfoVC = [[ZSHMultiInfoViewController alloc] initWithParamDic:paramDic];
+                [self.navigationController pushViewController:multiInfoVC animated:YES];
+            }
+            break;
+        }
         case FromVerifyVCToMultiInfoVC:{//门店提交审核
             if ([self submitCheckAction]) {
+                NSString *categoryId = self.funStoreName?self.funStoreName:self.paramDic[@"categoryId"];
                 HCLocationManager *locationManager = [HCLocationManager sharedManager];
                 [locationManager getLatiAndLongiWithCity:self.paramDic[@"address"] compelete:^(CLLocationDegrees latitude, CLLocationDegrees longitude) {
-                    NSDictionary *paramDic = @{@"CATEGORY_ID":self.paramDic[@"categoryId"],@"APPLYFOR_NAME":self.paramDic[@"storeName"],
+                    NSDictionary *paramDic = @{@"CATEGORY_ID":categoryId,@"APPLYFOR_NAME":self.paramDic[@"storeName"],
                                                @"APPLYFOR_PROVINCE":self.paramDic[@"provinceName"],@"APPLYFOR_CITY":self.paramDic[@"cityName"],
                                                @"APPLY_COUNTY":self.paramDic[@"districtName"],@"APPLYFOR_ADDRESS":self.paramDic[@"detailAddress"],
                                                @"APPLYFOR_LONGITUDE":@(longitude),@"APPLYFOR_LATITUDE":@(latitude),
@@ -566,9 +621,9 @@
                                                @"APPLYFOR_LEGALPERSON":self.text5,@"APPLYFOR_PHONE":self.text6,
                                                @"HONOURUSER_ID":HONOURUSER_IDValue
                                                };
-                [self submitActionWithDic:paramDic names:@[@"APPLYFOR_IDCARDIMAGE",@"APPLYFOR_IMAGES",@"APPLYFOR_CHARTERIMAGE"] images:_imagMArr fileNames:_fileNameMArr];
+                    [self submitActionWithDic:paramDic names:@[@"APPLYFOR_IDCARDIMAGE",@"APPLYFOR_IMAGES",@"APPLYFOR_CHARTERIMAGE"] images:_imagMArr fileNames:_fileNameMArr];
                 }];
-               
+                
             }
             
             break;
@@ -585,7 +640,18 @@
     
 }
 
-
+- (void)popRegionPickView{//弹出门店地址pickView
+    kWeakSelf(self);
+    weakself.pickView = [weakself createPickViewWithType:WindowRegion];
+    weakself.pickView.saveChangeBlock = ^(NSString *text, NSInteger index, NSDictionary *dic) {
+        weakself.addr = text;
+        weakself.provinceStr = dic[@"provinceStr"];
+        weakself.cityStr = dic[@"cityStr"];
+        weakself.districtStr = dic[@"districtStr"];
+        [weakself.tableView reloadData];
+    };
+    [weakself.pickView show:WindowRegion];
+}
 
 - (ZSHCreateStoreGuideView *)guideView{
     if (!_guideView) {
@@ -593,6 +659,12 @@
         _guideView.tag = 3;
     }
     return _guideView;
+}
+
+-(ZSHPickView *)createPickViewWithParamDic:(NSDictionary *)paramDic{
+    ZSHPickView *pickView = [[ZSHPickView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight) paramDic:paramDic];
+    pickView.controller = self;
+    return pickView;
 }
 
 
