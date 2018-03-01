@@ -8,11 +8,12 @@
 
 #import "ZSHBaseView.h"
 
-typedef void (^ClickSameBtnBlock)(BOOL openBtnList);
+typedef void (^ClickSameBtnBlock)(UIButton *btn);
 
 @interface ZSHCardBtnListView : ZSHBaseView
 
 @property (nonatomic, copy) ClickSameBtnBlock   clickSameBtn;
+
 
 @end
 

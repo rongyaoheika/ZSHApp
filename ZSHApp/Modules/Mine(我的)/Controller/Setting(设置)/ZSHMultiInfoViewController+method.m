@@ -21,8 +21,8 @@
         if (self.text4.length<4) {
             UIAlertView *phoneAlert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"门店电话格式错误" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
             [phoneAlert show];
+            return NO;
         }
-        return self.text4.length>4;
     }
     return YES;
 }
