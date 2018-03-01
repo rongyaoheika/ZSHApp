@@ -17,6 +17,7 @@
 @property (nonatomic, assign) NSInteger        column;
 @property (nonatomic, assign) UIButton         *lastBtn;
 @property (nonatomic, assign) NSInteger        selectIndex;
+
 @end
 
 @implementation ZSHCardBtnListView
@@ -96,7 +97,7 @@
         UIButton *tempBtn = btn;
         tempBtn.selected = !tempBtn.selected;
         if(self.clickSameBtn){
-            self.clickSameBtn(tempBtn.selected);
+            self.clickSameBtn(tempBtn);
         }
     } else if(btn.tag == _selectIndex){
         btn.selected = YES;

@@ -1468,8 +1468,8 @@ static CGFloat lastPinchDistance = 0;
     }
     
 }
-#pragma mark - <TextViewDelegate>
 
+#pragma mark - <TextViewDelegate>
 //监测用户输入文本长度
 - (void)textViewDidChangeText:(NSNotification *)notification
 
