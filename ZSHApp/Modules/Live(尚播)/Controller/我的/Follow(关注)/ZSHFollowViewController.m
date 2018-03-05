@@ -9,6 +9,7 @@
 #import "ZSHFollowViewController.h"
 #import "ZSHFollowCell.h"
 #import "ZSHLiveLogic.h"
+#import "ZSHFriendListModel.h"
 
 static NSString *ZSHLiveFollowCellID = @"ZSHLiveFollowCellID";
 
@@ -16,7 +17,7 @@ static NSString *ZSHLiveFollowCellID = @"ZSHLiveFollowCellID";
 
 @property (nonatomic, strong) NSMutableArray *dataArr;
 @property (nonatomic, strong) ZSHLiveLogic   *liveLogic;
-
+@property (nonatomic, strong) NSArray<ZSHFriendListModel *>   *friendListModelArr;
 @end
 
 @implementation ZSHFollowViewController
@@ -33,10 +34,10 @@ static NSString *ZSHLiveFollowCellID = @"ZSHLiveFollowCellID";
     _liveLogic = [[ZSHLiveLogic alloc] init];
     
     switch ([self.paramDic[KFromClassType] integerValue]) {
-        case FromHorseVCToFollowVC:
+        case FromFocusVCToFollowVC:
             self.title = @"我的关注";
             break;
-        case FromShipVCToFollowVC:
+        case FromFansVCToFollowVC:
             self.title = @"我的粉丝";
             break;
         default:
@@ -71,13 +72,13 @@ static NSString *ZSHLiveFollowCellID = @"ZSHLiveFollowCellID";
 - (ZSHBaseTableViewSectionModel*)storeListSection {
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     
-    for (int i = 0; i < _liveLogic.friendListModelArr.count; i++) {
+    for (int i = 0; i < _friendListModelArr.count; i++) {
         ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
         [sectionModel.cellModelArray addObject:cellModel];
         cellModel.height = kRealValue(59);
         cellModel.renderBlock = ^UITableViewCell *(NSIndexPath *indexPath, UITableView *tableView) {
             ZSHFollowCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHLiveFollowCellID forIndexPath:indexPath];
-            [cell updateCellWithModel:_liveLogic.friendListModelArr[indexPath.row]];
+            [cell updateCellWithModel:_friendListModelArr[indexPath.row]];
             return cell;
         };
         
@@ -91,22 +92,25 @@ static NSString *ZSHLiveFollowCellID = @"ZSHLiveFollowCellID";
 
 - (void)requestData {
     kWeakSelf(self);
-    if ([self.paramDic[@"follow"] isEqualToString:@"0"]) {// 关注
-//        [_liveLogic requestFriendList:^(id response) {
-//            [weakself initViewModel];
-//        }];
-        
-        [_liveLogic requestFocusList:^(id response) {
-             [weakself initViewModel];
-        }];
-    } else {// 粉丝
-//        [_liveLogic requestReFriendList:^(id response) {
-//            [weakself initViewModel];
-//        }];
-        [_liveLogic requestFansList:^(id response) {
-            [weakself initViewModel];
-        }];
+    switch ([self.paramDic[KFromClassType] integerValue]) {
+        case FromFocusVCToFollowVC:{
+            [_liveLogic requestFocusList:^(NSArray *friendListModelArr) {
+                _friendListModelArr = friendListModelArr;
+                [weakself initViewModel];
+            }];
+            break;
+        }
+        case FromFansVCToFollowVC:{
+            [_liveLogic requestFansList:^(NSArray *friendListModelArr) {
+                _friendListModelArr = friendListModelArr;
+                [weakself initViewModel];
+            }];
+            break;
+        }
+        default:
+            break;
     }
+    
 
 }
 

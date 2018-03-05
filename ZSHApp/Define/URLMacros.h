@@ -558,14 +558,14 @@
 //参数：无
 //请求地址：/apphomein/magazinelist?MAGAZINE(混淆码)
 #define kUrlMagazineList [NSString stringWithFormat:@"/apphomein/magazinelist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"MAGAZINE"]]
-//109.获取我关注的好友的列表接口（完成）
-//参数：HONOURUSER_ID  查询的用户Id
-//请求地址：/appfriendin/friendlist?FLIST (混淆码)
-#define kUrlFriendList [NSString stringWithFormat:@"/appfriendin/friendlist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"FLIST"]]
-//110.获取关注我的好友的列表接口（完成）
-//参数：HONOURUSER_ID  查询的用户Id
-//请求地址：/appfriendin/refriendlist?REFLIST(混淆码)
-#define kUrlRefriendList [NSString stringWithFormat:@"/appfriendin/refriendlist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"REFLIST"]]
+////109.获取我关注的好友的列表接口（完成）
+////参数：HONOURUSER_ID  查询的用户Id
+////请求地址：/appfriendin/friendlist?FLIST (混淆码)
+//#define kUrlFriendList [NSString stringWithFormat:@"/appfriendin/friendlist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"FLIST"]]
+////110.获取关注我的好友的列表接口（完成）
+////参数：HONOURUSER_ID  查询的用户Id
+////请求地址：/appfriendin/refriendlist?REFLIST(混淆码)
+//#define kUrlRefriendList [NSString stringWithFormat:@"/appfriendin/refriendlist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"REFLIST"]]
 //111.删除我关注的好友接口（取消关注）（完成）
 //参数：HONOURUSER_ID 当前登录用户Id/    REHONOURUSER_ID  被取消用户Id
 //请求地址：/appfriendin/delfriend?FRIENDDEL(混淆码)
@@ -761,7 +761,7 @@
 //请求地址：/appdiscoverin/upvideo.do?UPVIDEO (混淆码)
 #define kUrlUpVideo [NSString stringWithFormat:@"/appdiscoverin/upvideo.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"UPVIDEO"]]
 //150.商家发布自媒体广告流
-//参数：  TITLE 标题 /     HONOURUSER_ID  用户id     /fileList   上传的图片名
+//参数：  TITLE 标题 /     HONOURUSER_ID  用户id     /fileList   上传的图片名 CAIDAN_ID   所属菜单的ID DIS_TYPE类型：视频2001  纯文字2002  单图2003  3张图2004 showfile  视频文件名
 //请求地址：/appdiscoverin/addselfmediaad.do?SELFMEDIAADD (混淆码)
 #define kUrlAddSelfMediaad [NSString stringWithFormat:@"/appdiscoverin/addselfmediaad.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SELFMEDIAADD"]]
 
@@ -938,7 +938,10 @@
 //请求地址：/appdiscoverin/updtopline?UPDTOPLINE(混淆码)
 #define kUrlUpdTopLine [NSString stringWithFormat:@"/product/getprobystandard?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"GETPROBYSTANDARD"]]
 
-
+//230.修改头条的浏览量
+//参数：     DISCOVERVIDEO_ID 头条的id/
+//请求地址：/appdiscoverin/updpageviews?UPDPAGEVIEWS(混淆码)
+#define kUrlUpdPageViews [NSString stringWithFormat:@"/appdiscoverin/updpageviews?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"UPDPAGEVIEWS"]]
 
 #endif /* URLMacros_h */
 

@@ -9,8 +9,8 @@
 #import "RootViewController.h"
 
 typedef NS_ENUM(NSInteger,ZSHToFollowVC){
-    FromHorseVCToFollowVC,        // 关注
-    FromShipVCToFollowVC,         // 粉丝
+    FromFocusVCToFollowVC,        // 关注
+    FromFansVCToFollowVC,         // 粉丝
     FromNoneToFollowVC
 };
 

@@ -40,6 +40,8 @@
 @property (nonatomic, copy)   NSString     *topic;
 @property (nonatomic, copy)   NSString     *topicID;
 @property (nonatomic, strong) ZSHPickView  *pickView;
+@property (nonatomic, strong) NSArray      *disTypeArr;
+@property (nonatomic, strong) NSArray      *typeId;
 
 @end
 
@@ -56,6 +58,10 @@
     _liveLogic = [[ZSHLiveLogic alloc] init];
     _selectedPhotos = [NSMutableArray array];
     _selectedAssets = [NSMutableArray array];
+    
+    //视频2001  纯文字2002  单图2003  多图2004
+    _disTypeArr = @[@"2001",@"2002",@"2003",@"2004"];
+    _typeId = self.paramDic[@"typeId"];
     _topic = @"";
     _topicID = @"";
 }
@@ -73,7 +79,7 @@
     _titleTextView.font = [UIFont systemFontOfSize:15];
     _titleTextView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
     if (kFromClassTypeValue == FromWordVCToZSHWeiboWriteVC || kFromClassTypeValue == FromPhotoVCToZSHWeiboWriteVC || kFromClassTypeValue == FromVideoVCToZSHWeiboWriteVC) {
-        _titleTextView.xx_placeholder = @"精选";
+        _titleTextView.xx_placeholder = self.paramDic[@"title"];
     } else {
         _titleTextView.xx_placeholder = @"标题";
     }
@@ -92,11 +98,13 @@
     __weak typeof(_titleTextView)weakTitleTextView = _titleTextView;
     _titleTextView.beginEdit = ^{
         if (kFromClassTypeValue == FromWordVCToZSHWeiboWriteVC || kFromClassTypeValue == FromPhotoVCToZSHWeiboWriteVC || kFromClassTypeValue == FromVideoVCToZSHWeiboWriteVC) {
-            NSDictionary *nextParamDic = @{@"type":@(WindowDefault),@"midTitle":@"选择",@"dataArr":@[@"精选", @"数码", @"亲子", @"时尚", @"美食"]};
+            NSDictionary *nextParamDic = @{@"type":@(WindowDefault),@"midTitle":@"选择",@"dataArr":weakself.paramDic[@"titleArr"]};
             weakself.pickView = [[ZSHPickView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight) paramDic:nextParamDic];
             [weakself.pickView show:WindowDefault];
             weakself.pickView.saveChangeBlock = ^(NSString *rowTitle, NSInteger tag,NSDictionary *dic) {
                 weakself.titleTextView.xx_placeholder = rowTitle;
+                NSDictionary *paramDic = weakself.paramDic[@"paramArr"][tag];
+                weakself.typeId = paramDic[@"CAIDAN_ID"];
                 
             };
             [weakTitleTextView endEditing:true];
@@ -180,17 +188,17 @@
         
         if (kFromClassTypeValue == FromWordVCToZSHWeiboWriteVC) {
 
-        } else if (kFromClassTypeValue == FromPhotoVCToZSHWeiboWriteVC) {
-            NSString *DIS_TYPE = @"";
-            if (_selectedPhotos.count == 0) {
-                DIS_TYPE = @"2002";
-            } else if (_selectedPhotos.count == 1){
-                DIS_TYPE = @"2003";
-            } else if (_selectedPhotos.count > 1){
-                DIS_TYPE = @"2004";
+        } else if (kFromClassTypeValue == FromPhotoVCToZSHWeiboWriteVC) {//图片
+            NSString *DIS_TYPE = self.disTypeArr[_selectedPhotos.count];
+            if (_selectedPhotos.count == 0) {//仅文字
+                DIS_TYPE = _disTypeArr[1];
+            } else if (_selectedPhotos.count == 1){//单图
+                DIS_TYPE = _disTypeArr[2];
+            } else if (_selectedPhotos.count > 1){//多图
+                DIS_TYPE = _disTypeArr[3];
             }
             
-            [_liveLogic requestAddSelfMediaAD:@{@"HONOURUSER_ID":HONOURUSER_IDValue, @"TITLE":_contentTextView.text, @"DIS_TYPE":DIS_TYPE, @"CAIDAN_ID":self.paramDic[@"CAIDAN_ID"]} images:_selectedPhotos fileNames:fileNames success:^(id response) {
+            [_liveLogic requestAddSelfMediaAD:@{@"HONOURUSER_ID":HONOURUSER_IDValue, @"TITLE":_contentTextView.text, @"DIS_TYPE":DIS_TYPE, @"CAIDAN_ID":_typeId} images:_selectedPhotos fileNames:fileNames success:^(id response) {
                 UIAlertController *ac = [UIAlertController alertControllerWithTitle:@"提示" message:@"发布成功" preferredStyle:UIAlertControllerStyleAlert];
                 UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
                     [weakself.navigationController popViewControllerAnimated:true];
@@ -201,7 +209,7 @@
         } else if (kFromClassTypeValue == FromVideoVCToZSHWeiboWriteVC) {
             [[TZImageManager manager] getVideoOutputPathWithAsset:_selectedAssets.firstObject presetName:AVAssetExportPreset640x480 success:^(NSString *outputPath) {
                 NSLog(@"视频导出到本地完成,沙盒路径为:%@",outputPath);
-                [weakself.liveLogic requestUpVideoWithDic:@{@"DIS_TYPE": @"2001", @"TITLE ":_contentTextView.text, @"HONOURUSER_ID":HONOURUSER_IDValue, @"CAIDAN_ID":self.paramDic[@"CAIDAN_ID"]} withFilePath:outputPath thumb:_selectedPhotos.firstObject success:^(id response) {
+                [weakself.liveLogic requestUpVideoWithDic:@{@"DIS_TYPE": _disTypeArr[0], @"TITLE ":_contentTextView.text, @"HONOURUSER_ID":HONOURUSER_IDValue, @"CAIDAN_ID":_typeId} withFilePath:outputPath thumb:_selectedPhotos.firstObject success:^(id response) {
                     UIAlertController *ac = [UIAlertController alertControllerWithTitle:@"提示" message:@"发布成功" preferredStyle:UIAlertControllerStyleAlert];
                     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
                         [weakself.navigationController popViewControllerAnimated:true];
@@ -250,6 +258,7 @@
     self.collectionView.contentInset = UIEdgeInsetsMake(4, 4, 4, 4);
     self.collectionView.dataSource = self;
     self.collectionView.delegate = self;
+    self.collectionView.scrollEnabled = NO;
     self.collectionView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
     [self.view addSubview:self.collectionView];
     [self.collectionView registerClass:[TZTestCell class] forCellWithReuseIdentifier:@"TZTestCell"];

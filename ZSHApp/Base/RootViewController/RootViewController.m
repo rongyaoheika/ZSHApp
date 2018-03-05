@@ -261,7 +261,6 @@
     [_leftBtn setTitleColor:KZSHColor929292 forState:UIControlStateNormal];
     _leftBtn.titleLabel.font = kPingFangMedium(12);
     [_leftBtn setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
-//    _leftBtn.size = CGSizeMake(44, 44);
     _leftBtn.frame = CGRectMake(0, 0, 44, 44);
     [_leftBtn.titleLabel setLineBreakMode:NSLineBreakByTruncatingMiddle];
     [_leftBtn layoutButtonWithEdgeInsetsStyle:imageLocate imageTitleSpace:kRealValue(4)];
@@ -270,11 +269,10 @@
     _leftBtn.imageView.contentMode = UIViewContentModeScaleAspectFit;
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:_leftBtn];
     UIBarButtonItem *spaceButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+    spaceButtonItem.width = kiOS11Later?-15:0;
     if (isLeft) {
-        spaceButtonItem.width = -15;
         self.navigationItem.leftBarButtonItems = @[spaceButtonItem, item];
     } else {
-        spaceButtonItem.width = -15;
         self.navigationItem.rightBarButtonItems = @[spaceButtonItem, item];
     }
 
@@ -288,26 +286,17 @@
     [btn addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
     btn.tag = tag;
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:btn];
-#ifdef __IPHONE_11_0
-    if (@available(ios 11.0,*)) {
-        if (isLeft) {
-            btn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-            [btn setImageEdgeInsets:UIEdgeInsetsMake(0, kRealValue(-5),0,0)];
-        } else {
-            btn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
-            [btn setImageEdgeInsets:UIEdgeInsetsMake(0, kRealValue(5),0,0)];
-        }
-    }
-#endif
-   
     if (isLeft) {
-        self.navigationItem.leftBarButtonItems = @[item];
+        btn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+        [btn setImageEdgeInsets:UIEdgeInsetsMake(0, kRealValue(-5),0,0)];
+         self.navigationItem.leftBarButtonItems = @[item];
     } else {
+        btn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
+        [btn setImageEdgeInsets:UIEdgeInsetsMake(0, kRealValue(5),0,0)];
         self.navigationItem.rightBarButtonItems = @[item];
     }
-    
-    
 }
+
 
 - (void)addNavigationItemWithTitles:(NSArray *)titles isLeft:(BOOL)isLeft target:(id)target action:(SEL)action tags:(NSArray *)tags
 {
@@ -418,6 +407,10 @@
         HCLocationManager *locationManager = [HCLocationManager sharedManager];
         locationManager.delegate = delegate;
         [locationManager startLocate];
+}
+
+- (void)updateUIWithParamDic:(NSDictionary *)paramDic{
+    
 }
 
 @end
