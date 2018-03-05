@@ -16,7 +16,7 @@
 @property (nonatomic, strong) NSArray           *paramArr;
 @property (nonatomic, strong) UIImageView       *headImageView;
 @property (nonatomic, strong) UILabel           *nameLabel;
-@property (nonatomic, strong) UIButton          *friendBtn;
+@property (nonatomic, strong) UIButton          *couponBtn;
 @property (nonatomic, strong) UIButton          *coinBtn;
 @property (nonatomic, strong) UIButton          *energyBtn;
 
@@ -26,12 +26,9 @@
 
 - (void)setup{
     self.pushVCsArr = @[@"ZSHMineCouponViewController",@"ZSHCoinViewController",@"ZSHEnergyValueViewController"];
-    self.paramArr = @[@{KFromClassType:@(ZSHFromMineFriendVCToServiceCenterVC),
-                        @"title":@"好友",
-                        @"titleArr":@[@"爱跳舞的小丑",@"爱跳舞的小丑",@"爱跳舞的小丑",@"爱跳舞的小丑"],
-                    @"imageArr":@[@"weibo_head_image",@"weibo_head_image",@"weibo_head_image",@"weibo_head_image"]},
-                       @{},
-                       @{}];
+    self.paramArr = @[@{@"value":@"5"},
+                      @{@"value":@"99"},
+                      @{@"value":@"99"}];
 
     
     UIImageView *headImageView = [[UIImageView alloc] init];
@@ -76,13 +73,13 @@
     }];
     
     //好友
-    NSDictionary *friendBtnTopDic = @{@"text":@"优惠券",@"font":kPingFangRegular(14),@"textAlignment":@(NSTextAlignmentCenter),@"height":@(14)};
-    NSDictionary *friendBtnBottomDic = @{@"text":@"99",@"font":kPingFangMedium(18),@"textAlignment":@(NSTextAlignmentCenter),@"height":@(14)};
-    _friendBtn = [ZSHBaseUIControl createLabelBtnWithTopDic:friendBtnTopDic bottomDic:friendBtnBottomDic];
-    _friendBtn.tag = 1;
-    [_friendBtn addTarget:self action:@selector(btnAction:) forControlEvents:UIControlEventTouchUpInside];
-    [self addSubview:_friendBtn];
-    [_friendBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+    NSDictionary *couponBtnTopDic = @{@"text":@"优惠券",@"font":kPingFangRegular(14),@"textAlignment":@(NSTextAlignmentCenter),@"height":@(14)};
+    NSDictionary *couponBtnBottomDic = @{@"text":@"99",@"font":kPingFangMedium(18),@"textAlignment":@(NSTextAlignmentCenter),@"height":@(14)};
+    _couponBtn = [ZSHBaseUIControl createLabelBtnWithTopDic:couponBtnTopDic bottomDic:couponBtnBottomDic];
+    _couponBtn.tag = 1;
+    [_couponBtn addTarget:self action:@selector(btnAction:) forControlEvents:UIControlEventTouchUpInside];
+    [self addSubview:_couponBtn];
+    [_couponBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self);
         make.top.mas_equalTo(self.coinBtn);
         make.width.mas_equalTo(self.coinBtn);
@@ -110,23 +107,27 @@
 }
 
 - (void)btnAction:(UIButton *)btn{
-        Class className = NSClassFromString(self.pushVCsArr[btn.tag - 1]);
-        RootViewController *vc = [[className alloc]initWithParamDic:self.paramArr[btn.tag - 1]];
-        [[kAppDelegate getCurrentUIVC].navigationController pushViewController:vc animated:YES];
+    Class className = NSClassFromString(self.pushVCsArr[btn.tag - 1]);
+    RootViewController *vc = [[className alloc]initWithParamDic:self.paramArr[btn.tag - 1]];
+    [[kAppDelegate getCurrentUIVC].navigationController pushViewController:vc animated:YES];
 }
 
 
 - (void)updateViewWithParamDic:(NSDictionary *)paramDic {
-    UILabel *friendBottom = [_friendBtn viewWithTag:21];
+    UILabel *couponBottom = [_couponBtn viewWithTag:21];
     NSLog(@"%@", curUser.HONOURUSER_ID);
     if ([curUser.HONOURUSER_ID isEqualToString:@"d6a3779de8204dfd9359403f54f7d27c"])
-        friendBottom.text = @"5";
+        couponBottom.text = @"5";
     else
-        friendBottom.text =NSStringFormat(@"%@",paramDic[@"COUPON"]);
+        couponBottom.text = NSStringFormat(@"%@",paramDic[@"couponBtn"]);
     UILabel *coinBottom = [_coinBtn viewWithTag:21];
     coinBottom.text = NSStringFormat(@"%@",paramDic[@"BLACKCOIN"]);
     UILabel *energyBottom = [_energyBtn viewWithTag:21];
     energyBottom.text = NSStringFormat(@"%@",paramDic[@"ENERGY"]);
+    
+    self.paramArr = @[@{@"value":couponBottom.text},
+                      @{@"value":coinBottom.text},
+                      @{@"value":energyBottom.text}];
 }
 
 @end

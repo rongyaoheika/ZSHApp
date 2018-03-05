@@ -9,32 +9,7 @@
 
 #import "ZSHLiveLogic.h"
 
-
 @implementation ZSHLiveLogic
-//老接口
-// 关注
-- (void)requestFriendList:(void (^)(id response))success {
-    kWeakSelf(self);
-    [PPNetworkHelper POST:kUrlFriendList parameters:@{@"HONOURUSER_ID":HONOURUSER_IDValue} success:^(id responseObject) {
-        weakself.friendListModelArr = [ZSHFriendListModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"]];
-        RLog(@"%@",responseObject);
-        success(nil);
-    } failure:^(NSError *error) {
-        RLog(@"%@", error);
-    }];
-}
-
-// 粉丝
-- (void)requestReFriendList:(void (^)(id response))success {
-    kWeakSelf(self);
-    [PPNetworkHelper POST:kUrlRefriendList parameters:@{@"HONOURUSER_ID":HONOURUSER_IDValue} success:^(id responseObject) {
-        weakself.friendListModelArr = [ZSHFriendListModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"]];
-        RLog(@"%@",responseObject);
-        success(nil);
-    } failure:^(NSError *error) {
-        RLog(@"%@", error);
-    }];
-}
 
 // 发布内容到我的圈子
 - (void)requestAddCircle:(NSDictionary *)dic images:(NSArray *)images fileNames:(NSArray *)fileNmaes success:(void (^)(id response))success {
@@ -70,8 +45,6 @@
         
     }];
 }
-
-
 
 // 获取我和我关注的好友的所有圈子并根据时间排序
 - (void)requestCircleList:(void (^)(id response))success {
@@ -280,11 +253,11 @@
 //泓磊：直播-我的-关注，粉丝接口
 // 关注
 - (void)requestFocusList:(void (^)(id response))success {
-    kWeakSelf(self);
+   
     [PPNetworkHelper POST:kUrlGetFocusList parameters:@{@"HONOURUSER_ID":HONOURUSER_IDValue} success:^(id responseObject) {
-        weakself.friendListModelArr = [ZSHFriendListModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"]];
-        RLog(@"%@",responseObject);
-        success(nil);
+        NSArray *friendModelArr = [ZSHFriendListModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"]];
+        RLog(@"直播-我的关注%@",responseObject);
+        success(friendModelArr);
     } failure:^(NSError *error) {
         RLog(@"%@", error);
     }];
@@ -292,11 +265,10 @@
 
 // 粉丝
 - (void)requestFansList:(void (^)(id response))success {
-    kWeakSelf(self);
     [PPNetworkHelper POST:kUrlGetFansList parameters:@{@"HONOURUSER_ID":HONOURUSER_IDValue} success:^(id responseObject) {
-        weakself.friendListModelArr = [ZSHFriendListModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"]];
-        RLog(@"%@",responseObject);
-        success(nil);
+        NSArray *friendModelArr = [ZSHFriendListModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"]];
+        RLog(@"直播-粉丝数据%@",responseObject);
+        success(friendModelArr);
     } failure:^(NSError *error) {
         RLog(@"%@", error);
     }];
@@ -305,7 +277,6 @@
 // 贡献榜
 - (void)requestRankWithDic:(NSDictionary *)dic success:(void (^)(id response))success {
     [PPNetworkHelper POST:kUrlGetRankList parameters:dic success:^(id responseObject) {
-//        weakself.friendListModelArr = [ZSHFriendListModel mj_objectArrayWithKeyValuesArray:responseObject[@"pd"]];
         RLog(@"贡献榜==%@",responseObject);
         success(responseObject);
     } failure:^(NSError *error) {

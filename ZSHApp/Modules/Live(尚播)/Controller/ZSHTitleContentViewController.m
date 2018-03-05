@@ -54,7 +54,10 @@
 @property (nonatomic, strong) ZSHToplineTopView    *toplineTopView;
 @property (nonatomic, strong) NSMutableArray       *myTags;
 @property (nonatomic, strong) NSMutableArray       *recommandTags;
-@property (strong, nonatomic) UILabel *tagLabel;
+@property (nonatomic, strong) UILabel              *tagLabel;
+
+//可变参数字典
+//@property (nonatomic, strong) NSMutableArray       *paramMArr;
 
 @end
 
@@ -85,6 +88,7 @@
 }
 
 - (void)loadData{
+//    self.paramMArr = [NSMutableArray new];
     self.myTags = [[NSMutableArray alloc]init];
     self.recommandTags = [[NSMutableArray alloc]init];
     self.buyLogic = [[ZSHBuyLogic alloc]init];
@@ -101,7 +105,7 @@
             
         }
             break;
-        case FromFindVCToTitleContentVC:{
+        case FromFindVCToTitleContentVC:{//头条
             [self createFindNaviUI];
             [self requestTopLineMenuData];
             return;
@@ -205,7 +209,6 @@
                                 @"ZSHMagazineListViewController",
                                 @"ZSHMagazineListViewController",
                                 @"ZSHMagazineListViewController"];
-//            self.paramArr = @[@{KFromClassType:@(kFromClassTypeValue)},@{KFromClassType:@(kFromClassTypeValue)},@{KFromClassType:@(kFromClassTypeValue)}];
         }
         break;
         case FromBuyVCToTitleContentVC : { //尊购
@@ -371,7 +374,7 @@
             vc = [[className alloc]initWithParamDic:dic];
             [self.vcs addObject:vc];
         }
-    } else{
+    } else {
         for (int i = 0; i<self.titleArr.count; i++) {
             Class className = NSClassFromString(self.contentVCS[i]);
 
@@ -434,29 +437,6 @@
         default:
             break;
     }
-    
-    
-//    NSMutableDictionary *nextParamDic = [[NSMutableDictionary alloc] initWithDictionary:@{KFromClassType:@(ZSHFromFoodVCToBottomBlurPopView)}];
-//    [nextParamDic addEntriesFromDictionary:paramArr[index]];
-//    [nextParamDic setObject:@(index) forKey:@"index"];
-//    [nextParamDic setObject:@(self.contentVCS.count) forKey:@"count"];
-//    ZSHBottomBlurPopView *bottomBlurPopView = [[ZSHBottomBlurPopView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight) paramDic:nextParamDic];
-//    bottomBlurPopView.blurRadius = 20;
-//    bottomBlurPopView.dynamic = NO;
-//    bottomBlurPopView.tintColor = KClearColor;
-//    bottomBlurPopView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.6];
-//    [bottomBlurPopView setBlurEnabled:NO];
-//    [ZSHBaseUIControl setAnimationWithHidden:NO view:bottomBlurPopView completedBlock:nil];
-//    bottomBlurPopView.dissmissViewBlock = ^(UIView *blurView, NSIndexPath *indexpath) {
-//        [ZSHBaseUIControl setAnimationWithHidden:YES view:blurView completedBlock:^{
-//            if (indexpath) {//跳转到对应控制器
-//                //                        Class className = NSClassFromString(weakself.menuPushVCsArr[indexpath.row]);
-//                //                        RootViewController *vc = [[className alloc]initWithParamDic:weakself.menuParamArr[indexpath.row]];
-//                //                        [weakself.navigationController pushViewController:vc animated:YES];
-//            }
-//            return;
-//        }];
-//    };
     
     NSDictionary *nextParamDic = @{@"type":@(WindowDefault),@"midTitle":paramArr[index][@"midTitle"],@"dataArr":paramArr[index][@"shopSortArr"]};
     weakself.pickView = [weakself createPickViewWithParamDic:nextParamDic];
@@ -543,13 +523,22 @@
 - (void)distributeAction{
     RLog(@"发布");
     kWeakSelf(self);
+    
     if (![self.view viewWithTag:18011506]) {
         [UIView transitionWithView:self.toplineTopView duration:1.0 options:UIViewAnimationOptionCurveEaseIn animations:^ {
             [self.view addSubview:self.toplineTopView];
             self.toplineTopView.btnClickBlock = ^(UIButton *btn) {
                 NSArray *values = @[@(FromWordVCToZSHWeiboWriteVC), @(FromPhotoVCToZSHWeiboWriteVC), @(FromVideoVCToZSHWeiboWriteVC)];
-                NSMutableDictionary *mutableDic = [[NSMutableDictionary alloc] initWithDictionary:weakself.paramArr[btn.tag]];
-                [mutableDic addEntriesFromDictionary:@{KFromClassType:values[btn.tag]}];
+                NSMutableDictionary *mutableDic = [NSMutableDictionary new];
+                [mutableDic setValue:values[btn.tag] forKey:KFromClassType];
+                [mutableDic setValue:weakself.paramArr forKey:@"paramArr"];
+                [mutableDic setValue:weakself.titleArr forKey:@"titleArr"];
+                [mutableDic setValue:weakself.titleArr[weakself.vcIndex] forKey:@"title"];
+                
+                NSDictionary *dic = weakself.paramArr[weakself.vcIndex];
+                [mutableDic setValue:dic[@"CAIDAN_ID"] forKey:@"typeId"];
+                
+                
                 ZSHWeiboWriteController *weiboWriteVC = [[ZSHWeiboWriteController alloc]initWithParamDic:mutableDic];
                 [weakself.navigationController pushViewController:weiboWriteVC animated:YES];
             };
@@ -614,7 +603,7 @@
             [paramMArr addObject:@{@"CAIDAN_ID":dic[@"CAIDAN_ID"],@"shopId":shopId}];
             [contentVCSMArr addObject:@"ZSHFindViewController"];
         }
-       
+        
         for (NSDictionary *dic in response[@"recomList"]) {
             [weakself.recommandTags addObject:dic[@"NAME"]];
         }

@@ -29,9 +29,9 @@
                         @"ZSHCoinViewController",
                         @"ZSHFollowViewController"];
     self.paramArr = @[
-                      @{KFromClassType:@(FromHorseVCToFollowVC),@"title":@"关注", @"follow":@"0"},
-                      @{},
-                      @{KFromClassType:@(FromShipVCToFollowVC),@"title":@"粉丝", @"follow":@"1"}];
+                      @{KFromClassType:@(FromFocusVCToFollowVC),@"title":@"关注", @"follow":@"0"},
+                      @{@"title":@"黑卡比",@"value":@"99"},
+                      @{KFromClassType:@(FromFansVCToFollowVC),@"title":@"粉丝", @"follow":@"1"}];
     
     UIImageView *headImageView = [[UIImageView alloc] init];
     headImageView.layer.cornerRadius = kRealValue(50)/2;
@@ -110,6 +110,7 @@
     Class className = NSClassFromString(self.pushVCsArr[btn.tag - 1]);
     RootViewController *vc = [[className alloc]initWithParamDic:self.paramArr[btn.tag - 1]];
     [[kAppDelegate getCurrentUIVC].navigationController pushViewController:vc animated:YES];
+    
 }
 
 - (void)updateViewWithParamDic:(NSDictionary *)paramDic{
@@ -122,6 +123,11 @@
     
     UILabel *followerLB = [_followerBtn viewWithTag:21];
     followerLB.text = [paramDic[@"FANSCOUNT"]stringValue];
+    
+    self.paramArr = @[
+                      @{KFromClassType:@(FromFocusVCToFollowVC),@"title":@"关注", @"follow":followValueLB.text},
+                      @{@"title":@"黑卡比",@"value":coinValueLB.text},
+                      @{KFromClassType:@(FromFansVCToFollowVC),@"title":@"粉丝", @"follow":followerLB.text}];
 }
 
 @end

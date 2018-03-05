@@ -30,14 +30,14 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
 - (void)loadData{
     
     self.pushVCsArr = @[@"ZSHLiveProfitViewController",@""];
-    self.paramArr = @[@{},@{}];
+    self.paramArr = @[@{@"value":self.paramDic[@"value"]},@{}];
     [self initViewModel];
 }
 
 - (void)createUI{
     self.title = @"黑卡币";
     
-    NSDictionary *nextParamDic = @{@"headKeyTitle":@"黑卡币余额",@"headValueTitle":@"500.00"};
+    NSDictionary *nextParamDic = @{@"headKeyTitle":@"黑卡币余额",@"headValueTitle":self.paramDic[@"value"]};
     self.headerView = [[ZSHQuotaHeadView alloc]initWithFrame:CGRectZero paramDic:nextParamDic];
     [self.view addSubview:self.headerView];
     [self.headerView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -104,6 +104,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
     }
     return sectionModel;
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

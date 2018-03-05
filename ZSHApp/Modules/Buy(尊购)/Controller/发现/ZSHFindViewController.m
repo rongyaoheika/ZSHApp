@@ -52,8 +52,13 @@ static NSString *Identify_threePicsCell = @"Identify_threePicsCell";
     
     [self initViewModel];
     _buyLogic = [[ZSHBuyLogic alloc] init];
-    [self requestData];
+   
     
+}
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+     [self requestData];
 }
 
 - (void)createUI{
@@ -337,6 +342,18 @@ static NSString *Identify_threePicsCell = @"Identify_threePicsCell";
     [self.currentCell.playBtn.superview sendSubviewToBack:self.currentCell.playBtn];
     [self.player play];
     [self.tableView reloadData];
+    [self updatePageViewDtaWithModel:model];
+    
+}
+
+//更新浏览数据
+- (void)updatePageViewDtaWithModel:(ZSHFindModel *)model{
+    kWeakSelf(self);
+    [_buyLogic requestPageViewData:@{@"DISCOVERVIDEO_ID":model.DISCOVERVIDEO_ID} success:^(id response) {
+        if ([response[@"result"]isEqualToString:@"01"]) {
+            [weakself requestData];
+        }
+    }];
 }
 
 - (void)requestData {

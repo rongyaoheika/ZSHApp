@@ -247,5 +247,16 @@
     }];
 }
 
+// 修改头条的浏览量
+- (void)requestPageViewData:(NSDictionary *)dic success:(void (^)(id response))success {
+    [PPNetworkHelper POST:kUrlUpdPageViews parameters:dic success:^(id responseObject) {
+        RLog(@"点修改头条浏览量%@",responseObject);
+        success(responseObject);
+    } failure:^(NSError *error) {
+        RLog(@"%@", error);
+    }];
+}
+
+
 
 @end

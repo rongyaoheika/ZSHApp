@@ -8,6 +8,12 @@
 
 #import "ZSHQuotaHeadView.h"
 
+@interface ZSHQuotaHeadView ()
+
+@property (nonatomic, strong) UILabel *topLB;
+@property (nonatomic, strong) UILabel *bottomLB;
+
+@end
 
 @implementation ZSHQuotaHeadView
 
@@ -15,9 +21,9 @@
     self.backgroundColor = KClearColor;
     
     NSDictionary *topDic = @{@"text":self.paramDic[@"headKeyTitle"],@"font":kPingFangMedium(15),@"textAlignment":@(NSTextAlignmentCenter)};
-    UILabel *topLabel = [ZSHBaseUIControl createLabelWithParamDic:topDic];
-    [self addSubview:topLabel];
-    [topLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+    _topLB = [ZSHBaseUIControl createLabelWithParamDic:topDic];
+    [self addSubview:_topLB];
+    [_topLB mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self).offset(kRealValue(30));
         make.centerX.mas_equalTo(self);
         make.height.mas_equalTo(kRealValue(15));
@@ -25,11 +31,11 @@
     }];
     
     NSDictionary *bottomDic = @{@"text":self.paramDic[@"headValueTitle"],@"font":kPingFangRegular(32),@"textColor":[UIColor colorWithHexString:@"A0A0A0"],@"textAlignment":@(NSTextAlignmentCenter)};
-    UILabel *bottomLabel = [ZSHBaseUIControl createLabelWithParamDic:bottomDic];
-    bottomLabel.adjustsFontSizeToFitWidth = YES;
-    [self addSubview:bottomLabel];
-    [bottomLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(topLabel.mas_bottom).offset(kRealValue(20));
+    _bottomLB = [ZSHBaseUIControl createLabelWithParamDic:bottomDic];
+    _bottomLB.adjustsFontSizeToFitWidth = YES;
+    [self addSubview:_bottomLB];
+    [_bottomLB mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(_topLB.mas_bottom).offset(kRealValue(20));
         make.centerX.mas_equalTo(self);
         make.height.mas_equalTo(kRealValue(25));
         make.width.mas_equalTo(self);

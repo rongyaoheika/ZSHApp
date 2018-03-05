@@ -265,6 +265,24 @@
     _noticeLabel.text = _listDataDicArr[0][@"PDOWNINTROTITLE"];
     _noticeDetailLabel.text = _listDataDicArr[0][@"PDOWNINTROCONTENT"];
     
+    NSMutableParagraphStyle *titleLBStyle = [[NSMutableParagraphStyle alloc] init];
+    [titleLBStyle setLineSpacing:6];
+    NSMutableAttributedString *titleLBSetString = [[NSMutableAttributedString alloc] initWithString:_titleLabel.text];
+    [titleLBSetString addAttribute:NSParagraphStyleAttributeName value:titleLBStyle range:NSMakeRange(0, [_titleLabel.text length])];
+    [_titleLabel setAttributedText:titleLBSetString];
+    
+    
+    NSMutableParagraphStyle *contentLBStyle = [[NSMutableParagraphStyle alloc] init];
+    [contentLBStyle setLineSpacing:6];
+    NSMutableAttributedString *contentLBSetString = [[NSMutableAttributedString alloc] initWithString:_contentLabel.text];
+    [contentLBSetString addAttribute:NSParagraphStyleAttributeName value:contentLBStyle range:NSMakeRange(0, [_contentLabel.text length])];
+    [_contentLabel setAttributedText:contentLBSetString];
+    
+    NSMutableParagraphStyle *subTitleLBStyle = [[NSMutableParagraphStyle alloc] init];
+    [subTitleLBStyle setLineSpacing:6];
+    NSMutableAttributedString *subTitleLBSetString = [[NSMutableAttributedString alloc] initWithString:_subTitleLabel.text];
+    [subTitleLBSetString addAttribute:NSParagraphStyleAttributeName value:contentLBStyle range:NSMakeRange(0, [_subTitleLabel.text length])];
+    [_subTitleLabel setAttributedText:subTitleLBSetString];
     
     NSMutableParagraphStyle  *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
     [paragraphStyle  setLineSpacing:5];

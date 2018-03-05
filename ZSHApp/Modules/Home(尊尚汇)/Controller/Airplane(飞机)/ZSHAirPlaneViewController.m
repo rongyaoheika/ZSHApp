@@ -156,6 +156,11 @@ static NSString *ZSHBaseTicketDateCellID = @"ZSHBaseTicketDateCell";
                 cell = [[ZSHBaseCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"child"];
                 NSDictionary *childBtnDic = @{@"title":@"携带儿童",@"font":kPingFangRegular(12),@"withImage":@(YES),@"normalImage":@"airplane_press"};
                 UIButton *childBtn = [ZSHBaseUIControl createBtnWithParamDic:childBtnDic];
+               
+                [childBtn setImage:[UIImage imageNamed:@"airplane_normal"] forState:UIControlStateNormal];
+                [childBtn setImage:[UIImage imageNamed:@"airplane_press"] forState:UIControlStateSelected];
+                
+                [childBtn addTarget:self action:@selector(childBtnAction:) forControlEvents:UIControlEventTouchUpInside];
                 [cell.contentView addSubview:childBtn];
                 [childBtn mas_makeConstraints:^(MASConstraintMaker *make) {
                     make.left.mas_equalTo(cell).offset(KLeftMargin);
@@ -257,6 +262,10 @@ static NSString *ZSHBaseTicketDateCellID = @"ZSHBaseTicketDateCell";
         };
     }
     return sectionModel;
+}
+
+- (void)childBtnAction:(UIButton *)childBtn{
+    childBtn.selected = !childBtn.selected;
 }
 
 //搜索机票
