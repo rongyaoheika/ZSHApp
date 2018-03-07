@@ -33,10 +33,9 @@
     //取消按钮
     NSArray *btnTitleArr = @[@"取消",@"确定"];
     for (int i = 0; i<btnTitleArr.count; i++) {
-        NSDictionary *btnDic = @{@"title":btnTitleArr[i],@"titleColor":KZSHColor333333,@"font":kPingFangRegular(15),@"backgroundColor":KClearColor};
-        UIButton *btn = [ZSHBaseUIControl createBtnWithParamDic:btnDic];
+        NSDictionary *btnDic = @{@"title":btnTitleArr[i],@"titleColor":KZSHColor333333,@"font":kPingFangRegular(15)};
+        UIButton *btn = [ZSHBaseUIControl  createBtnWithParamDic:btnDic target:self action:@selector(btnAction:)];
         btn.tag = i+1;
-        [btn addTarget:self action:@selector(btnAction:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:btn];
         [btn mas_makeConstraints:^(MASConstraintMaker *make) {
             make.width.mas_equalTo(kRealValue(40));

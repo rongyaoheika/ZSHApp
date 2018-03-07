@@ -15,17 +15,18 @@
     UILabel *label = [[UILabel alloc]initWithFrame:CGRectZero];
     label.tag = [paramDic[@"tag"]integerValue];
     label.text = paramDic[@"text"];
-    label.font = paramDic[@"font"]?paramDic[@"font"]:kPingFangRegular(15);
+    label.font = paramDic[@"font"]?paramDic[@"font"]:kPingFangRegular(14);
     label.textColor = paramDic[@"textColor"]? paramDic[@"textColor"]:KZSHColor929292;
     label.textAlignment = [paramDic[@"textAlignment"]integerValue]? [paramDic[@"textAlignment"]integerValue]:NSTextAlignmentLeft;
    
     return label;
 }
 
-//NSDictionary *btnDic = @{@"title":titleArr[i],@"titleColor":KZSHColor929292,@"selectedTitleColor":KZSHColor929292,@"font":kPingFangRegular(14),@"backgroundColor":KClearColor,@"withImage":@(YES),@"normalImage":imageArr[i],@"selectedImage":imageArr[i]};
-
-+ (UIButton *)createBtnWithParamDic:(NSDictionary *)paramDic{
+//NSDictionary *btnDic = @{@"title":titleArr[i],@"titleColor":KZSHColor929292,@"selectedTitleColor":KZSHColor929292,@"font":kPingFangRegular(14),@"backgroundColor":KClearColor,@"normalImage":imageArr[i],@"selectedImage":imageArr[i]};
++ (UIButton *)createBtnWithParamDic:(NSDictionary *)paramDic target:(id)target action:(SEL)action{
     UIButton *btn = [[UIButton alloc]initWithFrame:CGRectZero];
+    [btn addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
+    
     btn.tag = [paramDic[@"tag"]integerValue];
     [btn setTitle:paramDic[@"title"] forState:UIControlStateNormal];
     
@@ -38,11 +39,15 @@
     UIColor *bgColor = paramDic[@"backgroundColor"]?paramDic[@"backgroundColor"]:KClearColor;
     [btn setBackgroundColor:bgColor];
     
-    UIFont *titleFont = paramDic[@"font"]? paramDic[@"font"]:kPingFangRegular(15);
+    UIFont *titleFont = paramDic[@"font"]? paramDic[@"font"]:kPingFangRegular(14);
     btn.titleLabel.font = titleFont;
-    if ([paramDic[@"withImage"]integerValue]) {
-        [btn setImage:[UIImage imageNamed:paramDic[@"normalImage"]] forState:UIControlStateNormal];
-    }
+    
+    UIImage *noremalImage = paramDic[@"normalImage"]?[UIImage imageNamed:paramDic[@"normalImage"]]:nil;
+    [btn setImage:noremalImage forState:UIControlStateNormal];
+    
+    UIImage *selectImage = paramDic[@"selectedImage"]?[UIImage imageNamed:paramDic[@"selectedImage"]]:nil;
+    [btn setImage:selectImage forState:UIControlStateSelected];
+    
     
     return btn;
 }
@@ -112,12 +117,10 @@
     CGFloat rightValue = [paramDic[@"btnRightValue"]integerValue]?[paramDic[@"btnRightValue"]integerValue]:KLeftMargin;
     
     NSDictionary *btnDic = @{@"title":btnTitle,@"selectedTitleColor":KZSHColorF29E19,@"font":font};
-    UIButton *refreshBtn = [ZSHBaseUIControl createBtnWithParamDic:btnDic];
-    if (paramDic[@"btnImage"] ) {
-        [refreshBtn setImage:[UIImage imageNamed:paramDic[@"btnImage"]] forState:UIControlStateNormal];
-    }
-    
-    
+    UIButton *refreshBtn = [ZSHBaseUIControl  createBtnWithParamDic:btnDic target:self action:nil];
+    UIImage *normalImage = [UIImage imageNamed:paramDic[@"btnImage"]];
+    [refreshBtn setImage:normalImage forState:UIControlStateNormal];
+
     refreshBtn.tag = 2;
     refreshBtn.hidden = YES;
     [headView addSubview:refreshBtn];
@@ -187,13 +190,12 @@
     }
     NSArray *titles = @[@"加入购物车",@"立即购买"];
     for (NSInteger i = 0; i < titles.count; i++) {
-        NSDictionary *btnDic = @{@"title":titles[i],@"titleColor":KZSHColor929292,@"font":kPingFangMedium(17),@"backgroundColor":KClearColor};
-        UIButton *button = [ZSHBaseUIControl createBtnWithParamDic:btnDic];
+        NSDictionary *btnDic = @{@"title":titles[i],@"titleColor":KZSHColor929292,@"font":kPingFangMedium(17)};
+        UIButton *button = [ZSHBaseUIControl  createBtnWithParamDic:btnDic target:self action:nil];
         button.tag = i + 2;
         [button addTapBlock:^(UIButton *btn) {
             tapBlock(btn.tag);
         }];
-//        [button addTarget:self action:@selector(bottomButtonClick:) forControlEvents:UIControlEventTouchUpInside];
         [_bottomBtnView addSubview:button];
         [button mas_makeConstraints:^(MASConstraintMaker *make) {
             make.height.mas_equalTo(_bottomBtnView);

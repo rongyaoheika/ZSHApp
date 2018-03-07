@@ -148,6 +148,10 @@
     return [self.selectedViewController supportedInterfaceOrientations];
 }
 
+- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation{
+    return [self.selectedViewController preferredInterfaceOrientationForPresentation];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

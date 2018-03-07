@@ -22,9 +22,8 @@
     NSArray *titleArr = @[@"黑微博",@"开播呗",@"小视频"];
     for (int i = 0; i<titleArr.count; i++) {
         NSDictionary *btnDic = @{@"title":titleArr[i],@"titleColor":KZSHColor333333,@"selectedTitleColor":KZSHColorF29E19,@"font":kPingFangLight(14)};
-        UIButton *btn = [ZSHBaseUIControl createBtnWithParamDic:btnDic];
+        UIButton *btn = [ZSHBaseUIControl  createBtnWithParamDic:btnDic target:self action:@selector(btnAction:)];
         btn.tag = i+1;
-        [btn addTarget:self action:@selector(btnAction:) forControlEvents:UIControlEventTouchUpInside];
         [self.contentView addSubview:btn];
         [btn mas_makeConstraints:^(MASConstraintMaker *make) {
             make.width.mas_equalTo(kRealValue(45));

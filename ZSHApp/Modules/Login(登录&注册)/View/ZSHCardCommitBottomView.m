@@ -48,9 +48,8 @@
     }];
     
     NSDictionary *rightBtnDic = @{@"title":@"提交信息",@"font":kPingFangLight(17),@"backgroundColor": [UIColor colorWithRed:61/255.0 green:61/255.0 blue:61/255.0 alpha:0.4/1.0]};
-    _rightBtn = [ZSHBaseUIControl createBtnWithParamDic:rightBtnDic];
+    _rightBtn = [ZSHBaseUIControl  createBtnWithParamDic:rightBtnDic target:self action:@selector(commitInfoAction)];
     [self addSubview:_rightBtn];
-//    [_rightBtn addTarget:self action:@selector(commitInfoAction) forControlEvents:UIControlEventTouchUpInside];
     [_rightBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(_leftView.mas_right);
         make.right.and.top.and.height.mas_equalTo(self);

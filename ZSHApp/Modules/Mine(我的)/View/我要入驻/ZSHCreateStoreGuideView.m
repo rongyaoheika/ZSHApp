@@ -88,8 +88,7 @@
     
     //下一步按钮
     NSDictionary *nextBtnDic = @{@"title":@"下一步",@"font":kPingFangMedium(15)};
-    UIButton *nextBtn = [ZSHBaseUIControl createBtnWithParamDic:nextBtnDic];
-    [nextBtn addTarget:self action:@selector(nextBtnAction) forControlEvents:UIControlEventTouchUpInside];
+    UIButton *nextBtn = [ZSHBaseUIControl  createBtnWithParamDic:nextBtnDic target:self action:@selector(nextBtnAction)];
     nextBtn.layer.borderColor = KZSHColor929292.CGColor;
     nextBtn.layer.borderWidth = 0.5;
     nextBtn.layer.cornerRadius = 2.5;

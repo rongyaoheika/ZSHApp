@@ -220,10 +220,6 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     switch (section) {
-            //        case 1:{
-            //            return kRealValue(90);
-            //            break;
-            //        }
         case 3:
         case 4:
         case 5:
@@ -241,39 +237,6 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     kWeakSelf(self);
     switch (section) {
-            //        case 1:{
-            ////            NSArray *titleArr = @[@"至尊会籍卡",@"荣耀会籍卡",@"名人联名卡",@"经典会籍卡",@"12星座卡",@"周易五行卡"];
-            //            NSArray *titleArr = @[@"荣耀黑卡",@"名人联名卡",@"12星座卡",@"周易五行卡"];
-            //            NSDictionary *paramDic = @{@"titleArr":titleArr,@"normalImage":@"card_long_normal",@"selectedImage":@"card_long_press"};
-            //            ZSHCardBtnListView *listView = [[ZSHCardBtnListView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kRealValue(90)) paramDic:paramDic];
-            //            listView.tag = 2;
-            //
-            //            //点击同一个btn
-            //            listView.clickSameBtn = ^(BOOL openBtnList){
-            //                if (openBtnList) {
-            //
-            //                    [_selectedArr replaceObjectAtIndex:section withObject:@(YES)];
-            //                    [weakself.tableView reloadRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:section] withRowAnimation:UITableViewRowAnimationFade];
-            //                } else {
-            //
-            //                    [_selectedArr replaceObjectAtIndex:section withObject:@(false)];
-            //                    [weakself.tableView reloadRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:section] withRowAnimation:UITableViewRowAnimationFade];
-            //                }
-            //            };
-            //
-            //            //点击不同的btn-展开
-            //            listView.btnClickBlock = ^(UIButton *btn) {
-            //                _cardBtnTag = btn.tag-1;
-            //                //TODO:可能存在问题
-            //                [weakself requestData:_cardBtnTag];
-            //                [_selectedArr replaceObjectAtIndex:section withObject:@(YES)];
-            //                [weakself.tableView reloadRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:section] withRowAnimation:UITableViewRowAnimationFade];
-            //            };
-            //
-            //            return listView;
-            //        }
-            //            break;
-            
         case 3:
         case 4:
         case 5:
@@ -339,7 +302,7 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
         case 1:{
             ZSHBaseCell *cell = [[ZSHBaseCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@""];
             if (![cell viewWithTag:2]){
-                //头部
+                
                 //              NSArray *titleArr = @[@"至尊会籍卡",@"荣耀会籍卡",@"名人联名卡",@"经典会籍卡",@"12星座卡",@"周易五行卡"];
                 NSArray *titleArr = @[@"荣耀黑卡",@"名人联名卡",@"12星座卡",@"周易五行卡"];
                 NSDictionary *paramDic = @{@"titleArr":titleArr,@"normalImage":@"card_long_normal",@"selectedImage":@"card_long_press",@"btnTag":@(cardSelectIndex)};

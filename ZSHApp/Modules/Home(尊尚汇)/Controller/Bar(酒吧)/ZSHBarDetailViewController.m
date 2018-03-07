@@ -201,7 +201,7 @@ static NSString *ZSHHotelCellID = @"ZSHHotelCell";
         [self hideSeparatorLineWithCell:cell hide:NO];
         if (![cell.contentView viewWithTag:2]) {
             NSDictionary *scoreBtnDic = @{@"title":[NSString stringWithFormat:@"%.1f",scoreCount],@"titleColor":KWhiteColor,@"font":kPingFangMedium(12),@"backgroundColor":[UIColor colorWithHexString:@"F29E19"]};
-            UIButton *scoreBtn = [ZSHBaseUIControl createBtnWithParamDic:scoreBtnDic];
+            UIButton *scoreBtn = [ZSHBaseUIControl  createBtnWithParamDic:scoreBtnDic target:self action:nil];
             scoreBtn.tag = 2;
             scoreBtn.layer.cornerRadius = kRealValue(2.5);
             [cell.contentView addSubview:scoreBtn];

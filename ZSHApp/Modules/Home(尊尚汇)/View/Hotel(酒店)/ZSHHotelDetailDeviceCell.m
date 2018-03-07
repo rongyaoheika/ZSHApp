@@ -59,10 +59,9 @@
     
     int i = 0;
     for (NSDictionary *dic in _deviceArr) {
-        NSDictionary *hotelDeviceBtnDic = @{@"title":dic[@"titleName"],@"font":kPingFangRegular(11),@"tag":@(i+1),@"withImage":@(YES),@"normalImage":dic[@"imageName"]};
-        UIButton *hotelDeviceBtn = [ZSHBaseUIControl createBtnWithParamDic:hotelDeviceBtnDic];
+        NSDictionary *hotelDeviceBtnDic = @{@"title":dic[@"titleName"],@"font":kPingFangRegular(11),@"tag":@(i+1),@"normalImage":dic[@"imageName"]};
+        UIButton *hotelDeviceBtn = [ZSHBaseUIControl  createBtnWithParamDic:hotelDeviceBtnDic target:self action:@selector(hotelDeviceBtnAction:)];
         hotelDeviceBtn.tag = i;
-        [hotelDeviceBtn addTarget:self action:@selector(hotelDeviceBtnAction:) forControlEvents:UIControlEventTouchUpInside];
         [self.contentView addSubview:hotelDeviceBtn];
         [_allBtnArr addObject:hotelDeviceBtn];
         i++;

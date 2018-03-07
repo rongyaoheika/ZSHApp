@@ -46,8 +46,8 @@
 }
 
 - (void)createBottomButton {
-    NSDictionary *nextStepDic = @{@"title":@"下一步",@"titleColor":KZSHColor929292,@"font":kPingFangMedium(17),@"backgroundColor":KBlackColor};
-    _nextStepBtn = [ZSHBaseUIControl createBtnWithParamDic:nextStepDic];
+    NSDictionary *nextStepDic = @{@"title":@"下一步",@"font":kPingFangMedium(17),@"backgroundColor":KBlackColor};
+    _nextStepBtn = [ZSHBaseUIControl  createBtnWithParamDic:nextStepDic target:self action:nil];
     [self.view addSubview:_nextStepBtn];
     [_nextStepBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.mas_equalTo(self.view);

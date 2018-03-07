@@ -55,6 +55,7 @@
 // 尊购专区点击之后跳转页面
 - (void)requestShipPrefectureWithBrandID:(NSString *)brandID success:(void (^)(id response))success {
     [PPNetworkHelper POST:kUrlShipPrefecture parameters:@{@"BRAND_ID":brandID} success:^(id responseObject) {
+        NSLog(@"尊购商品==%@",responseObject);
         success(responseObject);
     } failure:^(NSError *error) {
         RLog(@"请求失败");

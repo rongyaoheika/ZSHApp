@@ -52,11 +52,10 @@
     
     //加好友
     NSDictionary *btnDic = @{@"title":@"加好友",@"font":kPingFangRegular(11)};
-    _addFriendBtn = [ZSHBaseUIControl createBtnWithParamDic:btnDic];
+    _addFriendBtn = [ZSHBaseUIControl  createBtnWithParamDic:btnDic target:self action:@selector(addFriendAction)];
     _addFriendBtn.layer.cornerRadius = kRealValue(7.0);
     _addFriendBtn.layer.borderColor = KZSHColor929292.CGColor;
     _addFriendBtn.layer.borderWidth = 0.5;
-    [_addFriendBtn addTarget:self action:@selector(addFriendAction) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:_addFriendBtn];
 }
 

@@ -29,7 +29,7 @@
 
     for (int i = 0; i<titleListArr.count; i++) {
         NSDictionary *cardTypeBtnDic = @{@"title":titleListArr[i],@"font":kPingFangLight(15), @"selectedTitleColor":KZSHColorF29E19};
-        UIButton *cardTypeBtn = [ZSHBaseUIControl createBtnWithParamDic:cardTypeBtnDic];
+        UIButton *cardTypeBtn = [ZSHBaseUIControl  createBtnWithParamDic:cardTypeBtnDic target:self action:@selector(cardTypeBtnAction:)];
         cardTypeBtn.tag = i + 1;
 
         if (self.paramDic[@"selectedImage"]) {
@@ -41,7 +41,6 @@
             [cardTypeBtn setBackgroundImage:[UIImage imageWithColor:self.paramDic[@"selectedColor"]] forState:UIControlStateSelected];
         }
         
-        [cardTypeBtn addTarget:self action:@selector(cardTypeBtnAction:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:cardTypeBtn];
         [_btnArr addObject:cardTypeBtn];
         

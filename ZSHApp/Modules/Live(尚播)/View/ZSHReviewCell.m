@@ -38,7 +38,7 @@
     self.avatarImageView.layer.cornerRadius = kRealValue(40)/2;
     [self.contentView addSubview:self.avatarImageView];
     
-    NSDictionary *nameLabelDic = @{@"text":@"昨忘记时间的钟",@"font":kPingFangRegular(14),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentLeft )};
+    NSDictionary *nameLabelDic = @{@"text":@"昨忘记时间的钟"};
     self.nameLabel = [ZSHBaseUIControl createLabelWithParamDic:nameLabelDic];
     [self.contentView addSubview:self.nameLabel];
     
@@ -49,12 +49,12 @@
     _reNameLabel = [ZSHBaseUIControl createLabelWithParamDic:nameLabelDic];
     [self.contentView addSubview:_reNameLabel];
     
-    NSDictionary *dateLabelDic = @{@"text":@"昨天16:36",@"font":kPingFangRegular(11),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentLeft)};
+    NSDictionary *dateLabelDic = @{@"text":@"昨天16:36",@"font":kPingFangRegular(11)};
     self.dateLabel = [ZSHBaseUIControl createLabelWithParamDic:dateLabelDic];
     [self.contentView addSubview:self.dateLabel];
     
     
-    UIButton *replyBtn = [ZSHBaseUIControl createBtnWithParamDic:@{@"title":@"回复",@"font":kPingFangRegular(11)}];
+    UIButton *replyBtn = [ZSHBaseUIControl  createBtnWithParamDic:@{@"title":@"回复",@"font":kPingFangRegular(11)} target:self action:nil];
     [self.contentView addSubview:replyBtn];
     self.replyBtn = replyBtn;
     
@@ -67,9 +67,8 @@
     self.detailImageView = [[UIImageView alloc]init];
     [self.contentView addSubview:self.detailImageView];
     
-    UIButton *dislike = [ZSHBaseUIControl createBtnWithParamDic:@{@"title":@"0",@"font":kPingFangRegular(14),@"withImage":@(YES),@"normalImage":@"weibo_dislike"}];
+    UIButton *dislike = [ZSHBaseUIControl  createBtnWithParamDic:@{@"title":@"0",@"font":kPingFangRegular(14),@"normalImage":@"weibo_dislike"} target:self action:@selector(dislikeAction)];
     [self.contentView addSubview:dislike];
-    [dislike addTarget:self action:@selector(dislikeAction) forControlEvents:UIControlEventTouchUpInside];
     [dislike mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.contentView).offset(kRealValue(11));
         make.trailing.mas_equalTo(self.contentView).offset(kRealValue(-15));
@@ -77,9 +76,8 @@
     }];
     self.dislikeBtn = dislike;
     
-    UIButton *like = [ZSHBaseUIControl createBtnWithParamDic:@{@"title":@"0",@"font":kPingFangRegular(14),@"withImage":@(YES),@"normalImage":@"weibo_like"}];
+    UIButton *like = [ZSHBaseUIControl  createBtnWithParamDic:@{@"title":@"0",@"font":kPingFangRegular(14),@"normalImage":@"weibo_like"} target:self action:@selector(likeAction)];
     [self.contentView addSubview:like];
-    [like addTarget:self action:@selector(likeAction) forControlEvents:UIControlEventTouchUpInside];
     self.likeBtn = like;
     [like mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.contentView).offset(kRealValue(11));

@@ -142,10 +142,8 @@ static NSString *headerViewIdentifier = @"hederview";
 
 - (UIButton *)titleBtn{
     if (!_titleBtn) {
-    NSDictionary *titleBtnDic = @{@"title":@"尊购",@"font":kPingFangMedium(17)};
-    _titleBtn = [ZSHBaseUIControl createBtnWithParamDic:titleBtnDic];
-    [_titleBtn addTarget:self action:@selector(titleBtnAction) forControlEvents:UIControlEventTouchUpInside];
-     [_titleBtn setImage:[UIImage imageNamed:@"hotel_btn"] forState:UIControlStateNormal];
+        NSDictionary *titleBtnDic = @{@"title":@"尊购",@"font":kPingFangMedium(17),@"normalImage":@"hotel_btn"};
+    _titleBtn = [ZSHBaseUIControl  createBtnWithParamDic:titleBtnDic target:self action:@selector(titleBtnAction)];
     }
     return _titleBtn;
 }

@@ -86,13 +86,10 @@ static NSString *ZSHAddPassengerCellID = @"ZSHAddPassengerCellID";
             if (indexPath.row == 1) {
                 NSArray *typenameArr = @[@"成人票", @"学生票", @"儿童票"];
                 for (int i = 0; i < 3; i++) {
-                    UIButton *btn = [ZSHBaseUIControl createBtnWithParamDic:@{@"title":typenameArr[i],@"font":kPingFangRegular(15)}];
+                    UIButton *btn = [ZSHBaseUIControl  createBtnWithParamDic:@{@"title":typenameArr[i],@"font":kPingFangRegular(15)} target:self action:@selector(selectPassengerType:)];
                     btn.layer.borderWidth = 0.5;
                     btn.layer.borderColor = KZSHColor929292.CGColor;
                     btn.tag = 1116+i;
-                    [btn addTapBlock:^(UIButton *btn) {
-                        [self selectPassengerType:btn];
-                    }];
                     [cell.contentView addSubview:btn];
                     [btn mas_makeConstraints:^(MASConstraintMaker *make) {
                         make.top.mas_equalTo(cell.contentView).offset(kRealValue(9));

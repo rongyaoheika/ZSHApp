@@ -26,7 +26,7 @@
     NSDictionary *btnDic = @{@"title":@"三亚",@"font":kPingFangLight(14)};
     
     for (int i = 0; i<self.titleArr.count; i++) {
-        UIButton *cityBtn = [ZSHBaseUIControl createBtnWithParamDic:btnDic];
+        UIButton *cityBtn = [ZSHBaseUIControl  createBtnWithParamDic:btnDic target:self action:@selector(btnClick:)];
         [cityBtn setTitle:self.titleArr[i] forState:UIControlStateNormal];
         cityBtn.tag = i+1;
         [ZSHSpeedy zsh_chageControlCircularWith:cityBtn AndSetCornerRadius:kRealValue(6.0) SetBorderWidth:1.0 SetBorderColor:KZSHColor929292 canMasksToBounds:YES];

@@ -83,11 +83,8 @@
     }];
     
     
-    NSDictionary *conBtnDic = @{@"title":@"匿名评价",@"font":kPingFangRegular(12),@"withImage":@(YES),@"normalImage":@"airplane_press"};
-    UIButton *conBtn = [ZSHBaseUIControl createBtnWithParamDic:conBtnDic];
-    [conBtn setImage:[UIImage imageNamed:@"airplane_press"] forState:UIControlStateNormal];
-    [conBtn setImage:[UIImage imageNamed:@"airplane_normal"] forState:UIControlStateSelected];
-    [conBtn setTarget:self action:@selector(conBtnAction:) forControlEvents:UIControlEventTouchUpInside];
+    NSDictionary *conBtnDic = @{@"title":@"匿名评价",@"font":kPingFangRegular(12),@"normalImage":@"airplane_normal",@"selectedImage":@"airplane_press"};
+    UIButton *conBtn = [ZSHBaseUIControl  createBtnWithParamDic:conBtnDic target:self action:@selector(conBtnAction:)];
     [self.view addSubview:conBtn];
     [conBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.mas_equalTo(self.view).offset(kRealValue(10));

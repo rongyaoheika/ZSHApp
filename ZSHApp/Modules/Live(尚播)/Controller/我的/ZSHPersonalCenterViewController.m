@@ -100,9 +100,8 @@
     _followLabel = followLabel;
     
     
-    UIButton *liveBtn = [ZSHBaseUIControl createBtnWithParamDic:@{@"title":@"直播中",@"titleColor":KBlackColor,@"font":kPingFangRegular(11)}];
+    UIButton *liveBtn = [ZSHBaseUIControl  createBtnWithParamDic:@{@"title":@"直播中",@"titleColor":KBlackColor,@"font":kPingFangRegular(11),@"normalImage":@"personal_center_2"} target:self action:nil];
     liveBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
-    [liveBtn setBackgroundImage:[UIImage imageNamed:@"personal_center_2"] forState:UIControlStateNormal];
     [self.view addSubview:liveBtn];
     [liveBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.view).offset(kRealValue(120));

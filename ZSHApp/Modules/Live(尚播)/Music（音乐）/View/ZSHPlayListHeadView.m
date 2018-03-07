@@ -48,8 +48,8 @@
         make.width.mas_equalTo(kRealValue(180));
     }];
     
-    NSDictionary *loveBtnDic = @{@"title":@"9.8万",@"font":kPingFangRegular(12),@"withImage":@(YES),@"normalImage":@"music_like"};
-    _loveBtn = [ZSHBaseUIControl createBtnWithParamDic:loveBtnDic];
+    NSDictionary *loveBtnDic = @{@"title":@"9.8万",@"font":kPingFangRegular(12),@"normalImage":@"music_like" };
+    _loveBtn = [ZSHBaseUIControl  createBtnWithParamDic:loveBtnDic target:self action:nil];
     [self addSubview:_loveBtn];
     [_loveBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(_songTypeLabel);
@@ -58,8 +58,8 @@
         make.height.mas_equalTo(kRealValue(25));
     }];
     
-    NSDictionary *commentBtnDic = @{@"title":@"9.8万",@"font":kPingFangRegular(12),@"withImage":@(YES),@"normalImage":@"music_discuss"};
-    _commentBtn = [ZSHBaseUIControl createBtnWithParamDic:commentBtnDic];
+    NSDictionary *commentBtnDic = @{@"title":@"9.8万",@"font":kPingFangRegular(12),@"normalImage":@"music_discuss"};
+    _commentBtn = [ZSHBaseUIControl  createBtnWithParamDic:commentBtnDic target:self action:nil];
     [self addSubview:_commentBtn];
     [_commentBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(_loveBtn.mas_right).offset(kRealValue(18));
@@ -68,8 +68,8 @@
         make.height.mas_equalTo(_loveBtn);
     }];
     
-    NSDictionary *shareBtnDic = @{@"title":@"9.8万",@"font":kPingFangRegular(12),@"withImage":@(YES),@"normalImage":@"music_share"};
-    _shareBtn = [ZSHBaseUIControl createBtnWithParamDic:shareBtnDic];
+    NSDictionary *shareBtnDic = @{@"title":@"9.8万",@"font":kPingFangRegular(12),@"normalImage":@"music_share"};
+    _shareBtn = [ZSHBaseUIControl  createBtnWithParamDic:shareBtnDic target:self action:nil];
     [self addSubview:_shareBtn];
     [_shareBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(_commentBtn.mas_right).offset(kRealValue(18));

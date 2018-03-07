@@ -32,11 +32,10 @@
     
     for (int i = 0; i<titleListArr.count; i++) {
         NSDictionary *cardTypeBtnDic = @{@"title":@"",@"font":kPingFangRegular(12), @"selectedTitleColor":KZSHColorF29E19};
-        UIButton *cardTypeBtn = [ZSHBaseUIControl createBtnWithParamDic:cardTypeBtnDic];
+        UIButton *cardTypeBtn = [ZSHBaseUIControl createBtnWithParamDic:cardTypeBtnDic target:self action:@selector(phoneNumBtnAction:)];
         cardTypeBtn.tag = i + 1;
         [cardTypeBtn setBackgroundImage:[UIImage imageNamed:self.paramDic[@"normalImage"]]    forState:UIControlStateNormal];
         [cardTypeBtn setBackgroundImage:[UIImage imageNamed:self.paramDic[@"selectedImage"]] forState:UIControlStateSelected];
-        [cardTypeBtn addTarget:self action:@selector(phoneNumBtnAction:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:cardTypeBtn];
         [_btnArr addObject:cardTypeBtn];
     }
@@ -86,12 +85,15 @@
 }
 
 - (void)updateViewWithData {
-    for (int i = 0; i < _cardNumArr.count; i++) {
-        UIButton *btn = _btnArr[i];
-        ZSHCardNumModel *model = _cardNumArr[i];
-        [btn setTitle:model.CARDNUM forState:UIControlStateNormal];
-        [btn setTitle:model.CARDNUM forState:UIControlStateSelected];
-    }
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        for (int i = 0; i < _cardNumArr.count; i++) {
+            UIButton *btn = _btnArr[i];
+            ZSHCardNumModel *model = _cardNumArr[i];
+            [btn setTitle:model.CARDNUM forState:UIControlStateNormal];
+            [btn setTitle:model.CARDNUM forState:UIControlStateSelected];
+            RLog(@"btn.title==%@",btn.titleLabel.text)
+        }
+    });
 }
 
 

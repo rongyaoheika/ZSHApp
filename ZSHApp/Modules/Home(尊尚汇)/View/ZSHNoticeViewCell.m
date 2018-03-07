@@ -98,8 +98,7 @@
         _itemScrollView.fromClassType = FromKTVRoomTypeVCToNoticeView;
         for (int i = 0; i<titleArr.count; i++) {
             NSDictionary *roomTypeBtnDic = @{@"title":titleArr[i],@"font":kPingFangRegular(12)};
-            UIButton *roomTypeBtn = [ZSHBaseUIControl createBtnWithParamDic:roomTypeBtnDic];
-//            roomTypeBtn.backgroundColor = [UIColor greenColor];
+            UIButton *roomTypeBtn = [ZSHBaseUIControl  createBtnWithParamDic:roomTypeBtnDic target:self action:nil];
             roomTypeBtn.layer.cornerRadius = kRealValue(2.5);
             roomTypeBtn.layer.borderWidth = 0.5;
             roomTypeBtn.layer.borderColor = KZSHColor929292.CGColor;

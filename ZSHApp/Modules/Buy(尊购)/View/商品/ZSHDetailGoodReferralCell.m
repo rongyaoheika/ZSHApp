@@ -20,7 +20,7 @@
 #pragma mark - UI
 - (void)setup
 {
-    NSDictionary *goodTitleLabelDic = @{@"text":@"Gucci/古奇/古驰女士手拿包蓝色大LOGO",@"font":kPingFangMedium(12),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentLeft)};
+    NSDictionary *goodTitleLabelDic = @{@"text":@"Gucci/古奇/古驰女士手拿包蓝色大LOGO",@"font":kPingFangMedium(12)};
     _goodTitleLabel = [ZSHBaseUIControl createLabelWithParamDic:goodTitleLabelDic];
     _goodTitleLabel.numberOfLines = 0;
     [self addSubview:_goodTitleLabel];
@@ -29,13 +29,13 @@
     _goodPriceLabel = [ZSHBaseUIControl createLabelWithParamDic:goodPriceLabelDic];
     [self addSubview:_goodPriceLabel];
     
-    NSDictionary *goodSubtitleLabelDic = @{@"text":@"Herschel Supply Co",@"font":kPingFangRegular(12),@"textColor":KZSHColorB2B2B2,@"textAlignment":@(NSTextAlignmentLeft)};
+    NSDictionary *goodSubtitleLabelDic = @{@"text":@"Herschel Supply Co",@"font":kPingFangRegular(12),@"textColor":KZSHColorB2B2B2};
     _goodSubtitleLabel = [ZSHBaseUIControl createLabelWithParamDic:goodSubtitleLabelDic];
     _goodSubtitleLabel.numberOfLines = 0;
     [self addSubview:_goodSubtitleLabel];
     
     NSDictionary *btnDic = @{@"title":@"新品",@"titleColor":KWhiteColor,@"font":kPingFangRegular(10),@"backgroundColor":[UIColor colorWithHexString:@"68BF7B"]};
-    _typeBtn = [ZSHBaseUIControl createBtnWithParamDic:btnDic];
+    _typeBtn = [ZSHBaseUIControl  createBtnWithParamDic:btnDic target:self action:nil];
     _typeBtn.layer.cornerRadius = kRealValue(5.0);
     [self addSubview:_typeBtn];
     

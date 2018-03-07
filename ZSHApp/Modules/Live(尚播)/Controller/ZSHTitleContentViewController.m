@@ -274,15 +274,11 @@
 }
 
 - (void)createBuyNaviUI{
-    UIButton *searchBtn = [ZSHBaseUIControl createBtnWithParamDic:@{@"title":@"搜索",@"font":kPingFangRegular(14),@"withImage":@(YES),@"normalImage":@"nav_home_search"}];
+    UIButton *searchBtn = [ZSHBaseUIControl  createBtnWithParamDic:@{@"title":@"搜索",@"normalImage":@"nav_home_search"} target:self action:@selector(searchAction)];
     searchBtn.frame = CGRectMake(0, 0, kRealValue(270), 30);
     searchBtn.backgroundColor = KZSHColor1A1A1A;
     searchBtn.layer.cornerRadius = 5.0;
     searchBtn.layer.masksToBounds = YES;
-    kWeakSelf(self);
-    [searchBtn addTapBlock:^(UIButton *btn) {
-        [weakself searchAction];
-    }];
     [self.navigationItem setTitleView:searchBtn];
     
     [self addNavigationItemWithImageName:@"nav_buy_mine" isLeft:YES target:self action:@selector(buyMineBtntAction) tag:1];

@@ -14,5 +14,4 @@ typedef void(^TapBlock)(NSString *section, NSInteger index);
 @property (nonatomic , copy) TapBlock tapBlock;
 
 - (void)selectedByIndex:(NSUInteger)index;
-
 @end

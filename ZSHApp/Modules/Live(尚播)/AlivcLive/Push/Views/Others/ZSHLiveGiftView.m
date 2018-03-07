@@ -84,9 +84,8 @@ static NSString *ZSHLiveGiftPopCellID = @"ZSHLiveGiftPopCell";
     
     for (int i = 0; i<_btnTitleArr.count; i++) {
         NSDictionary *liveTypeBtnDic = @{@"title":_btnTitleArr[i],@"font":kPingFangMedium(15)};
-        UIButton *liveTypeBtn = [ZSHBaseUIControl createBtnWithParamDic:liveTypeBtnDic];
+        UIButton *liveTypeBtn = [ZSHBaseUIControl  createBtnWithParamDic:liveTypeBtnDic target:self action:@selector(liveTypeBtnAction:)];
         liveTypeBtn.frame = CGRectMake(i*kRealValue(65), 0, kRealValue(65), kRealValue(50));
-        [liveTypeBtn addTarget:self action:@selector(liveTypeBtnAction:) forControlEvents:UIControlEventTouchUpInside];
         liveTypeBtn.tag = i+1;
         [_headView addSubview:liveTypeBtn];
         [_typeBtnArr addObject:liveTypeBtn];
@@ -109,7 +108,7 @@ static NSString *ZSHLiveGiftPopCellID = @"ZSHLiveGiftPopCell";
     [_giftBgView addSubview:_footView];
     
     NSDictionary *rechargeBtnDic = @{@"title":@"充值",@"font":kPingFangRegular(15)};
-    _rechargeBtn = [ZSHBaseUIControl createBtnWithParamDic:rechargeBtnDic];
+    _rechargeBtn = [ZSHBaseUIControl  createBtnWithParamDic:rechargeBtnDic target:self action:nil];
     
     [_footView addSubview:_rechargeBtn];
     [_rechargeBtn mas_makeConstraints:^(MASConstraintMaker *make) {

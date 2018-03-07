@@ -27,11 +27,9 @@
     NSArray *imageArr = @[@"weibo_love",@"weibo_comment",@"weibo_present"];
     NSArray *titleArr = @[@"0",@"0",@"0"];
     for (int i = 0; i<3; i++) {
-        NSDictionary *btnDic = @{@"title":titleArr[i],@"titleColor":KZSHColor929292,@"font":kPingFangRegular(18),@"backgroundColor":KClearColor};
-        UIButton *btn = [ZSHBaseUIControl createBtnWithParamDic:btnDic];
+        NSDictionary *btnDic = @{@"title":titleArr[i],@"font":kPingFangRegular(18),@"normalImage":imageArr[i]};
+        UIButton *btn = [ZSHBaseUIControl  createBtnWithParamDic:btnDic target:self action:@selector(btnAction:)];
         btn.tag = i+1;
-        [btn setImage:[UIImage imageNamed:imageArr[i]] forState:UIControlStateNormal];
-        [btn addTarget:self action:@selector(btnAction:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:btn];
         [btn mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.mas_equalTo(i*KScreenWidth/3);

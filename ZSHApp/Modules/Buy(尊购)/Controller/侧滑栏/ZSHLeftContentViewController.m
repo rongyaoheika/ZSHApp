@@ -146,8 +146,8 @@ static NSString *ZSHBaseBottomListCellID = @"ZSHBaseBottomListCell";
     [headImageView sd_setImageWithURL:[NSURL URLWithString:curUser.PORTRAIT]];
     [headCellView addSubview:headImageView];
     
-    NSDictionary *loginBtnDic = @{@"title":@"",@"titleColor":KZSHColor929292,@"font":kPingFangMedium(17),@"backgroundColor":KClearColor};
-    UIButton *loginBtn = [ZSHBaseUIControl createBtnWithParamDic:loginBtnDic];
+    NSDictionary *loginBtnDic = @{@"title":@"",@"font":kPingFangMedium(17)};
+    UIButton *loginBtn = [ZSHBaseUIControl  createBtnWithParamDic:loginBtnDic target:self action:nil];
     [loginBtn setTitle:curUser.NICKNAME forState:UIControlStateNormal];
     [headCellView addSubview:loginBtn];
     [loginBtn mas_makeConstraints:^(MASConstraintMaker *make) {

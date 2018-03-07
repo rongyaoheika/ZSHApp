@@ -62,19 +62,16 @@ static NSString *cellIdentifier = @"VideoDetailCellIdentifier";
     [view addSubview:playdateLabel];
     
     
-    UIButton *nameBtn = [ZSHBaseUIControl createBtnWithParamDic:@{@"title":@"姜小白：......",@"font":kPingFangMedium(14)}];
+    UIButton *nameBtn = [ZSHBaseUIControl  createBtnWithParamDic:@{@"title":@"姜小白：......",@"font":kPingFangMedium(14),@"normalImage":@"video_detail_1"} target:self action:nil];
     nameBtn.frame = CGRectMake(15, 280.5, 105, 20);
-    [nameBtn setImage:[UIImage imageNamed:@"video_detail_1"] forState:UIControlStateNormal];
     [view addSubview:nameBtn];
     
-    UIButton *likeBtn = [ZSHBaseUIControl createBtnWithParamDic:@{@"title":@"400喜欢",@"font":kPingFangRegular(11)}];
+    UIButton *likeBtn = [ZSHBaseUIControl  createBtnWithParamDic:@{@"title":@"400喜欢",@"font":kPingFangRegular(11),@"normalImage":@"video_detail_2"} target:self action:nil];
     likeBtn.frame = CGRectMake(15, 300.5, 70, 20);
-    [likeBtn setImage:[UIImage imageNamed:@"video_detail_2"] forState:UIControlStateNormal];
     [view addSubview:likeBtn];
     
-    UIButton *discussBtn = [ZSHBaseUIControl createBtnWithParamDic:@{@"title":@"89评论",@"font":kPingFangRegular(11)}];
+    UIButton *discussBtn = [ZSHBaseUIControl  createBtnWithParamDic:@{@"title":@"89评论",@"font":kPingFangRegular(11),@"normalImage":@"video_detail_3"} target:self action:nil];
     discussBtn.frame = CGRectMake(15, 320.5, 60, 20);
-    [discussBtn setImage:[UIImage imageNamed:@"video_detail_3"] forState:UIControlStateNormal];
     [view addSubview:discussBtn];
     
     return view;

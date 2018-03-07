@@ -92,9 +92,8 @@
 - (UIButton *)shareBtn{
     if (!_shareBtn) {
         NSDictionary *shareBtnParam = @{@"title":@"立即分享",@"titleColor":[UIColor colorWithHexString:@"B15308"],@"font":kPingFangSemibold(20),@"backgroundColor":[UIColor colorWithHexString:@"FFDA31"]};
-        _shareBtn = [ZSHBaseUIControl createBtnWithParamDic:shareBtnParam];
+        _shareBtn = [ZSHBaseUIControl  createBtnWithParamDic:shareBtnParam target:self action:@selector(shareAction)];
         _shareBtn.layer.cornerRadius = 10.0;
-        [_shareBtn addTarget:self action:@selector(shareAction) forControlEvents:UIControlEventTouchUpInside];
     }
     return _shareBtn;
 }

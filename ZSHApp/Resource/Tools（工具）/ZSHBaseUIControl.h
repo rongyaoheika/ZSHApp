@@ -169,7 +169,7 @@ typedef NS_ENUM(NSInteger, ShowCellType) {
 @interface ZSHBaseUIControl : NSObject
 
 + (UILabel *)createLabelWithParamDic:(NSDictionary *)paramDic;
-+ (UIButton *)createBtnWithParamDic:(NSDictionary *)paramDic;
++ (UIButton *)createBtnWithParamDic:(NSDictionary *)paramDic target:(id)target action:(SEL)action;
 + (UITableView *)createTableView;
 + (UIButton *)createLabelBtnWithTopDic:(NSDictionary *)topDic bottomDic:(NSDictionary *)bottomDic;
 + (UIView *)createTabHeadLabelViewWithParamDic:(NSDictionary *)paramDic;

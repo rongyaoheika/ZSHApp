@@ -28,7 +28,7 @@
         make.centerY.mas_equalTo(self);
     }];
     
-    NSDictionary *typeNameLabelDic = @{@"text":@"20元代金券",@"font":kPingFangMedium(24),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentCenter)};
+    NSDictionary *typeNameLabelDic = @{@"text":@"20元代金券",@"font":kPingFangMedium(24),@"textAlignment":@(NSTextAlignmentCenter)};
     UILabel *typeNameLabel = [ZSHBaseUIControl createLabelWithParamDic:typeNameLabelDic];
     [self addSubview:typeNameLabel];
     [typeNameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -39,9 +39,8 @@
     }];
     self.typeNameLabel = typeNameLabel;
     
-    NSDictionary *exchangeLabelDic = @{@"title":@"兑换",@"titleColor":KZSHColor929292,@"font":kPingFangMedium(24),@"backgroundColor":KClearColor};
-    UIButton *exchangeBtn = [ZSHBaseUIControl createBtnWithParamDic:exchangeLabelDic];
-    [exchangeBtn addTarget:self action:@selector(exchangeBtnAction:) forControlEvents:UIControlEventTouchUpInside];
+    NSDictionary *exchangeLabelDic = @{@"title":@"兑换",@"font":kPingFangMedium(24)};
+    UIButton *exchangeBtn = [ZSHBaseUIControl  createBtnWithParamDic:exchangeLabelDic target:self action:@selector(exchangeBtnAction:)];
     [self addSubview:exchangeBtn];
     [exchangeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.mas_equalTo(bgImageView);

@@ -47,15 +47,11 @@ static NSString *cellIdentifier = @"listCell";
 
 - (void)createUI{
     
-    UIButton *searchBtn = [ZSHBaseUIControl createBtnWithParamDic:@{@"title":@"搜索",@"font":kPingFangRegular(14),@"withImage":@(YES),@"normalImage":@"nav_home_search"}];
+    UIButton *searchBtn = [ZSHBaseUIControl  createBtnWithParamDic:@{@"title":@"搜索",@"font":kPingFangRegular(14),@"normalImage":@"nav_home_search"} target:self action:@selector(searchAction)];
     searchBtn.frame = CGRectMake(0, 0, kRealValue(270), 30);
     searchBtn.backgroundColor = KZSHColor1A1A1A;
     searchBtn.layer.cornerRadius = 5.0;
     searchBtn.layer.masksToBounds = YES;
-    kWeakSelf(self);
-    [searchBtn addTapBlock:^(UIButton *btn) {
-        [weakself searchAction];
-    }];
     [self.navigationItem setTitleView:searchBtn];
     
     [self.view addSubview:self.tableView];

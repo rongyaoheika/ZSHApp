@@ -29,9 +29,8 @@
     [self addSubview:_titleLabel];
     
     NSDictionary *rightBtnDic = @{@"title":self.paramDic[@"btnTitle"],@"font":kPingFangLight(11)};
-    _rightBtn = [ZSHBaseUIControl createBtnWithParamDic:rightBtnDic];
+    _rightBtn = [ZSHBaseUIControl  createBtnWithParamDic:rightBtnDic target:self action:@selector(rightBtnAction:)];
     _rightBtn.tag = [self.paramDic[@"tag"]integerValue];
-    [_rightBtn addTarget:self action:@selector(rightBtnAction:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:_rightBtn];
     
     if (kFromClassTypeValue == FromCustomizedCellToCardSubHeadView) {

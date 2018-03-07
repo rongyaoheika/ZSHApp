@@ -38,7 +38,7 @@
     
     
     NSDictionary *activeBtnDic = @{@"title":@"激活额度",@"font":kPingFangRegular(17)};
-    UIButton *activeBtn = [ZSHBaseUIControl createBtnWithParamDic:activeBtnDic];
+    UIButton *activeBtn = [ZSHBaseUIControl  createBtnWithParamDic:activeBtnDic target:self action:nil];
     [self.view addSubview:activeBtn];
     [activeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.headerView.mas_bottom).offset(kRealValue(40));
