@@ -23,24 +23,23 @@
     [self addSubview:activityImage];
     self.activityImage = activityImage;
     
-    NSDictionary *titleLabelDic = @{@"text":@"吃喝玩乐区",@"font":kPingFangMedium(15),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentLeft)};
+    NSDictionary *titleLabelDic = @{@"text":@"吃喝玩乐区",@"font":kPingFangMedium(15)};
     UILabel *titleLabel = [ZSHBaseUIControl createLabelWithParamDic:titleLabelDic];
     [self addSubview:titleLabel];
     self.titleLabel = titleLabel;
     
-    NSDictionary *contentLabelDic = @{@"text":@"吃喝玩乐区",@"font":kPingFangRegular(12),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentLeft)};
+    NSDictionary *contentLabelDic = @{@"text":@"吃喝玩乐区",@"font":kPingFangRegular(12)};
     UILabel *contentLabel = [ZSHBaseUIControl createLabelWithParamDic:contentLabelDic];
     [self addSubview:contentLabel];
     self.contentLabel = contentLabel;
     
     NSDictionary *finishBtnDic = @{@"title":@"去看看",@"font":kPingFangRegular(11)};
-    UIButton *finishBtn = [ZSHBaseUIControl createBtnWithParamDic:finishBtnDic];
+    UIButton *finishBtn = [ZSHBaseUIControl  createBtnWithParamDic:finishBtnDic target:self action:@selector(normalAction:)];
     finishBtn.layer.borderColor = [KZSHColor929292 CGColor];
     [finishBtn.layer setMasksToBounds:YES];
     [finishBtn.layer setCornerRadius:5.0]; //设置矩形四个圆角半径
     [finishBtn.layer setBorderWidth:0];
     [finishBtn setTitle:@"已完成" forState:UIControlStateSelected];
-    [finishBtn addTarget:self action:@selector(normalAction:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:finishBtn];
     self.finishBtn = finishBtn;
 }

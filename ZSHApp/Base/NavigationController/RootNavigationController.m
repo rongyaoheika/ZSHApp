@@ -252,6 +252,10 @@
     return self.topViewController.supportedInterfaceOrientations;
 }
 
+- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation{
+    return [self.topViewController preferredInterfaceOrientationForPresentation];
+}
+
 //显示navigationbar
 - (void)setupMainStype{
     self.navigationBar.translucent = NO;

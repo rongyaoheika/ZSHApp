@@ -28,20 +28,20 @@
     [self addSubview:activityImage];
     self.activityImage = activityImage;
     
-    NSDictionary *titleLabelDic = @{@"text":@"吃喝玩乐区",@"font":kPingFangRegular(12),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentLeft)};
+    NSDictionary *titleLabelDic = @{@"text":@"吃喝玩乐区",@"font":kPingFangRegular(12)};
     UILabel *titleLabel = [ZSHBaseUIControl createLabelWithParamDic:titleLabelDic];
     titleLabel.numberOfLines = 0;
     [self addSubview:titleLabel];
     self.titleLabel = titleLabel;
     
-    NSDictionary *priceLabelDic = @{@"text":@"吃喝玩乐区",@"font":kPingFangRegular(11),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentLeft)};
+    NSDictionary *priceLabelDic = @{@"text":@"吃喝玩乐区",@"font":kPingFangRegular(11)};
     UILabel *priceLabel = [ZSHBaseUIControl createLabelWithParamDic:priceLabelDic];
     priceLabel.numberOfLines = 0;
     [self addSubview:priceLabel];
     self.priceLabel = priceLabel;
     
     NSDictionary *similarBtnDic = @{@"title":@"找相似",@"font":kPingFangRegular(10)};
-    UIButton *similarBtn = [ZSHBaseUIControl createBtnWithParamDic:similarBtnDic];
+    UIButton *similarBtn = [ZSHBaseUIControl  createBtnWithParamDic:similarBtnDic target:self action:nil];
     similarBtn.layer.cornerRadius = 10.0;
     similarBtn.layer.masksToBounds = true;
     similarBtn.layer.borderWidth = 0.5;

@@ -51,8 +51,7 @@
     }];
     
     NSDictionary *btnDic = @{@"title":@"恢复默认",@"font":kPingFangRegular(12),@"backgroundColor":KZSHColor454545};
-    _defaultBtn = [ZSHBaseUIControl createBtnWithParamDic:btnDic];
-    [_defaultBtn addTarget:self action:@selector(defaultBtnAction) forControlEvents:UIControlEventTouchUpInside];
+    _defaultBtn = [ZSHBaseUIControl  createBtnWithParamDic:btnDic target:self action:@selector(defaultBtnAction)];
     _defaultBtn.layer.cornerRadius = kRealValue(12.5);
     [_setView addSubview:_defaultBtn];
     [_defaultBtn mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -68,14 +67,13 @@
     CGFloat space = (KScreenWidth - kRealValue(200))/6;
     for (int i = 0; i <5; i++) {
         NSDictionary *setBtnDic = @{@"title":[NSString stringWithFormat:@"%d",i],@"titleColor":KWhiteColor,@"font":kPingFangRegular(30)};
-        UIButton *setBtn = [ZSHBaseUIControl createBtnWithParamDic:setBtnDic];
+        UIButton *setBtn = [ZSHBaseUIControl  createBtnWithParamDic:setBtnDic target:self action:@selector(setBtnAction:)];
         setBtn.tag = i + 1;
         setBtn.layer.cornerRadius = kRealValue(20);
         setBtn.clipsToBounds = YES;
         [setBtn setBackgroundImage:[UIImage imageWithColor:KClearColor size:CGSizeMake(kRealValue(40), kRealValue(40))] forState:UIControlStateSelected];
         [setBtn setBackgroundImage:[UIImage imageWithColor:KWhiteColor size:CGSizeMake(kRealValue(40), kRealValue(40))] forState:UIControlStateSelected];
         [_setView addSubview:setBtn];
-        [setBtn addTarget:self action:@selector(setBtnAction:) forControlEvents:UIControlEventTouchUpInside];
         [setBtn mas_makeConstraints:^(MASConstraintMaker *make) {
             make.size.mas_equalTo(CGSizeMake(kRealValue(40), kRealValue(40)));
             make.left.mas_equalTo(_setView).offset((i+1)*space + i*kRealValue(40));

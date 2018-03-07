@@ -16,36 +16,29 @@
 
 - (void)setup{
     
-    NSDictionary *nameLabelDic = @{@"text":@"王晶",@"font":kPingFangMedium(14),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentLeft)};
+    NSDictionary *nameLabelDic = @{@"text":@"王晶",@"font":kPingFangMedium(14)};
     _nameLabel = [ZSHBaseUIControl createLabelWithParamDic:nameLabelDic];
     [self.contentView addSubview:_nameLabel];
     
-    NSDictionary *addressLabelDic = @{@"text":@"13719143456",@"font":kPingFangLight(14),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentLeft)};
+    NSDictionary *addressLabelDic = @{@"text":@"13719143456",@"font":kPingFangLight(14)};
     _addressLabel = [ZSHBaseUIControl createLabelWithParamDic:addressLabelDic];
     _addressLabel.numberOfLines = 0;
     [self.contentView addSubview:_addressLabel];
     
-    NSDictionary *telLabelDic = @{@"text":@"13719143456",@"font":kPingFangMedium(14),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentRight)};
+    NSDictionary *telLabelDic = @{@"text":@"13719143456",@"font":kPingFangMedium(14),@"textAlignment":@(NSTextAlignmentRight)};
     _telLabel = [ZSHBaseUIControl createLabelWithParamDic:telLabelDic];
     [self.contentView addSubview:_telLabel];
     
-    NSDictionary *defaultBtnDic = @{@"title":@"设为默认",@"font":kPingFangLight(11)};
-    _defaultBtn = [ZSHBaseUIControl createBtnWithParamDic:defaultBtnDic];
-    [_defaultBtn setImage:[UIImage imageNamed:@"address_normal"] forState:UIControlStateNormal];
-    [_defaultBtn setImage:[UIImage imageNamed:@"address_press"] forState:UIControlStateSelected];
-//    [_defaultBtn addTarget:self action:@selector(defaultBtnAction:) forControlEvents:UIControlEventTouchUpInside];
+    NSDictionary *defaultBtnDic = @{@"title":@"设为默认",@"font":kPingFangLight(11),@"normalImage":@"address_normal",@"selectedImage":@"address_press"};
+    _defaultBtn = [ZSHBaseUIControl  createBtnWithParamDic:defaultBtnDic target:self action:@selector(btnAction:)];
     [self.contentView addSubview:_defaultBtn];
     
-    NSDictionary *deleteBtnDic = @{@"title":@"删除",@"font":kPingFangLight(11),};
-    _deleteBtn = [ZSHBaseUIControl createBtnWithParamDic:deleteBtnDic];
-    [_deleteBtn setImage:[UIImage imageNamed:@"address_delete"] forState:UIControlStateNormal];
-    [_deleteBtn setImage:[UIImage imageNamed:@"address_delete"] forState:UIControlStateSelected];
+    NSDictionary *deleteBtnDic = @{@"title":@"删除",@"font":kPingFangLight(11),@"normalImage":@"address_delete"};
+    _deleteBtn = [ZSHBaseUIControl  createBtnWithParamDic:deleteBtnDic target:self action:@selector(btnAction:)];
     [self.contentView addSubview:_deleteBtn];
     
-    NSDictionary *editBtnDic = @{@"title":@"编辑",@"font":kPingFangLight(11)};
-    _editBtn = [ZSHBaseUIControl createBtnWithParamDic:editBtnDic];
-    [_editBtn setImage:[UIImage imageNamed:@"address_edit"] forState:UIControlStateNormal];
-    [_editBtn setImage:[UIImage imageNamed:@"address_edit"] forState:UIControlStateSelected];
+    NSDictionary *editBtnDic = @{@"title":@"编辑",@"font":kPingFangLight(11),@"normalImage":@"address_edit"};
+    _editBtn = [ZSHBaseUIControl  createBtnWithParamDic:editBtnDic target:self action:@selector(btnAction:) ];
     [self.contentView addSubview:_editBtn];
 }
 
@@ -105,6 +98,9 @@
     self.addressLabel.text = NSStringFormat(@"%@%@", model.PROVINCE, model.ADDRESS);
 }
 
-
+- (void)btnAction:(UIButton *)btn{
+    btn.selected = !btn.selected;
+    
+}
 
 @end

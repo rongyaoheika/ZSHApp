@@ -36,9 +36,8 @@
     }];
    
     
-    NSDictionary *headTapBtnDic = @{@"backgroundColor":KClearColor};
-    UIButton *headTapBtn = [ZSHBaseUIControl createBtnWithParamDic:headTapBtnDic];
-    [headTapBtn addTarget:self action:@selector(headTapBtnAction) forControlEvents:UIControlEventTouchUpInside];
+    NSDictionary *headTapBtnDic = @{};
+    UIButton *headTapBtn = [ZSHBaseUIControl  createBtnWithParamDic:headTapBtnDic target:self action:@selector(headTapBtnAction)];
     [self addSubview:headTapBtn];
     [headTapBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.left.right.mas_equalTo(self);
@@ -112,14 +111,11 @@
    
     
     //
-    NSDictionary *addFriendBtnDic = @{@"title":@"",@"titleColor":KZSHColorFF2068,@"font":kPingFangMedium(17),@"backgroundColor":KZSHColorFF2068};
-    UIButton *addFriendBtn = [ZSHBaseUIControl createBtnWithParamDic:addFriendBtnDic];
+    NSDictionary *addFriendBtnDic = @{@"title":@"",@"titleColor":KZSHColorFF2068,@"font":kPingFangMedium(17),@"backgroundColor":KZSHColorFF2068,@"normalImage":@"room_unfollow",@"selectedImage":@"room_follow"};
+    UIButton *addFriendBtn = [ZSHBaseUIControl  createBtnWithParamDic:addFriendBtnDic target:self action:@selector(addFriendAction:)];
     addFriendBtn.selected = [self.paramDic[@"isfriend"] boolValue];
     addFriendBtn.layer.cornerRadius = 15.0;
     addFriendBtn.layer.masksToBounds = true;
-    [addFriendBtn setImage:[UIImage imageNamed:@"room_unfollow"] forState:UIControlStateNormal];
-    [addFriendBtn setImage:[UIImage imageNamed:@"room_follow"] forState:UIControlStateSelected];
-    [addFriendBtn addTarget:self action:@selector(addFriendAction:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:addFriendBtn];
     self.addFriendBtn = addFriendBtn;
     [addFriendBtn mas_makeConstraints:^(MASConstraintMaker *make) {

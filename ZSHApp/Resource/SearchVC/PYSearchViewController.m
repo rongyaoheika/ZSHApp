@@ -141,9 +141,8 @@
 - (UIButton *)emptyButton
 {
     if (!_emptyButton) {
-        NSDictionary *emptyBtnDic = @{@"title":@"清空",@"font":kPingFangRegular(14),@"withImage":@(YES),@"normalImage":@"address_delete"};
-        UIButton *emptyButton = [ZSHBaseUIControl createBtnWithParamDic:emptyBtnDic];
-        [emptyButton addTarget:self action:@selector(emptySearchHistoryDidClick) forControlEvents:UIControlEventTouchUpInside];
+        NSDictionary *emptyBtnDic = @{@"title":@"清空",@"font":kPingFangRegular(14),@"normalImage":@"address_delete"};
+        UIButton *emptyButton = [ZSHBaseUIControl  createBtnWithParamDic:emptyBtnDic target:self action:@selector(emptySearchHistoryDidClick)];
         [emptyButton sizeToFit];
         emptyButton.zsh_width += PYSEARCH_MARGIN;
         emptyButton.zsh_height += PYSEARCH_MARGIN;

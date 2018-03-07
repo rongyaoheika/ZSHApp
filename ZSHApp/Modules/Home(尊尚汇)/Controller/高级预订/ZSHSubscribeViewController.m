@@ -244,7 +244,7 @@
     }];
     
     NSDictionary *stewardBtnDic = @{@"title":@"召唤管家",@"titleColor":KZSHColor929292,@"font":kPingFangMedium(17),@"backgroundColor":KBlackColor};
-    _stewardBtn = [ZSHBaseUIControl createBtnWithParamDic:stewardBtnDic];
+    _stewardBtn = [ZSHBaseUIControl  createBtnWithParamDic:stewardBtnDic target:self action:nil];
     [self.view addSubview:_stewardBtn];
     [_stewardBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.mas_equalTo(self.view);

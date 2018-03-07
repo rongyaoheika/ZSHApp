@@ -31,19 +31,18 @@
     _goodsImageView.contentMode = UIViewContentModeScaleAspectFit;
     [self addSubview:_goodsImageView];
     
-    NSDictionary *goodsLabelDic = @{@"text":@"杰克琼斯男鞋低帮系带休闲简约百搭舒适板鞋TURBO",@"font":kPingFangLight(12),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentLeft)};
+    NSDictionary *goodsLabelDic = @{@"text":@"杰克琼斯男鞋低帮系带休闲简约百搭舒适板鞋TURBO",@"font":kPingFangLight(12)};
     _goodsLabel = [ZSHBaseUIControl createLabelWithParamDic:goodsLabelDic];
     _goodsLabel.numberOfLines = 2;
     [self addSubview:_goodsLabel];
     
-     NSDictionary *priceLabelDic = @{@"text":@"¥599",@"font":kPingFangLight(12),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentLeft)};
+     NSDictionary *priceLabelDic = @{@"text":@"¥599",@"font":kPingFangLight(12)};
     _priceLabel = [ZSHBaseUIControl createLabelWithParamDic:priceLabelDic];
     [self addSubview:_priceLabel];
     
     NSDictionary *sameButtonDic = @{@"title":@"特价",@"titleColor":KWhiteColor,@"font":kPingFangRegular(10),@"backgroundColor":[UIColor colorWithHexString:@"FF3F2B"]};
-    _sameButton = [ZSHBaseUIControl createBtnWithParamDic:sameButtonDic];
+    _sameButton = [ZSHBaseUIControl  createBtnWithParamDic:sameButtonDic target:self action:@selector(lookSameGoods)];
     _sameButton.layer.cornerRadius = kRealValue(2.5);
-    [_sameButton addTarget:self action:@selector(lookSameGoods) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:_sameButton];
     
 }

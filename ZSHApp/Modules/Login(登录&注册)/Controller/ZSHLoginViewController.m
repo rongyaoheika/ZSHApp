@@ -70,12 +70,8 @@
     
     kWeakSelf(self);
     NSDictionary *btnDic = @{@"title":@"登录",@"titleColor":KWhiteColor,@"font":kPingFangRegular(17),@"backgroundColor":KZSHColorCD933B};
-    _loginButton = [ZSHBaseUIControl createBtnWithParamDic:btnDic];
+    _loginButton = [ZSHBaseUIControl  createBtnWithParamDic:btnDic target:self action:@selector(login)];
     _loginButton.layer.cornerRadius = kRealValue(3.0);
-    [_loginButton addTapBlock:^(UIButton *btn) {
-        RLog(@"登录");
-         [weakself login];
-    }];
     [self.view addSubview:_loginButton];
     [_loginButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(_pwdView.mas_bottom).offset(kRealValue(71.5));
@@ -86,7 +82,7 @@
     
     
     NSDictionary *signBtnDic = @{@"title":@"在线申请",@"font":kPingFangRegular(12)};
-    _signBtn = [ZSHBaseUIControl createBtnWithParamDic:signBtnDic];
+    _signBtn = [ZSHBaseUIControl  createBtnWithParamDic:signBtnDic target:self action:nil];
     [_signBtn addTapBlock:^(UIButton *btn) {
         RLog(@"点击在线申请");
         ZSHCardViewController *cardVC = [[ZSHCardViewController alloc]init];
@@ -102,7 +98,7 @@
     }];
     
     NSDictionary *forgotPwdBtnDic = @{@"title":@"忘记密码",@"font":kPingFangRegular(12)};
-    _forgotPwdBtn = [ZSHBaseUIControl createBtnWithParamDic:forgotPwdBtnDic];
+    _forgotPwdBtn = [ZSHBaseUIControl  createBtnWithParamDic:forgotPwdBtnDic target:self action:nil];
     [_forgotPwdBtn addTapBlock:^(UIButton *btn) {
         ZSHMultiInfoViewController *multiInfoVC = [[ZSHMultiInfoViewController alloc] initWithParamDic:@{KFromClassType:@(FromAccountVCToMultiInfoVC),@"title":@"找回登录密码", @"bottomBtnTitle":@"下一步"}];
         [weakself.navigationController pushViewController:multiInfoVC animated:YES];
@@ -122,8 +118,7 @@
 
 #pragma action
 - (void)login {
-   
-    
+    RLog(@"点击登录");
     if (_userView.textField.text.length && _pwdView.textField.text.length) {
         RLog(@"username;%@:password%@", _userView.textField.text,_pwdView.textField.text);
         [userManager login:kUserLoginTypePwd params:@{@"CARDNO":_userView.textField.text,@"PASSWORD":[ZSHBaseFunction md5StringFromString: _pwdView.textField.text]} completion:^(BOOL success, NSString *des) {

@@ -104,7 +104,7 @@ static AFHTTPSessionManager *_sessionManager;
                 parameters:(id)parameters
                    success:(PPHttpRequestSuccess)success
                    failure:(PPHttpRequestFailed)failure {
-    NSString *requestUrl = [NSString stringWithFormat:@"%@%@", kUrlRoot, URL];
+    NSString *requestUrl = NSStringFormat(@"%@%@",kUrlRoot,URL);//[NSString stringWithFormat:@"%@%@", kUrlRoot, URL];
     if ([URL containsString:@"https://www.pgyer.com"]) {
         requestUrl = URL;
     }

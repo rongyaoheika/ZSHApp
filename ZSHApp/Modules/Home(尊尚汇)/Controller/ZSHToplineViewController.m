@@ -92,7 +92,7 @@ static NSString *ZSHToplineCellID = @"ZSHToplineCellID";
         make.size.mas_equalTo(CGSizeMake(kRealValue(285), kRealValue(31)));
     }];
     
-    UIButton *commentBtn = [ZSHBaseUIControl createBtnWithParamDic:@{@"withImage":@(YES),@"normalImage":@"head_image_1"}];
+    UIButton *commentBtn = [ZSHBaseUIControl  createBtnWithParamDic:@{@"normalImage":@"head_image_1"} target:self action:nil];
     [self.view addSubview:commentBtn];
     [commentBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.mas_equalTo(textField);
@@ -101,7 +101,7 @@ static NSString *ZSHToplineCellID = @"ZSHToplineCellID";
     }];
     
     
-    UIButton *shareBtn = [ZSHBaseUIControl createBtnWithParamDic:@{@"withImage":@(YES),@"normalImage":@"head_image_2"}];
+    UIButton *shareBtn = [ZSHBaseUIControl  createBtnWithParamDic:@{@"normalImage":@"head_image_2"} target:self action:nil];
     [self.view addSubview:shareBtn];
     [shareBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.mas_equalTo(textField);

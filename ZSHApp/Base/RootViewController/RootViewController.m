@@ -195,7 +195,7 @@
 - (UIButton *)bottomBtn{
     if (!_bottomBtn) {
         NSDictionary *bottomBtnDic = @{@"title":@"申请售后",@"titleColor":KZSHColor929292,@"font":kPingFangMedium(17),@"backgroundColor":KZSHColor0B0B0B};
-       _bottomBtn = [ZSHBaseUIControl createBtnWithParamDic:bottomBtnDic];
+       _bottomBtn = [ZSHBaseUIControl  createBtnWithParamDic:bottomBtnDic target:self action:nil];
        _bottomBtn.frame = CGRectMake(0, KScreenHeight - KBottomTabH, KScreenWidth, KBottomNavH);
     }
     return _bottomBtn;

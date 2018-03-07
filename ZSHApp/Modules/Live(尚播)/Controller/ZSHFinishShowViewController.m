@@ -32,7 +32,7 @@
     self.isShowLiftBack = false;
     self.isHidenNaviBar = true;
     
-    UIButton *listButton = [ZSHBaseUIControl createBtnWithParamDic:@{@"title":@"贡献榜  5678",@"titleColor":KBlackColor,@"font":kPingFangRegular(10),@"backgroundColor":KZSHColorD8D8D8}];
+    UIButton *listButton = [ZSHBaseUIControl  createBtnWithParamDic:@{@"title":@"贡献榜  5678",@"titleColor":KBlackColor,@"font":kPingFangRegular(10),@"backgroundColor":KZSHColorD8D8D8} target:self action:nil];
     listButton.layer.cornerRadius = 10;
     listButton.hidden = YES;
     [self.view addSubview:listButton];
@@ -65,8 +65,7 @@
     }];
     
     
-    UIButton *backBtn = [ZSHBaseUIControl createBtnWithParamDic:@{@"title":@"返回大厅",@"titleColor":KZSHColorFF2068,@"font":kPingFangRegular(17)}];
-    [backBtn addTarget:self action:@selector(closeLiveRoom) forControlEvents:UIControlEventTouchUpInside];
+    UIButton *backBtn = [ZSHBaseUIControl  createBtnWithParamDic:@{@"title":@"返回大厅",@"titleColor":KZSHColorFF2068,@"font":kPingFangRegular(17)} target:self action:@selector(closeLiveRoom)];
     backBtn.layer.cornerRadius = 18;
     backBtn.layer.borderColor = KZSHColorFF2068.CGColor;
     backBtn.layer.borderWidth = 1.0;

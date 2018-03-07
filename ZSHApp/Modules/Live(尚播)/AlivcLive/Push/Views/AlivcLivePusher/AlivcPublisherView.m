@@ -1244,9 +1244,8 @@ static CGFloat lastPinchDistance = 0;
         [_shareBtnArr addObject:typeBtn];
     }
 
-    _beginShowBtn = [ZSHBaseUIControl createBtnWithParamDic:@{@"title":@"开启直播",@"titleColor":KWhiteColor,@"font":kPingFangLight(17),@"backgroundColor":KZSHColorFF2068}];
+    _beginShowBtn = [ZSHBaseUIControl  createBtnWithParamDic:@{@"title":@"开启直播",@"titleColor":KWhiteColor,@"font":kPingFangLight(17),@"backgroundColor":KZSHColorFF2068} target:self action:@selector(pushButtonAction:)];
     _beginShowBtn.layer.cornerRadius = 20;
-    [_beginShowBtn addTarget:self action:@selector(pushButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:_beginShowBtn];
     [_beginShowBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.mas_equalTo(self).offset(kRealValue(-83.5));

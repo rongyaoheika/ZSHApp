@@ -50,7 +50,7 @@
         make.size.mas_equalTo(CGSizeMake(kRealValue(37), kRealValue(64)));
     }];
     
-    UILabel *nameLabel = [ZSHBaseUIControl createLabelWithParamDic:@{@"text":@"卡地亚Cartier伦敦SOLO手表 石英男表W6701005",@"font":kPingFangRegular(12),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentLeft)}];
+    UILabel *nameLabel = [ZSHBaseUIControl createLabelWithParamDic:@{@"text":@"卡地亚Cartier伦敦SOLO手表 石英男表W6701005",@"font":kPingFangRegular(12)}];
     nameLabel.numberOfLines = 0;
     [nameLabel setRowSpace:5.0];
     [self.view addSubview:nameLabel];
@@ -60,7 +60,7 @@
         make.size.mas_equalTo(CGSizeMake(kRealValue(214), kRealValue(36)));
     }];
     
-    UILabel *priceLabel = [ZSHBaseUIControl createLabelWithParamDic:@{@"text":@"¥49200",@"font":kPingFangRegular(11),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentLeft)}];
+    UILabel *priceLabel = [ZSHBaseUIControl createLabelWithParamDic:@{@"text":@"¥49200",@"font":kPingFangRegular(11)}];
     priceLabel.numberOfLines = 0;
     [self.view addSubview:priceLabel];
     [priceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -69,7 +69,7 @@
         make.size.mas_equalTo(CGSizeMake(kRealValue(214), kRealValue(12)));
     }];
     
-    UILabel *serviceTypeLabel = [ZSHBaseUIControl createLabelWithParamDic:@{@"text":@"服务类型",@"font":kPingFangRegular(14),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentLeft)}];
+    UILabel *serviceTypeLabel = [ZSHBaseUIControl createLabelWithParamDic:@{@"text":@"服务类型"}];
     [self.view addSubview:serviceTypeLabel];
     [serviceTypeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(imageView.mas_bottom).offset(kRealValue(28));
@@ -77,7 +77,7 @@
         make.size.mas_equalTo(CGSizeMake(kRealValue(57.5), kRealValue(15)));
     }];
     
-    UIButton *repairBtn = [ZSHBaseUIControl createBtnWithParamDic:@{@"title":@"维修",@"font":kPingFangRegular(12)}];
+    UIButton *repairBtn = [ZSHBaseUIControl  createBtnWithParamDic:@{@"title":@"维修",@"font":kPingFangRegular(12)} target:self action:nil];
     repairBtn.layer.borderWidth = 0.5;
     repairBtn.layer.borderColor = KZSHColor929292.CGColor;
     [self.view addSubview:repairBtn];
@@ -87,7 +87,7 @@
         make.size.mas_equalTo(CGSizeMake(kRealValue(80), kRealValue(30)));
     }];
 
-    UIButton *replaceBtn = [ZSHBaseUIControl createBtnWithParamDic:@{@"title":@"维修",@"font":kPingFangRegular(12)}];
+    UIButton *replaceBtn = [ZSHBaseUIControl  createBtnWithParamDic:@{@"title":@"维修",@"font":kPingFangRegular(12)} target:self action:nil];
     replaceBtn.layer.borderWidth = 0.5;
     replaceBtn.layer.borderColor = KZSHColor929292.CGColor;
     [self.view addSubview:replaceBtn];
@@ -98,7 +98,7 @@
     }];
     
     
-    UILabel *problemDESCLabel = [ZSHBaseUIControl createLabelWithParamDic:@{@"text":@"问题描述",@"font":kPingFangRegular(14),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentLeft)}];
+    UILabel *problemDESCLabel = [ZSHBaseUIControl createLabelWithParamDic:@{@"text":@"问题描述"}];
     [self.view addSubview:problemDESCLabel];
     [problemDESCLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(repairBtn).offset(kRealValue(58));
@@ -121,7 +121,7 @@
         make.size.mas_equalTo(CGSizeMake(KScreenWidth-30, kRealValue(50)));
     }];
     
-    UILabel *logisticsLabel = [ZSHBaseUIControl createLabelWithParamDic:@{@"text":@"物流单号",@"font":kPingFangRegular(14),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentLeft)}];
+    UILabel *logisticsLabel = [ZSHBaseUIControl createLabelWithParamDic:@{@"text":@"物流单号"}];
     [self.view addSubview:logisticsLabel];
     [logisticsLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(problemDESCLabel).offset(kRealValue(90));
@@ -129,7 +129,7 @@
         make.size.mas_equalTo(CGSizeMake(kRealValue(57.5), kRealValue(15)));
     }];
     
-    UILabel *logisticsNumLabel = [ZSHBaseUIControl createLabelWithParamDic:@{@"text":@"621699049821",@"font":kPingFangRegular(12),@"textColor":KZSHColor454545,@"textAlignment":@(NSTextAlignmentLeft)}];
+    UILabel *logisticsNumLabel = [ZSHBaseUIControl createLabelWithParamDic:@{@"text":@"621699049821",@"font":kPingFangRegular(12),@"textColor":KZSHColor454545}];
     [self.view addSubview:logisticsNumLabel];
     [logisticsNumLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(logisticsLabel).offset(kRealValue(30));
@@ -137,7 +137,7 @@
         make.size.mas_equalTo(CGSizeMake(kRealValue(86.5), kRealValue(12)));
     }];
     
-    UILabel *logisticsCompanyLabel = [ZSHBaseUIControl createLabelWithParamDic:@{@"text":@"物流公司",@"font":kPingFangRegular(14),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentLeft)}];
+    UILabel *logisticsCompanyLabel = [ZSHBaseUIControl createLabelWithParamDic:@{@"text":@"物流公司"}];
     [self.view addSubview:logisticsCompanyLabel];
     [logisticsCompanyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(logisticsLabel).offset(kRealValue(60));
@@ -145,7 +145,7 @@
         make.size.mas_equalTo(CGSizeMake(kRealValue(57.5), kRealValue(15)));
     }];
     
-    UILabel *logisticsCompanyNameLabel = [ZSHBaseUIControl createLabelWithParamDic:@{@"text":@" 申通快递",@"font":kPingFangRegular(12),@"textColor":KZSHColor454545,@"textAlignment":@(NSTextAlignmentLeft)}];
+    UILabel *logisticsCompanyNameLabel = [ZSHBaseUIControl createLabelWithParamDic:@{@"text":@" 申通快递",@"font":kPingFangRegular(12),@"textColor":KZSHColor454545}];
     [self.view addSubview:logisticsCompanyNameLabel];
     [logisticsCompanyNameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(logisticsCompanyLabel).offset(kRealValue(30));
@@ -154,7 +154,7 @@
     }];
     
 
-    UIButton *netxBtn = [ZSHBaseUIControl createBtnWithParamDic:@{@"withImage":@(YES),@"normalImage":@"mine_next"}];
+    UIButton *netxBtn = [ZSHBaseUIControl  createBtnWithParamDic:@{@"normalImage":@"mine_next"} target:self action:nil];
     [self.view addSubview:netxBtn];
     [netxBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(logisticsCompanyLabel).offset(kRealValue(28));
@@ -163,7 +163,7 @@
     }];
     
     
-    UIButton *stewardBtn = [ZSHBaseUIControl createBtnWithParamDic:@{@"title":@"申请售后",@"titleColor":KZSHColor929292,@"font":kPingFangMedium(17),@"backgroundColor":KBlackColor}];
+    UIButton *stewardBtn = [ZSHBaseUIControl  createBtnWithParamDic:@{@"title":@"申请售后",@"font":kPingFangMedium(17),@"backgroundColor":KBlackColor} target:self action:nil];
     [self.view addSubview:stewardBtn];
     [stewardBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.mas_equalTo(self.view);

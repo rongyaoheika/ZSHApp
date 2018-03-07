@@ -72,8 +72,8 @@
     }];
     self.bottomLabel = bottomLabel;
     
-    NSDictionary *cancelBtnDic = @{@"title":@"取消订单",@"titleColor":KZSHColor929292,@"font":kPingFangLight(6),@"backgroundColor":KClearColor};
-    UIButton *cancelBtn = [ZSHBaseUIControl createBtnWithParamDic:cancelBtnDic];
+    NSDictionary *cancelBtnDic = @{@"title":@"取消订单",@"font":kPingFangLight(6)};
+    UIButton *cancelBtn = [ZSHBaseUIControl  createBtnWithParamDic:cancelBtnDic target:self action:nil];
     cancelBtn.frame = CGRectZero;
     cancelBtn.layer.borderWidth = 0.5;
     cancelBtn.layer.cornerRadius = 10.0;
@@ -81,7 +81,7 @@
     [bottmView addSubview:cancelBtn];
     
     //右侧结果
-    NSDictionary *resultLabelDic = @{@"text":@"已发货",@"font": kPingFangRegular(12),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentRight)};
+    NSDictionary *resultLabelDic = @{@"text":@"已发货",@"font": kPingFangRegular(12),@"textAlignment":@(NSTextAlignmentRight)};
     _resultLabel = [ZSHBaseUIControl createLabelWithParamDic:resultLabelDic];
     [self addSubview:_resultLabel];
     [_resultLabel mas_makeConstraints:^(MASConstraintMaker *make) {

@@ -571,8 +571,7 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHBaseCell *cell = [[ZSHBaseCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@""];
         NSDictionary *bottomBtnDic = @{@"title":@"确认订单",@"font":kPingFangMedium(17),@"backgroundColor":KZSHColor0B0B0B};
-        UIButton  *confirmOrderBtn = [ZSHBaseUIControl createBtnWithParamDic:bottomBtnDic];
-        [confirmOrderBtn addTarget:self action:@selector(confirmBtnAction) forControlEvents:UIControlEventTouchUpInside];
+        UIButton  *confirmOrderBtn = [ZSHBaseUIControl  createBtnWithParamDic:bottomBtnDic target:self action:@selector(confirmBtnAction)];
         [cell.contentView addSubview:confirmOrderBtn];
         [confirmOrderBtn mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.mas_equalTo(cell);
@@ -696,7 +695,7 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
             } else if (i == 4) {
                 NSArray *titleArr = @[@"最高保险130W万\n￥30", @"最高保80万\n¥20"];
                 for (int i = 0; i < titleArr.count; i++) {
-                    UIButton *insuranceBtn = [ZSHBaseUIControl createBtnWithParamDic:@{@"title":titleArr[i],@"font":kPingFangRegular(10)}];
+                    UIButton *insuranceBtn = [ZSHBaseUIControl  createBtnWithParamDic:@{@"title":titleArr[i],@"font":kPingFangRegular(10)} target:self action:nil];
                     insuranceBtn.titleLabel.numberOfLines = 0;
                     insuranceBtn.titleLabel.textAlignment = NSTextAlignmentCenter;
                     insuranceBtn.layer.borderWidth = 0.5;

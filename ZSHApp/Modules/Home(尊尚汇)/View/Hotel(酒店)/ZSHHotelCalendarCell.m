@@ -35,7 +35,7 @@
     _checkBtn = checkBtn;
     
     NSDictionary *dateBtnDic = @{@"title":@"共一天",@"font":kPingFangMedium(15)};
-    UIButton *dateBtn = [ZSHBaseUIControl createBtnWithParamDic:dateBtnDic];
+    UIButton *dateBtn = [ZSHBaseUIControl  createBtnWithParamDic:dateBtnDic target:self action:nil];
     [self.contentView addSubview:dateBtn];
     [dateBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.mas_equalTo(self);

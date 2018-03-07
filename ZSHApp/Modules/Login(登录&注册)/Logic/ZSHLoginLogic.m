@@ -73,7 +73,7 @@
 // 分类随机显示6个卡号 
 - (void)requestCardNumWithDic:(NSDictionary *)dic success:(void (^)(id response))success {
     [PPNetworkHelper POST:kUrlGetCardNum parameters:dic success:^(id responseObject) {
-        RLog(@"请求参数：%@", dic);
+        RLog(@"请求参数：%@  选号返回卡号数据==%@", dic, responseObject);
         success(responseObject);
     } failure:^(NSError *error) {
         RLog(@"请求失败");

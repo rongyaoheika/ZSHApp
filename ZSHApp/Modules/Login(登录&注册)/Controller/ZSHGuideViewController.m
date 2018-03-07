@@ -59,7 +59,7 @@
     
     kWeakSelf(self);
     NSDictionary *applyBtnDic = @{KFromClassType:@(FromGuideVCToGuideView),@"title":@"在线申请",@"titleColor":KWhiteColor,@"font":kPingFangRegular(12)};
-    _applyBtn = [ZSHBaseUIControl createBtnWithParamDic:applyBtnDic];
+    _applyBtn = [ZSHBaseUIControl  createBtnWithParamDic:applyBtnDic target:self action:nil];
     [ZSHSpeedy zsh_chageControlCircularWith:_applyBtn AndSetCornerRadius:0 SetBorderWidth:1.0 SetBorderColor:KWhiteColor canMasksToBounds:YES];
     [_applyBtn addTapBlock:^(UIButton *btn) {
         RLog(@"在线申请");
@@ -74,17 +74,10 @@
         make.width.mas_equalTo(kRealValue(120));
         make.height.mas_equalTo(kRealValue(30));
     }];
-    
+
     NSDictionary *vipLoginbtnDic = @{@"title":@"会籍登录",@"titleColor":KWhiteColor,@"font":kPingFangRegular(12)};
-    _vipLoginBtn = [ZSHBaseUIControl createBtnWithParamDic:vipLoginbtnDic];
+    _vipLoginBtn = [ZSHBaseUIControl  createBtnWithParamDic:vipLoginbtnDic target:self action:@selector(btnAction)];
     [ZSHSpeedy zsh_chageControlCircularWith:_vipLoginBtn AndSetCornerRadius:0 SetBorderWidth:1.0 SetBorderColor:KWhiteColor canMasksToBounds:YES];
-    [_vipLoginBtn addTapBlock:^(UIButton *btn) {
-        RLog(@"登录");
-        ZSHLoginViewController *loginVC = [[ZSHLoginViewController alloc]init];
-        RootNavigationController *loginNavi = [[RootNavigationController alloc]initWithRootViewController:loginVC];
-//        [weakself presentViewController:loginNavi animated:YES completion:nil];
-        [weakself.navigationController pushViewController:loginVC animated:YES];
-    }];
     [self.view addSubview:_vipLoginBtn];
     [_vipLoginBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(_applyBtn);
@@ -113,6 +106,12 @@
         make.width.mas_equalTo(self.view);
     }];
     
+}
+
+- (void)btnAction{
+    RLog(@"登录");
+    ZSHLoginViewController *loginVC = [[ZSHLoginViewController alloc]init];
+    [self.navigationController pushViewController:loginVC animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

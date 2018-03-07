@@ -37,8 +37,8 @@
      _nameLabel = [ZSHBaseUIControl createLabelWithParamDic:nameLabelDic];
     [_detailView addSubview:_nameLabel];
 
-    NSDictionary *enterBtnParamDic = @{@"title":@"ENTER",@"titleColor":KZSHColor929292,@"font":kPingFangLight(12),@"backgroundColor":KClearColor};
-    _enterBtn = [ZSHBaseUIControl createBtnWithParamDic:enterBtnParamDic];
+    NSDictionary *enterBtnParamDic = @{@"title":@"ENTER",@"font":kPingFangLight(12)};
+    _enterBtn = [ZSHBaseUIControl  createBtnWithParamDic:enterBtnParamDic target:self action:nil];
     _enterBtn.layer.borderWidth = 0.5;
     _enterBtn.layer.borderColor = KZSHColor979797.CGColor;
     [_detailView addSubview:_enterBtn];

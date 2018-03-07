@@ -266,9 +266,8 @@ static NSString *ZSHMusicPlayListCellID = @"ZSHMusicPlayListCell";
 - (UIView *)tabHeadView{
     if (!_tabHeadView) {
         _tabHeadView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kRealValue(40))];
-        NSDictionary *btnDic = @{@"title":@"随机播放",@"withImage":@(YES),@"normalImage":@"music_play"};
-        UIButton *playBtn = [ZSHBaseUIControl createBtnWithParamDic:btnDic];
-        [playBtn addTarget:self action:@selector(randomPlayAction:) forControlEvents:UIControlEventTouchUpInside];
+        NSDictionary *btnDic = @{@"title":@"随机播放",@"normalImage":@"music_play"};
+        UIButton *playBtn = [ZSHBaseUIControl  createBtnWithParamDic:btnDic target:self action:@selector(randomPlayAction:)];
         playBtn.tag = 1;
         playBtn.frame = CGRectMake(KLeftMargin, 0, kRealValue(100), kRealValue(40));
         [playBtn layoutButtonWithEdgeInsetsStyle:XYButtonEdgeInsetsStyleLeft imageTitleSpace:kRealValue(7.5)];

@@ -33,35 +33,32 @@ static TLMenuButtonView *instanceMenuView;
     CGPoint point2 = CGPointMake(center.x, center.y - r);
     CGPoint point3 = CGPointMake(center.x + r*cos(M_PI /5), center.y - r*sin(M_PI / 5));
     
-    NSDictionary *menu1Dic = @{@"title":@"黑微博",@"font":kPingFangLight(11),@"backgroundColor":KClearColor,@"withImage":@(YES),@"normalImage":@"live_weibo"};
-    _menu1 = [ZSHBaseUIControl createBtnWithParamDic:menu1Dic];
+    NSDictionary *menu1Dic = @{@"title":@"黑微博",@"font":kPingFangLight(11),@"backgroundColor":KClearColor,@"normalImage":@"live_weibo"};
+    _menu1 = [ZSHBaseUIControl  createBtnWithParamDic:menu1Dic target:self action:@selector(_addExamApprovel:)];
     _menu1.frame = CGRectMake(0, 0, kRealValue(55), kRealValue(55));
     _menu1.center = center;
     _menu1.layer.cornerRadius = kRealValue(55)/2;
     [_menu1 layoutButtonWithEdgeInsetsStyle:(XYButtonEdgeInsetsStyleTop) imageTitleSpace:kRealValue(4)];
     _menu1.tag = 1;
     _menu1.alpha = 0;
-    [_menu1 addTarget:self action:@selector(_addExamApprovel:) forControlEvents:UIControlEventTouchUpInside];
     
-    NSDictionary *menu2Dic = @{@"title":@"开播吧",@"font":kPingFangLight(11),@"withImage":@(YES),@"normalImage":@"live_video"};
-    _menu2 = [ZSHBaseUIControl createBtnWithParamDic:menu2Dic];
+    NSDictionary *menu2Dic = @{@"title":@"开播吧",@"font":kPingFangLight(11),@"normalImage":@"live_video"};
+    _menu2 = [ZSHBaseUIControl  createBtnWithParamDic:menu2Dic target:self action:@selector(_addExamApprovel:)];
     _menu2.frame = CGRectMake(0, 0, kRealValue(55), kRealValue(55));
     _menu2.center = center;
     _menu2.layer.cornerRadius = kRealValue(55)/2;
     [_menu2 layoutButtonWithEdgeInsetsStyle:(XYButtonEdgeInsetsStyleTop) imageTitleSpace:kRealValue(4)];
     _menu2.tag = 2;
     _menu2.alpha = 0;
-    [_menu2 addTarget:self action:@selector(_addExamApprovel:) forControlEvents:UIControlEventTouchUpInside];
     
-    NSDictionary *menu3Dic = @{@"title":@"小视频",@"font":kPingFangLight(11),@"withImage":@(YES),@"normalImage":@"live_photo"};
-    _menu3 = [ZSHBaseUIControl createBtnWithParamDic:menu3Dic];
+    NSDictionary *menu3Dic = @{@"title":@"小视频",@"font":kPingFangLight(11),@"normalImage":@"live_photo"};
+    _menu3 = [ZSHBaseUIControl  createBtnWithParamDic:menu3Dic target:self action:@selector(_addExamApprovel:)];
     _menu3.frame = CGRectMake(0, 0, kRealValue(55), kRealValue(55));
     _menu3.center = center;
     _menu3.layer.cornerRadius = kRealValue(55)/2;
     [_menu3 layoutButtonWithEdgeInsetsStyle:(XYButtonEdgeInsetsStyleTop) imageTitleSpace:kRealValue(4)];
     _menu3.tag = 3;
     _menu3.alpha = 0;
-    [_menu3 addTarget:self action:@selector(_addExamApprovel:) forControlEvents:UIControlEventTouchUpInside];
     
      [self addSubview:_menu1];
      [self addSubview:_menu2];

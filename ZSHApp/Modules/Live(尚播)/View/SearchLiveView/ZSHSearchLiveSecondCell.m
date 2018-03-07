@@ -19,7 +19,7 @@
 - (void)setup{
     _btnArr = [[NSMutableArray alloc]init];
     
-    NSDictionary *titleLabelDic = @{@"text":@"性别",@"font":kPingFangLight(14),@"textColor":KZSHColor333333};
+    NSDictionary *titleLabelDic = @{@"text":@"性别",@"textColor":KZSHColor333333};
     UILabel *titleLabel = [ZSHBaseUIControl createLabelWithParamDic:titleLabelDic];
     [self.contentView addSubview:titleLabel];
     [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -32,9 +32,8 @@
     NSArray *titleArr = @[@"全部",@"男",@"女"];
     for (int i = 0; i<titleArr.count; i++) {
         NSDictionary *btnDic = @{@"title":titleArr[i],@"titleColor":KZSHColor333333,@"selectedTitleColor":KZSHColorF29E19,@"font":kPingFangLight(14)};
-        UIButton *btn = [ZSHBaseUIControl createBtnWithParamDic:btnDic];
+        UIButton *btn = [ZSHBaseUIControl  createBtnWithParamDic:btnDic target:self action:@selector(btnAction:)];
         btn.tag = i+1;
-        [btn addTarget:self action:@selector(btnAction:) forControlEvents:UIControlEventTouchUpInside];
         [self.contentView addSubview:btn];
         [btn mas_makeConstraints:^(MASConstraintMaker *make) {
             make.width.mas_equalTo(kRealValue(75));

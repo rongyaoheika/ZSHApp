@@ -38,8 +38,8 @@
     [self addSubview:englishNameLabel];
     self.englishNameLabel = englishNameLabel;
     
-    NSDictionary *moreBtnDic = @{@"title":@"查看更多",@"titleColor":KWhiteColor,@"font":kPingFangRegular(12),@"backgroundColor":KClearColor};
-    UIButton *moreBtn = [ZSHBaseUIControl createBtnWithParamDic:moreBtnDic];
+    NSDictionary *moreBtnDic = @{@"title":@"查看更多",@"titleColor":KWhiteColor,@"font":kPingFangRegular(12)};
+    UIButton *moreBtn = [ZSHBaseUIControl  createBtnWithParamDic:moreBtnDic target:self action:nil];
     moreBtn.layer.borderColor = KWhiteColor.CGColor;
     moreBtn.layer.borderWidth = 0.5;
     moreBtn.hidden = YES;

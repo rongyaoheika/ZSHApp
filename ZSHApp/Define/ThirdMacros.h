@@ -35,7 +35,9 @@
 #define kPGYApiKey @"925b799ec8ce5d19910288cdde27bfdc"
 #define kPGYAppKey @"ba5cdab1acf602dd6b5ffc206905d0a8"
 
-
+/** 微信key **/
+#define kWeixinAppId        @"wxc6209eb4696e2f55"
+#define kWeixinAppSecret    @"06530660033e053e47f0805aa02fc47d"
 
 //阿里云直播
 #define PLAY_AUTH @""

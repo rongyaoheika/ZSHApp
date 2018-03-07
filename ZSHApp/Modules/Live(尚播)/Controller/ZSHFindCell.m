@@ -18,7 +18,7 @@
 
 
 - (void)setup {
-    _titleLabel = [ZSHBaseUIControl createLabelWithParamDic:@{@"text":@"乘客姓名",@"font":kPingFangMedium(14),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentLeft)}];
+    _titleLabel = [ZSHBaseUIControl createLabelWithParamDic:@{@"text":@"乘客姓名",@"font":kPingFangMedium(14)}];
     [self addSubview:_titleLabel];
     [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.left.mas_equalTo(self).offset(kRealValue(KLeftMargin));
@@ -34,14 +34,14 @@
     }];
     
 
-    _playBtn = [ZSHBaseUIControl createBtnWithParamDic:@{@"text":@"",@"font":kPingFangRegular(14),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentLeft),@"withImage":@(YES),@"normalImage":@"play_find_1"}];
+    _playBtn = [ZSHBaseUIControl  createBtnWithParamDic:@{@"text":@"",@"font":kPingFangRegular(14),@"textAlignment":@(NSTextAlignmentLeft),@"normalImage":@"play_find_1"} target:self action:nil];
     [self addSubview:_playBtn];
     [_playBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.centerY.mas_equalTo(_picView);
         make.size.mas_equalTo(CGSizeMake(kRealValue(40), kRealValue(40)));
     }];
     
-    _pageviewLabel = [ZSHBaseUIControl createLabelWithParamDic:@{@"text":@"2.2万人浏览",@"font":kPingFangMedium(11),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentLeft)}];
+    _pageviewLabel = [ZSHBaseUIControl createLabelWithParamDic:@{@"text":@"2.2万人浏览",@"font":kPingFangMedium(11)}];
     [self addSubview:_pageviewLabel];
     [_pageviewLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self).offset(kRealValue(174));

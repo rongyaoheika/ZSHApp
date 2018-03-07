@@ -211,10 +211,9 @@
             lab1.frame = CGRectMake(KLeftMargin, 0, 100, kRealValue(60));
             
             NSDictionary *btnDic = @{@"title":@"编辑",@"font":kPingFangRegular(12)};
-            UIButton *editBtn = [ZSHBaseUIControl createBtnWithParamDic:btnDic];
+            UIButton *editBtn = [ZSHBaseUIControl  createBtnWithParamDic:btnDic target:self action:@selector(editTags:)];
             editBtn.frame = CGRectMake(collectionView.frame.size.width-kRealValue(60), 0, kRealValue(44), kRealValue(60));
             [header addSubview:editBtn];
-            [editBtn addTarget:self action:@selector(editTags:) forControlEvents:UIControlEventTouchUpInside];
         }
     } else if (indexPath.section == 1){
         if (kind == UICollectionElementKindSectionHeader){

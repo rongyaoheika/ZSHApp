@@ -98,7 +98,6 @@
             weakself.selectRow = index;
         };
         [cell.contentView addSubview:listView];
-        
         return cell;
     };
 }

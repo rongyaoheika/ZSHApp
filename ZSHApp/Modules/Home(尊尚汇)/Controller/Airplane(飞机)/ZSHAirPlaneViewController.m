@@ -20,6 +20,7 @@
 @property (nonatomic, strong) ZSHBottomBlurPopView      *bottomBlurPopView;
 @property (nonatomic, strong) ZSHPickView               *pickView;
 @property (nonatomic, strong) ZSHTrainModel             *trainModel;
+@property (nonatomic, copy)   NSString                  *seatType;
 
 @end
 
@@ -99,7 +100,8 @@ static NSString *ZSHBaseTicketDateCellID = @"ZSHBaseTicketDateCell";
     if (kFromClassTypeValue == ZSHHomeAirPlaneVCToAirPlaneVC) {
         //出发日期,席别
         NSArray *titleArr = @[@"出发日期",@"席别"];
-        NSArray *valueArr = @[@"2017-9-25",@"经济舱"];
+        NSString *seatStr = _seatType?_seatType:@"经济舱";
+        NSArray *valueArr = @[@"2017-9-25",seatStr];
         for (int i = 0; i<2; i++) {
             cellModel = [[ZSHBaseTableViewCellModel alloc] init];
             cellModel.height = kRealValue(60);
@@ -109,7 +111,6 @@ static NSString *ZSHBaseTicketDateCellID = @"ZSHBaseTicketDateCell";
                 if (!cell) {
                     cell = [[ZSHBaseCell alloc] initWithStyle:UITableViewCellStyleDefault
                                               reuseIdentifier:@"AirHead"];
-//                    NSDictionary *dateLabelDic = @{@"text":valueArr[i]};
                     UILabel *dateLabel = [ZSHBaseUIControl createLabelWithParamDic:@{}];
                     dateLabel.tag = 3;
                     [cell.contentView addSubview:dateLabel];
@@ -136,13 +137,15 @@ static NSString *ZSHBaseTicketDateCellID = @"ZSHBaseTicketDateCell";
                         [weakself initViewModel];
                     };
                     [kAppDelegate.window addSubview:self.bottomBlurPopView];
-//                    self.bottomBlurPopView = [weakself createBottomBlurPopViewWith:ZSHFromAirplaneCalendarVCToBottomBlurPopView];
-//                    [kAppDelegate.window addSubview:self.bottomBlurPopView];
                 }  else if (indexPath.row == 2) {//席别
                     NSArray *seatArr = @[@"不限",@"经济仓",@"头等／商务舱"];
                     NSDictionary *nextParamDic = @{@"type":@(WindowTogether),@"midTitle":@"席别选择",@"dataArr":seatArr};
                     weakself.pickView = [weakself createPickViewWithParamDic:nextParamDic];
                     [weakself.pickView show:WindowTogether];
+                    [weakself.pickView setSaveChangeBlock:^(NSString *str, NSInteger tag, NSDictionary *moreDic) {
+                        _seatType = str;
+                        [weakself initViewModel];
+                    }];
                 }
             };
         }
@@ -154,13 +157,8 @@ static NSString *ZSHBaseTicketDateCellID = @"ZSHBaseTicketDateCell";
             ZSHBaseCell *cell = [tableView dequeueReusableCellWithIdentifier:@"child"];
             if (!cell) {
                 cell = [[ZSHBaseCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"child"];
-                NSDictionary *childBtnDic = @{@"title":@"携带儿童",@"font":kPingFangRegular(12),@"withImage":@(YES),@"normalImage":@"airplane_press"};
-                UIButton *childBtn = [ZSHBaseUIControl createBtnWithParamDic:childBtnDic];
-               
-                [childBtn setImage:[UIImage imageNamed:@"airplane_normal"] forState:UIControlStateNormal];
-                [childBtn setImage:[UIImage imageNamed:@"airplane_press"] forState:UIControlStateSelected];
-                
-                [childBtn addTarget:self action:@selector(childBtnAction:) forControlEvents:UIControlEventTouchUpInside];
+                NSDictionary *childBtnDic = @{@"title":@"携带儿童",@"font":kPingFangRegular(12),@"normalImage":@"airplane_normal",@"selectedImage":@"airplane_press"};
+                UIButton *childBtn = [ZSHBaseUIControl  createBtnWithParamDic:childBtnDic target:self action:@selector(ticketBtnAction:)];
                 [cell.contentView addSubview:childBtn];
                 [childBtn mas_makeConstraints:^(MASConstraintMaker *make) {
                     make.left.mas_equalTo(cell).offset(KLeftMargin);
@@ -231,8 +229,9 @@ static NSString *ZSHBaseTicketDateCellID = @"ZSHBaseTicketDateCell";
             ZSHBaseCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ZSHStudent"];
             if (!cell) {
                 cell = [[ZSHBaseCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"ZSHStudent"];
-                NSDictionary *childBtnDic = @{@"title":@"学生票",@"font":kPingFangRegular(12),@"withImage":@(YES),@"normalImage":@"airplane_press"};
-                UIButton *childBtn = [ZSHBaseUIControl createBtnWithParamDic:childBtnDic];
+                
+                NSDictionary *childBtnDic = @{@"title":@"学生票",@"font":kPingFangRegular(12),@"normalImage":@"airplane_normal", @"selectedImage":@"airplane_press"};
+                UIButton *childBtn = [ZSHBaseUIControl  createBtnWithParamDic:childBtnDic target:self action:@selector(ticketBtnAction:)];
                 [cell.contentView addSubview:childBtn];
                 [childBtn mas_makeConstraints:^(MASConstraintMaker *make) {
                     make.left.mas_equalTo(cell).offset(KLeftMargin);
@@ -243,8 +242,8 @@ static NSString *ZSHBaseTicketDateCellID = @"ZSHBaseTicketDateCell";
                 
                 [childBtn layoutButtonWithEdgeInsetsStyle:XYButtonEdgeInsetsStyleRight imageTitleSpace:kRealValue(5)];
                 
-                NSDictionary *conBtnDic = @{@"title":@"只看高铁／动车",@"font":kPingFangRegular(12),@"withImage":@(YES),@"normalImage":@"airplane_press"};
-                UIButton *conBtn = [ZSHBaseUIControl createBtnWithParamDic:conBtnDic];
+                NSDictionary *conBtnDic = @{@"title":@"只看高铁／动车",@"font":kPingFangRegular(12),@"normalImage":@"airplane_normal", @"selectedImage":@"airplane_press"};
+                UIButton *conBtn = [ZSHBaseUIControl  createBtnWithParamDic:conBtnDic target:self action:@selector(ticketBtnAction:)];
                 [cell.contentView addSubview:conBtn];
                 [conBtn mas_makeConstraints:^(MASConstraintMaker *make) {
                     make.left.mas_equalTo(cell).offset(kRealValue(160));
@@ -264,8 +263,8 @@ static NSString *ZSHBaseTicketDateCellID = @"ZSHBaseTicketDateCell";
     return sectionModel;
 }
 
-- (void)childBtnAction:(UIButton *)childBtn{
-    childBtn.selected = !childBtn.selected;
+- (void)ticketBtnAction:(UIButton *)ticketBtn{
+    ticketBtn.selected = !ticketBtn.selected;
 }
 
 //搜索机票

@@ -35,7 +35,7 @@
         make.size.mas_equalTo(CGSizeMake(kRealValue(50), 16));
     }];
     
-    UIButton *joinBtn = [ZSHBaseUIControl createBtnWithParamDic:@{@"title":@"入驻",@"font":kPingFangRegular(12)}];
+    UIButton *joinBtn = [ZSHBaseUIControl  createBtnWithParamDic:@{@"title":@"入驻",@"font":kPingFangRegular(12)} target:self action:nil];
     [self addSubview:joinBtn];
     [joinBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.mas_equalTo(self).offset(-kRealValue(KLeftMargin));

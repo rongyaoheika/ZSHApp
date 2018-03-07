@@ -22,34 +22,25 @@
 
 - (void)setup {
     
-    UIButton *selectBtn = [ZSHBaseUIControl createBtnWithParamDic:@{}];
-    [selectBtn setImage:[UIImage imageNamed:@"pay_btn_normal"] forState:UIControlStateNormal];
-    [selectBtn setImage:[UIImage imageNamed:@"pay_btn_press"] forState:UIControlStateSelected];
-    [selectBtn addTapBlock:^(UIButton *btn) {
-        btn.selected = !btn.selected;
-    }];
+    UIButton *selectBtn = [ZSHBaseUIControl  createBtnWithParamDic:@{@"normalImage":@"pay_btn_normal",@"selectedImage":@"pay_btn_press"} target:self action:@selector(btnClick:)];
     [self addSubview:selectBtn];
     self.selectBtn = selectBtn;
     
-    UILabel *nameLabel = [ZSHBaseUIControl createLabelWithParamDic:@{@"text":@"132456", @"font":kPingFangRegular(14),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentLeft)}];
+    UILabel *nameLabel = [ZSHBaseUIControl createLabelWithParamDic:@{@"text":@"132456"}];
     [self addSubview:nameLabel];
     self.nameLabel = nameLabel;
     
     
-    UILabel *typeLabel = [ZSHBaseUIControl createLabelWithParamDic:@{@"text":@"132456", @"font":kPingFangRegular(14),@"textColor":KBlackColor,@"textAlignment":@(NSTextAlignmentLeft)}];
+    UILabel *typeLabel = [ZSHBaseUIControl createLabelWithParamDic:@{@"text":@"132456"}];
     [self addSubview:typeLabel];
     self.typeLabel = typeLabel;
     
     
-    UILabel *IDValueLabel = [ZSHBaseUIControl createLabelWithParamDic:@{@"text":@"132456", @"font":kPingFangRegular(11),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentLeft)}];
+    UILabel *IDValueLabel = [ZSHBaseUIControl createLabelWithParamDic:@{@"text":@"132456", @"font":kPingFangRegular(11)}];
     [self addSubview:IDValueLabel];
     self.IDValueLabel = IDValueLabel;
     
-    UIButton *editBtn = [ZSHBaseUIControl createBtnWithParamDic:@{@"backgroundColor":KClearColor,@"withImage":@(YES),@"normalImage":@"passenger_image_1",@"selectedImage":@"pay_btn_press"}];
-    
-    [editBtn addTapBlock:^(UIButton *btn) {
-        RLog(@"tap edit button");
-    }];
+    UIButton *editBtn = [ZSHBaseUIControl  createBtnWithParamDic:@{@"normalImage":@"passenger_image_1"} target:self action:@selector(btnClick:)];
     [self addSubview:editBtn];
     self.editBtn = editBtn;
     
@@ -59,9 +50,9 @@
     [super layoutSubviews];
     
     [self.selectBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self).offset(kRealValue(24));
-        make.left.mas_equalTo(self).offset(kRealValue(15));
-        make.size.mas_equalTo(CGSizeMake(kRealValue(12.5), kRealValue(12.5)));
+        make.centerY.mas_equalTo(self);
+        make.left.mas_equalTo(self);
+        make.size.mas_equalTo(CGSizeMake(kRealValue(44), kRealValue(44)));
     }];
     
     
@@ -73,14 +64,14 @@
     
     [self.typeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self).offset(kRealValue(13.5));;
-        make.left.mas_equalTo(self).offset(kRealValue(90));
-        make.size.mas_equalTo(CGSizeMake(kRealValue(40), kRealValue(15)));
+        make.left.mas_equalTo(self.nameLabel.mas_right).offset(KLeftMargin);
+        make.size.mas_equalTo(CGSizeMake(KScreenWidth*0.5, kRealValue(15)));
     }];
     
     
     [self.IDValueLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self).offset(kRealValue(36));;
-        make.left.mas_equalTo(self).offset(kRealValue(40));
+        make.left.mas_equalTo(self.nameLabel);
         make.size.mas_equalTo(CGSizeMake(kRealValue(120), kRealValue(12)));
 
     }];
@@ -100,6 +91,10 @@
     self.typeLabel.text = dic[@"type"];
     self.IDValueLabel.text = dic[@"IDValue"];
     [self layoutIfNeeded];
+}
+
+- (void)btnClick:(UIButton *)btn{
+    btn.selected = !btn.selected;
 }
 
 @end

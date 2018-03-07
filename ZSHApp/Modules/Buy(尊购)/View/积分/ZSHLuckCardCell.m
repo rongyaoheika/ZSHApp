@@ -21,7 +21,7 @@
         make.size.mas_equalTo(CGSizeMake(kRealValue(160), kRealValue(215)));
     }];
     
-    NSDictionary *descLabelDic = @{@"text":@"每次翻牌需消耗100积分",@"font":kPingFangRegular(10),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentCenter)};
+    NSDictionary *descLabelDic = @{@"text":@"每次翻牌需消耗100积分",@"font":kPingFangRegular(10),@"textAlignment":@(NSTextAlignmentCenter)};
     UILabel *descLabel = [ZSHBaseUIControl createLabelWithParamDic:descLabelDic];
     [bgImageView addSubview:descLabel];
     [descLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -31,10 +31,9 @@
         make.bottom.mas_equalTo(bgImageView).offset(-kRealValue(10));
     }];
     
-    NSDictionary *transferBtnDic = @{@"title":@"点击翻牌",@"titleColor":KZSHColor929292,@"font":kPingFangMedium(15),@"backgroundColor":[UIColor colorWithHexString:@"272727"]};
-    UIButton *transferBtn = [ZSHBaseUIControl createBtnWithParamDic:transferBtnDic];
+    NSDictionary *transferBtnDic = @{@"title":@"点击翻牌",@"font":kPingFangMedium(15),@"backgroundColor":[UIColor colorWithHexString:@"272727"]};
+    UIButton *transferBtn = [ZSHBaseUIControl  createBtnWithParamDic:transferBtnDic target:self action:@selector(transformAction:)];
     transferBtn.layer.cornerRadius = kRealValue(15);
-    [transferBtn addTarget:self action:@selector(transformAction:) forControlEvents:UIControlEventTouchUpInside];
     [bgImageView addSubview:transferBtn];
     [transferBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.mas_equalTo(bgImageView);
