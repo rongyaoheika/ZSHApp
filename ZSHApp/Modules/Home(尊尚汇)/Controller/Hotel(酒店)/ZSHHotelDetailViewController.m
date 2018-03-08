@@ -279,6 +279,8 @@ static NSString *ZSHHotelCellID = @"ZSHHotelCell";
             NSDictionary *paramDic = _hotelDetailSetDicArr[indexPath.row];
             NSDictionary *nextParamDic = @{KFromClassType:@(ZSHConfirmOrderToBottomBlurPopView),@"shopType":@(ZSHHotelShopType), @"deviceDic":weakself.hotelDetailParamDic,@"listDic":paramDic,@"liveInfoStr":_liveInfoStr};
             weakself.bottomBlurPopView = [weakself createBottomBlurPopViewWithParamDic:nextParamDic];
+            
+            //加在winndow上，键盘弹窗有问题
             [weakself.view addSubview:weakself.bottomBlurPopView];
         };
     }

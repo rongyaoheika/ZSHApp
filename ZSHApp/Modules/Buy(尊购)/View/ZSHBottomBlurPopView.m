@@ -162,8 +162,6 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
 }
 
 - (void)createUI{
-    self.backgroundColor = KClearColor;
-//    [self addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapBlurViewAction:)]];
     
     if (kFromClassTypeValue != ZSHFromPersonInfoVCToBottomBlurPopView && kFromClassTypeValue != ZSHFromLiveMidVCToBottomBlurPopView && kFromClassTypeValue != ZSHFromGoodsMineVCToToBottomBlurPopView) {
         self.subTab = [ZSHBaseUIControl createTableView];
@@ -218,11 +216,7 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
         ZSHLivePersonInfoView *personInfoView = [[ZSHLivePersonInfoView alloc] initWithFrame:CGRectMake((KScreenWidth - kRealValue(260))/2, (KScreenHeight - kRealValue(318))/2, kRealValue(260), kRealValue(318)) paramDic:_paramDic[@"userInfo"]];
         personInfoView.userInteractionEnabled = YES;
         [self addSubview:personInfoView];
-//        [personInfoView mas_makeConstraints:^(MASConstraintMaker *make) {
-//            make.centerX.and.centerY.mas_equalTo(self);
-//            make.size.mas_equalTo(CGSizeMake(kRealValue(260), kRealValue(318)));
-//        }];
-        
+
     }  else if (kFromClassTypeValue == ZSHFromLiveMidVCToBottomBlurPopView) {//直播-直播弹窗
         
         ZSHLivePopView *livePopView = [[ZSHLivePopView alloc]initWithFrame:CGRectMake(0, KScreenHeight- kRealValue(150), KScreenWidth, kRealValue(150))];
