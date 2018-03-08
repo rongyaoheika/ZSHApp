@@ -457,7 +457,7 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
         [cell.contentView addSubview:countBtn];
         [countBtn mas_makeConstraints:^(MASConstraintMaker *make) {
             make.right.mas_equalTo(cell).offset(-KLeftMargin);
-            make.size.mas_equalTo(CGSizeMake(kRealValue(50), kRealValue(15)));
+            make.size.mas_equalTo(CGSizeMake(kRealValue(60), kRealValue(20)));
             make.centerY.mas_equalTo(cell);
         }];
         cell.backgroundColor = KWhiteColor;

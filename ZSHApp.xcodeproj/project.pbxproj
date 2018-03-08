@@ -292,7 +292,6 @@
 		FE0ED82C1FC34703008299C5 /* StepSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = FE0ED82A1FC34703008299C5 /* StepSlider.m */; };
 		FE0F9DB81F949B4E004F8D2A /* ZSHWeiBoCellModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FE0F9DB71F949B4E004F8D2A /* ZSHWeiBoCellModel.m */; };
 		FE0F9DBB1F949C45004F8D2A /* ZSHWeiBoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE0F9DBA1F949C45004F8D2A /* ZSHWeiBoCell.m */; };
-		FE0F9DC01F94ACD8004F8D2A /* cellData.plist in Resources */ = {isa = PBXBuildFile; fileRef = FE0F9DBF1F94A20E004F8D2A /* cellData.plist */; };
 		FE0F9DC31F94DB85004F8D2A /* ZSHWeiBoBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE0F9DC21F94DB85004F8D2A /* ZSHWeiBoBottomView.m */; };
 		FE1377751F972745003C8DFB /* ZSHOrderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE1377741F972745003C8DFB /* ZSHOrderCell.m */; };
 		FE1377781F973402003C8DFB /* ZSHOrderModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FE1377771F973402003C8DFB /* ZSHOrderModel.m */; };
@@ -426,7 +425,6 @@
 		FE5CFA411FA1B32500A55644 /* ZSHHotelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE5CFA401FA1B32500A55644 /* ZSHHotelCell.m */; };
 		FE5ED9A81FA47968003FB2BA /* ZSHHotelCalendarCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE5ED9A71FA47968003FB2BA /* ZSHHotelCalendarCell.m */; };
 		FE6818A11FE0D3DF00AFB511 /* ZSHFootPlayMusicView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE6818A01FE0D3DF00AFB511 /* ZSHFootPlayMusicView.m */; };
-		FE7502AD1F99CA80002F2708 /* YouLikeGoods.plist in Resources */ = {isa = PBXBuildFile; fileRef = FE4DB1F31F99A23F008E12E9 /* YouLikeGoods.plist */; };
 		FE7502B11F99CD83002F2708 /* ZSHBaseUIControl.m in Sources */ = {isa = PBXBuildFile; fileRef = FE7502B01F99CD83002F2708 /* ZSHBaseUIControl.m */; };
 		FE7502B41F99D378002F2708 /* ZSHGoodsTitleContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE7502B31F99D378002F2708 /* ZSHGoodsTitleContentViewController.m */; };
 		FE7502B71F99D76A002F2708 /* ZSHGoodsSegmentView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE7502B61F99D76A002F2708 /* ZSHGoodsSegmentView.m */; };
@@ -490,10 +488,6 @@
 		FEA1057B1F9B274E008652D6 /* UIView+ZSHExtension.h in Sources */ = {isa = PBXBuildFile; fileRef = FEA105791F9B2738008652D6 /* UIView+ZSHExtension.h */; };
 		FEA1057E1F9B27DC008652D6 /* ZSHBrandSortCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FEA1057D1F9B27DC008652D6 /* ZSHBrandSortCell.m */; };
 		FEA105811F9B292B008652D6 /* ZSHBrandsSortHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEA105801F9B292B008652D6 /* ZSHBrandsSortHeadView.m */; };
-		FEA105841F9B2B4B008652D6 /* ClassiftyGoods01.plist in Resources */ = {isa = PBXBuildFile; fileRef = FEA105831F9B2B2A008652D6 /* ClassiftyGoods01.plist */; };
-		FEA105851F9B2B4B008652D6 /* ClassifyTitles.plist in Resources */ = {isa = PBXBuildFile; fileRef = FEA105821F9B2B24008652D6 /* ClassifyTitles.plist */; };
-		FEA1058A1F9B438F008652D6 /* ClassiftyGoods03.plist in Resources */ = {isa = PBXBuildFile; fileRef = FEA105871F9B437D008652D6 /* ClassiftyGoods03.plist */; };
-		FEA1058C1F9B43B8008652D6 /* ClassiftyGoods02.plist in Resources */ = {isa = PBXBuildFile; fileRef = FEA1058B1F9B43AD008652D6 /* ClassiftyGoods02.plist */; };
 		FEA105971F9B5417008652D6 /* ZSHGoodsDetailShufflingHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEA105961F9B5417008652D6 /* ZSHGoodsDetailShufflingHeadView.m */; };
 		FEA1059A1F9B5CEF008652D6 /* ZSHSpeedy.m in Sources */ = {isa = PBXBuildFile; fileRef = FEA105991F9B5CEF008652D6 /* ZSHSpeedy.m */; };
 		FEA1059B1F9B5D06008652D6 /* ZSHSpeedy.h in Resources */ = {isa = PBXBuildFile; fileRef = FEA105981F9B5CEF008652D6 /* ZSHSpeedy.h */; };
@@ -505,7 +499,6 @@
 		FEA30A531F9F236100AB0FFC /* ZSHConfirmOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEA30A521F9F236100AB0FFC /* ZSHConfirmOrderViewController.m */; };
 		FEA30A561F9F2A8700AB0FFC /* ZSHOrderUserInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FEA30A551F9F2A8700AB0FFC /* ZSHOrderUserInfoCell.m */; };
 		FEA30A591F9F309400AB0FFC /* ZSHGoodsDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FEA30A581F9F309400AB0FFC /* ZSHGoodsDetailCell.m */; };
-		FEA30A5F1F9F494E00AB0FFC /* ZSHNumberCount.m in Sources */ = {isa = PBXBuildFile; fileRef = FEA30A5E1F9F494E00AB0FFC /* ZSHNumberCount.m */; };
 		FEA483A91F91B96000219CFE /* RXLSideSlipViewController.h in Sources */ = {isa = PBXBuildFile; fileRef = FEA483A51F91B76F00219CFE /* RXLSideSlipViewController.h */; };
 		FEA483AA1F91B96000219CFE /* RXLSideSlipViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEA483A61F91B76F00219CFE /* RXLSideSlipViewController.m */; };
 		FEA483AB1F91B96000219CFE /* UIViewController+RXLSideMenu.h in Sources */ = {isa = PBXBuildFile; fileRef = FEA483A71F91B76F00219CFE /* UIViewController+RXLSideMenu.h */; };
@@ -1144,7 +1137,6 @@
 		FE0F9DB71F949B4E004F8D2A /* ZSHWeiBoCellModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHWeiBoCellModel.m; sourceTree = "<group>"; };
 		FE0F9DB91F949C45004F8D2A /* ZSHWeiBoCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHWeiBoCell.h; sourceTree = "<group>"; };
 		FE0F9DBA1F949C45004F8D2A /* ZSHWeiBoCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHWeiBoCell.m; sourceTree = "<group>"; };
-		FE0F9DBF1F94A20E004F8D2A /* cellData.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = cellData.plist; sourceTree = "<group>"; };
 		FE0F9DC11F94DB85004F8D2A /* ZSHWeiBoBottomView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHWeiBoBottomView.h; sourceTree = "<group>"; };
 		FE0F9DC21F94DB85004F8D2A /* ZSHWeiBoBottomView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHWeiBoBottomView.m; sourceTree = "<group>"; };
 		FE1377731F972745003C8DFB /* ZSHOrderCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHOrderCell.h; sourceTree = "<group>"; };
@@ -1302,7 +1294,6 @@
 		FE4DB1E81F999747008E12E9 /* ZSHGoodModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHGoodModel.m; sourceTree = "<group>"; };
 		FE4DB1EB1F99998B008E12E9 /* ZSHBaseCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHBaseCollectionViewCell.h; sourceTree = "<group>"; };
 		FE4DB1EC1F99998B008E12E9 /* ZSHBaseCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHBaseCollectionViewCell.m; sourceTree = "<group>"; };
-		FE4DB1F31F99A23F008E12E9 /* YouLikeGoods.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = YouLikeGoods.plist; sourceTree = "<group>"; };
 		FE4E4B231FBFDC4E00E3B2F4 /* ZSHSearchLiveFirstCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHSearchLiveFirstCell.h; sourceTree = "<group>"; };
 		FE4E4B241FBFDC4E00E3B2F4 /* ZSHSearchLiveFirstCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHSearchLiveFirstCell.m; sourceTree = "<group>"; };
 		FE4E4B261FC000E800E3B2F4 /* ZSHSearchLiveSecondCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHSearchLiveSecondCell.h; sourceTree = "<group>"; };
@@ -1506,10 +1497,6 @@
 		FEA1057D1F9B27DC008652D6 /* ZSHBrandSortCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHBrandSortCell.m; sourceTree = "<group>"; };
 		FEA1057F1F9B292B008652D6 /* ZSHBrandsSortHeadView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHBrandsSortHeadView.h; sourceTree = "<group>"; };
 		FEA105801F9B292B008652D6 /* ZSHBrandsSortHeadView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHBrandsSortHeadView.m; sourceTree = "<group>"; };
-		FEA105821F9B2B24008652D6 /* ClassifyTitles.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = ClassifyTitles.plist; sourceTree = "<group>"; };
-		FEA105831F9B2B2A008652D6 /* ClassiftyGoods01.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = ClassiftyGoods01.plist; sourceTree = "<group>"; };
-		FEA105871F9B437D008652D6 /* ClassiftyGoods03.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = ClassiftyGoods03.plist; sourceTree = "<group>"; };
-		FEA1058B1F9B43AD008652D6 /* ClassiftyGoods02.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = ClassiftyGoods02.plist; sourceTree = "<group>"; };
 		FEA105951F9B5417008652D6 /* ZSHGoodsDetailShufflingHeadView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHGoodsDetailShufflingHeadView.h; sourceTree = "<group>"; };
 		FEA105961F9B5417008652D6 /* ZSHGoodsDetailShufflingHeadView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHGoodsDetailShufflingHeadView.m; sourceTree = "<group>"; };
 		FEA105981F9B5CEF008652D6 /* ZSHSpeedy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHSpeedy.h; sourceTree = "<group>"; };
@@ -1528,8 +1515,6 @@
 		FEA30A551F9F2A8700AB0FFC /* ZSHOrderUserInfoCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHOrderUserInfoCell.m; sourceTree = "<group>"; };
 		FEA30A571F9F309400AB0FFC /* ZSHGoodsDetailCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHGoodsDetailCell.h; sourceTree = "<group>"; };
 		FEA30A581F9F309400AB0FFC /* ZSHGoodsDetailCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHGoodsDetailCell.m; sourceTree = "<group>"; };
-		FEA30A5D1F9F494E00AB0FFC /* ZSHNumberCount.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHNumberCount.h; sourceTree = "<group>"; };
-		FEA30A5E1F9F494E00AB0FFC /* ZSHNumberCount.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHNumberCount.m; sourceTree = "<group>"; };
 		FEA483A51F91B76F00219CFE /* RXLSideSlipViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RXLSideSlipViewController.h; sourceTree = "<group>"; };
 		FEA483A61F91B76F00219CFE /* RXLSideSlipViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RXLSideSlipViewController.m; sourceTree = "<group>"; };
 		FEA483A71F91B76F00219CFE /* UIViewController+RXLSideMenu.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIViewController+RXLSideMenu.h"; sourceTree = "<group>"; };
@@ -3632,8 +3617,6 @@
 				FE7CA9E31F9DBE5100A2B15D /* ZSHGoodsDetailColorCell.m */,
 				FE7CA9E51F9DC59300A2B15D /* ZSHGoodsDetailCountCell.h */,
 				FE7CA9E61F9DC59300A2B15D /* ZSHGoodsDetailCountCell.m */,
-				FEA30A5D1F9F494E00AB0FFC /* ZSHNumberCount.h */,
-				FEA30A5E1F9F494E00AB0FFC /* ZSHNumberCount.m */,
 				FEBD7CA11FA716AC00CE2BA6 /* ZSHGoodsCommentCell.h */,
 				FEBD7CA21FA716AC00CE2BA6 /* ZSHGoodsCommentCell.m */,
 				FEBD7CAD1FA730F600CE2BA6 /* ZSHGoodsDetailSubCell.h */,
@@ -3680,12 +3663,6 @@
 			children = (
 				1843133E1FD4E2F60046B128 /* citys.plist */,
 				18177E8E1FD29C7500213B3B /* area.plist */,
-				FE0F9DBF1F94A20E004F8D2A /* cellData.plist */,
-				FEA1058B1F9B43AD008652D6 /* ClassiftyGoods02.plist */,
-				FEA105871F9B437D008652D6 /* ClassiftyGoods03.plist */,
-				FEA105831F9B2B2A008652D6 /* ClassiftyGoods01.plist */,
-				FEA105821F9B2B24008652D6 /* ClassifyTitles.plist */,
-				FE4DB1F31F99A23F008E12E9 /* YouLikeGoods.plist */,
 			);
 			path = "Plist(本地文件)";
 			sourceTree = "<group>";
@@ -4872,14 +4849,10 @@
 				043F2E38200DFF3500CE18DE /* record_beauty@3x.png in Resources */,
 				043F2E1A200DFF3500CE18DE /* AlivcLiveConfigViewController.xib in Resources */,
 				FEA1059C1F9B5D06008652D6 /* ZSHSpeedy.m in Resources */,
-				FEA1058C1F9B43B8008652D6 /* ClassiftyGoods02.plist in Resources */,
 				043F2E28200DFF3500CE18DE /* camera_flash_on@2x.png in Resources */,
 				FE4BC2B21FE21A3100007C4C /* CityData.plist in Resources */,
-				FEA1058A1F9B438F008652D6 /* ClassiftyGoods03.plist in Resources */,
 				043F2E40200DFF3500CE18DE /* watermark_small.png in Resources */,
-				FEA105841F9B2B4B008652D6 /* ClassiftyGoods01.plist in Resources */,
 				043F2E3A200DFF3500CE18DE /* record_beauty_on@3x.png in Resources */,
-				FEA105851F9B2B4B008652D6 /* ClassifyTitles.plist in Resources */,
 				043F2E34200DFF3500CE18DE /* music_loop_simple_line@3x.png in Resources */,
 				185C6D7E1FC2C2D2004EA461 /* ShopCarNew.plist in Resources */,
 				185C6D711FC2C168004EA461 /* cart_addBtn_highlight@2x.png in Resources */,
@@ -4889,10 +4862,8 @@
 				043F2E21200DFF3500CE18DE /* 版权信息.txt in Resources */,
 				043F2E3B200DFF3500CE18DE /* volume_off@2x.png in Resources */,
 				043F2E58200E0CC700CE18DE /* Localizable.strings in Resources */,
-				FE7502AD1F99CA80002F2708 /* YouLikeGoods.plist in Resources */,
 				043F2E31200DFF3500CE18DE /* music_check@2x.png in Resources */,
 				043F2E35200DFF3500CE18DE /* QR@2x.png in Resources */,
-				FE0F9DC01F94ACD8004F8D2A /* cellData.plist in Resources */,
 				FE5538341F47049D00803128 /* MBHUD_Warn@3x.png in Resources */,
 				1816F5241F566F320060C4BE /* UMSocialSDKPromptResources.bundle in Resources */,
 				FE5538321F47049D00803128 /* MBHUD_Success@3x.png in Resources */,
@@ -5388,7 +5359,6 @@
 				FEAEE3F01FA86CBA00F73EEA /* STCalendarItem.m in Sources */,
 				FEA30A561F9F2A8700AB0FFC /* ZSHOrderUserInfoCell.m in Sources */,
 				1891C1391FC6D115000AFEFB /* ZSHTogetherModel.m in Sources */,
-				FEA30A5F1F9F494E00AB0FFC /* ZSHNumberCount.m in Sources */,
 				043F2E1B200DFF3500CE18DE /* AlivcLiveViewController.m in Sources */,
 				FE3E005F1FDA269600A0F7CA /* ZSHMusicRankViewController.m in Sources */,
 				049823BC20074F640080626D /* ZSHCabinetReusableView.m in Sources */,

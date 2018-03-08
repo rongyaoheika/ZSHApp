@@ -24,9 +24,9 @@ static NSString *ZSHZSHLikeCellID = @"ZSHZSHLikeCellID";
 }
 
 - (void)loadData{
-    
-    
+
     [self initViewModel];
+    self.tableView.estimatedRowHeight = 100;
 }
 
 - (void)createUI{
@@ -59,7 +59,7 @@ static NSString *ZSHZSHLikeCellID = @"ZSHZSHLikeCellID";
     for (int i = 0; i < titleArr.count; i++) {
         ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
         [sectionModel.cellModelArray addObject:cellModel];
-        cellModel.height = kRealValue(60);
+        cellModel.height = UITableViewAutomaticDimension;
         cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
             ZSHLikeCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHZSHLikeCellID forIndexPath:indexPath];
             NSDictionary *nextParamDic = @{@"headImage":imageArr[i],@"nickname":titleArr[i],@"date":date[i],@"content":content[i]};

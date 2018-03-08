@@ -26,9 +26,10 @@ static NSString *ZSHDiscussCellID = @"ZSHDiscussCellID";
 }
 
 - (void)loadData{
-    
-    
     [self initViewModel];
+    
+    //设置cell的估计高度
+    self.tableView.estimatedRowHeight = 100;
 }
 
 - (void)createUI{
@@ -44,6 +45,8 @@ static NSString *ZSHDiscussCellID = @"ZSHDiscussCellID";
     [self.tableView setSeparatorInset:UIEdgeInsetsMake(0, 0, 0, 0)];
     
     [self.tableView registerClass:[ZSHDiscussCell class] forCellReuseIdentifier:ZSHDiscussCellID];
+    
+    
     [self.tableView reloadData];
 }
 
@@ -61,7 +64,7 @@ static NSString *ZSHDiscussCellID = @"ZSHDiscussCellID";
     for (int i = 0; i<self.titleArr.count; i++) {
         ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
         [sectionModel.cellModelArray addObject:cellModel];
-        cellModel.height = kRealValue(60);
+        cellModel.height = UITableViewAutomaticDimension;
         cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
             ZSHDiscussCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHDiscussCellID forIndexPath:indexPath];
             NSDictionary *nextParamDic = @{@"headImage":imageArr[i],@"nickname":self.titleArr[i],@"date":date[i],@"content":content[i]};
