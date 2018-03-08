@@ -51,18 +51,18 @@
         make.left.mas_equalTo(self).offset(kRealValue(15));
         make.size.mas_equalTo(CGSizeMake(kRealValue(40), kRealValue(40)));
     }];
-
+    
+    [self.dateLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.mas_equalTo(self).offset(-kRealValue(10));
+        make.left.mas_equalTo(self).offset(kRealValue(65));
+        make.size.mas_equalTo(CGSizeMake(kRealValue(40), kRealValue(12)));
+    }];
+    
     [self.nicknameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.headImage);
         make.left.mas_equalTo(self).offset(kRealValue(65));
-        make.size.mas_equalTo(CGSizeMake(kRealValue(265), kRealValue(42)));
-    }];
-    
-    
-    [self.dateLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.mas_equalTo(self.nicknameLabel);
-        make.left.mas_equalTo(self).offset(kRealValue(65));
-        make.size.mas_equalTo(CGSizeMake(kRealValue(40), kRealValue(12)));
+        make.width.mas_equalTo(kRealValue(265));
+        make.bottom.mas_equalTo(self.dateLabel.mas_top).offset(-kRealValue(10));
     }];
     
     
@@ -78,6 +78,13 @@
 - (void)updateCellWithParamDic:(NSDictionary *)dic{
     self.headImage.image = [UIImage imageNamed:dic[@"headImage"]];
     self.nicknameLabel.text = dic[@"nickname"];
+    
+    NSMutableParagraphStyle *nickLBStyle = [[NSMutableParagraphStyle alloc]init];
+    [nickLBStyle setLineSpacing:2.0];
+    NSMutableAttributedString *setStr = [[NSMutableAttributedString alloc]initWithString:self.nicknameLabel.text];
+    [setStr addAttribute:NSParagraphStyleAttributeName value:nickLBStyle range:NSMakeRange(0, [self.nicknameLabel.text length])];
+    [self.nicknameLabel setAttributedText:setStr];
+    
     self.dateLabel.text = dic[@"date"];
     self.contentImage.image = [UIImage imageNamed:dic[@"content"]];
 

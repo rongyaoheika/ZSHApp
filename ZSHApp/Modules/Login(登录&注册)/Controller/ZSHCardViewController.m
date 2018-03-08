@@ -404,7 +404,7 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
                 cell.selectIndex = numCellIndex;
                 cell.cellHeightBlock = ^(NSInteger index) {
                     numCellIndex = index;
-                    [weakself.tableView reloadData];
+                    [weakself.tableView reloadRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:indexPath.section] withRowAnimation:UITableViewRowAnimationFade];
                 };
                 return cell;
             }
@@ -417,7 +417,7 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
                 cell.selectIndex = customizedCellIndex;
                 cell.cellHeightBlock = ^(NSInteger selectIndex) {
                     customizedCellIndex = selectIndex;
-                    [weakself.tableView reloadData];
+                    [weakself.tableView reloadRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:indexPath.section] withRowAnimation:UITableViewRowAnimationFade];
                 };
                 return cell;
             }

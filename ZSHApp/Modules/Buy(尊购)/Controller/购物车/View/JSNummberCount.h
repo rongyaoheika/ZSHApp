@@ -6,11 +6,11 @@
 //  Copyright © 2016年 乔同新. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "ZSHBaseView.h"
 
 typedef void(^JSNumberChangeBlock)(NSInteger count);
 
-@interface JSNummberCount : UIView
+@interface JSNummberCount : ZSHBaseView
 /**
  *  总数
  */

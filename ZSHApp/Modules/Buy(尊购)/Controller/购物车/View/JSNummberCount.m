@@ -8,7 +8,7 @@
 
 #import "JSNummberCount.h"
 
-static CGFloat const Wd = 15;
+static CGFloat const Wd = 20;
 
 @interface JSNummberCount()
 //加
@@ -21,31 +21,13 @@ static CGFloat const Wd = 15;
 
 @implementation JSNummberCount
 
-- (instancetype)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        [self setUI];
-    }
-    return self;
-}
-
-- (void)awakeFromNib{
+- (void)setup{
     
-    [super awakeFromNib];
-    
-    [self setUI];
-}
-
-#pragma mark -  set UI
-
-- (void)setUI{
-    
-    self.backgroundColor = [UIColor clearColor];
     self.currentCountNumber = 0;
     self.totalNum = 0;
+    
     kWeakSelf(self);
-    /************************** 加 ****************************/
+    /************************** 减 ****************************/
     _subButton = [UIButton buttonWithType:UIButtonTypeCustom];
     _subButton.frame = CGRectMake(0, 0, Wd,Wd);
     [_subButton setBackgroundImage:[UIImage imageNamed:@"goods_sub"]
@@ -53,14 +35,6 @@ static CGFloat const Wd = 15;
     [_subButton setBackgroundImage:[UIImage imageNamed:@"goods_sub"]
                           forState:UIControlStateDisabled];
     _subButton.tag = 0;
-//    [[self.subButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(id x) {
-//        kStrongSelf(self);
-//        self.currentCountNumber--;
-//        if (self.NumberChangeBlock) {
-//            self.NumberChangeBlock(self.currentCountNumber);
-//        }
-//        
-//    }];
     [_subButton addTapBlock:^(UIButton *btn) {
         weakself.currentCountNumber--;
         weakself.numberTT.text = [NSString stringWithFormat:@"%@",@(weakself.currentCountNumber)];
@@ -92,14 +66,6 @@ static CGFloat const Wd = 15;
     [_addButton setBackgroundImage:[UIImage imageNamed:@"goods_add"]
                           forState:UIControlStateDisabled];
     _addButton.tag = 1;
-//    [[self.addButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(id x) {
-//        
-//        kStrongSelf(self);
-//        self.currentCountNumber++;
-//        if (self.NumberChangeBlock) {
-//            self.NumberChangeBlock(self.currentCountNumber);
-//        }
-//    }];
     [_addButton addTapBlock:^(UIButton *btn) {
         
         weakself.currentCountNumber++;
@@ -112,57 +78,6 @@ static CGFloat const Wd = 15;
     
      /************************** 内容改变 ****************************/
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textfieldChange:) name:@"UITextFieldTextDidEndEditingNotification" object:nil];
-    
-    
-//    [[[NSNotificationCenter defaultCenter] rac_addObserverForName:@"UITextFieldTextDidEndEditingNotification" object:self.numberTT] subscribeNext:^(NSNotification *x) {
-//        kStrongSelf(self);
-//        UITextField *t1 = [x object];
-//        NSString *text = t1.text;
-//        NSInteger changeNum = 0;
-//        if (text.integerValue>self.totalNum&&self.totalNum!=0) {
-//            
-//            self.currentCountNumber = self.totalNum;
-//            self.numberTT.text = [NSString stringWithFormat:@"%@",@(self.totalNum)];
-//            changeNum = self.totalNum;
-//            
-//        } else if (text.integerValue<1){
-//            
-//            self.numberTT.text = @"1";
-//            changeNum = 1;
-//            
-//        } else {
-//            
-//            self.currentCountNumber = text.integerValue;
-//            changeNum = self.currentCountNumber;
-//
-//        }
-//        if (self.NumberChangeBlock) {
-//            self.NumberChangeBlock(changeNum);
-//        }
-//        
-//    }];
-    
-    
-    /* 捆绑加减的enable */
-//    RACSignal *subSignal =  [RACObserve(self, currentCountNumber) map:^id(NSNumber *subValue) {
-//        return @(subValue.integerValue>1);
-//    }];
-//    RACSignal *addSignal =  [RACObserve(self, currentCountNumber) map:^id(NSNumber *addValue) {
-//        return @(addValue.integerValue<self.totalNum);
-//    }];
-//    RAC(self.subButton,enabled)  = subSignal;
-//    RAC(self.addButton,enabled)  = addSignal;
-//    /* 内容颜色显示 */
-//    RACSignal *numColorSignal = [RACObserve(self, totalNum) map:^id(NSNumber *totalValue) {
-////        return totalValue.integerValue==0?[UIColor redColor]:KZSHColor929292;
-//        return KZSHColor929292;
-//    }];
-//    RAC(self.numberTT,textColor) = numColorSignal;
-//    /*  */
-//    RACSignal *textSigal = [RACObserve(self, currentCountNumber) map:^id(NSNumber *Value) {
-//        return [NSString stringWithFormat:@"%@",Value];
-//    }];
-//    RAC(self.numberTT,text) = textSigal;
 }
 
 - (void)textfieldChange:(NSNotification *)x {

@@ -43,6 +43,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     ZSHBaseTableViewCellModel *cellModel = [self cellModelAtIndexPath:indexPath];
     return cellModel.height;
+    
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     ZSHBaseTableViewSectionModel *sectionModel = [self sectionModelAtSection:section];
@@ -170,6 +171,5 @@
         scrollView.contentInset = UIEdgeInsetsMake(-sectionHeaderHeight, 0, 0, 0);
     }
 }
-
 
 @end

@@ -14,7 +14,7 @@
 #pragma mark - UI
 - (void)setup
 {
-    NSDictionary *titleLabelDic = @{@"text":@"数量",@"font":kPingFangRegular(15),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentLeft)};
+    NSDictionary *titleLabelDic = @{@"text":@"数量",@"font":kPingFangRegular(15)};
     UILabel *titleLabel = [ZSHBaseUIControl createLabelWithParamDic:titleLabelDic];
     [self.contentView addSubview:titleLabel];
     [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -31,8 +31,8 @@
     };
     [countBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(titleLabel.mas_right).offset(kRealValue(55));
-        make.width.mas_equalTo(kRealValue(50));
-        make.height.mas_equalTo(kRealValue(15));
+        make.width.mas_equalTo(kRealValue(60));
+        make.height.mas_equalTo(kRealValue(20));
         make.centerY.mas_equalTo(self);
     }];
 }
