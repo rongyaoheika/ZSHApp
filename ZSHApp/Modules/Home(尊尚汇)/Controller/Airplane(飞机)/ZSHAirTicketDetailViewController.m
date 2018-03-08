@@ -75,9 +75,10 @@ static NSString *ZSHAirTicketDetailCellID = @"ZSHAirTicketDetailCell";
             return cell;
         };
     
+    
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
             ZSHBottomBlurPopView *bottomBlurPopView = [weakself createBottomBlurPopViewWith:ZSHFromAirplaneUserInfoVCToBottomBlurPopView];
-            [kAppDelegate.window addSubview:bottomBlurPopView];
+            [weakself.view addSubview:bottomBlurPopView];
         };
     }
     return sectionModel;

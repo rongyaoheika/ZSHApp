@@ -79,7 +79,8 @@ static NSString *ZSHTrainTicketDetailCellID = @"ZSHTrainTicketDetailCellID";
         
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
             ZSHBottomBlurPopView *bottomBlurPopView = [weakself createBottomBlurPopViewWith:ZSHFromTrainUserInfoVCToBottomBlurPopView];
-            [kAppDelegate.window addSubview:bottomBlurPopView];
+            [weakself.view addSubview:bottomBlurPopView];
+            [weakself.view bringSubviewToFront:bottomBlurPopView];
         };
     }
     return sectionModel;
