@@ -11,7 +11,7 @@
 #import "ZSHGoodsCell.h"
 #import "ZSHGoodsDetailViewController.h"
 #import "ZSHBuyLogic.h"
-
+#import "RootWebViewController.h"
 
 @interface ZSHGoodsTypeViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 
@@ -112,9 +112,20 @@ static NSString * ZSHBottomListCellID = @"ZSHBottomListCell";
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-    ZSHGoodsDetailViewController *goodsDetailVC = [[ZSHGoodsDetailViewController alloc]init];
-    goodsDetailVC.goodModel = _goodModelArr[indexPath.row];
+//    ZSHGoodsDetailViewController *goodsDetailVC = [[ZSHGoodsDetailViewController alloc]init];
+//    goodsDetailVC.goodModel = _goodModelArr[indexPath.row];
+//    [self.navigationController pushViewController:goodsDetailVC animated:YES];
+    
+    
+    
+    //加载h5
+    ZSHGoodModel *model = _goodModelArr[indexPath.row];
+    NSString *urlStr = NSStringFormat(@"%@?productid=%@",ZSHGoodsDetailH5,model.PRODUCT_ID);
+    
+    RLog(@"urlStr===%@",urlStr);
+    RootWebViewController *goodsDetailVC =  [[RootWebViewController alloc] initWithParamDic:@{@"url":urlStr}];
     [self.navigationController pushViewController:goodsDetailVC animated:YES];
+    
 }
 
 //tableview
