@@ -17,7 +17,7 @@
 #import "ZSHCardBtnListView.h"
 #import "ZSHBottomBlurPopView.h"
 #import "ZSHGoodMineReusableView.h"
-
+#import "RootWebViewController.h"
 static NSString * cellIdentifier = @"cellId";
 static NSString *headerViewIdentifier = @"hederview";
 
@@ -103,6 +103,9 @@ static NSString *headerViewIdentifier = @"hederview";
     NSDictionary *dicData = self.dataArr[indexPath.section][indexPath.row];
     cell.modelDic = dicData;
     cell.btnClickBlock = ^(UIButton *btn){
+//        if (indexPath.section == 1 && btn.tag-1 == 2) {//地址管理
+//            RootWebViewController *addressListVC = [RootViewController alloc]INI;
+//        }
         Class className = NSClassFromString(weakself.pushVCsArr[indexPath.section][btn.tag-1]);
         RootViewController *vc = [[className alloc]initWithParamDic:weakself.paramArr[indexPath.section][btn.tag-1]];
         [weakself.navigationController pushViewController:vc animated:YES];
@@ -203,7 +206,6 @@ static NSString *headerViewIdentifier = @"hederview";
 - (void)changeDataSource:(NSInteger )index {
     if (index == 0) {
         self.sectionTitleArr = @[@"我的订单",@"必备工具",@"钱包中心"];
-        
         self.dataArr = @[
                          @[@{@"image":@"goods_mine_payment",@"desc":@"待付款", @"tag":@(1)},
                            @{@"image":@"goods_mine_receipt",@"desc":@"待收货",@"tag":@(2)},
@@ -227,20 +229,21 @@ static NSString *headerViewIdentifier = @"hederview";
                             
                             @[@"",
                               @"",
-                              @"ZSHManageAddressListViewController",
+//                              @"ZSHManageAddressListViewController",
+                              @"RootWebViewController",
                               @""],
                             
                             @[@"ZSHCouponViewController",
                               @"ZSHIntegralViewController",
                               @""]
                             ];
-        self.paramArr = @[@[@{KFromClassType:@(FromAllOrderVCToTitleContentVC),@"title":@"我的订单",@"tag":@(_typeIndex), @"titleArr":@[@"全部",@"待付款",@"待收货",@"待评价",@"退款售后"], @"contentVCS":@[@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHOrderSubViewController"], @"ORDERSTATUS":@[@"", @"0040001", @"0040002", @"0040003", @"0040004"], @"selectedIndex":@"1"},
-                            @{KFromClassType:@(FromAllOrderVCToTitleContentVC),@"title":@"我的订单",@"tag":@(_typeIndex), @"titleArr":@[@"全部",@"待付款",@"待收货",@"待评价",@"退款售后"], @"contentVCS":@[@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHOrderSubViewController"], @"ORDERSTATUS":@[@"", @"0040001", @"0040002", @"0040003", @"0040004"], @"selectedIndex":@"2"},
-                            @{KFromClassType:@(FromAllOrderVCToTitleContentVC),@"title":@"我的订单",@"tag":@(_typeIndex), @"titleArr":@[@"全部",@"待付款",@"待收货",@"待评价",@"退款售后"], @"contentVCS":@[@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHOrderSubViewController"], @"ORDERSTATUS":@[@"", @"0040001", @"0040002", @"0040003", @"0040004"], @"selectedIndex":@"3"},
-                            @{KFromClassType:@(FromAllOrderVCToTitleContentVC),@"title":@"我的订单",@"tag":@(_typeIndex), @"titleArr":@[@"全部",@"待付款",@"待收货",@"待评价",@"退款售后"], @"contentVCS":@[@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHOrderSubViewController"], @"ORDERSTATUS":@[@"", @"0040001", @"0040002", @"0040003", @"0040004"], @"selectedIndex":@"4"}],
-                          @[@{},@{},@{},@{}],
-                          @[@{},@{},@{},@{}],
-                          @[@{},@{},@{},@{}]
+        self.paramArr = @[
+  @[@{KFromClassType:@(FromAllOrderVCToTitleContentVC),@"title":@"我的订单",@"tag":@(_typeIndex), @"titleArr":@[@"全部",@"待付款",@"待收货",@"待评价",@"退款售后"], @"contentVCS":@[@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHOrderSubViewController"], @"ORDERSTATUS":@[@"", @"0040001", @"0040002", @"0040003", @"0040004"], @"selectedIndex":@"1"},
+    @{KFromClassType:@(FromAllOrderVCToTitleContentVC),@"title":@"我的订单",@"tag":@(_typeIndex), @"titleArr":@[@"全部",@"待付款",@"待收货",@"待评价",@"退款售后"], @"contentVCS":@[@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHOrderSubViewController"], @"ORDERSTATUS":@[@"", @"0040001", @"0040002", @"0040003", @"0040004"], @"selectedIndex":@"2"},
+    @{KFromClassType:@(FromAllOrderVCToTitleContentVC),@"title":@"我的订单",@"tag":@(_typeIndex), @"titleArr":@[@"全部",@"待付款",@"待收货",@"待评价",@"退款售后"], @"contentVCS":@[@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHOrderSubViewController"], @"ORDERSTATUS":@[@"", @"0040001", @"0040002", @"0040003", @"0040004"], @"selectedIndex":@"3"},
+    @{KFromClassType:@(FromAllOrderVCToTitleContentVC),@"title":@"我的订单",@"tag":@(_typeIndex), @"titleArr":@[@"全部",@"待付款",@"待收货",@"待评价",@"退款售后"], @"contentVCS":@[@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHOrderSubViewController",@"ZSHOrderSubViewController"], @"ORDERSTATUS":@[@"", @"0040001", @"0040002", @"0040003", @"0040004"], @"selectedIndex":@"4"}],
+  @[@{},@{},@{@"url":ZSHMineAddressListH5},@{}],
+  @[@{},@{},@{}]
                           ];
     } else {
         self.sectionTitleArr = @[@"我的订单"];

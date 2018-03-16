@@ -20,19 +20,11 @@
 
 @implementation RootWebViewController
 
--(instancetype)initWithUrl:(NSString *)url{
-    self = [super init];
-    if (self) {
-        self.url = url;
-        _progressViewColor = [UIColor colorWithRed:119.0/255 green:228.0/255 blue:115.0/255 alpha:1];
-    }
-    return self;
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self initWKWebView];
+    self.url = self.paramDic[@"url"];
+    [self createUI];
 }
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -44,11 +36,12 @@
     [self.progressView removeFromSuperview];
 }
 #pragma mark 初始化webview
--(void)initWKWebView
+-(void)createUI
 {
+    _progressViewColor = [UIColor colorWithRed:119.0/255 green:228.0/255 blue:115.0/255 alpha:1];
     WKWebViewConfiguration * configuration = [[WKWebViewConfiguration alloc]init];//先实例化配置类 以前UIWebView的属性有的放到了这里
     //注册供js调用的方法
-    userContentController =[[WKUserContentController alloc]init];
+    userContentController = [[WKUserContentController alloc]init];
 //    //弹出登录
 //    [userContentController addScriptMessageHandler:self  name:@"loginVC"];
 //    
@@ -62,8 +55,8 @@
     configuration.preferences.javaScriptEnabled = YES;//打开js交互
     _wkwebView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight) configuration:configuration];
     [self.view addSubview:_wkwebView];
-    _wkwebView.backgroundColor = [UIColor clearColor];
-    _wkwebView.allowsBackForwardNavigationGestures =YES;//打开网页间的 滑动返回
+    _wkwebView.backgroundColor = KClearColor;
+    _wkwebView.allowsBackForwardNavigationGestures = YES;//打开网页间的 滑动返回
     _wkwebView.scrollView.decelerationRate = UIScrollViewDecelerationRateNormal;
     if (kiOS9Later) {
         _wkwebView.allowsLinkPreview = YES;//允许预览链接

@@ -12,8 +12,8 @@
 #import "ZSHTitleContentViewController.h"
 #import "LZCartViewController.h"
 #import "ZSHPersonalTailorViewController.h"
-
 #import "ZSHGoodsViewController.h"
+#import "RootWebViewController.h"
 
 typedef NS_ENUM(NSInteger, MemberType) {
     MemberTypeEmployee,
@@ -52,14 +52,15 @@ static NSString *ZSHBaseBottomListCellID = @"ZSHBaseBottomListCell";
                    @"",
                    @"ZSHGoodsViewController",
                    @"ZSHLeftFindViewController",
-                   @"LZCartViewController",
+//                   @"LZCartViewController",
+                   @"RootWebViewController",
                    @"ZSHCollectViewController",
                    @"ZSHPersonalTailorViewController",
                    @"ZSHMakeMoneyViewController"];
     self.paramDicArr = @[@{},
                          @{},
                          @{},
-                         @{},
+                         @{@"url":ZSHLeftShopCartH5},
                          @{},
                          @{},
                          @{}];
@@ -124,8 +125,13 @@ static NSString *ZSHBaseBottomListCellID = @"ZSHBaseBottomListCell";
             };
             
             cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
-                Class className = NSClassFromString(self.vcArr[indexPath.row]);
-                UIViewController *vc = [[className alloc]initWithParamDic:self.paramDicArr[indexPath.row]];
+//                RootViewController *vc = nil;
+//                if (indexPath.row == 3) {//购物车
+//                    vc =  [[RootWebViewController alloc] initWithUrl:ZSHLeftShopCartH5];
+//                } else {
+                    Class className = NSClassFromString(self.vcArr[indexPath.row]);
+                    RootViewController *vc = [[className alloc]initWithParamDic:self.paramDicArr[indexPath.row]];
+//                }
                 MainTabBarController *tab = (MainTabBarController *)self.sideSlipVC.contentViewController;
                 RootNavigationController *mainNavi = (RootNavigationController *)tab.selectedViewController;
                 [mainNavi pushViewController:vc animated:YES];
