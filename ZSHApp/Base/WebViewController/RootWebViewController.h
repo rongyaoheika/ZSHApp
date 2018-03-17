@@ -27,15 +27,6 @@
  */
 @property (nonatomic)UIColor* progressViewColor;
 
-/**
- *  get instance with url
- *
- *  @param url url
- *
- *  @return instance
- */
--(instancetype)initWithUrl:(NSString *)url;
-
 
 -(void)reloadWebView;
 

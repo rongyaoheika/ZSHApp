@@ -122,9 +122,10 @@ static NSString * ZSHBottomListCellID = @"ZSHBottomListCell";
     ZSHGoodModel *model = _goodModelArr[indexPath.row];
     NSString *urlStr = NSStringFormat(@"%@?productid=%@",ZSHGoodsDetailH5,model.PRODUCT_ID);
     
-    RLog(@"urlStr===%@",urlStr);
+    RLog(@"商品详情请求h5网址==%@",urlStr);
     RootWebViewController *goodsDetailVC =  [[RootWebViewController alloc] initWithParamDic:@{@"url":urlStr}];
     [self.navigationController pushViewController:goodsDetailVC animated:YES];
+//    [self presentViewController:goodsDetailVC animated:YES completion:nil];
     
 }
 

@@ -9,12 +9,12 @@
 #import "RootWebViewController.h"
 #import <WebKit/WebKit.h>
 
-@interface RootWebViewController ()<WKNavigationDelegate,WKUIDelegate>
+@interface RootWebViewController ()<WKNavigationDelegate,WKUIDelegate,WKScriptMessageHandler>
 {
     WKUserContentController * userContentController;
 }
-@property(nonatomic, strong) WKWebView *wkwebView;
-@property (strong, nonatomic) UIProgressView *progressView;//这个是加载页面的进度条
+@property (nonatomic, strong) WKWebView         *wkwebView;
+@property (nonatomic,strong)  UIProgressView    *progressView;  //这个是加载页面的进度条
 
 @end
 
@@ -39,6 +39,11 @@
 -(void)createUI
 {
     _progressViewColor = [UIColor colorWithRed:119.0/255 green:228.0/255 blue:115.0/255 alpha:1];
+    self.navigationController.navigationBar.hidden = YES;
+    //去掉顶部20像素的状态栏
+    
+    [self setStatusBarStyle:UIStatusBarStyleLightContent];
+    
     WKWebViewConfiguration * configuration = [[WKWebViewConfiguration alloc]init];//先实例化配置类 以前UIWebView的属性有的放到了这里
     //注册供js调用的方法
     userContentController = [[WKUserContentController alloc]init];
@@ -48,16 +53,17 @@
 //    //加载首页
 //    [userContentController addScriptMessageHandler:self name:@"gotoFirstVC"];
 //    
-//    //进入详情页
-//    [userContentController addScriptMessageHandler:self  name:@"gotodetailVC"];
+    //pop到前一页
+    [userContentController addScriptMessageHandler:self name:@"backBtnClicked"];
     
     configuration.userContentController = userContentController;
     configuration.preferences.javaScriptEnabled = YES;//打开js交互
-    _wkwebView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight) configuration:configuration];
+    _wkwebView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 20, KScreenWidth, KScreenHeight-20) configuration:configuration];
     [self.view addSubview:_wkwebView];
     _wkwebView.backgroundColor = KClearColor;
     _wkwebView.allowsBackForwardNavigationGestures = YES;//打开网页间的 滑动返回
     _wkwebView.scrollView.decelerationRate = UIScrollViewDecelerationRateNormal;
+    _wkwebView.scrollView.backgroundColor = KClearColor;
     if (kiOS9Later) {
         _wkwebView.allowsLinkPreview = YES;//允许预览链接
     }
@@ -67,8 +73,6 @@
     
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:_url]];
     [_wkwebView loadRequest:request];
-    
-    
 }
 
 #pragma mark --这个就是设置的上面的那个加载的进度
@@ -141,7 +145,7 @@
         //现在先把iOS 9以下的不使用动态添加按钮 其实微信也是这样做的，即便返回到webview的第一页也保留了关闭按钮
         
         if (kiOS9Later) {
-            [self addNavigationItemWithTitles:@[@"返回"] isLeft:YES target:self action:@selector(leftBtnClick:) tags:@[@2001]];
+            [self addNavigationItemWithImageName:@"nav_back" isLeft:YES target:self action:@selector(leftBtnClick:) tag:2001];
         }
     }
 }
@@ -165,6 +169,16 @@
 -(void)dealloc{
     [self clean];
 }
+
+- (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message{
+    if ([message.name isEqualToString:@"  "]) {
+         [self backBtnClicked];
+        //TODO
+        
+    }
+    
+}
+
 #pragma mark ————— 清理 —————
 -(void)clean{
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
