@@ -15,8 +15,8 @@
 #define UMengKey @"59281b4a5312dd3f5f0005ed"
 
 //微信
-#define kAppKey_Wechat          @"wx38ae805374bd9c73"
-#define kSecret_Wechat          @"b319a731d49e8c67eec203731d05dd45"
+#define kAppKey_Wechat          @"wxc6209eb4696e2f55"
+#define kSecret_Wechat          @"06530660033e053e47f0805aa02fc47d"
 
 // 腾讯
 #define kAppKey_Tencent          @"1106139910"
@@ -35,9 +35,6 @@
 #define kPGYApiKey @"925b799ec8ce5d19910288cdde27bfdc"
 #define kPGYAppKey @"ba5cdab1acf602dd6b5ffc206905d0a8"
 
-/** 微信key **/
-#define kWeixinAppId        @"wxc6209eb4696e2f55"
-#define kWeixinAppSecret    @"06530660033e053e47f0805aa02fc47d"
 
 //阿里云直播
 #define PLAY_AUTH @""

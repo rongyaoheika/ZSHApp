@@ -125,7 +125,6 @@ static NSString * ZSHBottomListCellID = @"ZSHBottomListCell";
     RLog(@"商品详情请求h5网址==%@",urlStr);
     RootWebViewController *goodsDetailVC =  [[RootWebViewController alloc] initWithParamDic:@{@"url":urlStr}];
     [self.navigationController pushViewController:goodsDetailVC animated:YES];
-//    [self presentViewController:goodsDetailVC animated:YES completion:nil];
     
 }
 

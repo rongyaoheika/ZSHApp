@@ -34,6 +34,7 @@
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [self.progressView removeFromSuperview];
+    self.navigationController.navigationBar.hidden = NO;
 }
 #pragma mark 初始化webview
 -(void)createUI
@@ -170,14 +171,19 @@
     [self clean];
 }
 
-- (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message{
-    if ([message.name isEqualToString:@"  "]) {
-         [self backBtnClicked];
-        //TODO
-        
+#pragma mark - WKNavigationDelegate
+- (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler
+{
+    NSURL *URL = navigationAction.request.URL;
+    NSString *scheme = [URL scheme];
+    if ([scheme isEqualToString:@"iosdevtip"]) {
+        [self backBtnClicked];
+        decisionHandler(WKNavigationActionPolicyCancel);
+        return;
     }
-    
+    decisionHandler(WKNavigationActionPolicyAllow);
 }
+
 
 #pragma mark ————— 清理 —————
 -(void)clean{
