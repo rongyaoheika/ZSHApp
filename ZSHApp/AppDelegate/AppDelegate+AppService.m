@@ -207,6 +207,7 @@
     BOOL result = [[UMSocialManager defaultManager]  handleOpenURL:url options:options];
     if (!result) {
         // 其他如支付等SDK的回调
+        result = [WXApi handleOpenURL:url delegate:self];
     }
     return result;
 }
@@ -217,6 +218,7 @@
     BOOL result = [[UMSocialManager defaultManager] handleOpenURL:url];
     if (!result) {
         // 其他如支付等SDK的回调
+        result = [WXApi handleOpenURL:url delegate:self];
     }
     return result;
 }
@@ -316,6 +318,11 @@
 
 - (void)initZego{
     [ZegoAVKitManager api];
+}
+
+//初始化微信支付
+-(void)initWXPaySDK{
+    [WXApi registerApp:kAppKey_Wechat];
 }
 
 

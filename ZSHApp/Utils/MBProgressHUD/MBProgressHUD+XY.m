@@ -65,7 +65,7 @@ const NSInteger hideTime = 2;
 }
 + (void)showActivityMessageInView:(NSString*)message
 {
-    [self showActivityMessage:message isWindow:false timer:0];
+    [self showActivityMessage:message isWindow:false timer:5];
 }
 + (void)showActivityMessageInWindow:(NSString*)message timer:(float)aTimer
 {
