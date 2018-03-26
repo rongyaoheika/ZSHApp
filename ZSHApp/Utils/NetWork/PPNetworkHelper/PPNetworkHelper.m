@@ -10,7 +10,7 @@
 #import "PPNetworkHelper.h"
 #import "AFNetworking.h"
 #import "AFNetworkActivityIndicatorManager.h"
-
+#import <MBProgressHUD.h>
 @implementation PPNetworkHelper
 
 static BOOL _isOpenLog;   // 是否已开启日志打印
@@ -125,7 +125,6 @@ static AFHTTPSessionManager *_sessionManager;
     NSURLSessionTask *sessionTask = [_sessionManager GET:requestUrl parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
         if (_isOpenLog) {RLog(@"responseObject = %@",responseObject);}
         [[self allSessionTask] removeObject:task];
         success ? success(responseObject) : nil;
@@ -133,7 +132,6 @@ static AFHTTPSessionManager *_sessionManager;
         responseCache!=nil ? [PPNetworkCache setHttpCache:responseObject URL:requestUrl parameters:parameters] : nil;
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        
         if (_isOpenLog) {RLog(@"error = %@",error);}
         [[self allSessionTask] removeObject:task];
         failure ? failure(error) : nil;
@@ -165,7 +163,6 @@ static AFHTTPSessionManager *_sessionManager;
         responseCache!=nil ? [PPNetworkCache setHttpCache:responseObject URL:URL parameters:parameters] : nil;
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        
         if (_isOpenLog) {RLog(@"error = %@",error);}
         [[self allSessionTask] removeObject:task];
         failure ? failure(error) : nil;

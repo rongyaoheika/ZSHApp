@@ -36,6 +36,9 @@
 //即构科技初始化
 - (void)initZego;
 
+//初始化微信支付
+-(void)initWXPaySDK;
+
 //单例
 + (AppDelegate *)shareAppDelegate;
 

@@ -20,6 +20,7 @@
 @property (nonatomic, strong) NSArray       *musicArr;
 @property (nonatomic, strong) NSArray       *magzineArr;
 
+
 //新闻推荐列表
 - (void)loadNoticeCellDataSuccess:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail;
 //荣耀服务列表

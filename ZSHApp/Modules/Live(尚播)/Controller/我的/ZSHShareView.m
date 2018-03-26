@@ -13,7 +13,7 @@
 - (void)setup{
     self.backgroundColor = [UIColor whiteColor];
     
-    NSArray *titleArr = @[@"微信朋友去", @"微信好友", @"QQ好友", @"QQ空间", @"新浪微博", @"复制链接"];
+    NSArray *titleArr = @[@"微信朋友圈", @"微信好友", @"QQ好友", @"QQ空间", @"新浪微博", @"复制链接"];
     
     for (int i = 0; i <  titleArr.count; i++) {
         UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:[NSString stringWithFormat:@"share_image_%d",i+1]]];
