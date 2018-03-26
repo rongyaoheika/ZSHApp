@@ -266,6 +266,16 @@ SOFTWARE.
 
 
 
+## UMCCommon
+
+Copyright 2011 - 2018 umeng.com. All rights reserved.
+
+
+## UMCShare
+
+Copyright 2011 - 2018 umeng.com. All rights reserved.
+
+
 ## WechatOpenSDK
 
 Copyright 2017 tencent.com. All rights reserved.

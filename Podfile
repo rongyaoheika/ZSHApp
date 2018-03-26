@@ -18,5 +18,7 @@ pod 'AliyunPlayer_iOS/AliyunPlayerSDK'
 pod 'AliyunPlayer_iOS/AliyunVodPlayerSDK'
 pod 'AliyunPlayer_iOS'
 pod 'WechatOpenSDK'
+pod 'UMCShare/UI'
+pod 'UMCShare/Social/ReducedWeChat'
 
 end
