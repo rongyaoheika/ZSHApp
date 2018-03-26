@@ -7,7 +7,6 @@
 //
 
 #import "AppDelegate+AppService.h"
-#import <UMSocialCore/UMSocialCore.h>
 #import "ZSHLoginViewController.h"
 #import "OpenUDID.h"
 #import "ZSHLeftContentViewController.h"
@@ -19,7 +18,8 @@
 #import "ZSHTitleContentViewController.h"
 #import "HCLocationManager.h"
 #import "ZSHLiveMineViewController.h"
-
+#import <UMShare/UMShare.h>
+#import <UMCommon/UMCommon.h>
 
 @implementation AppDelegate (AppService)
 
@@ -180,8 +180,9 @@
     [[UMSocialManager defaultManager] openLog:YES];
     
     /* 设置友盟appkey */
-    [[UMSocialManager defaultManager] setUmSocialAppkey:UMengKey];
-    
+    [UMConfigure initWithAppkey:UMengKey channel:@"App Store"];
+  
+    // U-Share 平台设置
     [self configUSharePlatforms];
 }
 #pragma mark ————— 配置第三方 —————

@@ -12,14 +12,14 @@
 #define ThirdMacros_h
 
 // 友盟统计
-#define UMengKey @"59281b4a5312dd3f5f0005ed"
+#define UMengKey @"5ab89ce78f4a9d5fa8000100"
 
 //微信
 #define kAppKey_Wechat          @"wxc6209eb4696e2f55"
 #define kSecret_Wechat          @"06530660033e053e47f0805aa02fc47d"
 
 // 腾讯
-#define kAppKey_Tencent          @"1106139910"
+#define kAppKey_Tencent         @"1106139910"
 
 
 //网易云信
@@ -43,7 +43,7 @@
 #define ACCESS_KEY_SECRET @""
 #define SECURITY_TOKEN @""
 
-#define KZSHColorRGB(R,G,B)  [UIColor colorWithRed:(R * 1.0) / 255.0 green:(G * 1.0) / 255.0 blue:(B * 1.0) / 255.0 alpha:1.0]
+#define KZSHColorRGB(R,G,B)     [UIColor colorWithRed:(R * 1.0) / 255.0 green:(G * 1.0) / 255.0 blue:(B * 1.0) / 255.0 alpha:1.0]
 #define KZSHColorRGBA(R,G,B,A)  [UIColor colorWithRed:(R * 1.0) / 255.0 green:(G * 1.0) / 255.0 blue:(B * 1.0) / 255.0 alpha:A]
 #define AlivcTextPushURL @"rtmp://video-center.alivecdn.com/ZSHApp/stream00?vhost=live.rongyaohk.com&auth_key=1516417147-0-0-7b5549b1f901c18f84a0bef816cb5a75"
 #define AlivcUserDefaultsIndentifierFirst @"AlivcUserDefaultsIndentifierFirst"

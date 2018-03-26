@@ -7,7 +7,7 @@
 //
 
 #import "UserManager.h"
-#import <UMSocialCore/UMSocialCore.h>
+#import <UMShare/UMShare.h>
 #import "ZSHLoginLogic.h"
 
 @implementation UserManager
