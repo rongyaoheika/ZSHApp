@@ -188,7 +188,7 @@
 #pragma mark ————— 配置第三方 —————
 -(void)configUSharePlatforms{
     /* 设置微信的appKey和appSecret */
-    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_WechatSession appKey:kAppKey_Wechat appSecret:kSecret_Wechat redirectURL:nil];
+    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_WechatSession appKey:kAppKey_Wechat appSecret:kSecret_Wechat redirectURL:@"www.rongyaohk.com"];
     /*
      * 移除相应平台的分享，如微信收藏
      */

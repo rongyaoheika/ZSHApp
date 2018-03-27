@@ -82,7 +82,6 @@
                 [_delegate loationMangerSuccessLocationWithCity:city];
             }
             RLog(@"定位成功的城市%@，经度=%lf,纬度 = %lf",city,aLatitude,aLongitude);
-//            [[NSNotificationCenter defaultCenter]postNotificationName:KLocateNoti object:@{@"cityName":city,@"latitude":@(aLatitude),@"longitude":@(aLongitude)}];
         }
     }];
 }
