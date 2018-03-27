@@ -25,8 +25,10 @@ static NSString *cellId = @"customCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    kWeakSelf(self);
     self.isHidenNaviBar = YES;
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(pushLivePersonInfoVCAction) name:KPushLivePersonInfoVC object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(shareInfoAction:) name:KShareInfo object:nil];
     
     UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout *)self.collectionView.collectionViewLayout;
     layout.itemSize =  CGSizeMake(KScreenWidth, KScreenHeight);
@@ -40,11 +42,10 @@ static NSString *cellId = @"customCell";
     self.collectionView.showsHorizontalScrollIndicator = YES;
     [self.view addSubview:self.collectionView];
     [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.mas_equalTo(self.view).insets(UIEdgeInsetsMake(0, 0, KBottomHeight, 0));
+        make.edges.mas_equalTo(weakself.view).insets(UIEdgeInsetsMake(0, 0, KBottomHeight, 0));
     }];
     
     [self.view addSubview:self.audienceView];
-    kWeakSelf(self);
     self.audienceView.dissmissViewBlock = ^(UIButton *btn) {
         NSArray *ary = [weakself.collectionView visibleCells];
         for (AliyunPlaySDKDemoFullScreenScrollCollectionViewCell *cell in ary) {
@@ -108,6 +109,47 @@ static NSString *cellId = @"customCell";
         _audienceView.backgroundColor = [UIColor clearColor];
     }
     return _audienceView;
+}
+
+- (void)shareInfoAction:(NSNotification *)noti{
+    kWeakSelf(self);
+    UIButton *btn = [noti.object objectForKey:@"btn"];
+    NSInteger sharePlatform = 2;
+    switch (btn.tag) {
+        case 1://朋友圈
+            sharePlatform = 2;
+            break;
+        case 2://好友
+            sharePlatform = 1;
+            break;
+            
+        default:
+            break;
+    }
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+//        UIImage *screenShot = [weakself takeScreenShot];
+        UIImage *screenShot = [UIImage imageNamed:@"home_service"];
+        NSString *shareText = @"荣耀黑卡，风暴来袭";
+        NSString *descr = @"荣耀黑卡为您提供至尊轻奢服务，期待您的入驻，期待您的关注";
+        [[ShareManager sharedShareManager]shareToPlatform:sharePlatform title:shareText descr:descr image:screenShot url:nil controller:weakself callback:^(BOOL flag) {
+            if (flag) {
+                RLog(@"分享成功！");
+            }
+        }];
+    });
+
+}
+
+//屏幕快照
+- (UIImage *)takeScreenShot {
+    // 截图
+    UIGraphicsBeginImageContextWithOptions(self.view.bounds.size, self.view.opaque, 0.0);
+    [self.view.layer renderInContext:UIGraphicsGetCurrentContext()];
+    UIImage * image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return image;
 }
 
 - (void)didReceiveMemoryWarning {

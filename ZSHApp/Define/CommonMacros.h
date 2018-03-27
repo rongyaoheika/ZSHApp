@@ -39,4 +39,7 @@
 #define KPresentPreviewVC                   @"KPresentPreviewVC"
 #define KPresentFinishShowVC                @"KPresentFinishShowVC"
 #define KPushLivePersonInfoVC               @"KPushLivePersonInfoVC"
+
+//三方分享
+#define KShareInfo                          @"KShareInfo"
 #endif /* CommonMacros_h */
