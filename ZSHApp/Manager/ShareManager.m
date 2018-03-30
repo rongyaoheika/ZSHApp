@@ -39,15 +39,14 @@ SINGLETON_FOR_CLASS(ShareManager);
         if (error) {
             UMSocialLogInfo(@"************Share fail with error %@*********",error);
             RLog("分享失败error====%@",error);
-        }else{
+        } else {
             if ([data isKindOfClass:[UMSocialShareResponse class]]) {
                 UMSocialShareResponse *resp = data;
                 //分享结果消息
                 UMSocialLogInfo(@"response message is %@",resp.message);
                 //第三方原始返回的数据
                 UMSocialLogInfo(@"response originalResponse data is %@",resp.originalResponse);
-                
-            }else{
+            } else {
                 UMSocialLogInfo(@"response data is %@",data);
             }
         }
