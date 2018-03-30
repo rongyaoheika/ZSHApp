@@ -28,4 +28,6 @@ typedef void(^SaveBlock)(id , NSInteger );
 @property (nonatomic, copy) NSString *imageText1;
 @property (nonatomic, copy) NSString *imageText2;
 @property (nonatomic, copy) NSString *imageText3;
+
+@property (nonatomic, strong) NSMutableDictionary       *storeDic;// 门店参数
 @end
