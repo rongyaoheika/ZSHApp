@@ -47,7 +47,6 @@ static NSString *ZSHGoodsListViewID = @"ZSHGoodsListView";
 
 - (void)createUI{
     
-//    self.tableView.frame = CGRectMake(0, 0, kScreenWidth, kScreenHeight - KNavigationBarHeight - KBottomTabH);
     [self.view addSubview:self.tableView];
     self.tableView.delegate = self.tableViewModel;
     self.tableView.dataSource = self.tableViewModel;

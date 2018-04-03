@@ -167,8 +167,16 @@ static NSString * ZSHBottomListCellID = @"ZSHBottomListCell";
             return cell;
         };
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
-            ZSHGoodsDetailViewController *goodsDetailVC = [[ZSHGoodsDetailViewController alloc]init];
-            goodsDetailVC.goodModel = _goodModelArr[indexPath.row];
+//            ZSHGoodsDetailViewController *goodsDetailVC = [[ZSHGoodsDetailViewController alloc]init];
+//            goodsDetailVC.goodModel = _goodModelArr[indexPath.row];
+//            [self.navigationController pushViewController:goodsDetailVC animated:YES];
+            
+            //加载h5
+            ZSHGoodModel *model = _goodModelArr[indexPath.row];
+            NSString *urlStr = NSStringFormat(@"%@?productid=%@",ZSHGoodsDetailH5,model.PRODUCT_ID);
+            
+            RLog(@"商品详情请求h5网址==%@",urlStr);
+            RootWebViewController *goodsDetailVC =  [[RootWebViewController alloc] initWithParamDic:@{@"url":urlStr}];
             [self.navigationController pushViewController:goodsDetailVC animated:YES];
         };
     }
