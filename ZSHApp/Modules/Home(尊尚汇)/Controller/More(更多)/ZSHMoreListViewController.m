@@ -20,7 +20,7 @@
 @property (nonatomic, strong) NSDictionary   *pushNextParamDic;
 @property (nonatomic, strong) ZSHGuideView   *guideView;
 @property (nonatomic, strong) ZSHBaseView    *headView;
-@property (nonatomic, strong) ZSHBaseView    *funcView;
+@property (nonatomic, strong) UIScrollView   *funcView;
 
 @end
 
@@ -175,18 +175,19 @@ static NSString *ZSHMoreListCellID = @"ZSHMoreListCell";
     return _guideView;
 }
 
-- (ZSHBaseView *)funcView{
+- (UIScrollView *)funcView{
     if (!_funcView) {
-        _funcView = [[ZSHBaseView alloc]initWithFrame:CGRectMake(0, kRealValue(120), KScreenWidth, kRealValue(30))];
-        NSArray *funcNameArr = @[@"游艇买卖",@"游艇租赁",@"游艇驾校",@"游艇托管"];
+        _funcView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, kRealValue(120), KScreenWidth, kRealValue(30))];
+        _funcView.contentSize = CGSizeMake(KScreenWidth * 2, 0);
+        NSArray *funcNameArr = @[@"携艇会所",@"游艇买卖",@"游艇租赁",@"游艇基金",@"活动策划",@"码头建设",@"游艇驾校",@"游艇托管"];
         CGFloat count = funcNameArr.count;
         for (int i = 0; i<count; i++) {
             UIButton *funcBtn = [ZSHBaseUIControl createBtnWithParamDic:@{@"title":funcNameArr[i]} target:self action:nil];
             [_funcView addSubview:funcBtn];
             [funcBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.width.mas_equalTo(KScreenWidth/count);
+                make.width.mas_equalTo(KScreenWidth/4);
                 make.top.height.mas_equalTo(_funcView);
-                make.left.mas_equalTo(i*(KScreenWidth/count));
+                make.left.mas_equalTo(i*(KScreenWidth/4));
             }];
         }
     }
