@@ -190,7 +190,7 @@
 
         case FromHorseVCToTitleContentVC://马术
         case FromShipVCToTitleContentVC://游艇
-        case FromGolfVCToTitleContentVC://游艇
+        case FromGolfVCToTitleContentVC://高尔夫
         case FromLuxcarVCToTitleContentVC:{//豪车
             self.contentVCS = @[@"ZSHMoreListViewController",
                                 @"ZSHMoreListViewController",

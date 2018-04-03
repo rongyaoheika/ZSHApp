@@ -19,7 +19,8 @@
 @property (nonatomic, strong) NSArray        *listDataArr;
 @property (nonatomic, strong) NSDictionary   *pushNextParamDic;
 @property (nonatomic, strong) ZSHGuideView   *guideView;
-
+@property (nonatomic, strong) ZSHBaseView    *headView;
+@property (nonatomic, strong) ZSHBaseView    *funcView;
 
 @end
 
@@ -114,7 +115,7 @@ static NSString *ZSHMoreListCellID = @"ZSHMoreListCell";
     self.tableView.delegate = self.tableViewModel;
     self.tableView.dataSource = self.tableViewModel;
     [self.tableView registerClass:[ZSHMoreListCell class] forCellReuseIdentifier:ZSHMoreListCellID];
-    self.tableView.tableHeaderView = self.guideView;
+    self.tableView.tableHeaderView = self.headView;//self.guideView;
 }
 
 - (void)initViewModel {
@@ -156,12 +157,40 @@ static NSString *ZSHMoreListCellID = @"ZSHMoreListCell";
     return sectionModel;
 }
 
+- (ZSHBaseView *)headView{
+    if (!_headView) {
+        CGFloat headHeight = (kFromClassTypeValue==FromShipVCToTitleContentVC?kRealValue(150):kRealValue(120));
+        _headView = [[ZSHBaseView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, headHeight) paramDic:nil];
+        [_headView addSubview:self.guideView];
+        kFromClassTypeValue==FromShipVCToTitleContentVC?[_headView addSubview:self.funcView]:nil;
+    }
+    return _headView;
+}
+
 - (ZSHGuideView *)guideView {
     if(!_guideView) {
         NSDictionary *nextParamDic = @{KFromClassType:@(FromBuyVCToGuideView),@"pageViewHeight":@(kRealValue(120)),@"min_scale":@(0.6),@"withRatio":@(1.8),@"infinite":@(false)};
         _guideView = [[ZSHGuideView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, kRealValue(120)) paramDic:nextParamDic];
     }
     return _guideView;
+}
+
+- (ZSHBaseView *)funcView{
+    if (!_funcView) {
+        _funcView = [[ZSHBaseView alloc]initWithFrame:CGRectMake(0, kRealValue(120), KScreenWidth, kRealValue(30))];
+        NSArray *funcNameArr = @[@"游艇买卖",@"游艇租赁",@"游艇驾校",@"游艇托管"];
+        CGFloat count = funcNameArr.count;
+        for (int i = 0; i<count; i++) {
+            UIButton *funcBtn = [ZSHBaseUIControl createBtnWithParamDic:@{@"title":funcNameArr[i]} target:self action:nil];
+            [_funcView addSubview:funcBtn];
+            [funcBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.width.mas_equalTo(KScreenWidth/count);
+                make.top.height.mas_equalTo(_funcView);
+                make.left.mas_equalTo(i*(KScreenWidth/count));
+            }];
+        }
+    }
+    return _funcView;
 }
 
 - (void)didReceiveMemoryWarning {
