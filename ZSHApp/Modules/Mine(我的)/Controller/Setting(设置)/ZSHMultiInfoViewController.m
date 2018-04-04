@@ -450,20 +450,6 @@ static NSString *ListCell = @"listCellId";
                         break;
                 }
                 
-                
-                //            if (index == 2) {
-                //                weakself.text1 = str;
-                //            } else if (index == 3) {
-                //                weakself.text2 = str;
-                //            } else if (index == 4) {
-                //                weakself.text3 = str;
-                //            } else if (index == 5) {
-                //                weakself.text4 = str;
-                //            } else if (index == 6) {
-                //                weakself.text5 = str;
-                //            } else if (index == 7) {
-                //                weakself.text6 = str;
-                //            }
             }
         }
     };
@@ -688,9 +674,9 @@ static NSString *ListCell = @"listCellId";
 //门店-提交审核
 - (UIView *)createTableHeadView {
     UIView *backgroundView = [[UIView alloc] init];
-    UILabel *addLabel = [ZSHBaseUIControl createLabelWithParamDic:@{@"text":@"龙兴莱曼海景度假酒店"}];
+    UILabel *addLabel = [ZSHBaseUIControl createLabelWithParamDic:@{@"text":self.paramDic[@"storeName"]}];
     addLabel.frame = CGRectMake(15, 17.5, 200, 16);
-    UILabel *detailLabel = [ZSHBaseUIControl createLabelWithParamDic:@{@"text":@"天涯区三亚湾路128号", @"font":kPingFangMedium(12)}];
+    UILabel *detailLabel = [ZSHBaseUIControl createLabelWithParamDic:@{@"text":[NSString stringWithFormat:@"%@%@",self.paramDic[@"address"],self.paramDic[@"detailAddress"]], @"font":kPingFangMedium(12)}];
     detailLabel.frame = CGRectMake(15, 46.5, 2000, 16);
     [backgroundView addSubview:addLabel];
     [backgroundView addSubview:detailLabel];
