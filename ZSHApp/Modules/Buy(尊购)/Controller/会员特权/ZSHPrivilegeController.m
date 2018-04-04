@@ -9,6 +9,7 @@
 #import "ZSHPrivilegeController.h"
 #import "ZSHTogetherView.h"
 #import "ZSHBuyLogic.h"
+#import "ZSHTailorDetailViewController.h"
 
 static NSString *ZSHPrivilegeCellID = @"ZSHPrivilegeCellID";
 
@@ -64,6 +65,9 @@ static NSString *ZSHPrivilegeCellID = @"ZSHPrivilegeCellID";
             return cell;
         };
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
+            
+            ZSHTailorDetailViewController *tailorDetailVC = [[ZSHTailorDetailViewController alloc] initWithParamDic:@{@"PersonalID":_buyLogic.personModelArr[indexPath.row].PERSONAL_ID}];
+            [weakself.navigationController pushViewController:tailorDetailVC animated:YES];
         };
     }
     return sectionModel;

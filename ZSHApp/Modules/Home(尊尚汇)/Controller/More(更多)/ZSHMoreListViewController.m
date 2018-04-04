@@ -167,7 +167,7 @@ static NSString *ZSHMoreListCellID = @"ZSHMoreListCell";
     return _headView;
 }
 
-- (ZSHGuideView *)guideView {
+- (ZSHGuideView *)guideView {                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
     if(!_guideView) {
         NSDictionary *nextParamDic = @{KFromClassType:@(FromBuyVCToGuideView),@"pageViewHeight":@(kRealValue(120)),@"min_scale":@(0.6),@"withRatio":@(1.8),@"infinite":@(false)};
         _guideView = [[ZSHGuideView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, kRealValue(120)) paramDic:nextParamDic];
