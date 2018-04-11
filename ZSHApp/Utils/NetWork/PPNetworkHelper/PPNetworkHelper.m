@@ -104,8 +104,8 @@ static AFHTTPSessionManager *_sessionManager;
                 parameters:(id)parameters
                    success:(PPHttpRequestSuccess)success
                    failure:(PPHttpRequestFailed)failure {
-    NSString *requestUrl = NSStringFormat(@"%@%@",kUrlRoot,URL);//[NSString stringWithFormat:@"%@%@", kUrlRoot, URL];
-    if ([URL containsString:@"https://www.pgyer.com"]) {
+    NSString *requestUrl = NSStringFormat(@"%@%@",kUrlRoot,URL);
+    if ([URL containsString:@"https://www.pgyer.com"]) {//蒲公英更新版本
         requestUrl = URL;
     }
     RLog(@"请求的完整url == %@",requestUrl);

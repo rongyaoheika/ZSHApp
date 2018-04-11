@@ -61,7 +61,7 @@ platform :ios do
       #silent:true,#隐藏没有必要的信息
       export_options: {
         provisioningProfiles: {
-          "com.combatworld.honourcard" => "Ad_hoc_profile0307"
+          "com.combatworld.honourcard" => "Ad_hoc_profile(0404)"
         }
       }
     )
