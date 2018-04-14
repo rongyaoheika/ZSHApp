@@ -90,6 +90,7 @@
 		04647D022017068800A21600 /* ZSHLiveMoreView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04647D012017068800A21600 /* ZSHLiveMoreView.m */; };
 		04647D052017602000A21600 /* ZSHBeautyView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04647D042017602000A21600 /* ZSHBeautyView.m */; };
 		047BC20F20216376007F4055 /* ZSHLiveGiftView.m in Sources */ = {isa = PBXBuildFile; fileRef = 047BC20E20216376007F4055 /* ZSHLiveGiftView.m */; };
+		0492FB73207F5CE400B78724 /* ZSHAboutUsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0492FB72207F5CE400B78724 /* ZSHAboutUsViewController.m */; };
 		04936D972027FCBF00E069BE /* ZSHLiveSignViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04936D962027FCBF00E069BE /* ZSHLiveSignViewController.m */; };
 		049823B520074D9C0080626D /* ZSHCabinetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 049823B420074D9C0080626D /* ZSHCabinetViewController.m */; };
 		049823B920074F180080626D /* ZSHCabinetCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 049823B820074F180080626D /* ZSHCabinetCollectionCell.m */; };
@@ -745,6 +746,8 @@
 		04647D042017602000A21600 /* ZSHBeautyView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHBeautyView.m; sourceTree = "<group>"; };
 		047BC20D20216376007F4055 /* ZSHLiveGiftView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHLiveGiftView.h; sourceTree = "<group>"; };
 		047BC20E20216376007F4055 /* ZSHLiveGiftView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHLiveGiftView.m; sourceTree = "<group>"; };
+		0492FB71207F5CE400B78724 /* ZSHAboutUsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHAboutUsViewController.h; sourceTree = "<group>"; };
+		0492FB72207F5CE400B78724 /* ZSHAboutUsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHAboutUsViewController.m; sourceTree = "<group>"; };
 		04936D952027FCBF00E069BE /* ZSHLiveSignViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHLiveSignViewController.h; sourceTree = "<group>"; };
 		04936D962027FCBF00E069BE /* ZSHLiveSignViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHLiveSignViewController.m; sourceTree = "<group>"; };
 		049823B320074D9C0080626D /* ZSHCabinetViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHCabinetViewController.h; sourceTree = "<group>"; };
@@ -4083,6 +4086,8 @@
 				FE443FDE1FB04FF100B7F7A5 /* ZSHMultiInfoViewController.m */,
 				042E0915202861EF0037BB4B /* ZSHMultiInfoViewController+method.h */,
 				042E0916202861EF0037BB4B /* ZSHMultiInfoViewController+method.m */,
+				0492FB71207F5CE400B78724 /* ZSHAboutUsViewController.h */,
+				0492FB72207F5CE400B78724 /* ZSHAboutUsViewController.m */,
 				FE8FD0851FADF4FD005F1184 /* ZSHSettingViewController.h */,
 				FE8FD0861FADF4FD005F1184 /* ZSHSettingViewController.m */,
 				FE8FD0881FADFF17005F1184 /* ZSHUserInfoViewController.h */,
@@ -5358,6 +5363,7 @@
 				FE55385C1F47049D00803128 /* AESCipher.m in Sources */,
 				185C6D861FC2D97E004EA461 /* LZCartTableViewCell.m in Sources */,
 				1811057A1FBC125E0046D229 /* ZSHLikeViewController.m in Sources */,
+				0492FB73207F5CE400B78724 /* ZSHAboutUsViewController.m in Sources */,
 				FE55387F1F470BAF00803128 /* IMManager.m in Sources */,
 				1813E26A1FBD2B6E00624405 /* ZSHTrainTicketListCell.m in Sources */,
 				FEB099121FD125BE00E8F03D /* ZSHMoreLogic.m in Sources */,

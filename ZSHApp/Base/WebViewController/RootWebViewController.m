@@ -41,8 +41,8 @@
 {
     _progressViewColor = [UIColor colorWithRed:119.0/255 green:228.0/255 blue:115.0/255 alpha:1];
     self.navigationController.navigationBar.hidden = YES;
-    //去掉顶部20像素的状态栏
     
+    //去掉顶部20像素的状态栏
     [self setStatusBarStyle:UIStatusBarStyleLightContent];
     
     WKWebViewConfiguration * configuration = [[WKWebViewConfiguration alloc]init];//先实例化配置类 以前UIWebView的属性有的放到了这里
@@ -106,27 +106,6 @@
     }
 }
 
-
-#pragma mark - ——————— WKNavigationDelegate ————————
-// 页面开始加载时调用
--(void)webView:(WKWebView *)webView didStartProvisionalNavigation:(WKNavigation *)navigation{
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-}
-// 当内容开始返回时调用
--(void)webView:(WKWebView *)webView didCommitNavigation:(WKNavigation *)navigation{
-    
-}
-// 页面加载完成之后调用
--(void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation{
-    self.title = webView.title;
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-    [self updateNavigationItems];
-}
-// 页面加载失败时调用
--(void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *)navigation{
-    
-}
-
 #pragma mark - update nav items
 
 -(void)updateNavigationItems{
@@ -167,25 +146,54 @@
 -(void)reloadWebView{
     [self.wkwebView reload];
 }
--(void)dealloc{
-    [self clean];
+
+
+#pragma mark - ——————— WKNavigationDelegate ————————
+// 页面开始加载时调用
+-(void)webView:(WKWebView *)webView didStartProvisionalNavigation:(WKNavigation *)navigation{
+    RLog(@"web页面开始加载");
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    
+}
+// 当内容开始返回时调用
+-(void)webView:(WKWebView *)webView didCommitNavigation:(WKNavigation *)navigation{
+    RLog(@"web页面获取内容开始返回");
+}
+// 页面加载完成之后调用
+-(void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation{
+    RLog(@"web页面加载完成");
+    self.title = webView.title;
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+    [self updateNavigationItems];
+}
+// 页面加载失败时调用
+-(void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *)navigation{
+    RLog(@"web页面加载失败");
 }
 
-#pragma mark - WKNavigationDelegate
+// 在发送请求之前，决定是否跳转
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler
 {
     NSURL *URL = navigationAction.request.URL;
     NSString *scheme = [URL scheme];
+    RLog(@"当前web页面是否可以返回h5页面==%d",self.wkwebView.canGoBack?1:0);
     if ([scheme isEqualToString:@"iosdevtip"]) {
         [self backBtnClicked];
         decisionHandler(WKNavigationActionPolicyCancel);
         return;
+    } else {
+       
+        self.wkwebView.canGoBack?[self.wkwebView goBack]:nil;
     }
     decisionHandler(WKNavigationActionPolicyAllow);
 }
 
 
 #pragma mark ————— 清理 —————
+-(void)dealloc{
+    [self clean];
+}
+
 -(void)clean{
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     [self.wkwebView removeObserver:self forKeyPath:@"estimatedProgress"];

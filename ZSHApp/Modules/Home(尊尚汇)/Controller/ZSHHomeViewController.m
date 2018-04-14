@@ -603,7 +603,7 @@ static NSString *Identify_MusicCell = @"musicCell";
 
 - (void)loationMangerSuccessLocationWithLatitude:(CLLocationDegrees)latitude longitude:(CLLocationDegrees)longitude{
     RLog(@"latitude = %f , longitude = %f",latitude,longitude);
-    NSDictionary *paramic= @{@"USERLONGITUDE":@(latitude),@"USERLATITUDE":@(longitude),@"HONOURUSER_ID":HONOURUSER_IDValue,};
+    NSDictionary *paramic= @{@"USERLONGITUDE":@(longitude),@"USERLATITUDE":@(latitude),@"HONOURUSER_ID":HONOURUSER_IDValue};
     [_homeLogic locateDic:paramic success:^(id response) {
         RLog(@"传递经纬度成功");
     }];
