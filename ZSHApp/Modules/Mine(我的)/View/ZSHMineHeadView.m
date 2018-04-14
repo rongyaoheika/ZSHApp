@@ -48,7 +48,7 @@
     
     NSDictionary *nameLabelDic = @{@"text":@"",@"font":kPingFangRegular(15),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentCenter)};
     UILabel *nameLabel = [ZSHBaseUIControl createLabelWithParamDic:nameLabelDic];
-    nameLabel.text = @"海南尊尚汇网络科技有限公司";//curUser.NICKNAME;
+    nameLabel.text = curUser.NICKNAME;//@"海南尊尚汇网络科技有限公司";
     [self addSubview:nameLabel];
     [nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(headImageView.mas_bottom).offset(kRealValue(10));
@@ -59,7 +59,7 @@
     self.nameLabel = nameLabel;
     
     //黑卡币
-    NSDictionary *coinBtnTopDic = @{@"text":@"积分",@"font":kPingFangRegular(14),@"textAlignment":@(NSTextAlignmentCenter),@"height":@(14)};
+    NSDictionary *coinBtnTopDic = @{@"text":@"黑卡币",@"font":kPingFangRegular(14),@"textAlignment":@(NSTextAlignmentCenter),@"height":@(14)};
     NSDictionary *coinBtnBottomDic = @{@"text":@"99",@"font":kPingFangMedium(18),@"textAlignment":@(NSTextAlignmentCenter),@"height":@(14)};
     _coinBtn = [ZSHBaseUIControl createLabelBtnWithTopDic:coinBtnTopDic bottomDic:coinBtnBottomDic];
     _coinBtn.tag = 2;
