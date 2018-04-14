@@ -19,7 +19,7 @@
     } success:^(id responseObject) {
         success(responseObject);
     } failure:^(NSError *error) {
-        
+        fail(error);
     }];
 }
 

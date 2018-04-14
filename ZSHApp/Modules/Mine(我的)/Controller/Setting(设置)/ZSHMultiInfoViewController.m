@@ -185,13 +185,13 @@ static NSString *ListCell = @"listCellId";
     } else if (kFromClassTypeValue == FromUserInfoPhoneVCToMultiInfoVC){//更改手机号
         [self.view addSubview:self.bottomBtn];
         [self.bottomBtn setTitle:self.paramDic[@"bottomBtnTitle"] forState:UIControlStateNormal];
-        [self.bottomBtn addTarget:self action:@selector(nextBtnAction) forControlEvents:UIControlEventTouchUpInside];
+        [self.bottomBtn addTarget:self action:@selector(nextBtnAction:) forControlEvents:UIControlEventTouchUpInside];
         
     } else if (kFromClassTypeValue == FromUserPasswordVCToMultiInfoVC || kFromClassTypeValue == FromAccountVCToMultiInfoVC || kFromClassTypeValue == FromSetPasswordToMultiInfoVC || kFromClassTypeValue == FromCreateStoreVCToMultiInfoVC | kFromClassTypeValue == FromVerifyVCToMultiInfoVC ||kFromClassTypeValue ==  FromWeMediaVCToMultiInfoVC || kFromClassTypeValue ==  FromWeMediaVerifyVCToMultiInfoVC) {//添加底部按钮
         
         [self.view addSubview:self.bottomBtn];
         [self.bottomBtn setTitle:self.paramDic[@"bottomBtnTitle"] forState:UIControlStateNormal];
-        [self.bottomBtn addTarget:self action:@selector(nextBtnAction) forControlEvents:UIControlEventTouchUpInside];
+        [self.bottomBtn addTarget:self action:@selector(nextBtnAction:) forControlEvents:UIControlEventTouchUpInside];
     }
     
     self.tableView.frame = CGRectMake(0, KNavigationBarHeight, KScreenWidth, KScreenHeight - KNavigationBarHeight - KBottomNavH);
@@ -515,7 +515,7 @@ static NSString *ListCell = @"listCellId";
     }
 }
 
-- (void)nextBtnAction{
+- (void)nextBtnAction:(UIButton *)nextBtn{
     kWeakSelf(self);
     switch (kFromClassTypeValue) {
         case FromUserPasswordVCToMultiInfoVC:{
@@ -612,6 +612,7 @@ static NSString *ListCell = @"listCellId";
         }
         case FromVerifyVCToMultiInfoVC:{//门店提交审核
             if ([self submitCheckAction]) {
+                
                 NSString *categoryId = self.funStoreName?self.funStoreName:self.paramDic[@"categoryId"];
                 HCLocationManager *locationManager = [HCLocationManager sharedManager];
                 [locationManager getLatiAndLongiWithCity:self.paramDic[@"address"] compelete:^(CLLocationDegrees latitude, CLLocationDegrees longitude) {
@@ -625,7 +626,11 @@ static NSString *ListCell = @"listCellId";
                                                @"APPLYFOR_LEGALPERSON":self.text5,@"APPLYFOR_PHONE":self.text6,
                                                @"HONOURUSER_ID":HONOURUSER_IDValue
                                                };
-                    [self submitActionWithDic:paramDic names:@[@"APPLYFOR_IDCARDIMAGE",@"APPLYFOR_IMAGES",@"APPLYFOR_CHARTERIMAGE"] images:_imagMArr fileNames:_fileNameMArr];
+                    [self submitActionWithBtn:nextBtn paramDic:paramDic names:@[@"APPLYFOR_IDCARDIMAGE",@"APPLYFOR_IMAGES",@"APPLYFOR_CHARTERIMAGE"] images:_imagMArr fileNames:_fileNameMArr];
+                    //5s之后可重复点击提交审核按钮
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                        nextBtn.enabled = YES;
+                    });
                 }];
                 
             }

@@ -55,13 +55,17 @@
 }
 
 //提交审核
-- (void)submitActionWithDic:(NSDictionary *)paramDic names:(NSArray *)names images:(NSArray *)images fileNames:(NSArray *)fileNames{
+- (void)submitActionWithBtn:(UIButton *)btn paramDic:(NSDictionary *)paramDic names:(NSArray<NSString *>*)names images:(NSArray<UIImage*>*)images fileNames:(NSArray<NSString *>*)fileNames{
+    btn.enabled = NO;
     [self.entryLogic loadBusinessInDataWith:paramDic names:names images:images fileNames:fileNames success:^(id responseObject) {
         RLog(@"提交审核结果%@",responseObject);
         if ([responseObject[@"result"]isEqualToString:@"01"]) {
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"提交审核成功" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
             [alert show];
+            btn.enabled = YES;
         }
-    } fail:nil];
+    } fail:^(NSError *error) {
+        btn.enabled = YES;
+    }];
 }
 @end
