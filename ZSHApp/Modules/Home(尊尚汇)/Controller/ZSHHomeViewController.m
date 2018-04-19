@@ -93,13 +93,13 @@ static NSString *Identify_MusicCell = @"musicCell";
                         @"ZSHMoreSubscribeViewController"];   //更多
     
     self.paramArr = @[
-                      @{KFromClassType:@(FromFoodVCToTitleContentVC)},
-                      @{KFromClassType:@(FromHotelVCToTitleContentVC)},
+                      @{KFromClassType:@(FromFoodVCToTitleContentVC),@"storeName":@(0)},
+                      @{KFromClassType:@(FromHotelVCToTitleContentVC),@"storeName":@(1)},
                       @{KFromClassType:@(ZSHFromHomeTrainVCToAirPlaneVC),@"title":@"火车票预订"},
                       @{KFromClassType:@(ZSHHomeAirPlaneVCToAirPlaneVC),@"title":@"机票预订"},
-                      @{KFromClassType:@(FromHorseVCToTitleContentVC)},  //马术
-                      @{KFromClassType:@(FromShipVCToTitleContentVC)},   //游艇
-                      @{KFromClassType:@(FromLuxcarVCToTitleContentVC)}, //豪车
+                      @{KFromClassType:@(FromHorseVCToTitleContentVC),@"storeName":@(6)},  //马术
+                      @{KFromClassType:@(FromShipVCToTitleContentVC),@"storeName":@(4)},   //游艇
+                      @{KFromClassType:@(FromLuxcarVCToTitleContentVC),@"storeName":@(5)}, //豪车
                       @{}
                       ];
     self.menuPushVCsArr = @[@"",

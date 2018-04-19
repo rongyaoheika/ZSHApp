@@ -65,17 +65,17 @@
 //                        @"ZSHSubscribeViewController" //定制理财
                         ];
     self.paramArr = @[
-                      @{KFromClassType:@(FromFoodVCToTitleContentVC)},
-                      @{KFromClassType:@(FromHotelVCToTitleContentVC)},
-                      @{KFromClassType:@(FromBarVCToTitleContentVC)},
-                      @{KFromClassType:@(FromKTVVCToTitleContentVC)},
+                      @{KFromClassType:@(FromFoodVCToTitleContentVC),@"storeName":@(0)},
+                      @{KFromClassType:@(FromHotelVCToTitleContentVC),@"storeName":@(1)},
+                      @{KFromClassType:@(FromBarVCToTitleContentVC),@"storeName":@(3)},
+                      @{KFromClassType:@(FromKTVVCToTitleContentVC),@"storeName":@(2)},
                       @{KFromClassType:@(ZSHFromHomeTrainVCToAirPlaneVC),@"title":@"火车票预订"},
                       @{KFromClassType:@(ZSHHomeAirPlaneVCToAirPlaneVC),@"title":@"机票预订"},
-                      @{KFromClassType:@(FromHorseVCToTitleContentVC)},
-                      @{KFromClassType:@(FromShipVCToTitleContentVC)},
-                      @{KFromClassType:@(FromLuxcarVCToTitleContentVC)},
-                      @{KFromClassType:@(ZSHPlaneType),@"title":@"飞机"},
-                      @{KFromClassType:@(FromGolfVCToTitleContentVC)},
+                      @{KFromClassType:@(FromHorseVCToTitleContentVC),@"storeName":@(6)},
+                      @{KFromClassType:@(FromShipVCToTitleContentVC),@"storeName":@(4)},
+                      @{KFromClassType:@(FromLuxcarVCToTitleContentVC),@"storeName":@(5)},
+                      @{KFromClassType:@(ZSHPlaneType),@"title":@"飞机",@"storeName":@(7)},
+                      @{KFromClassType:@(FromGolfVCToTitleContentVC),@"storeName":@(8)},
                       @{@"title":@"私人定制"},
                       
                       @{@"currentSelectIndex":@(13)}, //品牌杂志

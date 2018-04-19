@@ -31,6 +31,7 @@
     [self.view addSubview:self.midImageView];
     [self.view addSubview:self.promptLabel];
     [self.view addSubview:self.companyLB];
+    [self.view addSubview:self.timeLB];
     [self updateViewConstraints];
 }
 
@@ -45,7 +46,7 @@
 
 - (UILabel *)promptLabel{
     if (!_promptLabel) {
-        NSDictionary *promptLabelDic = @{@"text":@"荣耀黑卡 V1.0.0",@"font":kPingFangMedium(15),@"textAlignment":@(NSTextAlignmentCenter)};
+        NSDictionary *promptLabelDic = @{@"text":@"荣耀黑卡 v1.0.0",@"font":kPingFangMedium(15),@"textAlignment":@(NSTextAlignmentCenter)};
         _promptLabel = [ZSHBaseUIControl createLabelWithParamDic:promptLabelDic];
     }
     return _promptLabel;
@@ -53,10 +54,18 @@
 
 - (UILabel *)companyLB{
     if (!_companyLB) {
-        NSDictionary *companyLBDic = @{@"text":@"海南尊尚汇网络科技有限公司",@"font":kPingFangMedium(15),@"textAlignment":@(NSTextAlignmentCenter)};
+        NSDictionary *companyLBDic = @{@"text":@"海南尊尚汇网络科技有限公司",@"font":kPingFangMedium(12),@"textAlignment":@(NSTextAlignmentCenter)};
         _companyLB = [ZSHBaseUIControl createLabelWithParamDic:companyLBDic];
     }
     return _companyLB;
+}
+
+- (UILabel *)timeLB {
+    if (!_timeLB) {
+        NSDictionary *companyLBDic = @{@"text":@"Copyright ©2017-2018",@"font":kPingFangMedium(12),@"textAlignment":@(NSTextAlignmentCenter)};
+        _timeLB = [ZSHBaseUIControl createLabelWithParamDic:companyLBDic];
+    }
+    return _timeLB;
 }
 
 - (void)updateViewConstraints
@@ -81,8 +90,16 @@
         make.bottom.mas_equalTo(weakself.view).offset(-KBottomNavH);
         make.width.mas_equalTo(weakself.view);
         make.centerX.mas_equalTo(weakself.view);
-        make.height.mas_equalTo(kRealValue(20));
+        make.height.mas_equalTo(kRealValue(15));
     }];
+    
+    [self.timeLB mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.mas_equalTo(weakself.companyLB.mas_top);
+        make.width.mas_equalTo(weakself.view);
+        make.centerX.mas_equalTo(weakself.view);
+        make.height.mas_equalTo(kRealValue(15));
+    }];
+   
 }
 
 

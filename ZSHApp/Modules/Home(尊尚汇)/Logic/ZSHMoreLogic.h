@@ -45,4 +45,8 @@
 
 //新闻详情
 - (void)requestNewsDetailWithParamDic:(NSDictionary *)paramDic Success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail;
+
+//底部（美食，酒店，酒吧等） 品牌、筛选数据
+- (void)loadBottomCategoryWithParamDic:(NSDictionary *)paramDic success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail;
+
 @end

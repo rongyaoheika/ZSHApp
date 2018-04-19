@@ -579,7 +579,7 @@
 //请求地址：/appdiscoverin/discoverlist.do?DISCOVERLIST(混淆码)
 #define kUrlDiscoverList [NSString stringWithFormat:@"/appdiscoverin/discoverlist.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"DISCOVERLIST"]]
 //114.查询所有美食,酒店,KTV,酒吧品牌或者类型
-//参数：TYPE  (0代表品牌，1代表筛选)          SORTNAME  (0代表美食，1酒店，2KTV，3酒吧)
+//参数：TYPE  (0代表品牌，1代表筛选)          SORTNAME  (0代表美食，1酒店，2KTV，3酒吧，4游艇，5豪车,6马术,7飞机,8高尔夫)
 //请求地址：/appsfoodin/brandstylelist.do?BRANDLIST(混淆码)
 #define kUrlBrandstyleList [NSString stringWithFormat:@"/appsfoodin/brandstylelist.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"BRANDLIST"]]
 //115.发布内容到我的圈子 （完成）
