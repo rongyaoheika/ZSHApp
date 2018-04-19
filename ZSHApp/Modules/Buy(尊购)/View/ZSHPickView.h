@@ -13,8 +13,9 @@ typedef void(^SaveChangeBlock)(NSString *str, NSInteger tag, NSDictionary *moreD
 
 @interface ZSHPickView : UIWindow
 
-@property (nonatomic,weak) RootViewController                   *controller;
-@property (nonatomic,copy) SaveChangeBlock                      saveChangeBlock;
+@property (nonatomic, weak) RootViewController                   *controller;
+@property (nonatomic, copy) SaveChangeBlock                      saveChangeBlock;
+@property (nonatomic, strong) NSMutableArray                     *dataArr;
 
 - (instancetype)initWithFrame:(CGRect)frame type:(ShowPickViewWindowType)type;
 - (instancetype)initWithFrame:(CGRect)frame paramDic:(NSDictionary *)paramDic;

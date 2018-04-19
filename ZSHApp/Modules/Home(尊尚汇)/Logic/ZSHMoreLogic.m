@@ -126,5 +126,15 @@
     }];
 }
 
+//底部（美食，酒店，酒吧等） 品牌、筛选数据
+- (void)loadBottomCategoryWithParamDic:(NSDictionary *)paramDic success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail {
+    [PPNetworkHelper POST:kUrlBrandstyleList parameters:paramDic success:^(id responseObject) {
+        RLog(@"品牌，或者筛选底部数据==%@",responseObject)
+        NSArray *categoryDicArr = responseObject[@"pd"];
+        success(categoryDicArr);
+    } failure:^(NSError *error) {
+        RLog(@"请求失败");
+    }];
+}
 
 @end

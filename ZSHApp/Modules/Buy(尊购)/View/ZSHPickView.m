@@ -31,8 +31,6 @@ NSInteger yearSatrt = 1900;
 @property (nonatomic, assign) NSInteger            currentMonth;
 @property (nonatomic, assign) NSInteger            currentDay;
 @property (nonatomic, assign) NSInteger            selectedRow;
-
-@property (nonatomic, strong) NSMutableArray       *dataArr;
 @property (nonatomic, copy)   NSString             *midTitle;
 @end
 
@@ -55,7 +53,6 @@ NSInteger yearSatrt = 1900;
     self = [super initWithFrame:frame];
     if (self) {
         _showType = type;
-        
         [self createData];
         [self createUI];
     }
@@ -588,5 +585,13 @@ NSInteger yearSatrt = 1900;
     }
     return _pickerView;
 }
+
+- (void)setDataArr:(NSMutableArray *)dataArr{
+    _dataArr = dataArr;
+    
+    [self.pickerView reloadAllComponents];
+}
+
+
 
 @end

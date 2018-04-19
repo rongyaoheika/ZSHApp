@@ -27,6 +27,7 @@
 #import "ZSHGoodsTitleContentViewController.h"
 #import "ZSHTopLineMoreTypeViewController.h"
 #import "ZSHBuyLogic.h"
+#import "ZSHMoreLogic.h"
 
 @interface ZSHTitleContentViewController ()<UISearchBarDelegate,PYSearchViewControllerDelegate>
 
@@ -56,8 +57,9 @@
 @property (nonatomic, strong) NSMutableArray       *recommandTags;
 @property (nonatomic, strong) UILabel              *tagLabel;
 
-//可变参数字典
-//@property (nonatomic, strong) NSMutableArray       *paramMArr;
+
+@property (nonatomic, strong) NSMutableArray       *paramMArr;
+@property (nonatomic, strong) ZSHMoreLogic         *moreLogic;
 
 @end
 
@@ -88,10 +90,11 @@
 }
 
 - (void)loadData{
-//    self.paramMArr = [NSMutableArray new];
+    self.paramMArr = [[NSMutableArray alloc]initWithCapacity:3];
     self.myTags = [[NSMutableArray alloc]init];
     self.recommandTags = [[NSMutableArray alloc]init];
     self.buyLogic = [[ZSHBuyLogic alloc]init];
+    self.moreLogic = [[ZSHMoreLogic alloc]init];
     self.vcIndex = 0;
     self.indicatorHeight = 0.0;
    
@@ -330,7 +333,8 @@
             __weak typeof(self) strongSelf = weakSelf;
             strongSelf.vcIndex = index;
             strongSelf.contentView.currentIndex = index;
-            if (kFromClassTypeValue == FromHotelVCToTitleContentVC||kFromClassTypeValue == FromBarVCToTitleContentVC||kFromClassTypeValue == FromFoodVCToTitleContentVC|| kFromClassTypeValue ==FromKTVVCToTitleContentVC ) {
+            if ((kFromClassTypeValue>=FromHotelVCToTitleContentVC) &&(kFromClassTypeValue<=FromLuxcarVCToTitleContentVC)) {
+                //美食，酒店，酒吧，KTV，马术，游艇，豪车，高尔夫汇 (0代表美食，1酒店，2KTV，3酒吧，4游艇，5豪车,6马术,7飞机,8高尔夫)
                 [weakself titleViewSelectChangeWithIndex:index];
             }
            
@@ -409,37 +413,28 @@
 #pragma action
 - (void)titleViewSelectChangeWithIndex:(NSInteger)index{
     kWeakSelf(self);
-    //0:排序  1：品牌  2：筛选
-    NSArray *paramArr = nil;
-    switch (kFromClassTypeValue) {
-        case FromHotelVCToTitleContentVC://酒店排序
-        case FromBarVCToTitleContentVC:{//酒吧排序
-            paramArr = @[@{@"shopSortArr":@[@"推荐",@"距离由近到远",@"评分由高到低",@"价格由高到低",@"价格由低到高"],@"midTitle":@"排序"},
-                         @{@"shopSortArr":@[@"全部品牌",@"如家",@"7天",@"汉庭",@"锦江之星"],@"midTitle":@"品牌"},
-                         @{@"shopSortArr":@[@"经济型酒店",@"高端酒店",@"主题酒店",@"度假酒店",@"公寓型酒店",@"客栈",@"青年旅社"],@"midTitle":@"筛选"}];
-            
-            break;
-        }
-        case FromFoodVCToTitleContentVC://美食排序
-        case FromKTVVCToTitleContentVC:{//KTV排序
-            paramArr = @[@{@"shopSortArr":@[@"推荐",@"距离由近到远",@"评分由高到低",@"价格由高到低",@"价格由低到高"],@"midTitle":@"排序"},
-                         @{@"shopSortArr":@[@"全聚德",@"海底捞",@"眉州小吃",@"呷浦呷哺",@"肯德基",@"必胜客"],@"midTitle":@"品牌"},
-                         @{@"shopSortArr":@[@"甜点饮品",@"火锅",@"自助餐",@"小吃快餐",@"日韩料理",@"西餐",@"烧烤烤肉",@"素食"],@"midTitle":@"筛选"}];
-            break;
-        }
-         
-
-            
-        default:
-            break;
-    }
     
-    NSDictionary *nextParamDic = @{@"type":@(WindowDefault),@"midTitle":paramArr[index][@"midTitle"],@"dataArr":paramArr[index][@"shopSortArr"]};
+    //弹出底部
+    NSArray *midTitleArr = @[@"排序",@"品牌",@"筛选"];
+    NSDictionary *nextParamDic = @{@"type":@(WindowDefault),@"midTitle":midTitleArr[index]};
     weakself.pickView = [weakself createPickViewWithParamDic:nextParamDic];
     [weakself.pickView show:WindowDefault];
     weakself.pickView.saveChangeBlock = ^(NSString *rowTitle, NSInteger tag,NSDictionary *dic) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:KUpdateDataWithSort object:@{@"row":@(tag),@"midTitle":paramArr[index][@"midTitle"],@"rowTitle":rowTitle,KFromClassType:@(kFromClassTypeValue)}];
+        [[NSNotificationCenter defaultCenter] postNotificationName:KUpdateDataWithSort object:@{@"row":@(tag),@"midTitle":midTitleArr[index],@"rowTitle":rowTitle,KFromClassType:@(kFromClassTypeValue)}];
     };
+ 
+    if (index == 0) {//排序
+        weakself.pickView.dataArr = [@[@"推荐",@"距离由近到远",@"评分由高到低",@"价格由高到低",@"价格由低到高"]mutableCopy];
+    } else {//1：品牌  2：筛选
+        NSMutableArray *shopSortArr = [[NSMutableArray alloc]init];
+        NSDictionary *paramDic = @{@"TYPE":@(index-1),@"SORTNAME":[self.paramDic[@"storeName"] stringValue]};
+        [self.moreLogic loadBottomCategoryWithParamDic:paramDic success:^(id responseObject) {
+            for (NSDictionary *subDic in responseObject) {
+                [shopSortArr addObject:subDic[@"NAME"]];
+            }
+            weakself.pickView.dataArr = shopSortArr;
+        } fail:nil];
+    }
     
 }
 
