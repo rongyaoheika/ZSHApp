@@ -12,57 +12,50 @@
 
 @property (nonatomic, strong) NSArray             *titles;
 @property (nonatomic, copy)   NSString            *imageName;
-
-@property (nonatomic, strong) UIView              *selectionIndicator;
-
+@property (nonatomic, strong) UIView              *indicatorView;
 
 @end
 
 @implementation LXScollTitleView
 
-- (void)awakeFromNib{
-    [super awakeFromNib];
-    [self initData];
-    [self setupUI];
-}
-
 - (instancetype)initWithFrame:(CGRect)frame{
     if (self = [super initWithFrame:frame]) {
         [self initData];
-        [self setupUI];
+//        [self setupUI];
     }
     return self;
 }
 
 - (void)initData{
-    self.selectedIndex = 0;
     self.normalColor = KZSHColor929292;
-    self.selectedColor = KWhiteColor;
+    self.selectedColor = KZSHColorF29E19;
+    self.normalTitleFont = kPingFangRegular(15);
+    self.selectedTitleFont = kPingFangMedium(15);
     self.titleWidth = 85.f;
-    self.indicatorHeight = 2.f;
-    self.normalTitleFont = kPingFangMedium(15);
-    self.selectedTitleFont = kPingFangRegular(15);
+    self.indicatorHeight = 0.f;
     self.titleButtons = [[NSMutableArray alloc] init];
 }
 
-- (void)setupUI{
-    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
-    self.scrollView.scrollsToTop = NO;
-    self.scrollView.scrollEnabled = YES;
-    self.scrollView.showsHorizontalScrollIndicator = NO;
-    self.scrollView.showsVerticalScrollIndicator = NO;
-    [self addSubview:self.scrollView];
+- (void)layoutSubviews{
+    [super layoutSubviews];
+    self.scrollView.frame = self.bounds;
+    if (self.titleButtons.count == 0) {
+        return;
+    }
     
-    self.selectionIndicator = [[UIView alloc] initWithFrame:CGRectZero];
-    [self.scrollView addSubview:self.selectionIndicator];
+    self.scrollView.contentSize = CGSizeEqualToSize(self.svContentSize,CGSizeZero)?CGSizeMake(self.titleButtons.count * self.titleWidth, self.frame.size.height):self.svContentSize;
+    NSInteger i = 0;
+    for (UIButton *btn in self.titleButtons) {
+        btn.frame = CGRectMake(self.titleWidth * i++, 0, self.titleWidth, self.frame.size.height);
+        [btn layoutButtonWithEdgeInsetsStyle:self.imageStyle imageTitleSpace:self.imageTitleSpace];
+    }
+    [self setSelectedIndicator:NO];
+    [self.scrollView bringSubviewToFront:self.indicatorView];
 }
 
 - (void)reloadViewWithTitles:(NSArray *)titles {
-    for (UIButton *btn in self.titleButtons) {
-        [btn removeFromSuperview];
-    }
-    [self.titleButtons removeAllObjects];
-  
+    [self.titleButtons makeObjectsPerformSelector:@selector(removeAllObjects)];
+    self.titleButtons = nil;
     NSInteger i = 0;
     for (NSString *title in titles) {
        
@@ -87,7 +80,9 @@
         [self.scrollView addSubview:btn];
         [self.titleButtons addObject:btn];
     }
-    [self layoutSubviews];
+    self.selectedIndex = 0;
+    [self setNeedsLayout];
+    [self layoutIfNeeded];
 }
 
 - (void)btnClick:(UIButton *)titleBtn{
@@ -103,27 +98,14 @@
     [super updateConstraints];
 }
 
-- (void)layoutSubviews{
-    [super layoutSubviews];
-    self.scrollView.frame = self.bounds;
-    
-    self.scrollView.contentSize = CGSizeEqualToSize(self.svContentSize,CGSizeZero)?CGSizeMake(self.titleButtons.count * self.titleWidth, self.frame.size.height):self.svContentSize;
-    NSInteger i = 0;
-    for (UIButton *btn in self.titleButtons) {
-        btn.frame = CGRectMake(self.titleWidth * i++, 0, self.titleWidth, self.frame.size.height);
-        [btn layoutButtonWithEdgeInsetsStyle:self.imageStyle imageTitleSpace:self.imageTitleSpace];
-    }
-    [self setSelectedIndicator:NO];
-    [self.scrollView bringSubviewToFront:self.selectionIndicator];
-}
 
 - (void)setSelectedIndicator:(BOOL)animated {
-    self.selectionIndicator.backgroundColor = self.selectedColor;
+    self.indicatorView.backgroundColor = self.selectedColor;
     CGFloat leftW = (self.titleWidth - self.indicatorWidth)/2;
     [UIView animateWithDuration:(animated? 0.02 : 0) delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
-        self.selectionIndicator.frame = CGRectMake(leftW + (self.selectedIndex)*self.titleWidth, self.frame.size.height - self.indicatorHeight, self.indicatorWidth, self.indicatorHeight);
+        self.indicatorView.frame = CGRectMake(leftW + (self.selectedIndex)*self.titleWidth, self.frame.size.height - self.indicatorHeight, self.indicatorWidth, self.indicatorHeight);
     } completion:^(BOOL finished) {
-        [self scrollRectToVisibleCenteredOn:self.selectionIndicator.frame animated:YES];
+        [self scrollRectToVisibleCenteredOn:self.indicatorView.frame animated:YES];
     }];
 }
 
@@ -141,7 +123,7 @@
     
     [self.titleButtons enumerateObjectsUsingBlock:^(UIButton *btn , NSUInteger idx, BOOL * _Nonnull stop) {
         if (btn.tag-100 == selectedIndex) {
-            btn.selected = !btn.selected;
+            btn.selected = YES;
             btn.titleLabel.font = self.selectedTitleFont;
             
             if (self.selectedBorderColor) {
@@ -164,11 +146,39 @@
     }
     
     _selectedIndex = selectedIndex;
-    if (_indicatorHeight>0) {
-        [self setSelectedIndicator:YES];
-    }
+    [self setSelectedIndicator:YES];
 }
 
+#pragma mark - getter
+- (UIScrollView *)scrollView{
+    if (!_scrollView) {
+        UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
+        scrollView.scrollsToTop = NO;
+        scrollView.showsHorizontalScrollIndicator = NO;
+        scrollView.showsVerticalScrollIndicator = NO;
+        [self addSubview:scrollView];
+        _scrollView = scrollView;
+    }
+    return _scrollView;
+}
+
+- (UIView *)indicatorView{
+    if (!_indicatorView) {
+        UIView *indicatorView = [[UIView alloc] initWithFrame:CGRectZero];
+        [self.scrollView addSubview:indicatorView];
+        _indicatorView = indicatorView;
+    }
+    return _indicatorView;
+}
+
+- (NSMutableArray<UIButton *> *)titleButtons{
+    if (!_titleButtons) {
+        _titleButtons = [[NSMutableArray alloc] init];
+    }
+    return _titleButtons;
+}
+
+#pragma mark - setter
 - (void)setNormalColor:(UIColor *)normalColor{
     _normalColor = normalColor;
 }
@@ -185,6 +195,7 @@
 - (void)setIndicatorHeight:(CGFloat)indicatorHeight{
     _indicatorHeight = indicatorHeight;
     [self setNeedsLayout];
+    [self layoutIfNeeded];
 }
 
 - (void)setNormalTitleFont:(UIFont *)normalTitleFont{

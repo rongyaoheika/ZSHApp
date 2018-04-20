@@ -11,16 +11,17 @@
 #import "ZSHMoreLogic.h"
 #import "ZSHSubscribeViewController.h"
 #import "ZSHGuideView.h"
+#import "LXScollTitleView.h"
 
 @interface ZSHMoreListViewController ()
 
-@property (nonatomic, assign) ZSHShopType    shopType;
-@property (nonatomic, strong) ZSHMoreLogic   *moreLogic;
-@property (nonatomic, strong) NSArray        *listDataArr;
-@property (nonatomic, strong) NSDictionary   *pushNextParamDic;
-@property (nonatomic, strong) ZSHGuideView   *guideView;
-@property (nonatomic, strong) ZSHBaseView    *headView;
-@property (nonatomic, strong) UIScrollView   *funcView;
+@property (nonatomic, assign) ZSHShopType       shopType;
+@property (nonatomic, strong) ZSHMoreLogic      *moreLogic;
+@property (nonatomic, strong) NSArray           *listDataArr;
+@property (nonatomic, strong) NSDictionary      *pushNextParamDic;
+@property (nonatomic, strong) ZSHGuideView      *guideView;
+@property (nonatomic, strong) ZSHBaseView       *headView;
+@property (nonatomic, strong) LXScollTitleView  *titleView;
 
 @end
 
@@ -36,7 +37,6 @@ static NSString *ZSHMoreListCellID = @"ZSHMoreListCell";
 }
 
 - (void)loadData{
-    
     [self requestListData];
     [self initViewModel];
 }
@@ -162,7 +162,8 @@ static NSString *ZSHMoreListCellID = @"ZSHMoreListCell";
         CGFloat headHeight = (kFromClassTypeValue==FromShipVCToTitleContentVC?kRealValue(150):kRealValue(120));
         _headView = [[ZSHBaseView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, headHeight) paramDic:nil];
         [_headView addSubview:self.guideView];
-        kFromClassTypeValue==FromShipVCToTitleContentVC?[_headView addSubview:self.funcView]:nil;
+        kFromClassTypeValue==FromShipVCToTitleContentVC?[_headView addSubview:self.titleView]:nil;
+        [self.titleView reloadViewWithTitles:@[@"携艇会所",@"游艇买卖",@"游艇租赁", @"游艇基金",@"活动策划",@"码头建设",@"游艇驾校",@"游艇托管"]];
     }
     return _headView;
 }
@@ -175,23 +176,21 @@ static NSString *ZSHMoreListCellID = @"ZSHMoreListCell";
     return _guideView;
 }
 
-- (UIScrollView *)funcView{
-    if (!_funcView) {
-        _funcView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, kRealValue(120), KScreenWidth, kRealValue(30))];
-        _funcView.contentSize = CGSizeMake(KScreenWidth * 2, 0);
-        NSArray *funcNameArr = @[@"携艇会所",@"游艇买卖",@"游艇租赁",@"游艇基金",@"活动策划",@"码头建设",@"游艇驾校",@"游艇托管"];
-        CGFloat count = funcNameArr.count;
-        for (int i = 0; i<count; i++) {
-            UIButton *funcBtn = [ZSHBaseUIControl createBtnWithParamDic:@{@"title":funcNameArr[i]} target:self action:nil];
-            [_funcView addSubview:funcBtn];
-            [funcBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.width.mas_equalTo(KScreenWidth/4);
-                make.top.height.mas_equalTo(_funcView);
-                make.left.mas_equalTo(i*(KScreenWidth/4));
-            }];
-        }
+- (LXScollTitleView *)titleView{
+    kWeakSelf(self);
+    if (!_titleView) {
+        _titleView = [[LXScollTitleView alloc] initWithFrame:CGRectMake(0,  kRealValue(120), KScreenWidth, kRealValue(30))];
+        _titleView.indicatorHeight = 0;
+        _titleView.selectedBlock = ^(NSInteger index){
+            [weakself shipBtnAction:index];
+        };
+        _titleView.titleWidth = KScreenWidth/4;
     }
-    return _funcView;
+    return _titleView;
+}
+
+- (void)shipBtnAction:(NSInteger)index{
+
 }
 
 - (void)didReceiveMemoryWarning {
