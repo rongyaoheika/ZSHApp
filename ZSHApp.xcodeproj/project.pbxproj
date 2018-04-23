@@ -118,6 +118,7 @@
 		04CC545E201EBBAF00917089 /* ZSHCountdowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CC545D201EBBAF00917089 /* ZSHCountdowView.m */; };
 		04DD819E2018AEEB00B1E3CE /* ZSHCustomSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DD819D2018AEEB00B1E3CE /* ZSHCustomSlider.m */; };
 		04E2F3C120070E2200F902A4 /* ZSHMagazineReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E2F3C020070E2200F902A4 /* ZSHMagazineReusableView.m */; };
+		04ECCBD9208E01BE0017E76F /* ZSHHomeViewController+Method.m in Sources */ = {isa = PBXBuildFile; fileRef = 04ECCBD8208E01BE0017E76F /* ZSHHomeViewController+Method.m */; };
 		04ED27382009AAC7000B1541 /* ZSHUploadIDCardController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04ED27372009AAC7000B1541 /* ZSHUploadIDCardController.m */; };
 		18063C541FC90379000F5A00 /* ZSHPersonalModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 18063C531FC90379000F5A00 /* ZSHPersonalModel.m */; };
 		18063C571FC90951000F5A00 /* ZSHPersonalDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 18063C561FC90951000F5A00 /* ZSHPersonalDetailModel.m */; };
@@ -801,6 +802,8 @@
 		04DD819D2018AEEB00B1E3CE /* ZSHCustomSlider.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHCustomSlider.m; sourceTree = "<group>"; };
 		04E2F3BF20070E2200F902A4 /* ZSHMagazineReusableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHMagazineReusableView.h; sourceTree = "<group>"; };
 		04E2F3C020070E2200F902A4 /* ZSHMagazineReusableView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHMagazineReusableView.m; sourceTree = "<group>"; };
+		04ECCBD7208E01BE0017E76F /* ZSHHomeViewController+Method.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ZSHHomeViewController+Method.h"; sourceTree = "<group>"; };
+		04ECCBD8208E01BE0017E76F /* ZSHHomeViewController+Method.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "ZSHHomeViewController+Method.m"; sourceTree = "<group>"; };
 		04ED27362009AAC7000B1541 /* ZSHUploadIDCardController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHUploadIDCardController.h; sourceTree = "<group>"; };
 		04ED27372009AAC7000B1541 /* ZSHUploadIDCardController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHUploadIDCardController.m; sourceTree = "<group>"; };
 		14ED69325E9FD4BDB1CA95F8 /* Pods-ZSHApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZSHApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-ZSHApp/Pods-ZSHApp.release.xcconfig"; sourceTree = "<group>"; };
@@ -2934,6 +2937,8 @@
 				FE9CC3E01FA0A44200285475 /* Hotel(酒店) */,
 				FE2BB0C01F8E168B000D5800 /* ZSHHomeViewController.h */,
 				FE2BB0C11F8E168B000D5800 /* ZSHHomeViewController.m */,
+				04ECCBD7208E01BE0017E76F /* ZSHHomeViewController+Method.h */,
+				04ECCBD8208E01BE0017E76F /* ZSHHomeViewController+Method.m */,
 				042DC4972004D12A00AF2995 /* ZSHRecommendView.h */,
 				042DC4982004D12A00AF2995 /* ZSHRecommendView.m */,
 			);
@@ -5309,6 +5314,7 @@
 				FEADBD251FBEBBC00065B94B /* ZSHBlackCardPhoneNumView.m in Sources */,
 				183218091FD69A5300320022 /* ZSHTrainModel.m in Sources */,
 				FE5538831F470BAF00803128 /* UserManager.m in Sources */,
+				04ECCBD9208E01BE0017E76F /* ZSHHomeViewController+Method.m in Sources */,
 				043F2E15200DFF3500CE18DE /* AliyunPlaySDKDemoFullScreenScrollCollectionViewCell.m in Sources */,
 				0453B0B9202C42B200791A75 /* Channel.m in Sources */,
 				FEBD7C901FA6C47300CE2BA6 /* ZSHHotelListCell.m in Sources */,

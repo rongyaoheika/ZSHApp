@@ -50,7 +50,7 @@ static NSString *bottomCellIdentifier   = @"listCell";
                       @"mine_icon_4",@"mine_icon_5",@"mine_icon_6",
                       @"mine_icon_7",@"mine_icon_8",@"mine_icon_10",
                       @"mine_icon_11",@"mine_icon_12",@"mine_icon_9",
-                      @"mine_icon_9"];
+                      @"mine_icon_13"];
     self.pushVCS = @[
   @"ZSHMemberCenterViewController",@"",@"ZSHWeiboViewController",
   @"ZSHTitleContentViewController",@"",@"ZSHServiceCenterViewController",

@@ -128,13 +128,16 @@
 - (void)headBtnClick:(UITapGestureRecognizer *)gesture {
     NSInteger tag = gesture.view.tag - 10;
     NSString *privilegeID = _privlegeModelArr[tag].PRIVILEGE_ID;
-    
     NSArray *privilegeIDs = @[@"383387957278539776", @"383557677113933824", @"385379959020978176", @"385380016873013248", @"383557751072096256", @"383557820093562880", @"383557868474859520", @"383557942164586496", @"383557992391376896", @"383558270297571328", @"383558332801089536", @"383558377935994880", @"383558448089923584", @"383558527584567296", @"383558605036584960", @"383558664083996672"];
     
     if ([privilegeIDs containsObject:privilegeID]) {
+
         NSInteger index = [privilegeIDs indexOfObject:privilegeID];
+        NSMutableDictionary *mDic = [[NSMutableDictionary alloc]initWithDictionary:self.paramArr[index]];
+        [mDic setValue:privilegeID forKey:@"privilegeID"];
+        
         Class className = NSClassFromString(self.pushVCsArr[index]);
-        RootViewController *vc = [[className alloc]initWithParamDic:self.paramArr[index]];
+        RootViewController *vc = [[className alloc]initWithParamDic:[mDic copy] ];
         [self.navigationController pushViewController:vc animated:YES];
     }
 }

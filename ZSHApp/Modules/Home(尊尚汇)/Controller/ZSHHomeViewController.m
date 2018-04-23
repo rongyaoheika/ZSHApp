@@ -31,6 +31,7 @@
 #import "ZSHMagazineViewController.h"
 #import "ZSHGuideView.h"
 #import "ZSHMusicMainViewController.h"
+#import "ZSHHomeViewController+Method.h"
 
 static NSString *Identify_HeadCell = @"headCell";
 static NSString *Identify_NoticeCell = @"noticeCell";
@@ -62,8 +63,7 @@ static NSString *Identify_MusicCell = @"musicCell";
 @property (nonatomic, strong) NSArray                *recommendImageArr;
 
 @property (nonatomic, strong) PYSearchViewController *searchViewController;
-
-
+@property (nonatomic, strong) UIButton               *moveRedPacket;
 
 @end
 
@@ -76,6 +76,17 @@ static NSString *Identify_MusicCell = @"musicCell";
     [self loadData];
 }
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self creatMoveBtn];
+}
+
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [_moveRedPacket removeFromSuperview];
+    _moveRedPacket = nil;
+}
+
 - (void)loadData{
     [self startLocateWithDelegate:self];
      _homeLogic = [[ZSHHomeLogic alloc]init];
@@ -83,23 +94,23 @@ static NSString *Identify_MusicCell = @"musicCell";
     [self requestData];
     
     //更多列表
-    self.pushVCsArr = @[@"ZSHTitleContentViewController",
-                        @"ZSHTitleContentViewController",
-                        @"ZSHAirPlaneViewController",
-                        @"ZSHAirPlaneViewController",
+    self.pushVCsArr = @[@"ZSHTitleContentViewController",     //美食
+                        @"ZSHTitleContentViewController",     //酒店
+                        @"ZSHAirPlaneViewController",         //火车票
+                        @"ZSHAirPlaneViewController",         //机票
                         @"ZSHTitleContentViewController",     //马术
                         @"ZSHTitleContentViewController",     //游艇
                         @"ZSHTitleContentViewController",     //豪车
                         @"ZSHMoreSubscribeViewController"];   //更多
     
     self.paramArr = @[
-                      @{KFromClassType:@(FromFoodVCToTitleContentVC),@"storeName":@(0)},
-                      @{KFromClassType:@(FromHotelVCToTitleContentVC),@"storeName":@(1)},
-                      @{KFromClassType:@(ZSHFromHomeTrainVCToAirPlaneVC),@"title":@"火车票预订"},
-                      @{KFromClassType:@(ZSHHomeAirPlaneVCToAirPlaneVC),@"title":@"机票预订"},
-                      @{KFromClassType:@(FromHorseVCToTitleContentVC),@"storeName":@(6)},  //马术
-                      @{KFromClassType:@(FromShipVCToTitleContentVC),@"storeName":@(4)},   //游艇
-                      @{KFromClassType:@(FromLuxcarVCToTitleContentVC),@"storeName":@(5)}, //豪车
+                      @{KFromClassType:@(FromFoodVCToTitleContentVC),@"storeName":@(0),@"privilegeID":@"383387957278539776"},
+                      @{KFromClassType:@(FromHotelVCToTitleContentVC),@"storeName":@(1),@"privilegeID":@"383557677113933824"},
+                      @{KFromClassType:@(ZSHFromHomeTrainVCToAirPlaneVC),@"title":@"火车票预订",@"privilegeID":@"383557751072096256"},
+                      @{KFromClassType:@(ZSHHomeAirPlaneVCToAirPlaneVC),@"title":@"机票预订",@"privilegeID":@"383557820093562880"},
+                      @{KFromClassType:@(FromHorseVCToTitleContentVC),@"storeName":@(6),@"privilegeID":@"383557868474859520"},  //马术
+                      @{KFromClassType:@(FromShipVCToTitleContentVC),@"storeName":@(4),@"privilegeID":@"383557942164586496"},   //游艇
+                      @{KFromClassType:@(FromLuxcarVCToTitleContentVC),@"storeName":@(5),@"privilegeID":@"383557992391376896"}, //豪车
                       @{}
                       ];
     self.menuPushVCsArr = @[@"",
@@ -180,7 +191,7 @@ static NSString *Identify_MusicCell = @"musicCell";
     [self hasUpdateVersion];
     [self addNavigationItemWithImageName:@"nav_home_more" title:@"三亚市" locate:XYButtonEdgeInsetsStyleRight isLeft:YES target:self action:@selector(locateBtnAction) tag:10];
     [self addNavigationItemWithImageName:@"nav_home_menu" isLeft:NO target:self action:@selector(menuBtntClick:) tag:11];
-    
+   
     UIButton *searchBtn = [ZSHBaseUIControl  createBtnWithParamDic:@{@"title":@"搜索",@"font":kPingFangRegular(14),@"normalImage":@"nav_home_search"} target:self action:@selector(searchAction)];
     searchBtn.frame = CGRectMake(0, 0, kRealValue(270), 30);
     searchBtn.backgroundColor = KZSHColor1A1A1A;
@@ -609,6 +620,25 @@ static NSString *Identify_MusicCell = @"musicCell";
     }];
 }
 
+#pragma mark 五行链
+-(void)creatMoveBtn{
+    UIPanGestureRecognizer *panTouch =  [[UIPanGestureRecognizer  alloc]initWithTarget:self action:@selector(handlePan:)];
+    NSDictionary *btnDic = @{@"title":@"五行链",@"backgroundColor":KZSHColorF29E19};
+    
+    if (!_moveRedPacket) {
+        _moveRedPacket = [ZSHBaseUIControl createBtnWithParamDic:btnDic target:self action:@selector(clickMoveBtn:)];
+        _moveRedPacket.frame = CGRectMake(KScreenWidth-120, KScreenHeight-120, kRealValue(60), kRealValue(60));
+        _moveRedPacket.layer.cornerRadius = kRealValue(20.0);
+        [_moveRedPacket setTitleColor:KWhiteColor forState:UIControlStateNormal];
+    }
+
+    [_moveRedPacket addGestureRecognizer:panTouch];
+    [kAppWindow addSubview:_moveRedPacket];
+}
+
+- (void)clickMoveBtn:(UIButton *)btn{
+    RLog(@"点击了五行区块链浮动按钮");
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

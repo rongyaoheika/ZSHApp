@@ -22,7 +22,8 @@
 @property (nonatomic, strong) ZSHGuideView      *guideView;
 @property (nonatomic, strong) ZSHBaseView       *headView;
 @property (nonatomic, strong) LXScollTitleView  *titleView;
-@property (nonatomic, strong) NSArray           *yachtArr;
+@property (nonatomic, strong) NSArray           *yachtServiceArr;
+@property (nonatomic, strong) NSMutableArray    *serviceTitleArr;
 
 @end
 
@@ -66,6 +67,17 @@ static NSString *ZSHMoreListCellID = @"ZSHMoreListCell";
                 [weakself updateAd:responseObject[@"ad"]];
                 [weakself initViewModel];
             } fail:nil];
+            
+            //游艇服务
+            [_moreLogic loadYachtServiceWithParamDic:@{@"PRIVILEGE_ID":self.paramDic[@"privilegeID"]} success:^(id responseObject) {
+                weakself.yachtServiceArr = responseObject;
+                weakself.serviceTitleArr = [[NSMutableArray alloc]init];
+                for (NSDictionary *subDic in responseObject) {
+                    [weakself.serviceTitleArr addObject:subDic[@"BUTTON_NAME"]];
+                }
+                [weakself.titleView reloadViewWithTitles:weakself.serviceTitleArr];
+                
+            } fail:nil];
             break;
         }
         case FromGolfVCToTitleContentVC:{//高尔夫汇
@@ -104,6 +116,7 @@ static NSString *ZSHMoreListCellID = @"ZSHMoreListCell";
     }
     [_guideView updateViewWithParamDic:@{@"dataArr":imageArr}];
 }
+
 
 - (void)createUI{
     [self.view addSubview:self.tableView];
@@ -158,13 +171,14 @@ static NSString *ZSHMoreListCellID = @"ZSHMoreListCell";
     return sectionModel;
 }
 
+#pragma getter
 - (ZSHBaseView *)headView{
     if (!_headView) {
         CGFloat headHeight = (kFromClassTypeValue==FromShipVCToTitleContentVC?kRealValue(150):kRealValue(120));
         _headView = [[ZSHBaseView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, headHeight) paramDic:nil];
         [_headView addSubview:self.guideView];
         kFromClassTypeValue==FromShipVCToTitleContentVC?[_headView addSubview:self.titleView]:nil;
-        [self.titleView reloadViewWithTitles:@[@"携艇会所",@"游艇买卖",@"游艇租赁", @"游艇基金",@"活动策划",@"码头建设",@"游艇驾校",@"游艇托管"]];
+//        [self.titleView reloadViewWithTitles:@[@"携艇会所",@"游艇买卖",@"游艇租赁", @"游艇基金",@"活动策划",@"码头建设",@"游艇驾校",@"游艇托管"]];
     }
     return _headView;
 }
@@ -190,10 +204,10 @@ static NSString *ZSHMoreListCellID = @"ZSHMoreListCell";
     return _titleView;
 }
 
+
 - (void)shipBtnAction:(NSInteger)index{
-    //self.yachtArr[index][@"id"]
     //加载h5
-    NSString *urlStr = NSStringFormat(@"%@?button_id=%@",ZSHYachtDetailH5,@"430760993237237760");
+    NSString *urlStr = NSStringFormat(@"%@?button_id=%@",ZSHYachtDetailH5,self.yachtServiceArr[index][@"BUTTON_ID"]);
     
     RLog(@"游艇服务请求h5网址==%@",urlStr);
     RootWebViewController *goodsDetailVC =  [[RootWebViewController alloc] initWithParamDic:@{@"url":urlStr}];

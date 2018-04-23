@@ -198,7 +198,7 @@
             self.contentVCS = @[@"ZSHMoreListViewController",
                                 @"ZSHMoreListViewController",
                                 @"ZSHMoreListViewController"];
-            self.paramArr = @[@{KFromClassType:@(kFromClassTypeValue)},@{KFromClassType:@(kFromClassTypeValue)},@{KFromClassType:@(kFromClassTypeValue)}];
+            self.paramArr = @[self.paramDic,self.paramDic,self.paramDic];
             [self createTileViewUI];
             [self createSearchNaviUI];
         }

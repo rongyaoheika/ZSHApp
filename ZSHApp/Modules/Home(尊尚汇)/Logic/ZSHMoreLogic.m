@@ -139,7 +139,7 @@
 
 //游艇服务
 - (void)loadYachtServiceWithParamDic:(NSDictionary *)paramDic success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail {
-    [PPNetworkHelper POST:kUrlBrandstyleList parameters:paramDic success:^(id responseObject) {
+    [PPNetworkHelper POST:kUrlYachtService parameters:paramDic success:^(id responseObject) {
         RLog(@"游艇服务数据==%@",responseObject)
         NSArray *serviceDetailDicArr = responseObject[@"pd"];
         success(serviceDetailDicArr);

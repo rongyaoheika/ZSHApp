@@ -945,6 +945,12 @@
 //请求地址：/appdiscoverin/updpageviews?UPDPAGEVIEWS(混淆码)
 #define kUrlUpdPageViews [NSString stringWithFormat:@"/appdiscoverin/updpageviews?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"UPDPAGEVIEWS"]]
 
+
+//248.获取游艇服务等处的按钮
+//参数：     请求参数：PRIVILEGE_ID   商家类型
+//http://localhost:8081/ZSHINTER/highsort/getbuttonlist?GETBUTTONLIST&CATEGORY_ID=游艇商家
+#define kUrlYachtService [NSString stringWithFormat:@"/highsort/getbuttonlist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"GETBUTTONLIST"]]
+
 #endif /* URLMacros_h */
 
 
