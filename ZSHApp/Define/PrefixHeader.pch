@@ -41,7 +41,7 @@
 #import "NSDictionary+Safe.h"
 #import "UIImage+ImageEffects.h"
 #import "NSString+pinyin.h"
-
+#import "RootWebViewController.h"
 //第三方
 #import <YYKit.h>
 #import <MBProgressHUD.h>

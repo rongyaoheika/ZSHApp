@@ -94,7 +94,7 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
     ZSHCardCommitBottomView *bottomView = [[ZSHCardCommitBottomView alloc]initWithFrame:CGRectMake(0, KScreenHeight - KBottomTabH, KScreenWidth, KBottomTabH)];
     kWeakSelf(self);
     [bottomView.rightBtn addTapBlock:^(UIButton *btn) {
-        [weakself userRegister];
+        [weakself userRegister:bottomView.rightBtn];
     }];
     [self.view addSubview:bottomView];
 }
@@ -491,7 +491,7 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
     }];
 }
 
-- (void)userRegister {
+- (void)userRegister:(UIButton *)registerBtn {
     NSString *cardNo = SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"CARDNO"]);
     NSString *phone = SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"PHONE"]);
     NSString *realName = SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"REALNAME"]);
@@ -535,12 +535,20 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
                                        @"ADDRESS":SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"ADDRESS"]),
                                        @"CUSTOM":SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"CUSTOM"]),
                                        @"CUSTOMCONTENT":NSStringFormat(@"%@%@", SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"CardCustom112311"]),SafeStr([[NSUserDefaults standardUserDefaults] objectForKey:@"CardCustom112312"]))
-                                       }];
+                                       } btn:registerBtn];
     
     _loginLogic.loginSuccess = ^(id response) {
         RLog(@"请求成功：返回数据&%@",response);
+        if ([response[@"result"]isEqualToString:@"01"]) {
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"提交审核成功" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            [alert show];
+        }
+        
+        //10s之后可重复点击提交审核按钮
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(10.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            registerBtn.enabled = YES;
+        });
     };
-    //    }
     
 }
 

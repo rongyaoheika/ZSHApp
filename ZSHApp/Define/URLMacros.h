@@ -71,6 +71,8 @@
 // 1首页推荐（完成）
 #define kUrlUserHome [NSString stringWithFormat:@"/apphomein/getrecommendlist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"COMMEND"]]
 // 2用户注册 (完成)
+//参数：CARDNO 会员卡号/PHONE 用户手机号/REALNAME 真实姓名/PROVINCE 省市区/ADDRESS 详细地址/ CUSTOM 是否定制（0放弃定制1普通定制2高端定制）
+//可选参数：CUSTOMCONTENT 定制内容
 #define kUrlUserRegister [NSString stringWithFormat:@"/appuserin/userregister?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"REGISTER"]]
 // 3用户登录 (完成)
 //  手机号登录
@@ -930,7 +932,7 @@
 #define kUrlAppBusinessIn [NSString stringWithFormat:@"/business/appbusinessin?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"APPBUSINESSIN"]]
 
 //176.商家提交入驻信息
-//APPLYFOR_IDCARDIMAGE 经营者身份照片地址 /   APPLYFOR_IMAGES  实体店铺照片地址/   APPLYFOR_CHARTERIMAGE 店铺营业执照图片地址/
+//APPLYFOR_IDCARDIMAGE 经营者身份照片地址 /   APPLYFOR_IMAGES  实体店铺照片地址/   APPLYFOR_CHARTERIMAGE 店铺营业执照图片地址/  IDENTIFY_CODE   验证码
 //请求地址：/business/appbusinessin?APPBUSINESSIN(混淆码)
 #define kUrlGetProbyStandard [NSString stringWithFormat:@"/product/getprobystandard?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"GETPROBYSTANDARD"]]
 //207.修改用户订阅的头条的菜单

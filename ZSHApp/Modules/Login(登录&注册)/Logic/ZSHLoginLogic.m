@@ -46,8 +46,8 @@
 }
 
 //  注册
-- (void)userRegisterWithDic:(NSDictionary *)dic {
-
+- (void)userRegisterWithDic:(NSDictionary *)dic btn:(UIButton *)registerBtn{
+    registerBtn.enabled = NO;
     [PPNetworkHelper POST:kUrlUserRegister parameters:dic success:^(id responseObject) {
         RLog(@"请求成功：返回数据&%@",responseObject);
         if (_loginSuccess) {
@@ -55,6 +55,7 @@
         }
     } failure:^(NSError *error) {
         RLog(@"请求失败");
+        registerBtn.enabled = YES;
     }];
 }
 

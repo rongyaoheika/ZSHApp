@@ -22,6 +22,7 @@
 @property (nonatomic, strong) ZSHGuideView      *guideView;
 @property (nonatomic, strong) ZSHBaseView       *headView;
 @property (nonatomic, strong) LXScollTitleView  *titleView;
+@property (nonatomic, strong) NSArray           *yachtArr;
 
 @end
 
@@ -190,6 +191,13 @@ static NSString *ZSHMoreListCellID = @"ZSHMoreListCell";
 }
 
 - (void)shipBtnAction:(NSInteger)index{
+    //self.yachtArr[index][@"id"]
+    //加载h5
+    NSString *urlStr = NSStringFormat(@"%@?button_id=%@",ZSHYachtDetailH5,@"430760993237237760");
+    
+    RLog(@"游艇服务请求h5网址==%@",urlStr);
+    RootWebViewController *goodsDetailVC =  [[RootWebViewController alloc] initWithParamDic:@{@"url":urlStr}];
+    [self.navigationController pushViewController:goodsDetailVC animated:YES];
 
 }
 

@@ -19,7 +19,7 @@ typedef void(^LoginSuccess)(id response);
 //卡密登录
 - (void)loginWithCardNo:(NSString *)CardNo password:(NSString *)password;
 // 注册
-- (void)userRegisterWithDic:(NSDictionary *)dic;
+- (void)userRegisterWithDic:(NSDictionary *)dic btn:(UIButton *)registerBtn;
 // 账号密码
 - (void)loginUserNamePwdWithDic:(NSDictionary *)dic success:(void (^)(id response))success;
 // 选择卡种类的图片

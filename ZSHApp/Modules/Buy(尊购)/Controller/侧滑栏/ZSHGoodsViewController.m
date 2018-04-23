@@ -219,12 +219,19 @@ static NSString *const ZSHBrandSortCellID = @"ZSHBrandSortCell";
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    RLog(@"点击了个第%zd分组第%zd个Item",indexPath.section,indexPath.row);
-    ZSHGoodsTitleContentViewController *goodContentVC = [[ZSHGoodsTitleContentViewController alloc]initWithParamDic:@{@"PreBrandID":_mainArr[indexPath.row][@"BUSINESS_ID"],
-                                KFromClassType:@(FromGoodsVCToGoodsTitleVC),
-                                @"cellType":@(ZSHCollectionViewCellType)
-                                }];
-    [self.navigationController pushViewController:goodContentVC animated:YES];
+//    RLog(@"点击了个第%zd分组第%zd个Item",indexPath.section,indexPath.row);
+//    ZSHGoodsTitleContentViewController *goodContentVC = [[ZSHGoodsTitleContentViewController alloc]initWithParamDic:@{@"PreBrandID":_mainArr[indexPath.row][@"BUSINESS_ID"],
+//                                KFromClassType:@(FromGoodsVCToGoodsTitleVC),
+//                                @"cellType":@(ZSHCollectionViewCellType)
+//                                }];
+//    [self.navigationController pushViewController:goodContentVC animated:YES];
+    
+    //加载h5
+    NSString *urlStr = NSStringFormat(@"%@?productid=%@",ZSHGoodsDetailH5,_mainArr[indexPath.row][@"BUSINESS_ID"]);
+    
+    RLog(@"商品详情请求h5网址==%@",urlStr);
+    RootWebViewController *goodsDetailVC =  [[RootWebViewController alloc] initWithParamDic:@{@"url":urlStr}];
+    [self.navigationController pushViewController:goodsDetailVC animated:YES];
 }
 
 - (void)headerRereshing {

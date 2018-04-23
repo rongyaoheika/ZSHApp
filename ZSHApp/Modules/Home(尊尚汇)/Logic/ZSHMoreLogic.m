@@ -137,4 +137,15 @@
     }];
 }
 
+//游艇服务
+- (void)loadYachtServiceWithParamDic:(NSDictionary *)paramDic success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail {
+    [PPNetworkHelper POST:kUrlBrandstyleList parameters:paramDic success:^(id responseObject) {
+        RLog(@"游艇服务数据==%@",responseObject)
+        NSArray *serviceDetailDicArr = responseObject[@"pd"];
+        success(serviceDetailDicArr);
+    } failure:^(NSError *error) {
+        RLog(@"请求失败");
+    }];
+}
+
 @end

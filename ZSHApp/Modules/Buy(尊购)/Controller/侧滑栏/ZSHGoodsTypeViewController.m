@@ -11,7 +11,6 @@
 #import "ZSHGoodsCell.h"
 #import "ZSHGoodsDetailViewController.h"
 #import "ZSHBuyLogic.h"
-#import "RootWebViewController.h"
 
 @interface ZSHGoodsTypeViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 

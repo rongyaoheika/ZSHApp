@@ -51,9 +51,10 @@
 #define AlivcPullURL  @"http://cloud.video.taobao.com/play/u/2712925557/p/1/e/6/t/1/40050769.mp4"// @"rtmp://live.rongyaohk.com/ZSHApp/game1000001332958882?auth_key=1516442532-0-0-c94169850efaa7f15a2c565bec67d671"
 
 //h5链接
-#define   ZSHGoodsDetailH5          @"http://192.168.1.128:8080/two/home/introduction.html"
-#define   ZSHLeftShopCartH5         @"http://192.168.1.128:8080/two/home/shopcart.html"
-#define   ZSHMineAddressListH5      @"http://192.168.1.128:8080/two/home/address.html"
-
+#define   ZSHGoodsDetailH5          @"http://inters.rongyaohk.com/home/introduction.html"
+#define   ZSHLeftShopCartH5         @"http://inters.rongyaohk.com/home/shopcart.html"
+#define   ZSHMineAddressListH5      @"http://inters.rongyaohk.com/home/address.html"
+//游艇服务
+#define   ZSHYachtDetailH5          @"http://192.168.1.121:8080/two/home/bannerdetail.html"
 
 #endif /* ThirdMacros_h */

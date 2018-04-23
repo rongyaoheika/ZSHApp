@@ -49,4 +49,7 @@
 //底部（美食，酒店，酒吧等） 品牌、筛选数据
 - (void)loadBottomCategoryWithParamDic:(NSDictionary *)paramDic success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail;
 
+//游艇服务
+- (void)loadYachtServiceWithParamDic:(NSDictionary *)paramDic success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail;
+
 @end

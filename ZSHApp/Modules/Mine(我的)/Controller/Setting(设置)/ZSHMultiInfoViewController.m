@@ -255,7 +255,6 @@ static NSString *ListCell = @"listCellId";
                         if (weakself.funStoreName) {
                             ZSHTextFieldCellView *textFieldView  = [cell.contentView viewWithTag:2+indexPath.row];
                             textFieldView.textField.text = weakself.funStoreName;
-                            
                         }
                     }
                     
@@ -416,6 +415,8 @@ static NSString *ListCell = @"listCellId";
                 weakself.text5 = str;
             } else if (index == 10) {
                 weakself.text6 = str;
+            } else if (index == 11) {
+                weakself.text7 = str;
             }
         } else if (kFromClassTypeValue ==  FromCreateStoreVCToMultiInfoVC ){//创建门店
             if ([self.paramDic[@"row"]integerValue] == 9) {//娱乐商家（增加一行“门店分类”）：
@@ -611,6 +612,7 @@ static NSString *ListCell = @"listCellId";
             break;
         }
         case FromVerifyVCToMultiInfoVC:{//门店提交审核
+            RLog(@"验证码== %@",self.text7);
             if ([self submitCheckAction]) {
                 
                 NSString *categoryId = self.funStoreName?self.funStoreName:self.paramDic[@"categoryId"];
@@ -624,7 +626,8 @@ static NSString *ListCell = @"listCellId";
                                                @"APPLY_OPERRATE":self.text1,@"APPLYFOR_IDCARD":self.text2,
                                                @"APPLYFOR_CHARTERNUM":self.text3,@"APPLYFOR_CHARTERNAME":self.text4,
                                                @"APPLYFOR_LEGALPERSON":self.text5,@"APPLYFOR_PHONE":self.text6,
-                                               @"HONOURUSER_ID":HONOURUSER_IDValue
+                                               @"HONOURUSER_ID":HONOURUSER_IDValue,
+                                               @"IDENTIFY_CODE":self.text7
                                                };
                     [self submitActionWithBtn:nextBtn paramDic:paramDic names:@[@"APPLYFOR_IDCARDIMAGE",@"APPLYFOR_IMAGES",@"APPLYFOR_CHARTERIMAGE"] images:_imagMArr fileNames:_fileNameMArr];
                     //5s之后可重复点击提交审核按钮

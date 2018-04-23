@@ -24,6 +24,7 @@ typedef void(^SaveBlock)(id , NSInteger );
 @property (nonatomic, copy) NSString *text4;
 @property (nonatomic, copy) NSString *text5;
 @property (nonatomic, copy) NSString *text6;
+@property (nonatomic, copy) NSString *text7;
 
 @property (nonatomic, copy) NSString *imageText1;
 @property (nonatomic, copy) NSString *imageText2;
