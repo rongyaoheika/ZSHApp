@@ -8,7 +8,7 @@
 
 #import "ZSHVideoDetailViewController.h"
 #import "ZSHVideoDetailCell.h"
-#import "ZSHBottomBlurPopView.h"
+
 
 static NSString *cellIdentifier = @"VideoDetailCellIdentifier";
 

@@ -8,7 +8,7 @@
 
 #import "ZSHSubscribeViewController.h"
 #import "ZSHMoreLogic.h"
-
+#import "ZSHHotelCalendarCell.h"
 @interface ZSHSubscribeViewController ()
 
 @property (nonatomic, strong) UIScrollView *scrollView;
@@ -28,6 +28,9 @@
 @property (nonatomic, strong) NSArray      *listDataDicArr;
 @property (nonatomic, strong) NSArray      *listDic;
 @property (nonatomic, strong) NSArray      *imageArr;
+
+@property (nonatomic, strong) ZSHHotelCalendarCell  *calendarCell;
+@property (nonatomic, strong) ZSHBottomBlurPopView  *bottomBlurPopView;
 
 @end
 
@@ -142,7 +145,7 @@
 }
 
 - (void)createUI{
-    
+    kWeakSelf(self);
     // height 1167
     _scrollView = [[UIScrollView alloc] init];
     _scrollView.scrollEnabled = true;

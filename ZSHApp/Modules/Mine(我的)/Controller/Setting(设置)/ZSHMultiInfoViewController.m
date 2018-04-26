@@ -49,7 +49,7 @@ static NSString *ListCell = @"listCellId";
 @property (nonatomic, strong) NSArray       *idImgDataArr;
 @property (nonatomic, strong) NSArray       *storeImgDataArr;
 @property (nonatomic, strong) NSArray       *licenseImgDataArr;
-
+@property (nonatomic, strong) NSArray       *textArr;
 @end
 
 @implementation ZSHMultiInfoViewController
@@ -160,6 +160,7 @@ static NSString *ListCell = @"listCellId";
                                   @(ZSHTextFieldSelect), @(ZSHTextFieldViewUser), @(ZSHTextFieldViewUser), @(ZSHTextFieldSelect),@(ZSHTextFieldSelect),
                                   @(ZSHTextFieldViewUser), @(ZSHTextFieldViewUser), @(ZSHTextFieldViewUser),@(ZSHTextFieldViewPhone), @(ZSHTextFieldViewCaptcha)];
         self.placeHolderArr = @[@"本人身份证照片", @"须与身份证姓名一致", @"请输入经营者身份证号码", @"请上传实体店铺照片",@"请上传营业执照照片", @"注册号或同一社会信用代码", @"营业执照名称这一行的内容", @"营业执照上法人或经营者姓名",@"用本人身份证办理的手机号", @"输入验证码"];
+        self.textArr = @[@"",@"维大神",@"371522199807212128",@"",@"",@"EJ1234890",@"海南尊尚汇网络科技有限公司",@"陈震",@"13718127415",@""];
     } else if (kFromClassTypeValue ==  FromWeMediaVCToMultiInfoVC) { // 自媒体入驻
         self.titleArr = @[@"自媒体名称", @"地址信息", @"详细地址"];
         self.textFieldTypeArr = @[@(ZSHTextFieldViewUser), @(ZSHTextFieldSelect), @(ZSHTextFieldViewUser)];
@@ -403,21 +404,24 @@ static NSString *ListCell = @"listCellId";
         if (kFromClassTypeValue == FromUserInfoNickNameVCToMultiInfoVC || kFromClassTypeValue == FromUserInfoResumeVCToMultiInfoVC){
             weakself.changedData = str;
         } else if(kFromClassTypeValue == FromVerifyVCToMultiInfoVC){
-            if (index == 3) {
+            if (index == 3) {//经营者姓名
                 weakself.text1 = str;
-            } else if (index == 4) {
+            } else if (index == 4) {//身份证号
                 weakself.text2 = str;
-            } else if (index == 7) {
+            } else if (index == 7) {//注册号
                 weakself.text3 = str;
-            } else if (index == 8) {
+            } else if (index == 8) {//执照名称
                 weakself.text4 = str;
-            } else if (index == 9) {
+            } else if (index == 9) {//法人姓名
                 weakself.text5 = str;
-            } else if (index == 10) {
+            } else if (index == 10) {//经营者手机号
                 weakself.text6 = str;
-            } else if (index == 11) {
+            } else if (index == 11) {//验证码
                 weakself.text7 = str;
             }
+            
+            [[NSUserDefaults standardUserDefaults]setObject:weakself.text6 forKey:@"phone"];
+            [[NSUserDefaults standardUserDefaults]synchronize];
         } else if (kFromClassTypeValue ==  FromCreateStoreVCToMultiInfoVC ){//创建门店
             if ([self.paramDic[@"row"]integerValue] == 9) {//娱乐商家（增加一行“门店分类”）：
                 if (index == 3) {//门店名称
@@ -627,8 +631,9 @@ static NSString *ListCell = @"listCellId";
                                                @"APPLYFOR_CHARTERNUM":self.text3,@"APPLYFOR_CHARTERNAME":self.text4,
                                                @"APPLYFOR_LEGALPERSON":self.text5,@"APPLYFOR_PHONE":self.text6,
                                                @"HONOURUSER_ID":HONOURUSER_IDValue,
-                                               @"IDENTIFY_CODE":self.text7
+                                               @"IDENTIFY_CODE":@"944013"//self.text7
                                                };
+                   
                     [self submitActionWithBtn:nextBtn paramDic:paramDic names:@[@"APPLYFOR_IDCARDIMAGE",@"APPLYFOR_IMAGES",@"APPLYFOR_CHARTERIMAGE"] images:_imagMArr fileNames:_fileNameMArr];
                     //5s之后可重复点击提交审核按钮
                     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{

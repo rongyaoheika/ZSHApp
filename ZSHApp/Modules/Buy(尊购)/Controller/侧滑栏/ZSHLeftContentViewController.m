@@ -125,13 +125,13 @@ static NSString *ZSHBaseBottomListCellID = @"ZSHBaseBottomListCell";
             };
             
             cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
-//                RootViewController *vc = nil;
-//                if (indexPath.row == 3) {//购物车
-//                    vc =  [[RootWebViewController alloc] initWithUrl:ZSHLeftShopCartH5];
-//                } else {
+                RootViewController *vc = nil;
+                if (indexPath.row == 3) {//购物车
+                    vc =  [[RootWebViewController alloc] initWithParamDic:@{@"url":ZSHLeftShopCartH5}];
+                } else {
                     Class className = NSClassFromString(self.vcArr[indexPath.row]);
-                    RootViewController *vc = [[className alloc]initWithParamDic:self.paramDicArr[indexPath.row]];
-//                }
+                    vc = [[className alloc]initWithParamDic:self.paramDicArr[indexPath.row]];
+                }
                 MainTabBarController *tab = (MainTabBarController *)self.sideSlipVC.contentViewController;
                 RootNavigationController *mainNavi = (RootNavigationController *)tab.selectedViewController;
                 [mainNavi pushViewController:vc animated:YES];

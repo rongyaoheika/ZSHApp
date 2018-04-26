@@ -14,7 +14,7 @@
 #import "ZSHAirPlaneViewController.h"
 #import "ZSHKTVModel.h"
 #import "ZSHSubscribeViewController.h"
-#import "ZSHBottomBlurPopView.h"
+
 #import "ZSHServiceCenterViewController.h"
 #import "ZSHToplineViewController.h"
 #import "ZSHCityViewController.h"
@@ -623,13 +623,12 @@ static NSString *Identify_MusicCell = @"musicCell";
 #pragma mark 五行链
 -(void)creatMoveBtn{
     UIPanGestureRecognizer *panTouch =  [[UIPanGestureRecognizer  alloc]initWithTarget:self action:@selector(handlePan:)];
-    NSDictionary *btnDic = @{@"title":@"五行链",@"backgroundColor":KZSHColorF29E19};
+    NSDictionary *btnDic = @{@"title":@"五行链",@"font":kPingFangRegular(11)};
     
     if (!_moveRedPacket) {
         _moveRedPacket = [ZSHBaseUIControl createBtnWithParamDic:btnDic target:self action:@selector(clickMoveBtn:)];
-        _moveRedPacket.frame = CGRectMake(KScreenWidth-120, KScreenHeight-120, kRealValue(60), kRealValue(60));
-        _moveRedPacket.layer.cornerRadius = kRealValue(20.0);
-        [_moveRedPacket setTitleColor:KWhiteColor forState:UIControlStateNormal];
+        [_moveRedPacket setBackgroundImage:[UIImage imageNamed:@"move_btn"] forState:UIControlStateNormal];
+        _moveRedPacket.frame = CGRectMake(KScreenWidth-100, KScreenHeight-100, kRealValue(50), kRealValue(50));
     }
 
     [_moveRedPacket addGestureRecognizer:panTouch];

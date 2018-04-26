@@ -9,7 +9,7 @@
 #import "ZSHExchangeViewController.h"
 #import "ZSHIntegralExchangeCell.h"
 #import "ZSHIntegralExchangeCell.h"
-#import "ZSHBottomBlurPopView.h"
+
 
 @interface ZSHExchangeViewController ()
 

@@ -149,6 +149,8 @@ static AFHTTPSessionManager *_sessionManager;
              responseCache:(PPHttpRequestCache)responseCache
                    success:(PPHttpRequestSuccess)success
                    failure:(PPHttpRequestFailed)failure {
+    
+    RLog(@"最后请求参数==%@",parameters);
     //读取缓存
     responseCache!=nil ? responseCache([PPNetworkCache httpCacheForURL:URL parameters:parameters]) : nil;
     

@@ -19,6 +19,8 @@
 @implementation ZSHHotelCalendarCell
 
 - (void)setup{
+    self.userInteractionEnabled = YES;
+    self.contentView.userInteractionEnabled = YES;
     
     NSDictionary *leftTopDic = @{@"text":@"入住",@"font":kPingFangRegular(11),@"textAlignment":@(NSTextAlignmentCenter),@"height":@(11)};
     NSDictionary *leftBottomDic = @{@"text":@"8-8",@"font":kPingFangRegular(15),@"textAlignment":@(NSTextAlignmentCenter),@"height":@(15)};

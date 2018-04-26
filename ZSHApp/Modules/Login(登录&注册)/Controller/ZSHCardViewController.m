@@ -538,7 +538,7 @@ static NSString *ZSHAddressViewID = @"ZSHAddressView";
                                        } btn:registerBtn];
     
     _loginLogic.loginSuccess = ^(id response) {
-        RLog(@"请求成功：返回数据&%@",response);
+        RLog(@"提交审核成功：返回数据&%@",response);
         if ([response[@"result"]isEqualToString:@"01"]) {
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"提交审核成功" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
             [alert show];

@@ -67,5 +67,7 @@
 - (void)requestUserPhone:(NSDictionary *)dic success:(void (^)(id response))success;
 // 根据店铺获取优惠券列表
 - (void)requestCouponList:(NSDictionary *)dic success:(void (^)(id response))success;
+// 获取验证码
+- (void)requestMessageCodeWithDic:(NSDictionary *)dic success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail;
 
 @end

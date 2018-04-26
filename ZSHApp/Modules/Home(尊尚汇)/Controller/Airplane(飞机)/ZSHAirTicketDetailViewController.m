@@ -9,7 +9,7 @@
 #import "ZSHAirTicketDetailViewController.h"
 #import "ZSHAirTicketDetailCell.h"
 #import "ZSHAirTicketDetailHeadView.h"
-#import "ZSHBottomBlurPopView.h"
+
 @interface ZSHAirTicketDetailViewController ()
 
 @property (nonatomic,strong)UILabel  *naviDateLabel;

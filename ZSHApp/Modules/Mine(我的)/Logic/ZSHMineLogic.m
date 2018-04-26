@@ -234,6 +234,14 @@
     }];
 }
 
-
+// 获取验证码
+- (void)requestMessageCodeWithDic:(NSDictionary *)dic success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail{
+    [PPNetworkHelper POST:kUrlSendMsgCode parameters:dic success:^(id responseObject) {
+        RLog(@"获取验证码==%@",responseObject);
+        success(responseObject);
+    } failure:^(NSError *error) {
+        RLog(@"请求失败");
+    }];
+}
 
 @end

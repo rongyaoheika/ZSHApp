@@ -12,7 +12,7 @@
 #import "ZSHEntertainmentDetailViewController.h"
 #import "ZSHEntertainmentDisViewController.h"
 #import "ZSHTogetherLogic.h"
-#import "ZSHBottomBlurPopView.h"
+
 #import "ZSHCardBtnListView.h"
 #import "ZSHGuideView.h"
 @interface ZSHEntertainmentViewController ()

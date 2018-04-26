@@ -8,7 +8,7 @@
 
 #import "ZSHKTVDetailViewController.h"
 #import "ZSHKTVModel.h"
-#import "ZSHBottomBlurPopView.h"
+
 #import "ZSHKTVLogic.h"
 #import "ZSHHotelDetailHeadCell.h"
 #import "ZSHNoticeViewCell.h"

@@ -14,7 +14,7 @@
 #import "ZSHLiveMineViewController.h"
 #import "MainTabBarController.h"
 #import "RXLSideSlipViewController.h"
-#import "ZSHBottomBlurPopView.h"
+
 
 #import <AlivcLivePusher/AlivcLivePusherHeader.h>
 #import "AlivcLivePusherViewController.h"

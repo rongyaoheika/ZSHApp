@@ -12,7 +12,6 @@
 #import "ZSHHotelCalendarCell.h"
 #import "ZSHHotelListCell.h"
 #import "ZSHHotelModel.h"
-#import "ZSHBottomBlurPopView.h"
 #import "ZSHNoticeViewCell.h"
 #import "ZSHHotelPayViewController.h"
 
@@ -230,7 +229,7 @@ static NSString *ZSHHotelCellID = @"ZSHHotelCell";
     return sectionModel;
 }
 
-//日历
+//日历cell
 - (ZSHBaseTableViewSectionModel*)storeCalendarSection {
     kWeakSelf(self);
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];

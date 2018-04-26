@@ -945,6 +945,9 @@
 //请求地址：/appdiscoverin/updpageviews?UPDPAGEVIEWS(混淆码)
 #define kUrlUpdPageViews [NSString stringWithFormat:@"/appdiscoverin/updpageviews?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"UPDPAGEVIEWS"]]
 
+//246.发送 手机短信验证码
+//http://localhost:8081/ZSHINTER/appuserin/sendmsgcode.do?SENDMSGCODE&PHONE=12345678999
+#define kUrlSendMsgCode [NSString stringWithFormat:@"/appuserin/sendmsgcode.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SENDMSGCODE"]]
 
 //248.获取游艇服务等处的按钮
 //参数：     请求参数：PRIVILEGE_ID   商家类型

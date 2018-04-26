@@ -13,14 +13,14 @@
 #import "ZSHOrderSubViewController.h"
 #import "ZSHFindViewController.h"
 #import "ZSHHotelViewController.h"
-#import "ZSHBottomBlurPopView.h"
+
 #import "ZSHFoodViewController.h"
 #import "ZSHMoreTicketViewController.h"
 #import "ZSHTicketPlaceCell.h"
 #import "ZSHActivityViewController.h"
 #import "PYSearchViewController.h"
 #import "ZSHPickView.h"
-#import "ZSHBottomBlurPopView.h"
+
 #import "ZSHToplineTopView.h"
 #import "ZSHWeiboWriteController.h"
 #import "ZSHHomeLogic.h"

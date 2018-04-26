@@ -178,7 +178,6 @@ static NSString *ZSHMoreListCellID = @"ZSHMoreListCell";
         _headView = [[ZSHBaseView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, headHeight) paramDic:nil];
         [_headView addSubview:self.guideView];
         kFromClassTypeValue==FromShipVCToTitleContentVC?[_headView addSubview:self.titleView]:nil;
-//        [self.titleView reloadViewWithTitles:@[@"携艇会所",@"游艇买卖",@"游艇租赁", @"游艇基金",@"活动策划",@"码头建设",@"游艇驾校",@"游艇托管"]];
     }
     return _headView;
 }

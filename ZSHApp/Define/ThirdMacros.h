@@ -15,8 +15,8 @@
 #define UMengKey @"5ab89ce78f4a9d5fa8000100"
 
 //微信
-#define kAppKey_Wechat          @"wxc6209eb4696e2f55"
-#define kSecret_Wechat          @"06530660033e053e47f0805aa02fc47d"
+#define kAppKey_Wechat          @"wxe717a91321162694"
+#define kSecret_Wechat          @"d9186ceef0608871cf7e085811c37d28"
 
 // 腾讯
 #define kAppKey_Tencent         @"1106139910"

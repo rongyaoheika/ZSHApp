@@ -11,7 +11,7 @@
 #import "ZSHHotelDetailHeadCell.h"
 #import "ZSHHotelDetailDeviceCell.h"
 #import "ZSHShopCommentViewController.h"
-#import "ZSHBottomBlurPopView.h"
+
 #import "ZSHHotelCell.h"
 #import "ZSHHotelListCell.h"
 

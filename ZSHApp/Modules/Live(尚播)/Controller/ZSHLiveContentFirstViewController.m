@@ -12,7 +12,7 @@
 #import "ZSHWeiboViewController.h"
 #import "ZSHLiveListModel.h"
 #import "ZSHNearHeadView.h"
-#import "ZSHBottomBlurPopView.h"
+
 #import "AdvancedPlayerViewController.h"
 #import "AliyunPlaySDKDemoFullScreenScrollViewController.h"
 #import "ZSHLiveLogic.h"

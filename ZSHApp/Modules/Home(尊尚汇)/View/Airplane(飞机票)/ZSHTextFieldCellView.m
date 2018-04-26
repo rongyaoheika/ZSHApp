@@ -7,6 +7,7 @@
 //
 
 #import "ZSHTextFieldCellView.h"
+#import "ZSHMineLogic.h"
 
 @interface ZSHTextFieldCellView()<UITextFieldDelegate>{
     NSTimer *_timer;
@@ -17,13 +18,15 @@
 @property (nonatomic, strong) YYLabel      *getCaptchaBtn;
 @property (nonatomic, strong) UIView       *verticalLine;
 @property (nonatomic, strong) UIView       *bottomLine;
- 
+@property (nonatomic, strong) ZSHMineLogic *mineLogic;
+
 @end
 
 @implementation ZSHTextFieldCellView
 
 - (void)setup{
     _i = -1;
+    _mineLogic = [[ZSHMineLogic alloc]init];
     [self addSubview:self.leftLabel];
     [self addSubview:self.textField];
     [self addSubview:self.getCaptchaBtn];
@@ -134,6 +137,7 @@
         _getCaptchaBtn.textVerticalAlignment = YYTextVerticalAlignmentCenter;
         _getCaptchaBtn.textTapAction = ^(UIView * _Nonnull containerView, NSAttributedString * _Nonnull text, NSRange range, CGRect rect) {
             if (_i == -1) {
+                [weakself requestMsgCode];
                 _timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(startCount) userInfo:nil repeats:YES];
                 _i = 60;
                 [weakself startCount];
@@ -198,18 +202,30 @@
 //    }];
 }
 
+//请求验证码
+- (void)requestMsgCode{
+    NSString *phone = [[NSUserDefaults standardUserDefaults]objectForKey:@"phone"];
+    RLog(@"填写的手机号==%@",phone);
+    if ([ZSHBaseFunction validateMobile:phone] ) {
+        [_mineLogic requestMessageCodeWithDic:@{@"PHONE":phone} success:^(id responseObject) {
+            RLog(@"获取验证码==%@",responseObject);
+        } fail:^(NSError *error) {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"验证码获取失败" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            [alert show];
+        }];
+    } else {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"手机号格式错误" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        [alert show];
+    }
+}
 
 - (void)startCount
 {
     NSString *text = [@[[NSString stringWithFormat:@"%zd",_i], @"秒"] componentsJoinedByString:@""];
-    
-    
-    if (!_i--)
-    {
+    if (!_i--) {
         _getCaptchaBtn.text = @"重新发送";
         [_timer invalidate];
     } else {
-        
         _getCaptchaBtn.text = text;
     }
 }

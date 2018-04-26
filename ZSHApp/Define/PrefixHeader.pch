@@ -42,6 +42,7 @@
 #import "UIImage+ImageEffects.h"
 #import "NSString+pinyin.h"
 #import "RootWebViewController.h"
+#import "ZSHBottomBlurPopView.h"
 //第三方
 #import <YYKit.h>
 #import <MBProgressHUD.h>

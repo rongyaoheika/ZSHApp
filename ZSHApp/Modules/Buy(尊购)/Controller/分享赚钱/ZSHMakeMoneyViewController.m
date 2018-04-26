@@ -7,7 +7,7 @@
 //
 
 #import "ZSHMakeMoneyViewController.h"
-#import "ZSHBottomBlurPopView.h"
+
 @interface ZSHMakeMoneyViewController ()<UITableViewDelegate,UITableViewDataSource>
 
 @property (nonatomic,strong)NSArray   *dataArr;

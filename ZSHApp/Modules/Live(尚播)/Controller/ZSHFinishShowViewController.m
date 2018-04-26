@@ -7,7 +7,7 @@
 //
 
 #import "ZSHFinishShowViewController.h"
-#import "ZSHBottomBlurPopView.h"
+
 
 @interface ZSHFinishShowViewController ()
 

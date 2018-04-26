@@ -12,7 +12,7 @@
 #import "ZSHHotelCalendarCell.h"
 #import "ZSHHotelListCell.h"
 #import "ZSHHotelModel.h"
-#import "ZSHBottomBlurPopView.h"
+
 #import "ZSHNoticeViewCell.h"
 #import "ZSHHotelPayViewController.h"
 #import "ZSHHotelLogic.h"

@@ -8,7 +8,7 @@
 
 #import "ZSHEntertainmentDisViewController.h"
 #import "ZSHDetailDemandViewController.h"
-#import "ZSHBottomBlurPopView.h"
+
 #import "ZSHPickView.h"
 #import "ZSHTogetherLogic.h"
 #import <Photos/Photos.h>

@@ -9,7 +9,7 @@
 #import "ZSHTrainTicketDetailViewController.h"
 #import "ZSHTrainTicketDetailHeadView.h"
 #import "ZSHTrainTicketDetailCell.h"
-#import "ZSHBottomBlurPopView.h"
+
 
 static NSString *ZSHTrainTicketDetailCellID = @"ZSHTrainTicketDetailCellID";
 

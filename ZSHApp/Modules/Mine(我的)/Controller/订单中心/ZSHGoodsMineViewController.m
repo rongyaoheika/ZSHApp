@@ -15,7 +15,7 @@
 #import "ZSHApplyServiceViewController.h"
 #import "ZSHCommentViewController.h"
 #import "ZSHCardBtnListView.h"
-#import "ZSHBottomBlurPopView.h"
+
 #import "ZSHGoodMineReusableView.h"
 #import "RootWebViewController.h"
 static NSString * cellIdentifier = @"cellId";

@@ -6,7 +6,7 @@
 //  Copyright © 2017年 apple. All rights reserved.
 //
 
-#import "ZSHBottomBlurPopView.h"
+
 #import "ZSHTopLineView.h"
 #import "ZSHHotelDetailHeadCell.h"
 #import "ZSHHotelDetailDeviceCell.h"

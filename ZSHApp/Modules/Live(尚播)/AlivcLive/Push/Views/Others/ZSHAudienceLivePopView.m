@@ -7,7 +7,7 @@
 //
 
 #import "ZSHAudienceLivePopView.h"
-#import "ZSHBottomBlurPopView.h"
+
 #import "ZSHLiveGiftView.h"
 #import "ZSHShareView.h"
 #import "ZSHLiveLogic.h"

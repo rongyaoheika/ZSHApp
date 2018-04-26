@@ -735,6 +735,7 @@
 		044A2F452004BBF000B05CE7 /* ZSHMakeMoneyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSHMakeMoneyViewController.m; sourceTree = "<group>"; };
 		0450A60B20036BC100D7B2D4 /* ZSHHomeSubListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHHomeSubListCell.h; sourceTree = "<group>"; };
 		0450A60C20036BC100D7B2D4 /* ZSHHomeSubListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHHomeSubListCell.m; sourceTree = "<group>"; };
+		0451A2422091985600983AE4 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		0453B0B3202C427A00791A75 /* ChannelCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChannelCell.h; sourceTree = "<group>"; };
 		0453B0B4202C427A00791A75 /* ChannelCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChannelCell.m; sourceTree = "<group>"; };
 		0453B0B7202C42B200791A75 /* Channel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Channel.h; sourceTree = "<group>"; };
@@ -2728,6 +2729,7 @@
 		6C3D66AC810B3ABDE56945D5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0451A2422091985600983AE4 /* JavaScriptCore.framework */,
 				188662981FEA117600EA7FA1 /* libresolv.tbd */,
 				188662961FEA115400EA7FA1 /* AVFoundation.framework */,
 				188662411FE9F20A00EA7FA1 /* libiconv.tbd */,

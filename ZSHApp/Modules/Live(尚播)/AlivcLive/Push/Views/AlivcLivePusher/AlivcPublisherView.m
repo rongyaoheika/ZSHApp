@@ -15,7 +15,7 @@
 #import <AlivcLivePusher/AlivcLivePusherHeader.h>
 
 #import "XXTextView.h"
-#import "ZSHBottomBlurPopView.h"
+
 #import "ZSHLiveMoreView.h"
 #import "ZSHBeautyView.h"
 #import "ZSHLiveLogic.h"

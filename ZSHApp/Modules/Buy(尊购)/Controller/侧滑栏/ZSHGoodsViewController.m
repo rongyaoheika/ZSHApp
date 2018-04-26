@@ -20,7 +20,7 @@
 #import "ZSHGoodsCollectionViewCell.h"
 #import "ZSHPickView.h"
 #import "ZSHGuideView.h"
-#import "ZSHBottomBlurPopView.h"
+
 
 #define tableViewW  kRealValue(100)
 
