@@ -13,9 +13,9 @@
 {
     WKUserContentController * userContentController;
 }
-@property (nonatomic, strong) WKWebView         *wkwebView;
-@property (nonatomic,strong)  UIProgressView    *progressView;  //这个是加载页面的进度条
-
+@property (nonatomic, strong)  WKWebView         *wkwebView;
+@property (nonatomic, strong)  UIProgressView    *progressView;  //这个是加载页面的进度条
+@property (nonatomic, assign)  BOOL              isFirstLoad;    //第一次加载
 @end
 
 @implementation RootWebViewController
@@ -26,6 +26,7 @@
     self.url = self.paramDic[@"url"];
     [self createUI];
 }
+
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self initProgressView];
@@ -40,12 +41,13 @@
 -(void)createUI
 {
     _progressViewColor = [UIColor colorWithRed:119.0/255 green:228.0/255 blue:115.0/255 alpha:1];
-//    self.navigationController.navigationBar.hidden = YES;
+    self.navigationController.navigationBar.hidden = YES;
     
     //去掉顶部20像素的状态栏
     [self setStatusBarStyle:UIStatusBarStyleLightContent];
     
-    WKWebViewConfiguration * configuration = [[WKWebViewConfiguration alloc]init];//先实例化配置类 以前UIWebView的属性有的放到了这里
+    //先实例化配置类 以前UIWebView的属性有的放到了这里
+    WKWebViewConfiguration * configuration = [[WKWebViewConfiguration alloc]init];
     //注册供js调用的方法
     userContentController = [[WKUserContentController alloc]init];
     //    //弹出登录
@@ -155,15 +157,12 @@
 {
     NSURL *URL = navigationAction.request.URL;
     NSString *scheme = [URL scheme];
-    RLog(@"当前web页面是否可以返回h5页面==%d",self.wkwebView.canGoBack?1:0);
+    RLog(@"当前web页面是否可以返回h5页面==%d，发送的请求是==%@,访问过的历史页面==%@",self.wkwebView.canGoBack?1:0,URL, webView.backForwardList);
     if ([scheme isEqualToString:@"iosdevtip"]) {
         [self backBtnClicked];
         decisionHandler(WKNavigationActionPolicyCancel);
         return;
-    } else if(navigationAction.navigationType==WKNavigationTypeBackForward){
-        [self.wkwebView goBack];
     }
-    
 
     decisionHandler(WKNavigationActionPolicyAllow);
 }
@@ -179,41 +178,16 @@
     RLog(@"web页面获取内容开始返回");
 }
 // 页面加载完成之后调用
-//-(void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation{
-//    RLog(@"web页面加载完成");
-//    self.title = webView.title;
-//    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-//    [self updateNavigationItems];
-//    
-//    // 1.获取页面标题
-//    NSString *string = @"document.title";
-//    //获取当前页面的title 设置导航栏标题
-////    NSString * title = [webView stringByEvaluatingJavaScriptFromString:@"document.title"];
-//    self.title = title;
-//    
-//    // 2.去掉页面标题
-//    NSMutableString *str = [NSMutableString string];
-//    // 3.根据标签类型获取指定标签的元素
-//    [str appendString:@"var header = document.getElementsByTagName(\"header\")[0];"];
-//    [str appendString:@"header.parentNode.removeChild(header);"];//移除头部的导航栏
-//    [webView stringByEvaluatingJavaScriptFromString:str];
-//    [selfperformSelector:@selector(hidenaction)withObject:selfafterDelay:0.1];
-//    
-//    
-//}
-//
-//- (void)hidenaction{
-//    /// 开始加载时隐藏webview 加载完后显示，原因是 因为我们要去掉头标签，，去掉的方法是在网页加载完毕进行的，，添加一个延时现实的方法 可以隐藏掉网页先显示头标签又被移除的过程。使其看起来更自然一些
-//    self.wkwebView.hidden =NO;
-//    self.hud.hidden =YES;
-//}
+-(void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation{
+    RLog(@"web页面加载完成");
+}
 
 // 页面加载失败时调用
 -(void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *)navigation{
     RLog(@"web页面加载失败");
+    self.navigationController.navigationBar.hidden = NO;
+   
 }
-
-
 
 
 #pragma mark ————— 清理 —————

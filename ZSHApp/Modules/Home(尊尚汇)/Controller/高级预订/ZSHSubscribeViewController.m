@@ -246,15 +246,19 @@
         make.bottom.mas_equalTo(_scrollView).offset(-132);
     }];
     
-    NSDictionary *stewardBtnDic = @{@"title":@"召唤管家",@"titleColor":KZSHColor929292,@"font":kPingFangMedium(17),@"backgroundColor":KBlackColor};
-    _stewardBtn = [ZSHBaseUIControl  createBtnWithParamDic:stewardBtnDic target:self action:nil];
-    [self.view addSubview:_stewardBtn];
-    [_stewardBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.mas_equalTo(self.view);
-        make.bottom.mas_equalTo(self.view);
-        make.width.mas_equalTo(kRealValue(KScreenWidth));
-        make.height.mas_equalTo(kRealValue(49));
-    }];
+//    NSDictionary *stewardBtnDic = @{@"title":@"召唤管家",@"titleColor":KZSHColor929292,@"font":kPingFangMedium(17),@"backgroundColor":KBlackColor};
+//    _stewardBtn = [ZSHBaseUIControl  createBtnWithParamDic:stewardBtnDic target:self action:nil];
+//    [self.view addSubview:_stewardBtn];
+//    [_stewardBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.centerX.mas_equalTo(self.view);
+//        make.bottom.mas_equalTo(self.view);
+//        make.width.mas_equalTo(kRealValue(KScreenWidth));
+//        make.height.mas_equalTo(kRealValue(49));
+//    }];
+    
+    [self.view addSubview:[ZSHBaseUIControl createBottomButton:^(NSInteger index) {
+        
+    }]];
 }
 
 - (void)updateUI{
