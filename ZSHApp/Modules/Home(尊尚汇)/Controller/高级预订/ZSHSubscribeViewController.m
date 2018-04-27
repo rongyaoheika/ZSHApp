@@ -9,7 +9,8 @@
 #import "ZSHSubscribeViewController.h"
 #import "ZSHMoreLogic.h"
 #import "ZSHHotelCalendarCell.h"
-@interface ZSHSubscribeViewController ()
+
+@interface ZSHSubscribeViewController ()<UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) UIImageView  *headImageView;
@@ -151,9 +152,8 @@
     _scrollView.scrollEnabled = true;
     _scrollView.contentSize = CGSizeMake(KScreenWidth, 0);
     [self.view addSubview:_scrollView];
-    [_scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(self.view);
-    }];
+//    [_scrollView addGestureRecognizer:[]];
+    
     
     _headImageView = [[UIImageView alloc] init];
 //    _headImageView.image = [UIImage imageNamed:self.dataArr[0]];
@@ -170,9 +170,9 @@
     _titleLabel.numberOfLines = 0;
     [_scrollView addSubview:_titleLabel];
     [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(_headImageView).offset(kRealValue(235));
-        make.centerX.mas_equalTo(_scrollView);
-        make.size.mas_equalTo(CGSizeMake(kRealValue(345), kRealValue(37)));
+        make.top.mas_equalTo(_headImageView.mas_bottom).offset(kRealValue(10));
+        make.left.mas_equalTo(self.view).offset(KLeftMargin);
+        make.right.mas_equalTo(self.view).offset(-KLeftMargin);
     }];
     
     
@@ -180,9 +180,9 @@
 //    _middleImageView.image = [UIImage imageNamed:self.dataArr[2]];
     [_scrollView addSubview:_middleImageView];
     [_middleImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(_titleLabel).offset(kRealValue(51));
-        make.centerX.mas_equalTo(_scrollView);
-        make.size.mas_equalTo(CGSizeMake(kRealValue(375), kRealValue(240)));
+        make.top.mas_equalTo(_titleLabel.mas_bottom).offset(kRealValue(10));
+        make.centerX.mas_equalTo(self.view);
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth, kRealValue(240)));
     }];
     
     //self.dataArr[4],
@@ -191,9 +191,10 @@
     _subTitleLabel.numberOfLines = 0;
     [_scrollView addSubview:_subTitleLabel];
     [_subTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(_middleImageView).offset(kRealValue(260));
+        make.top.mas_equalTo(_middleImageView.mas_bottom).offset(kRealValue(10));
         make.centerX.mas_equalTo(_scrollView);
-        make.size.mas_equalTo(CGSizeMake(kRealValue(345), kRealValue(51)));
+        make.left.mas_equalTo(self.view).offset(KLeftMargin);
+        make.right.mas_equalTo(self.view).offset(-KLeftMargin);
     }];
     
     
@@ -201,37 +202,30 @@
 //    _bottomImageView.image = [UIImage imageNamed:self.dataArr[3]];
     [_scrollView addSubview:_bottomImageView];
     [_bottomImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(_subTitleLabel).offset(kRealValue(60));
+        make.top.mas_equalTo(_subTitleLabel.mas_bottom).offset(kRealValue(10));
         make.centerX.mas_equalTo(_scrollView);
-        make.size.mas_equalTo(CGSizeMake(kRealValue(375), kRealValue(240)));
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth, kRealValue(240)));
     }];
     
 
     NSDictionary *contentLabelDic = @{@"text":@"", @"font":kPingFangRegular(12),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentLeft)};
     _contentLabel = [ZSHBaseUIControl createLabelWithParamDic:contentLabelDic];
     _contentLabel.numberOfLines = 0;
-    NSMutableParagraphStyle *paraStyle = [[NSMutableParagraphStyle alloc] init];
-    paraStyle.lineSpacing = 5.0; //设置行间距
-    NSDictionary *dic = @{
-                          NSParagraphStyleAttributeName:paraStyle,
-                          NSKernAttributeName:@0.11f
-                          };
-//    self.dataArr[5]
-    _contentLabel.attributedText = [[NSAttributedString alloc] initWithString:@"aa" attributes:dic];
     [_scrollView addSubview:_contentLabel];
     [_contentLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(_bottomImageView).offset(kRealValue(250));
-        make.centerX.mas_equalTo(_scrollView);
-        make.size.mas_equalTo(CGSizeMake(kRealValue(346), kRealValue(54)));
+        make.top.mas_equalTo(_bottomImageView.mas_bottom).offset(kRealValue(10));
+        make.left.mas_equalTo(self.view).offset(KLeftMargin);
+        make.right.mas_equalTo(self.view).offset(-KLeftMargin);
     }];
     
-    NSDictionary *noticeLabelDic = @{@"text":@"注意事项", @"font":kPingFangMedium(15),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentCenter)};
+    NSDictionary *noticeLabelDic = @{@"text":@"注意事项", @"font":kPingFangMedium(KLeftMargin),@"textColor":KZSHColor929292,@"textAlignment":@(NSTextAlignmentCenter)};
     _noticeLabel = [ZSHBaseUIControl createLabelWithParamDic:noticeLabelDic];
     [_scrollView addSubview:_noticeLabel];
     [_noticeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(_contentLabel).offset(kRealValue(74));
+        make.top.mas_equalTo(_contentLabel.mas_bottom).offset(kRealValue(30));
         make.centerX.mas_equalTo(_scrollView);
-        make.size.mas_equalTo(CGSizeMake(kRealValue(62), kRealValue(16)));
+        make.width.mas_equalTo(kRealValue(62));
+        
     }];
     
     
@@ -240,21 +234,32 @@
     _noticeDetailLabel.numberOfLines = 0;
     [_scrollView addSubview:_noticeDetailLabel];
     [_noticeDetailLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(_noticeLabel).offset(kRealValue(26));
-        make.centerX.mas_equalTo(_scrollView);
-        make.size.mas_equalTo(CGSizeMake(kRealValue(345), kRealValue(100)));
-        make.bottom.mas_equalTo(_scrollView).offset(-132);
+        make.top.mas_equalTo(_noticeLabel.mas_bottom).offset(kRealValue(10));
+        make.height.mas_equalTo(kRealValue(100));
+        make.left.mas_equalTo(self.view).offset(KLeftMargin);
+        make.right.mas_equalTo(self.view).offset(-KLeftMargin);
     }];
     
-//    NSDictionary *stewardBtnDic = @{@"title":@"召唤管家",@"titleColor":KZSHColor929292,@"font":kPingFangMedium(17),@"backgroundColor":KBlackColor};
-//    _stewardBtn = [ZSHBaseUIControl  createBtnWithParamDic:stewardBtnDic target:self action:nil];
-//    [self.view addSubview:_stewardBtn];
-//    [_stewardBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.centerX.mas_equalTo(self.view);
-//        make.bottom.mas_equalTo(self.view);
-//        make.width.mas_equalTo(kRealValue(KScreenWidth));
-//        make.height.mas_equalTo(kRealValue(49));
-//    }];
+    _scrollView.userInteractionEnabled = YES;
+    _calendarCell = [[ZSHHotelCalendarCell alloc]init];
+    [_scrollView addSubview:_calendarCell];
+    [_calendarCell mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(_noticeDetailLabel.mas_bottom).offset(kRealValue(10));
+        make.left.right.mas_equalTo(self.view);
+        make.height.mas_equalTo(kRealValue(65));
+    }];
+    
+    _calendarCell.dateViewTapBlock = ^(NSInteger tag) {//tag = 1入住
+        NSDictionary *nextParamDic = @{KFromClassType:@(ZSHFromHotelDetailCalendarVCToBottomBlurPopView)};
+        weakself.bottomBlurPopView = [weakself createBottomBlurPopViewWithParamDic:nextParamDic];
+        [kAppDelegate.window addSubview:weakself.bottomBlurPopView];
+    };
+    
+    [_scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self.view);
+        make.bottom.mas_equalTo(_calendarCell.mas_bottom).offset(kRealValue(20) + KBottomTabH);
+    }];
+
     
     [self.view addSubview:[ZSHBaseUIControl createBottomButton:^(NSInteger index) {
         
@@ -271,33 +276,44 @@
     _contentLabel.text = _listDataDicArr[0][@"PUPINTROCONTENT"];
     _noticeLabel.text = _listDataDicArr[0][@"PDOWNINTROTITLE"];
     _noticeDetailLabel.text = _listDataDicArr[0][@"PDOWNINTROCONTENT"];
+
+    [_titleLabel setAttributedText:[self setAtrribute:_titleLabel.text lineSpacing:6 paragraphSpacing:0]];
+    [_contentLabel setAttributedText:[self setAtrribute:_contentLabel.text lineSpacing:6 paragraphSpacing:0]];
+    [_subTitleLabel setAttributedText:[self setAtrribute:_subTitleLabel.text lineSpacing:6 paragraphSpacing:0]];
+    [_noticeDetailLabel setAttributedText:[self setAtrribute:_listDataDicArr[0][@"PDOWNINTROCONTENT"] lineSpacing:6 paragraphSpacing:22]];
     
-    NSMutableParagraphStyle *titleLBStyle = [[NSMutableParagraphStyle alloc] init];
-    [titleLBStyle setLineSpacing:6];
-    NSMutableAttributedString *titleLBSetString = [[NSMutableAttributedString alloc] initWithString:_titleLabel.text];
-    [titleLBSetString addAttribute:NSParagraphStyleAttributeName value:titleLBStyle range:NSMakeRange(0, [_titleLabel.text length])];
-    [_titleLabel setAttributedText:titleLBSetString];
-    
-    
-    NSMutableParagraphStyle *contentLBStyle = [[NSMutableParagraphStyle alloc] init];
-    [contentLBStyle setLineSpacing:6];
-    NSMutableAttributedString *contentLBSetString = [[NSMutableAttributedString alloc] initWithString:_contentLabel.text];
-    [contentLBSetString addAttribute:NSParagraphStyleAttributeName value:contentLBStyle range:NSMakeRange(0, [_contentLabel.text length])];
-    [_contentLabel setAttributedText:contentLBSetString];
-    
-    NSMutableParagraphStyle *subTitleLBStyle = [[NSMutableParagraphStyle alloc] init];
-    [subTitleLBStyle setLineSpacing:6];
-    NSMutableAttributedString *subTitleLBSetString = [[NSMutableAttributedString alloc] initWithString:_subTitleLabel.text];
-    [subTitleLBSetString addAttribute:NSParagraphStyleAttributeName value:contentLBStyle range:NSMakeRange(0, [_subTitleLabel.text length])];
-    [_subTitleLabel setAttributedText:subTitleLBSetString];
-    
+}
+
+- (NSMutableAttributedString *)setAtrribute:(NSString *)str lineSpacing:(CGFloat)lineSpacing paragraphSpacing:(CGFloat)paragraphSpacing{
     NSMutableParagraphStyle  *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-    [paragraphStyle  setLineSpacing:5];
-    [paragraphStyle setParagraphSpacing:22];
-    NSMutableAttributedString  *setString = [[NSMutableAttributedString alloc] initWithString:_listDataDicArr[0][@"PDOWNINTROCONTENT"]];
-    [setString  addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, [_listDataDicArr[0][@"PDOWNINTROCONTENT"] length])];
-    [_noticeDetailLabel setAttributedText:setString];
+    [paragraphStyle  setLineSpacing:lineSpacing];
+    [paragraphStyle setParagraphSpacing:paragraphSpacing];
+    NSMutableAttributedString *setString = [[NSMutableAttributedString alloc] initWithString:str];
+    [setString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, [str length])];
+    return setString;
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch{
+    gestureRecognizer.delegate = self;
+    // 输出点击的view的类名
+    // 若为UITableViewCellContentView（即点击了tableViewCell），则不截获Touch事件
+    if ([NSStringFromClass([touch.view class]) isEqualToString:@"UITableViewCellContentView"]) {
+        return NO;
+    }
     
+    //截获Touch事件
+    return  YES;
+    
+}
+
+
+#pragma getter
+- (ZSHBottomBlurPopView *)createBottomBlurPopViewWithParamDic:(NSDictionary *)paramDic{
+    ZSHBottomBlurPopView *bottomBlurPopView = [[ZSHBottomBlurPopView alloc]initWithFrame:kAppDelegate.window.bounds paramDic:paramDic];
+    bottomBlurPopView.blurRadius = 20;
+    bottomBlurPopView.dynamic = NO;
+    bottomBlurPopView.tintColor = KClearColor;
+    return bottomBlurPopView;
 }
 
 @end

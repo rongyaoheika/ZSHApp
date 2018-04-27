@@ -20,7 +20,7 @@
 #define kNotificationCenter [NSNotificationCenter defaultCenter]
 #define KFromClassType      @"fromClassType"
 #define kFromClassTypeValue [self.paramDic[KFromClassType] integerValue]
-#define kRealValue(with)    ((with)*(KScreenWidth/375.0f))
+
 //系统版本
 //判断是在iOS11之前
 #define kSysVersion         [[[UIDevice currentDevice] systemVersion] floatValue]
