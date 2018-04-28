@@ -188,7 +188,7 @@
             make.left.mas_equalTo(buttonX);
         }];
     }
-    NSArray *titles = @[@"加入购物车",@"立即购买"];
+    NSArray *titles = @[@"",@"立即购买"];
     for (NSInteger i = 0; i < titles.count; i++) {
         NSDictionary *btnDic = @{@"title":titles[i],@"titleColor":KZSHColor929292,@"font":kPingFangMedium(17)};
         UIButton *button = [ZSHBaseUIControl  createBtnWithParamDic:btnDic target:self action:nil];

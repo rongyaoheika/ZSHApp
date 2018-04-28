@@ -240,7 +240,6 @@
         make.right.mas_equalTo(self.view).offset(-KLeftMargin);
     }];
     
-    _scrollView.userInteractionEnabled = YES;
     _calendarCell = [[ZSHHotelCalendarCell alloc]init];
     [_scrollView addSubview:_calendarCell];
     [_calendarCell mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -305,7 +304,6 @@
     return  YES;
     
 }
-
 
 #pragma getter
 - (ZSHBottomBlurPopView *)createBottomBlurPopViewWithParamDic:(NSDictionary *)paramDic{
