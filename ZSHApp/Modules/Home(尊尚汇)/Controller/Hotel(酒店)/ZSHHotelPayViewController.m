@@ -36,7 +36,7 @@ static NSString *ZSHBasePriceCellID = @"ZSHBasePriceCell";
 
 - (void)loadData{
     NSDictionary *paramDic = self.paramDic[@"listDic"];
-    
+   
     switch ([self.paramDic[@"shopType"]integerValue]) {
         case ZSHFoodShopType:{
              _priceStr = [NSString stringWithFormat:@"订单金额¥%@",paramDic[@"FOODDETPRICE"]];
@@ -54,7 +54,11 @@ static NSString *ZSHBasePriceCellID = @"ZSHBasePriceCell";
             _priceStr = [NSString stringWithFormat:@"订单金额¥%@",paramDic[@"BARDETPRICE"]];
             break;
         }
+        case ZSHShipType:{
+            _priceStr = [NSString stringWithFormat:@"订单金额¥%@",self.paramDic[@"requestDic"][@"YACHTPRICE"]];
             
+            break;
+        }
         default:
             break;
     }

@@ -39,15 +39,22 @@
     _realBtnArr = [[NSMutableArray alloc]init];
     _allBtnArr = [[NSMutableArray alloc]init];
     
+    //名字
     NSDictionary *titleLabelDic = @{@"text":@"配备最先进的有氧运动设备"};
     _titleLabel = [ZSHBaseUIControl createLabelWithParamDic:titleLabelDic];
     [self.contentView addSubview:_titleLabel];
     
+    if (_shopType == ZSHShipType) {
+        return;
+    }
+    
+    //好评
     NSDictionary *topDic = @{@"text":@"4.9",@"font":kPingFangMedium(18),@"textAlignment":@(NSTextAlignmentCenter),@"height":@(15)};
     NSDictionary *bottomDic = @{@"text":@"好评",@"font":kPingFangMedium(11),@"textAlignment":@(NSTextAlignmentCenter),@"height":@(11)};
     _commentBtn = [ZSHBaseUIControl createLabelBtnWithTopDic:topDic bottomDic:bottomDic];
     [self.contentView addSubview:_commentBtn];
     
+    //设备
     _deviceArr = @[
                         @{@"imageName":@"hotel_wifi",@"titleName":@"WIFI"},
                         @{@"imageName":@"food_pay",@"titleName":@"移动支付"},
@@ -80,6 +87,10 @@
         make.height.mas_equalTo(kRealValue(15));
         make.width.mas_equalTo(KScreenWidth*0.65);
     }];
+    
+    if (_shopType == ZSHShipType) {
+        return;
+    }
     
     [_commentBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.mas_equalTo(self).offset(-kRealValue(22));
@@ -117,6 +128,11 @@
 
 #pragma action
 - (void)updateCellWithParamDic:(NSDictionary *)dic{
+    if (_shopType == ZSHShipType) {
+        _titleLabel.text = dic[@"YACHTNAMES"];
+        return;
+    }
+    
     //好评
     UILabel *topLabel = [_commentBtn viewWithTag:11];
     NSString *commentStr = @"4.9";
@@ -146,6 +162,7 @@
             commentStr = [NSString stringWithFormat:@"%.1f",[dic[@"BarEVALUATE"]floatValue] ];
             break;
         }
+       
         default:
             break;
     }

@@ -21,4 +21,7 @@
 
 //酒吧订单
 - (void)requestBarConfirmOrderWithParamDic:(NSDictionary *)paramDic Success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail;
+
+//高级特权
+- (void)requestHighConfirmOrderWithParamDic:(NSDictionary *)paramDic Success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail;
 @end

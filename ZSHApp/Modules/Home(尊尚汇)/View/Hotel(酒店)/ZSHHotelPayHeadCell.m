@@ -126,7 +126,7 @@
             make.centerY.mas_equalTo(self);
             make.right.mas_equalTo(self).offset(-KLeftMargin);
             make.height.mas_equalTo(kRealValue(17));
-            make.width.mas_equalTo(kRealValue(50));
+            make.width.mas_equalTo(kRealValue(100));
         }];
     }
 }
@@ -137,6 +137,23 @@
 }
 
 - (void)updateCellWithParamDic:(NSDictionary *)dic{
+    if (_shopType == ZSHShipType) {//游艇
+        NSDictionary *realDic = dic[@"requestDic"];
+        [_hotelmageView sd_setImageWithURL:[NSURL URLWithString:realDic[@"SHOWIMAGES"]]];
+        
+        if (_showCellType == ZSHNormalType) {//订单支付页面
+            _hotelNameLabel.text = realDic[@"YACHTNAMES"];
+            _hotelTypeLabel.text = realDic[@"KTVDETTYPE"];
+            _hotelLiveInfoLabel.text = [NSString stringWithFormat:@"%@-%@",realDic[@"KTVDETBEGIN"],realDic[@"KTVDETEND"]];;
+        } else if (_showCellType == ZSHPopType) {
+            _hotelNameLabel.text = realDic[@"YACHTNAMES"];
+//            _hotelLiveInfoLabel.text = self.listDic[@"KTVDETTYPE"];
+//            _sizeInfoLabel.text = [NSString stringWithFormat:@"%@-%@",self.listDic[@"KTVDETBEGIN"],self.listDic[@"KTVDETEND"]];
+            _priceLabel.text = [NSString stringWithFormat:@"¥%.0f",[realDic[@"YACHTPRICE"]floatValue] ];
+        }
+        
+        return;
+    }
     
     self.deviceDic = dic[@"deviceDic"];  //详情页上半部分数据
     self.listDic = dic[@"listDic"];      //详情页下半部分列表数据
@@ -192,7 +209,7 @@
             break;
         }
             
-        case ZSHKTVShopType:{//KTV
+        case ZSHShipType:{//KTV
             [_hotelmageView sd_setImageWithURL:[NSURL URLWithString:self.listDic[@"KTVDETIMG"]]];
             
             if (_showCellType == ZSHNormalType) {//订单支付页面

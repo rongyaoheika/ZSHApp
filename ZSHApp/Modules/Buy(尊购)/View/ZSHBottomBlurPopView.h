@@ -9,6 +9,7 @@
 #import "FXBlurView.h"
 #import "ZSHBaseTableViewModel.h"
 
+
 typedef NS_ENUM(NSUInteger,ZSHFromVCToBottomBlurPopView){
     ZSHFromHotelVCToBottomBlurPopView,                       //酒店-底部弹出
     ZSHFromExchangeVCToBottomBlurPopView,                    //兑换-底部弹出
@@ -30,6 +31,7 @@ typedef NS_ENUM(NSUInteger,ZSHFromVCToBottomBlurPopView){
     ZSHFromGoodsVCToBottomBlurPopView,                       //商品分类
     ZSHFromFoodVCToBottomBlurPopView,                        //美食分类
     ZSHFromTopLineVCToBottomBlurPopView,                     //头条-顶部
+    ZSHSubscribeVCToBottomBlurPopView,                       //游艇订单-底部弹出
     ZSHFromNoneVCToBottomBlurPopView
 };
 

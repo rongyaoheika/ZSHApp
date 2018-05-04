@@ -954,6 +954,12 @@
 //http://localhost:8081/ZSHINTER/highsort/getbuttonlist?GETBUTTONLIST&CATEGORY_ID=游艇商家
 #define kUrlYachtService [NSString stringWithFormat:@"/highsort/getbuttonlist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"GETBUTTONLIST"]]
 
+//249.高端特权生成订单
+//参数：ORDERUNAME 入住人姓名/ORDERPHONE 入住人手机号码/ORDERREMARK 订单备注/ORDERMONEY 订单价格/
+//ORDERROOMBEGIN 开始时间/ORDERROOMEND 离开日期
+///ORDERDAYS 入住天数 /SHOP_ID 店铺id/HONOURUSER_ID 提交订单用户id
+#define kUrlAddHighOrder [NSString stringWithFormat:@"/highsort/addhighorder?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"ADDHIGHORDER"]]
+
 #endif /* URLMacros_h */
 
 

@@ -13,9 +13,11 @@
 - (void)requestHotelConfirmOrderWithParamDic:(NSDictionary *)paramDic Success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail{
     [PPNetworkHelper POST:kUrlShipHotlOrder parameters:paramDic success:^(id responseObject) {
         RLog(@"生成酒店订单==%@",responseObject);
-        NSDictionary *newsDetailDic = responseObject[@"pd"];
+        NSDictionary *newsDetailDic = responseObject;
         success(newsDetailDic);
         
+//        result = 01;
+//        ORDERNUMBER = 180504154424641473d27c;        
     } failure:^(NSError *error) {
         
     }];
@@ -47,6 +49,18 @@
     [PPNetworkHelper POST:kUrlAddBarOrder parameters:paramDic success:^(id responseObject) {
         RLog(@"生成酒吧订单==%@",responseObject);
         NSDictionary *newsDetailDic = responseObject[@"pd"];
+        success(newsDetailDic);
+        
+    } failure:^(NSError *error) {
+        
+    }];
+}
+
+//高级特权
+- (void)requestHighConfirmOrderWithParamDic:(NSDictionary *)paramDic Success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail{
+    [PPNetworkHelper POST:kUrlAddHighOrder parameters:paramDic success:^(id responseObject) {
+        RLog(@"高级特权订单==%@",responseObject);
+        NSDictionary *newsDetailDic = responseObject;
         success(newsDetailDic);
         
     } failure:^(NSError *error) {

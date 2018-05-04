@@ -5,8 +5,6 @@
 //  Created by zhaoweiwei on 2017/10/27.
 //  Copyright © 2017年 apple. All rights reserved.
 //
-
-
 #import "ZSHTopLineView.h"
 #import "ZSHHotelDetailHeadCell.h"
 #import "ZSHHotelDetailDeviceCell.h"
@@ -71,7 +69,7 @@
 @property (nonatomic, strong) NSDictionary           *listDic;
 @property (nonatomic, copy)   NSString               *liveInfo;
 @property (nonatomic, strong) ZSHConfirmOrderLogic   *orderLogic;
-
+@property (nonatomic, strong) NSMutableDictionary    *confirmOderDic; //确认订单填写的参数
 
 //底部年龄弹出框
 @property (nonatomic, strong) ZSHAgeView            *ageView;
@@ -122,7 +120,7 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
     self = [super initWithFrame:frame];
     if (self) {
         _paramDic = paramDic;
-       
+    
         [self loadData];
         [self createUI];
        
@@ -133,6 +131,7 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
 
 
 - (void)loadData{
+    _confirmOderDic = [[NSMutableDictionary alloc]init];
     if (kFromClassTypeValue == ZSHFromHotelVCToBottomBlurPopView) {
         self.titleArr = @[@"距离",@"推荐",@"价格从低到高"];
         self.typeText = @"排序";
@@ -185,11 +184,14 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
         _subTabHeight = kRealValue(410);
         [self.subTab registerClass:[ZSHHotelDetailDeviceCell class] forCellReuseIdentifier:ZSHHotelDetailDeviceCellID];
         [self.subTab registerClass:[ZSHHotelPayHeadCell class] forCellReuseIdentifier:ZSHHotelPayHeadCellID];
-    } else if (kFromClassTypeValue == ZSHFromHotelDetailCalendarVCToBottomBlurPopView||kFromClassTypeValue == ZSHFromAirplaneCalendarVCToBottomBlurPopView) {//酒店入住(机票预订)日历
-        _subTabHeight = kRealValue(360);
-        [self.subTab registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHHeadCellID];
-        [self.subTab registerClass:[ZSHHotelPayHeadCell class] forCellReuseIdentifier:ZSHHotelPayHeadCellID];
-    } else if (kFromClassTypeValue == ZSHFromAirplaneUserInfoVCToBottomBlurPopView) {//机票个人信息
+        
+    }
+//    else if (kFromClassTypeValue == ZSHFromHotelDetailCalendarVCToBottomBlurPopView||kFromClassTypeValue == ZSHFromAirplaneCalendarVCToBottomBlurPopView) {//酒店入住(机票预订)日历
+//        _subTabHeight = kRealValue(360);
+//        [self.subTab registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHHeadCellID];
+//        [self.subTab registerClass:[ZSHHotelPayHeadCell class] forCellReuseIdentifier:ZSHHotelPayHeadCellID];
+//    }
+    else if (kFromClassTypeValue == ZSHFromAirplaneUserInfoVCToBottomBlurPopView) {//机票个人信息
         _subTabHeight = kRealValue(310.5);
         [self.subTab registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHHeadCellID];
     } else if (kFromClassTypeValue == ZSHFromAirplaneAgeVCToBottomBlurPopView) {//吃喝玩乐年龄
@@ -252,7 +254,7 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
         listView.tag = 2;
         [self addSubview:listView];
         return;
-    }else if (kFromClassTypeValue == ZSHFromTrainCalendarVCToBottomBlurPopView) {// 火车票
+    } else if (kFromClassTypeValue == ZSHFromTrainCalendarVCToBottomBlurPopView||kFromClassTypeValue == ZSHFromHotelDetailCalendarVCToBottomBlurPopView||kFromClassTypeValue == ZSHFromAirplaneCalendarVCToBottomBlurPopView) {// 火车票
         kWeakSelf(self);
         [self addSubview:self.topLineView];
         self.topLineView.backgroundColor = [UIColor whiteColor];
@@ -304,6 +306,12 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
         [self addSubview:self.toplineTopView];
         return;
         
+    } else if (kFromClassTypeValue == ZSHSubscribeVCToBottomBlurPopView) {//游艇
+        self.shopType = ZSHShipType;
+        _subTabHeight = kRealValue(295);
+        [self.subTab registerClass:[ZSHHotelPayHeadCell class] forCellReuseIdentifier:ZSHHotelPayHeadCellID];
+        [self.subTab registerClass:[ZSHHotelDetailDeviceCell class] forCellReuseIdentifier:ZSHHotelDetailDeviceCellID];
+        [self.subTab registerClass:[ZSHHotelPayHeadCell class] forCellReuseIdentifier:ZSHHotelPayHeadCellID];
     }
     
     
@@ -341,12 +349,14 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
         [self.tableViewModel.sectionModelArray addObject:[self storeNumCountSectionWithTitle:@"数量"]];
         [self.tableViewModel.sectionModelArray addObject:[self storeHotelDetailOtherSection]];
         [self.tableViewModel.sectionModelArray addObject:[self storeConfirmBtnSection]];
-    } else if (kFromClassTypeValue == ZSHFromHotelDetailCalendarVCToBottomBlurPopView||kFromClassTypeValue == ZSHFromAirplaneCalendarVCToBottomBlurPopView){//酒店入住日历(机票选择日历)
-        
-        [self.tableViewModel.sectionModelArray removeAllObjects];
-        [self.tableViewModel.sectionModelArray addObject:[self storeHeadSection]];
-        [self.tableViewModel.sectionModelArray addObject:[self storeCalendarDetailSection]];
-    }  else if (kFromClassTypeValue == ZSHFromAirplaneUserInfoVCToBottomBlurPopView){//机票个人信息
+    }
+//    else if (kFromClassTypeValue == ZSHFromHotelDetailCalendarVCToBottomBlurPopView||kFromClassTypeValue == ZSHFromAirplaneCalendarVCToBottomBlurPopView){//酒店入住日历(机票选择日历)
+//
+//        [self.tableViewModel.sectionModelArray removeAllObjects];
+//        [self.tableViewModel.sectionModelArray addObject:[self storeHeadSection]];
+//        [self.tableViewModel.sectionModelArray addObject:[self storeCalendarDetailSection]];
+//    }
+    else if (kFromClassTypeValue == ZSHFromAirplaneUserInfoVCToBottomBlurPopView){//机票个人信息
         
         [self.tableViewModel.sectionModelArray removeAllObjects];
         [self.tableViewModel.sectionModelArray addObject:[self storeTicketUserInfoBtnSection]];
@@ -377,6 +387,12 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
     } else if (kFromClassTypeValue == ZSHFromFoodVCToBottomBlurPopView) { // 美食
         [self.tableViewModel.sectionModelArray removeAllObjects];
         [self.tableViewModel.sectionModelArray addObject:[self storeFoodListSection]];
+    } else if (kFromClassTypeValue == ZSHSubscribeVCToBottomBlurPopView) { //游艇
+        [self.tableViewModel.sectionModelArray removeAllObjects];
+        [self.tableViewModel.sectionModelArray addObject:[self storePayHeadSection]];           //名字
+        [self.tableViewModel.sectionModelArray addObject:[self storeHotelDetailSection]];       //图片详情
+        [self.tableViewModel.sectionModelArray addObject:[self storeHotelDetailOtherSection]];  //联系人，手机号码，备注等
+        [self.tableViewModel.sectionModelArray addObject:[self storeConfirmBtnSection]];        //确认按钮
     }
 
 }
@@ -479,23 +495,30 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
 }
 
 /**确认订单弹窗**/
-//酒店确定订单-图片，设备
+//酒店确定订单： 酒店名称，设备类型
 - (ZSHBaseTableViewSectionModel*)storePayHeadSection {
     kWeakSelf(self);
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
     [sectionModel.cellModelArray addObject:cellModel];
-    cellModel.height = kRealValue(80);
+    
+    __block NSDictionary *deviceParamDic = nil;
+    if (kFromClassTypeValue == ZSHSubscribeVCToBottomBlurPopView) {//游艇-无设备按钮
+        cellModel.height = kRealValue(15);
+        deviceParamDic = self.paramDic[@"requestDic"];
+    } else {
+        cellModel.height = kRealValue(80);
+        deviceParamDic = self.deviceDic;
+    }
+    
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHHotelDetailDeviceCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHHotelDetailDeviceCellID forIndexPath:indexPath];
         cell.separatorInset = UIEdgeInsetsMake(0, 0, 0, MAXFLOAT);
         cell.backgroundColor = KWhiteColor;
-        if (weakself.deviceDic) {
-            cell.showCellType = ZSHPopType;
-            cell.shopType = weakself.shopType;
-            NSDictionary *paramDic = weakself.deviceDic;
-            [cell updateCellWithParamDic:paramDic];
-        }
+        cell.showCellType = ZSHPopType;
+        cell.shopType = weakself.shopType;
+        [cell updateCellWithParamDic:deviceParamDic];
+        
        
         return cell;
     };
@@ -524,7 +547,7 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
     return sectionModel;
 }
 
-//酒店其他
+//酒店其他：联系人，手机号码，备注
 - (ZSHBaseTableViewSectionModel*)storeHotelDetailOtherSection {
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     NSArray *titleArr = @[@"联系人",@"手机号码",@"备注"];
@@ -540,6 +563,8 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
             cell.textLabel.text = titleArr[i];
             
             UITextField *userinfoTextField = [[UITextField alloc]initWithFrame:CGRectZero];
+            userinfoTextField.tag = i+10;
+            [userinfoTextField addTarget:self action:@selector(textFieldEditChanged:) forControlEvents:UIControlEventEditingChanged];
             userinfoTextField.font = kPingFangLight(14);
             userinfoTextField.textColor = KZSHColor929292;
             userinfoTextField.placeholder = placeHolderArr[i];
@@ -583,8 +608,8 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
 //入住日历
 - (ZSHBaseTableViewSectionModel*)storeCalendarDetailSection {
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
-    sectionModel.headerHeight = kRealValue(80);
-    sectionModel.headerView = self.calendarHeadView;
+//    sectionModel.headerHeight = kRealValue(80);
+//    sectionModel.headerView = self.calendarHeadView;
     
     kWeakSelf(self);
     ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
@@ -593,23 +618,38 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHBaseCell *cell = [[ZSHBaseCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ZSHNumCountCellID];
         cell.backgroundColor = KWhiteColor;
+        FSCalendar *calendar = [[FSCalendar alloc] initWithFrame:CGRectMake(0,0,KScreenWidth,kRealValue(280))];
+        calendar.backgroundColor = [UIColor whiteColor];
+        calendar.dataSource = self;
+        calendar.delegate = self;
+        calendar.calendarHeaderView.backgroundColor = [UIColor colorWithHexString:@"F7F7F7"];
+        calendar.appearance.weekdayTextColor = KZSHColorFD5739;
+        calendar.appearance.todayColor = KZSHColorFD5739;
+        calendar.appearance.headerTitleColor = KZSHColor929292;
+        calendar.appearance.selectionColor = KZSHColorD8D8D8;
+        calendar.appearance.headerDateFormat = @"YYYY年M月";
+        calendar.appearance.headerTitleFont  = kPingFangRegular(12);
+        calendar.headerHeight = 30.0;
+        calendar.weekdayHeight = 50.0;
+        [cell.contentView addSubview:calendar];
+        self.calendar = calendar;
         
-        STCalendar *calender = [[STCalendar alloc]initWithFrame:CGRectMake(0,0,KScreenWidth,kRealValue(280))];
-        calender.tag = 2;
-        calender.backgroundColor = KWhiteColor;
-        [calender returnDate:^(NSString * _Nullable stringDate) {
-            NSString *labelDate  = stringDate;
-            RLog(@"现在的日期==%@",labelDate);
-            weakself.currentDateLabel.text = labelDate;
-        }];
-        
-        calender.delegate = self;
-        [calender setTextSelectedColor:[UIColor blackColor]];
-        self.calender = calender;
-        [cell.contentView addSubview:self.calender];
-        [calender mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.mas_equalTo(cell);
-        }];
+//        STCalendar *calender = [[STCalendar alloc]initWithFrame:CGRectMake(0,0,KScreenWidth,kRealValue(280))];
+//        calender.tag = 2;
+//        calender.backgroundColor = KWhiteColor;
+//        [calender returnDate:^(NSString * _Nullable stringDate) {
+//            NSString *labelDate  = stringDate;
+//            RLog(@"现在的日期==%@",labelDate);
+//            weakself.currentDateLabel.text = labelDate;
+//        }];
+//
+//        calender.delegate = self;
+//        [calender setTextSelectedColor:[UIColor blackColor]];
+//        self.calender = calender;
+//        [cell.contentView addSubview:self.calender];
+//        [calender mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.edges.mas_equalTo(cell);
+//        }];
         return cell;
     };
     return sectionModel;
@@ -1014,19 +1054,25 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
         [self removeFromSuperview];
         [self setHidden:YES];
         
+        NSDictionary *nextParamDic = nil;
         if ( kFromClassTypeValue == ZSHConfirmOrderToBottomBlurPopView) {
-            //生成订单
-            [weakself requestData];
             self.shopType = [self.paramDic[@"shopType"]integerValue]; //弹窗类型
             self.deviceDic = self.paramDic[@"deviceDic"];  //详情页上半部分数据
             self.listDic = self.paramDic[@"listDic"];      //详情页下半部分列表数据
             self.liveInfo = self.paramDic[@"liveInfoStr"]; //酒店居住时间信息
             
-            NSDictionary *nextParamDic = @{@"shopType":@(self.shopType), @"deviceDic":weakself.deviceDic,@"listDic":weakself.listDic,@"liveInfoStr":weakself.liveInfo};
+            nextParamDic = @{@"shopType":@(self.shopType), @"deviceDic":weakself.deviceDic,@"listDic":weakself.listDic,@"liveInfoStr":weakself.liveInfo};
+            
+        } else if(kFromClassTypeValue == ZSHSubscribeVCToBottomBlurPopView){//高级特权
+            nextParamDic = @{@"shopType":@(self.shopType),@"requestDic":self.paramDic[@"requestDic"]};
+        }
+        //生成订单
+        [weakself requestDataComplete:^{
             ZSHHotelPayViewController *hotelPayVC = [[ZSHHotelPayViewController alloc]initWithParamDic:nextParamDic];
             [[kAppDelegate getCurrentUIVC].navigationController pushViewController:hotelPayVC animated:YES];
-        }
 
+        }];
+      
     }];
 }
 
@@ -1093,13 +1139,78 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
     }
 }
 
-- (void)requestData{
+//美食，酒店等订单生成
+- (void)requestDataComplete:(void(^)())complete{
+    if (!_confirmOderDic[@"ORDERUNAME"]||!_confirmOderDic[@"ORDERPHONE"]||!_confirmOderDic[@"ORDERREMARK"]) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"信息填写不全" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        [alert show];
+        return;
+    }
+    
+    if (![ZSHBaseFunction validateMobile:_confirmOderDic[@"ORDERPHONE"]]) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"手机号格式错误" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        [alert show];
+        return;
+    }
     _orderLogic = [[ZSHConfirmOrderLogic alloc]init];
- 
-    NSDictionary *paramDic = @{@"ORDERUNAME":@"彩薇",@"ORDERPHONE":@"18888888888",@"ORDERREMARK":@"大房",@"ORDERMONEY":@(199),@"ORDERROOMNUM":@(1),@"ORDERCHECKDATE":@"20171205",@"ORDERLEAVEDATE":@"20171220",@"ORDERDAYS":@(1),@"HOTELDETAIL_ID":@"经济型",@"HONOURUSER_ID":HONOURUSER_IDValue};
-    [_orderLogic requestHotelConfirmOrderWithParamDic:paramDic Success:^(id responseObject) {
-        RLog(@"确认订单数据==%@",responseObject);
-    } fail:nil];
+    switch (kFromClassTypeValue) {
+        case ZSHConfirmOrderToBottomBlurPopView:{
+            [_confirmOderDic setValue:self.paramDic[@"requestDic"][@"YACHTPRICE"] forKey:@"ORDERMONEY"];
+            [_confirmOderDic setValue:@"1" forKey:@"ORDERROOMNUM"];
+            [_confirmOderDic setValue:@"2018-4-27" forKey:@"ORDERCHECKDATE"];
+            [_confirmOderDic setValue:@"2018-4-28" forKey:@"ORDERLEAVEDATE"];
+            [_confirmOderDic setValue:@"1" forKey:@"ORDERDAYS"];
+            [_confirmOderDic setValue:self.paramDic[@"requestDic"][@"YACHTSHOP_ID"] forKey:@"HOTELDETAIL_ID"];
+            [_confirmOderDic setValue:self.paramDic[@"requestDic"][@"HONOURUSER_ID"] forKey:@"HONOURUSER_ID"];
+            [_orderLogic requestHotelConfirmOrderWithParamDic:_confirmOderDic Success:^(id responseObject) {
+                RLog(@"确认订单数据==%@",responseObject);
+                 complete();
+            } fail:nil];
+            break;
+        }
+        case ZSHSubscribeVCToBottomBlurPopView:{//高端特权生成订单
+            [_confirmOderDic setValue:self.paramDic[@"requestDic"][@"YACHTPRICE"] forKey:@"ORDERMONEY"];
+            [_confirmOderDic setValue:@"2018-4-27" forKey:@"ORDERROOMBEGIN"];
+            [_confirmOderDic setValue:@"2018-4-28" forKey:@"ORDERROOMEND"];
+            [_confirmOderDic setValue:@"1" forKey:@"ORDERDAYS"];
+            [_confirmOderDic setValue:self.paramDic[@"requestDic"][@"YACHTSHOP_ID"] forKey:@"SHOP_ID"];
+            [_confirmOderDic setValue:self.paramDic[@"requestDic"][@"HONOURUSER_ID"] forKey:@"HONOURUSER_ID"];
+            [_orderLogic requestHighConfirmOrderWithParamDic:_confirmOderDic Success:^(id responseObject) {
+                RLog(@"高级特权订单==%@",responseObject);
+                complete();
+            } fail:nil];
+            break;
+        }
+        default:
+            break;
+    }
+
+}
+
+//生成订单输入的参数
+- (void)textFieldEditChanged:(UITextField *)textField{
+    
+    NSLog(@"textfield text %@",textField.text);
+    switch (textField.tag) {
+        case 10:{
+            [_confirmOderDic setValue:textField.text forKey:@"ORDERUNAME"];
+            break;
+        }
+        case 11:{
+            [_confirmOderDic setValue:textField.text forKey:@"ORDERPHONE"];
+            break;
+        }
+        case 12:{
+            [_confirmOderDic setValue:textField.text forKey:@"ORDERREMARK"];
+            break;
+        }
+            
+        default:
+            break;
+    }
+    
+    RLog(@"_confirmOderDic == %@",_confirmOderDic);
+    
 }
 
 @end

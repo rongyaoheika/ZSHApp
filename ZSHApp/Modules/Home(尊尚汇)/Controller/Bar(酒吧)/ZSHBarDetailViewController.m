@@ -274,7 +274,6 @@ static NSString *ZSHHotelCellID = @"ZSHHotelCell";
             NSDictionary *nextParamDic = @{KFromClassType:@(ZSHConfirmOrderToBottomBlurPopView),@"shopType":@(ZSHBarShopType), @"deviceDic":_barDetailDic,@"listDic":paramDic,@"liveInfoStr":@"酒吧无此字段"};
             weakself.bottomBlurPopView = [weakself createBottomBlurPopViewWithParamDic:nextParamDic];
             [weakself.view addSubview:weakself.bottomBlurPopView];
-            
         };
     }
     

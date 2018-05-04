@@ -10,7 +10,7 @@
 #import "ZSHMoreLogic.h"
 #import "ZSHHotelCalendarCell.h"
 
-@interface ZSHSubscribeViewController ()<UIGestureRecognizerDelegate>
+@interface ZSHSubscribeViewController ()
 
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) UIImageView  *headImageView;
@@ -260,8 +260,13 @@
     }];
 
     
+    NSDictionary *requestDic = self.paramDic[@"requestDic"];
     [self.view addSubview:[ZSHBaseUIControl createBottomButton:^(NSInteger index) {
-        
+        if (index == 3) {
+            NSDictionary *nextParamDic = @{KFromClassType:@(ZSHSubscribeVCToBottomBlurPopView),@"requestDic":requestDic,@"shopType":@(ZSHShipType)};
+            weakself.bottomBlurPopView = [weakself createBottomBlurPopViewWithParamDic:nextParamDic];
+            [weakself.view addSubview:weakself.bottomBlurPopView];
+        }
     }]];
 }
 
@@ -290,19 +295,6 @@
     NSMutableAttributedString *setString = [[NSMutableAttributedString alloc] initWithString:str];
     [setString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, [str length])];
     return setString;
-}
-
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch{
-    gestureRecognizer.delegate = self;
-    // 输出点击的view的类名
-    // 若为UITableViewCellContentView（即点击了tableViewCell），则不截获Touch事件
-    if ([NSStringFromClass([touch.view class]) isEqualToString:@"UITableViewCellContentView"]) {
-        return NO;
-    }
-    
-    //截获Touch事件
-    return  YES;
-    
 }
 
 #pragma getter
