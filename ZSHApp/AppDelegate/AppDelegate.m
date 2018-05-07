@@ -24,6 +24,9 @@
     //初始化app服务
     [self initService];
     
+    //初始化微信支付
+    [self initWXPaySDK];
+    
     //初始化IM
 //    [[IMManager sharedIMManager] initIM];
     

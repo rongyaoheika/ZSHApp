@@ -127,7 +127,8 @@ static NSString *ZSHBaseBottomListCellID = @"ZSHBaseBottomListCell";
             cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
                 RootViewController *vc = nil;
                 if (indexPath.row == 3) {//购物车
-                    vc =  [[RootWebViewController alloc] initWithParamDic:@{@"url":ZSHLeftShopCartH5}];
+                    NSString *urlStr = NSStringFormat(@"%@?HONOURUSER_ID=%@",ZSHLeftShopCartH5,HONOURUSER_IDValue);
+                    vc =  [[RootWebViewController alloc] initWithParamDic:@{@"url":urlStr}];
                 } else {
                     Class className = NSClassFromString(self.vcArr[indexPath.row]);
                     vc = [[className alloc]initWithParamDic:self.paramDicArr[indexPath.row]];

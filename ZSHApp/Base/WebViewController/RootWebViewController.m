@@ -8,7 +8,7 @@
 
 #import "RootWebViewController.h"
 #import <WebKit/WebKit.h>
-
+#import <AlipaySDK/AlipaySDK.h>
 @interface RootWebViewController ()<WKNavigationDelegate,WKUIDelegate,WKScriptMessageHandler>
 {
     WKUserContentController * userContentController;
@@ -36,6 +36,8 @@
     [super viewWillDisappear:animated];
     [self.progressView removeFromSuperview];
     self.navigationController.navigationBar.hidden = NO;
+    [self.wkwebView.configuration.userContentController removeScriptMessageHandlerForName:@"BackAction"];
+    [self.wkwebView.configuration.userContentController removeScriptMessageHandlerForName:@"CommitOrderAction"];
 }
 #pragma mark 初始化webview
 -(void)createUI
@@ -50,8 +52,11 @@
     WKWebViewConfiguration * configuration = [[WKWebViewConfiguration alloc]init];
     //注册供js调用的方法
     userContentController = [[WKUserContentController alloc]init];
-    //    //弹出登录
-    //    [userContentController addScriptMessageHandler:self  name:@"loginVC"];
+   
+    //返回按键
+    [userContentController addScriptMessageHandler:self  name:@"BackAction"];
+    //提交订单
+    [userContentController addScriptMessageHandler:self  name:@"CommitOrderAction"];
     //
     //    //加载首页
     //    [userContentController addScriptMessageHandler:self name:@"gotoFirstVC"];
@@ -153,24 +158,25 @@
 #pragma mark - ——————— WKNavigationDelegate ————————
 
 // 在发送请求之前，决定是否跳转
-- (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler
-{
-    NSURL *URL = navigationAction.request.URL;
-    NSString *scheme = [URL scheme];
-    RLog(@"当前web页面是否可以返回h5页面==%d，发送的请求是==%@,访问过的历史页面==%@",self.wkwebView.canGoBack?1:0,URL, webView.backForwardList);
-    if ([scheme isEqualToString:@"iosdevtip"]) {
-        [self backBtnClicked];
-        decisionHandler(WKNavigationActionPolicyCancel);
-        return;
-    }
-
-    decisionHandler(WKNavigationActionPolicyAllow);
-}
+//- (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler
+//{
+//    NSURL *URL = navigationAction.request.URL;
+//    NSString *scheme = [URL scheme];
+//    RLog(@"当前web页面是否可以返回h5页面==%d，发送的请求是==%@,访问过的历史页面==%@",self.wkwebView.canGoBack?1:0,URL, webView.backForwardList);
+//    if ([scheme isEqualToString:@"iosdevtip"]) {
+//        [self backBtnClicked];
+//        decisionHandler(WKNavigationActionPolicyCancel);
+//        return;
+//    }
+//
+//    decisionHandler(WKNavigationActionPolicyAllow);
+//}
 
 // 页面开始加载时调用
 -(void)webView:(WKWebView *)webView didStartProvisionalNavigation:(WKNavigation *)navigation{
     RLog(@"web页面开始加载");
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    
     
 }
 // 当内容开始返回时调用
@@ -187,6 +193,29 @@
     RLog(@"web页面加载失败");
     self.navigationController.navigationBar.hidden = NO;
    
+}
+
+#pragma mark - WKScriptMessageHandler
+- (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message
+{
+    //    message.body  --  Allowed types are NSNumber, NSString, NSDate, NSArray,NSDictionary, and NSNull
+    if ([message.name isEqualToString:@"BackAction"]) {
+        RLog(@"返回按钮");
+        [self backBtnClicked];
+    } else if ([message.name isEqualToString:@"CommitOrderAction"]) {
+        RLog(@"提交订单");
+        NSDictionary *paramDic = message.body;
+        
+        if ([paramDic[@"paytype"]isEqualToString:@"支付宝"]) {
+            // NOTE: 调用支付结果开始支付
+            [[AlipaySDK defaultService] payOrder:paramDic[@"orderStr"] fromScheme:kAppScheme_Alipay callback:^(NSDictionary *resultDic) {
+                RLog(@"reslut = %@",resultDic);
+            }];
+        }else if([paramDic[@"paytype"]isEqualToString:@"微信"]){
+            
+        }
+        
+    }
 }
 
 

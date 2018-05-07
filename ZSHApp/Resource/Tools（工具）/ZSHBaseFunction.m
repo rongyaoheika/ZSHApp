@@ -112,6 +112,50 @@
     
 }
 
+//获取当地时间
++ (NSString *)getCurrentTime {
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"MM-dd"];
+    NSString *dateTime = [formatter stringFromDate:[NSDate date]];
+    return dateTime;
+}
+//将字符串转成NSDate类型
++ (NSDate *)dateFromString:(NSString *)dateString {
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat: @"MM-dd"];
+    NSDate *destDate= [dateFormatter dateFromString:dateString];
+    return destDate;
+}
+//传入今天的时间，返回明天的时间
++ (NSString *)GetTomorrowDay:(NSDate *)aDate {
+    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    NSDateComponents *components = [gregorian components:NSCalendarUnitWeekday | NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay fromDate:aDate];
+    [components setDay:([components day]+1)];
+    
+    NSDate *beginningOfWeek = [gregorian dateFromComponents:components];
+    NSDateFormatter *dateday = [[NSDateFormatter alloc] init];
+    [dateday setDateFormat:@"MM-dd"];
+    return [dateday stringFromDate:beginningOfWeek];
+}
+
+
+//计算日期间隔天数
++(NSInteger)getDaysFrom:(NSDate *)serverDate To:(NSDate *)endDate
+{
+    NSCalendar *gregorian = [[NSCalendar alloc]
+                             initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    
+    [gregorian setFirstWeekday:2];
+    
+    //去掉时分秒信息
+    NSDate *fromDate;
+    NSDate *toDate;
+    [gregorian rangeOfUnit:NSCalendarUnitDay startDate:&fromDate interval:NULL forDate:serverDate];
+    [gregorian rangeOfUnit:NSCalendarUnitDay startDate:&toDate interval:NULL forDate:endDate];
+    NSDateComponents *dayComponents = [gregorian components:NSCalendarUnitDay fromDate:fromDate toDate:toDate options:0];
+    
+    return dayComponents.day;
+}
 
 
 

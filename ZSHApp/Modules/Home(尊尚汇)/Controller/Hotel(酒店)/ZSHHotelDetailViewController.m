@@ -242,10 +242,9 @@ static NSString *ZSHHotelCellID = @"ZSHHotelCell";
     cellModel.renderBlock = ^ZSHBaseCell *(NSIndexPath *indexPath, UITableView *tableView) {
         ZSHHotelCalendarCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHHotelCalendarCellID forIndexPath:indexPath];
         [self hideSeparatorLineWithCell:cell hide:YES];
-        _liveInfoStr = @"8-8入住，8-9离开，1天";
         cell.dateViewTapBlock = ^(NSInteger tag) {//tag = 1入住
             NSDictionary *paramDic = _hotelDetailSetDicArr[indexPath.row];
-            NSDictionary *nextParamDic = @{KFromClassType:@(ZSHFromHotelDetailCalendarVCToBottomBlurPopView),@"dic":paramDic};
+            NSDictionary *nextParamDic = @{KFromClassType:@(ZSHFromHotelDetailCalendarVCToBottomBlurPopView),@"dic":paramDic,@"btnTag":@(tag)};
             self.bottomBlurPopView = [weakself createBottomBlurPopViewWithParamDic:nextParamDic];
             [kAppDelegate.window addSubview:self.bottomBlurPopView];
         };
@@ -273,8 +272,14 @@ static NSString *ZSHHotelCellID = @"ZSHHotelCell";
             [cell updateCellWithParamDic:paramDic];
             return cell;
         };
+       
         
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
+            NSString *beginDate = [[NSUserDefaults standardUserDefaults]objectForKey:@"beginDate"];
+            NSString *endDate = [[NSUserDefaults standardUserDefaults]objectForKey:@"endDate"];
+            NSString *days = [[NSUserDefaults standardUserDefaults]objectForKey:@"days"];
+            _liveInfoStr = [NSString stringWithFormat:@"%@入住，%@离开，%@",beginDate,endDate,days];
+            
             NSDictionary *paramDic = _hotelDetailSetDicArr[indexPath.row];
             NSDictionary *nextParamDic = @{KFromClassType:@(ZSHConfirmOrderToBottomBlurPopView),@"shopType":@(ZSHHotelShopType), @"deviceDic":weakself.hotelDetailParamDic,@"listDic":paramDic,@"liveInfoStr":_liveInfoStr};
             weakself.bottomBlurPopView = [weakself createBottomBlurPopViewWithParamDic:nextParamDic];

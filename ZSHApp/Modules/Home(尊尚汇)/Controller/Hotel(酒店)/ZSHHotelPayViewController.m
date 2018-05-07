@@ -12,6 +12,8 @@
 #import "ZSHHotelModel.h"
 #import "ZSHHotelModel.h"
 #import "ZSHPayView.h"
+#import <AlipaySDK/AlipaySDK.h>
+
 @interface ZSHHotelPayViewController ()
 
 @property (nonatomic, strong) ZSHPayView             *payView;
@@ -139,6 +141,15 @@ static NSString *ZSHBasePriceCellID = @"ZSHBasePriceCell";
 
 #pragma action
 - (void)payBtnAction{
+    // NOTE: 调用支付结果开始支付
+    [[AlipaySDK defaultService] payOrder:self.paramDic[@"orderStr"] fromScheme:kAppScheme_Alipay callback:^(NSDictionary *resultDic) {
+        NSLog(@"reslut = %@",resultDic);
+        if ([resultDic[@"resultStatus"]isEqualToString:@"9000"]) {
+            UIAlertView *payResultAlert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"支付成功" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            [payResultAlert show];
+        }
+    }];
+    
 }
 
 - (void)rightBtnAction:(UIButton *)rightBtn{

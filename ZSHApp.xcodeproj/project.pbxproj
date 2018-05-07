@@ -90,6 +90,14 @@
 		04647D022017068800A21600 /* ZSHLiveMoreView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04647D012017068800A21600 /* ZSHLiveMoreView.m */; };
 		04647D052017602000A21600 /* ZSHBeautyView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04647D042017602000A21600 /* ZSHBeautyView.m */; };
 		047BC20F20216376007F4055 /* ZSHLiveGiftView.m in Sources */ = {isa = PBXBuildFile; fileRef = 047BC20E20216376007F4055 /* ZSHLiveGiftView.m */; };
+		0486BD77209FFF2A0084A55C /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0486BD75209FFF2A0084A55C /* AlipaySDK.bundle */; };
+		0486BD78209FFF2A0084A55C /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0486BD76209FFF2A0084A55C /* AlipaySDK.framework */; };
+		0486BD7A209FFF6E0084A55C /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0486BD79209FFF6E0084A55C /* QuartzCore.framework */; };
+		0486BD7C209FFF840084A55C /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0486BD7B209FFF840084A55C /* CoreText.framework */; };
+		0486BD7E209FFF9F0084A55C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0486BD7D209FFF9F0084A55C /* UIKit.framework */; };
+		0486BD80209FFFAE0084A55C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0486BD7F209FFFAE0084A55C /* Foundation.framework */; };
+		0486BD82209FFFB80084A55C /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0486BD81209FFFB80084A55C /* CFNetwork.framework */; };
+		0486BD84209FFFC00084A55C /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0486BD83209FFFC00084A55C /* CoreMotion.framework */; };
 		0492FB73207F5CE400B78724 /* ZSHAboutUsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0492FB72207F5CE400B78724 /* ZSHAboutUsViewController.m */; };
 		04936D972027FCBF00E069BE /* ZSHLiveSignViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04936D962027FCBF00E069BE /* ZSHLiveSignViewController.m */; };
 		049823B520074D9C0080626D /* ZSHCabinetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 049823B420074D9C0080626D /* ZSHCabinetViewController.m */; };
@@ -748,6 +756,14 @@
 		04647D042017602000A21600 /* ZSHBeautyView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHBeautyView.m; sourceTree = "<group>"; };
 		047BC20D20216376007F4055 /* ZSHLiveGiftView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHLiveGiftView.h; sourceTree = "<group>"; };
 		047BC20E20216376007F4055 /* ZSHLiveGiftView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHLiveGiftView.m; sourceTree = "<group>"; };
+		0486BD75209FFF2A0084A55C /* AlipaySDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AlipaySDK.bundle; sourceTree = "<group>"; };
+		0486BD76209FFF2A0084A55C /* AlipaySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AlipaySDK.framework; sourceTree = "<group>"; };
+		0486BD79209FFF6E0084A55C /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		0486BD7B209FFF840084A55C /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		0486BD7D209FFF9F0084A55C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		0486BD7F209FFFAE0084A55C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		0486BD81209FFFB80084A55C /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		0486BD83209FFFC00084A55C /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		0492FB71207F5CE400B78724 /* ZSHAboutUsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHAboutUsViewController.h; sourceTree = "<group>"; };
 		0492FB72207F5CE400B78724 /* ZSHAboutUsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHAboutUsViewController.m; sourceTree = "<group>"; };
 		04936D952027FCBF00E069BE /* ZSHLiveSignViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHLiveSignViewController.h; sourceTree = "<group>"; };
@@ -1673,6 +1689,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0486BD78209FFF2A0084A55C /* AlipaySDK.framework in Frameworks */,
+				0486BD84209FFFC00084A55C /* CoreMotion.framework in Frameworks */,
+				0486BD82209FFFB80084A55C /* CFNetwork.framework in Frameworks */,
+				0486BD80209FFFAE0084A55C /* Foundation.framework in Frameworks */,
+				0486BD7E209FFF9F0084A55C /* UIKit.framework in Frameworks */,
+				0486BD7C209FFF840084A55C /* CoreText.framework in Frameworks */,
+				0486BD7A209FFF6E0084A55C /* QuartzCore.framework in Frameworks */,
 				FE940AF61FEB5D15002D03EB /* ZegoLiveRoom.framework in Frameworks */,
 				188662971FEA115400EA7FA1 /* AVFoundation.framework in Frameworks */,
 				188662401FE9F1F100EA7FA1 /* VideoToolbox.framework in Frameworks */,
@@ -1979,6 +2002,15 @@
 				0453B0B8202C42B200791A75 /* Channel.m */,
 			);
 			path = "头条";
+			sourceTree = "<group>";
+		};
+		0486BD74209FFF2A0084A55C /* AliPay */ = {
+			isa = PBXGroup;
+			children = (
+				0486BD75209FFF2A0084A55C /* AlipaySDK.bundle */,
+				0486BD76209FFF2A0084A55C /* AlipaySDK.framework */,
+			);
+			path = AliPay;
 			sourceTree = "<group>";
 		};
 		04936D942027FB8E00E069BE /* 签到 */ = {
@@ -2729,6 +2761,12 @@
 		6C3D66AC810B3ABDE56945D5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0486BD83209FFFC00084A55C /* CoreMotion.framework */,
+				0486BD81209FFFB80084A55C /* CFNetwork.framework */,
+				0486BD7F209FFFAE0084A55C /* Foundation.framework */,
+				0486BD7D209FFF9F0084A55C /* UIKit.framework */,
+				0486BD7B209FFF840084A55C /* CoreText.framework */,
+				0486BD79209FFF6E0084A55C /* QuartzCore.framework */,
 				0451A2422091985600983AE4 /* JavaScriptCore.framework */,
 				188662981FEA117600EA7FA1 /* libresolv.tbd */,
 				188662961FEA115400EA7FA1 /* AVFoundation.framework */,
@@ -3794,6 +3832,7 @@
 		FE5537D71F47049D00803128 /* ThridParty */ = {
 			isa = PBXGroup;
 			children = (
+				0486BD74209FFF2A0084A55C /* AliPay */,
 				FE940AF01FEB5CC7002D03EB /* Zego */,
 			);
 			path = ThridParty;
@@ -4790,6 +4829,7 @@
 				185C6D701FC2C168004EA461 /* back_button@2x.png in Resources */,
 				FE3E009F1FDA8CD300A0F7CA /* musicPaper.json in Resources */,
 				FE5538501F47049D00803128 /* LaunchScreen.storyboard in Resources */,
+				0486BD77209FFF2A0084A55C /* AlipaySDK.bundle in Resources */,
 				043F2E32200DFF3500CE18DE /* music_check@3x.png in Resources */,
 				18177E8F1FD29C7500213B3B /* area.plist in Resources */,
 				043F2E2E200DFF3500CE18DE /* Pas de Deux.mp3 in Resources */,
@@ -5582,6 +5622,7 @@
 					"$(PROJECT_DIR)/iphoneos_simulator/**",
 					"$(PROJECT_DIR)/iphoneos_simulator",
 					"$(PROJECT_DIR)/ZSHApp/ThridParty/Zego/iphoneos_simulator",
+					"$(PROJECT_DIR)/ZSHApp/ThridParty/AliPay",
 				);
 				GCC_INPUT_FILETYPE = automatic;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/ZSHApp/Define/PrefixHeader.pch";
@@ -5692,6 +5733,7 @@
 					"$(PROJECT_DIR)/iphoneos_simulator/**",
 					"$(PROJECT_DIR)/iphoneos_simulator",
 					"$(PROJECT_DIR)/ZSHApp/ThridParty/Zego/iphoneos_simulator",
+					"$(PROJECT_DIR)/ZSHApp/ThridParty/AliPay",
 				);
 				GCC_INPUT_FILETYPE = automatic;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/ZSHApp/Define/PrefixHeader.pch";
@@ -5902,6 +5944,7 @@
 					"$(PROJECT_DIR)/iphoneos_simulator/**",
 					"$(PROJECT_DIR)/iphoneos_simulator",
 					"$(PROJECT_DIR)/ZSHApp/ThridParty/Zego/iphoneos_simulator",
+					"$(PROJECT_DIR)/ZSHApp/ThridParty/AliPay",
 				);
 				GCC_INPUT_FILETYPE = automatic;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/ZSHApp/Define/PrefixHeader.pch";

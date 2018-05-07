@@ -34,33 +34,33 @@
     [self.contentView addSubview:_hotelmageView];
     
     //酒店名字
-    NSDictionary *hotelNameLabelDic = @{@"text":@"三亚大中华希尔顿酒店",@"font": kPingFangMedium(17)};
+    NSDictionary *hotelNameLabelDic = @{@"font": kPingFangMedium(17)};
     _hotelNameLabel = [ZSHBaseUIControl createLabelWithParamDic:hotelNameLabelDic];
     _hotelNameLabel.numberOfLines = 0;
     [_hotelNameLabel setLineBreakMode:NSLineBreakByWordWrapping];
     [self.contentView addSubview:_hotelNameLabel];
     
     //酒店型号名字
-    NSDictionary *hotelTypeLabelDic = @{@"text":@"豪华贵宾房",@"font": kPingFangRegular(11)};
+    NSDictionary *hotelTypeLabelDic = @{@"font": kPingFangRegular(11)};
     _hotelTypeLabel = [ZSHBaseUIControl createLabelWithParamDic:hotelTypeLabelDic];
     [self.contentView addSubview:_hotelTypeLabel];
     
     //酒店底部（距离，型号，大小）
-    NSDictionary *liveInfoLabelDic = @{@"text":@"60㎡   大床  1.8m",@"font": kPingFangRegular(11)};
+    NSDictionary *liveInfoLabelDic = @{@"font": kPingFangRegular(11)};
     _sizeInfoLabel = [ZSHBaseUIControl createLabelWithParamDic:liveInfoLabelDic];
     _sizeInfoLabel.numberOfLines = 0;
     [_sizeInfoLabel setLineBreakMode:NSLineBreakByWordWrapping];
     [self.contentView addSubview:_sizeInfoLabel];
     
     //酒店底部（入住信息）
-    NSDictionary *hotelLiveInfoLabelDic = @{@"text":@"6月8日入住，6月9日离开，1天",@"font": kPingFangRegular(11)};
+    NSDictionary *hotelLiveInfoLabelDic = @{@"font": kPingFangRegular(11)};
     _hotelLiveInfoLabel = [ZSHBaseUIControl createLabelWithParamDic:hotelLiveInfoLabelDic];
     _hotelLiveInfoLabel.numberOfLines = 0;
     [_hotelLiveInfoLabel setLineBreakMode:NSLineBreakByWordWrapping];
     [self.contentView addSubview:_hotelLiveInfoLabel];
     
     //酒店价格
-    NSDictionary *priceLabelDic = @{@"text":@"¥999",@"font": kPingFangMedium(17),@"textAlignment":@(NSTextAlignmentRight)};
+    NSDictionary *priceLabelDic = @{@"font": kPingFangMedium(17),@"textAlignment":@(NSTextAlignmentRight)};
     _priceLabel = [ZSHBaseUIControl createLabelWithParamDic:priceLabelDic];
     [self.contentView addSubview:_priceLabel];
     
@@ -143,11 +143,11 @@
         
         if (_showCellType == ZSHNormalType) {//订单支付页面
             _hotelNameLabel.text = realDic[@"YACHTNAMES"];
-            _hotelTypeLabel.text = realDic[@"KTVDETTYPE"];
-            _hotelLiveInfoLabel.text = [NSString stringWithFormat:@"%@-%@",realDic[@"KTVDETBEGIN"],realDic[@"KTVDETEND"]];;
+            _hotelTypeLabel.text = realDic[@"YACHTNAMES"];
+            _hotelLiveInfoLabel.text = dic[@"liveInfoStr"];
         } else if (_showCellType == ZSHPopType) {
             _hotelNameLabel.text = realDic[@"YACHTNAMES"];
-//            _hotelLiveInfoLabel.text = self.listDic[@"KTVDETTYPE"];
+            _hotelLiveInfoLabel.text = dic[@"liveInfoStr"];
 //            _sizeInfoLabel.text = [NSString stringWithFormat:@"%@-%@",self.listDic[@"KTVDETBEGIN"],self.listDic[@"KTVDETEND"]];
             _priceLabel.text = [NSString stringWithFormat:@"¥%.0f",[realDic[@"YACHTPRICE"]floatValue] ];
         }

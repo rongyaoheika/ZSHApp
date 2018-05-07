@@ -249,7 +249,7 @@
     }];
     
     _calendarCell.dateViewTapBlock = ^(NSInteger tag) {//tag = 1入住
-        NSDictionary *nextParamDic = @{KFromClassType:@(ZSHFromHotelDetailCalendarVCToBottomBlurPopView)};
+        NSDictionary *nextParamDic = @{KFromClassType:@(ZSHFromHotelDetailCalendarVCToBottomBlurPopView),@"btnTag":@(tag)};
         weakself.bottomBlurPopView = [weakself createBottomBlurPopViewWithParamDic:nextParamDic];
         [kAppDelegate.window addSubview:weakself.bottomBlurPopView];
     };
@@ -261,9 +261,14 @@
 
     
     NSDictionary *requestDic = self.paramDic[@"requestDic"];
-    [self.view addSubview:[ZSHBaseUIControl createBottomButton:^(NSInteger index) {
+    [self.view addSubview:[ZSHBaseUIControl createBottomButton:^(NSInteger index) {//立即购买-生成订单
         if (index == 3) {
-            NSDictionary *nextParamDic = @{KFromClassType:@(ZSHSubscribeVCToBottomBlurPopView),@"requestDic":requestDic,@"shopType":@(ZSHShipType)};
+            NSString *beginDate = [[NSUserDefaults standardUserDefaults]objectForKey:@"beginDate"];
+            NSString *endDate = [[NSUserDefaults standardUserDefaults]objectForKey:@"endDate"];
+            NSString *days = [[NSUserDefaults standardUserDefaults]objectForKey:@"days"];
+            NSString *liveInfoStr = [NSString stringWithFormat:@"%@开始，%@结束，%@",beginDate,endDate,days];
+            
+            NSDictionary *nextParamDic = @{KFromClassType:@(ZSHSubscribeVCToBottomBlurPopView),@"requestDic":requestDic,@"shopType":@(ZSHShipType),@"liveInfoStr":liveInfoStr};
             weakself.bottomBlurPopView = [weakself createBottomBlurPopViewWithParamDic:nextParamDic];
             [weakself.view addSubview:weakself.bottomBlurPopView];
         }

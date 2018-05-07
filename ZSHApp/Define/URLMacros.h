@@ -956,9 +956,16 @@
 
 //249.高端特权生成订单
 //参数：ORDERUNAME 入住人姓名/ORDERPHONE 入住人手机号码/ORDERREMARK 订单备注/ORDERMONEY 订单价格/
-//ORDERROOMBEGIN 开始时间/ORDERROOMEND 离开日期
-///ORDERDAYS 入住天数 /SHOP_ID 店铺id/HONOURUSER_ID 提交订单用户id
+//ORDERROOMBEGIN 开始时间/ORDERROOMEND 离开日期 ORDERTYPE  5-马术，6-游艇，7-豪车，8-飞机，9-高尔夫
+///ORDERDAYS 入住天数 /SHOP_ID 店铺id/HONOURUSER_ID 提交订单用户id PAYTYPE  支付方式（支付宝/微信）
 #define kUrlAddHighOrder [NSString stringWithFormat:@"/highsort/addhighorder?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"ADDHIGHORDER"]]
+
+
+//253.订单支付处理(生成支付宝订单)
+//
+//请求参数：ORDERNUMBER：订单号
+//http://localhost:8081/ZSHINTER/zfbalipay/pay.do?ALIPAY&ORDERNUMBER=180228171602171d27c
+#define kUrlAliPay [NSString stringWithFormat:@"/ZSHINTER/zfbalipay/pay.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"ALIPAY"]]
 
 #endif /* URLMacros_h */
 

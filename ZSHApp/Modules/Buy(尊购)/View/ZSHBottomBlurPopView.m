@@ -14,9 +14,6 @@
 #import "ZSHHotelPayViewController.h"
 #import "ZSHTextFieldCellView.h"
 #import "JSNummberCount.h"
-//日历
-#import "STCalendar.h"
-#import "NSCalendar+ST.h"
 
 //年龄
 #import "ZSHAgeView.h"
@@ -44,7 +41,7 @@
 //首页
 #import "ZSHHomeSubListCell.h"
 #import "ZSHToplineTopView.h"
-@interface ZSHBottomBlurPopView ()<STCalendarDelegate, FSCalendarDataSource, FSCalendarDelegate>
+@interface ZSHBottomBlurPopView ()<FSCalendarDataSource, FSCalendarDelegate>
 
 @property (nonatomic, strong) NSDictionary           *paramDic;
 @property (nonatomic, strong) ZSHBaseModel           *model;
@@ -61,7 +58,6 @@
 @property (nonatomic, strong) UIView          *calendarHeadView;
 @property (nonatomic, strong) UILabel         *currentDateLabel;
 @property (nonatomic, strong) UIView          *weekView;
-@property (nonatomic, strong, nullable) STCalendar *calender;
 
 //确认订单
 @property (nonatomic, assign) ZSHShopType            shopType;
@@ -185,13 +181,7 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
         [self.subTab registerClass:[ZSHHotelDetailDeviceCell class] forCellReuseIdentifier:ZSHHotelDetailDeviceCellID];
         [self.subTab registerClass:[ZSHHotelPayHeadCell class] forCellReuseIdentifier:ZSHHotelPayHeadCellID];
         
-    }
-//    else if (kFromClassTypeValue == ZSHFromHotelDetailCalendarVCToBottomBlurPopView||kFromClassTypeValue == ZSHFromAirplaneCalendarVCToBottomBlurPopView) {//酒店入住(机票预订)日历
-//        _subTabHeight = kRealValue(360);
-//        [self.subTab registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHHeadCellID];
-//        [self.subTab registerClass:[ZSHHotelPayHeadCell class] forCellReuseIdentifier:ZSHHotelPayHeadCellID];
-//    }
-    else if (kFromClassTypeValue == ZSHFromAirplaneUserInfoVCToBottomBlurPopView) {//机票个人信息
+    } else if (kFromClassTypeValue == ZSHFromAirplaneUserInfoVCToBottomBlurPopView) {//机票个人信息
         _subTabHeight = kRealValue(310.5);
         [self.subTab registerClass:[ZSHBaseCell class] forCellReuseIdentifier:ZSHHeadCellID];
     } else if (kFromClassTypeValue == ZSHFromAirplaneAgeVCToBottomBlurPopView) {//吃喝玩乐年龄
@@ -349,14 +339,7 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
         [self.tableViewModel.sectionModelArray addObject:[self storeNumCountSectionWithTitle:@"数量"]];
         [self.tableViewModel.sectionModelArray addObject:[self storeHotelDetailOtherSection]];
         [self.tableViewModel.sectionModelArray addObject:[self storeConfirmBtnSection]];
-    }
-//    else if (kFromClassTypeValue == ZSHFromHotelDetailCalendarVCToBottomBlurPopView||kFromClassTypeValue == ZSHFromAirplaneCalendarVCToBottomBlurPopView){//酒店入住日历(机票选择日历)
-//
-//        [self.tableViewModel.sectionModelArray removeAllObjects];
-//        [self.tableViewModel.sectionModelArray addObject:[self storeHeadSection]];
-//        [self.tableViewModel.sectionModelArray addObject:[self storeCalendarDetailSection]];
-//    }
-    else if (kFromClassTypeValue == ZSHFromAirplaneUserInfoVCToBottomBlurPopView){//机票个人信息
+    } else if (kFromClassTypeValue == ZSHFromAirplaneUserInfoVCToBottomBlurPopView){//机票个人信息
         
         [self.tableViewModel.sectionModelArray removeAllObjects];
         [self.tableViewModel.sectionModelArray addObject:[self storeTicketUserInfoBtnSection]];
@@ -608,10 +591,6 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
 //入住日历
 - (ZSHBaseTableViewSectionModel*)storeCalendarDetailSection {
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
-//    sectionModel.headerHeight = kRealValue(80);
-//    sectionModel.headerView = self.calendarHeadView;
-    
-    kWeakSelf(self);
     ZSHBaseTableViewCellModel *cellModel = [[ZSHBaseTableViewCellModel alloc] init];
     [sectionModel.cellModelArray addObject:cellModel];
     cellModel.height = kRealValue(280);
@@ -633,23 +612,6 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
         calendar.weekdayHeight = 50.0;
         [cell.contentView addSubview:calendar];
         self.calendar = calendar;
-        
-//        STCalendar *calender = [[STCalendar alloc]initWithFrame:CGRectMake(0,0,KScreenWidth,kRealValue(280))];
-//        calender.tag = 2;
-//        calender.backgroundColor = KWhiteColor;
-//        [calender returnDate:^(NSString * _Nullable stringDate) {
-//            NSString *labelDate  = stringDate;
-//            RLog(@"现在的日期==%@",labelDate);
-//            weakself.currentDateLabel.text = labelDate;
-//        }];
-//
-//        calender.delegate = self;
-//        [calender setTextSelectedColor:[UIColor blackColor]];
-//        self.calender = calender;
-//        [cell.contentView addSubview:self.calender];
-//        [calender mas_makeConstraints:^(MASConstraintMaker *make) {
-//            make.edges.mas_equalTo(cell);
-//        }];
         return cell;
     };
     return sectionModel;
@@ -925,8 +887,9 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
 - (void)calendar:(FSCalendar *)calendar didSelectDate:(NSDate *)date atMonthPosition:(FSCalendarMonthPosition)monthPosition {
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    [dateFormatter setDateFormat:@"MM-dd"];
     self.currentDate = [dateFormatter stringFromDate:date];
+    [[NSNotificationCenter defaultCenter]postNotificationName:KCalendarDateChanged object:@{@"dateStr":self.currentDate,@"btnTag":self.paramDic[@"btnTag"]}];
     
 }
 
@@ -939,68 +902,12 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
     return _topLineView;
 }
 
-#pragma mark - 创建星期视图
-- (UIView *)calendarHeadView{
-    if (!_calendarHeadView) {
-        _calendarHeadView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, kRealValue(80))];
-
-         NSDictionary *currentDateLabelDic = @{@"text":@"2017年11月",@"font":kPingFangRegular(12),@"textAlignment":@(NSTextAlignmentCenter)};
-        UILabel *currentDateLabel = [ZSHBaseUIControl createLabelWithParamDic:currentDateLabelDic];
-        currentDateLabel.frame = CGRectMake(0, 0, KScreenWidth, kRealValue(30));
-        currentDateLabel.backgroundColor = [UIColor colorWithHexString:@"F7F7F7"];
-        [_calendarHeadView addSubview:currentDateLabel];
-        self.currentDateLabel = currentDateLabel;
-        
-        [_calendarHeadView addSubview:self.weekView];
-    }
-    return _calendarHeadView;
-}
-
-- (UIView *)weekView{
-    if (!_weekView) {
-        _weekView = [[UIView alloc]initWithFrame:CGRectMake(-1, kRealValue(30), KScreenWidth+2, kRealValue(50))];
-        NSArray *title = @[@"日",@"一",@"二",@"三",@"四",@"五",@"六"];
-        for (int i =0 ; i < 7 ; i++) {
-            NSDictionary *labelDic = @{@"text":title[i],@"font":kPingFangRegular(15),@"textColor":KZSHColorFD5739,@"textAlignment":@(NSTextAlignmentCenter)};
-            UILabel *label = [ZSHBaseUIControl createLabelWithParamDic:labelDic];
-            label.frame = CGRectMake(KScreenWidth/7*i+1, 0, KScreenWidth/7, _weekView.bounds.size.height);
-            [_weekView addSubview:label];
-        }
-        _weekView.backgroundColor = [UIColor whiteColor];
-    }
-    return _weekView;
-}
-
 //头条顶部发布view
 - (ZSHToplineTopView *)toplineTopView{
     if (!_toplineTopView) {
         _toplineTopView = [[ZSHToplineTopView alloc]initWithFrame:CGRectMake(0, KNavigationBarHeight, kScreenWidth, kRealValue(50))];
     }
     return _toplineTopView;
-}
-
-#pragma mark - event response 日历事件相应
-- (void)calendarResultWithBeginDate:(NSString *)beginDate endDate:(NSString *)endDate
-{
-    NSString *resultStr = [beginDate stringByAppendingString:endDate];
-    RLog(@"选择的日期==%@",resultStr);
-    self.currentDateLabel.text = resultStr;
-}
-
-- (void)nextMonth:(UIButton *)button
-{
-    ++self.calender.month;
-}
-
-- (void)upMonth:(UIButton *)button
-{
-    --self.calender.month;
-}
-
-- (void)currentMonth:(UIButton *)button
-{
-    self.calender.year = [NSCalendar currentYear];
-    self.calender.month = [NSCalendar currentMonth];
 }
 
 #pragma action
@@ -1054,23 +961,25 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
         [self removeFromSuperview];
         [self setHidden:YES];
         
-        NSDictionary *nextParamDic = nil;
+        NSMutableDictionary *nextParamDic = [[NSMutableDictionary alloc]init];
         if ( kFromClassTypeValue == ZSHConfirmOrderToBottomBlurPopView) {
             self.shopType = [self.paramDic[@"shopType"]integerValue]; //弹窗类型
             self.deviceDic = self.paramDic[@"deviceDic"];  //详情页上半部分数据
             self.listDic = self.paramDic[@"listDic"];      //详情页下半部分列表数据
             self.liveInfo = self.paramDic[@"liveInfoStr"]; //酒店居住时间信息
-            
-            nextParamDic = @{@"shopType":@(self.shopType), @"deviceDic":weakself.deviceDic,@"listDic":weakself.listDic,@"liveInfoStr":weakself.liveInfo};
+            [nextParamDic setDictionary: @{@"shopType":@(self.shopType), @"deviceDic":weakself.deviceDic,@"listDic":weakself.listDic,@"liveInfoStr":weakself.liveInfo}];
+//            nextParamDic = @{@"shopType":@(self.shopType), @"deviceDic":weakself.deviceDic,@"listDic":weakself.listDic,@"liveInfoStr":weakself.liveInfo};
             
         } else if(kFromClassTypeValue == ZSHSubscribeVCToBottomBlurPopView){//高级特权
-            nextParamDic = @{@"shopType":@(self.shopType),@"requestDic":self.paramDic[@"requestDic"]};
+            self.liveInfo = self.paramDic[@"liveInfoStr"];
+            [nextParamDic setDictionary:@{@"shopType":@(self.shopType),@"requestDic":self.paramDic[@"requestDic"],@"liveInfoStr":weakself.liveInfo}];
+//            nextParamDic = @{@"shopType":@(self.shopType),@"requestDic":self.paramDic[@"requestDic"],@"liveInfoStr":weakself.liveInfo};
         }
         //生成订单
-        [weakself requestDataComplete:^{
+        [weakself requestDataComplete:^(NSDictionary *dic){
+            [nextParamDic setValue:dic[@"orderStr"] forKey:@"orderStr"];
             ZSHHotelPayViewController *hotelPayVC = [[ZSHHotelPayViewController alloc]initWithParamDic:nextParamDic];
             [[kAppDelegate getCurrentUIVC].navigationController pushViewController:hotelPayVC animated:YES];
-
         }];
       
     }];
@@ -1140,7 +1049,7 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
 }
 
 //美食，酒店等订单生成
-- (void)requestDataComplete:(void(^)())complete{
+- (void)requestDataComplete:(void(^)(NSDictionary *dic))complete{
     if (!_confirmOderDic[@"ORDERUNAME"]||!_confirmOderDic[@"ORDERPHONE"]||!_confirmOderDic[@"ORDERREMARK"]) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"信息填写不全" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
         [alert show];
@@ -1164,7 +1073,8 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
             [_confirmOderDic setValue:self.paramDic[@"requestDic"][@"HONOURUSER_ID"] forKey:@"HONOURUSER_ID"];
             [_orderLogic requestHotelConfirmOrderWithParamDic:_confirmOderDic Success:^(id responseObject) {
                 RLog(@"确认订单数据==%@",responseObject);
-                 complete();
+                
+                 complete(responseObject);
             } fail:nil];
             break;
         }
@@ -1175,9 +1085,11 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
             [_confirmOderDic setValue:@"1" forKey:@"ORDERDAYS"];
             [_confirmOderDic setValue:self.paramDic[@"requestDic"][@"YACHTSHOP_ID"] forKey:@"SHOP_ID"];
             [_confirmOderDic setValue:self.paramDic[@"requestDic"][@"HONOURUSER_ID"] forKey:@"HONOURUSER_ID"];
+            [_confirmOderDic setValue:@"5" forKey:@"ORDERTYPE"];
+            [_confirmOderDic setValue:@"支付宝" forKey:@"PAYTYPE"];
             [_orderLogic requestHighConfirmOrderWithParamDic:_confirmOderDic Success:^(id responseObject) {
                 RLog(@"高级特权订单==%@",responseObject);
-                complete();
+                complete(responseObject);
             } fail:nil];
             break;
         }
@@ -1212,5 +1124,7 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
     RLog(@"_confirmOderDic == %@",_confirmOderDic);
     
 }
+
+
 
 @end

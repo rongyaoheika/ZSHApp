@@ -40,6 +40,9 @@
 #define KPresentFinishShowVC                @"KPresentFinishShowVC"
 #define KPushLivePersonInfoVC               @"KPushLivePersonInfoVC"
 
+//酒店，游艇入驻日历选择通知
+#define KCalendarDateChanged               @"KCalendarDateChanged"
+
 //三方分享
 #define KShareInfo                          @"KShareInfo"
 #endif /* CommonMacros_h */
