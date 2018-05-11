@@ -960,12 +960,9 @@
 ///ORDERDAYS 入住天数 /SHOP_ID 店铺id/HONOURUSER_ID 提交订单用户id PAYTYPE  支付方式（支付宝/微信）
 #define kUrlAddHighOrder [NSString stringWithFormat:@"/highsort/addhighorder?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"ADDHIGHORDER"]]
 
-
-//253.订单支付处理(生成支付宝订单)
-//
-//请求参数：ORDERNUMBER：订单号
-//http://localhost:8081/ZSHINTER/zfbalipay/pay.do?ALIPAY&ORDERNUMBER=180228171602171d27c
-#define kUrlAliPay [NSString stringWithFormat:@"/ZSHINTER/zfbalipay/pay.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"ALIPAY"]]
+//254.查询支付信息
+//请求参数：ORDERNUMBER  订单号
+#define kUrlGetPayInfo [NSString stringWithFormat:@"zfbalipay/getPayInfo.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"GETPAYINFO"]]
 
 #endif /* URLMacros_h */
 

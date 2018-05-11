@@ -45,7 +45,7 @@
     self.window.backgroundColor = KClearColor;
     [self.window makeKeyAndVisible];
     [[UIButton appearance] setExclusiveTouch:YES];
-//    [[UIButton appearance] setShowsTouchWhenHighlighted:YES];
+    //    [[UIButton appearance] setShowsTouchWhenHighlighted:YES];
     [UIActivityIndicatorView appearanceWhenContainedIn:[MBProgressHUD class], nil].color = KWhiteColor;
     [self setUpFixiOS11];
 }
@@ -53,17 +53,15 @@
 #pragma mark - 适配
 - (void)setUpFixiOS11
 {
-#ifdef __IPHONE_11_0
     if (@available(ios 11.0,*)) {
         UIScrollView.appearance.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
         UITableView.appearance.estimatedRowHeight = 0;
         UITableView.appearance.estimatedSectionFooterHeight = 0;
         UITableView.appearance.estimatedSectionHeaderHeight = 0;
-        
     }
-#endif
 }
 
+#pragma mark ————— 键盘响应 —————
 - (void)initKeyboard{
     [ZSHBaseFunction initKeyboard];
 }
@@ -91,7 +89,7 @@
     }else{
         //没有登录过，展示登录页面
         KPostNotification(KNotificationLoginStateChange, @NO)
-//                [MBProgressHUD showErrorMessage:@"需要登录"];
+        //                [MBProgressHUD showErrorMessage:@"需要登录"];
     }
 }
 
@@ -120,7 +118,7 @@
             RXL.scaleContentView = NO;
             RXL.scaleBackgroundImageView = NO;
             RXL.panGestureEnabled = false;
-        
+            
             CATransition *anima = [CATransition animation];
             anima.type = @"cube";//设置动画的类型
             anima.subtype = kCATransitionFromRight; //设置动画的方向
@@ -135,7 +133,7 @@
         self.mainTabBarVC = nil;
         self.slipVC = nil;
         RootNavigationController *loginNavi = [[RootNavigationController alloc] initWithRootViewController:[ZSHGuideViewController new]];
-
+        
         CATransition *anima = [CATransition animation];
         anima.type = @"fade";//设置动画的类型
         anima.subtype = kCATransitionFromRight; //设置动画的方向
@@ -181,7 +179,7 @@
     
     /* 设置友盟appkey */
     [UMConfigure initWithAppkey:UMengKey channel:@"App Store"];
-  
+    
     // U-Share 平台设置
     [self configUSharePlatforms];
 }
@@ -205,15 +203,17 @@
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey, id> *)options
 {
     //6.3的新的API调用，是为了兼容国外平台(例如:新版facebookSDK,VK等)的调用[如果用6.2的api调用会没有回调],对国内平台没有影响
-    if ([url.host isEqualToString:@"safepay"]) {
-        //跳转支付宝钱包进行支付，处理支付结果
+    //友盟回调
+    BOOL result = [[UMSocialManager defaultManager]  handleOpenURL:url options:options];
+    if (!result && [url.host isEqualToString:@"safepay"]) {//支付宝回调
+        result = YES;
         [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
-            NSLog(@"result = %@",resultDic);
+            RLog(@"支付宝支付回调结果= = %@",resultDic);
+            [[NSNotificationCenter defaultCenter] postNotificationName:kAliPayCallBack object:resultDic];
         }];
     }
-    BOOL result = [[UMSocialManager defaultManager]  handleOpenURL:url options:options];
-    if (!result) {
-        // 其他如支付等SDK的回调
+  
+    if (!result) {// 微信回调
         result = [WXApi handleOpenURL:url delegate:self];
     }
     return result;
@@ -222,18 +222,71 @@
 //支持目前所有iOS系统
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
 {
-    if ([url.host isEqualToString:@"safepay"]) {
+    //友盟回调
+    BOOL result = [[UMSocialManager defaultManager] handleOpenURL:url];
+    if (!result && [url.host isEqualToString:@"safepay"]) {//支付宝回调
+        result = YES;
         //跳转支付宝钱包进行支付，处理支付结果
         [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
-            NSLog(@"result = %@",resultDic);
+            RLog(@"result = %@",resultDic);
         }];
     }
-    BOOL result = [[UMSocialManager defaultManager] handleOpenURL:url];
-    if (!result) {
-        // 其他如支付等SDK的回调
+    if (!result) {//微信回调
         result = [WXApi handleOpenURL:url delegate:self];
     }
     return result;
+}
+
+//微信支付回调
+#pragma mark 微信回调方法
+- (void)onResp:(BaseResp *)resp{
+    NSString * strMsg = [NSString stringWithFormat:@"errorCode: %d",resp.errCode];
+    RLog(@"strMsg: %@",strMsg);
+    
+    NSString * errStr = [NSString stringWithFormat:@"errStr: %@",resp.errStr];
+    RLog(@"errStr: %@",errStr);
+    
+    
+    NSString * strTitle;
+    //判断是微信消息的回调
+    if ([resp isKindOfClass:[SendMessageToWXResp class]]){
+        strTitle = [NSString stringWithFormat:@"发送媒体消息的结果"];
+    }
+    
+    
+    NSString * wxPayResult;
+    //判断是否是微信支付回调 (注意是PayResp 而不是PayReq)
+    if ([resp isKindOfClass:[PayResp class]]){
+        //支付返回的结果, 实际支付结果需要去微信服务器端查询
+        strTitle = [NSString stringWithFormat:@"支付结果"];
+        switch (resp.errCode){
+            case WXSuccess:
+            {
+                strMsg = @"支付结果:";
+                RLog(@"支付成功: %d",resp.errCode);
+                wxPayResult = @"success";
+                break;
+            }
+            case WXErrCodeUserCancel:
+            {
+                strMsg = @"用户取消了支付";
+                RLog(@"用户取消支付: %d",resp.errCode);
+                wxPayResult = @"cancel";
+                break;
+            }
+            default:
+            {
+                strMsg = [NSString stringWithFormat:@"支付失败! code: %d  errorStr: %@",resp.errCode,resp.errStr];
+                RLog(@":支付失败: code: %d str: %@",resp.errCode,resp.errStr);
+                wxPayResult = @"faile";
+                break;
+            }
+        }
+        
+        //发出通知
+//        NSNotification * notification = [NSNotification notificationWithName:kWXPayCallBack object:wxPayResult];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kWXPayCallBack object:nil];
+    }
 }
 
 #pragma mark ————— 网络状态监听 —————
@@ -312,7 +365,7 @@
                 return liveVC;
             }
         } else {
-             return nav.viewControllers.lastObject;
+            return nav.viewControllers.lastObject;
         }
     }
     
@@ -323,8 +376,8 @@
         }
         return tabSelectVC;
     } else if ([superVC isKindOfClass:[UINavigationController class]]) {
-            
-            return ((UINavigationController*)superVC).viewControllers.lastObject;
+        
+        return ((UINavigationController*)superVC).viewControllers.lastObject;
     }
     return superVC;
 }

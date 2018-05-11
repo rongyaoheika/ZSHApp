@@ -9,20 +9,29 @@
 #import "RootWebViewController.h"
 #import <WebKit/WebKit.h>
 #import <AlipaySDK/AlipaySDK.h>
+#import "ZSHConfirmOrderLogic.h"
 @interface RootWebViewController ()<WKNavigationDelegate,WKUIDelegate,WKScriptMessageHandler>
 {
     WKUserContentController * userContentController;
 }
 @property (nonatomic, strong)  WKWebView         *wkwebView;
 @property (nonatomic, strong)  UIProgressView    *progressView;  //这个是加载页面的进度条
-@property (nonatomic, assign)  BOOL              isFirstLoad;    //第一次加载
+
+//支付
+@property (nonatomic, strong) ZSHConfirmOrderLogic   *orderLogic;
+@property (nonatomic, copy)   NSString               *payType;
+@property (nonatomic, strong) NSDictionary           *wechatOrderDic;
+@property (nonatomic, strong) NSDictionary           *alipayOrderDic;
+
 @end
 
 @implementation RootWebViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    //支付回调
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(aliPayCallBack:) name:kAliPayCallBack object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(wxPayCallBack:) name:kWXPayCallBack object:nil];
     self.url = self.paramDic[@"url"];
     [self createUI];
 }
@@ -57,12 +66,7 @@
     [userContentController addScriptMessageHandler:self  name:@"BackAction"];
     //提交订单
     [userContentController addScriptMessageHandler:self  name:@"CommitOrderAction"];
-    //
-    //    //加载首页
-    //    [userContentController addScriptMessageHandler:self name:@"gotoFirstVC"];
-    //
-    //pop到前一页
-//    [userContentController addScriptMessageHandler:self name:@"backBtnClicked"];
+
     
     configuration.userContentController = userContentController;
     configuration.preferences.javaScriptEnabled = YES;//打开js交互
@@ -157,27 +161,10 @@
 
 #pragma mark - ——————— WKNavigationDelegate ————————
 
-// 在发送请求之前，决定是否跳转
-//- (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler
-//{
-//    NSURL *URL = navigationAction.request.URL;
-//    NSString *scheme = [URL scheme];
-//    RLog(@"当前web页面是否可以返回h5页面==%d，发送的请求是==%@,访问过的历史页面==%@",self.wkwebView.canGoBack?1:0,URL, webView.backForwardList);
-//    if ([scheme isEqualToString:@"iosdevtip"]) {
-//        [self backBtnClicked];
-//        decisionHandler(WKNavigationActionPolicyCancel);
-//        return;
-//    }
-//
-//    decisionHandler(WKNavigationActionPolicyAllow);
-//}
-
 // 页面开始加载时调用
 -(void)webView:(WKWebView *)webView didStartProvisionalNavigation:(WKNavigation *)navigation{
     RLog(@"web页面开始加载");
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-    
-    
 }
 // 当内容开始返回时调用
 -(void)webView:(WKWebView *)webView didCommitNavigation:(WKNavigation *)navigation{
@@ -192,32 +179,41 @@
 -(void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *)navigation{
     RLog(@"web页面加载失败");
     self.navigationController.navigationBar.hidden = NO;
-   
 }
 
 #pragma mark - WKScriptMessageHandler
 - (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message
 {
-    //    message.body  --  Allowed types are NSNumber, NSString, NSDate, NSArray,NSDictionary, and NSNull
     if ([message.name isEqualToString:@"BackAction"]) {
         RLog(@"返回按钮");
         [self backBtnClicked];
     } else if ([message.name isEqualToString:@"CommitOrderAction"]) {
         RLog(@"提交订单");
         NSDictionary *paramDic = message.body;
-        
-        if ([paramDic[@"paytype"]isEqualToString:@"支付宝"]) {
-            // NOTE: 调用支付结果开始支付
-            [[AlipaySDK defaultService] payOrder:paramDic[@"orderStr"] fromScheme:kAppScheme_Alipay callback:^(NSDictionary *resultDic) {
-                RLog(@"reslut = %@",resultDic);
-            }];
-        }else if([paramDic[@"paytype"]isEqualToString:@"微信"]){
-            
-        }
+        [self doPayWith:paramDic];
         
     }
 }
 
+//调用第三方支付
+- (void)doPayWith:(NSDictionary *)responseObject{
+    if ([responseObject[@"PAYTYPE"] isEqualToString:@"微信"]) {//微信支付
+        _wechatOrderDic = responseObject;
+        PayReq *request = [[PayReq alloc] init];
+        request.partnerId = responseObject[@"orderStr"][@"partnerId"];
+        request.prepayId= responseObject[@"orderStr"][@"prepayId"];
+        request.package = responseObject[@"orderStr"][@"package"];
+        request.nonceStr= responseObject[@"orderStr"][@"nonceStr"];
+        request.sign = responseObject[@"orderStr"][@"sign"];
+        NSString *stamp =  responseObject[@"orderStr"][@"timeStamp"];
+        request.timeStamp = stamp.intValue;
+        [WXApi sendReq:request];
+    } else if ([responseObject[@"PAYTYPE"] isEqualToString:@"支付宝"]){//支付宝支付
+        _alipayOrderDic = responseObject;
+        [[AlipaySDK defaultService] payOrder:responseObject[@"orderStr"] fromScheme:kAppScheme_Alipay callback:nil];
+    }
+    
+}
 
 #pragma mark ————— 清理 —————
 -(void)dealloc{
@@ -229,8 +225,27 @@
     [self.wkwebView removeObserver:self forKeyPath:@"estimatedProgress"];
     self.wkwebView.UIDelegate = nil;
     self.wkwebView.navigationDelegate = nil;
-    
 }
+
+//弹窗提示支付结果
+- (void)showPayResultAlertWithDic:(NSDictionary *)dic{
+    _orderLogic = [[ZSHConfirmOrderLogic alloc]init];
+    [_orderLogic requestPayInfoWithParamDic:@{@"ORDERNUMBER":dic[@"ORDERNUMBER"]} Success:^(id responseObject) {
+        UIAlertView *payResultAlert = [[UIAlertView alloc]initWithTitle:@"支付结果" message:responseObject[@"pd"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        [payResultAlert show];
+    } fail:nil];
+}
+
+//微信支付回调
+- (void)wxPayCallBack:(NSNotification *)noti{
+    [self showPayResultAlertWithDic:_wechatOrderDic];
+}
+
+//支付宝回调
+- (void)aliPayCallBack:(NSNotification *)noti{
+    [self showPayResultAlertWithDic:_alipayOrderDic];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

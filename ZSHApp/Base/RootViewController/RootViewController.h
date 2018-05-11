@@ -31,7 +31,7 @@ typedef void(^ZSHBottomBtnViewBtnBlock)(NSInteger);
 @property (nonatomic, strong) ZSHBaseTableViewModel     *tableViewModel;
 @property (nonatomic, strong) UICollectionView          *collectionView;
 @property (nonatomic, strong) ZSHSearchBarView          *searchView;
-@property (nonatomic, strong) NSDictionary              *paramDic;
+@property (nonatomic, strong) NSMutableDictionary       *paramDic;
 @property (nonatomic, strong) UIButton                  *leftBtn;
 
 /**

@@ -11,10 +11,10 @@
 #import "IMManager.h"
 
 typedef NS_ENUM(NSInteger, UserLoginType){
-    kUserLoginTypeUnKnow = 0,//未知
-    kUserLoginTypeWeChat,//微信登录
-    kUserLoginTypeQQ,///QQ登录
-    kUserLoginTypePwd,///账号登录
+    kUserLoginTypeUnKnow = 0, //未知
+    kUserLoginTypeWeChat,     //微信登录
+    kUserLoginTypeQQ,         //QQ登录
+    kUserLoginTypePwd,        //账号登录
 };
 
 typedef void (^loginBlock)(BOOL success, NSString * des);

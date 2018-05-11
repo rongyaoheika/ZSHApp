@@ -44,5 +44,8 @@
 #define KCalendarDateChanged               @"KCalendarDateChanged"
 
 //三方分享
-#define KShareInfo                          @"KShareInfo"
+#define KShareInfo                         @"KShareInfo"
+
+#define kAliPayCallBack                    @"kAliPayCallBack"
+#define kWXPayCallBack                     @"kWXPayCallBack"
 #endif /* CommonMacros_h */

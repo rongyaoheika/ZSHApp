@@ -18,11 +18,14 @@
     //初始化window
     [self initWindow];
     
-    //UMeng初始化
-    [self initUMeng];
-    
     //初始化app服务
     [self initService];
+    
+    //初始化用户系统
+    [self initUserManager];
+    
+    //UMeng初始化
+    [self initUMeng];
     
     //初始化微信支付
     [self initWXPaySDK];
@@ -30,8 +33,7 @@
     //初始化IM
 //    [[IMManager sharedIMManager] initIM];
     
-    //初始化用户系统
-    [self initUserManager];
+
     
     //网络监听
     [self monitorNetworkStatus];
@@ -43,7 +45,7 @@
     [self initKeyboard];
     
     //打印网络json
-    [PPNetworkHelper openLog];
+//    [PPNetworkHelper openLog];
     
     //初始化即构科技
 //    [self initZego];

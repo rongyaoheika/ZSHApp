@@ -22,7 +22,7 @@
 
 @implementation RootViewController
 
-- (instancetype)initWithParamDic:(NSDictionary *)paramDic{
+- (instancetype)initWithParamDic:(NSMutableDictionary *)paramDic{
     self = [super init];
     if (self) {
         self.paramDic = paramDic;

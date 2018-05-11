@@ -48,7 +48,7 @@ static NSString *ZSHBaseCellID = @"ZSHBaseCell";
             cell.imageView.image = [UIImage imageNamed:weakself.cellParamArr[i][@"payImage"]];
             if (![cell.contentView viewWithTag:2]) {
                 UIButton *rightBtn = [[UIButton alloc]initWithFrame:CGRectZero];
-                rightBtn.tag = 2;
+                rightBtn.tag = cell;
                 rightBtn.imageView.contentMode = UIViewContentModeScaleAspectFit;
                 [rightBtn addTarget:self action:@selector(rightBtnAction:) forControlEvents:UIControlEventTouchUpInside];
                 [rightBtn setImage:[UIImage imageNamed:weakself.cellParamArr[i][@"btnNormalImage"]] forState:UIControlStateNormal];

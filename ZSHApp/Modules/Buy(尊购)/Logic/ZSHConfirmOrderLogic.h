@@ -24,4 +24,7 @@
 
 //高级特权
 - (void)requestHighConfirmOrderWithParamDic:(NSDictionary *)paramDic Success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail;
+
+//支付回调接口
+- (void)requestPayInfoWithParamDic:(NSDictionary *)paramDic Success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail;
 @end
