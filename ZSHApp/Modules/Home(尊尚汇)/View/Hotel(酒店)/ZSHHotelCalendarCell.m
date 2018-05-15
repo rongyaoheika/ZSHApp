@@ -51,7 +51,7 @@ static
     
     _leaveBtn = leaveBtn;
     [[NSUserDefaults standardUserDefaults]setObject:endDay forKey:@"endDate"];
-    [[NSUserDefaults standardUserDefaults]setObject:_dateBtn.titleLabel.text forKey:@"days"];
+    [[NSUserDefaults standardUserDefaults]setObject:@"1" forKey:@"days"];
     [[NSUserDefaults standardUserDefaults]synchronize];
     
 }
@@ -116,7 +116,7 @@ static
         NSDate *endDate = [ZSHBaseFunction dateFromString:[[NSUserDefaults standardUserDefaults]objectForKey:@"endDate"]];
         NSInteger days = [ZSHBaseFunction getDaysFrom:beginDate To:endDate];
         [_dateBtn setTitle:[NSString stringWithFormat:@"共%ld天",days] forState:UIControlStateNormal];
-        [[NSUserDefaults standardUserDefaults]setObject:_dateBtn.titleLabel.text forKey:@"days"];
+        [[NSUserDefaults standardUserDefaults]setObject:[NSString stringWithFormat:@"%ld",days] forKey:@"days"];
         [[NSUserDefaults standardUserDefaults]synchronize];
     }
 }

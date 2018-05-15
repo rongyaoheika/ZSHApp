@@ -48,7 +48,7 @@ static CGFloat const Wd = 20;
     self.numberTT = [[UITextField alloc]init];
     self.numberTT.frame = CGRectMake(CGRectGetMaxX(_subButton.frame), 0, Wd*1.5, _subButton.frame.size.height);
     self.numberTT.keyboardType=UIKeyboardTypeNumberPad;
-    self.numberTT.text=[NSString stringWithFormat:@"%@",@(0)];
+    self.numberTT.text=[NSString stringWithFormat:@"%@",@(1)];
     self.numberTT.backgroundColor = KClearColor;
     self.numberTT.textColor = KZSHColor929292;
     self.numberTT.adjustsFontSizeToFitWidth = YES;
@@ -77,32 +77,34 @@ static CGFloat const Wd = 20;
     [self addSubview:_addButton];
     
      /************************** 内容改变 ****************************/
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textfieldChange:) name:@"UITextFieldTextDidEndEditingNotification" object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textfieldChange:) name:@"UITextFieldTextDidEndEditingNotification" object:nil];
+    [self.numberTT addTarget:self action:@selector(textFieldEditChanged:) forControlEvents:UIControlEventEditingChanged];
 }
 
-- (void)textfieldChange:(NSNotification *)x {
-    UITextField *t1 = [x object];
-    NSString *text = t1.text;
-    NSInteger changeNum = 0;
-    if (text.integerValue>self.totalNum&&self.totalNum!=0) {
-
-        self.currentCountNumber = self.totalNum;
-        self.numberTT.text = [NSString stringWithFormat:@"%@",@(self.totalNum)];
-        changeNum = self.totalNum;
-
-    } else if (text.integerValue<1){
-
-        self.numberTT.text = @"1";
-        changeNum = 1;
-
-    } else {
-
-        self.currentCountNumber = text.integerValue;
-        changeNum = self.currentCountNumber;
-
-    }
+- (void)textFieldEditChanged:(UITextField *)textField {
+    
+//    NSString *text = textField.text;
+    
+//    NSInteger changeNum = 0;
+//    if (text.integerValue>self.totalNum&&self.totalNum!=0) {
+//
+//        self.currentCountNumber = self.totalNum;
+//        self.numberTT.text = [NSString stringWithFormat:@"%@",@(self.totalNum)];
+//        changeNum = self.totalNum;
+//
+//    } else if (text.integerValue<1){
+//
+//        self.numberTT.text = @"1";
+//        changeNum = 1;
+//
+//    } else {
+//
+//        self.currentCountNumber = text.integerValue;
+//        changeNum = self.currentCountNumber;
+//
+//    }
     if (self.NumberChangeBlock) {
-        self.NumberChangeBlock(changeNum);
+        self.NumberChangeBlock([textField.text integerValue]);
     }
 
 }

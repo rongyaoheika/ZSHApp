@@ -104,7 +104,7 @@
     int i = 0;
     for (UIButton *deviceBtn in self.realBtnArr) {
         [deviceBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.mas_equalTo(self).offset(i*btnWith);
+            make.left.mas_equalTo(self.contentView).offset(i*btnWith);
             make.top.mas_equalTo(_commentBtn.mas_bottom).offset(kRealValue(13));
             make.width.mas_equalTo(btnWith);
             make.height.mas_equalTo(kRealValue(22));
@@ -182,6 +182,7 @@
     dic[@"SHOPSERVFITNESS"]?[_realBtnArr addObject:_allBtnArr[3]]:0;  //健身
     dic[@"SHOPSERVSWIM"]?[_realBtnArr addObject:_allBtnArr[4]]:0;     //游泳
     dic[@"SHOPSERVPARK"]?[_realBtnArr addObject:_allBtnArr[5]]:0;     //停车
+    
 }
 
 

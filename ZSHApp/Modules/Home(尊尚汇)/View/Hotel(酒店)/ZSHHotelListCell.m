@@ -85,7 +85,7 @@
         make.top.mas_equalTo(_hotelNameLabel);
         make.right.mas_equalTo(self).offset(-KLeftMargin);
         make.height.mas_equalTo(kRealValue(17));
-        make.width.mas_equalTo(kRealValue(50));
+        make.width.mas_equalTo(kRealValue(100));
     }];
     
     [_discountLabel mas_makeConstraints:^(MASConstraintMaker *make) {

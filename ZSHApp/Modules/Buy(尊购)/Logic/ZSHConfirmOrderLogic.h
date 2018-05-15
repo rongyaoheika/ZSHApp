@@ -27,4 +27,7 @@
 
 //支付回调接口
 - (void)requestPayInfoWithParamDic:(NSDictionary *)paramDic Success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail;
+
+//生成美食酒店酒吧KTV订单接口
+- (void)requestStoreConfirmOrderWithParamDic:(NSDictionary *)paramDic Success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail;
 @end

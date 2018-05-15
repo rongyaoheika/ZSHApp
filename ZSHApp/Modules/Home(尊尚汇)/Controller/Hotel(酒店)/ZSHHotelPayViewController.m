@@ -36,10 +36,20 @@ static NSString *ZSHBasePriceCellID = @"ZSHBasePriceCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(aliPayCallBack:) name:kAliPayCallBack object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(wxPayCallBack:) name:kWXPayCallBack object:nil];
+   
     [self loadData];
     [self createUI];
+}
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(aliPayCallBack:) name:kAliPayCallBack object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(wxPayCallBack:) name:kWXPayCallBack object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
 }
 
 - (void)loadData{
@@ -153,7 +163,7 @@ static NSString *ZSHBasePriceCellID = @"ZSHBasePriceCell";
     [confirmOderDic setValue:_payType forKey:@"PAYTYPE"];
     switch (kFromClassTypeValue) {
         case ZSHConfirmOrderToBottomBlurPopView:{
-        [_orderLogic requestHotelConfirmOrderWithParamDic:confirmOderDic Success:^(id responseObject) {
+        [_orderLogic requestStoreConfirmOrderWithParamDic:confirmOderDic Success:^(id responseObject) {
             RLog(@"确认订单数据==%@",responseObject);
             [self doPayWith:responseObject];
         } fail:nil];

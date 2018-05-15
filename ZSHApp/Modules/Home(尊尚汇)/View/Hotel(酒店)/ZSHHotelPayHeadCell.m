@@ -209,7 +209,7 @@
             break;
         }
             
-        case ZSHShipType:{//KTV
+        case ZSHKTVShopType:{//KTV
             [_hotelmageView sd_setImageWithURL:[NSURL URLWithString:self.listDic[@"KTVDETIMG"]]];
             
             if (_showCellType == ZSHNormalType) {//订单支付页面

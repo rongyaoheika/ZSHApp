@@ -278,7 +278,7 @@ static NSString *ZSHHotelCellID = @"ZSHHotelCell";
             NSString *beginDate = [[NSUserDefaults standardUserDefaults]objectForKey:@"beginDate"];
             NSString *endDate = [[NSUserDefaults standardUserDefaults]objectForKey:@"endDate"];
             NSString *days = [[NSUserDefaults standardUserDefaults]objectForKey:@"days"];
-            _liveInfoStr = [NSString stringWithFormat:@"%@入住，%@离开，%@",beginDate,endDate,days];
+            _liveInfoStr = [NSString stringWithFormat:@"%@入住，%@离开，共%@天",beginDate,endDate,days];
             
             NSDictionary *paramDic = _hotelDetailSetDicArr[indexPath.row];
             NSDictionary *nextParamDic = @{KFromClassType:@(ZSHConfirmOrderToBottomBlurPopView),@"shopType":@(ZSHHotelShopType), @"deviceDic":weakself.hotelDetailParamDic,@"listDic":paramDic,@"liveInfoStr":_liveInfoStr};

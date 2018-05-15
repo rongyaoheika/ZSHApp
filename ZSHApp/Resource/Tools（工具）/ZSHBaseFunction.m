@@ -115,14 +115,14 @@
 //获取当地时间
 + (NSString *)getCurrentTime {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"MM-dd"];
+    [formatter setDateFormat:@"yyyy-MM-dd"];
     NSString *dateTime = [formatter stringFromDate:[NSDate date]];
     return dateTime;
 }
 //将字符串转成NSDate类型
 + (NSDate *)dateFromString:(NSString *)dateString {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat: @"MM-dd"];
+    [dateFormatter setDateFormat: @"yyyy-MM-dd"];
     NSDate *destDate= [dateFormatter dateFromString:dateString];
     return destDate;
 }
@@ -134,7 +134,7 @@
     
     NSDate *beginningOfWeek = [gregorian dateFromComponents:components];
     NSDateFormatter *dateday = [[NSDateFormatter alloc] init];
-    [dateday setDateFormat:@"MM-dd"];
+    [dateday setDateFormat:@"yyyy-MM-dd"];
     return [dateday stringFromDate:beginningOfWeek];
 }
 

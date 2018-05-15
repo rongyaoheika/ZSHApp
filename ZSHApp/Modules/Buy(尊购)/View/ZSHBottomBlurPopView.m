@@ -9,8 +9,6 @@
 #import "ZSHHotelDetailHeadCell.h"
 #import "ZSHHotelDetailDeviceCell.h"
 #import "ZSHHotelPayHeadCell.h"
-#import "ZSHHotelModel.h"
-#import "ZSHKTVModel.h"
 #import "ZSHHotelPayViewController.h"
 #import "ZSHTextFieldCellView.h"
 #import "JSNummberCount.h"
@@ -44,9 +42,6 @@
 @interface ZSHBottomBlurPopView ()<FSCalendarDataSource, FSCalendarDelegate>
 
 @property (nonatomic, strong) NSDictionary           *paramDic;
-@property (nonatomic, strong) ZSHBaseModel           *model;
-@property (nonatomic, strong) ZSHHotelModel          *hotelModel;
-@property (nonatomic, strong) ZSHKTVModel            *KTVModel;
 @property (nonatomic, strong) ZSHTopLineView         *topLineView;
 @property (nonatomic, copy)   NSString               *typeText;
 @property (nonatomic, strong) UITableView            *subTab;
@@ -116,10 +111,10 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
     self = [super initWithFrame:frame];
     if (self) {
         _paramDic = paramDic;
-    
+        
         [self loadData];
         [self createUI];
-       
+        
     }
     return self;
 }
@@ -141,10 +136,6 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
         self.listDic = self.paramDic[@"listDic"];      //详情页下半部分列表数据
         self.liveInfo = self.paramDic[@"liveInfoStr"]; //酒店居住时间信息
         
-        
-        self.model = (ZSHHotelModel *)_paramDic[@"model"];
-    } else if (kFromClassTypeValue == ZSHFromKTVConfirmOrderVCToBottomBlurPopView){
-        self.model = (ZSHKTVModel *)_paramDic[@"model"];
     } else if (kFromClassTypeValue == ZSHFromAirplaneCalendarVCToBottomBlurPopView || kFromClassTypeValue == ZSHFromTrainCalendarVCToBottomBlurPopView){//机票日期选择
         self.typeText = @"请选择出发时间";
     }
@@ -204,11 +195,10 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
         return;
         
     } else if (kFromClassTypeValue == ZSHFromPersonInfoVCToBottomBlurPopView) {
-        CGPoint center = self.center;
         ZSHLivePersonInfoView *personInfoView = [[ZSHLivePersonInfoView alloc] initWithFrame:CGRectMake((KScreenWidth - kRealValue(260))/2, (KScreenHeight - kRealValue(318))/2, kRealValue(260), kRealValue(318)) paramDic:_paramDic[@"userInfo"]];
         personInfoView.userInteractionEnabled = YES;
         [self addSubview:personInfoView];
-
+        
     }  else if (kFromClassTypeValue == ZSHFromLiveMidVCToBottomBlurPopView) {//直播-直播弹窗
         
         ZSHLivePopView *livePopView = [[ZSHLivePopView alloc]initWithFrame:CGRectMake(0, KScreenHeight- kRealValue(150), KScreenWidth, kRealValue(150))];
@@ -240,7 +230,7 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
         
         CGFloat listViewH = ceil(titleArr.count/3.0) *kRealValue(30) +  (ceil(titleArr.count/3.0) - 1)*kRealValue(15) + kRealValue(20);
         ZSHCardBtnListView *listView = [[ZSHCardBtnListView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, listViewH) paramDic:nextParamDic];
-       // [listView selectedByIndex:1];
+        // [listView selectedByIndex:1];
         listView.tag = 2;
         [self addSubview:listView];
         return;
@@ -377,7 +367,7 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
         [self.tableViewModel.sectionModelArray addObject:[self storeHotelDetailOtherSection]];  //联系人，手机号码，备注等
         [self.tableViewModel.sectionModelArray addObject:[self storeConfirmBtnSection]];        //确认按钮
     }
-
+    
 }
 
 //head
@@ -425,7 +415,7 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
         };
         
         cellModel.selectionBlock = ^(NSIndexPath *indexPath, UITableView *tableView) {
-           
+            
         };
     }
     
@@ -447,6 +437,10 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
         ZSHBaseCell *cell = [[ZSHBaseCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ZSHNumCountCellID];
         cell.textLabel.text = title;
         JSNummberCount *countBtn = [[JSNummberCount alloc]initWithFrame:CGRectZero];
+        [_confirmOderDic setValue:@(1) forKey:@"ORDERROOMNUM"];
+        countBtn.NumberChangeBlock = ^(NSInteger count) {
+            [_confirmOderDic setValue:@(count) forKey:@"ORDERROOMNUM"];
+        };
         [cell.contentView addSubview:countBtn];
         [countBtn mas_makeConstraints:^(MASConstraintMaker *make) {
             make.right.mas_equalTo(cell).offset(-KLeftMargin);
@@ -473,7 +467,7 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
         cell.textLabel.textColor = KZSHColor929292;
         return cell;
     };
-
+    
     return sectionModel;
 }
 
@@ -502,7 +496,7 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
         cell.shopType = weakself.shopType;
         [cell updateCellWithParamDic:deviceParamDic];
         
-       
+        
         return cell;
     };
     
@@ -523,7 +517,7 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
         cell.showCellType = ZSHPopType;
         cell.shopType = weakself.shopType;
         [cell updateCellWithParamDic:weakself.paramDic];
-       
+        
         return cell;
     };
     
@@ -557,7 +551,9 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
                 make.size.mas_equalTo(CGSizeMake([widtArr[i]integerValue], kRealValue(44)));
                 make.centerY.mas_equalTo(cell);
             }];
-            
+            if(indexPath.row == 1){
+                userinfoTextField.keyboardType = UIKeyboardTypePhonePad;
+            }
             return cell;
         };
     }
@@ -580,7 +576,7 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
             make.width.and.height.mas_equalTo(cell);
             make.bottom.mas_equalTo(cell);
         }];
-       
+        
         return cell;
     };
     
@@ -709,7 +705,7 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
         };
     }
     return sectionModel;
-
+    
 }
 
 //吃喝玩乐年龄选择
@@ -765,13 +761,13 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
 
 //尊购商品分类
 - (ZSHBaseTableViewSectionModel*)storeGoodsListSection {
-//    NSArray *imageArr = @[@"list_scan",@"list_news",@"list_noti",@"list_unlock"];
+    //    NSArray *imageArr = @[@"list_scan",@"list_news",@"list_noti",@"list_unlock"];
     NSMutableArray *titleArr = [NSMutableArray array];
     NSArray *filters = self.paramDic[@"filters"];
     for (NSDictionary *dic in filters) {
         [titleArr addObject:dic[@"BRANDNAME"]];
     }
-//    NSArray *titleArr = @[@"全部",@"名品",@"名物"];
+    //    NSArray *titleArr = @[@"全部",@"名品",@"名物"];
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     sectionModel.headerHeight = kRealValue(8);
     sectionModel.headerView = [[UIView alloc]initWithFrame:self.subTab.bounds];
@@ -783,7 +779,7 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
             ZSHBaseCell *cell = [tableView dequeueReusableCellWithIdentifier:ZSHHeadCellID];
             cell.textLabel.text = titleArr[i];
             cell.textLabel.font = kPingFangLight(14);
-//            cell.imageView.image = [UIImage imageNamed:imageArr[i]];
+            //            cell.imageView.image = [UIImage imageNamed:imageArr[i]];
             cell.imageEdgeInsets = UIEdgeInsetsMake(0, -10, 0, 0);
             cell.textLabelEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
             return cell;
@@ -801,10 +797,10 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
 //首页-菜单
 - (ZSHBaseTableViewSectionModel*)storeMenuListSection {
     NSArray *paramArr = @[
-  @{@"imageName":@"list_scan",@"titleText":@"扫一扫"},
-  @{@"imageName":@"list_news",@"titleText":@"消息中心"},
-  @{@"imageName":@"list_noti",@"titleText":@"系统通知"},
-  @{@"imageName":@"list_unlock",@"titleText":@"解锁特权"}];
+                          @{@"imageName":@"list_scan",@"titleText":@"扫一扫"},
+                          @{@"imageName":@"list_news",@"titleText":@"消息中心"},
+                          @{@"imageName":@"list_noti",@"titleText":@"系统通知"},
+                          @{@"imageName":@"list_unlock",@"titleText":@"解锁特权"}];
     ZSHBaseTableViewSectionModel *sectionModel = [[ZSHBaseTableViewSectionModel alloc] init];
     sectionModel.headerHeight = kRealValue(8);
     sectionModel.headerView = [[UIView alloc]initWithFrame:self.subTab.bounds];
@@ -845,7 +841,7 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
                     [weakself pushWeiboVCAction];
                     break;
                 }
-               
+                    
                     
                 default:
                     break;
@@ -887,7 +883,7 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
 - (void)calendar:(FSCalendar *)calendar didSelectDate:(NSDate *)date atMonthPosition:(FSCalendarMonthPosition)monthPosition {
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"MM-dd"];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
     self.currentDate = [dateFormatter stringFromDate:date];
     [[NSNotificationCenter defaultCenter]postNotificationName:KCalendarDateChanged object:@{@"dateStr":self.currentDate,@"btnTag":self.paramDic[@"btnTag"]}];
     
@@ -947,82 +943,40 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
         [[kAppDelegate getCurrentUIVC].navigationController pushViewController:passengerVC animated:YES];
     }];
     
-   
 }
 
 //确认订单
 - (void)confirmBtnAction{
     kWeakSelf(self);
-//    [UIView animateWithDuration:0.5 animations:^{
-//        CGRect mainFrame = _subTab.frame;
-//        mainFrame.origin.y = self.frame.size.height;
-//        _subTab.frame = mainFrame;
-//    } completion:^(BOOL finished) {
-//
-//        NSMutableDictionary *nextParamDic = [[NSMutableDictionary alloc]init];
-//        if ( kFromClassTypeValue == ZSHConfirmOrderToBottomBlurPopView) {
-//            self.shopType = [self.paramDic[@"shopType"]integerValue]; //弹窗类型
-//            self.deviceDic = self.paramDic[@"deviceDic"];  //详情页上半部分数据
-//            self.listDic = self.paramDic[@"listDic"];      //详情页下半部分列表数据
-//            self.liveInfo = self.paramDic[@"liveInfoStr"]; //酒店居住时间信息
-//            [nextParamDic setDictionary: @{@"shopType":@(self.shopType), @"deviceDic":weakself.deviceDic,@"listDic":weakself.listDic,@"liveInfoStr":weakself.liveInfo}];
-//            [nextParamDic setObject:@(kFromClassTypeValue) forKey:KFromClassType];
-//
-//        } else if(kFromClassTypeValue == ZSHSubscribeVCToBottomBlurPopView){//高级特权
-//            self.liveInfo = self.paramDic[@"liveInfoStr"];
-//            [nextParamDic setDictionary:@{@"shopType":@(self.shopType),@"requestDic":self.paramDic[@"requestDic"],@"liveInfoStr":weakself.liveInfo}];
-//            [nextParamDic setObject:@(kFromClassTypeValue) forKey:KFromClassType];
-//        }
-//        //生成订单
-//        [weakself requestDataComplete:^(NSDictionary *dic){
-//            [weakself removeFromSuperview];
-//            [weakself setHidden:YES];
-//
-//            [nextParamDic setValue:dic forKey:@"confirmOderDic"];
-//            ZSHHotelPayViewController *hotelPayVC = [[ZSHHotelPayViewController alloc]initWithParamDic:nextParamDic];
-//            [[kAppDelegate getCurrentUIVC].navigationController pushViewController:hotelPayVC animated:YES];
-//        }];
-//    }];
-    
-//    [UIView animateWithDuration:0.5 animations:^{
-//        CGRect mainFrame = _subTab.frame;
-//        mainFrame.origin.y = self.frame.size.height;
-//        _subTab.frame = mainFrame;
-//    } completion:^(BOOL finished) {
-//
-        NSMutableDictionary *nextParamDic = [[NSMutableDictionary alloc]init];
-        if ( kFromClassTypeValue == ZSHConfirmOrderToBottomBlurPopView) {
-            self.shopType = [self.paramDic[@"shopType"]integerValue]; //弹窗类型
-            self.deviceDic = self.paramDic[@"deviceDic"];  //详情页上半部分数据
-            self.listDic = self.paramDic[@"listDic"];      //详情页下半部分列表数据
-            self.liveInfo = self.paramDic[@"liveInfoStr"]; //酒店居住时间信息
-            [nextParamDic setDictionary: @{@"shopType":@(self.shopType), @"deviceDic":weakself.deviceDic,@"listDic":weakself.listDic,@"liveInfoStr":weakself.liveInfo}];
-            [nextParamDic setObject:@(kFromClassTypeValue) forKey:KFromClassType];
+    NSMutableDictionary *nextParamDic = [[NSMutableDictionary alloc]init];
+    if ( kFromClassTypeValue == ZSHConfirmOrderToBottomBlurPopView) {
+        self.shopType = [self.paramDic[@"shopType"]integerValue]; //弹窗类型
+        self.deviceDic = self.paramDic[@"deviceDic"];  //详情页上半部分数据
+        self.listDic = self.paramDic[@"listDic"];      //详情页下半部分列表数据
+        self.liveInfo = self.paramDic[@"liveInfoStr"]; //酒店居住时间信息
+        [nextParamDic setDictionary: @{@"shopType":@(self.shopType), @"deviceDic":weakself.deviceDic,@"listDic":weakself.listDic,@"liveInfoStr":weakself.liveInfo}];
+        [nextParamDic setObject:@(kFromClassTypeValue) forKey:KFromClassType];
+        
+    } else if(kFromClassTypeValue == ZSHSubscribeVCToBottomBlurPopView){//高级特权
+        self.liveInfo = self.paramDic[@"liveInfoStr"];
+        [nextParamDic setDictionary:@{@"shopType":@(self.shopType),@"requestDic":self.paramDic[@"requestDic"],@"liveInfoStr":weakself.liveInfo}];
+        [nextParamDic setObject:@(kFromClassTypeValue) forKey:KFromClassType];
+    }
+    //生成订单
+    [weakself requestDataComplete:^(NSDictionary *dic){
+        [UIView animateWithDuration:0.5 animations:^{
+            CGRect mainFrame = _subTab.frame;
+            mainFrame.origin.y = self.frame.size.height;
+            _subTab.frame = mainFrame;
+        } completion:^(BOOL finished){
+            [weakself removeFromSuperview];
+            [weakself setHidden:YES];
             
-        } else if(kFromClassTypeValue == ZSHSubscribeVCToBottomBlurPopView){//高级特权
-            self.liveInfo = self.paramDic[@"liveInfoStr"];
-            [nextParamDic setDictionary:@{@"shopType":@(self.shopType),@"requestDic":self.paramDic[@"requestDic"],@"liveInfoStr":weakself.liveInfo}];
-            [nextParamDic setObject:@(kFromClassTypeValue) forKey:KFromClassType];
-        }
-        //生成订单
-        [weakself requestDataComplete:^(NSDictionary *dic){
-            [UIView animateWithDuration:0.5 animations:^{
-                CGRect mainFrame = _subTab.frame;
-                mainFrame.origin.y = self.frame.size.height;
-                _subTab.frame = mainFrame;
-            } completion:^(BOOL finished){
-                [weakself removeFromSuperview];
-                [weakself setHidden:YES];
-                
-                [nextParamDic setValue:dic forKey:@"confirmOderDic"];
-                ZSHHotelPayViewController *hotelPayVC = [[ZSHHotelPayViewController alloc]initWithParamDic:nextParamDic];
-                [[kAppDelegate getCurrentUIVC].navigationController pushViewController:hotelPayVC animated:YES];
-            }];
+            [nextParamDic setValue:dic forKey:@"confirmOderDic"];
+            ZSHHotelPayViewController *hotelPayVC = [[ZSHHotelPayViewController alloc]initWithParamDic:nextParamDic];
+            [[kAppDelegate getCurrentUIVC].navigationController pushViewController:hotelPayVC animated:YES];
         }];
-//    }];
-    
-    
-  
+    }];
 }
 
 - (void)saveChange{
@@ -1037,7 +991,7 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
         NSDictionary *preParamDic;
         switch (kFromClassTypeValue) {
             case ZSHFromAirplaneCalendarVCToBottomBlurPopView:{
-                 preParamDic = @{@"trainDate":_currentDateLabel.text};
+                preParamDic = @{@"trainDate":_currentDateLabel.text};
                 break;
             }
             case ZSHFromAirplaneAgeVCToBottomBlurPopView:{
@@ -1045,7 +999,7 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
                 break;
             }
             case ZSHFromTrainCalendarVCToBottomBlurPopView:{
-               preParamDic = @{@"trainDate":_currentDate};
+                preParamDic = @{@"trainDate":_currentDate};
                 break;
             }
             case ZSHFromLiveNearSearchVCToBottomBlurPopView:{
@@ -1056,15 +1010,13 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
                 break;
         }
         
-         //确定保存
+        //确定保存
         if (self.confirmOrderBlock) {
             self.confirmOrderBlock(preParamDic);
         }
     }];
     
 }
-
-
 
 - (void)dismiss {
     [UIView animateWithDuration:0.5 animations:^{
@@ -1084,11 +1036,11 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
         } else {
             [self dismiss];
         }
-    
+        
     }
 }
 
-//美食，酒店等订单生成
+//美食，酒店,酒吧，KTV等订单生成
 - (void)requestDataComplete:(void(^)(NSDictionary *dic))complete{
     if (!_confirmOderDic[@"ORDERUNAME"]||!_confirmOderDic[@"ORDERPHONE"]||!_confirmOderDic[@"ORDERREMARK"]) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"信息填写不全" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
@@ -1102,35 +1054,69 @@ static NSString *ZSHSearchLiveThirdCellID = @"ZSHSearchLiveThirdCell";
         return;
     }
     _orderLogic = [[ZSHConfirmOrderLogic alloc]init];
+    NSString *beginDate = [[NSUserDefaults standardUserDefaults]objectForKey:@"beginDate"];
+    NSString *endDate = [[NSUserDefaults standardUserDefaults]objectForKey:@"endDate"];
+    NSString *days = [[NSUserDefaults standardUserDefaults]objectForKey:@"days"];
+    NSString *storePrice = nil;
+    NSString *storeId = nil;
     switch (kFromClassTypeValue) {
-        case ZSHConfirmOrderToBottomBlurPopView:{
-            [_confirmOderDic setValue:self.paramDic[@"requestDic"][@"YACHTPRICE"] forKey:@"ORDERMONEY"];
-            [_confirmOderDic setValue:@"1" forKey:@"ORDERROOMNUM"];
-            [_confirmOderDic setValue:@"2018-4-27" forKey:@"ORDERCHECKDATE"];
-            [_confirmOderDic setValue:@"2018-4-28" forKey:@"ORDERLEAVEDATE"];
-            [_confirmOderDic setValue:@"1" forKey:@"ORDERDAYS"];
-            [_confirmOderDic setValue:self.paramDic[@"requestDic"][@"YACHTSHOP_ID"] forKey:@"HOTELDETAIL_ID"];
-            [_confirmOderDic setValue:self.paramDic[@"requestDic"][@"HONOURUSER_ID"] forKey:@"HONOURUSER_ID"];
+        case ZSHConfirmOrderToBottomBlurPopView:{//美食，酒店，KTV,酒吧订单生成
+            switch (self.shopType) {
+                case ZSHFoodShopType:{
+                    storePrice = self.paramDic[@"listDic"][@"FOODDETPRICE"];
+                    storeId = self.paramDic[@"listDic"][@"SORTFOOD_ID"];
+                    break;
+                }
+                case ZSHHotelShopType:{
+                    storePrice = self.paramDic[@"listDic"][@"HOTELDETPRICE"];
+                    storeId = self.paramDic[@"listDic"][@"SORTHOTEL_ID"];
+                    [_confirmOderDic setValue:days forKey:@"ORDERDAYS"];
+                    break;
+                }
+                case ZSHKTVShopType:{
+                    storePrice = self.paramDic[@"listDic"][@"KTVDETPRICE"];
+                    storeId = self.paramDic[@"listDic"][@"KTVDETAIL_ID"];
+                    beginDate = self.paramDic[@"listDic"][@"KTVDETBEGIN"];
+                    endDate = self.paramDic[@"listDic"][@"KTVDETEND"];
+                    break;
+                }
+                case ZSHBarShopType:{
+                    storePrice = self.paramDic[@"listDic"][@"BARDETPRICE"];
+                    storeId = self.paramDic[@"listDic"][@"SORTBAR_ID"];
+                    break;
+                }
+                    
+                default:
+                    break;
+            }
+            
+            [_confirmOderDic setValue:storePrice forKey:@"ORDERMONEY"];
+            [_confirmOderDic setValue:storeId forKey:@"DETAIL_ID"];
+            [_confirmOderDic setValue:beginDate forKey:@"ORDERROOMBEGIN"];
+            [_confirmOderDic setValue:endDate forKey:@"ORDERROOMEND"];
+            [_confirmOderDic setValue:@(self.shopType) forKey:@"ORDERTYPE"];
+            [_confirmOderDic setValue:HONOURUSER_IDValue forKey:@"HONOURUSER_ID"];
             complete(_confirmOderDic);
             break;
         }
         case ZSHSubscribeVCToBottomBlurPopView:{//高端特权生成订单
             [_confirmOderDic setValue:self.paramDic[@"requestDic"][@"YACHTPRICE"] forKey:@"ORDERMONEY"];
-            [_confirmOderDic setValue:@"2018-4-27" forKey:@"ORDERROOMBEGIN"];
-            [_confirmOderDic setValue:@"2018-4-28" forKey:@"ORDERROOMEND"];
-            [_confirmOderDic setValue:@"1" forKey:@"ORDERDAYS"];
+            [_confirmOderDic setValue:beginDate forKey:@"ORDERROOMBEGIN"];
+            [_confirmOderDic setValue:endDate forKey:@"ORDERROOMEND"];
+            [_confirmOderDic setValue:days forKey:@"ORDERDAYS"];
             [_confirmOderDic setValue:self.paramDic[@"requestDic"][@"YACHTSHOP_ID"] forKey:@"SHOP_ID"];
             [_confirmOderDic setValue:self.paramDic[@"requestDic"][@"HONOURUSER_ID"] forKey:@"HONOURUSER_ID"];
-            [_confirmOderDic setValue:@"5" forKey:@"ORDERTYPE"];
-             complete(_confirmOderDic);
-
+            [_confirmOderDic setValue:@(self.shopType) forKey:@"ORDERTYPE"];
+            complete(_confirmOderDic);
             break;
         }
         default:
             break;
     }
-
+    
 }
+
+
 
 //生成订单输入的参数
 - (void)textFieldEditChanged:(UITextField *)textField{

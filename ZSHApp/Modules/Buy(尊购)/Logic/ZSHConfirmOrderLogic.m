@@ -56,6 +56,8 @@
     }];
 }
 
+
+
 //高级特权
 - (void)requestHighConfirmOrderWithParamDic:(NSDictionary *)paramDic Success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail{
     [PPNetworkHelper POST:kUrlAddHighOrder parameters:paramDic success:^(id responseObject) {
@@ -72,6 +74,18 @@
 - (void)requestPayInfoWithParamDic:(NSDictionary *)paramDic Success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail{
     [PPNetworkHelper POST:kUrlGetPayInfo parameters:paramDic success:^(id responseObject) {
         RLog(@"订单回调结果%@",responseObject);
+        NSDictionary *detailDic = responseObject;
+        success(detailDic);
+        
+    } failure:^(NSError *error) {
+        
+    }];
+}
+
+//生成美食酒店酒吧KTV订单接口
+- (void)requestStoreConfirmOrderWithParamDic:(NSDictionary *)paramDic Success:(ResponseSuccessBlock)success fail:(ResponseFailBlock)fail{
+    [PPNetworkHelper POST:kUrlAddLowOrder parameters:paramDic success:^(id responseObject) {
+        RLog(@"美食酒店酒吧KTV订单==%@",responseObject);
         NSDictionary *detailDic = responseObject;
         success(detailDic);
         

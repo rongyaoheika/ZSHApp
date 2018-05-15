@@ -266,7 +266,7 @@
             NSString *beginDate = [[NSUserDefaults standardUserDefaults]objectForKey:@"beginDate"];
             NSString *endDate = [[NSUserDefaults standardUserDefaults]objectForKey:@"endDate"];
             NSString *days = [[NSUserDefaults standardUserDefaults]objectForKey:@"days"];
-            NSString *liveInfoStr = [NSString stringWithFormat:@"%@开始，%@结束，%@",beginDate,endDate,days];
+            NSString *liveInfoStr = [NSString stringWithFormat:@"%@开始，%@结束，共%@天",beginDate,endDate,days];
             
             NSDictionary *nextParamDic = @{KFromClassType:@(ZSHSubscribeVCToBottomBlurPopView),@"requestDic":requestDic,@"shopType":@(ZSHShipType),@"liveInfoStr":liveInfoStr};
             weakself.bottomBlurPopView = [weakself createBottomBlurPopViewWithParamDic:nextParamDic];

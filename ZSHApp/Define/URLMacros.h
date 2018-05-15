@@ -946,11 +946,11 @@
 #define kUrlUpdPageViews [NSString stringWithFormat:@"/appdiscoverin/updpageviews?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"UPDPAGEVIEWS"]]
 
 //246.发送 手机短信验证码
-//http://localhost:8081/ZSHINTER/appuserin/sendmsgcode.do?SENDMSGCODE&PHONE=12345678999
+//参数：PHONE手机号码
 #define kUrlSendMsgCode [NSString stringWithFormat:@"/appuserin/sendmsgcode.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"SENDMSGCODE"]]
 
 //248.获取游艇服务等处的按钮
-//参数：     请求参数：PRIVILEGE_ID   商家类型
+//参数：PRIVILEGE_ID   商家类型
 //http://localhost:8081/ZSHINTER/highsort/getbuttonlist?GETBUTTONLIST&CATEGORY_ID=游艇商家
 #define kUrlYachtService [NSString stringWithFormat:@"/highsort/getbuttonlist?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"GETBUTTONLIST"]]
 
@@ -963,6 +963,25 @@
 //254.查询支付信息
 //请求参数：ORDERNUMBER  订单号
 #define kUrlGetPayInfo [NSString stringWithFormat:@"zfbalipay/getPayInfo.do?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"GETPAYINFO"]]
+
+//256.生成美食酒店酒吧KTV订单接口
+//请求参数：
+//ORDERUNAME：使用人姓名
+//ORDERPHONE：手机号码
+//ORDERREMARK：备注
+//ORDERMONEY：订单价格
+//ORDERROOMNUM：套餐数量（同预定房间数量等）
+//ORDERROOMBEGIN:开始日期
+//ORDERROOMEND:离开日期
+//DETAIL_ID：详情id(同套餐id，预定房间类型ID等)
+//HONOURUSER_ID:用户id
+//ORDERTYPE:订单类型（1代表美食2代表酒店3代表ktv4代表酒吧）
+//PAY_TYPE:支付方式（微信或支付宝）
+//
+//注意：ORDERDAYS：入驻天数（ORDERTYPE为2传入）
+
+#define kUrlAddLowOrder [NSString stringWithFormat:@"appsfoodin/addloworder?FKEY=%@", [ZSHBaseFunction getFKEYWithCommand:@"ADDLOWORDER"]]
+
 
 #endif /* URLMacros_h */
 

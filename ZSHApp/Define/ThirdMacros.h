@@ -23,7 +23,7 @@
 #define kAppKey_Wechat          @"wxe717a91321162694"
 #define kSecret_Wechat          @"d9186ceef0608871cf7e085811c37d28"
 #define kPartnerid_Wechat       @"1502819271"
-//OC6p0c9fuYIQkZj1QdgCbijrBuD87y7v
+
 
 // 腾讯
 #define kAppKey_Tencent         @"1106139910"

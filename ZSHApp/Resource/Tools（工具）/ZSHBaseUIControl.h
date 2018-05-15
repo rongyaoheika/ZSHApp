@@ -15,12 +15,12 @@ typedef NS_ENUM(NSInteger,ZSHCellType){
 };
 
 typedef NS_ENUM(NSInteger,ZSHShopType){
-    ZSHFoodShopType,     //美食
-    ZSHKTVShopType,      //KTV
+    ZSHFoodShopType=1,     //美食
     ZSHHotelShopType,    //酒店
+    ZSHKTVShopType,      //KTV
     ZSHBarShopType,      //酒吧
-    ZSHHorseType,        //马术
     ZSHShipType,         //游艇
+    ZSHHorseType,        //马术
     ZSHPlaneType,        //飞机
     ZSHGolfType,         //高尔夫
     ZSHLuxcarType,       //豪车

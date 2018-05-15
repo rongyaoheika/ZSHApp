@@ -29,9 +29,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    //支付回调
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(aliPayCallBack:) name:kAliPayCallBack object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(wxPayCallBack:) name:kWXPayCallBack object:nil];
+   
     self.url = self.paramDic[@"url"];
     [self createUI];
 }
@@ -39,6 +37,9 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self initProgressView];
+    //支付回调
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(aliPayCallBack:) name:kAliPayCallBack object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(wxPayCallBack:) name:kWXPayCallBack object:nil];
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
@@ -47,6 +48,7 @@
     self.navigationController.navigationBar.hidden = NO;
     [self.wkwebView.configuration.userContentController removeScriptMessageHandlerForName:@"BackAction"];
     [self.wkwebView.configuration.userContentController removeScriptMessageHandlerForName:@"CommitOrderAction"];
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
 }
 #pragma mark 初始化webview
 -(void)createUI

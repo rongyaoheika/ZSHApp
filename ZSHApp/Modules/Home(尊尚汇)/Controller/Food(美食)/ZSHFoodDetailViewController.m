@@ -236,7 +236,6 @@ static NSString *ZSHHotelListCellID = @"ZSHHotelListCell";
             NSDictionary *paramDic = _foodDetailSetDicArr[indexPath.row];
             NSDictionary *nextParamDic = @{KFromClassType:@(ZSHConfirmOrderToBottomBlurPopView),@"shopType":@(ZSHFoodShopType), @"deviceDic":weakself.foodDetailParamDic,@"listDic":paramDic,@"liveInfoStr":@""};
             weakself.bottomBlurPopView = [weakself createBottomBlurPopViewWithParamDic:nextParamDic];
-//            [kAppDelegate.window addSubview:weakself.bottomBlurPopView];键盘偏移无效
             [weakself.view addSubview:weakself.bottomBlurPopView];
         };
     }
