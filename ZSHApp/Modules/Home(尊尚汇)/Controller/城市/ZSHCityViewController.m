@@ -22,7 +22,6 @@
 
 @property (nonatomic, strong) NSMutableArray    *indexArray;
 @property (nonatomic, strong) NSMutableArray    *letterResultArr;
-@property (nonatomic, strong) NSTimer           *timer;
 @property (nonatomic, assign) CGFloat           cellHeight;
 @property (nonatomic, assign) NSInteger         row;
 @property (nonatomic, strong) DSectionIndexView *sectionIndexView;

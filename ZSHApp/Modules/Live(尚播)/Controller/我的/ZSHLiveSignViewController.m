@@ -12,7 +12,7 @@
 @interface ZSHLiveSignViewController ()<FSCalendarDataSource,FSCalendarDelegate>
 
 @property (nonatomic, strong) UIButton *signBtn;
-@property (nonatomic, strong) NSTimer  *timer;
+@property (nonatomic, strong) dispatch_source_t timer;
 @property (nonatomic,   weak) FSCalendar *calendar;
 
 @end
@@ -48,9 +48,19 @@
     bottomLabel.frame = CGRectMake(9, 55, 70, 13);
     [_signBtn addSubview:bottomLabel];
     
-    _timer= [NSTimer scheduledTimerWithTimeInterval:0.2 target:self selector:@selector(btnClick:) userInfo:nil repeats:YES];
-    [_timer fire];
-    
+//    _timer= [NSTimer scheduledTimerWithTimeInterval:0.2 target:self selector:@selector(btnClick:) userInfo:nil repeats:YES];
+//    [_timer fire];
+//
+    kWeakSelf(self);
+    self.timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_global_queue(0, 0));
+    dispatch_source_set_timer(self.timer, DISPATCH_TIME_NOW, 0.2 * NSEC_PER_SEC, 0 * NSEC_PER_SEC);
+    dispatch_source_set_event_handler(self.timer, ^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [weakself btnClick:nil];
+        });
+    });
+    //开启定时器
+    dispatch_resume(self.timer);
     
     FSCalendar *calendar = [[FSCalendar alloc] initWithFrame:CGRectMake(0, 260, kScreenWidth, 300)];
     calendar.scrollEnabled = false;
@@ -110,8 +120,8 @@
 }
 
 - (void)dealloc {
-    [_timer invalidate];
-    _timer = nil;
+    dispatch_source_cancel(self.timer);
+    self.timer = nil;
 }
 
 @end

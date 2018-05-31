@@ -122,7 +122,11 @@ static NSString *cellId = @"customCell";
         case 2://好友
             sharePlatform = 1;
             break;
-            
+        case 3://QQ好友
+            sharePlatform = 4;
+        case 4://QQ空间
+            sharePlatform = 5;
+            break;
         default:
             break;
     }

@@ -22,16 +22,16 @@
 //微信
 #define kAppKey_Wechat          @"wxe717a91321162694"
 #define kSecret_Wechat          @"d9186ceef0608871cf7e085811c37d28"
-#define kPartnerid_Wechat       @"1502819271"
+
 
 
 // 腾讯
-#define kAppKey_Tencent         @"1106139910"
-
+#define kAppID_Tencent          @"ID1106857373"
+#define kAppKey_Tencent         @"ophgwiEdO0udvLXg"
 
 //网易云信
-#define kIMAppKey               @"afc7265de3857bbaa7404b4ea92b191e"
-#define kIMAppSecret            @"c34bd403b29a"
+#define kIMAppKey               @"dcf32a23120d57721814dfbcebd69d29"
+#define kIMAppSecret            @"8dff89cb7ed7"
 #define kIMPushCerName          @""
 
 //即构科技
