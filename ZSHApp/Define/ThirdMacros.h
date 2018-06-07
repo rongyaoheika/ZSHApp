@@ -11,8 +11,10 @@
 #ifndef ThirdMacros_h
 #define ThirdMacros_h
 
+#define KRedirectURL            @"www.rongyaohk.com"
+
 // 友盟统计
-#define UMengKey @"5ab89ce78f4a9d5fa8000100"
+#define UMengKey                @"5ab89ce78f4a9d5fa8000100"
 
 //支付宝
 #define kAppScheme_Alipay       @"AlipaySDK"
@@ -21,12 +23,14 @@
 
 //微信
 #define kAppKey_Wechat          @"wxe717a91321162694"
-#define kSecret_Wechat          @"d9186ceef0608871cf7e085811c37d28"
+#define kAppSecret_Wechat       @"d9186ceef0608871cf7e085811c37d28"
 
-
+//微博
+#define kAppKey_Sina            @"3778301026"
+#define kAppSecret_Sina         @"d532071035ee0ff38680745dd6fc199c"
 
 // 腾讯
-#define kAppID_Tencent          @"ID1106857373"
+#define kAppID_Tencent          @"1106857373"
 #define kAppKey_Tencent         @"ophgwiEdO0udvLXg"
 
 //网易云信

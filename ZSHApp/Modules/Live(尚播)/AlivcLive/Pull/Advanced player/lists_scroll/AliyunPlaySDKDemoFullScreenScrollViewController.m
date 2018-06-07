@@ -114,18 +114,22 @@ static NSString *cellId = @"customCell";
 - (void)shareInfoAction:(NSNotification *)noti{
     kWeakSelf(self);
     UIButton *btn = [noti.object objectForKey:@"btn"];
-    NSInteger sharePlatform = 2;
+    NSInteger sharePlatform = UMSocialPlatformType_WechatTimeLine;
     switch (btn.tag) {
         case 1://朋友圈
-            sharePlatform = 2;
+            sharePlatform = UMSocialPlatformType_WechatTimeLine;
             break;
         case 2://好友
-            sharePlatform = 1;
+            sharePlatform = UMSocialPlatformType_WechatSession;
             break;
         case 3://QQ好友
-            sharePlatform = 4;
+            sharePlatform = UMSocialPlatformType_QQ;
+            break;
         case 4://QQ空间
-            sharePlatform = 5;
+            sharePlatform = UMSocialPlatformType_Qzone;
+            break;
+        case 5://新浪
+            sharePlatform = UMSocialPlatformType_Sina;
             break;
         default:
             break;
@@ -133,9 +137,10 @@ static NSString *cellId = @"customCell";
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC));
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
 //        UIImage *screenShot = [weakself takeScreenShot];
-        UIImage *screenShot = [UIImage imageNamed:@"home_service"];
+       
         NSString *shareText = @"荣耀黑卡，风暴来袭";
         NSString *descr = @"荣耀黑卡为您提供至尊轻奢服务，期待您的入驻，期待您的关注";
+        UIImage *screenShot = [UIImage imageNamed:@"home_service"];
         [[ShareManager sharedShareManager]shareToPlatform:sharePlatform title:shareText descr:descr image:screenShot url:nil controller:weakself callback:^(BOOL flag) {
             if (flag) {
                 RLog(@"分享成功！");

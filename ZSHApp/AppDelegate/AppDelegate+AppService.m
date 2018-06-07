@@ -174,6 +174,7 @@
 
 #pragma mark ————— 友盟 初始化 —————
 -(void)initUMeng{
+    
     /* 打开调试日志 */
     [[UMSocialManager defaultManager] openLog:YES];
     
@@ -186,7 +187,7 @@
 #pragma mark ————— 配置第三方 —————
 -(void)configUSharePlatforms{
     /* 设置微信的appKey和appSecret */
-    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_WechatSession appKey:kAppKey_Wechat appSecret:kSecret_Wechat redirectURL:@"www.rongyaohk.com"];
+    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_WechatSession appKey:kAppKey_Wechat appSecret:kAppSecret_Wechat redirectURL:KRedirectURL];
     /*
      * 移除相应平台的分享，如微信收藏
      */
@@ -195,27 +196,30 @@
     /* 设置分享到QQ互联的appID
      * U-Share SDK为了兼容大部分平台命名，统一用appKey和appSecret进行参数设置，而QQ平台仅需将appID作为U-Share的appKey参数传进即可。
      */
-    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_QQ appKey:kAppKey_Tencent/*设置QQ平台的appID*/  appSecret:nil redirectURL:nil];
+    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_QQ appKey:kAppKey_Tencent appSecret:nil redirectURL:nil];
+    
+    /* 设置新浪的appKey和appSecret */
+    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_Sina appKey:kAppKey_Sina appSecret:kAppSecret_Sina redirectURL:@"https://sns.whalecloud.com/sina2/callback"];
 }
 
 #pragma mark ————— OpenURL 回调 —————
+// 支持所有iOS系统
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
+    //6.3的新的API调用，是为了兼容国外平台(例如:新版facebookSDK,VK等)的调用[如果用6.2的api调用会没有回调],对国内平台没有影响
+    BOOL result = [[UMSocialManager defaultManager] handleOpenURL:url sourceApplication:sourceApplication annotation:annotation];
+    result = [self payCallBack:result url:url];
+    return result;
+}
+
+
 //仅支持iOS9以上系统，iOS8及以下系统不会回调
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey, id> *)options
 {
     //6.3的新的API调用，是为了兼容国外平台(例如:新版facebookSDK,VK等)的调用[如果用6.2的api调用会没有回调],对国内平台没有影响
     //友盟回调
     BOOL result = [[UMSocialManager defaultManager]  handleOpenURL:url options:options];
-    if (!result && [url.host isEqualToString:@"safepay"]) {//支付宝回调
-        result = YES;
-        [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
-            RLog(@"支付宝支付回调结果= = %@",resultDic);
-            [[NSNotificationCenter defaultCenter] postNotificationName:kAliPayCallBack object:resultDic];
-        }];
-    }
-  
-    if (!result) {// 微信回调
-        result = [WXApi handleOpenURL:url delegate:self];
-    }
+    result = [self payCallBack:result url:url];
     return result;
 }
 
@@ -224,14 +228,21 @@
 {
     //友盟回调
     BOOL result = [[UMSocialManager defaultManager] handleOpenURL:url];
+    result = [self payCallBack:result url:url];
+    return result;
+}
+
+//支付回调
+- (BOOL)payCallBack:(BOOL)result url:(NSURL *)url{
     if (!result && [url.host isEqualToString:@"safepay"]) {//支付宝回调
         result = YES;
-        //跳转支付宝钱包进行支付，处理支付结果
         [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
-            RLog(@"result = %@",resultDic);
+            RLog(@"支付宝支付回调结果= = %@",resultDic);
+            [[NSNotificationCenter defaultCenter] postNotificationName:kAliPayCallBack object:resultDic];
         }];
     }
-    if (!result) {//微信回调
+    
+    if (!result) {// 微信回调
         result = [WXApi handleOpenURL:url delegate:self];
     }
     return result;

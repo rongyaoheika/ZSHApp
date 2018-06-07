@@ -13,6 +13,7 @@
 
 SINGLETON_FOR_CLASS(ShareManager);
 
+//显示分享面板
 -(void)showShareView{
     //显示分享面板
     [UMSocialUIManager showShareMenuViewInWindowWithPlatformSelectionBlock:^(UMSocialPlatformType platformType, NSDictionary *userInfo) {
@@ -21,6 +22,7 @@ SINGLETON_FOR_CLASS(ShareManager);
     }];
 }
 
+//网页链接
 - (void)shareWebPageToPlatformType:(UMSocialPlatformType)platformType controller:(UIViewController *)vc
 {
     //创建分享消息对象
@@ -29,7 +31,7 @@ SINGLETON_FOR_CLASS(ShareManager);
     //创建网页内容对象
     UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:@"荣耀黑卡至尊服务" descr:@"荣耀黑卡至尊服务，期待您的加入" thumImage:[UIImage imageNamed:@"live_room_head1"]];
     //设置网页地址
-    shareObject.webpageUrl = @"http://mobile.umeng.com/social";
+    shareObject.webpageUrl = KRedirectURL;
     
     //分享消息对象设置分享内容对象
     messageObject.shareObject = shareObject;
@@ -58,8 +60,9 @@ SINGLETON_FOR_CLASS(ShareManager);
 {
     NSString *result = nil;
     if (!error) {
-        result = [NSString stringWithFormat:@"Share succeed"];
-    } else {
+        result = [NSString stringWithFormat:@"Share complete"];
+    }
+    else{
         NSMutableString *str = [NSMutableString string];
         if (error.userInfo) {
             for (NSString *key in error.userInfo) {
@@ -68,7 +71,8 @@ SINGLETON_FOR_CLASS(ShareManager);
         }
         if (error) {
             result = [NSString stringWithFormat:@"Share fail with error code: %d\n%@",(int)error.code, str];
-        }else{
+        }
+        else{
             result = [NSString stringWithFormat:@"Share fail"];
         }
     }
@@ -80,22 +84,25 @@ SINGLETON_FOR_CLASS(ShareManager);
     [alert show];
 }
 
+//分享网页
 - (void)shareToPlatform:(UMSocialPlatformType)platformType title:(NSString *)title descr:(NSString *)descr image:(UIImage *)image url:(NSString *)url controller:(UIViewController *)controller callback:(ZSHShareCallback)callback
 {
     UMSocialMessageObject *messageObj = [UMSocialMessageObject messageObject];
     UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:title descr:descr thumImage:image];
     //设置网页地址
-    shareObject.webpageUrl = @"www.rongyaohk.com";
+    shareObject.webpageUrl = KRedirectURL;
     
     //分享消息对象设置分享内容对象
     messageObj.shareObject = shareObject;
     
     [[UMSocialManager defaultManager] shareToPlatform:platformType messageObject:messageObj currentViewController:controller completion:^(id result, NSError *error) {
         if(!error) {
+            RLog(@"response data is %@",result);
             callback(YES);
         } else {
             UMSocialLogInfo(@"************Share fail with error %@*********",error);
             RLog("分享失败error====%@",error);
+            [self alertWithError:error];
         }
     }];
     
