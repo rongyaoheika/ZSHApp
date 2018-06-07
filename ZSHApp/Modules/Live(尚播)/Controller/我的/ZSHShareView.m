@@ -48,8 +48,6 @@
 
 - (void)shareBtnAction:(UIButton *)btn{
     [[NSNotificationCenter defaultCenter]postNotificationName:KShareInfo object:@{@"btn":btn}];
-    
-    
 }
 
 

@@ -22,47 +22,12 @@ SINGLETON_FOR_CLASS(ShareManager);
     }];
 }
 
-//网页链接
-- (void)shareWebPageToPlatformType:(UMSocialPlatformType)platformType controller:(UIViewController *)vc
-{
-    //创建分享消息对象
-    UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
-    
-    //创建网页内容对象
-    UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:@"荣耀黑卡至尊服务" descr:@"荣耀黑卡至尊服务，期待您的加入" thumImage:[UIImage imageNamed:@"live_room_head1"]];
-    //设置网页地址
-    shareObject.webpageUrl = KRedirectURL;
-    
-    //分享消息对象设置分享内容对象
-    messageObject.shareObject = shareObject;
-    
-    //调用分享接口
-    [[UMSocialManager defaultManager] shareToPlatform:platformType messageObject:messageObject currentViewController:vc completion:^(id data, NSError *error) {
-        if (error) {
-            UMSocialLogInfo(@"************Share fail with error %@*********",error);
-            RLog("分享失败error====%@",error);
-        } else {
-            if ([data isKindOfClass:[UMSocialShareResponse class]]) {
-                UMSocialShareResponse *resp = data;
-                //分享结果消息
-                UMSocialLogInfo(@"response message is %@",resp.message);
-                //第三方原始返回的数据
-                UMSocialLogInfo(@"response originalResponse data is %@",resp.originalResponse);
-            } else {
-                UMSocialLogInfo(@"response data is %@",data);
-            }
-        }
-        [self alertWithError:error];
-    }];
-}
-
 - (void)alertWithError:(NSError *)error
 {
     NSString *result = nil;
     if (!error) {
-        result = [NSString stringWithFormat:@"Share complete"];
-    }
-    else{
+        result = [NSString stringWithFormat:@"分享成功"];
+    } else {
         NSMutableString *str = [NSMutableString string];
         if (error.userInfo) {
             for (NSString *key in error.userInfo) {
@@ -71,15 +36,14 @@ SINGLETON_FOR_CLASS(ShareManager);
         }
         if (error) {
             result = [NSString stringWithFormat:@"Share fail with error code: %d\n%@",(int)error.code, str];
-        }
-        else{
-            result = [NSString stringWithFormat:@"Share fail"];
+        } else {
+            result = [NSString stringWithFormat:@"分享失败"];
         }
     }
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"share"
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"分享结果"
                                                     message:result
                                                    delegate:nil
-                                          cancelButtonTitle:NSLocalizedString(@"sure", @"确定")
+                                          cancelButtonTitle:@"确定"
                                           otherButtonTitles:nil];
     [alert show];
 }

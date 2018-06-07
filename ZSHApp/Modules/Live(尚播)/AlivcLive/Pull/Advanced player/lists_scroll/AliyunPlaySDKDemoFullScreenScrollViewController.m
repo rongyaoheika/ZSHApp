@@ -147,7 +147,6 @@ static NSString *cellId = @"customCell";
             }
         }];
     });
-
 }
 
 //屏幕快照
