@@ -64,7 +64,6 @@
 }
 
 #pragma delegate
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return [self.dataArr[0]count];
 }
@@ -148,8 +147,26 @@
 
 #pragma action
 - (void)shareAction{
-    [self.view addSubview:[self createBottomBlurPopViewWith:ZSHFromShareVCToToBottomBlurPopView]];
+//    [self.view addSubview:[self createBottomBlurPopViewWith:ZSHFromShareVCToToBottomBlurPopView]];
+    if ([self.view viewWithTag:20]) {
+        [self.view addSubview:self.bottomBlurPopView];
+    }
 }
+
+- (ZSHBottomBlurPopView *)bottomBlurPopView{
+    if (!_bottomBlurPopView) {
+        NSDictionary *nextParamDic = @{KFromClassType:@(ZSHFromShareVCToToBottomBlurPopView)};
+        _bottomBlurPopView = [[ZSHBottomBlurPopView alloc]initWithFrame:kAppDelegate.window.bounds paramDic:nextParamDic];
+        _bottomBlurPopView.tag = 20;
+        _bottomBlurPopView.blurRadius = 20;
+        _bottomBlurPopView.dynamic = NO;
+        _bottomBlurPopView.tintColor = KClearColor;
+        _bottomBlurPopView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.6];
+        [_bottomBlurPopView setBlurEnabled:NO];
+    }
+    return _bottomBlurPopView;
+}
+
 
 - (ZSHBottomBlurPopView *)createBottomBlurPopViewWith:(ZSHFromVCToBottomBlurPopView)fromClassType{
     NSDictionary *nextParamDic = @{KFromClassType:@(fromClassType)};
