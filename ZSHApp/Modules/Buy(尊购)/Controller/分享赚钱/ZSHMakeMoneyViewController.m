@@ -148,7 +148,7 @@
 #pragma action
 - (void)shareAction{
 //    [self.view addSubview:[self createBottomBlurPopViewWith:ZSHFromShareVCToToBottomBlurPopView]];
-    if ([self.view viewWithTag:20]) {
+    if (![self.view viewWithTag:20]) {
         [self.view addSubview:self.bottomBlurPopView];
     }
 }
